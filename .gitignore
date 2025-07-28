@@ -1046,3 +1046,6 @@ dkms.conf
 
 # ignore .vs
 .vs/
+
+# External 예외 처리
+!Engine/External/**
