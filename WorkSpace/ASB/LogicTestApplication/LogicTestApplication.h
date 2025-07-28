@@ -1,5 +1,6 @@
 #pragma once
-#include "../../Engine/Application/Application.h"
+#include "Application/Application.h"
+class GameLogicTestScene;
 class LogicTestApplication : public Application
 {
 public:
@@ -7,5 +8,8 @@ public:
 	void Render() override;
 	void Uninitialize() override;
 	void Update() override;
+
+
+	GameLogicTestScene* gameLogicTestScene = nullptr;
 };
 
