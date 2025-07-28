@@ -134,6 +134,9 @@
       <Project>{9f8b7d36-e4aa-4c3f-aade-81fb4ba00603}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Manager\BettleManager.cpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
