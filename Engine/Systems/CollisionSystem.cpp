@@ -113,34 +113,38 @@ void CollisionSystem::CallEvent(CollisionComponent* a, CollisionComponent* b, co
 
 	auto DoCall = [&](GameObject* caller, GameObject* target, bool trigger)
 		{
+			MonoBehavior* mono = caller->GetComponent<MonoBehavior>();
 			if (trigger)
 			{
-				if (type == "Enter") // NOTE: 호출하기
+
+				if (!mono) return;
+
+				if (type == "Enter") // NOTE: 현재 monobehaivior중 하나만 호출됨, 모두 호출되게 수정하기
 				{
-					// caller->OnTriggerEnter(target);
+					mono->OnTriggerEnter(target);
 				}
 				else if (type == "Stay")
 				{
-					// caller->OnTriggerStay(target);
+					mono->OnTriggerStay(target);
 				}
 				else if (type == "Exit")
 				{
-					// caller->OnTriggerExit(target);
+					mono->OnTriggerExit(target);
 				}
 			}
 			else
 			{
 				if (type == "Enter")
 				{
-					// caller->OnColliderEnter(target);
+					mono->OnColliderEnter(target);
 				}
 				else if (type == "Stay")
 				{
-					// caller->OnColliderStay(target);
+					mono->OnColliderStay(target);
 				}
 				else if (type == "Exit")
 				{
-					// caller->OnColliderExit(target);
+					mono->OnColliderExit(target);
 				}
 			}
 		};

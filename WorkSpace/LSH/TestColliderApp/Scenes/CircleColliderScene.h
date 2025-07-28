@@ -12,5 +12,6 @@ namespace TestCollider
 
 	private:
 		GameObject* testCircle{};
+		GameObject* dummyCircle{};
 	};
 }
