@@ -38,7 +38,7 @@ public:
 
 		for (Component* mono : monoBehaviors)
 		{
-			if (typeid(*mono) == typeid(T))
+			if (typeid(MonoBehavior) == typeid(T))
 			{
 				return static_cast<T*>(static_cast<Component*>(mono));
 			}
@@ -78,7 +78,7 @@ public:
 	void SetQueryInterface(IGameObjectQuery* q);
 
 	Transform& GetTransform();
-
+	
 protected:
 	EngineData::RenderLayer renderLayer = EngineData::RenderLayer::None;
 	IGameObjectQuery* query = nullptr;
@@ -93,5 +93,5 @@ private:
 	std::vector<Component*> components;			// 컴포넌트를 담는 컨테이너
 	std::queue<Component*> startQueue;			// start를 실행하지 않은 컴포넌트 모음
 	bool shouldRemove = false;					// 해당 오브젝트가 다음 프레임에 제거될 대상인지 확인하는 변수 ( 제거예정이면 true )
-	bool isActiveInScene = true;					// 해당 오브젝트가 이번 프레임에 생성되었는지 확인하는 변수 ( 생성된 후 다음 프레임에 false로 전환 )
+	bool isActiveInScene = true;				// 해당 오브젝트가 이번 프레임에 생성되었는지 확인하는 변수 ( 생성된 후 다음 프레임에 false로 전환 )
 };

@@ -24,7 +24,7 @@ struct CollisionPair
 class CollisionSystem : public Singleton<CollisionSystem>
 {
 public:
-	friend class  Singleton<CollisionSystem>;
+	friend class Singleton<CollisionSystem>;
 
 	void Register(CollisionComponent* comp);
 	void UnRegister(CollisionComponent* comp);

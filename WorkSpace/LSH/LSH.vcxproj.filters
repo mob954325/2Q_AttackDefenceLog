@@ -11,6 +11,9 @@
     <ClCompile Include="TestColliderApp\Scripts\TestCircleCollider.cpp">
       <Filter>Scripts</Filter>
     </ClCompile>
+    <ClCompile Include="TestColliderApp\Scripts\DummyCircleCollider.cpp">
+      <Filter>Scripts</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TestColliderApp\App\TestColliderApp.h">
@@ -20,6 +23,9 @@
       <Filter>Scene</Filter>
     </ClInclude>
     <ClInclude Include="TestColliderApp\Scripts\TestCircleCollider.h">
+      <Filter>Scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="TestColliderApp\Scripts\DummyCircleCollider.h">
       <Filter>Scripts</Filter>
     </ClInclude>
   </ItemGroup>
