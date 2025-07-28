@@ -1,16 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="game.cpp" />
-    <ClCompile Include="GameLogicTestScene\GameLogicTestScene.cpp" />
-    <ClCompile Include="LiveObject\LiveObject.cpp" />
-    <ClCompile Include="LogicTestApplication\LogicTestApplication.cpp" />
-    <ClCompile Include="LogicTestApplication\LogicTestApplicationmain.cpp" />
     <ClCompile Include="LogicTestManager\BettleManager.cpp" />
+    <ClCompile Include="LiveObject\LiveObject.cpp" />
+    <ClCompile Include="GameLogicTestScene\GameLogicTestScene.cpp" />
+    <ClCompile Include="LogicTestApplication\LogicTestApplicationmain.cpp" />
+    <ClCompile Include="LogicTestApplication\LogicTestApplication.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GameLogicTestScene\GameLogicTestScene.h" />
     <ClInclude Include="LiveObject\LiveObject.h" />
+    <ClInclude Include="GameLogicTestScene\GameLogicTestScene.h" />
     <ClInclude Include="LogicTestApplication\LogicTestApplication.h" />
   </ItemGroup>
 </Project>

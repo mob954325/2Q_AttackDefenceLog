@@ -5,9 +5,4 @@
       <UniqueIdentifier>{50ca43e3-3bd1-4a05-afaa-9c2a2295f442}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Manager\BettleManager.cpp">
-      <Filter>BettleLogic</Filter>
-    </ClCompile>
-  </ItemGroup>
 </Project>
