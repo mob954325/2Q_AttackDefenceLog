@@ -1,5 +1,5 @@
 ﻿#include <windows.h>
-
+#include "LogicTestApplication/LogicTestApplication.h"
 // ASB
 
 /// <summary>
@@ -15,6 +15,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     // app.Initialize();
     // app.Run();
     // app.Uninitialize();
+    LogicTestApplication TestApplication;
+    TestApplication.Initialize();
+    TestApplication.Update();
+    TestApplication.Render();
+    TestApplication.Uninitialize();
+
 
     CoUninitialize();        // COM 해제
     return (int)1;
