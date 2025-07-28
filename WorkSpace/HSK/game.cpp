@@ -1,6 +1,6 @@
 ﻿#include <windows.h>
 
-// ASB
+// HSK
 
 /// <summary>
 /// 프로그램 winMain
