@@ -334,6 +334,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="GameLogicTestScene\GameLogicTestScene.cpp" />
+    <ClCompile Include="LiveObject\LiveObject.cpp" />
+    <ClCompile Include="LogicTestApplication\LogicTestApplication.cpp" />
+    <ClCompile Include="LogicTestApplication\LogicTestApplicationmain.cpp" />
+    <ClCompile Include="LogicTestManager\BettleManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GameLogicTestScene\GameLogicTestScene.h" />
+    <ClInclude Include="LiveObject\LiveObject.h" />
+    <ClInclude Include="LogicTestApplication\LogicTestApplication.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
