@@ -1,0 +1,41 @@
+{
+    "clipName": "Dead_Normal",
+    "loop": false,
+    "texturePath": "Assets/Sprites/ken.png",
+    "duration": 0.6666666865348816,
+    "frames": [
+        {
+            "sprite": "Dead_Normal_0",
+            "time": 0.0
+        },
+        {
+            "sprite": "Dead_Normal_1",
+            "time": 0.0833333358168602
+        },
+        {
+            "sprite": "Dead_Normal_2",
+            "time": 0.1666666716337204
+        },
+        {
+            "sprite": "Dead_Normal_3",
+            "time": 0.25
+        },
+        {
+            "sprite": "Dead_Normal_4",
+            "time": 0.3333333432674408
+        },
+        {
+            "sprite": "Dead_Normal_5",
+            "time": 0.4166666865348816
+        },
+        {
+            "sprite": "Dead_Normal_6",
+            "time": 0.5
+        },
+        {
+            "sprite": "Dead_Normal_7",
+            "time": 0.5833333730697632
+        }
+    ],
+    "events": []
+}

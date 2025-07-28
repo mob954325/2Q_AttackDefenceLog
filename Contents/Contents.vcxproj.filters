@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Test_2Q">
+      <UniqueIdentifier>{559c1c72-6911-4da6-8610-077d4f929bfe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Test_2Q\GameObject">
+      <UniqueIdentifier>{c8b4a70c-d557-4bc2-8c47-6e1bdf8f3386}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Test_2Q\GameObject\MenuScene">
+      <UniqueIdentifier>{b97bb19e-521c-47b2-9ec8-a4e20ac8e4bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Test_2Q\GameObject\TestGameScene">
+      <UniqueIdentifier>{3f159fc5-65e4-440e-90b1-ba212fd8d1ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Test_2Q\GameObject\TestColliderScene">
+      <UniqueIdentifier>{e2b5367b-ae57-4255-b816-c9bfad701406}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Test_2Q\Application">
+      <UniqueIdentifier>{db8955e1-1f56-4b8a-91ab-dedcc54f5fbc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Test_2Q\Scene">
+      <UniqueIdentifier>{4a9fe95d-0cba-4a2e-af0a-5b40e54df505}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Test_Platformer">
+      <UniqueIdentifier>{40ee191e-8423-42a1-8669-6aad0c4b62f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Test_Platformer\Scene">
+      <UniqueIdentifier>{7f5b8aa7-9650-4724-90c3-67307b2e3ade}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Test_Platformer\Application">
+      <UniqueIdentifier>{15a5ade7-ccb9-4bb6-9fdf-8d7fa0f7f0c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Test_Platformer\Scripts">
+      <UniqueIdentifier>{cc4091d5-788d-4c70-a54a-ca59ff4e05a5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Application\Game.cpp">
+      <Filter>Test_2Q\Application</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

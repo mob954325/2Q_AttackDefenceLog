@@ -1,0 +1,346 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Application">
+      <UniqueIdentifier>{81649092-2ece-43bd-8f16-3703ffd88630}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components">
+      <UniqueIdentifier>{e9fe5acd-f9af-46ce-9bb0-09535d81ec3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Base">
+      <UniqueIdentifier>{6df25cfa-6973-4ae2-91b8-a9e7250e0d5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Camera">
+      <UniqueIdentifier>{16a04f4e-a38c-40d4-ad6d-43d7456d3c14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Logic">
+      <UniqueIdentifier>{353087d1-7b75-4fc4-9e87-dcaf59d80e21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Physics">
+      <UniqueIdentifier>{ce24086c-8f1f-4341-b59d-43a8bf5c71b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Rendering">
+      <UniqueIdentifier>{771ed8b6-073b-463e-aea2-aeba11eaf35a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform">
+      <UniqueIdentifier>{59684d07-d153-42e2-b6f8-c1457a1f7889}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{4f986c6f-0898-4cf4-a1d5-322eb4c6e021}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Loader">
+      <UniqueIdentifier>{01c98fe4-53f4-4a5d-9e32-c2fcd74edd80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{ce9e2d34-6c04-4d82-80ab-6c6b84b19b8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems">
+      <UniqueIdentifier>{dd278e99-60ec-4a76-8451-f4cca7639623}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{53c74694-e10e-4f76-be88-4d723e6bacf5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Collider">
+      <UniqueIdentifier>{0632af0c-e055-4ae1-97be-418ddd8f9699}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Datas">
+      <UniqueIdentifier>{b429deab-a7ad-4792-a98a-b65d14a1da05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External">
+      <UniqueIdentifier>{935e4c66-a620-4eb2-b0b8-5ee0a99995cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math">
+      <UniqueIdentifier>{f08d5be6-fc1a-432f-8cf0-67e09a566670}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Application\Application.h">
+      <Filter>Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\AppPaths.h">
+      <Filter>Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Base\Component.h">
+      <Filter>Components\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Base\GameObject.h">
+      <Filter>Components\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Base\Transform.h">
+      <Filter>Components\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Camera\Camera.h">
+      <Filter>Components\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Logic\FSMInstance.h">
+      <Filter>Components\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Logic\InputSystem.h">
+      <Filter>Components\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Logic\ScriptComponent.h">
+      <Filter>Components\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Logic\StatComponent.h">
+      <Filter>Components\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Physics\PhysicComponent.h">
+      <Filter>Components\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Rendering\AnimationRenderer.h">
+      <Filter>Components\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Rendering\BitmapRenderer.h">
+      <Filter>Components\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Rendering\BoxComponent.h">
+      <Filter>Components\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Rendering\RenderComponent.h">
+      <Filter>Components\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Rendering\TextRenderer.h">
+      <Filter>Components\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Datas\AnimationControllerDatas.h">
+      <Filter>Datas</Filter>
+    </ClInclude>
+    <ClInclude Include="Datas\AnimationDatas.h">
+      <Filter>Datas</Filter>
+    </ClInclude>
+    <ClInclude Include="Datas\EngineData.h">
+      <Filter>Datas</Filter>
+    </ClInclude>
+    <ClInclude Include="Datas\SpriteDatas.h">
+      <Filter>Datas</Filter>
+    </ClInclude>
+    <ClInclude Include="External\json.hpp">
+      <Filter>External</Filter>
+    </ClInclude>
+    <ClInclude Include="Platform\D2DRenderManager.h">
+      <Filter>Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="Platform\Input.h">
+      <Filter>Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources\Loaders\AnimationClipLoader.h">
+      <Filter>Resources\Loader</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources\Loaders\AnimationControllerLoader.h">
+      <Filter>Resources\Loader</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources\Loaders\SpriteSheetLoader.h">
+      <Filter>Resources\Loader</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources\AnimationResource.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources\BitmapResource.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources\ResourceManager.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\GameObjectQuery.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\Scene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\SceneManager.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\PhysicSystem.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\RenderSystem.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\ScriptSystem.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\TransformSystem.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\DebugUtility.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\EventDelegate.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\GameTime.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\Singleton.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\StringConvert.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Collision\AABBCollider.h">
+      <Filter>Components\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Base\ActiveComponent.h">
+      <Filter>Components\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Base\BaseObject.h">
+      <Filter>Components\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Camera\CameraManager.h">
+      <Filter>Components\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Collision\CollisionComponent.h">
+      <Filter>Components\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Datas\CollisionInfo.h">
+      <Filter>Datas</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\CollisionSystem.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Collision\ICollider.h">
+      <Filter>Components\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Base\MonoBehavior.h">
+      <Filter>Components\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\MonoBehaviorSystem.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Physics\Rigidbody2D.h">
+      <Filter>Components\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\TypeCastUtil.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Vector2.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="framework.h" />
+    <ClInclude Include="pch.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Application\Application.cpp">
+      <Filter>Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\AppPaths.cpp">
+      <Filter>Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\Base\GameObject.cpp">
+      <Filter>Components\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\Base\Transform.cpp">
+      <Filter>Components\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\Camera\Camera.cpp">
+      <Filter>Components\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\Logic\InputSystem.cpp">
+      <Filter>Components\Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\Logic\StatComponent.cpp">
+      <Filter>Components\Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\Rendering\AnimationRenderer.cpp">
+      <Filter>Components\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\Rendering\BitmapRenderer.cpp">
+      <Filter>Components\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\Rendering\BoxComponent.cpp">
+      <Filter>Components\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\Rendering\TextRenderer.cpp">
+      <Filter>Components\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Resources\ResourceManager.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Resources\BitmapResource.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Platform\D2DRenderManager.cpp">
+      <Filter>Platform</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\DebugUtility.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\GameTime.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\Scene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\SceneManager.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Platform\Input.cpp">
+      <Filter>Platform</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\RenderSystem.cpp">
+      <Filter>Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\ScriptSystem.cpp">
+      <Filter>Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Resources\Loaders\AnimationClipLoader.cpp">
+      <Filter>Resources\Loader</Filter>
+    </ClCompile>
+    <ClCompile Include="Resources\Loaders\SpriteSheetLoader.cpp">
+      <Filter>Resources\Loader</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\StringConvert.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Resources\Loaders\AnimationControllerLoader.cpp">
+      <Filter>Resources\Loader</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\Logic\FSMInstance.cpp">
+      <Filter>Components\Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\PhysicSystem.cpp">
+      <Filter>Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\TransformSystem.cpp">
+      <Filter>Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\Collision\AABBCollider.cpp">
+      <Filter>Components\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\Base\BaseObject.cpp">
+      <Filter>Components\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\Camera\CameraManager.cpp">
+      <Filter>Components\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\Collision\CollisionComponent.cpp">
+      <Filter>Components\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\CollisionSystem.cpp">
+      <Filter>Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\Base\Component.cpp">
+      <Filter>Components\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\MonoBehaviorSystem.cpp">
+      <Filter>Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\Physics\Rigidbody2D.cpp">
+      <Filter>Components\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\TypeCastUtil.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\Vector2.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="MyD2DEngine.cpp" />
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="Components\Rendering\RenderComponent.cpp">
+      <Filter>Components\Rendering</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cpp.hint" />
+  </ItemGroup>
+</Project>

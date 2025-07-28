@@ -1,0 +1,29 @@
+{
+    "clipName": "Move_Front",
+    "loop": true,
+    "texturePath": "Assets/Sprites/ken.png",
+    "duration": 0.4166666865348816,
+    "frames": [
+        {
+            "sprite": "Move_Front_0",
+            "time": 0.0
+        },
+        {
+            "sprite": "Move_Front_1",
+            "time": 0.0833333358168602
+        },
+        {
+            "sprite": "Move_Front_2",
+            "time": 0.1666666716337204
+        },
+        {
+            "sprite": "Move_Front_3",
+            "time": 0.25
+        },
+        {
+            "sprite": "Move_Front_4",
+            "time": 0.3333333432674408
+        }
+    ],
+    "events": []
+}

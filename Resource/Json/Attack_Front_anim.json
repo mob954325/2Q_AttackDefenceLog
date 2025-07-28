@@ -1,0 +1,57 @@
+{
+    "clipName": "Attack_Front",
+    "loop": false,
+    "texturePath": "Assets/Sprites/ken.png",
+    "duration": 1.0,
+    "frames": [
+        {
+            "sprite": "Attack_Front_0",
+            "time": 0.0
+        },
+        {
+            "sprite": "Attack_Front_1",
+            "time": 0.0833333358168602
+        },
+        {
+            "sprite": "Attack_Front_2",
+            "time": 0.1666666716337204
+        },
+        {
+            "sprite": "Attack_Front_3",
+            "time": 0.25
+        },
+        {
+            "sprite": "Attack_Front_4",
+            "time": 0.3333333432674408
+        },
+        {
+            "sprite": "Attack_Front_5",
+            "time": 0.4166666865348816
+        },
+        {
+            "sprite": "Attack_Front_6",
+            "time": 0.5
+        },
+        {
+            "sprite": "Attack_Front_7",
+            "time": 0.5833333730697632
+        },
+        {
+            "sprite": "Attack_Front_8",
+            "time": 0.6666666865348816
+        },
+        {
+            "sprite": "Attack_Front_9",
+            "time": 0.75
+        },
+        {
+            "sprite": "Attack_Front_10",
+            "time": 0.8333333730697632
+        },
+        {
+            "sprite": "Attack_Front_11",
+            "time": 0.9166666865348816
+        }
+    ],
+    "events": []
+}

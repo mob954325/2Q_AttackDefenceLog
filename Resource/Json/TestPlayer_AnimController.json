@@ -1,0 +1,180 @@
+{
+    "controllerName": "TestPlayer",
+    "parameters": [
+        {
+            "name": "speed",
+            "type": "Float",
+            "defaultFloat": 0.0,
+            "defaultInt": 0,
+            "defaultBool": false
+        },
+        {
+            "name": "attack",
+            "type": "Trigger",
+            "defaultFloat": 0.0,
+            "defaultInt": 0,
+            "defaultBool": false
+        },
+        {
+            "name": "hit",
+            "type": "Trigger",
+            "defaultFloat": 0.0,
+            "defaultInt": 0,
+            "defaultBool": false
+        },
+        {
+            "name": "dead",
+            "type": "Trigger",
+            "defaultFloat": 0.0,
+            "defaultInt": 0,
+            "defaultBool": false
+        },
+        {
+            "name": "isDead",
+            "type": "Bool",
+            "defaultFloat": 0.0,
+            "defaultInt": 0,
+            "defaultBool": false
+        }
+    ],
+    "defaultState": "Idle",
+    "states": [
+        {
+            "name": "Idle",
+            "motionName": "Idle_Right",
+            "clipLength": 0.5,
+            "loop": true,
+            "transitions": [
+                {
+                    "fromState": "Idle",
+                    "toState": "Move",
+                    "exitTime": 0.75,
+                    "hasExitTime": true,
+                    "conditions": [
+                        {
+                            "parameter": "speed",
+                            "mode": "Greater",
+                            "threshold": 0.10000000149011612
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Move",
+            "motionName": "Move_Front",
+            "clipLength": 0.4166666865348816,
+            "loop": true,
+            "transitions": [
+                {
+                    "fromState": "Move",
+                    "toState": "Idle",
+                    "exitTime": 0.75,
+                    "hasExitTime": true,
+                    "conditions": [
+                        {
+                            "parameter": "speed",
+                            "mode": "Less",
+                            "threshold": 0.10000000149011612
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Hit",
+            "motionName": "Hit_Normal",
+            "clipLength": 0.3333333432674408,
+            "loop": false,
+            "transitions": [
+                {
+                    "fromState": "Hit",
+                    "toState": "Exit",
+                    "exitTime": 0.25,
+                    "hasExitTime": true,
+                    "conditions": [
+                        {
+                            "parameter": "",
+                            "mode": "Always",
+                            "threshold": 0.0
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Dead",
+            "motionName": "Dead_Normal",
+            "clipLength": 0.6666666865348816,
+            "loop": false,
+            "transitions": [
+                {
+                    "fromState": "Dead",
+                    "toState": "Exit",
+                    "exitTime": 0.625,
+                    "hasExitTime": true,
+                    "conditions": [
+                        {
+                            "parameter": "isDead",
+                            "mode": "IfNot",
+                            "threshold": 0.0
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Attack",
+            "motionName": "Attack_Front",
+            "clipLength": 1.0,
+            "loop": false,
+            "transitions": [
+                {
+                    "fromState": "Attack",
+                    "toState": "Exit",
+                    "exitTime": 0.75,
+                    "hasExitTime": true,
+                    "conditions": [
+                        {
+                            "parameter": "",
+                            "mode": "Always",
+                            "threshold": 0.0
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "anyStateTransitions": [
+        {
+            "toState": "Dead",
+            "conditions": [
+                {
+                    "parameter": "dead",
+                    "mode": "If",
+                    "threshold": 0.0
+                }
+            ]
+        },
+        {
+            "toState": "Attack",
+            "conditions": [
+                {
+                    "parameter": "attack",
+                    "mode": "If",
+                    "threshold": 0.0
+                }
+            ]
+        },
+        {
+            "toState": "Hit",
+            "conditions": [
+                {
+                    "parameter": "hit",
+                    "mode": "If",
+                    "threshold": 0.0
+                }
+            ]
+        }
+    ]
+}
