@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="TestColliderApp\App\TestColliderApp.cpp">
+      <Filter>App</Filter>
+    </ClCompile>
+    <ClCompile Include="TestColliderApp\Scenes\CircleColliderScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Game.cpp" />
+    <ClCompile Include="TestColliderApp\Scripts\TestCircleCollider.cpp">
+      <Filter>Scripts</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="TestColliderApp\App\TestColliderApp.h">
+      <Filter>App</Filter>
+    </ClInclude>
+    <ClInclude Include="TestColliderApp\Scenes\CircleColliderScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="TestColliderApp\Scripts\TestCircleCollider.h">
+      <Filter>Scripts</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="App">
+      <UniqueIdentifier>{6b0b9014-7255-42be-bfa5-e713aff0ec16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{22927b52-d0ff-413e-8370-cbafb56f85d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts">
+      <UniqueIdentifier>{40aa62a8-f8f3-4da1-a9d7-a5dcea343c28}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

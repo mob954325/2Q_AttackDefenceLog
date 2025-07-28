@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="ASB|Win32">
@@ -53,9 +53,10 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{9f8b7d36-e4aa-4c3f-aade-81fb4ba00603}</ProjectGuid>
-    <RootNamespace>Engine</RootNamespace>
+    <ProjectGuid>{a9f98e09-c40b-46cf-aa93-fb0383bc6525}</ProjectGuid>
+    <RootNamespace>HSK</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>Work_HSK</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -96,37 +97,37 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LSH|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='KJH|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='HSK|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ASB|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -178,11 +179,11 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -190,11 +191,11 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -202,11 +203,11 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -214,11 +215,11 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -226,11 +227,11 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -240,11 +241,11 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -254,9 +255,8 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Engine\Component\Base;$(SolutionDir)Engine\Core;$(SolutionDir)Engine\Utility;$(SolutionDir)Engine\Component;$(SolutionDir)Engine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -267,9 +267,8 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Engine\Component\Base;$(SolutionDir)Engine\Core;$(SolutionDir)Engine\Utility;$(SolutionDir)Engine\Component;$(SolutionDir)Engine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -280,9 +279,8 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Engine\Component\Base;$(SolutionDir)Engine\Core;$(SolutionDir)Engine\Utility;$(SolutionDir)Engine\Component;$(SolutionDir)Engine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -293,9 +291,8 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Engine\Component\Base;$(SolutionDir)Engine\Core;$(SolutionDir)Engine\Utility;$(SolutionDir)Engine\Component;$(SolutionDir)Engine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -306,9 +303,8 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Engine\Component\Base;$(SolutionDir)Engine\Core;$(SolutionDir)Engine\Utility;$(SolutionDir)Engine\Component;$(SolutionDir)Engine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -321,9 +317,8 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Engine\Component\Base;$(SolutionDir)Engine\Core;$(SolutionDir)Engine\Utility;$(SolutionDir)Engine\Component;$(SolutionDir)Engine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -333,108 +328,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Components\Base\ActiveComponent.h" />
-    <ClInclude Include="Components\Base\MonoBehavior.h" />
-    <ClInclude Include="Components\Base\BaseObject.h" />
-    <ClInclude Include="Components\Physics\Rigidbody2D.h" />
-    <ClInclude Include="Datas\CollisionInfo.h" />
-    <ClInclude Include="Systems\MonoBehaviorSystem.h" />
-    <ClInclude Include="Systems\CollisionSystem.h" />
-    <ClInclude Include="Components\Collision\AABBCollider.h" />
-    <ClInclude Include="Components\Collision\CollisionComponent.h" />
-    <ClInclude Include="Components\Collision\ICollider.h" />
-    <ClInclude Include="Components\Camera\CameraManager.h" />
-    <ClInclude Include="Components\Logic\FSMInstance.h" />
-    <ClInclude Include="Components\Physics\PhysicComponent.h" />
-    <ClInclude Include="Datas\AnimationControllerDatas.h" />
-    <ClInclude Include="Systems\PhysicSystem.h" />
-    <ClInclude Include="Resources\Loaders\AnimationControllerLoader.h" />
-    <ClInclude Include="Datas\AnimationDatas.h" />
-    <ClInclude Include="Resources\Loaders\AnimationClipLoader.h" />
-    <ClInclude Include="Application\Application.h" />
-    <ClInclude Include="Application\AppPaths.h" />
-    <ClInclude Include="Components\Base\Component.h" />
-    <ClInclude Include="Components\Base\GameObject.h" />
-    <ClInclude Include="Components\Base\Transform.h" />
-    <ClInclude Include="Components\Camera\Camera.h" />
-    <ClInclude Include="Components\Logic\InputSystem.h" />
-    <ClInclude Include="Components\Logic\ScriptComponent.h" />
-    <ClInclude Include="Components\Logic\StatComponent.h" />
-    <ClInclude Include="Components\Rendering\AnimationRenderer.h" />
-    <ClInclude Include="Components\Rendering\BitmapRenderer.h" />
-    <ClInclude Include="Components\Rendering\BoxComponent.h" />
-    <ClInclude Include="Components\Rendering\RenderComponent.h" />
-    <ClInclude Include="Components\Rendering\TextRenderer.h" />
-    <ClInclude Include="Datas\EngineData.h" />
-    <ClInclude Include="Resources\Loaders\SpriteSheetLoader.h" />
-    <ClInclude Include="Systems\TransformSystem.h" />
-    <ClInclude Include="Utils\TypeCastUtil.h" />
-    <ClInclude Include="Utils\StringConvert.h" />
-    <ClInclude Include="Systems\RenderSystem.h" />
-    <ClInclude Include="Systems\ScriptSystem.h" />
-    <ClInclude Include="External\json.hpp" />
-    <ClInclude Include="Scene\GameObjectQuery.h" />
-    <ClInclude Include="Platform\D2DRenderManager.h" />
-    <ClInclude Include="Resources\AnimationResource.h" />
-    <ClInclude Include="Resources\BitmapResource.h" />
-    <ClInclude Include="Resources\ResourceManager.h" />
-    <ClInclude Include="Datas\SpriteDatas.h" />
-    <ClInclude Include="Scene\Scene.h" />
-    <ClInclude Include="Scene\SceneManager.h" />
-    <ClInclude Include="Platform\Input.h" />
-    <ClInclude Include="framework.h" />
-    <ClInclude Include="pch.h" />
-    <ClInclude Include="Utils\DebugUtility.h" />
-    <ClInclude Include="Utils\EventDelegate.h" />
-    <ClInclude Include="Utils\GameTime.h" />
-    <ClInclude Include="Utils\Singleton.h" />
-    <ClInclude Include="Math\Vector2.h" />
+    <ProjectReference Include="..\..\Engine\Engine.vcxproj">
+      <Project>{9f8b7d36-e4aa-4c3f-aade-81fb4ba00603}</Project>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Components\Base\BaseObject.cpp" />
-    <ClCompile Include="Components\Base\Component.cpp" />
-    <ClCompile Include="Components\Rendering\RenderComponent.cpp" />
-    <ClCompile Include="Math\Vector2.cpp" />
-    <ClCompile Include="Components\Physics\Rigidbody2D.cpp" />
-    <ClCompile Include="Systems\MonoBehaviorSystem.cpp" />
-    <ClCompile Include="Systems\CollisionSystem.cpp" />
-    <ClCompile Include="Components\Collision\AABBCollider.cpp" />
-    <ClCompile Include="Components\Collision\CollisionComponent.cpp" />
-    <ClCompile Include="Components\Camera\CameraManager.cpp" />
-    <ClCompile Include="Components\Logic\FSMInstance.cpp" />
-    <ClCompile Include="Systems\PhysicSystem.cpp" />
-    <ClCompile Include="Resources\Loaders\AnimationControllerLoader.cpp" />
-    <ClCompile Include="Resources\Loaders\AnimationClipLoader.cpp" />
-    <ClCompile Include="Application\Application.cpp" />
-    <ClCompile Include="Application\AppPaths.cpp" />
-    <ClCompile Include="Components\Base\GameObject.cpp" />
-    <ClCompile Include="Components\Base\Transform.cpp" />
-    <ClCompile Include="Components\Camera\Camera.cpp" />
-    <ClCompile Include="Components\Logic\InputSystem.cpp" />
-    <ClCompile Include="Components\Logic\StatComponent.cpp" />
-    <ClCompile Include="Components\Rendering\AnimationRenderer.cpp" />
-    <ClCompile Include="Components\Rendering\BitmapRenderer.cpp" />
-    <ClCompile Include="Components\Rendering\BoxComponent.cpp" />
-    <ClCompile Include="Components\Rendering\TextRenderer.cpp" />
-    <ClCompile Include="Resources\Loaders\SpriteSheetLoader.cpp" />
-    <ClCompile Include="Systems\TransformSystem.cpp" />
-    <ClCompile Include="Utils\TypeCastUtil.cpp" />
-    <ClCompile Include="Utils\StringConvert.cpp" />
-    <ClCompile Include="Systems\ScriptSystem.cpp" />
-    <ClCompile Include="Platform\D2DRenderManager.cpp" />
-    <ClCompile Include="Resources\BitmapResource.cpp" />
-    <ClCompile Include="Resources\ResourceManager.cpp" />
-    <ClCompile Include="Scene\Scene.cpp" />
-    <ClCompile Include="Scene\SceneManager.cpp" />
-    <ClCompile Include="Platform\Input.cpp" />
-    <ClCompile Include="Systems\RenderSystem.cpp" />
-    <ClCompile Include="MyD2DEngine.cpp" />
-    <ClCompile Include="pch.cpp" />
-    <ClCompile Include="Utils\DebugUtility.cpp" />
-    <ClCompile Include="Utils\GameTime.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="cpp.hint" />
+    <ClCompile Include="..\ASB\game.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
