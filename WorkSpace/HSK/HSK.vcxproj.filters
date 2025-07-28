@@ -2,5 +2,27 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="HSKScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="HSKApp.cpp">
+      <Filter>App</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="HSKScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="HSKApp.h">
+      <Filter>App</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{b4ecf695-4052-4a06-a99a-d6a6d2414b29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="App">
+      <UniqueIdentifier>{cb83a66b-ca2e-4d1f-af2d-135ecc4157bb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>
