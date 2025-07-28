@@ -11,6 +11,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     // 25.07.28 - 이성호
     // 실행할 Application 클래스 여기에 작성하기
+    // Fork test comment
 
     CoUninitialize();        // COM 해제
     return (int)1;
