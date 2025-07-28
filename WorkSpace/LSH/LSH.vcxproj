@@ -335,11 +335,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application\Game.cpp" />
+    <ClCompile Include="TestColliderApp\Scripts\DummyCircleCollider.cpp" />
     <ClCompile Include="TestColliderApp\App\TestColliderApp.cpp" />
     <ClCompile Include="TestColliderApp\Scenes\CircleColliderScene.cpp" />
     <ClCompile Include="TestColliderApp\Scripts\TestCircleCollider.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="TestColliderApp\Scripts\DummyCircleCollider.h" />
     <ClInclude Include="TestColliderApp\App\TestColliderApp.h" />
     <ClInclude Include="TestColliderApp\Scenes\CircleColliderScene.h" />
     <ClInclude Include="TestColliderApp\Scripts\TestCircleCollider.h" />

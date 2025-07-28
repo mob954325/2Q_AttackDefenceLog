@@ -333,6 +333,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Components\Collision\CircleCollider.h" />
+    <ClInclude Include="Components\Rendering\CircleComponent.h" />
     <ClInclude Include="Components\Base\ActiveComponent.h" />
     <ClInclude Include="Components\Base\MonoBehavior.h" />
     <ClInclude Include="Components\Base\BaseObject.h" />
@@ -391,6 +393,8 @@
     <ClInclude Include="Math\Vector2.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Components\Collision\CircleCollider.cpp" />
+    <ClCompile Include="Components\Rendering\CircleComponent.cpp" />
     <ClCompile Include="Components\Base\BaseObject.cpp" />
     <ClCompile Include="Components\Base\Component.cpp" />
     <ClCompile Include="Components\Rendering\RenderComponent.cpp" />

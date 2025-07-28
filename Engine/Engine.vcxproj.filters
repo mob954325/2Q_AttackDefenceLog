@@ -218,6 +218,12 @@
     </ClInclude>
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Components\Collision\CircleCollider.h">
+      <Filter>Components\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Rendering\CircleComponent.h">
+      <Filter>Components\Rendering</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\Application.cpp">
@@ -337,6 +343,12 @@
     <ClCompile Include="MyD2DEngine.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="Components\Rendering\RenderComponent.cpp">
+      <Filter>Components\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\Collision\CircleCollider.cpp">
+      <Filter>Components\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\Rendering\CircleComponent.cpp">
       <Filter>Components\Rendering</Filter>
     </ClCompile>
   </ItemGroup>
