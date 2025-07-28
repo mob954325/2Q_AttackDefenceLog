@@ -24,5 +24,8 @@
     <Filter Include="App">
       <UniqueIdentifier>{cb83a66b-ca2e-4d1f-af2d-135ecc4157bb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Obj">
+      <UniqueIdentifier>{3894e249-9d54-48e6-aa1d-563a886403f0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>
