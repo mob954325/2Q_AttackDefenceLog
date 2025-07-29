@@ -75,7 +75,8 @@ public:
 	void SetRenderLayer(EngineData::RenderLayer layerType);
 	int GetRenderLayerIndex() const;
 
-	void SetQueryInterface(IGameObjectQuery* q);
+	void SetQuery(IGameObjectQuery* q);
+	IGameObjectQuery* GetQuery();
 
 	Transform& GetTransform();
 	

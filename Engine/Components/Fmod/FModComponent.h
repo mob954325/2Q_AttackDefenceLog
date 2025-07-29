@@ -4,6 +4,7 @@
 #include "External/FMod/fmod_errors.h"
 #include <iostream>
 #include <unordered_map>
+#include "Datas/SoundDatas.h"
 
 
 /*
@@ -21,8 +22,9 @@ class FModComponent : public Component
 public:
 
 	/*void OnCreate() override;*/
-	void OnStart() override;
+	//void OnStart() override;
 	void OnDestroy() override;
+	void AddSound(const std::vector<SoundInfo>& list);
 	void PlaySound(const std::wstring& id);
 
 

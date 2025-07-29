@@ -2,9 +2,15 @@
 #include <string>
 #include "External/FMod/fmod.hpp"
 
-struct SoundInfo
+struct SoundResource
 {
 	std::wstring id;
 	std::wstring path;
 	FMOD_MODE mode;
+};
+
+struct SoundInfo
+{
+	std::wstring name;
+	std::wstring id;
 };
