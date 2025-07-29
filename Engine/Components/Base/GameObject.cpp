@@ -5,6 +5,7 @@
 #include "Systems/PhysicSystem.h"
 #include "Systems/TransformSystem.h"
 #include "Systems/MonoBehaviorSystem.h"
+#include "Systems/UISystem.h"
 
 GameObject::GameObject()
 {
@@ -112,6 +113,10 @@ void GameObject::DispatchComponentToSystem(Component* comp)
 	else if (MonoBehavior* mb = dynamic_cast<MonoBehavior*>(comp))
 	{
 		Singleton<MonoBehaviorSystem>::GetInstance().Register(mb);
+	}
+	else if (UIComponent* ui = dynamic_cast<UIComponent*>(comp))
+	{
+		Singleton<UISystem>::GetInstance().Register(ui);
 	}
 }
 
