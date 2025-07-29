@@ -6,6 +6,12 @@
 #include <string>
 #include <iostream>
 #include "Datas/SoundDatas.h"
+#include <Windows.h>
+
+
+// $(SolutionDir)Engine\External\FMOD\api\core\lib\x64
+// "../../Engine/External/FMOD/api/core/lib/x64/fmod_vc.lib"
+#pragma comment(lib, "../../Engine/External/Fmod/fmod_vc.lib")
 
 /*
 FMOD_RESULT playSound(
@@ -18,6 +24,17 @@ FMOD_RESULT playSound(
 AudioSystem에 모든 bgm을 한번에 등록가능
 등록할때는 struct 객체를 만들어서 그 객체를 등록 ( Datas에서 SoundDatas사용)
 모든 사운드는 muteGroup으로 등록하기때문에 Setvolume 함수를 통해 전체 사운드 크기 조절 가능
+
+
+채널 관리가 필요할때
+동일 사운드 중복 재생을 안할때 -> (isPlaying 확인 후 재생중이면 stop 실행)
+동일 사운드 여러 번 재생 허용할때 -> (unique key , static int 변수를 이용해 특별한 key 설정)
+사운드를 그룹별로 관리할때 -> 벡터안에 벡터, channelGroup 사용 , std::unordered_map<std::wstring, std::vector<FMOD::Channel*>> channels; 사용
+
+모든 사운드 멈출때는 PauseSound() ,  재시작할때는 AgainstSound() 호출
+Scene넘어갈때 chanel 다 리셋용도로 ReSetChannel() 호출
+
+Fmod 초기화시 채널 갯수를 Init에 전달하여 채널 수를 정할 수 있음
 */
 
 
@@ -25,10 +42,20 @@ class AudioSystem : public Singleton<AudioSystem>
 {
 public:
 	
-	void Initialize();
-	void Register(const std::vector<SoundInfo>& sounds);
-	void PlaySound(const std::wstring& id);
+	void Initialize(int num);
+	void Register(const std::vector<SoundResource>& sounds);
+	void PlaySound2(const std::wstring& id);
 	void UnRegister();
+
+	
+
+	void PauseSound();
+
+	void AgainstSound();
+
+	void ReSetChannel();
+
+	//채널 개별 사운드 조절은 함수 추가하면됨
 
 	void Setvolume(float state);
 
@@ -39,10 +66,14 @@ public:
 		}
 	}
 
+	bool FileExists(const std::wstring& path);
+
+
 private:
 	FMOD::System* fmodSystem = nullptr;
 	FMOD::Channel* channel = nullptr;
 	std::unordered_map<std::wstring, FMOD::Sound*> sounds;
+	std::unordered_map<std::wstring, FMOD::Channel*> Channels;
 	FMOD::ChannelGroup* muteGroup;
 
 };
