@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include <iostream>
 #include <float.h>
 #include <math.h>
 
@@ -30,6 +31,7 @@ struct Vector2
 
 	Vector2& operator+=(const Vector2& other);
 	Vector2& operator-=(const Vector2& other);
+	friend std::ostream& operator<<(std::ostream& os, Vector2 vec);
 
 	bool IsZero() const;
 	float Dot(const Vector2& other);
