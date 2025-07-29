@@ -25,6 +25,4 @@ private:
 
 	CircleCollider* circle{};
 	InputSystem* input{};
-
-	GameObject* targetToFindObject{}; // 찾을 오브젝트 : baseobject 유효성 검사 테스트용
 };

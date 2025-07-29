@@ -1,8 +1,6 @@
 ﻿#include "DummyCircleCollider.h"
 #include "Components/Base/GameObject.h"
 #include "Platform/Input.h"
-#include "TestCircleCollider.h"
-
 
 void DummyCircleCollider::OnCreate()
 {
@@ -16,7 +14,6 @@ void DummyCircleCollider::OnCreate()
 
 void DummyCircleCollider::OnStart()
 {
-	targetToFindObject = owner->GetQuery()->FindByName("Test Cirlce");
 }
 
 void DummyCircleCollider::OnFixedUpdate()
@@ -27,7 +24,7 @@ void DummyCircleCollider::OnUpdate()
 {
 	HandleInput();
 	//owner->GetTransform().SetPosition(Input::MouseX, Input::MouseY);
-	//std::cout << "dummy position :::: " << owner->GetTransform().GetPosition().x << ", " << owner->GetTransform().GetPosition().y << std::endl;
+	// std::cout << "dummy position :::: " << owner->GetTransform().GetPosition().x << ", " << owner->GetTransform().GetPosition().y << std::endl;
 }
 
 void DummyCircleCollider::OnDestroy()
@@ -37,11 +34,6 @@ void DummyCircleCollider::OnDestroy()
 void DummyCircleCollider::OnColliderEnter(GameObject* collider)
 {
 	std::cout << ">>> Dummy 충돌시작 >>>" << std::endl;
-
-	if (collider == targetToFindObject)
-	{
-		std::cout << "찾음---------" << std::endl;
-	}
 }
 
 void DummyCircleCollider::OnColliderStay(GameObject* collider)
