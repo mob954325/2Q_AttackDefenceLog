@@ -119,7 +119,13 @@ bool AABBCollider::CheckCollisionWithAABB(ICollider* other, CollisionInfo& outCo
 
 void AABBCollider::OnCreate()
 {
-	// debugBoxComponent = owner->AddComponent<BoxComponent>();
+	debugBoxComponent = owner->AddComponent<BoxComponent>();
+	debugBoxComponent->SetRect({ 0,0,0,0 });
+}
+
+void AABBCollider::OnStart()
+{
+	debugBoxComponent->SetOrderInLayer(10);
 }
 
 void AABBCollider::OnDestroy()
@@ -132,17 +138,17 @@ void AABBCollider::SetSize(float width, float height, float scale)
 	this->height = height;
 	this->size = scale;
 
-	//if (box != nullptr)
-	//{
-	//	Vector2 posVec = owner->transform->GetPosition();
-	//	box->SetRect
-	//	({
-	//		posVec.x - width / 2 * scale,
-	//		posVec.y - height / 2 * scale,
-	//		posVec.x + width / 2 * scale,
-	//		posVec.y + height / 2 * scale
-	//	});
-	//}
+	if (!owner->GetTransform().IsUnityCoords())
+	{
+		debugBoxComponent->SetRect({ -width / 2, -height / 2, width / 2, height / 2 });
+	}
+	else
+	{
+		debugBoxComponent->SetRect({ 0, height, width, 0 });
+	}
+
+	debugBoxComponent->SetWidth(3.0f);
+	debugBoxComponent->SetIsShow(true);
 }
 
 D2D1_RECT_F AABBCollider::GetSize() const

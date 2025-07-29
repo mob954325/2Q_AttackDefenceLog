@@ -5,15 +5,28 @@
 #include "Utils/GameTime.h"
 #include "Datas/SpriteDatas.h"
 #include "Utils/DebugUtility.h"
-#include "Platform/D2DRenderManager.h"
+#include "Resources/ResourceManager.h"
 
 constexpr float PI = 3.141592654f;
 
-void TrailComponent::Update() {
+void TrailComponent::Update() { // 여기서 삭제(정리)처리해주면 됨
+	while (trails.size() > maxTrailCount && isOutFromBox) { // 최대 사이즈대로 빼줌, 나중에 조건추가하면 됨
+		trails.pop_front();
+	}
 
+	if (wasDraw && !isDraw) { // 이후상태 true + 현재상태 false, 즉 꺼질때 한번
+		Clear();
+	}
+	wasDraw = isDraw;
+}
+
+void TrailComponent::Clear()
+{
+	trails.clear();
 }
 
 void TrailComponent::AddStamp(D2D1_POINT_2F pos) {
+	if (!isDraw) return;
 
 	if (trails.empty()) { // 첫 요소는 바로 처리해버림
 		trails.push_back({ pos, 0.0f });
@@ -47,7 +60,7 @@ void TrailComponent::Draw(D2DRenderManager* manager) {
 	if (!stampBitmap) return;
 
 	for (auto& stamp : trails) {
-		D2D1_SIZE_F bmpSize = stampBitmap->GetSize();
+		D2D1_SIZE_F bmpSize = stampBitmap->GetBitmap()->GetSize();
 		D2D1_RECT_F destRect = { // 대충 이미지 정 가운데 기준
 		 stamp.position.x - bmpSize.width * 0.5f,
 		 stamp.position.y - bmpSize.height * 0.5f,
@@ -65,19 +78,25 @@ void TrailComponent::Draw(D2DRenderManager* manager) {
 			0.0f, 0.0f,
 			bmpSize.width, bmpSize.height
 		};
-		manager->DrawBitmap(stampBitmap, destRect, srcRect);
-	}	
+		manager->DrawBitmap(stampBitmap->GetBitmap(), destRect, srcRect);
+	}
 }
 
 void TrailComponent::Render(D2DRenderManager* manager)
 {
+	Update();
 	auto tf = owner->GetTransform().GetPosition();
 	AddStamp({ tf.x, tf.y });
 	Draw(manager);
-	Update();
+
 }
 
 void TrailComponent::SetBitmap(std::wstring path)
 {
-	renderManager->CreateBitmapFromFile(path.c_str(), &stampBitmap);
+	stampBitmap = resourceManager->CreateBitmapResource(path);
+}
+
+void TrailComponent::OnDestroy()
+{
+	stampBitmap.reset(); // 수정했습니다 20:30 
 }

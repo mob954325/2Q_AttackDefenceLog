@@ -9,11 +9,15 @@
 #include "MonoBehavior.h"
 #include <queue>
 
+#include "Systems/CollisionSystem.h"
+
 /// <summary>
 /// 모든 게임 오브젝트가 상속받는 클래스로 Component만 담고 Component관련 함수만 포함되어있음
 /// </summary>
 class GameObject : public BaseObject
 {
+	friend CollisionSystem;
+
 public:
 	GameObject();
 	virtual ~GameObject();

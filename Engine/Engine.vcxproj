@@ -333,6 +333,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Components\UI\Button.h" />
     <ClInclude Include="Components\Collision\CircleCollider.h" />
     <ClInclude Include="Systems\AudioSystem.h" />
     <ClInclude Include="Components\Fmod\FModComponent.h" />
@@ -381,6 +382,8 @@
     <ClInclude Include="Datas\EngineData.h" />
     <ClInclude Include="Resources\Loaders\SpriteSheetLoader.h" />
     <ClInclude Include="Systems\TransformSystem.h" />
+    <ClInclude Include="Components\UI\UIComponent.h" />
+    <ClInclude Include="Systems\UISystem.h" />
     <ClInclude Include="Utils\TypeCastUtil.h" />
     <ClInclude Include="Utils\StringConvert.h" />
     <ClInclude Include="Systems\RenderSystem.h" />
@@ -404,6 +407,7 @@
     <ClInclude Include="Math\Vector2.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Components\UI\Button.cpp" />
     <ClCompile Include="Components\Collision\CircleCollider.cpp" />
     <ClCompile Include="Systems\AudioSystem.cpp" />
     <ClCompile Include="Components\Fmod\FModComponent.cpp" />
@@ -435,6 +439,8 @@
     <ClCompile Include="Components\Rendering\TextRenderer.cpp" />
     <ClCompile Include="Resources\Loaders\SpriteSheetLoader.cpp" />
     <ClCompile Include="Systems\TransformSystem.cpp" />
+    <ClCompile Include="Components\UI\UIComponent.cpp" />
+    <ClCompile Include="Systems\UISystem.cpp" />
     <ClCompile Include="Utils\TypeCastUtil.cpp" />
     <ClCompile Include="Utils\StringConvert.cpp" />
     <ClCompile Include="Systems\ScriptSystem.cpp" />

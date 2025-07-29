@@ -1,10 +1,10 @@
 ﻿#pragma once
-#include "Components/Base/Component.h"
+#include "Components/Base/ActiveComponent.h"
 
 class D2DRenderManager;
 class ResourceManager;
 
-class RenderComponent : public Component
+class RenderComponent : public ActiveComponent
 {
 public:
 	RenderComponent() = default;
