@@ -3,14 +3,15 @@
 #include "TrailComponent.h"
 
 using namespace HSK;
+
 void HSKScene::OnEnterImpl()
 {
 	obj = new GameObject();
 	obj->SetName("trailTestObj");
-	obj->AddComponent<TrailComponent>();
+	auto t = obj->AddComponent<TrailComponent>();
+	t->SetBitmap(L"../HSK/Test/test3.png");
+
 	AddGameObject(obj);
-
-
 }
 
 void HSKScene::OnExitImpl()
@@ -25,7 +26,8 @@ void HSKScene::OnExitImpl()
 void HSKScene::UpdateImpl()
 {
 
-	obj->GetTransform().SetPosition(1.0f, 1.0f);
+	
+	obj->GetTransform().SetPosition(Input::MouseX, Input::MouseY);
 
 
 

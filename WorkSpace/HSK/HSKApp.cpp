@@ -7,14 +7,16 @@ using namespace HSK;
 
 void HSKApp::Initialize()
 {
+	__super::Initialize();
 	testScene = new HSKScene();
 	Singleton<SceneManager>::GetInstance().AddScene(testScene);
 	Singleton<SceneManager>::GetInstance().Init();
-
-	__super::Initialize();
 }
 
 void HSKApp::Uninitialize()
 {
 	__super::Uninitialize();
+}
+void HSKApp::Update() {
+	__super::Update();
 }
