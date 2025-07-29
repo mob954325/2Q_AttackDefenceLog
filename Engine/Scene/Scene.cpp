@@ -99,7 +99,7 @@ void Scene::CleanUpDestroyedObjects()
 void Scene::AddGameObject(GameObject* gameObject)
 {
 	objectsToAdd.push_back(gameObject);
-	gameObject->SetQueryInterface(this);
+	gameObject->SetQuery(this);
 
 	// Singleton<TransformSystem>::GetInstance().Register(&gameObject->GetTransform()); // NOTE: 0709추가 TransformSystem에 transform 추가
 }
@@ -107,7 +107,7 @@ void Scene::AddGameObject(GameObject* gameObject)
 void Scene::AddGameObject(GameObject* gameObject, const std::string& name)
 {
 	AddGameObject(gameObject);
-	gameObject->SetQueryInterface(this);
+	gameObject->SetQuery(this);
 
 	// Singleton<TransformSystem>::GetInstance().Register(&gameObject->GetTransform());
 }

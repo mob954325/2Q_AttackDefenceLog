@@ -25,4 +25,6 @@ private:
 
 	CircleCollider* circle{};
 	InputSystem* input{};
+
+	GameObject* target{};
 };

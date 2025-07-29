@@ -10,7 +10,7 @@ void BaseObject::SetInstanceID()
     }
 }
 
-uint64_t BaseObject::GetInstanceID()
+uint64_t BaseObject::GetInstanceID() const
 {
     return instanceID;
 }

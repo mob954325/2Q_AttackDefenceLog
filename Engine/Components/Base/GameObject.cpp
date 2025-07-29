@@ -163,9 +163,14 @@ int GameObject::GetRenderLayerIndex() const
 	return (int)renderLayer; 
 }
 
-void GameObject::SetQueryInterface(IGameObjectQuery* q) 
+void GameObject::SetQuery(IGameObjectQuery* q) 
 { 
 	query = q; 
+}
+
+IGameObjectQuery* GameObject::GetQuery()
+{
+	return query;
 }
 
 Transform& GameObject::GetTransform()
