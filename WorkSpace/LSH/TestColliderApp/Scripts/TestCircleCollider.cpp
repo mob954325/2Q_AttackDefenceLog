@@ -34,15 +34,15 @@ void TestCircleCollider::OnDestroy()
 
 void TestCircleCollider::OnColliderEnter(GameObject* collider)
 {
-	std::cout << "--- Test Circle 충돌시작 ---"<< std::endl;
+	// std::cout << "--- Test Circle 충돌시작 ---"<< std::endl;
 }
 
 void TestCircleCollider::OnColliderStay(GameObject* collider)
 {
-	std::cout << "--- Test Circle 충돌 중 ---"<< std::endl;
+	// std::cout << "--- Test Circle 충돌 중 ---"<< std::endl;
 }
 
 void TestCircleCollider::OnColliderExit(GameObject* collider)
 {
-	std::cout << "--- Test Circle 충돌 종료---"<< std::endl;
+	// std::cout << "--- Test Circle 충돌 종료---"<< std::endl;
 }

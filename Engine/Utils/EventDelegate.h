@@ -1,5 +1,4 @@
-﻿#pragma once
-// <example>
+﻿// <example>
 // 등록 방식
 // 1. Add() 사용
 // ListenerID id1 = player->OnHpChange.Add(std::bind(&HpComponent::ChangeValue, this, std::placeholders::_1));
@@ -25,6 +24,8 @@
 // NOTE2: 현재 코드는 ListnerID의 고유 값을 저장안하면 제거할 수 없습니다. 반드시 해당 값을 저장하고 사용하세요
 //		  ListenerID는 고유 값이기 때문에 중복 저장을하면 덮어씌워진 값은 찾을 수 없습니다.
 
+#pragma once
+#include <functional>
 
 using ListenerID = size_t;
 
