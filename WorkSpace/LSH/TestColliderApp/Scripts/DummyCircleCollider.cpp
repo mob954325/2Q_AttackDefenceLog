@@ -2,6 +2,8 @@
 #include "Components/Base/GameObject.h"
 #include "Platform/Input.h"
 
+#include "TestCircleCollider.h"
+
 void DummyCircleCollider::OnCreate()
 {
 	owner->GetTransform().SetUnityCoords(true);
@@ -14,6 +16,7 @@ void DummyCircleCollider::OnCreate()
 
 void DummyCircleCollider::OnStart()
 {
+	target = owner->GetQuery()->FindByName("Test Cirlce");
 }
 
 void DummyCircleCollider::OnFixedUpdate()
@@ -33,17 +36,25 @@ void DummyCircleCollider::OnDestroy()
 
 void DummyCircleCollider::OnColliderEnter(GameObject* collider)
 {
-	std::cout << ">>> Dummy 충돌시작 >>>" << std::endl;
+	// std::cout << ">>> Dummy 충돌시작 >>>" << std::endl;
+	if (collider == target)
+	{
+		std::cout << "찾음" << std::endl;
+	}
+	else
+	{
+		std::cout << "target 오브젝트가 아님" << std::endl;
+	}
 }
 
 void DummyCircleCollider::OnColliderStay(GameObject* collider)
 {
-	std::cout << ">>> Dummy 충돌 중 >>>" << std::endl;
+	// std::cout << ">>> Dummy 충돌 중 >>>" << std::endl;
 }
 
 void DummyCircleCollider::OnColliderExit(GameObject* collider)
 {
-	std::cout << ">>> Dummy 충돌 종료 >>>" << std::endl;
+	// std::cout << ">>> Dummy 충돌 종료 >>>" << std::endl;
 }
 
 void DummyCircleCollider::HandleInput()
