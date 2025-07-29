@@ -18,6 +18,8 @@ void Button::OnStart()
 
 	pressed->CreateBitmapResource(L"../../Resource/UI/Test_Button/button_square_pressed.png");
 	pressed->SetActive(false);
+
+	SetOnClickEvent(NULL); // 0730 : Test code
 }
 
 void Button::Update()
@@ -30,10 +32,11 @@ void Button::Update()
 		normal->SetActive(false);
 		pressed->SetActive(true);
 
+
 		if (Input::leftButtonDown || Input::middleButtonDown || Input::rightButtonDown)
 		{
 			std::cout << "==== 마우스 클릭 =====" << std::endl;
-			// onClickEvent.Invoke(); // NOTE: 버튼 이벤트 등록 및 실행할 수 있게되면 이 주석 제거하기
+			onClickEvent.Invoke(); // NOTE: 버튼 이벤트 등록 및 실행할 수 있게되면 이 주석 제거하기
 		}
 	}
 	else
@@ -82,7 +85,7 @@ void Button::SetRect(float width, float height)
 
 void Button::SetOnClickEvent(std::function<void()> cb)
 {
-	// int id = onClickEvent.Add([]() {std::cout << "버튼 이벤트 확인 " << std::endl; }); 
+	int id = onClickEvent.Add([]() {std::cout << "버튼 이벤트 확인 " << std::endl; }); 
 }
 
 bool Button::IsMouseOver(const Vector2& mousePos) const

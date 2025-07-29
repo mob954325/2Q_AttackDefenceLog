@@ -33,6 +33,6 @@ private:
 
 	D2D1_RECT_F screenRect{};
 
-	// EventDelegate<> onClickEvent;
+	EventDelegate<> onClickEvent;
 };
 
