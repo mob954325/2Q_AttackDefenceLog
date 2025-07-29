@@ -5,7 +5,7 @@
 #include "Utils/GameTime.h"
 #include "Datas/SpriteDatas.h"
 #include "Utils/DebugUtility.h"
-#include "Platform/D2DRenderManager.h"
+#include "Resources/ResourceManager.h"
 
 constexpr float PI = 3.141592654f;
 
@@ -46,8 +46,8 @@ void TrailComponent::AddStamp(D2D1_POINT_2F pos) {
 void TrailComponent::Draw(D2DRenderManager* manager) {
 	if (!stampBitmap) return;
 
-	for (auto& stamp : trails) {
-		D2D1_SIZE_F bmpSize = stampBitmap->GetSize();
+	for (auto& stamp : trails) { 
+		D2D1_SIZE_F bmpSize = stampBitmap->GetBitmap()->GetSize();
 		D2D1_RECT_F destRect = { // 대충 이미지 정 가운데 기준
 		 stamp.position.x - bmpSize.width * 0.5f,
 		 stamp.position.y - bmpSize.height * 0.5f,
@@ -65,7 +65,7 @@ void TrailComponent::Draw(D2DRenderManager* manager) {
 			0.0f, 0.0f,
 			bmpSize.width, bmpSize.height
 		};
-		manager->DrawBitmap(stampBitmap, destRect, srcRect);
+		manager->DrawBitmap(stampBitmap->GetBitmap(), destRect, srcRect);
 	}	
 }
 
@@ -79,5 +79,10 @@ void TrailComponent::Render(D2DRenderManager* manager)
 
 void TrailComponent::SetBitmap(std::wstring path)
 {
-	renderManager->CreateBitmapFromFile(path.c_str(), &stampBitmap);
+	stampBitmap = resourceManager->CreateBitmapResource(path);
+}
+
+void TrailComponent::OnDestroy()
+{
+	stampBitmap.reset(); // 수정했습니다 20:30 
 }

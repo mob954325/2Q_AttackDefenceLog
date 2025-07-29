@@ -2,6 +2,7 @@
 
 #include "Components/Rendering/RenderComponent.h"
 #include "Platform/D2DRenderManager.h"
+#include "Resources/BitmapResource.h"
 #include <deque>
 
 /* 07.29. 한승규
@@ -26,6 +27,7 @@ public:
 	void Draw(D2DRenderManager* manager);
 	void Render(D2DRenderManager* manager) override; // 이거 기반으로 그려짐
 	void SetBitmap(std::wstring path);
+	void OnDestroy() override;
 
 	inline float GetAngle(D2D1_POINT_2F prev, D2D1_POINT_2F current) { // 이전좌표와 현재좌표를 비교해서, 각도(radian) 반환해줌
 		return atan2f(current.y - prev.y, current.x - prev.x); // radian
@@ -35,5 +37,6 @@ public:
 	float lifeTime = 0.3f;
 
 	std::deque<TrailStamp> trails;
-	ID2D1Bitmap1* stampBitmap = nullptr;
+	// ID2D1Bitmap1* stampBitmap = nullptr;
+	std::shared_ptr<BitmapResource> stampBitmap = nullptr;
 };

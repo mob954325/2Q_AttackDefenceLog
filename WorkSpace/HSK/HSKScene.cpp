@@ -9,7 +9,7 @@ void HSKScene::OnEnterImpl()
 	obj = new GameObject();
 	obj->SetName("trailTestObj");
 	auto t = obj->AddComponent<TrailComponent>();
-	t->SetBitmap(L"../HSK/Test/test3.png");
+	t->SetBitmap(L"../HSK/Test/test5.png");
 
 	AddGameObject(obj);
 }
