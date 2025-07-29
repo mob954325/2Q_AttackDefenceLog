@@ -25,11 +25,15 @@ void HSKScene::OnExitImpl()
 
 void HSKScene::UpdateImpl()
 {
+	//Input::leftButtonDown ;
+	//Input::rightButtonDown;
+	//Input::middleButtonDown;
+	auto t = obj->GetComponent<TrailComponent>();
 
-	
+	t->isDraw = Input::leftButtonDown;
+
+
 	obj->GetTransform().SetPosition(Input::MouseX, Input::MouseY);
-
-
 
 
 }
