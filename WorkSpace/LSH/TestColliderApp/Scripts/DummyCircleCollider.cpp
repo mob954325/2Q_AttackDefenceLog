@@ -37,7 +37,7 @@ void DummyCircleCollider::OnDestroy()
 void DummyCircleCollider::OnColliderEnter(GameObject* collider)
 {
 	// std::cout << ">>> Dummy 충돌시작 >>>" << std::endl;
-	if (collider == target)
+	if (*collider == *target)
 	{
 		std::cout << "찾음" << std::endl;
 	}
