@@ -10,7 +10,7 @@
 constexpr float PI = 3.141592654f;
 
 void TrailComponent::Update() { // 여기서 삭제(정리)처리해주면 됨
-	while (trails.size() > maxTrailCount) { // 최대 사이즈대로 빼줌, 나중에 조건추가하면 됨
+	while (trails.size() > maxTrailCount && isOutFromBox) { // 최대 사이즈대로 빼줌, 나중에 조건추가하면 됨
 		trails.pop_front();
 	}
 
@@ -84,10 +84,11 @@ void TrailComponent::Draw(D2DRenderManager* manager) {
 
 void TrailComponent::Render(D2DRenderManager* manager)
 {
+	Update();
 	auto tf = owner->GetTransform().GetPosition();
 	AddStamp({ tf.x, tf.y });
 	Draw(manager);
-	Update();
+
 }
 
 void TrailComponent::SetBitmap(std::wstring path)

@@ -11,6 +11,7 @@
 * 이미지를 박아둠
 * 즉, 스탬프를 짧은 간격으로 여러번 찍어서 선을 만드는 컴포넌트임
 * 이미지 리소스들을 여러개 만들어야해서 가벼운 구조체로 게임오브젝트를 대체함
+* 해당 큐로 충돌판정을 해도 되지만, 너무 숫자가 많아서 비추
 */
 
 struct TrailStamp {
@@ -36,6 +37,8 @@ public:
 
 	bool isDraw = false;
 	bool wasDraw = false;
+	bool isOutFromBox = true; // 영역밖으로 나가면 true, 뒤에 크기를 자름
+
 	float minDistance = 5.0f; // 최소거리, 즉 스탬프들간의 간격임
 	float lifeTime = 0.3f; // 이거일단 사용안함
 	int maxTrailCount = 100;
