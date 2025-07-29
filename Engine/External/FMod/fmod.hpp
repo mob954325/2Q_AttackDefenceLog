@@ -11,8 +11,8 @@
 #ifndef _FMOD_HPP
 #define _FMOD_HPP
 
-#include "fmod_common.h"
-#include "fmod.h"
+#include "External/FMod/fmod_common.h"
+#include "External/FMod/fmod.h"
 
 /*
     FMOD Namespace

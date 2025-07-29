@@ -218,6 +218,23 @@
     </ClInclude>
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Components\Collision\CircleCollider.h">
+      <Filter>Components\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Rendering\CircleComponent.h">
+      <Filter>Components\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="External\FMod\fmod.h" />
+    <ClInclude Include="External\FMod\fmod.hpp" />
+    <ClInclude Include="External\FMod\fmod_codec.h" />
+    <ClInclude Include="External\FMod\fmod_common.h" />
+    <ClInclude Include="External\FMod\fmod_dsp.h" />
+    <ClInclude Include="External\FMod\fmod_dsp_effects.h" />
+    <ClInclude Include="External\FMod\fmod_errors.h" />
+    <ClInclude Include="External\FMod\fmod_output.h" />
+    <ClInclude Include="Systems\AudioSystem.h" />
+    <ClInclude Include="Components\Fmod\FModComponent.h" />
+    <ClInclude Include="Datas\SoundDatas.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\Application.cpp">
@@ -339,8 +356,23 @@
     <ClCompile Include="Components\Rendering\RenderComponent.cpp">
       <Filter>Components\Rendering</Filter>
     </ClCompile>
+    <ClCompile Include="Components\Collision\CircleCollider.cpp">
+      <Filter>Components\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\Rendering\CircleComponent.cpp">
+      <Filter>Components\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\AudioSystem.cpp" />
+    <ClCompile Include="Components\Fmod\FModComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
+    <None Include="External\FMod\fmod.cs" />
+    <None Include="External\FMod\fmod_dsp.cs" />
+    <None Include="External\FMod\fmod_errors.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="External\FMod\fmod_vc.lib" />
+    <Library Include="External\FMod\fmodL_vc.lib" />
   </ItemGroup>
 </Project>

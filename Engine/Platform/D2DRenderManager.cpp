@@ -99,6 +99,11 @@ void D2DRenderManager::DrawRectangle(D2D1_RECT_F& rect, ID2D1Brush* brush, FLOAT
 	m_d2dDeviceContext->DrawRectangle(rect, brush, width, strokeStyle);
 }
 
+void D2DRenderManager::DrawCircle(ID2D1Brush* brush, FLOAT radius, FLOAT width, ID2D1StrokeStyle* strokeStyle)
+{
+	m_d2dDeviceContext->DrawEllipse({{0, 0}, radius, radius}, brush, width, strokeStyle); // NOTE: 만약 타원이 필요하면 raidus를 쪼개면 됨., 위치가 0인 이유는 SetTransform으로 위치를 옮기기 때문
+}
+
 void D2DRenderManager::PrintText(const wchar_t* str, float left, float top, bool isWorld)
 {
 	if (!m_d2dDeviceContext || !m_pBrush) return;

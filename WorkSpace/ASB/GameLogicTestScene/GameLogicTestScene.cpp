@@ -1,5 +1,5 @@
 #include "GameLogicTestScene.h"
-
+#include "LiveObject/LiveObject.h"
 
 void GameLogicTestScene::OnEnterImpl()
 {
