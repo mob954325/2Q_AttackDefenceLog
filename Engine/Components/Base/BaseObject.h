@@ -19,7 +19,7 @@ public:
 	virtual ~BaseObject() {}
 
 	void SetInstanceID();
-	uint64_t GetInstanceID();
+	uint64_t GetInstanceID() const;
 	std::string GetName();
 	void SetName(std::string str);
 
@@ -31,12 +31,12 @@ public:
 		return instanceID == INVALID_ID ? false : true;
 	}
 
-	bool operator !=(BaseObject rhs) const
+	bool operator !=(const BaseObject& rhs) const
 	{
-		return instanceID != rhs.GetInstanceID();
+		return !(*this == rhs);
 	}
 
-	bool operator ==(BaseObject rhs) const
+	bool operator ==(const BaseObject& rhs) const
 	{
 		return instanceID == rhs.GetInstanceID();
 	}
