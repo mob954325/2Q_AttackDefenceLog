@@ -73,10 +73,10 @@ void Input::ProcessMouseMessage(UINT message, WPARAM wParam, LPARAM lParam)
         break;
     }
 
-    std::cout << "Mouse : " << Input::MouseX << ", " << Input::MouseY << std::endl;
-    std::cout << "Mouse Delta : " << Input::MouseDeltaX << ", " << Input::MouseDeltaY << std::endl;
-    std::cout << "wheelDelta Delta : " << Input::wheelDelta << std::endl;
-    std::cout << "Left Button: " << leftButtonDown << std::boolalpha << std::endl;
-    std::cout << "Right Button: " << rightButtonDown << std::boolalpha << std::endl;
-    std::cout << "Middle Button: " << middleButtonDown << std::boolalpha << std::endl;
+    // std::cout << "Mouse : " << Input::MouseX << ", " << Input::MouseY << std::endl;
+    // std::cout << "Mouse Delta : " << Input::MouseDeltaX << ", " << Input::MouseDeltaY << std::endl;
+    // std::cout << "wheelDelta Delta : " << Input::wheelDelta << std::endl;
+    // std::cout << "Left Button: " << leftButtonDown << std::boolalpha << std::endl;
+    // std::cout << "Right Button: " << rightButtonDown << std::boolalpha << std::endl;
+    // std::cout << "Middle Button: " << middleButtonDown << std::boolalpha << std::endl;
 }
