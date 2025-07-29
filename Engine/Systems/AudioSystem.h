@@ -24,7 +24,7 @@ AudioSystem에 모든 bgm을 한번에 등록가능
 class AudioSystem : public Singleton<AudioSystem>
 {
 public:
-
+	
 	void Initialize();
 	void Register(const std::vector<SoundInfo>& sounds);
 	void PlaySound(const std::wstring& id);

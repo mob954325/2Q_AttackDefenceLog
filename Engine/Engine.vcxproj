@@ -334,7 +334,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Components\Collision\CircleCollider.h" />
-    <ClInclude Include="Components\Fmod\AudioSystem.h" />
+    <ClInclude Include="Systems\AudioSystem.h" />
     <ClInclude Include="Components\Fmod\FModComponent.h" />
     <ClInclude Include="Components\Rendering\CircleComponent.h" />
     <ClInclude Include="Components\Base\ActiveComponent.h" />
@@ -405,7 +405,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Components\Collision\CircleCollider.cpp" />
-    <ClCompile Include="Components\Fmod\AudioSystem.cpp" />
+    <ClCompile Include="Systems\AudioSystem.cpp" />
     <ClCompile Include="Components\Fmod\FModComponent.cpp" />
     <ClCompile Include="Components\Rendering\CircleComponent.cpp" />
     <ClCompile Include="Components\Base\BaseObject.cpp" />
