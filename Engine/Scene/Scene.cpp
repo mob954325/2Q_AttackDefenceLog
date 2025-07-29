@@ -7,6 +7,7 @@
 #include "Systems/PhysicSystem.h"
 #include "Systems/MonoBehaviorSystem.h"
 #include "Components/Camera/CameraManager.h"
+#include "Systems/UISystem.h"
 
 #include "Utils/GameTime.h"
 
@@ -47,6 +48,7 @@ void Scene::Update()
 void Scene::LateUpdate()
 {
 	Singleton<CameraManager>::GetInstance().Update();	// 카메라 순서 업데이트
+	Singleton<UISystem>::GetInstance().Update();		// UI 업데이트
 }
 
 void Scene::OnExit()
