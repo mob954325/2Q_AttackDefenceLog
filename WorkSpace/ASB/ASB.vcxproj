@@ -353,7 +353,7 @@
   <ItemGroup>
     <ClCompile Include="CsvData\DataStorage\CsvDataStorage.cpp" />
     <ClCompile Include="CsvData\DataClass\AllNodePattenClass.cpp" />
-    <ClCompile Include="CsvData\BaseData.cpp" />
+    <ClCompile Include="CsvData\DataClass\BaseData.cpp" />
     <ClCompile Include="CsvData\CsvDataManager.cpp" />
     <ClCompile Include="CsvData\DataClass\EnemyAtkPattenData.cpp" />
     <ClCompile Include="CsvData\DataClass\EnemyData.cpp" />
@@ -370,7 +370,7 @@
   <ItemGroup>
     <ClInclude Include="CsvData\DataStorage\CsvDataStorage.h" />
     <ClInclude Include="CsvData\DataClass\AllNodePattenClass.h" />
-    <ClInclude Include="CsvData\BaseData.h" />
+    <ClInclude Include="CsvData\DataClass\BaseData.h" />
     <ClInclude Include="CsvData\CsvDataManager.h" />
     <ClInclude Include="CsvData\DataClass\EnemyAtkPattenData.h" />
     <ClInclude Include="CsvData\DataClass\EnemyData.h" />
