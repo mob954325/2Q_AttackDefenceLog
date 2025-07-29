@@ -351,6 +351,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DataStorage\DataClass\AllNodePattenClass.cpp" />
+    <ClCompile Include="DataStorage\BaseData.cpp" />
+    <ClCompile Include="DataStorage\CsvDataStorage.cpp" />
+    <ClCompile Include="DataStorage\DataClass\EnemyAtkPattenData.cpp" />
     <ClCompile Include="LiveObject\Enemy.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="GameLogicTestScene\GameLogicTestScene.cpp" />
@@ -360,6 +364,10 @@
     <ClCompile Include="LiveObject\Player.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DataStorage\DataClass\AllNodePattenClass.h" />
+    <ClInclude Include="DataStorage\BaseData.h" />
+    <ClInclude Include="DataStorage\CsvDataStorage.h" />
+    <ClInclude Include="DataStorage\DataClass\EnemyAtkPattenData.h" />
     <ClInclude Include="LiveObject\Enemy.h" />
     <ClInclude Include="GameLogicTestScene\GameLogicTestScene.h" />
     <ClInclude Include="LiveObject\LiveObject.h" />
