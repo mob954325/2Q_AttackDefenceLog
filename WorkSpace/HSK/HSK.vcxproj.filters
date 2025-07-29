@@ -8,6 +8,12 @@
     <ClCompile Include="HSKApp.cpp">
       <Filter>App</Filter>
     </ClCompile>
+    <ClCompile Include="TrailComponent.cpp">
+      <Filter>Comp</Filter>
+    </ClCompile>
+    <ClCompile Include="MouseObj.cpp">
+      <Filter>Obj</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HSKScene.h">
@@ -15,6 +21,12 @@
     </ClInclude>
     <ClInclude Include="HSKApp.h">
       <Filter>App</Filter>
+    </ClInclude>
+    <ClInclude Include="TrailComponent.h">
+      <Filter>Comp</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseObj.h">
+      <Filter>Obj</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -26,6 +38,9 @@
     </Filter>
     <Filter Include="Obj">
       <UniqueIdentifier>{3894e249-9d54-48e6-aa1d-563a886403f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Comp">
+      <UniqueIdentifier>{5cc687f8-c2ed-4dae-8bf2-e4bee152f66a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

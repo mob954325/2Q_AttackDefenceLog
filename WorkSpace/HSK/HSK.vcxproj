@@ -342,10 +342,14 @@
     <ClCompile Include="game.cpp" />
     <ClCompile Include="HSKApp.cpp" />
     <ClCompile Include="HSKScene.cpp" />
+    <ClCompile Include="MouseObj.cpp" />
+    <ClCompile Include="TrailComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HSKApp.h" />
     <ClInclude Include="HSKScene.h" />
+    <ClInclude Include="MouseObj.h" />
+    <ClInclude Include="TrailComponent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

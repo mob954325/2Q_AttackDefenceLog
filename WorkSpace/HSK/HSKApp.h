@@ -9,6 +9,7 @@ namespace HSK
 	public:
 		void Initialize() override;
 		void Uninitialize() override;
+	
 
 	private:
 		Scene* testScene{};
