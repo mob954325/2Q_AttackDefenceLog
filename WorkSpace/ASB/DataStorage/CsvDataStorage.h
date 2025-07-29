@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <windows.h>
 #include <iostream>
 #include <fstream>
@@ -7,14 +7,14 @@
 #include <unordered_map>
 #include <string>
 
-#include <fcntl.h> // ÄÜ¼ÖÃ¢¿¡ wstringÀ» Ãâ·ÂÇÏ±â À§ÇÑ Çì´õ
+#include <fcntl.h> // ì½˜ì†”ì°½ì— wstringì„ ì¶œë ¥í•˜ê¸° ìœ„í•œ í—¤ë”
 #include <io.h>
 
-/*25.07.29 - ¾È¼ººó
-	¿ªÇÒ : CsvDataStorage Å¬·¡½º´Â CSV ÆÄÀÏÀ» ÀĞ¾î¿Í¼­ µ¥ÀÌÅÍ¸¦ ÀúÀåÇÏ´Â Å¬·¡½º
-		  CSV ÆÄÀÏÀÇ Ã¹ ¹øÂ° ¼¿À» Å°·Î »ç¿ëÇÏ°í, µ¥ÀÌÅÍ Å¬·¡½ºÀÇ Æ÷ÀÎÅÍ¸¦ °ªÀ¸·Î ¸Ê¿¡ ÀúÀåÇÔ
+/*25.07.29 - ì•ˆì„±ë¹ˆ
+	ì—­í•  : CsvDataStorage í´ë˜ìŠ¤ëŠ” CSV íŒŒì¼ì„ ì½ì–´ì™€ì„œ ë°ì´í„°ë¥¼ ì €ì¥í•˜ëŠ” í´ë˜ìŠ¤
+		  CSV íŒŒì¼ì˜ ì²« ë²ˆì§¸ ì…€ì„ í‚¤ë¡œ ì‚¬ìš©í•˜ê³ , ë°ì´í„° í´ë˜ìŠ¤ì˜ í¬ì¸í„°ë¥¼ ê°’ìœ¼ë¡œ ë§µì— ì €ì¥í•¨
 
-	ÁÖÀÇ : baseData¿¡ ÀÖ´Â º¤ÅÍ¸¦ ÀÚ·á±¸Á¶·Î ÀúÀåÇÏ´Â ÇÔ¼ö(SetData)¸¦ È£ÃâÇÔÀ¸·Î ÇØ´ç Å¬·¡½º¸¦ »ç¿ë½Ã baseData¸¦ »ó¼Ó¹Ş´Â°ÍÀÌ ÁÁÀ½
+	ì£¼ì˜ : baseDataì— ìˆëŠ” ë²¡í„°ë¥¼ ìë£Œêµ¬ì¡°ë¡œ ì €ì¥í•˜ëŠ” í•¨ìˆ˜(SetData)ë¥¼ í˜¸ì¶œí•¨ìœ¼ë¡œ í•´ë‹¹ í´ë˜ìŠ¤ë¥¼ ì‚¬ìš©ì‹œ baseDataë¥¼ ìƒì†ë°›ëŠ”ê²ƒì´ ì¢‹ìŒ
 
 */
 
@@ -26,70 +26,71 @@ public:
 	CsvDataStorage() {};
 	~CsvDataStorage() {};
 
-	std::unordered_map<std::wstring, T*> DataMap; // Å°¿Í °ªÀÇ ½ÖÀ» ÀúÀåÇÒ ¸Ê, Å°´Â ÁÖ·Î ID
+	std::unordered_map<std::wstring, T*> DataMap; // í‚¤ì™€ ê°’ì˜ ìŒì„ ì €ì¥í•  ë§µ, í‚¤ëŠ” ì£¼ë¡œ ID
 
 
 
-	// ¸Å°³º¯¼ö  : CSV ÆÄÀÏÀÇ °æ·Î, ÆÄÀÏ ³»ºÎ ½ºÅµÇÒ ¶óÀÎÀÇ ¼ö
-	// CSV ÆÄÀÏÀ» ÀĞ¾î¿Í¼­ std::unordered_map¿¡ ÀúÀåÇÏ´Â ÇÔ¼ö
-	// mapÀÇ Å° : Ã¹ ¹øÂ° ¼¿ÀÇ °ª(ID), 
-	//		 °ª : ÇØ´ç ÇàÀÇ µ¥ÀÌÅÍ¸¦ ÀúÀåÇÏ´Â Å¬·¡½ºÀÇ Æ÷ÀÎÅÍ
-	void SetCSV(const std::string& filePath, int skipLine) {
+	// ë§¤ê°œë³€ìˆ˜  : CSV íŒŒì¼ì˜ ê²½ë¡œ, íŒŒì¼ ë‚´ë¶€ ìŠ¤í‚µí•  ë¼ì¸ì˜ ìˆ˜
+	// CSV íŒŒì¼ì„ ì½ì–´ì™€ì„œ std::unordered_mapì— ì €ì¥í•˜ëŠ” í•¨ìˆ˜
+	// mapì˜ í‚¤ : ì²« ë²ˆì§¸ ì…€ì˜ ê°’(ID), 
+	//		 ê°’ : í•´ë‹¹ í–‰ì˜ ë°ì´í„°ë¥¼ ì €ì¥í•˜ëŠ” í´ë˜ìŠ¤ì˜ í¬ì¸í„°
+	void SetCSV(const std::string& filePath, int skipLine);
 
-		std::wifstream file(filePath); // ÆÄÀÏ ½ºÆ®¸² »ı¼º
-
-		
-		if (!file.is_open()) {  // ÆÄÀÏ ¿­±â ½ÇÆĞ ½Ã ¿¡·¯ ¸Ş½ÃÁö Ãâ·Â
-			//std::cout << "ÆÄÀÏÀ» ¿­ ¼ö ¾ø½À´Ï´Ù: " << file << std::endl;
-		}
-
-
-		std::wstring line;	 // ÇöÀç ÁÙÀ» ÀúÀåÇÒ º¯¼ö
-		int countLine = 1;	 // ½ÃÀÛ ¶óÀÎ ¹øÈ£ (1ºÎÅÍ ½ÃÀÛ)
-		
-
-		while (std::getline(file, line)) {
-			T* tmpData = new T(); // µ¥ÀÌÅÍ Å¬·¡½ºÀÇ °´Ã¼ »ı¼º
-			if (countLine++ <= skipLine) continue; // Çì´õ °Ç³Ê¶Ù±â
-
-			std::wstringstream ss(line);   // ¹®ÀÚ¿­ ½ºÆ®¸² »ı¼º
-			std::wstring cell;			  // °¢ ¼¿À» ÀúÀåÇÒ º¯¼ö
-			std::vector<std::wstring> row; // ÇöÀç ÇàÀÇ ¼¿µéÀ» ÀúÀåÇÒ º¤ÅÍ
-			std::wstring key;	          // Å°·Î »ç¿ëÇÒ Ã¹ ¹øÂ° ¼¿ÀÇ °ª
-			bool isFirst = true;          // Ã¹ ¹øÂ° ¼¿ÀÎÁö ¿©ºÎ¸¦ È®ÀÎÇÏ´Â ÇÃ·¡±×
-
-			while (std::getline(ss, cell, L',')) {
-				if (isFirst) {		 // Ã¹ ¹øÂ° ¼¿À» Å°·Î »ç¿ë
-					key = cell;
-					isFirst = false;
-				}
-				row.push_back(cell); // ³ª¸ÓÁö ¼¿Àº º¤ÅÍ¿¡ Ãß°¡
-			}
-
-			// µ¥ÀÌÅÍ Å¬·¡½º °´Ã¼¿¡ µ¥ÀÌÅÍ¸¦ ³ÖÀ½
-			// T´Â BaseData¸¦ »ó¼Ó¹Ş´Â Å¬·¡½ºÀÇ °´Ã¼·Î, SetData ÇÔ¼ö°¡ Á¤ÀÇµÇ¾î ÀÖ¾î¾ß ÇÔ
-			tmpData->SetData(row);
-
-
-			// ¿¹¿ÜÃ³¸®
-			// key°¡ ºñ¾îÀÖÀ¸¸é ÀúÀåÇÏÁö ¾ÊÀ½ (º¸È£ ·ÎÁ÷)
-			if (!key.empty()) {
-				DataMap[key] = tmpData; // Å°¿Í °ª(µ¥ÀÌÅÍÀÇ Æ÷ÀÎÅÍ)ÀÇ ½ÖÀ» ¸Ê¿¡ ÀúÀå
-			}
-		}
-
-		file.close();
-	}
-
-
-
-	// ÄÜ¼Ö¿ë
-	// ÀüÃ¼¸¦ ÄÜ¼ÖÃ¢¿¡ ¶ç¿ì´Â ÇÔ¼ö, Å°¿Í °ªÀÇ ½ÖÀ» Ãâ·ÂÇÏ´Â ÇÔ¼ö,
+	// ì½˜ì†”ìš©
+	// ì „ì²´ë¥¼ ì½˜ì†”ì°½ì— ë„ìš°ëŠ” í•¨ìˆ˜, í‚¤ì™€ ê°’ì˜ ìŒì„ ì¶œë ¥í•˜ëŠ” í•¨ìˆ˜,
 	void PrintMap() {
 		for (auto it = DataMap.begin(); it != DataMap.end(); ++it) {
 			
-			it->second->PrintMap(); // BaseData Å¬·¡½ºÀÇ PrintMap ÇÔ¼ö È£Ãâ
+			it->second->PrintMap(); // BaseData í´ë˜ìŠ¤ì˜ PrintMap í•¨ìˆ˜ í˜¸ì¶œ
 		}
 	}
 };
 
+template<typename T>
+inline void CsvDataStorage<T>::SetCSV(const std::string& filePath, int skipLine)
+{
+
+	std::wifstream file(filePath); // íŒŒì¼ ìŠ¤íŠ¸ë¦¼ ìƒì„±
+
+
+	if (!file.is_open()) {  // íŒŒì¼ ì—´ê¸° ì‹¤íŒ¨ ì‹œ ì—ëŸ¬ ë©”ì‹œì§€ ì¶œë ¥
+		//std::cout << "íŒŒì¼ì„ ì—´ ìˆ˜ ì—†ìŠµë‹ˆë‹¤: " << file << std::endl;
+	}
+
+
+	std::wstring line;	 // í˜„ì¬ ì¤„ì„ ì €ì¥í•  ë³€ìˆ˜
+	int countLine = 1;	 // ì‹œì‘ ë¼ì¸ ë²ˆí˜¸ (1ë¶€í„° ì‹œì‘)
+
+
+	while (std::getline(file, line)) {
+		T* tmpData = new T(); // ë°ì´í„° í´ë˜ìŠ¤ì˜ ê°ì²´ ìƒì„±
+		if (countLine++ <= skipLine) continue; // í—¤ë” ê±´ë„ˆë›°ê¸°
+
+		std::wstringstream ss(line);   // ë¬¸ìì—´ ìŠ¤íŠ¸ë¦¼ ìƒì„±
+		std::wstring cell;			  // ê° ì…€ì„ ì €ì¥í•  ë³€ìˆ˜
+		std::vector<std::wstring> row; // í˜„ì¬ í–‰ì˜ ì…€ë“¤ì„ ì €ì¥í•  ë²¡í„°
+		std::wstring key;	          // í‚¤ë¡œ ì‚¬ìš©í•  ì²« ë²ˆì§¸ ì…€ì˜ ê°’
+		bool isFirst = true;          // ì²« ë²ˆì§¸ ì…€ì¸ì§€ ì—¬ë¶€ë¥¼ í™•ì¸í•˜ëŠ” í”Œë˜ê·¸
+
+		while (std::getline(ss, cell, L',')) {
+			if (isFirst) {		 // ì²« ë²ˆì§¸ ì…€ì„ í‚¤ë¡œ ì‚¬ìš©
+				key = cell;
+				isFirst = false;
+			}
+			row.push_back(cell); // ë‚˜ë¨¸ì§€ ì…€ì€ ë²¡í„°ì— ì¶”ê°€
+		}
+
+		// ë°ì´í„° í´ë˜ìŠ¤ ê°ì²´ì— ë°ì´í„°ë¥¼ ë„£ìŒ
+		// TëŠ” BaseDataë¥¼ ìƒì†ë°›ëŠ” í´ë˜ìŠ¤ì˜ ê°ì²´ë¡œ, SetData í•¨ìˆ˜ê°€ ì •ì˜ë˜ì–´ ìˆì–´ì•¼ í•¨
+		tmpData->SetData(row);
+
+
+		// ì˜ˆì™¸ì²˜ë¦¬
+		// keyê°€ ë¹„ì–´ìˆìœ¼ë©´ ì €ì¥í•˜ì§€ ì•ŠìŒ (ë³´í˜¸ ë¡œì§)
+		if (!key.empty()) {
+			DataMap[key] = tmpData; // í‚¤ì™€ ê°’(ë°ì´í„°ì˜ í¬ì¸í„°)ì˜ ìŒì„ ë§µì— ì €ì¥
+		}
+	}
+
+	file.close();
+}

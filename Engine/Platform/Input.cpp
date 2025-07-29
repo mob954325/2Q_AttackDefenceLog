@@ -48,9 +48,6 @@ void Input::ResetMouseEventFrameState()
     MouseDeltaX = 0.0f;
     MouseDeltaY = 0.0f;
     wheelDelta = 0.0f;
-    leftButtonDown = false;
-    rightButtonDown = false;
-    middleButtonDown = false;
 }
 
 void Input::ProcessMouseMessage(UINT message, WPARAM wParam, LPARAM lParam)

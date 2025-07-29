@@ -1,9 +1,9 @@
-#pragma once
+ï»¿#pragma once
 #include <vector>
 #include <string>
-/* 2025.07.29 - ¾È¼ººó
-	BaseData Å¬·¡½º´Â ¿¢¼¿ ÆÄÀÏÀÇ µ¥ÀÌÅÍ ±¸Á¶ÀÇ ±âº» Å¬·¡½º
-	int´Â nullÀ» ÀúÀåÇÒ ¼ö ¾øÀ½À¸·Î 0À¸·Î ´ë½ÅÇÔ!
+/* 2025.07.29 - ì•ˆì„±ë¹ˆ
+	BaseData í´ë˜ìŠ¤ëŠ” ì—‘ì…€ íŒŒì¼ì˜ ë°ì´í„° êµ¬ì¡°ì˜ ê¸°ë³¸ í´ë˜ìŠ¤
+	intëŠ” nullì„ ì €ì¥í•  ìˆ˜ ì—†ìŒìœ¼ë¡œ 0ìœ¼ë¡œ ëŒ€ì‹ í•¨!
 */
 
 class BaseData
@@ -13,8 +13,6 @@ public :
 	virtual ~BaseData() {};
 
 public:
-	virtual void SetData(std::vector<std::wstring> tmp)  = 0; // µ¥ÀÌÅÍ ¼³Á¤ ÇÔ¼ö
-	virtual void PrintMap()  = 0; // ¸ÊÀ» ÄÜ¼ÖÃ¢¿¡ Ãâ·Â ÇÔ¼ö, »ó¼Ó¹Ş´Â µ¥ÀÌÅÍ¿¡¼­ ¿À¹ö¶óÀÌµå ÇÏ¿© »ç¿ë
-	
+	virtual void SetData(std::vector<std::wstring> tmp)  = 0; // ë°ì´í„° ì„¤ì • í•¨ìˆ˜
+	virtual void PrintMap()  = 0; // ë§µì„ ì½˜ì†”ì°½ì— ì¶œë ¥ í•¨ìˆ˜, ìƒì†ë°›ëŠ” ë°ì´í„°ì—ì„œ ì˜¤ë²„ë¼ì´ë“œ í•˜ì—¬ ì‚¬ìš©	
 };
-
