@@ -16,7 +16,7 @@ void AnimationRenderer::Render(D2DRenderManager* manager)
 	D2D1_MATRIX_3X2_F mat = owner->GetTransform().GetFinalMatrix();
 
 	if (isFlip) mat.m11 = -mat.m11;
-	manager->SetBitmapTransform(mat);
+	manager->SetRenderTransform(mat);
 
 	// Spirte 정보에 맞게 위치 조정
 	Sprite currSprite = sheet.sprites[clip.frames[frameIndex].spriteSheetIndex];

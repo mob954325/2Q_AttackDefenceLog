@@ -116,8 +116,8 @@ void Application::Initialize()
 	m_D2DRenderManager->Initialize();
 	m_D2DRenderManager->SetD2D1DeviceContext7(m_d2dDeviceContext.Get());
 
-	// ResourceManager 초기화
-	m_ResourceManager = new ResourceManager(m_D2DRenderManager);
+	// BitmapResourceManager 초기화
+	m_ResourceManager = new BitmapResourceManager(m_D2DRenderManager);
 
 	// RenderSystem  초기화
 	Singleton<RenderSystem>::GetInstance().SetD2DRenderManager(m_D2DRenderManager);

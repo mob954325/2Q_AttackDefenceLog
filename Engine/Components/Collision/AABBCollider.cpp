@@ -119,7 +119,7 @@ bool AABBCollider::CheckCollisionWithAABB(ICollider* other, CollisionInfo& outCo
 
 void AABBCollider::OnCreate()
 {
-	debugBoxComponent = owner->AddComponent<BoxComponent>();
+	debugBoxComponent = owner->AddComponent<BoxRenderer>();
 	debugBoxComponent->SetRect({ 0,0,0,0 });
 }
 

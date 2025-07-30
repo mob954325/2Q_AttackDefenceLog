@@ -338,7 +338,7 @@
     <ClInclude Include="Components\Collision\CircleCollider.h" />
     <ClInclude Include="Systems\AudioSystem.h" />
     <ClInclude Include="Components\Fmod\FModComponent.h" />
-    <ClInclude Include="Components\Rendering\CircleComponent.h" />
+    <ClInclude Include="Components\Rendering\CircleRenderer.h" />
     <ClInclude Include="Components\Base\ActiveComponent.h" />
     <ClInclude Include="Components\Base\MonoBehavior.h" />
     <ClInclude Include="Components\Base\BaseObject.h" />
@@ -377,7 +377,7 @@
     <ClInclude Include="Components\Logic\StatComponent.h" />
     <ClInclude Include="Components\Rendering\AnimationRenderer.h" />
     <ClInclude Include="Components\Rendering\BitmapRenderer.h" />
-    <ClInclude Include="Components\Rendering\BoxComponent.h" />
+    <ClInclude Include="Components\Rendering\BoxRenderer.h" />
     <ClInclude Include="Components\Rendering\RenderComponent.h" />
     <ClInclude Include="Components\Rendering\TextRenderer.h" />
     <ClInclude Include="Datas\EngineData.h" />
@@ -413,7 +413,7 @@
     <ClCompile Include="Components\Collision\CircleCollider.cpp" />
     <ClCompile Include="Systems\AudioSystem.cpp" />
     <ClCompile Include="Components\Fmod\FModComponent.cpp" />
-    <ClCompile Include="Components\Rendering\CircleComponent.cpp" />
+    <ClCompile Include="Components\Rendering\CircleRenderer.cpp" />
     <ClCompile Include="Components\Base\BaseObject.cpp" />
     <ClCompile Include="Components\Base\Component.cpp" />
     <ClCompile Include="Components\Rendering\RenderComponent.cpp" />
@@ -437,7 +437,7 @@
     <ClCompile Include="Components\Logic\StatComponent.cpp" />
     <ClCompile Include="Components\Rendering\AnimationRenderer.cpp" />
     <ClCompile Include="Components\Rendering\BitmapRenderer.cpp" />
-    <ClCompile Include="Components\Rendering\BoxComponent.cpp" />
+    <ClCompile Include="Components\Rendering\BoxRenderer.cpp" />
     <ClCompile Include="Components\Rendering\TextRenderer.cpp" />
     <ClCompile Include="Resources\Loaders\SpriteSheetLoader.cpp" />
     <ClCompile Include="Systems\TransformSystem.cpp" />

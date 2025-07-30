@@ -102,7 +102,7 @@
     <ClInclude Include="Components\Rendering\BitmapRenderer.h">
       <Filter>Components\Rendering</Filter>
     </ClInclude>
-    <ClInclude Include="Components\Rendering\BoxComponent.h">
+    <ClInclude Include="Components\Rendering\BoxRenderer.h">
       <Filter>Components\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="Components\Rendering\RenderComponent.h">
@@ -230,7 +230,7 @@
     <ClInclude Include="Components\Collision\CircleCollider.h">
       <Filter>Components\Collider</Filter>
     </ClInclude>
-    <ClInclude Include="Components\Rendering\CircleComponent.h">
+    <ClInclude Include="Components\Rendering\CircleRenderer.h">
       <Filter>Components\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="Datas\SoundDatas.h" />
@@ -303,7 +303,7 @@
     <ClCompile Include="Components\Rendering\BitmapRenderer.cpp">
       <Filter>Components\Rendering</Filter>
     </ClCompile>
-    <ClCompile Include="Components\Rendering\BoxComponent.cpp">
+    <ClCompile Include="Components\Rendering\BoxRenderer.cpp">
       <Filter>Components\Rendering</Filter>
     </ClCompile>
     <ClCompile Include="Components\Rendering\TextRenderer.cpp">
@@ -398,7 +398,7 @@
     <ClCompile Include="Components\Collision\CircleCollider.cpp">
       <Filter>Components\Collider</Filter>
     </ClCompile>
-    <ClCompile Include="Components\Rendering\CircleComponent.cpp">
+    <ClCompile Include="Components\Rendering\CircleRenderer.cpp">
       <Filter>Components\Rendering</Filter>
     </ClCompile>
     <ClCompile Include="Components\Fmod\FModComponent.cpp">
