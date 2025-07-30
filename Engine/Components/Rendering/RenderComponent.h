@@ -2,7 +2,7 @@
 #include "Components/Base/ActiveComponent.h"
 
 class D2DRenderManager;
-class ResourceManager;
+class BitmapResourceManager;
 
 class RenderComponent : public ActiveComponent
 {
@@ -12,13 +12,13 @@ public:
 
 	virtual void Render(D2DRenderManager* manager) = 0;
 	void SetRenderManager(D2DRenderManager* pManager);
-	void SetResourceManager(ResourceManager* pManager);
+	void SetResourceManager(BitmapResourceManager* pManager);
 	
 	void SetOrderInLayer(int value);
 	int GetOrderInLayer();
 
 protected:	
 	D2DRenderManager* renderManager{};
-	ResourceManager* resourceManager{};
+	BitmapResourceManager* resourceManager{};
 	int orderInLayer = 0;
 };
