@@ -36,6 +36,7 @@ void TrailComponent::Update() { // 여기서 삭제(정리)처리해주면 됨
 
 	if (wasDraw && !isDraw) { // 이후상태 true + 현재상태 false, 즉 꺼질때 한번
 		cachedTrails = trails;
+		isNewCached = true;		
 		Clear();
 	}
 	wasDraw = isDraw;

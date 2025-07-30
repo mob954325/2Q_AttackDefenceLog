@@ -82,7 +82,7 @@ public:
 	void SetQuery(IGameObjectQuery* q);
 	IGameObjectQuery* GetQuery();
 
-	Transform& GetTransform();
+	Transform& GetTransform() const;
 	
 protected:
 	EngineData::RenderLayer renderLayer = EngineData::RenderLayer::None;

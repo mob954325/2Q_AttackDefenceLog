@@ -178,7 +178,7 @@ IGameObjectQuery* GameObject::GetQuery()
 	return query;
 }
 
-Transform& GameObject::GetTransform()
+Transform& GameObject::GetTransform() const
 {
 	return *transform;
 }

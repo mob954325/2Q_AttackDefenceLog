@@ -24,10 +24,11 @@ struct Node {
 
 class PatternManager {
 public:
-	void SetNodes(const std::array<Vector2, 9>& positions, float radius);
+	void SetNodes(const std::array<GameObject*, 9>& positions, float radius);
 	void SetPatternBox(const D2D1_RECT_F& box);
 	void CheckTrails(const std::deque<TrailStamp>& trails);
 	void CheckOutOfBox(Vector2 pos);
+	void AddNodes(Vector2 pos, float radius, int i);
 
 	const std::deque<int>& GetPattern() const {
 		return pattern;

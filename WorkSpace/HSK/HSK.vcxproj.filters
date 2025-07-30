@@ -8,9 +8,6 @@
     <ClCompile Include="HSKApp.cpp">
       <Filter>App</Filter>
     </ClCompile>
-    <ClCompile Include="MouseObj.cpp">
-      <Filter>Obj</Filter>
-    </ClCompile>
     <ClCompile Include="PatternManager.cpp">
       <Filter>manag</Filter>
     </ClCompile>
@@ -24,9 +21,6 @@
     </ClInclude>
     <ClInclude Include="HSKApp.h">
       <Filter>App</Filter>
-    </ClInclude>
-    <ClInclude Include="MouseObj.h">
-      <Filter>Obj</Filter>
     </ClInclude>
     <ClInclude Include="PatternManager.h">
       <Filter>manag</Filter>
