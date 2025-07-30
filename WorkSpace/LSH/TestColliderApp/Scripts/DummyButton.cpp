@@ -12,6 +12,10 @@ void DummyButton::OnStart()
 	button->SetRect(imageSize.width, imageSize.height);
 	button->AddOnClickEvent(std::bind(&DummyButton::OnClick, this));
 	button->AddOnClickEvent([&]() { SetValue(100); });
+
+	Vector2 start = Vector2::Zero();
+	Vector2 end = { 2,3 };
+	Vector2 dir = (end - start).Normalize();
 }
 
 void DummyButton::OnUpdate()

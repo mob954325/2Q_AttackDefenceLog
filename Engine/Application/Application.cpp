@@ -192,7 +192,10 @@ void Application::MessageProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	case WM_MBUTTONDOWN:
 	case WM_MBUTTONUP:
 	case WM_MOUSEWHEEL:
-		Input::ProcessMouseMessage(msg, wParam, lParam);
+		Input::ProcessMouseMessage(hWnd, msg, wParam, lParam);
+		break;
+	case WM_MOUSELEAVE:
+		Input::ResetMouseOnOutOfBounds();
 		break;
 	default:
 		break;
