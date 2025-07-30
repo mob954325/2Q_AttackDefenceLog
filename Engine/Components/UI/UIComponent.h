@@ -8,4 +8,3 @@ public:
 	virtual void Update() = 0;
 	virtual bool IsMouseOver(const Vector2& mousePos) const = 0;
 };
-
