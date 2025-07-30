@@ -2,13 +2,15 @@
 #include "Components/Logic/InputSystem.h"
 #include "Components/Rendering/TrailComponent.h"
 #include "NodeObj.h"
-
+#include "Datas/EngineData.h"
 using namespace HSK;
 
 void HSKScene::OnEnterImpl()
 {
-	obj = new GameObject();	
+	obj = new GameObject();
+	obj->SetRenderLayer(EngineData::RenderLayer::UI);
 	auto t = obj->AddComponent<TrailComponent>();
+	t->SetOrderInLayer(100);
 	t->SetBitmap(L"../HSK/Test/test5.png");
 	AddGameObject(obj, "trail");
 
