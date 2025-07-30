@@ -111,7 +111,7 @@ void TrailComponent::Draw(D2DRenderManager* manager) { // 본격적으로 그리는 부분
 			stamp.position
 		);
 
-		manager->SetBitmapTransform(transform); // 회전행렬 적용
+		manager->SetRenderTransform(transform); // 회전행렬 적용
 
 		D2D1_RECT_F srcRect = { // 이건 규격 맞출려고 바꿔주는거임
 			0.0f, 0.0f,
