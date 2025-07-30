@@ -16,7 +16,7 @@
 struct TrailStamp { // 게임오브젝트를 대체하는 구조체, 어차피 비트맵 컴포넌트만 요구하기 때문에 가볍게 사용
 	D2D1_POINT_2F position; // 좌표
 	float angle; // 각도(계산 해야함)
-	
+
 	float timestamp; // 기능 사용 안함
 };
 
@@ -25,7 +25,7 @@ class TrailComponent : public RenderComponent
 public:
 	void Update(); // 노드 삭제 + 플래그 처리용
 
-	void AddStamp(D2D1_POINT_2F pos); 
+	void AddStamp(D2D1_POINT_2F pos);
 	void Draw(D2DRenderManager* manager); // 한번 감싼거임, 여기서 for 돌려서 비트맵 찍음
 	void Render(D2DRenderManager* manager) override; // 이거 기반으로 그려짐
 	void SetBitmap(std::wstring path);
