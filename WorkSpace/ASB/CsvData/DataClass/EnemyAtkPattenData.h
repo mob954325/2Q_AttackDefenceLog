@@ -12,6 +12,9 @@
 
 class EnemyAtkPattenData : public BaseData
 {
+public:
+	EnemyAtkPattenData() {};
+	~EnemyAtkPattenData() {};
 	std::string ePatternID;    // 적의 공격 패턴 ID를 저장
 	int atkPetternGroup;       // 적의 공격 그룹을 저장
 	std::string eNodepattern;  // 적의 노드 패턴을 저장
