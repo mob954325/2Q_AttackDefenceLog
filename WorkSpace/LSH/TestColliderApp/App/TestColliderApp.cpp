@@ -5,11 +5,11 @@
 
 void TestCollider::TestColliderApp::Initialize()
 {
+	__super::Initialize();
+
 	testColliderScene = new CircleColliderScene();
 	Singleton<SceneManager>::GetInstance().AddScene(testColliderScene);
 	Singleton<SceneManager>::GetInstance().Init();
-
-	__super::Initialize();
 }
 
 void TestCollider::TestColliderApp::Uninitialize()

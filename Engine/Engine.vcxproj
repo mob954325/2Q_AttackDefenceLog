@@ -336,6 +336,8 @@
     <ClInclude Include="Components\Rendering\TrailComponent.h" />
     <ClInclude Include="Components\UI\Button.h" />
     <ClInclude Include="Components\Collision\CircleCollider.h" />
+    <ClInclude Include="Components\Rendering\ParticleRenderer.h" />
+    <ClInclude Include="Math\GameRandom.h" />
     <ClInclude Include="Systems\AudioSystem.h" />
     <ClInclude Include="Components\Fmod\FModComponent.h" />
     <ClInclude Include="Components\Rendering\CircleRenderer.h" />
@@ -411,6 +413,8 @@
     <ClCompile Include="Components\Rendering\TrailComponent.cpp" />
     <ClCompile Include="Components\UI\Button.cpp" />
     <ClCompile Include="Components\Collision\CircleCollider.cpp" />
+    <ClCompile Include="Components\Rendering\ParticleRenderer.cpp" />
+    <ClCompile Include="Math\GameRandom.cpp" />
     <ClCompile Include="Systems\AudioSystem.cpp" />
     <ClCompile Include="Components\Fmod\FModComponent.cpp" />
     <ClCompile Include="Components\Rendering\CircleRenderer.cpp" />

@@ -32,7 +32,7 @@ void Button::Update()
 		if (Input::leftButtonDown || Input::middleButtonDown || Input::rightButtonDown)
 		{
 			HandleButtonImage(ButtonState::Pressed);
-			onClickEvent.Invoke(); // NOTE: 버튼 이벤트 등록 및 실행할 수 있게되면 이 주석 제거하기
+			onClickEvent.Invoke();
 		}
 	}
 	else
