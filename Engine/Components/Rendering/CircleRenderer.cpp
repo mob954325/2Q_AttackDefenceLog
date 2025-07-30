@@ -1,13 +1,13 @@
-﻿#include "CircleComponent.h"
+﻿#include "CircleRenderer.h"
 #include "Platform/D2DRenderManager.h"
 #include "Components/Base/GameObject.h"
-
-void CircleComponent::OnStart()
+	
+void CircleRenderer::OnStart()
 {
 	renderManager->CreateBrush(D2D1::ColorF::Green, &brush);
 }
 
-void CircleComponent::OnDestroy()
+void CircleRenderer::OnDestroy()
 {
 	if (brush)
 	{
@@ -15,30 +15,25 @@ void CircleComponent::OnDestroy()
 	}
 }
 
-void CircleComponent::Render(D2DRenderManager* render)
+void CircleRenderer::Render(D2DRenderManager* render)
 {
-	if (!isShow) return;
+	if (!IsActiveSelf()) return;
 
 	if (brush)
 	{
 		D2D1_MATRIX_3X2_F mat = owner->GetTransform().GetFinalMatrix();
 
-		render->SetBitmapTransform(mat);
+		render->SetRenderTransform(mat);
 		render->DrawCircle(brush, radius, 1.0f, strokeStyle);
 	}
 }
 
-void CircleComponent::SetRadius(float radius)
+void CircleRenderer::SetRadius(float radius)
 {
 	this->radius = radius;
 }
 
-void CircleComponent::SetStyle(ID2D1StrokeStyle* style)
+void CircleRenderer::SetStyle(ID2D1StrokeStyle* style)
 {
 	this->strokeStyle = style;
-}
-
-void CircleComponent::SetIsShow(bool value)
-{
-	isShow = value;
 }

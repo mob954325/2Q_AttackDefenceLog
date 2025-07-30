@@ -5,7 +5,7 @@
 #pragma once
 #include "Components/Collision/CollisionComponent.h"
 #include "Math/Vector2.h"
-#include "Components/Rendering/CircleComponent.h"
+#include "Components/Rendering/CircleRenderer.h"
 class CircleCollider : public CollisionComponent, ICollider
 {
 public:
@@ -26,7 +26,7 @@ public:
 	float GetRadius() const;
 
 private:
-	CircleComponent* debugCircle{};
+	CircleRenderer* debugCircle{};
 	float radius = 1.0f; // 지름
 	float size = 1.0f;
 };
