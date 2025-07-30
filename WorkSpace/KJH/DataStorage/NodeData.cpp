@@ -21,11 +21,11 @@ void NodeData::NodeList::SetData(std::vector<std::wstring> tmp)
 	}
 }
 
-int NodeData::NodeList::GetData(std::wstring name)
-{
-	std::string nameC = StringConvert::WstringToString(name);
-	return this->nameC;
-}
+//int NodeData::NodeList::GetData(std::wstring name)
+//{
+//	std::string nameC = StringConvert::WstringToString(name);
+//	return this->nameC;
+//}
 
 
  const NodeData::NodeList& NodeData::GetNodeData(std::wstring ID)
