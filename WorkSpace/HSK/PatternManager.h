@@ -9,12 +9,6 @@
 * 패턴 관련된 관리는 여기서 처리할 예정
 */
 
-struct Node {
-	int num; // 1~9
-	bool isActive = false; // 중복 방지
-	float x, y;
-};
-
 class PatternManager {
 
 
