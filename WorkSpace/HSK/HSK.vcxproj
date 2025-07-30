@@ -343,13 +343,15 @@
     <ClCompile Include="HSKApp.cpp" />
     <ClCompile Include="HSKScene.cpp" />
     <ClCompile Include="MouseObj.cpp" />
-    <ClCompile Include="TrailComponent.cpp" />
+    <ClCompile Include="NodeObj.cpp" />
+    <ClCompile Include="PatternManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HSKApp.h" />
     <ClInclude Include="HSKScene.h" />
     <ClInclude Include="MouseObj.h" />
-    <ClInclude Include="TrailComponent.h" />
+    <ClInclude Include="NodeObj.h" />
+    <ClInclude Include="PatternManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -333,6 +333,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Components\Rendering\TrailComponent.h" />
     <ClInclude Include="Components\UI\Button.h" />
     <ClInclude Include="Components\Collision\CircleCollider.h" />
     <ClInclude Include="Systems\AudioSystem.h" />
@@ -407,6 +408,7 @@
     <ClInclude Include="Math\Vector2.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Components\Rendering\TrailComponent.cpp" />
     <ClCompile Include="Components\UI\Button.cpp" />
     <ClCompile Include="Components\Collision\CircleCollider.cpp" />
     <ClCompile Include="Systems\AudioSystem.cpp" />

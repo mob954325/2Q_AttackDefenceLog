@@ -8,10 +8,13 @@
     <ClCompile Include="HSKApp.cpp">
       <Filter>App</Filter>
     </ClCompile>
-    <ClCompile Include="TrailComponent.cpp">
-      <Filter>Comp</Filter>
-    </ClCompile>
     <ClCompile Include="MouseObj.cpp">
+      <Filter>Obj</Filter>
+    </ClCompile>
+    <ClCompile Include="PatternManager.cpp">
+      <Filter>manag</Filter>
+    </ClCompile>
+    <ClCompile Include="NodeObj.cpp">
       <Filter>Obj</Filter>
     </ClCompile>
   </ItemGroup>
@@ -22,10 +25,13 @@
     <ClInclude Include="HSKApp.h">
       <Filter>App</Filter>
     </ClInclude>
-    <ClInclude Include="TrailComponent.h">
-      <Filter>Comp</Filter>
-    </ClInclude>
     <ClInclude Include="MouseObj.h">
+      <Filter>Obj</Filter>
+    </ClInclude>
+    <ClInclude Include="PatternManager.h">
+      <Filter>manag</Filter>
+    </ClInclude>
+    <ClInclude Include="NodeObj.h">
       <Filter>Obj</Filter>
     </ClInclude>
   </ItemGroup>
@@ -41,6 +47,9 @@
     </Filter>
     <Filter Include="Comp">
       <UniqueIdentifier>{5cc687f8-c2ed-4dae-8bf2-e4bee152f66a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="manag">
+      <UniqueIdentifier>{954cd158-176f-4cb9-8722-9fa2ffdc7ba7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
