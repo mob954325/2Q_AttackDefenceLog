@@ -1,6 +1,7 @@
 ﻿#include "Systems/CollisionSystem.h"
 #include "Components/Base/GameObject.h"
 #include "set"
+#include <algorithm>
 
 void CollisionSystem::Register(CollisionComponent* comp)
 {
@@ -113,38 +114,59 @@ void CollisionSystem::CallEvent(CollisionComponent* a, CollisionComponent* b, co
 
 	auto DoCall = [&](GameObject* caller, GameObject* target, bool trigger)
 		{
-			MonoBehavior* mono = caller->GetComponent<MonoBehavior>();
+			int size = caller->monoBehaviors.size();
 			if (trigger)
 			{
-
-				if (!mono) return;
-
 				if (type == "Enter") // NOTE: 현재 monobehaivior중 하나만 호출됨, 모두 호출되게 수정하기
 				{
-					mono->OnTriggerEnter(target);
+					std::for_each(caller->monoBehaviors.begin(), caller->monoBehaviors.end(),[&]
+					(MonoBehavior* mono)
+						{ 
+							mono->OnTriggerEnter(target);
+						});
 				}
 				else if (type == "Stay")
 				{
-					mono->OnTriggerStay(target);
+					std::for_each(caller->monoBehaviors.begin(), caller->monoBehaviors.end(), [&]
+					(MonoBehavior* mono)
+						{
+							mono->OnTriggerStay(target);
+						});
 				}
 				else if (type == "Exit")
 				{
-					mono->OnTriggerExit(target);
+					std::for_each(caller->monoBehaviors.begin(), caller->monoBehaviors.end(), [&]
+					(MonoBehavior* mono)
+						{
+							mono->OnTriggerExit(target);
+						});
 				}
 			}
 			else
 			{
 				if (type == "Enter")
 				{
-					mono->OnColliderEnter(target);
+					std::for_each(caller->monoBehaviors.begin(), caller->monoBehaviors.end(), [&]
+					(MonoBehavior* mono)
+						{
+							mono->OnColliderEnter(target);
+						});
 				}
 				else if (type == "Stay")
 				{
-					mono->OnColliderStay(target);
+					std::for_each(caller->monoBehaviors.begin(), caller->monoBehaviors.end(), [&]
+					(MonoBehavior* mono)
+						{
+							mono->OnColliderStay(target);
+						});
 				}
 				else if (type == "Exit")
 				{
-					mono->OnColliderExit(target);
+					std::for_each(caller->monoBehaviors.begin(), caller->monoBehaviors.end(), [&]
+					(MonoBehavior* mono)
+						{
+							mono->OnColliderExit(target);
+						});
 				}
 			}
 		};

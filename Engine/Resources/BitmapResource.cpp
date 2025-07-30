@@ -9,5 +9,5 @@ Microsoft::WRL::ComPtr<ID2D1Bitmap1> BitmapResource::GetBitmap()
 
 void BitmapResource::SetBitmap(ID2D1Bitmap1** pBitmap)
 {
-	bitmap.Attach(*pBitmap); // NOTE : 테스트 안함
+	bitmap.Attach(*pBitmap);
 }

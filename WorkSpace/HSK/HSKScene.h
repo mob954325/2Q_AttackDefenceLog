@@ -12,5 +12,6 @@ namespace HSK
 
 	private:
 		GameObject* obj{};
+		GameObject* m_node1{};
 	};
 }

@@ -49,7 +49,7 @@ void DummyCircleCollider::OnColliderEnter(GameObject* collider)
 
 void DummyCircleCollider::OnColliderStay(GameObject* collider)
 {
-	// std::cout << ">>> Dummy 충돌 중 >>>" << std::endl;
+	std::cout << ">>> Dummy 충돌 중 >>>" << " [ " << collider->GetName() << " ] " << std::endl;
 }
 
 void DummyCircleCollider::OnColliderExit(GameObject* collider)
