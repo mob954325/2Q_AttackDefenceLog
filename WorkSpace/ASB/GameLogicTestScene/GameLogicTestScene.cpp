@@ -1,7 +1,7 @@
 #include "GameLogicTestScene.h"
 #include "LiveObject/LiveObject.h"
 #include "../DataStorage/CsvDataManager.h"
-#include "../DataStorage/DataClass/AllNodePattenClass.h"
+#include "../DataClass/AllNodePattenClass.h"
 void GameLogicTestScene::OnEnterImpl()
 {
 	//menuObj = new GameObject(); // GameObject °´Ã¼ »ý¼º

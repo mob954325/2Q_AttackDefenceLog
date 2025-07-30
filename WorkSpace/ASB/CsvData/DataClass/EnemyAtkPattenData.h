@@ -1,5 +1,5 @@
 #pragma once
-#include "../BaseData.h"
+#include "BaseData.h"
 #include <vector>
 
 /*25.07.29 - 안성빈
@@ -12,6 +12,10 @@
 
 class EnemyAtkPattenData : public BaseData
 {
+	std::string ePatternID;    // 적의 공격 패턴 ID를 저장
+	int atkPetternGroup;       // 적의 공격 그룹을 저장
+	std::string eNodepattern;  // 적의 노드 패턴을 저장
+	float eAtkCoolDown;        // 적의 공격 쿨타임을 저장
 
 
 	void SetData(std::vector<std::wstring> tmp)override; // 데이터 설정 함수

@@ -1,5 +1,5 @@
 #pragma once
-#include "../BaseData.h"
+#include "BaseData.h"
 
 class PlayerData : public BaseData
 {

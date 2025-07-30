@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include "../BaseData.h"
+#include "BaseData.h"
 
 
 /*25.07.29 - ¾È¼ººó
