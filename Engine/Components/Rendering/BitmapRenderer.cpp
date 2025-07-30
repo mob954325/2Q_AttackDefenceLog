@@ -18,7 +18,15 @@ void BitmapRenderer::Render(D2DRenderManager* manager)
 		if (isFlip) mat.m11 = -mat.m11;
 
 		manager->SetRenderTransform(mat);
-		manager->DrawBitmap(m_bitmapResource->GetBitmap());
+
+		if (!useCustomRect)
+		{
+			manager->DrawBitmap(m_bitmapResource->GetBitmap());
+		}
+		else
+		{
+			manager->DrawBitmap(m_bitmapResource->GetBitmap(), destRect, srcRect); // 0730 : 작성자 : 이성호, rect로 직접 수정할 수 있게 코드 추가
+		}
 	}
 }
 
@@ -45,4 +53,29 @@ std::shared_ptr<BitmapResource> BitmapRenderer::GetResource()
 void BitmapRenderer::SetFlip(bool value)
 {
 	isFlip = value;
+}
+
+void BitmapRenderer::SetUseCustomRect(bool value)
+{
+	useCustomRect = value;
+}
+
+void BitmapRenderer::SetDestRect(const D2D1_RECT_F& rect)
+{
+	destRect = rect;
+}
+
+D2D1_RECT_F BitmapRenderer::GetDestRect() const
+{
+	return destRect;
+}
+
+void BitmapRenderer::SetSrcRect(const D2D1_RECT_F& rect)
+{
+	srcRect = rect;
+}
+
+D2D1_RECT_F BitmapRenderer::GetSrcRect() const
+{
+	return srcRect;
 }

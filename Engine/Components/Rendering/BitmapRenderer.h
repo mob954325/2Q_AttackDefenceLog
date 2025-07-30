@@ -20,13 +20,19 @@ public:
 	std::shared_ptr<BitmapResource> GetResource();
 
 	void SetFlip(bool value);
+	void SetUseCustomRect(bool value);
+
+	void SetDestRect(const D2D1_RECT_F& rect);
+	D2D1_RECT_F GetDestRect() const;
+
+	void SetSrcRect(const D2D1_RECT_F& rect);
+	D2D1_RECT_F GetSrcRect() const;
 
 protected:
 	std::shared_ptr<BitmapResource> m_bitmapResource;
 	D2D1_RECT_F destRect = {};
+	D2D1_RECT_F srcRect = {};
 
-	int screenWidth = 0;
-	int screenHeight = 0;
 	float offsetX = 0.0f;
 	float offsetY = 0.0f;
 
@@ -34,5 +40,6 @@ protected:
 	float maxtimer = 0.2f;
 
 	bool isFlip = false;
+	bool useCustomRect = false; // 위 destRect, srcRect 사용여부 변수
 };
 
