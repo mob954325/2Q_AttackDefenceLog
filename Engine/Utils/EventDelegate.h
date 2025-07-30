@@ -39,12 +39,7 @@ class EventDelegate
 	};
 
 public:
-	ListenerID Add(const std::function<void(Args...)>& refFunc)
-	{
-		ListenerID id = nextId++;
-		listeners.push_back({ id, refFunc });
-		return id;
-	}
+	ListenerID Add(const std::function<void(Args...)>& refFunc);
 
 	void RemoveByID(ListenerID targetId)
 	{
@@ -94,3 +89,19 @@ private:
 	std::vector<Event> listeners;
 	ListenerID nextId = 0;
 };
+
+template<typename ...Args>
+inline ListenerID EventDelegate<Args...>::Add(const std::function<void(Args...)>& refFunc)
+{
+	ListenerID id = nextId++;
+	listeners.push_back({ id, refFunc });
+	return id;
+}
+
+template<>
+inline ListenerID EventDelegate<>::Add(const std::function<void()>& refFunc)
+{
+	ListenerID id = nextId++;
+	listeners.push_back({ id, refFunc });
+	return id;
+}
