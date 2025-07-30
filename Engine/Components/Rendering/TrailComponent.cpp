@@ -24,7 +24,7 @@ Update
 	obj->GetTransform().SetPosition(Input::MouseX, Input::MouseY);
 */
 
-constexpr float PI = 3.141592654f; // 
+constexpr float PI = 3.141592654f; // 한글
 
 void TrailComponent::Update() { // 여기서 삭제(정리)처리해주면 됨
 	// 	while (trails.size() > maxTrailCount && isOutFromBox) { // 최대 사이즈대로 빼줌, 나중에 조건추가하면 됨
