@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "Components/Rendering/RenderComponent.h"
 
-class BoxComponent : public RenderComponent
+class BoxRenderer : public RenderComponent
 {
 public:
 	void OnStart() override;

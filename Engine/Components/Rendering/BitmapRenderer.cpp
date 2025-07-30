@@ -17,7 +17,7 @@ void BitmapRenderer::Render(D2DRenderManager* manager)
 		
 		if (isFlip) mat.m11 = -mat.m11;
 
-		manager->SetBitmapTransform(mat);
+		manager->SetRenderTransform(mat);
 
 		if (!useCustomRect)
 		{

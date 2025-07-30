@@ -12,7 +12,7 @@ class Application
 {
 public:
 	D2DRenderManager* m_D2DRenderManager{};
-	ResourceManager* m_ResourceManager{};
+	BitmapResourceManager* m_ResourceManager{};
 
 	/// <summary>
 	/// D2DRenderManager 초기화
