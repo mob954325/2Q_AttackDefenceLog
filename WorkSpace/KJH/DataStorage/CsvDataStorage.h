@@ -26,7 +26,7 @@ public:
 	// CSV 파일을 읽어와서 std::unordered_map에 저장하는 함수
 	// map의 키 : 첫 번째 셀의 값(ID), 
 	//		 값 : 해당 행의 데이터를 저장하는 클래스의 포인터
-	void SetCSV(const std::string& path, std::unordered_map<std::wstring, T>& outMap) {
+	static void SetCSV(const std::string& path, std::unordered_map<std::wstring, T>& outMap) {
 
 		std::wifstream file(path); // 파일 스트림 생성
 

@@ -274,6 +274,7 @@
     <ClInclude Include="Components\Rendering\TrailComponent.h">
       <Filter>Components\Rendering</Filter>
     </ClInclude>
+    <ClInclude Include="Components\UI\Slider.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\Application.cpp">
@@ -417,6 +418,7 @@
     <ClCompile Include="Components\Rendering\TrailComponent.cpp">
       <Filter>Components\Rendering</Filter>
     </ClCompile>
+    <ClCompile Include="Components\UI\Slider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
