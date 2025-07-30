@@ -10,6 +10,7 @@ void DummyButton::OnStart()
 {
 	D2D1_SIZE_F imageSize = button->GetNormalImage()->GetResource()->GetBitmap()->GetSize();
 	button->SetRect(imageSize.width, imageSize.height);
+	button->AddOnClickEvent(std::bind(&DummyButton::OnClick, this));
 }
 
 void DummyButton::OnUpdate()
@@ -25,4 +26,9 @@ void DummyButton::OnFixedUpdate()
 void DummyButton::OnDestroy()
 {
 	
+}
+
+void DummyButton::OnClick()
+{
+	std::cout << "Button 클릭됨" << std::endl;
 }

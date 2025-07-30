@@ -13,6 +13,8 @@ public:
 	void OnDestroy() override;
 
 private:
+	void OnClick();
+
 	Button* button{};
 };
 
