@@ -271,6 +271,9 @@
       <Filter>Components\UI</Filter>
     </ClInclude>
     <ClInclude Include="Systems\UISystem.h" />
+    <ClInclude Include="Components\Rendering\TrailComponent.h">
+      <Filter>Components\Rendering</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\Application.cpp">
@@ -411,6 +414,9 @@
       <Filter>Components\UI</Filter>
     </ClCompile>
     <ClCompile Include="Systems\UISystem.cpp" />
+    <ClCompile Include="Components\Rendering\TrailComponent.cpp">
+      <Filter>Components\Rendering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
