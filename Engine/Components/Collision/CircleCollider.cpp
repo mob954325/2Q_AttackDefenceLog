@@ -94,7 +94,6 @@ void CircleCollider::OnStart()
 {
 	debugCircle = owner->AddComponent<CircleRenderer>();
 	debugCircle->SetRadius(radius);
-	debugCircle->SetIsShow(true);
 }
 
 void CircleCollider::OnDestroy()

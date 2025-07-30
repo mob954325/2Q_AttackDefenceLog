@@ -5,6 +5,8 @@
 
 void TextRenderer::Render(D2DRenderManager* manager)
 {
+	if (!IsActiveSelf()) return;
+
 	if (!isWorldPosition)
 	{
 		manager->PrintText(text.c_str(), left, top, color);

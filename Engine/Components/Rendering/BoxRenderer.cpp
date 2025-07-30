@@ -19,7 +19,7 @@ void BoxRenderer::OnDestroy()
 
 void BoxRenderer::Render(D2DRenderManager* render)
 {
-	if (!isShow) return;
+	if (!IsActiveSelf()) return;
 
 	if (brush)
 	{
@@ -44,11 +44,6 @@ void BoxRenderer::SetWidth(FLOAT width)
 void BoxRenderer::SetStyle(ID2D1StrokeStyle* style)
 {
 	this->strokeStyle = style;
-}
-
-void BoxRenderer::SetIsShow(bool value)
-{
-	isShow = value;	
 }
 
 D2D1_POINT_2F BoxRenderer::MatrixTransform(const D2D1_POINT_2F& point, const D2D1_MATRIX_3X2_F& matrix)
