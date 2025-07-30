@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include "Components/Collision/CollisionComponent.h"
-#include "Components/Rendering/BoxComponent.h"
+#include "Components/Rendering/BoxRenderer.h"
 #include "Math/Vector2.h"
 
 /// <summary>
@@ -26,7 +26,7 @@ public:
 	D2D1_RECT_F GetSize() const;
 
 private:
-	BoxComponent* debugBoxComponent = nullptr; // 디버깅용
+	BoxRenderer* debugBoxComponent = nullptr; // 디버깅용
 
 	float width = 0; 
 	float height = 0;
