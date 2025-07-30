@@ -44,7 +44,10 @@ public:
 	float lifeTime = 0.3f; // 이거일단 사용안함, 나중에 update에서 시간 지난거 처리하는식으로 가능함
 	int maxTrailCount = 100; // 최대 길이, 찍히는 비트맵의 갯수
 
-	std::deque<TrailStamp> trails; // 큐, 여기에 구조체 담김(좌표, 각도, 수명)
+
+	std::deque<TrailStamp> cachedTrails; // 이건 저장용임(공개됨) - 갱신은 삭제되기전에
 	// ID2D1Bitmap1* stampBitmap = nullptr;
+private:
+	std::deque<TrailStamp> trails; // 큐, 여기에 구조체 담김(좌표, 각도, 수명)
 	std::shared_ptr<BitmapResource> stampBitmap = nullptr; // 찍을 비트맵, 브러쉬 넣으면 됨
 };

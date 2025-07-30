@@ -35,6 +35,7 @@ void TrailComponent::Update() { // 여기서 삭제(정리)처리해주면 됨
 	// 		trails.pop_front();
 
 	if (wasDraw && !isDraw) { // 이후상태 true + 현재상태 false, 즉 꺼질때 한번
+		cachedTrails = trails;
 		Clear();
 	}
 	wasDraw = isDraw;
@@ -92,7 +93,7 @@ void TrailComponent::AddStamp(D2D1_POINT_2F pos) {
 
 void TrailComponent::Draw(D2DRenderManager* manager) { // 본격적으로 그리는 부분
 	if (!stampBitmap) return; // 비트맵 등록 안하면 안그림
-	
+
 	if (!IsActiveSelf()) return; // 비활성화 얼리리턴
 
 	for (auto& stamp : trails) { // 큐 전체를 순회하면서
