@@ -9,6 +9,8 @@
 
 void BitmapRenderer::Render(D2DRenderManager* manager)
 {
+	if (!IsActiveSelf()) return;
+
 	if (m_bitmapResource != nullptr)
 	{
 		D2D1_MATRIX_3X2_F mat = owner->GetTransform().GetFinalMatrix();

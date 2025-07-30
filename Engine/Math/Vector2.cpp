@@ -134,3 +134,9 @@ Vector2	Vector2::Lerp(Vector2& start, Vector2& end, float t)
 	Vector2 lerpVec = (1.0f - t) * start + t * end;
 	return lerpVec;
 }
+
+std::ostream& operator<<(std::ostream& os, Vector2 vec)
+{
+	os << vec.x << ", " << vec.y;
+	return os;
+}

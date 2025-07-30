@@ -1,5 +1,6 @@
 ﻿#include "pch.h"
 #include "Input.h"
+#include "../Datas/EngineData.h"
 
 float Input::MouseX = 0.0f;
 float Input::MouseY = 0.0f;
@@ -11,22 +12,29 @@ bool Input::leftButtonDown = false;
 bool Input::rightButtonDown = false;
 bool Input::middleButtonDown = false;
 
-void Input::Update() {
+bool Input::IsTrackingMouse = false;
+bool Input::IsMouseInside = false;
+
+void Input::Update() 
+{
     memcpy_s(prevState, sizeof(prevState), currState, sizeof(currState));
     for (int i = 0; i < 256; i++) {
         currState[i] = GetAsyncKeyState(i);
     }
 }
 
-bool Input::IsKeyDown(int vKey) {
+bool Input::IsKeyDown(int vKey) 
+{
     return (currState[vKey] & 0x8000) != 0;
 }
 
-bool Input::IsKeyPressed(int vKey) {
+bool Input::IsKeyPressed(int vKey) 
+{
     return (!(prevState[vKey] & 0x8000) && (currState[vKey] & 0x8000));
 }
 
-bool Input::IsKeyReleased(int vKey) {
+bool Input::IsKeyReleased(int vKey) 
+{
     return ((prevState[vKey] & 0x8000) && !(currState[vKey] & 0x8000));
 }
 
@@ -48,13 +56,21 @@ void Input::ResetMouseEventFrameState()
     MouseDeltaX = 0.0f;
     MouseDeltaY = 0.0f;
     wheelDelta = 0.0f;
-    leftButtonDown = false;
-    rightButtonDown = false;
-    middleButtonDown = false;
 }
 
-void Input::ProcessMouseMessage(UINT message, WPARAM wParam, LPARAM lParam)
+void Input::ProcessMouseMessage(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+    if (!IsTrackingMouse && message == WM_MOUSEMOVE)
+    {
+        TRACKMOUSEEVENT tme = {};
+        tme.cbSize = sizeof(tme);
+        tme.dwFlags = TME_LEAVE;
+        tme.hwndTrack = hwnd;
+        TrackMouseEvent(&tme);
+        IsTrackingMouse = true;
+        IsMouseInside = true;
+    }
+
     Input::MouseDeltaX = LOWORD(lParam) - Input::MouseX;
     Input::MouseDeltaY = HIWORD(lParam) - Input::MouseY;
     Input::MouseX = LOWORD(lParam);
@@ -79,4 +95,13 @@ void Input::ProcessMouseMessage(UINT message, WPARAM wParam, LPARAM lParam)
     // std::cout << "Left Button: " << leftButtonDown << std::boolalpha << std::endl;
     // std::cout << "Right Button: " << rightButtonDown << std::boolalpha << std::endl;
     // std::cout << "Middle Button: " << middleButtonDown << std::boolalpha << std::endl;
+}
+
+void Input::ResetMouseOnOutOfBounds()
+{
+    leftButtonDown = false;
+    rightButtonDown = false;
+    middleButtonDown = false;
+    IsTrackingMouse = false;
+    IsMouseInside = false;
 }

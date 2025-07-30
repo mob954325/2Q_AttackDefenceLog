@@ -20,6 +20,7 @@ public:
 	bool CheckCollisionWithAABB(ICollider* other, CollisionInfo& outCollisionInfo);
 
 	void OnCreate() override;
+	void OnStart() override;
 	void OnDestroy() override;
 	void SetSize(float width, float height, float size);
 	D2D1_RECT_F GetSize() const;
