@@ -19,7 +19,7 @@ void Button::OnStart()
 	pressed->CreateBitmapResource(L"../../Resource/UI/Test_Button/button_square_pressed.png");
 	pressed->SetActive(false);
 
-	SetOnClickEvent(NULL); // 0730 : Test code
+	AddOnClickEvent(NULL); // 0730 : Test code
 }
 
 void Button::Update()
@@ -83,10 +83,17 @@ void Button::SetRect(float width, float height)
 	}
 }
 
-void Button::SetOnClickEvent(std::function<void()> cb)
+size_t Button::AddOnClickEvent(std::function<void()> fn)
 {
-	int id = onClickEvent.Add([]() {std::cout << "버튼 이벤트 확인 " << std::endl; }); 
+	int id = onClickEvent.Add(fn); 
+	return id; // 이벤트 아이디 반환
 }
+
+void Button::RemoveOnClickEventById(size_t id)
+{
+	onClickEvent.RemoveByID(id);
+}
+
 
 bool Button::IsMouseOver(const Vector2& mousePos) const
 {

@@ -1,7 +1,6 @@
 ﻿#pragma once
 #include "Components/UI/UIComponent.h"
 #include "Components/Rendering/BitmapRenderer.h"
-#include "Components/Collision/AABBCollider.h"
 #include <Utils/EventDelegate.h>
 #include <string>
 #include <functional>
@@ -23,7 +22,12 @@ public:
 	BitmapRenderer* GetPressedImage();
 	void SetRect(float width, float height);
 
-	void SetOnClickEvent(std::function<void()> cb);
+	/// <summary>
+	/// 버튼 클릭이벤트 등록함수
+	/// </summary>
+	/// <param name="cb"><void()형 함수 객체/param>
+	size_t AddOnClickEvent(std::function<void()> fn);
+	void RemoveOnClickEventById(size_t id);
 
 	bool IsMouseOver(const Vector2& mousePos) const;
 	
