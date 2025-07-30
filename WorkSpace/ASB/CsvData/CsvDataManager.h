@@ -28,22 +28,20 @@
 
 class CsvDataManager : public Singleton<CsvDataManager>
 {
-private:
-	CsvDataManager() {};
-	~CsvDataManager() override {};
+public:
+	CsvDataManager() = default; // 생성자
+	~CsvDataManager() override; // 소멸자
 	friend class Singleton<CsvDataManager>; // 싱글톤 패턴을 사용하기 위한 친구 클래스 선언
 public:
 	// 매개변수  : CSV 파일의 경로, 파일 내부 스킵할 라인의 수
 	// CSV 파일을 읽어와서 std::unordered_map에 저장하는 함수
 
 	template<typename T>
-	void SetCSV(const std::string& filePath, int skipLine);
+	void SetCSV(const std::string filePath, int skipLine);
 	
 	// 데이터 타입을 바탕으로 맵을 찾고, ID에 해당하는 데이터의 포인터를 반환함 
 	template<typename T>
 	T* GetCSV(const std::string DataID);
-
-
 
 
 	// 콘솔용
@@ -70,13 +68,33 @@ private:
 	PlayerData* CreateDataImpl(PlayerData* tag) { return playerDataStorage.CreateData(); }
 
 	//SaveDataImpl 헬퍼 힘수
-	template<typename T>
-	void SaveDataImpl(const std::string& key, T* data) {};
 	void SaveDataImpl(const std::string& key, AllNodePattenClass* data) { allNodePattenStorage.SetData(key, data); }
 	void SaveDataImpl(const std::string& key, EnemyAtkPattenData* data) { enemyAtkPattenStorage.SetData(key, data); }
 	void SaveDataImpl(const std::string& key, EnemyData* data) { enemyDataStorage.SetData(key, data); }
 	void SaveDataImpl(const std::string& key, PlayerAtkPetternData* data) { playerAtkPetternStorage.SetData(key, data); }
 	void SaveDataImpl(const std::string& key, PlayerData* data) { playerDataStorage.SetData(key, data); }
+
+	//
+	template<typename T>
+	void DispatchSaveData(const std::string& key, T* ptr) {
+		static_assert(sizeof(T) == 0, "지원되지 않는 타입입니다");
+	}
+	template<>
+	void DispatchSaveData<AllNodePattenClass>(const std::string& key, AllNodePattenClass* ptr) {
+		allNodePattenStorage.SetData(key, ptr);
+	}
+	template<>
+	void DispatchSaveData<EnemyData>(const std::string& key, EnemyData* ptr) {
+		enemyDataStorage.SetData(key, ptr);
+	}
+	template<>
+	void DispatchSaveData<PlayerAtkPetternData>(const std::string& key, PlayerAtkPetternData* ptr) {
+		playerAtkPetternStorage.SetData(key, ptr);
+	}
+	template<>
+	void DispatchSaveData<PlayerData>(const std::string& key, PlayerData* ptr) {
+		playerDataStorage.SetData(key, ptr);
+	}
 
 	//GetData 헬퍼
 	AllNodePattenClass* getDataImpl(AllNodePattenClass* tag, std::string ID) 
@@ -97,12 +115,12 @@ private:
 
 
 template<typename T>
-void CsvDataManager::SetCSV(const std::string& filePath, int skipLine) {
+void CsvDataManager::SetCSV(const std::string filePath, int skipLine) {
 	static_assert(std::is_base_of_v<BaseData, T>); // T가 BaseData를 상속받는지 확인하는 문장
 
 
 	//데이터 클래스 T의 타입을 검사해서 같다면 데이터 저장소에서 데이터 클레스 생성함수 호출
-	T* tmpData = CreateDataImpl(T*);
+	T* tmpData = CreateDataImpl(static_cast<T*>(nullptr));
 
 	std::wifstream file(filePath); // 파일 스트림 생성
 	if (!file.is_open()) {  // 파일 열기 실패 시 에러 메시지 출력
@@ -144,16 +162,17 @@ void CsvDataManager::SetCSV(const std::string& filePath, int skipLine) {
 		// key가 비어있으면 저장하지 않음 (보호 로직)
 		//
 		if (!key.empty()) {
-			SaveDataImpl(key, tmpData); // SaveDataImpl 함수를 호출하여 데이터를 저장
+			//SaveDataImpl(key, tmpData); // SaveDataImpl 함수를 호출하여 데이터를 저장
+			this->DispatchSaveData(key, tmpData); // DispatchSaveData 함수를 호출하여 데이터를 저장
 		}
 	}
 	// 데이터를 저장하는 함수 필요함!!!
 	file.close();
-};
+}
 
 
 
 template<typename T>
 T* CsvDataManager::GetCSV(const std::string DataID) {
-	return getDataImpl(T* tag, DataID);
-};
+	return getDataImpl(static_cast<T*>(nullptr), DataID);
+}

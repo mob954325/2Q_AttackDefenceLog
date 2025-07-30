@@ -2,6 +2,7 @@
 #include <string>
 #include <unordered_map>
 #include <typeinfo>
+#include "Utils/Singleton.h"
 #include "../DataClass/AllNodePattenClass.h"
 #include "../DataClass/EnemyAtkPattenData.h"
 #include "../DataClass/EnemyData.h"
@@ -23,7 +24,7 @@ template<typename T>
 class CsvDataStorage
 { // CSV 데이터 저장 클래스
   // 맵 :   키 : 각 엑셀의 첫 번째 값    값 : 해당 행의 데이터를 저장하는 클래스의 포인터
-protected:
+public:
 	CsvDataStorage() {};
 	virtual ~CsvDataStorage() {};
 	friend class Singleton<CsvDataManager>; // 싱글톤 패턴을 사용하기 위한 친구 클래스 선언
