@@ -1,4 +1,5 @@
 ﻿#include <windows.h>
+#include "App/SoundApp.h"
 
 // KJH
 
@@ -12,9 +13,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 {
     CoInitialize(nullptr);  // COM 초기화
 
-    // app.Initialize();
-    // app.Run();
-    // app.Uninitialize();
+    SoundApp::SoundApp app;
+	app.Initialize();
+	app.Run();
+	app.Uninitialize();
 
     CoUninitialize();        // COM 해제
     return (int)1;

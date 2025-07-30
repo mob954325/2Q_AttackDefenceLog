@@ -2,5 +2,13 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="Script\MusicScript.cpp" />
+    <ClCompile Include="App\SoundApp.cpp" />
+    <ClCompile Include="Scene\TestScene.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Script\MusicScript.h" />
+    <ClInclude Include="App\SoundApp.h" />
+    <ClInclude Include="Scene\TestScene.h" />
   </ItemGroup>
 </Project>
