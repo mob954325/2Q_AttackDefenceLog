@@ -93,7 +93,7 @@ void CircleCollider::OnCreate()
 void CircleCollider::OnStart()
 {
 	debugCircle = owner->AddComponent<CircleRenderer>();
-	debugCircle->SetRadius(radius);
+	debugCircle->SetRadius(radius);	
 }
 
 void CircleCollider::OnDestroy()

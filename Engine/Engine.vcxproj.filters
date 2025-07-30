@@ -282,6 +282,7 @@
     <ClInclude Include="Math\GameRandom.h">
       <Filter>Math</Filter>
     </ClInclude>
+    <ClInclude Include="Components\UI\Slider.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\Application.cpp">
@@ -433,6 +434,7 @@
     <ClCompile Include="Math\GameRandom.cpp">
       <Filter>Math</Filter>
     </ClCompile>
+    <ClCompile Include="Components\UI\Slider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
