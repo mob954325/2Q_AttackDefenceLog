@@ -1,4 +1,4 @@
-癤#include "TrailComponent.h"
+﻿#include "TrailComponent.h"
 #include "Components/Camera/Camera.h"
 #include "Scene/SceneManager.h"
 
@@ -7,7 +7,7 @@
 #include "Utils/DebugUtility.h"
 #include "Resources/ResourceManager.h"
 
-/* ъ (留곗 곕쇨寃 ㅼ)
+/* 
 #include "Components/Logic/InputSystem.h"
 #include "Components/Rendering/TrailComponent.h"
 
@@ -24,7 +24,7 @@ Update
 	obj->GetTransform().SetPosition(Input::MouseX, Input::MouseY);
 */
 
-constexpr float PI = 3.141592654f; //  レ 紐 대쇰嫄곗
+constexpr float PI = 3.141592654f; // 
 
 void TrailComponent::Update() { // 여기서 삭제(정리)처리해주면 됨
 	// 	while (trails.size() > maxTrailCount && isOutFromBox) { // 최대 사이즈대로 빼줌, 나중에 조건추가하면 됨
@@ -48,19 +48,20 @@ void TrailComponent::Clear()
 }
 
 void TrailComponent::AddStamp(D2D1_POINT_2F pos) {
-	if (!isDraw) return; // 洹 쇰━ 由ы
+	if (!isDraw) return; // 
 
-	if (trails.empty()) { // 泥  諛濡 泥由ы대由, 댁감 媛 怨고  쇰源
+	if (trails.empty()) { // 
 		trails.push_back({ pos, 0.0f });
 		return;
 	}
 
-	const TrailStamp& last = trails.back(); // 援ъ“泥대� 鍮�ㅼ,  媛 理洹쇱쎌嫄 湲곗쇰
-	float dx = pos.x - last.position.x; // 蹂, x利媛
-	float dy = pos.y - last.position.y; // y利媛
-	float dist = sqrtf(dx * dx + dy * dy); // �怨깊댁  猷⑦ , 利 嫄곕━
+	const TrailStamp& last = trails.back(); // 
 
-	if (dist < minDistance) // 쇱嫄곕━ 댄硫 깆,
+	float dx = pos.x - last.position.x; // 
+	float dy = pos.y - last.position.y; // 
+	float dist = sqrtf(dx * dx + dy * dy); // 
+
+	if (dist < minDistance) // 
 		return;
 
 	int steps = static_cast<int>(dist / minDistance); //최소거리가 현재 간격에 몇번들어가는지 확인하는거임
@@ -72,10 +73,10 @@ void TrailComponent::AddStamp(D2D1_POINT_2F pos) {
 			last.position.y + dy * t
 		};
 
-		float angle = (i == 1) // 泥ル吏 硫
-			? GetAngle(last.position, interpPos) // 留吏留�怨 媛 怨
-			: GetAngle(trails.back().position, interpPos); // 硫 留吏留 異媛嫄곕 媛 怨
-		trails.push_back({ interpPos, angle }); //  吏대ｌ, 以 draw 醫 + 媛 湲곕쇰 洹몃ㅼ
+		float angle = (i == 1) // 
+			? GetAngle(last.position, interpPos) // 
+			: GetAngle(trails.back().position, interpPos); // 
+		trails.push_back({ interpPos, angle }); // 
 	}
 
 	if (isOutFromBox) {
@@ -92,8 +93,8 @@ void TrailComponent::AddStamp(D2D1_POINT_2F pos) {
 	}
 }
 
-void TrailComponent::Draw(D2DRenderManager* manager) { // 蹂멸꺽�쇰 洹몃━ 遺遺
-	if (!stampBitmap) return; // 鍮몃㏊ 깅 硫 洹몃┝
+void TrailComponent::Draw(D2DRenderManager* manager) { //
+	if (!stampBitmap) return; // 
 	if (!IsActiveSelf()) return; // 비활성화 얼리리턴
 
 	for (auto& stamp : trails) { // 큐 전체를 순회하면서
@@ -105,7 +106,7 @@ void TrailComponent::Draw(D2DRenderManager* manager) { // 蹂멸꺽�쇰�
 		 stamp.position.y + bmpSize.height * 0.5f,
 		};
 
-		D2D1::Matrix3x2F transform = D2D1::Matrix3x2F::Rotation( // �� ㅼ
+		D2D1::Matrix3x2F transform = D2D1::Matrix3x2F::Rotation( //
 			stamp.angle * 180.0f / PI,
 			stamp.position
 		);
@@ -116,7 +117,7 @@ void TrailComponent::Draw(D2DRenderManager* manager) { // 蹂멸꺽�쇰�
 			bmpSize.width, bmpSize.height
 		};
 
-		manager->DrawBitmap(stampBitmap->GetBitmap(), destRect, srcRect); // 濡 鍮몃㏊ 吏� 몄댁
+		manager->DrawBitmap(stampBitmap->GetBitmap(), destRect, srcRect); // 
 	}
 }
 
@@ -128,12 +129,12 @@ void TrailComponent::Render(D2DRenderManager* manager)
 	Draw(manager);
 }
 
-void TrailComponent::SetBitmap(std::wstring path) // ⑺嫄곗
+void TrailComponent::SetBitmap(std::wstring path) // 
 {
 	stampBitmap = resourceManager->CreateBitmapResource(path);
 }
 
-void TrailComponent::OnDestroy() // 臾댄 
+void TrailComponent::OnDestroy() // 
 {
-	stampBitmap.reset(); // �듬 20:30 
+	stampBitmap.reset(); //  20:30 
 }
