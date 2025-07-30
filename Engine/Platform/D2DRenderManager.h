@@ -16,7 +16,7 @@ public:
 
 	void SetD2D1DeviceContext7(ID2D1DeviceContext7* pD2D1DeviceContext7);
 
-	void SetBitmapTransform(D2D1_MATRIX_3X2_F& finalMatrix);
+	void SetRenderTransform(D2D1_MATRIX_3X2_F& finalMatrix);
 	void DrawBitmap(ComPtr<ID2D1Bitmap1> bitmap);
 	void DrawBitmap(ComPtr<ID2D1Bitmap1> bitmap, D2D1_RECT_F& destRect, D2D1_RECT_F& srcRect);
 	void DrawImage(ComPtr<ID2D1Effect> effect);
