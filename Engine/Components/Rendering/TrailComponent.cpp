@@ -9,7 +9,7 @@
 
 /* 사용 예시(마우스 따라가게 설정)
 #include "Components/Logic/InputSystem.h"
-#include "TrailComponent.h"
+#include "Components/Rendering/TrailComponent.h"
 
 Enter
 	auto t = obj->GetComponent<TrailComponent>();
