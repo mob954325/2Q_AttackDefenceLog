@@ -6,10 +6,14 @@
 void Button::OnStart()
 {
 	normal = owner->AddComponent<BitmapRenderer>();
+	hover = owner->AddComponent<BitmapRenderer>();
 	pressed = owner->AddComponent<BitmapRenderer>();
 
 	normal->CreateBitmapResource(L"../../Resource/UI/Test_Button/button_square.png");
-	// normal->SetActive(false);
+	normal->SetActive(true);
+
+	hover->CreateBitmapResource(L"../../Resource/UI/Test_Button/button_square_hover.png");
+	hover->SetActive(false);
 
 	pressed->CreateBitmapResource(L"../../Resource/UI/Test_Button/button_square_pressed.png");
 	pressed->SetActive(false);
@@ -22,19 +26,18 @@ void Button::Update()
 
 	if (IsMouseOver(mouseVec))
 	{
-		normal->SetActive(false); 
-		pressed->SetActive(true);
+		HandleButtonImage(ButtonState::Hover);
 
 		// 마우스 3버튼 아무거나 클릭하면 이벤트 실행
 		if (Input::leftButtonDown || Input::middleButtonDown || Input::rightButtonDown)
 		{
+			HandleButtonImage(ButtonState::Pressed);
 			onClickEvent.Invoke(); // NOTE: 버튼 이벤트 등록 및 실행할 수 있게되면 이 주석 제거하기
 		}
 	}
 	else
 	{
-		normal->SetActive(true);
-		pressed->SetActive(false);
+		HandleButtonImage(ButtonState::Normal);
 	}
 }
 
@@ -46,6 +49,16 @@ void Button::SetNormalImage(std::wstring path)
 BitmapRenderer* Button::GetNormalImage()
 {
 	return normal;
+}
+
+void Button::SetHoverImage(std::wstring path)
+{
+	hover->CreateBitmapResource(path);
+}
+
+BitmapRenderer* Button::GetHoverImage()
+{
+	return hover;
 }
 
 void Button::SetPressedImage(std::wstring path)
@@ -94,4 +107,28 @@ bool Button::IsMouseOver(const Vector2& mousePos) const
 		mousePos.x <= screenRect.right &&	// 오른쪽 
 		mousePos.y >= screenRect.top &&		// 위
 		mousePos.y <= screenRect.bottom;	// 아래
+}
+
+void Button::HandleButtonImage(ButtonState type)
+{
+	switch (type)
+	{
+	case ButtonState::Normal:
+		normal->SetActive(true);
+		hover->SetActive(false);
+		pressed->SetActive(false);
+		break;
+	case ButtonState::Hover:
+		normal->SetActive(false);
+		hover->SetActive(true);
+		pressed->SetActive(false);
+		break;
+	case ButtonState::Pressed:
+		normal->SetActive(false);
+		hover->SetActive(false);
+		pressed->SetActive(true);
+		break;
+	default:
+		break;
+	}
 }
