@@ -13,7 +13,6 @@
 class Button : public UIComponent
 {
 public:
-	void OnCreate() override;
 	void OnStart() override;
 	void Update() override;
 	void SetNormalImage(std::wstring path);
@@ -37,6 +36,6 @@ private:
 
 	D2D1_RECT_F screenRect{};
 
-	EventDelegate<> onClickEvent;
+	EventDelegate<> onClickEvent; // void()형만 받는 클릭 이벤트 
 };
 

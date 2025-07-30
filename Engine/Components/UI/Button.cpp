@@ -3,11 +3,6 @@
 #include "Platform/Input.h"
 #include "Datas/EngineData.h"
 
-void Button::OnCreate()
-{
-
-}
-
 void Button::OnStart()
 {
 	normal = owner->AddComponent<BitmapRenderer>();
@@ -18,8 +13,6 @@ void Button::OnStart()
 
 	pressed->CreateBitmapResource(L"../../Resource/UI/Test_Button/button_square_pressed.png");
 	pressed->SetActive(false);
-
-	AddOnClickEvent(NULL); // 0730 : Test code
 }
 
 void Button::Update()
@@ -29,13 +22,12 @@ void Button::Update()
 
 	if (IsMouseOver(mouseVec))
 	{
-		normal->SetActive(false);
+		normal->SetActive(false); 
 		pressed->SetActive(true);
 
-
+		// 마우스 3버튼 아무거나 클릭하면 이벤트 실행
 		if (Input::leftButtonDown || Input::middleButtonDown || Input::rightButtonDown)
 		{
-			std::cout << "==== 마우스 클릭 =====" << std::endl;
 			onClickEvent.Invoke(); // NOTE: 버튼 이벤트 등록 및 실행할 수 있게되면 이 주석 제거하기
 		}
 	}
@@ -71,6 +63,7 @@ void Button::SetRect(float width, float height)
 	Vector2 position = owner->GetTransform().GetPosition();
 	if (owner->GetTransform().IsUnityCoords())
 	{
+		// 유니티 좌표처럼 위치 보정 
 		screenRect = {position.x, position.y, position.x + width, position.y + height};
 		screenRect.left += EngineData::SceenWidth / 2;
 		screenRect.right += EngineData::SceenWidth / 2;
@@ -79,7 +72,7 @@ void Button::SetRect(float width, float height)
 	}
 	else
 	{
-		screenRect = {position.x, position.y, position.x + width, position.y + height};
+		screenRect = {position.x, position.y, position.x + width, position.y + height}; // 좌측 상단을 기준으로 충돌 범위 설정
 	}
 }
 

@@ -14,7 +14,10 @@ public:
 
 private:
 	void OnClick();
+	void SetValue(int value);
 
 	Button* button{};
+	
+	int value = 0;
 };
 
