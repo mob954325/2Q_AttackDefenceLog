@@ -270,9 +270,17 @@
     <ClInclude Include="Components\UI\UIComponent.h">
       <Filter>Components\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Systems\UISystem.h" />
     <ClInclude Include="Components\Rendering\TrailComponent.h">
       <Filter>Components\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\UISystem.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Rendering\ParticleRenderer.h">
+      <Filter>Components\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\GameRandom.h">
+      <Filter>Math</Filter>
     </ClInclude>
     <ClInclude Include="Components\UI\Slider.h" />
   </ItemGroup>
@@ -414,9 +422,17 @@
     <ClCompile Include="Components\UI\UIComponent.cpp">
       <Filter>Components\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Systems\UISystem.cpp" />
     <ClCompile Include="Components\Rendering\TrailComponent.cpp">
       <Filter>Components\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\UISystem.cpp">
+      <Filter>Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\Rendering\ParticleRenderer.cpp">
+      <Filter>Components\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\GameRandom.cpp">
+      <Filter>Math</Filter>
     </ClCompile>
     <ClCompile Include="Components\UI\Slider.cpp" />
   </ItemGroup>

@@ -12,11 +12,14 @@ void DummyCircleCollider::OnCreate()
 	circle->SetRadius(20.0f);
 
 	input = owner->AddComponent<InputSystem>();
+
+	particle = owner->AddComponent<ParticleRenderer>();
 }
 
 void DummyCircleCollider::OnStart()
 {
 	target = owner->GetQuery()->FindByName("Test Cirlce");
+	particle->SetBitmap(L"../../Resource/Mushroom.png");
 }
 
 void DummyCircleCollider::OnFixedUpdate()
@@ -26,8 +29,27 @@ void DummyCircleCollider::OnFixedUpdate()
 void DummyCircleCollider::OnUpdate()
 {
 	HandleInput();
-	//owner->GetTransform().SetPosition(Input::MouseX, Input::MouseY);
-	// std::cout << "dummy position :::: " << owner->GetTransform().GetPosition().x << ", " << owner->GetTransform().GetPosition().y << std::endl;
+
+	if (input->IsKeyPressed('Q'))
+	{
+		particle->Play();
+	}
+	if (input->IsKeyPressed('W'))
+	{
+		particle->Pause();
+	}
+	if (input->IsKeyPressed('E'))
+	{
+		particle->Reset();
+	}
+	if (input->IsKeyPressed('R'))
+	{
+		particle->SetLoop(true);
+	}
+	if (input->IsKeyPressed('T'))
+	{
+		particle->SetLoop(false);
+	}
 }
 
 void DummyCircleCollider::OnDestroy()
@@ -59,8 +81,8 @@ void DummyCircleCollider::OnColliderExit(GameObject* collider)
 
 void DummyCircleCollider::HandleInput()
 {
-	if (input->IsKeyDown('W')) owner->GetTransform().Translate({ 0, 1 });
-	if (input->IsKeyDown('A')) owner->GetTransform().Translate({ -1, 0 });
-	if (input->IsKeyDown('S')) owner->GetTransform().Translate({ 0, -1 });
-	if (input->IsKeyDown('D')) owner->GetTransform().Translate({ 1, 0 });
+	// if (input->IsKeyDown('W')) owner->GetTransform().Translate({ 0, 1 });
+	// if (input->IsKeyDown('A')) owner->GetTransform().Translate({ -1, 0 });
+	// if (input->IsKeyDown('S')) owner->GetTransform().Translate({ 0, -1 });
+	// if (input->IsKeyDown('D')) owner->GetTransform().Translate({ 1, 0 });
 }

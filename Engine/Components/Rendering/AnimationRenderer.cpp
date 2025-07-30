@@ -11,7 +11,8 @@
 void AnimationRenderer::Render(D2DRenderManager* manager)
 {
 	if (!m_bitmapResource) return;
-	
+	if (!IsActiveSelf()) return;
+
 	// 출력할 최종 위치 설정
 	D2D1_MATRIX_3X2_F mat = owner->GetTransform().GetFinalMatrix();
 

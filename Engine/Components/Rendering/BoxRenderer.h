@@ -22,7 +22,5 @@ private:
 	ID2D1SolidColorBrush* brush{};
 	FLOAT width = 0.8f;
 	ID2D1StrokeStyle* strokeStyle = (ID2D1StrokeStyle*)0;
-
-	bool isShow = false;
 };
 

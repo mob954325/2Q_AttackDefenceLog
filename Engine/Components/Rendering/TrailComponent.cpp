@@ -1,4 +1,4 @@
-#include "TrailComponent.h"
+ç™¤#include "TrailComponent.h"
 #include "Components/Camera/Camera.h"
 #include "Scene/SceneManager.h"
 
@@ -7,7 +7,7 @@
 #include "Utils/DebugUtility.h"
 #include "Resources/ResourceManager.h"
 
-/* »ç¿ë ¿¹½Ã(¸¶¿ì½º µû¶ó°¡°Ô ¼³Á¤)
+/* Â‚ÑŠÂš Â˜ÂˆÂ‹Âœ(ï§ÂˆÂšê³—ÂŠ Â”ê³•Âì‡¨Â€å¯ƒÂŒ Â„ã…¼Â•)
 #include "Components/Logic/InputSystem.h"
 #include "Components/Rendering/TrailComponent.h"
 
@@ -24,17 +24,17 @@ Update
 	obj->GetTransform().SetPosition(Input::MouseX, Input::MouseY);
 */
 
-constexpr float PI = 3.141592654f; // ÀÌ ¼ıÀÚ´Â À¯¸íÇÑ ÆÄÀÌ¶ó´Â°ÅÀÓ
+constexpr float PI = 3.141592654f; // Â Âˆãƒ¬ÂÂÂŠÂ” Âœï§Â…Â•Âœ ÂŒÂŒÂëŒ€Âì‡°ÂŠÂ”å«„ê³—ÂÂ„
 
-void TrailComponent::Update() { // ¿©±â¼­ »èÁ¦(Á¤¸®)Ã³¸®ÇØÁÖ¸é µÊ
-	// 	while (trails.size() > maxTrailCount && isOutFromBox) { // ÃÖ´ë »çÀÌÁî´ë·Î »©ÁÜ, ³ªÁß¿¡ Á¶°ÇÃß°¡ÇÏ¸é µÊ
+void TrailComponent::Update() { // ì—¬ê¸°ì„œ ì‚­ì œ(ì •ë¦¬)ì²˜ë¦¬í•´ì£¼ë©´ ë¨
+	// 	while (trails.size() > maxTrailCount && isOutFromBox) { // ìµœëŒ€ ì‚¬ì´ì¦ˆëŒ€ë¡œ ë¹¼ì¤Œ, ë‚˜ì¤‘ì— ì¡°ê±´ì¶”ê°€í•˜ë©´ ë¨
 	// 		trails.pop_front();
 	// 	}
 
 	// 	if (trails.size() > maxTrailCount && isOutFromBox)
 	// 		trails.pop_front();
 
-	if (wasDraw && !isDraw) { // ÀÌÈÄ»óÅÂ true + ÇöÀç»óÅÂ false, Áï ²¨Áú¶§ ÇÑ¹ø
+	if (wasDraw && !isDraw) { // ì´í›„ìƒíƒœ true + í˜„ì¬ìƒíƒœ false, ì¦‰ êº¼ì§ˆë•Œ í•œë²ˆ
 		cachedTrails = trails;
 		isNewCached = true;		
 		Clear();
@@ -48,95 +48,92 @@ void TrailComponent::Clear()
 }
 
 void TrailComponent::AddStamp(D2D1_POINT_2F pos) {
-	if (!isDraw) return; // ÇÃ·¡±× ¾ó¸® ¸®ÅÏ
+	if (!isDraw) return; // Â”ÂŒÂÂ˜æ´¹ Â–ì‡°â” ç”±Ñ‹Â„
 
-	if (trails.empty()) { // Ã¹ ¿ä¼Ò´Â ¹Ù·Î Ã³¸®ÇØ¹ö¸², ¾îÂ÷ÇÇ °¢µµ °è»êÇÒ ÇÊ¿ä ¾øÀ¸´Ï±î
+	if (trails.empty()) { // ï§£ ÂšÂ”Â†ÂŒÂŠÂ” è«›Â”æ¿¡Âœ ï§£Â˜ç”±Ñ‹Â•ëŒ€Â„ç”±, Â–ëŒê°Â” åª›ÂÂ„ æ€¨Â„Â‚ê³ Â• Â•Â„ÂšÂ” Â—Â†Âœì‡°Â‹ÂˆæºÂŒ
 		trails.push_back({ pos, 0.0f });
 		return;
 	}
 
-	const TrailStamp& last = trails.back(); // ±¸Á¶Ã¼¸¦ ºô·Á¿È, Å¥ÀÇ °¡Àå ÃÖ±Ù»ğÀÔµÈ°Å ±âÁØÀ¸·Î
-	float dx = pos.x - last.position.x; // º¯È­·®ÀÓ, xÁõ°¡·®
-	float dy = pos.y - last.position.y; // yÁõ°¡·®
-	float dist = sqrtf(dx * dx + dy * dy); // Á¦°öÇØ¼­ ´õÇÑµÚ ·çÆ® ¾º¿ò, Áï °Å¸®ÀÓ
+	const TrailStamp& last = trails.back(); // æ´ÑŠâ€œï§£ëŒ€ï¿½ é®ÂŒï¿½ã…¼Â˜, ÂÂÂÂ˜ åª›Â€Â ï§¤Âœæ´¹ì‡±Â‚ìŒÂÂ…ÂÂœå«„ æ¹²ê³—Â€Âœì‡°Âœ
+	float dx = pos.x - last.position.x; // è¹‚Â€Â™Â”ÂŸÂ‰ÂÂ„, xï§Âåª›Â€ÂŸÂ‰
+	float dy = pos.y - last.position.y; // yï§Âåª›Â€ÂŸÂ‰
+	float dist = sqrtf(dx * dx + dy * dy); // ï¿½Âœæ€¨ê¹ŠÂ•ëŒÂ„Âœ ÂÂ”Â•ÂœÂ’ çŒ·â‘¦ÂŠ Â”ÂŒÂ›Â€, ï§Â‰ å«„ê³•â”ÂÂ„
 
-	if (dist < minDistance) // ÀÏÁ¤°Å¸® ÀÌÇÏ¸é »ı¼º¾ÈÇÔ,
+	if (dist < minDistance) // Âì‡±Â•å«„ê³•â” ÂëŒ„Â•Â˜ï§ ÂƒÂÂ„ê¹†Â•ÂˆÂ•,
 		return;
 
-	int steps = static_cast<int>(dist / minDistance); //ÃÖ¼Ò°Å¸®°¡ ÇöÀç °£°İ¿¡ ¸î¹øµé¾î°¡´ÂÁö È®ÀÎÇÏ´Â°ÅÀÓ
-	//(ÃÖ¼Ò°Å¸®º¸´Ù Ä¿¾ß »ı¼ºµÇ´Ï±î ±âº»ÀûÀ¸·Î 1 ÀÌ»óÀÓ + int¶ó Á¤¼öÀÓ)
+	int steps = static_cast<int>(dist / minDistance); //ìµœì†Œê±°ë¦¬ê°€ í˜„ì¬ ê°„ê²©ì— ëª‡ë²ˆë“¤ì–´ê°€ëŠ”ì§€ í™•ì¸í•˜ëŠ”ê±°ì„
+	//(ìµœì†Œê±°ë¦¬ë³´ë‹¤ ì»¤ì•¼ ìƒì„±ë˜ë‹ˆê¹Œ ê¸°ë³¸ì ìœ¼ë¡œ 1 ì´ìƒì„ + intë¼ ì •ìˆ˜ì„)
 	for (int i = 1; i <= steps; ++i) {
-		float t = static_cast<float>(i) / steps; // º¸°£½Ä, t + 1/t
-		D2D1_POINT_2F interpPos = { // º¸°£À¸·Î Áß°£ Á¡ »ı¼ºÇØÁÜ, º¯È­·®(±â¿ï±â)ÀÀ¿ë
-			last.position.x + dx * t, // ¿øÁ¡¿¡¼­ º¯È­·®¸¸Å­ ÀÌµ¿ * º¸°£Ä¡
+		float t = static_cast<float>(i) / steps; // ë³´ê°„ì‹, t + 1/t
+		D2D1_POINT_2F interpPos = { // ë³´ê°„ìœ¼ë¡œ ì¤‘ê°„ ì  ìƒì„±í•´ì¤Œ, ë³€í™”ëŸ‰(ê¸°ìš¸ê¸°)ì‘ìš©
+			last.position.x + dx * t, // ì›ì ì—ì„œ ë³€í™”ëŸ‰ë§Œí¼ ì´ë™ * ë³´ê°„ì¹˜
 			last.position.y + dy * t
 		};
 
-		float angle = (i == 1) // Ã¹¹øÂ° ¿ä¼Ò¸é
-			? GetAngle(last.position, interpPos) // ¸¶Áö¸·Á¡°ú °¢µµ °è»ê
-			: GetAngle(trails.back().position, interpPos); // ¾Æ´Ï¸é ¸¶Áö¸· Ãß°¡µÈ°Å¶û °¢µµ °è»ê
-		trails.push_back({ interpPos, angle }); // Å¥¿¡ Áı¾î³ÖÀ½, ³ªÁß¿¡ draw¿¡¼­ ÁÂÇ¥ + °¢µµ ±â¹İÀ¸·Î ±×·ÁÁÜ
+		float angle = (i == 1) // ï§£ãƒ«Âˆï§ ÂšÂ”Â†ÂŒï§
+			? GetAngle(last.position, interpPos) // ï§Âˆï§Â€ï§Â‰ï¿½Âæ€¨ åª›ÂÂ„ æ€¨Â„Â‚
+			: GetAngle(trails.back().position, interpPos); // Â•Â„Â‹Âˆï§ ï§Âˆï§Â€ï§Â‰ ç•°Â”åª›Â€ÂÂœå«„ê³•ÂÂ‘ åª›ÂÂ„ æ€¨Â„Â‚
+		trails.push_back({ interpPos, angle }); // ÂÂÂ—Â ï§Â‘Â–ëŒ€Â„ï½ŒÂÂŒ, Â‚Â˜ä»¥Â‘Â—Â drawÂ—ÂÂ„Âœ é†«ÂŒÂ‘Âœ + åª›ÂÂ„ æ¹²ê³•Â˜Âœì‡°Âœ æ´¹ëªƒã…¼ÂŒ
 	}
 
 	if (isOutFromBox) {
-		int over = trails.size() > maxTrailCount ? trails.size() - maxTrailCount : 0; // ¾ó¸¶³ª ³ÑÃÆ´ÂÁö °è»ê
-		int deleteCount = over / 10; // ³ÑÄ£ °ªÀÇ ÆÛ¼¾Æ®, Á¶ÀıÇØÁÖ¸é µÊ
+		int over = trails.size() > maxTrailCount ? trails.size() - maxTrailCount : 0; // ì–¼ë§ˆë‚˜ ë„˜ì³¤ëŠ”ì§€ ê³„ì‚°
+		int deleteCount = over / 10; // ë„˜ì¹œ ê°’ì˜ í¼ì„¼íŠ¸, ì¡°ì ˆí•´ì£¼ë©´ ë¨
 
-		if (deleteCount < 1) deleteCount = 1; // ÃÖ¼ÒÇÑ ÇÏ³ª´Â Áö¿ö¾ßÁö 
-		else if (deleteCount > over) deleteCount = over; // ÇÑ¹ø¿¡ ´ÙÁö¿ì´Â°Ç ¸·¾Æ¾ßÁö(int¶ó¼­ ±×·³)
+		if (deleteCount < 1) deleteCount = 1; // ìµœì†Œí•œ í•˜ë‚˜ëŠ” ì§€ì›Œì•¼ì§€ 
+		else if (deleteCount > over) deleteCount = over; // í•œë²ˆì— ë‹¤ì§€ìš°ëŠ”ê±´ ë§‰ì•„ì•¼ì§€(intë¼ì„œ ê·¸ëŸ¼)
 
-		// ²¿¸® Àß¶ó³¿
+		// ê¼¬ë¦¬ ì˜ë¼ëƒ„
 		for (int i = 0; i < deleteCount && !trails.empty(); ++i) {
 			trails.pop_front();
 		}
 	}
 }
 
-void TrailComponent::Draw(D2DRenderManager* manager) { // º»°İÀûÀ¸·Î ±×¸®´Â ºÎºĞ
-	if (!stampBitmap) return; // ºñÆ®¸Ê µî·Ï ¾ÈÇÏ¸é ¾È±×¸²
+void TrailComponent::Draw(D2DRenderManager* manager) { // è¹‚ë©¸êº½ï¿½ÂÂœì‡°Âœ æ´¹ëªƒâ”ÂŠÂ” éºÂ€éºÂ„
+	if (!stampBitmap) return; // é®Â„ÂŠëªƒãŠ Â“ê¹…Â Â•ÂˆÂ•Â˜ï§ Â•Âˆæ´¹ëªƒâ”
+	if (!IsActiveSelf()) return; // ë¹„í™œì„±í™” ì–¼ë¦¬ë¦¬í„´
 
-	if (!IsActiveSelf()) return; // ºñÈ°¼ºÈ­ ¾ó¸®¸®ÅÏ
-
-	for (auto& stamp : trails) { // Å¥ ÀüÃ¼¸¦ ¼øÈ¸ÇÏ¸é¼­
-		D2D1_SIZE_F bmpSize = stampBitmap->GetBitmap()->GetSize(); // »çÀÌÁî ´ëÃæ ±¸ÇØ¼­ Áß¾Ó±âÁØÀ¸·Î
-		D2D1_RECT_F destRect = { // ´ëÃæ ÀÌ¹ÌÁö Á¤ °¡¿îµ¥ ±âÁØ
+	for (auto& stamp : trails) { // í ì „ì²´ë¥¼ ìˆœíšŒí•˜ë©´ì„œ
+		D2D1_SIZE_F bmpSize = stampBitmap->GetBitmap()->GetSize(); // ì‚¬ì´ì¦ˆ ëŒ€ì¶© êµ¬í•´ì„œ ì¤‘ì•™ê¸°ì¤€ìœ¼ë¡œ
+		D2D1_RECT_F destRect = { // ëŒ€ì¶© ì´ë¯¸ì§€ ì • ê°€ìš´ë° ê¸°ì¤€
 		 stamp.position.x - bmpSize.width * 0.5f,
 		 stamp.position.y - bmpSize.height * 0.5f,
 		 stamp.position.x + bmpSize.width * 0.5f,
 		 stamp.position.y + bmpSize.height * 0.5f,
 		};
 
-		D2D1::Matrix3x2F transform = D2D1::Matrix3x2F::Rotation( // È¸ÀüÇà·Ä ¼³Á¤
+		D2D1::Matrix3x2F transform = D2D1::Matrix3x2F::Rotation( // ÂšÂŒï¿½Â„Â–Â‰ï¿½ Â„ã…¼Â•
 			stamp.angle * 180.0f / PI,
 			stamp.position
 		);
 
-		manager->SetRenderTransform(transform); // È¸ÀüÇà·Ä Àû¿ë
-
-		D2D1_RECT_F srcRect = { // ÀÌ°Ç ±Ô°İ ¸ÂÃâ·Á°í ¹Ù²ãÁÖ´Â°ÅÀÓ
+		manager->SetRenderTransform(transform); // íšŒì „í–‰ë ¬ ì ìš©
+		D2D1_RECT_F srcRect = { // ì´ê±´ ê·œê²© ë§ì¶œë ¤ê³  ë°”ê¿”ì£¼ëŠ”ê±°ì„
 			0.0f, 0.0f,
 			bmpSize.width, bmpSize.height
 		};
 
-		manager->DrawBitmap(stampBitmap->GetBitmap(), destRect, srcRect); // µå·Î¿ì ºñÆ®¸ÊÀ» Á÷Á¢ È£ÃâÇØÁÜ
+		manager->DrawBitmap(stampBitmap->GetBitmap(), destRect, srcRect); // Â“Âœæ¿¡ÂœÂš é®Â„ÂŠëªƒãŠÂÂ„ ï§Âï¿½Â‘ Â˜ëª„ÂœÂ•ëŒÂŒ
 	}
 }
 
 void TrailComponent::Render(D2DRenderManager* manager)
 {
-	Update(); // ¿©±â¼­´Â »èÁ¦ ¿©ºÎ ÆÇ´ÜÇÔ
-	auto tf = owner->GetTransform().GetPosition(); // ÄÄÆ÷³ÍÆ®°¡ ºÙ¾îÀÖ´Â ¿À³ÊÀÇ ÁÂÇ¥¸¦ ¹Ş¾Æ¼­
-	AddStamp({ tf.x, tf.y }); // ½ºÅÆÇÁ Ãß°¡ ½Ãµµ, ÁÂÇ¥°¡ ¾î´ÀÁ¤µµ(±âÁØÄ¡ ÀÌ»óÀ¸·Î) ¿òÁ÷¿©¾ß »ı¼ºµÊ 
+	Update(); // ì—¬ê¸°ì„œëŠ” ì‚­ì œ ì—¬ë¶€ íŒë‹¨í•¨
+	auto tf = owner->GetTransform().GetPosition(); // ì»´í¬ë„ŒíŠ¸ê°€ ë¶™ì–´ìˆëŠ” ì˜¤ë„ˆì˜ ì¢Œí‘œë¥¼ ë°›ì•„ì„œ
+	AddStamp({ tf.x, tf.y }); // ìŠ¤íƒ¬í”„ ì¶”ê°€ ì‹œë„, ì¢Œí‘œê°€ ì–´ëŠì •ë„(ê¸°ì¤€ì¹˜ ì´ìƒìœ¼ë¡œ) ì›€ì§ì—¬ì•¼ ìƒì„±ë¨ 
 	Draw(manager);
-
 }
 
-void TrailComponent::SetBitmap(std::wstring path) // ·¦ÇÎÇÑ°ÅÀÓ
+void TrailComponent::SetBitmap(std::wstring path) // Ââ‘ºÂ•Â‘Â•Âœå«„ê³—ÂÂ„
 {
 	stampBitmap = resourceManager->CreateBitmapResource(path);
 }
 
-void TrailComponent::OnDestroy() // ¾Æ¹«Æ° ÇÊ¿äÇÔ
+void TrailComponent::OnDestroy() // Â•Â„è‡¾ëŒ„ÂŠ Â•Â„ÂšÂ”Â•
 {
-	stampBitmap.reset(); // ¼öÁ¤Çß½À´Ï´Ù 20:30 
+	stampBitmap.reset(); // ÂˆÂ˜ï¿½Â•Â–ÂˆÂŠë“¬Â‹ÂˆÂ‹ 20:30 
 }

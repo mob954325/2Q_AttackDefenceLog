@@ -6,6 +6,7 @@
 #include "Components/Rendering/TextRenderer.h"
 #include "Components/Collision/CircleCollider.h"
 #include "Components/Logic/InputSystem.h"
+#include "Components/Rendering/ParticleRenderer.h"
 
 class DummyCircleCollider : public MonoBehavior
 {
@@ -27,4 +28,6 @@ private:
 	InputSystem* input{};
 
 	GameObject* target{};
+
+	ParticleRenderer* particle{};
 };
