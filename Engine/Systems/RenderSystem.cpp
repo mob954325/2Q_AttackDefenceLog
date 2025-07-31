@@ -60,7 +60,7 @@ void RenderSystem::Update(D2DRenderManager* manager)
 		{
 			std::sort(element.second.begin(), element.second.end(), [](RenderComponent* lhs, RenderComponent* rhs)
 				{
-					return lhs->GetOrderInLayer() < rhs->GetOrderInLayer();
+					return lhs->GetOrderInLayer() < rhs->GetOrderInLayer(); // 이거 sort 안됨 컴포넌트에서 여러 bitmap이 sort될 때 확인할 것
 				});
 		});
 
