@@ -24,6 +24,8 @@ public:
 	void CreateBrush(const D2D1::ColorF& color, ID2D1SolidColorBrush** pBrush);
 	void DrawRectangle(D2D1_RECT_F& rect, ID2D1Brush* brush, FLOAT width = 1.0f, ID2D1StrokeStyle* strokeStyle = (ID2D1StrokeStyle*)0);
 	void DrawCircle(ID2D1Brush* brush, FLOAT radius = 1.0f, FLOAT width = 1.0f, ID2D1StrokeStyle* strokeStyle = (ID2D1StrokeStyle*)0);
+	void DrawLine(ID2D1Brush* brush, D2D1_POINT_2F p1, D2D1_POINT_2F p2, FLOAT width = 1.0f, ID2D1StrokeStyle* strokeStyle = (ID2D1StrokeStyle*)0);
+	void DrawLine(ID2D1Brush* brush, Vector2 p1, Vector2 p2, FLOAT width = 1.0f, ID2D1StrokeStyle* strokeStyle = (ID2D1StrokeStyle*)0);
 
 	/// <summary>
 	/// WIC를 통해 이미지를 ID2D1Bitmap1**로 반환하는 함수

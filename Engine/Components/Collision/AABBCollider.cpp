@@ -148,7 +148,6 @@ void AABBCollider::SetSize(float width, float height, float scale)
 	}
 
 	debugBoxComponent->SetWidth(3.0f);
-	debugBoxComponent->SetIsShow(true);
 }
 
 D2D1_RECT_F AABBCollider::GetSize() const
