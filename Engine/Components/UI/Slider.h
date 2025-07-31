@@ -1,17 +1,17 @@
-#pragma once
+ï»¿#pragma once
 #include "Components/UI/UIComponent.h"
 #include "Components/Rendering/BitmapRenderer.h"
 #include <Utils/EventDelegate.h>
 #include <string>
 #include <functional>
 
-/* 25.07.29 | ÀÛ¼ºÀÚ : ±èÁ¤Çö
-°ÔÀÌÁö ¹é±×¶ó¿îµå, °ÔÀÌÁö, ¹öÆ° ÃÑ 3°³¸¦ OnStart¿¡¼­ µî·Ï
-ÀÌ¹ÌÁö¸¦ ¹Ù²Ù°í½ÍÀ¸¸é Component¸¦ Ãß°¡ÈÄ SetImage(°æ·Î) ÇÔ¼ö·Î ÀÌ¹ÌÁö ÁöÁ¤
-***ÀÌ¶§ ÀÌ¹ÌÁö´Â °¡·Î¼¼·Î ´Ù ¸Â´Â ±×¸²ÀÌ¾î¾ßÇÔ , ¸®¼Ò½º ¿äÃ»½Ã ÇÊ¼ö »çÇ×
-¹öÆ°ÀÌ ÇÊ¿ä¾ø´Â ½½¶óÀÌ´õÀÇ °æ¿ì ButtShow¿¡ false¸¦ Àü´Ş
-½½¶óÀÌ´õ ÀÌµ¿½Ã void ChangeGauge(float x); void ChangeButtonPosition(float x);¿¡¼­ x°ªÀº °°Àº°ªÀ» ´øÁ®Áà¾ßÇÔ
-SetPivotSideÀº false¸¦ ´øÁ®ÁÙ¶§ ¿À¸¥ÂÊ¿¡¼­ ¿ŞÂÊÀ¸·Î ´Ã¾î³ªµµ·ÏÇÔ ( ±â´É ¹Ì¿Ï¼ºÀÌ¶ó ¾È¾²´Â°Ô ÁÁÀ½ )
+/* 25.07.29 | ì‘ì„±ì : ê¹€ì •í˜„
+ê²Œì´ì§€ ë°±ê·¸ë¼ìš´ë“œ, ê²Œì´ì§€, ë²„íŠ¼ ì´ 3ê°œë¥¼ OnStartì—ì„œ ë“±ë¡
+ì´ë¯¸ì§€ë¥¼ ë°”ê¾¸ê³ ì‹¶ìœ¼ë©´ Componentë¥¼ ì¶”ê°€í›„ SetImage(ê²½ë¡œ) í•¨ìˆ˜ë¡œ ì´ë¯¸ì§€ ì§€ì •
+***ì´ë•Œ ì´ë¯¸ì§€ëŠ” ê°€ë¡œì„¸ë¡œ ë‹¤ ë§ëŠ” ê·¸ë¦¼ì´ì–´ì•¼í•¨ , ë¦¬ì†ŒìŠ¤ ìš”ì²­ì‹œ í•„ìˆ˜ ì‚¬í•­
+ë²„íŠ¼ì´ í•„ìš”ì—†ëŠ” ìŠ¬ë¼ì´ë”ì˜ ê²½ìš° ButtShowì— falseë¥¼ ì „ë‹¬
+ìŠ¬ë¼ì´ë” ì´ë™ì‹œ void ChangeGauge(float x); void ChangeButtonPosition(float x);ì—ì„œ xê°’ì€ ê°™ì€ê°’ì„ ë˜ì ¸ì¤˜ì•¼í•¨
+SetPivotSideì€ falseë¥¼ ë˜ì ¸ì¤„ë•Œ ì˜¤ë¥¸ìª½ì—ì„œ ì™¼ìª½ìœ¼ë¡œ ëŠ˜ì–´ë‚˜ë„ë¡í•¨ ( ê¸°ëŠ¥ ë¯¸ì™„ì„±ì´ë¼ ì•ˆì“°ëŠ”ê²Œ ì¢‹ìŒ )
 */
 
 
@@ -23,7 +23,7 @@ public:
 
 	/*void SetPivotSide( bool isLeft);*/
 
-	//ÀÌ¹ÌÁöµéÀ» ¼ÂÆÃ ¹× °¡Á®¿À´Â ÇÔ¼ö
+	//ì´ë¯¸ì§€ë“¤ì„ ì…‹íŒ… ë° ê°€ì ¸ì˜¤ëŠ” í•¨ìˆ˜
 	void SetGaugeBackgroundImage(std::wstring path);
 	BitmapRenderer* GetGaugeBackgroundImage();
 	void SetGaugeBarImage(std::wstring path);
@@ -32,37 +32,59 @@ public:
 	BitmapRenderer* GetGaugeButtonImage();
 
 
-	//GaugeRect¼ÂÆÃÇÔ¼ö(Ã¹ ½ÃÀÛ °ÔÀÌÁö ¹Ş¾Æ¿È)
+	//GaugeRectì…‹íŒ…í•¨ìˆ˜(ì²« ì‹œì‘ ê²Œì´ì§€ ë°›ì•„ì˜´)
 	void SetGaugeRectValue();
 	D2D1_RECT_F GetGaugeRectValue();
 
-	//GaugeRect¼ÂÆÃÇÔ¼ö(°ÔÀÌÁö ¾î´ÀÁ¤µµÀÎÁö ¼ÂÆÃ)
+	//GaugeRectì…‹íŒ…í•¨ìˆ˜(ê²Œì´ì§€ ì–´ëŠì •ë„ì¸ì§€ ì…‹íŒ…)
 	void ChangeGauge(float x);
 
-	//ButtonÀ§Ä¡¼ÂÆÃÇÔ¼ö
+	//Buttonìœ„ì¹˜ì…‹íŒ…í•¨ìˆ˜
 	void ChangeButtonPosition(float x);
 
-	//Button¾Èº¸ÀÌ´Â¿ëµµ(Ã¼·Â¹Ù)
+	//Buttonì•ˆë³´ì´ëŠ”ìš©ë„(ì²´ë ¥ë°”)
 	void ButtShow(bool setvalue);
 
-	//Ãß»óÅ¬·¡½º »ó¼Ó¹Ş¾Æ¼­ Á¸ÀçÇÏ´Â ÇÔ¼ö
-	virtual bool IsMouseOver(const Vector2& mousePos) const override;
+	//
+	size_t AddOnClickEvent(std::function<void()> fn);
+	void RemoveOnClickEventById(size_t id);
+
+	//
+	bool IsMouseOver(const Vector2& mousePos) const override;
+	bool IsMouseOverBackground(const Vector2& mousePos) const;
+
+
+	void ButtonEvent();
+
 
 private:
 	BitmapRenderer* GaugeBackground{};
 	BitmapRenderer* GaugeBar{};
 	BitmapRenderer* BarButton{};
 
-	D2D1_RECT_F GaugeBarRect{};
 
+	D2D1_RECT_F GaugeBarRect{};
 	D2D1_RECT_F ButtonDestRect{};
 	D2D1_RECT_F BarButSrctonRect{};
 
+	//ë§ˆìš°ìŠ¤ ê°ì§€ ë°•ìŠ¤ 2ê°œ
+	D2D1_RECT_F ButtonRect{};
+	D2D1_RECT_F BackGroundRect{};
+	
+	
+	/*D2D1_RECT_F AABBRect{};*/
+
+	//ë¹„íŠ¸ë§µ ì‚¬ì´ì¦ˆ ë³€ìˆ˜
+	D2D1_SIZE_F size;
+	D2D1_SIZE_F sizeButton;
 	
 	bool HandleValue = true;
 
 	bool pivotIsLeft = true;
 
+	bool OnButton = false;
+
+	EventDelegate<> onClickEvent; // void()í˜•ë§Œ ë°›ëŠ” í´ë¦­ ì´ë²¤íŠ¸ 
 };
 
 

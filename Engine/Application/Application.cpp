@@ -248,6 +248,7 @@ void Application::Run()
 			Singleton<SceneManager>::GetInstance().CheckSceneLoad();	// 씬 교체 확인 
 			Input::ResetMouseEventFrameState();
 		}
+
 	}
 }
 
