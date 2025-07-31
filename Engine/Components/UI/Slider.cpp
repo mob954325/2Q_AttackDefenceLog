@@ -128,10 +128,6 @@ void Slider::ChangeGauge(float x)
 //x는 좌표값
 void Slider::ChangeButtonPosition(float x)
 {
-	/*ButtonDestRect.left = size.width / 2 - sizeButton.width / 2;
-	ButtonDestRect.right = size.width / 2 + sizeButton.width / 2;*/
-	/*D2D1_SIZE_F size = GaugeBar->GetResource()->GetBitmap()->GetSize();
-	D2D1_SIZE_F sizeButton = BarButton->GetResource()->GetBitmap()->GetSize();*/
 	if (pivotIsLeft) {
 		if ((ButtonDestRect.right -sizeButton.width / 2 < size.width && ButtonDestRect.right - sizeButton.width / 2 > 0))
 		{
@@ -171,8 +167,8 @@ void Slider::ButtShow(bool setvalue)
 size_t Slider::AddOnClickEvent(std::function<void()> fn)
 {
 	//이벤트를 등록하고 그 ID를 return
-	size_t ID = onClickEvent.Add(fn);
-	return ID;
+	/*size_t ID = onClickEvent.Add(fn);*/
+	/*return ID;*/
 }
 
 void Slider::RemoveOnClickEventById(size_t id)
@@ -221,7 +217,7 @@ void Slider::ButtonEvent()
 	//std::cout << ButtonDestRect.left << std::endl;
 	/*std::cout << BackGroundRect.right << std::endl;*/
 
-	//std::cout << "asdf ::::: " << Input::MouseDeltaX << std::endl;
+	/*std::cout << "asdf ::::: " << Input::MouseDeltaX << std::endl;*/
 
 	//std::cout << Input::MouseDeltaX << std::endl;
 	/*std::cout << BackGroundRect.right << std::endl;*/
@@ -230,30 +226,40 @@ void Slider::ButtonEvent()
 	if (IsMouseOver(mouseVec))
 	{
 		OnButton = true;
-		std::cout << "마우스 버튼 위 지나감 감지" << std::endl;
+		/*std::cout << "마우스 버튼 위 지나감 감지" << std::endl;*/
 
 		if (Input::leftButtonDown)
 		{
+			if(Input::MouseDeltaX != 0){
+
 			ChangeButtonPosition(Input::MouseDeltaX);
 			std::cout << "마우스 버튼 클릭 감지" << std::endl;
-			//if(Input::MouseDeltaX != 0.0f)
-			//{
-			//	
-			//	/*onClickEvent.Invoke();*/
-			//}
+
+
+
+			}
+		}
+		else if (!Input::leftButtonDown)
+		{
+			/*onClickEvent.Invoke(float);*/
+			/*onClickEvent.Add([](float value) { std::cout << value << std::endl; });*/
 		}
 	}
 	else OnButton = false;
 	
 	if (IsMouseOverBackground(mouseVec) && !OnButton)
 	{
-		std::cout << "마우스 게이지 배경 지나감 감지" << std::endl;
+		/*std::cout << "마우스 게이지 배경 지나감 감지" << std::endl;*/
 		if (Input::leftButtonDown)
 		{
-			std::cout << "마우스 배경 클릭 감지" << std::endl;
-			/*ChangeButtonPosition();*/
-			/*onClickEvent.Invoke();*/
+			std::cout << mouseVec.x << std::endl;
+			ChangeButtonPosition(mouseVec.x - ButtonDestRect.right + sizeButton.width / 2);
 		}
 	}
+}
+
+void Slider::SetDelegate(std::function<void(float)> fn)
+{
+	onClickEvent.Add(fn);
 }
 

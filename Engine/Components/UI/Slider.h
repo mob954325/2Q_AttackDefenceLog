@@ -19,7 +19,7 @@ class Slider : public UIComponent
 {
 public:
 	void OnStart() override;
-	void Update() override;	
+	void Update() override;
 
 	/*void SetPivotSide( bool isLeft);*/
 
@@ -56,6 +56,7 @@ public:
 
 	void ButtonEvent();
 
+	void SetDelegate(std::function<void(float)> fn);
 
 private:
 	BitmapRenderer* GaugeBackground{};
@@ -70,21 +71,16 @@ private:
 	//마우스 감지 박스 2개
 	D2D1_RECT_F ButtonRect{};
 	D2D1_RECT_F BackGroundRect{};
-	
-	
-	/*D2D1_RECT_F AABBRect{};*/
+
+
 
 	//비트맵 사이즈 변수
 	D2D1_SIZE_F size;
 	D2D1_SIZE_F sizeButton;
-	
+
 	bool HandleValue = true;
-
 	bool pivotIsLeft = true;
-
 	bool OnButton = false;
 
-	EventDelegate<> onClickEvent; // void()형만 받는 클릭 이벤트 
+	EventDelegate<float> onClickEvent; // void()형만 받는 클릭 이벤트 
 };
-
-
