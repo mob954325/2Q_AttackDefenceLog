@@ -119,7 +119,7 @@ bool AABBCollider::CheckCollisionWithAABB(ICollider* other, CollisionInfo& outCo
 
 void AABBCollider::OnCreate()
 {
-	debugBoxComponent = owner->AddComponent<BoxComponent>();
+	debugBoxComponent = owner->AddComponent<BoxRenderer>();
 	debugBoxComponent->SetRect({ 0,0,0,0 });
 }
 
@@ -148,7 +148,6 @@ void AABBCollider::SetSize(float width, float height, float scale)
 	}
 
 	debugBoxComponent->SetWidth(3.0f);
-	debugBoxComponent->SetIsShow(true);
 }
 
 D2D1_RECT_F AABBCollider::GetSize() const

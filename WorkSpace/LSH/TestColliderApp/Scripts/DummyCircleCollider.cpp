@@ -9,14 +9,33 @@ void DummyCircleCollider::OnCreate()
 	owner->GetTransform().SetUnityCoords(true);
 
 	circle = owner->AddComponent<CircleCollider>();
-	circle->SetRadius(20.0f);
 
 	input = owner->AddComponent<InputSystem>();
+
+	particle = owner->AddComponent<ParticleRenderer>();
+
+	owner->GetTransform().SetRotation(180);
 }
 
 void DummyCircleCollider::OnStart()
 {
 	target = owner->GetQuery()->FindByName("Test Cirlce");
+
+	circle->SetRadius(20.0f);
+
+	particle->SetBitmap(L"../../Resource/Particles/spark_1.png");
+	particle->SetLoop(true);
+	particle->SetMinSpeed(0.5f);
+	particle->SetMaxSpeed(2.0f);
+	particle->SetDuration(0.8f);
+	particle->SetFadeOutTime(0.7f);
+	particle->SetAmount(20);
+	particle->SetAnimPlayer(L"../../Resource/Particles/Test/FireEffectSheet.png",
+		L"../../Resource/Json/Test_Paticles/FireEffectSheet.json",
+		L"../../Resource/Json/Test_Paticles/Fire_Boom_anim.json");
+	particle->SetShowType(ParticleShowType::Single);
+	particle->SetGravity(true);
+	particle->SetSeeDirection(true);
 }
 
 void DummyCircleCollider::OnFixedUpdate()
@@ -26,8 +45,30 @@ void DummyCircleCollider::OnFixedUpdate()
 void DummyCircleCollider::OnUpdate()
 {
 	HandleInput();
-	//owner->GetTransform().SetPosition(Input::MouseX, Input::MouseY);
-	// std::cout << "dummy position :::: " << owner->GetTransform().GetPosition().x << ", " << owner->GetTransform().GetPosition().y << std::endl;
+
+	// owner->GetTransform().SetPosition(-EngineData::SceenWidth / 2 + Input::MouseX, EngineData::SceenHeight / 2 - Input::MouseY);
+	// std::cout << owner->GetTransform().GetPosition() << std::endl;
+
+	if (input->IsKeyPressed('Q'))
+	{
+		particle->Play();
+	}
+	if (input->IsKeyPressed('W'))
+	{
+		particle->Pause();
+	}
+	if (input->IsKeyPressed('E'))
+	{
+		particle->Reset();
+	}
+	if (input->IsKeyPressed('R'))
+	{
+		particle->SetLoop(true);
+	}
+	if (input->IsKeyPressed('T'))
+	{
+		particle->SetLoop(false);
+	}
 }
 
 void DummyCircleCollider::OnDestroy()
@@ -59,8 +100,8 @@ void DummyCircleCollider::OnColliderExit(GameObject* collider)
 
 void DummyCircleCollider::HandleInput()
 {
-	if (input->IsKeyDown('W')) owner->GetTransform().Translate({ 0, 1 });
-	if (input->IsKeyDown('A')) owner->GetTransform().Translate({ -1, 0 });
-	if (input->IsKeyDown('S')) owner->GetTransform().Translate({ 0, -1 });
-	if (input->IsKeyDown('D')) owner->GetTransform().Translate({ 1, 0 });
+	// if (input->IsKeyDown('W')) owner->GetTransform().Translate({ 0, 1 });
+	// if (input->IsKeyDown('A')) owner->GetTransform().Translate({ -1, 0 });
+	// if (input->IsKeyDown('S')) owner->GetTransform().Translate({ 0, -1 });
+	// if (input->IsKeyDown('D')) owner->GetTransform().Translate({ 1, 0 });
 }

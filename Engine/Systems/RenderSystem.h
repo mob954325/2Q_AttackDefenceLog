@@ -6,7 +6,7 @@
 #include <map>
 
 class D2DRenderManager;
-class ResourceManager;
+class BitmapResourceManager;
 
 class RenderSystem : public Singleton<RenderSystem>
 {
@@ -14,7 +14,7 @@ public:
 	friend class Singleton<RenderSystem>;
 
 	void SetD2DRenderManager(D2DRenderManager* pRenderManager) { renderManager = pRenderManager; }
-	void SetResourceManager(ResourceManager* pResourceManager) { resourceManager = pResourceManager; }
+	void SetResourceManager(BitmapResourceManager* pResourceManager) { resourceManager = pResourceManager; }
 	void Register(RenderComponent* comp);
 	void UnRegister(RenderComponent* comp);
 
@@ -27,7 +27,7 @@ private:
 	~RenderSystem();
 
 	D2DRenderManager* renderManager{};
-	ResourceManager* resourceManager{};
+	BitmapResourceManager* resourceManager{};
 	std::map<EngineData::RenderLayer, std::vector<RenderComponent*>> renderComponentGroup; // TODO : 컴포넌트별로 순서도 추가
 };
 

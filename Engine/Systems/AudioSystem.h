@@ -13,7 +13,7 @@
 // "../../Engine/External/FMOD/api/core/lib/x64/fmod_vc.lib"
 #pragma comment(lib, "../../Engine/External/Fmod/fmod_vc.lib")
 
-/*
+/* 25.07.28 | 작성자 : 김정현
 FMOD_RESULT playSound(
 	FMOD::Sound *sound,         // [1] 재생할 사운드 객체
 	FMOD::ChannelGroup *group,  // [2] 속할 채널 그룹 (nullptr이면 기본 그룹), 모두음소거 같은 기능을 넣을때 한개의 그룹에 묶으면됨

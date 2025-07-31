@@ -5,6 +5,8 @@
 
 void TextRenderer::Render(D2DRenderManager* manager)
 {
+	if (!IsActiveSelf()) return;
+
 	if (!isWorldPosition)
 	{
 		manager->PrintText(text.c_str(), left, top, color);
@@ -12,7 +14,7 @@ void TextRenderer::Render(D2DRenderManager* manager)
 	else
 	{
 		D2D1_MATRIX_3X2_F final = owner->GetTransform().GetFinalMatrix();
-		manager->SetBitmapTransform(final);
+		manager->SetRenderTransform(final);
 		manager->PrintText(text.c_str(), 0x0, 0, color, true);
 	}
 }

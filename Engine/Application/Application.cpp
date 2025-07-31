@@ -116,8 +116,8 @@ void Application::Initialize()
 	m_D2DRenderManager->Initialize();
 	m_D2DRenderManager->SetD2D1DeviceContext7(m_d2dDeviceContext.Get());
 
-	// ResourceManager 초기화
-	m_ResourceManager = new ResourceManager(m_D2DRenderManager);
+	// BitmapResourceManager 초기화
+	m_ResourceManager = new BitmapResourceManager(m_D2DRenderManager);
 
 	// RenderSystem  초기화
 	Singleton<RenderSystem>::GetInstance().SetD2DRenderManager(m_D2DRenderManager);
@@ -192,7 +192,10 @@ void Application::MessageProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	case WM_MBUTTONDOWN:
 	case WM_MBUTTONUP:
 	case WM_MOUSEWHEEL:
-		Input::ProcessMouseMessage(msg, wParam, lParam);
+		Input::ProcessMouseMessage(hWnd, msg, wParam, lParam);
+		break;
+	case WM_MOUSELEAVE:
+		Input::ResetMouseOnOutOfBounds();
 		break;
 	default:
 		break;
@@ -231,7 +234,6 @@ void Application::Run()
 	MSG msg = {};
 	while (msg.message != WM_QUIT)
 	{
-		Input::ResetMouseEventFrameState();	// 07 27 추가 : 마우스 이벤트는 윈도우 메세지를 받기때문에 메세지 받기전에 초기화
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 		{
 			TranslateMessage(&msg);
@@ -244,7 +246,7 @@ void Application::Run()
 			Singleton<CollisionSystem>::GetInstance().CheckPrevPairRemoval();
 			Singleton<SceneManager>::GetInstance().GetCurrentScene()->CleanUpDestroyedObjects(); // 06 30 추가 : 모든 루프가 끝나고 오브젝트 제거
 			Singleton<SceneManager>::GetInstance().CheckSceneLoad();	// 씬 교체 확인 
-
+			Input::ResetMouseEventFrameState();
 		}
 	}
 }

@@ -7,10 +7,10 @@
 /// <summary>
 /// 리소스 매니저 ( 일단 BitmapResource만 다룸 )
 /// </summary>
-class ResourceManager
+class BitmapResourceManager
 {
 public:
-	ResourceManager(D2DRenderManager* pManager) : renderManager(pManager) {};
+	BitmapResourceManager(D2DRenderManager* pManager) : renderManager(pManager) {};
 
 	std::shared_ptr<BitmapResource> CreateBitmapResource(std::wstring filePath);
 

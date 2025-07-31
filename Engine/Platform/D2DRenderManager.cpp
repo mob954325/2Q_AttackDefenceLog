@@ -69,7 +69,7 @@ void D2DRenderManager::SetD2D1DeviceContext7(ID2D1DeviceContext7* pD2D1DeviceCon
 	}
 }
 
-void D2DRenderManager::SetBitmapTransform(D2D1_MATRIX_3X2_F& finalMatrix)
+void D2DRenderManager::SetRenderTransform(D2D1_MATRIX_3X2_F& finalMatrix)
 {
 	m_d2dDeviceContext->SetTransform(finalMatrix); // NOTE: Direct2D가 이후에 그릴 모든 도형/텍스트/이미지 등에 적용활 좌표 변환 행렬 설정 함수
 }
@@ -82,6 +82,11 @@ void D2DRenderManager::DrawBitmap(Microsoft::WRL::ComPtr<ID2D1Bitmap1> bitmap)
 void D2DRenderManager::DrawBitmap(Microsoft::WRL::ComPtr<ID2D1Bitmap1> bitmap, D2D1_RECT_F& destRect, D2D1_RECT_F& srcRect) 
 {
 	m_d2dDeviceContext->DrawBitmap(bitmap.Get(), &destRect, 1.0f, D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, &srcRect);
+}
+
+void D2DRenderManager::DrawBitmap(ComPtr<ID2D1Bitmap1> bitmap, D2D1_RECT_F& destRect, D2D1_RECT_F& srcRect, float capacity)
+{
+	m_d2dDeviceContext->DrawBitmap(bitmap.Get(), &destRect, capacity, D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, &srcRect);
 }
 
 void D2DRenderManager::DrawImage(Microsoft::WRL::ComPtr<ID2D1Effect> effect)
@@ -102,6 +107,18 @@ void D2DRenderManager::DrawRectangle(D2D1_RECT_F& rect, ID2D1Brush* brush, FLOAT
 void D2DRenderManager::DrawCircle(ID2D1Brush* brush, FLOAT radius, FLOAT width, ID2D1StrokeStyle* strokeStyle)
 {
 	m_d2dDeviceContext->DrawEllipse({{0, 0}, radius, radius}, brush, width, strokeStyle); // NOTE: 만약 타원이 필요하면 raidus를 쪼개면 됨., 위치가 0인 이유는 SetTransform으로 위치를 옮기기 때문
+}
+
+void D2DRenderManager::DrawLine(ID2D1Brush* brush, D2D1_POINT_2F p1, D2D1_POINT_2F p2, FLOAT width, ID2D1StrokeStyle* strokeStyle)
+{
+	m_d2dDeviceContext->DrawLine(p1, p2, brush, width, strokeStyle);
+}
+
+void D2DRenderManager::DrawLine(ID2D1Brush* brush, Vector2 p1, Vector2 p2, FLOAT width, ID2D1StrokeStyle* strokeStyle)
+{
+	D2D1_POINT_2F d2dpoint1 = { p1.x, p1.y };
+	D2D1_POINT_2F d2dpoint2 = { p2.x, p2.y };
+	DrawLine(brush, d2dpoint1, d2dpoint2, width, strokeStyle);
 }
 
 void D2DRenderManager::PrintText(const wchar_t* str, float left, float top, bool isWorld)

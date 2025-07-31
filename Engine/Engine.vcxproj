@@ -333,11 +333,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Components\Rendering\AnimationPlayer.h" />
+    <ClInclude Include="Components\Rendering\TrailComponent.h" />
     <ClInclude Include="Components\UI\Button.h" />
     <ClInclude Include="Components\Collision\CircleCollider.h" />
+    <ClInclude Include="Components\Rendering\ParticleRenderer.h" />
+    <ClInclude Include="Components\Rendering\LineRenderer.h" />
+    <ClInclude Include="Math\EasingFunction.h" />
+    <ClInclude Include="Math\GameRandom.h" />
+    <ClInclude Include="Components\UI\Slider.h" />
     <ClInclude Include="Systems\AudioSystem.h" />
     <ClInclude Include="Components\Fmod\FModComponent.h" />
-    <ClInclude Include="Components\Rendering\CircleComponent.h" />
+    <ClInclude Include="Components\Rendering\CircleRenderer.h" />
     <ClInclude Include="Components\Base\ActiveComponent.h" />
     <ClInclude Include="Components\Base\MonoBehavior.h" />
     <ClInclude Include="Components\Base\BaseObject.h" />
@@ -376,7 +383,7 @@
     <ClInclude Include="Components\Logic\StatComponent.h" />
     <ClInclude Include="Components\Rendering\AnimationRenderer.h" />
     <ClInclude Include="Components\Rendering\BitmapRenderer.h" />
-    <ClInclude Include="Components\Rendering\BoxComponent.h" />
+    <ClInclude Include="Components\Rendering\BoxRenderer.h" />
     <ClInclude Include="Components\Rendering\RenderComponent.h" />
     <ClInclude Include="Components\Rendering\TextRenderer.h" />
     <ClInclude Include="Datas\EngineData.h" />
@@ -407,11 +414,18 @@
     <ClInclude Include="Math\Vector2.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Components\Rendering\AnimationPlayer.cpp" />
+    <ClCompile Include="Components\Rendering\TrailComponent.cpp" />
     <ClCompile Include="Components\UI\Button.cpp" />
     <ClCompile Include="Components\Collision\CircleCollider.cpp" />
+    <ClCompile Include="Components\Rendering\ParticleRenderer.cpp" />
+    <ClCompile Include="Components\Rendering\LineRenderer.cpp" />
+    <ClCompile Include="Math\EasingFunction.cpp" />
+    <ClCompile Include="Math\GameRandom.cpp" />
+    <ClCompile Include="Components\UI\Slider.cpp" />
     <ClCompile Include="Systems\AudioSystem.cpp" />
     <ClCompile Include="Components\Fmod\FModComponent.cpp" />
-    <ClCompile Include="Components\Rendering\CircleComponent.cpp" />
+    <ClCompile Include="Components\Rendering\CircleRenderer.cpp" />
     <ClCompile Include="Components\Base\BaseObject.cpp" />
     <ClCompile Include="Components\Base\Component.cpp" />
     <ClCompile Include="Components\Rendering\RenderComponent.cpp" />
@@ -435,7 +449,7 @@
     <ClCompile Include="Components\Logic\StatComponent.cpp" />
     <ClCompile Include="Components\Rendering\AnimationRenderer.cpp" />
     <ClCompile Include="Components\Rendering\BitmapRenderer.cpp" />
-    <ClCompile Include="Components\Rendering\BoxComponent.cpp" />
+    <ClCompile Include="Components\Rendering\BoxRenderer.cpp" />
     <ClCompile Include="Components\Rendering\TextRenderer.cpp" />
     <ClCompile Include="Resources\Loaders\SpriteSheetLoader.cpp" />
     <ClCompile Include="Systems\TransformSystem.cpp" />

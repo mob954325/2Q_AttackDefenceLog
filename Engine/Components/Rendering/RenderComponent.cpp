@@ -5,7 +5,7 @@ void RenderComponent::SetRenderManager(D2DRenderManager* pManager)
 	renderManager = pManager;
 }
 
-void RenderComponent::SetResourceManager(ResourceManager* pManager)
+void RenderComponent::SetResourceManager(BitmapResourceManager* pManager)
 {
 	resourceManager = pManager;	
 }

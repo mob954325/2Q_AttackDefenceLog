@@ -2,6 +2,7 @@
 #include "TestColliderApp/Scripts/TestCircleCollider.h"
 #include "TestColliderApp/Scripts/DummyCircleCollider.h"
 #include "TestColliderApp/Scripts/DummyButton.h"
+#include "TestColliderApp/Scripts/DummyEffectAnimation.h"
 
 void TestCollider::CircleColliderScene::OnEnterImpl()
 {
@@ -25,6 +26,12 @@ void TestCollider::CircleColliderScene::OnEnterImpl()
 	dummyButton->SetName("Dummy Button");
 	dummyButton->AddComponent<DummyButton>();
 	AddGameObject(dummyButton);
+
+	dummyEffectAnimation = new GameObject();
+	dummyEffectAnimation->SetName("Dummy Effect Animation");
+	dummyEffectAnimation->AddComponent<DummyEffectAnimation>();
+	AddGameObject(dummyEffectAnimation);
+	dummyEffectAnimation->GetTransform().SetPosition(-200, 200);
 }
 
 void TestCollider::CircleColliderScene::OnExitImpl()

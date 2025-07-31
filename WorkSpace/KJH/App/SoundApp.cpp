@@ -11,7 +11,7 @@ void SoundApp::SoundApp::Initialize()
 	Singleton<SceneManager>::GetInstance().AddScene(testScene);
 	Singleton<SceneManager>::GetInstance().Init();
 	__super::Initialize();
-	AudioSystem::GetInstance().Initialize();
+	AudioSystem::GetInstance().Initialize(128);
 	AudioSystem::GetInstance().Register(musiclist);
 }
 
