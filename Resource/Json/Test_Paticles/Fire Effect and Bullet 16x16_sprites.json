@@ -1,0 +1,2437 @@
+{
+    "texture": "Fire Effect and Bullet 16x16.png",
+    "textureWidth": 576,
+    "textureHeight": 208,
+    "sprites": [
+        {
+            "name": "Fire Effect and Bullet 16x16_0",
+            "x": 0.0,
+            "y": 33.0,
+            "width": 16.0,
+            "height": 32.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_1",
+            "x": 18.0,
+            "y": 33.0,
+            "width": 13.0,
+            "height": 33.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_2",
+            "x": 33.0,
+            "y": 17.0,
+            "width": 13.0,
+            "height": 17.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_3",
+            "x": 50.0,
+            "y": 33.0,
+            "width": 12.0,
+            "height": 32.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_4",
+            "x": 66.0,
+            "y": 33.0,
+            "width": 12.0,
+            "height": 30.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_5",
+            "x": 81.0,
+            "y": 33.0,
+            "width": 12.0,
+            "height": 33.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_6",
+            "x": 111.0,
+            "y": 33.0,
+            "width": 34.0,
+            "height": 30.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_7",
+            "x": 159.0,
+            "y": 17.0,
+            "width": 21.0,
+            "height": 17.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_8",
+            "x": 176.0,
+            "y": 13.0,
+            "width": 8.0,
+            "height": 8.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_9",
+            "x": 177.0,
+            "y": 22.0,
+            "width": 32.0,
+            "height": 22.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_10",
+            "x": 227.0,
+            "y": 17.0,
+            "width": 10.0,
+            "height": 17.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_11",
+            "x": 239.0,
+            "y": 33.0,
+            "width": 18.0,
+            "height": 33.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_12",
+            "x": 256.0,
+            "y": 17.0,
+            "width": 16.0,
+            "height": 17.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_13",
+            "x": 272.0,
+            "y": 26.0,
+            "width": 16.0,
+            "height": 26.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_14",
+            "x": 303.0,
+            "y": 17.0,
+            "width": 66.0,
+            "height": 17.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_15",
+            "x": 385.0,
+            "y": 14.0,
+            "width": 14.0,
+            "height": 10.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_16",
+            "x": 401.0,
+            "y": 13.0,
+            "width": 14.0,
+            "height": 9.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_17",
+            "x": 417.0,
+            "y": 13.0,
+            "width": 14.0,
+            "height": 9.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_18",
+            "x": 433.0,
+            "y": 13.0,
+            "width": 14.0,
+            "height": 9.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_19",
+            "x": 449.0,
+            "y": 13.0,
+            "width": 14.0,
+            "height": 10.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_20",
+            "x": 481.0,
+            "y": 16.0,
+            "width": 15.0,
+            "height": 16.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_21",
+            "x": 496.0,
+            "y": 16.0,
+            "width": 15.0,
+            "height": 16.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_22",
+            "x": 513.0,
+            "y": 16.0,
+            "width": 15.0,
+            "height": 16.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_23",
+            "x": 528.0,
+            "y": 17.0,
+            "width": 17.0,
+            "height": 17.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_24",
+            "x": 543.0,
+            "y": 44.0,
+            "width": 33.0,
+            "height": 44.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_25",
+            "x": 34.0,
+            "y": 33.0,
+            "width": 13.0,
+            "height": 16.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_26",
+            "x": 159.0,
+            "y": 31.0,
+            "width": 21.0,
+            "height": 14.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_27",
+            "x": 179.0,
+            "y": 31.0,
+            "width": 18.0,
+            "height": 14.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_28",
+            "x": 196.0,
+            "y": 31.0,
+            "width": 13.0,
+            "height": 14.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_29",
+            "x": 227.0,
+            "y": 29.0,
+            "width": 10.0,
+            "height": 10.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_30",
+            "x": 256.0,
+            "y": 32.0,
+            "width": 16.0,
+            "height": 16.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_31",
+            "x": 304.0,
+            "y": 30.0,
+            "width": 15.0,
+            "height": 12.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_32",
+            "x": 323.0,
+            "y": 29.0,
+            "width": 11.0,
+            "height": 10.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_33",
+            "x": 340.0,
+            "y": 27.0,
+            "width": 8.0,
+            "height": 8.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_34",
+            "x": 356.0,
+            "y": 25.0,
+            "width": 6.0,
+            "height": 6.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_35",
+            "x": 389.0,
+            "y": 28.0,
+            "width": 7.0,
+            "height": 7.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_36",
+            "x": 404.0,
+            "y": 29.0,
+            "width": 9.0,
+            "height": 9.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_37",
+            "x": 417.0,
+            "y": 32.0,
+            "width": 15.0,
+            "height": 15.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_38",
+            "x": 432.0,
+            "y": 33.0,
+            "width": 17.0,
+            "height": 17.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_39",
+            "x": 450.0,
+            "y": 33.0,
+            "width": 13.0,
+            "height": 17.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_40",
+            "x": 479.0,
+            "y": 32.0,
+            "width": 17.0,
+            "height": 17.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_41",
+            "x": 495.0,
+            "y": 33.0,
+            "width": 17.0,
+            "height": 18.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_42",
+            "x": 511.0,
+            "y": 32.0,
+            "width": 18.0,
+            "height": 17.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_43",
+            "x": 528.0,
+            "y": 23.0,
+            "width": 9.0,
+            "height": 7.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_44",
+            "x": 529.0,
+            "y": 32.0,
+            "width": 6.0,
+            "height": 9.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_45",
+            "x": 533.0,
+            "y": 33.0,
+            "width": 10.0,
+            "height": 10.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_46",
+            "x": 536.0,
+            "y": 24.0,
+            "width": 8.0,
+            "height": 9.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_47",
+            "x": 4.0,
+            "y": 44.0,
+            "width": 7.0,
+            "height": 7.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_48",
+            "x": 18.0,
+            "y": 47.0,
+            "width": 13.0,
+            "height": 13.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_49",
+            "x": 31.0,
+            "y": 49.0,
+            "width": 18.0,
+            "height": 15.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_50",
+            "x": 47.0,
+            "y": 97.0,
+            "width": 34.0,
+            "height": 57.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_51",
+            "x": 83.0,
+            "y": 65.0,
+            "width": 12.0,
+            "height": 26.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_52",
+            "x": 111.0,
+            "y": 48.0,
+            "width": 18.0,
+            "height": 16.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_53",
+            "x": 131.0,
+            "y": 46.0,
+            "width": 14.0,
+            "height": 13.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_54",
+            "x": 162.0,
+            "y": 49.0,
+            "width": 12.0,
+            "height": 15.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_55",
+            "x": 179.0,
+            "y": 49.0,
+            "width": 9.0,
+            "height": 12.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_56",
+            "x": 197.0,
+            "y": 49.0,
+            "width": 6.0,
+            "height": 9.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_57",
+            "x": 224.0,
+            "y": 64.0,
+            "width": 17.0,
+            "height": 33.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_58",
+            "x": 240.0,
+            "y": 63.0,
+            "width": 16.0,
+            "height": 32.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_59",
+            "x": 256.0,
+            "y": 49.0,
+            "width": 16.0,
+            "height": 16.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_60",
+            "x": 272.0,
+            "y": 49.0,
+            "width": 16.0,
+            "height": 17.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_61",
+            "x": 303.0,
+            "y": 49.0,
+            "width": 66.0,
+            "height": 18.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_62",
+            "x": 388.0,
+            "y": 44.0,
+            "width": 7.0,
+            "height": 7.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_63",
+            "x": 403.0,
+            "y": 45.0,
+            "width": 9.0,
+            "height": 9.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_64",
+            "x": 417.0,
+            "y": 47.0,
+            "width": 13.0,
+            "height": 13.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_65",
+            "x": 432.0,
+            "y": 52.0,
+            "width": 16.0,
+            "height": 19.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_66",
+            "x": 447.0,
+            "y": 75.0,
+            "width": 18.0,
+            "height": 44.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_67",
+            "x": 485.0,
+            "y": 49.0,
+            "width": 6.0,
+            "height": 9.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_68",
+            "x": 500.0,
+            "y": 49.0,
+            "width": 6.0,
+            "height": 11.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_69",
+            "x": 512.0,
+            "y": 64.0,
+            "width": 17.0,
+            "height": 28.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_70",
+            "x": 532.0,
+            "y": 48.0,
+            "width": 8.0,
+            "height": 16.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_71",
+            "x": 4.0,
+            "y": 60.0,
+            "width": 8.0,
+            "height": 8.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_72",
+            "x": 20.0,
+            "y": 61.0,
+            "width": 9.0,
+            "height": 9.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_73",
+            "x": 31.0,
+            "y": 65.0,
+            "width": 18.0,
+            "height": 16.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_74",
+            "x": 116.0,
+            "y": 59.0,
+            "width": 9.0,
+            "height": 7.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_75",
+            "x": 128.0,
+            "y": 62.0,
+            "width": 15.0,
+            "height": 13.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_76",
+            "x": 164.0,
+            "y": 72.0,
+            "width": 8.0,
+            "height": 16.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_77",
+            "x": 178.0,
+            "y": 73.0,
+            "width": 11.0,
+            "height": 18.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_78",
+            "x": 192.0,
+            "y": 113.0,
+            "width": 17.0,
+            "height": 64.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_79",
+            "x": 258.0,
+            "y": 63.0,
+            "width": 11.0,
+            "height": 13.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_80",
+            "x": 266.0,
+            "y": 57.0,
+            "width": 7.0,
+            "height": 7.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_81",
+            "x": 276.0,
+            "y": 62.0,
+            "width": 11.0,
+            "height": 10.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_82",
+            "x": 307.0,
+            "y": 62.0,
+            "width": 10.0,
+            "height": 11.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_83",
+            "x": 323.0,
+            "y": 61.0,
+            "width": 11.0,
+            "height": 10.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_84",
+            "x": 339.0,
+            "y": 62.0,
+            "width": 10.0,
+            "height": 11.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_85",
+            "x": 354.0,
+            "y": 61.0,
+            "width": 11.0,
+            "height": 10.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_86",
+            "x": 388.0,
+            "y": 60.0,
+            "width": 7.0,
+            "height": 7.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_87",
+            "x": 402.0,
+            "y": 62.0,
+            "width": 11.0,
+            "height": 11.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_88",
+            "x": 417.0,
+            "y": 63.0,
+            "width": 13.0,
+            "height": 13.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_89",
+            "x": 431.0,
+            "y": 65.0,
+            "width": 17.0,
+            "height": 15.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_90",
+            "x": 485.0,
+            "y": 60.0,
+            "width": 6.0,
+            "height": 7.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_91",
+            "x": 499.0,
+            "y": 62.0,
+            "width": 11.0,
+            "height": 12.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_92",
+            "x": 528.0,
+            "y": 64.0,
+            "width": 17.0,
+            "height": 17.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_93",
+            "x": 544.0,
+            "y": 74.0,
+            "width": 26.0,
+            "height": 27.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_94",
+            "x": 561.0,
+            "y": 61.0,
+            "width": 15.0,
+            "height": 11.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_95",
+            "x": 111.0,
+            "y": 81.0,
+            "width": 18.0,
+            "height": 18.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_96",
+            "x": 127.0,
+            "y": 79.0,
+            "width": 18.0,
+            "height": 14.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_97",
+            "x": 223.0,
+            "y": 129.0,
+            "width": 66.0,
+            "height": 69.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_98",
+            "x": 234.0,
+            "y": 65.0,
+            "width": 7.0,
+            "height": 7.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_99",
+            "x": 320.0,
+            "y": 80.0,
+            "width": 16.0,
+            "height": 16.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_100",
+            "x": 335.0,
+            "y": 81.0,
+            "width": 18.0,
+            "height": 18.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_101",
+            "x": 351.0,
+            "y": 90.0,
+            "width": 18.0,
+            "height": 27.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_102",
+            "x": 400.0,
+            "y": 81.0,
+            "width": 17.0,
+            "height": 17.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_103",
+            "x": 3.0,
+            "y": 78.0,
+            "width": 11.0,
+            "height": 11.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_104",
+            "x": 17.0,
+            "y": 78.0,
+            "width": 13.0,
+            "height": 12.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_105",
+            "x": 31.0,
+            "y": 78.0,
+            "width": 18.0,
+            "height": 11.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_106",
+            "x": 82.0,
+            "y": 97.0,
+            "width": 13.0,
+            "height": 26.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_107",
+            "x": 306.0,
+            "y": 78.0,
+            "width": 12.0,
+            "height": 12.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_108",
+            "x": 386.0,
+            "y": 79.0,
+            "width": 13.0,
+            "height": 13.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_109",
+            "x": 420.0,
+            "y": 77.0,
+            "width": 9.0,
+            "height": 9.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_110",
+            "x": 437.0,
+            "y": 76.0,
+            "width": 7.0,
+            "height": 7.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_111",
+            "x": 480.0,
+            "y": 96.0,
+            "width": 16.0,
+            "height": 26.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_112",
+            "x": 501.0,
+            "y": 76.0,
+            "width": 7.0,
+            "height": 7.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_113",
+            "x": 515.0,
+            "y": 77.0,
+            "width": 10.0,
+            "height": 10.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_114",
+            "x": 532.0,
+            "y": 77.0,
+            "width": 9.0,
+            "height": 9.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_115",
+            "x": 547.0,
+            "y": 77.0,
+            "width": 9.0,
+            "height": 9.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_116",
+            "x": 3.0,
+            "y": 93.0,
+            "width": 11.0,
+            "height": 11.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_117",
+            "x": 17.0,
+            "y": 94.0,
+            "width": 13.0,
+            "height": 12.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_118",
+            "x": 32.0,
+            "y": 95.0,
+            "width": 15.0,
+            "height": 15.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_119",
+            "x": 114.0,
+            "y": 95.0,
+            "width": 13.0,
+            "height": 14.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_120",
+            "x": 127.0,
+            "y": 97.0,
+            "width": 18.0,
+            "height": 18.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_121",
+            "x": 163.0,
+            "y": 94.0,
+            "width": 11.0,
+            "height": 11.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_122",
+            "x": 175.0,
+            "y": 111.0,
+            "width": 18.0,
+            "height": 31.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_123",
+            "x": 308.0,
+            "y": 92.0,
+            "width": 8.0,
+            "height": 8.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_124",
+            "x": 324.0,
+            "y": 92.0,
+            "width": 8.0,
+            "height": 8.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_125",
+            "x": 341.0,
+            "y": 91.0,
+            "width": 6.0,
+            "height": 6.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_126",
+            "x": 385.0,
+            "y": 96.0,
+            "width": 15.0,
+            "height": 15.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_127",
+            "x": 402.0,
+            "y": 95.0,
+            "width": 14.0,
+            "height": 14.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_128",
+            "x": 419.0,
+            "y": 94.0,
+            "width": 11.0,
+            "height": 11.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_129",
+            "x": 436.0,
+            "y": 93.0,
+            "width": 23.0,
+            "height": 9.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_130",
+            "x": 496.0,
+            "y": 107.0,
+            "width": 16.0,
+            "height": 27.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_131",
+            "x": 512.0,
+            "y": 96.0,
+            "width": 16.0,
+            "height": 16.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_132",
+            "x": 528.0,
+            "y": 96.0,
+            "width": 16.0,
+            "height": 16.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_133",
+            "x": 544.0,
+            "y": 96.0,
+            "width": 16.0,
+            "height": 16.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_134",
+            "x": 559.0,
+            "y": 96.0,
+            "width": 17.0,
+            "height": 16.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_135",
+            "x": 2.0,
+            "y": 111.0,
+            "width": 13.0,
+            "height": 13.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_136",
+            "x": 17.0,
+            "y": 110.0,
+            "width": 14.0,
+            "height": 13.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_137",
+            "x": 32.0,
+            "y": 112.0,
+            "width": 16.0,
+            "height": 16.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_138",
+            "x": 53.0,
+            "y": 111.0,
+            "width": 7.0,
+            "height": 13.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_139",
+            "x": 68.0,
+            "y": 110.0,
+            "width": 9.0,
+            "height": 12.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_140",
+            "x": 84.0,
+            "y": 113.0,
+            "width": 9.0,
+            "height": 17.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_141",
+            "x": 115.0,
+            "y": 110.0,
+            "width": 9.0,
+            "height": 12.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_142",
+            "x": 129.0,
+            "y": 110.0,
+            "width": 13.0,
+            "height": 13.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_143",
+            "x": 165.0,
+            "y": 108.0,
+            "width": 7.0,
+            "height": 7.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_144",
+            "x": 308.0,
+            "y": 109.0,
+            "width": 12.0,
+            "height": 10.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_145",
+            "x": 321.0,
+            "y": 108.0,
+            "width": 14.0,
+            "height": 8.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_146",
+            "x": 340.0,
+            "y": 109.0,
+            "width": 11.0,
+            "height": 10.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_147",
+            "x": 357.0,
+            "y": 110.0,
+            "width": 10.0,
+            "height": 12.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_148",
+            "x": 400.0,
+            "y": 129.0,
+            "width": 15.0,
+            "height": 21.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_149",
+            "x": 422.0,
+            "y": 113.0,
+            "width": 10.0,
+            "height": 6.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_150",
+            "x": 431.0,
+            "y": 113.0,
+            "width": 18.0,
+            "height": 10.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_151",
+            "x": 450.0,
+            "y": 113.0,
+            "width": 14.0,
+            "height": 9.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_152",
+            "x": 481.0,
+            "y": 127.0,
+            "width": 14.0,
+            "height": 24.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_153",
+            "x": 511.0,
+            "y": 129.0,
+            "width": 18.0,
+            "height": 21.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_154",
+            "x": 516.0,
+            "y": 108.0,
+            "width": 11.0,
+            "height": 8.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_155",
+            "x": 530.0,
+            "y": 111.0,
+            "width": 13.0,
+            "height": 13.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_156",
+            "x": 546.0,
+            "y": 111.0,
+            "width": 10.0,
+            "height": 13.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_157",
+            "x": 562.0,
+            "y": 109.0,
+            "width": 10.0,
+            "height": 11.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_158",
+            "x": 2.0,
+            "y": 126.0,
+            "width": 13.0,
+            "height": 13.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_159",
+            "x": 17.0,
+            "y": 127.0,
+            "width": 14.0,
+            "height": 14.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_160",
+            "x": 31.0,
+            "y": 145.0,
+            "width": 18.0,
+            "height": 33.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_161",
+            "x": 52.0,
+            "y": 125.0,
+            "width": 9.0,
+            "height": 10.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_162",
+            "x": 68.0,
+            "y": 127.0,
+            "width": 9.0,
+            "height": 13.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_163",
+            "x": 84.0,
+            "y": 125.0,
+            "width": 9.0,
+            "height": 9.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_164",
+            "x": 111.0,
+            "y": 129.0,
+            "width": 18.0,
+            "height": 18.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_165",
+            "x": 131.0,
+            "y": 125.0,
+            "width": 10.0,
+            "height": 11.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_166",
+            "x": 162.0,
+            "y": 126.0,
+            "width": 12.0,
+            "height": 12.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_167",
+            "x": 177.0,
+            "y": 127.0,
+            "width": 14.0,
+            "height": 14.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_168",
+            "x": 192.0,
+            "y": 128.0,
+            "width": 16.0,
+            "height": 16.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire_Hanabi_0",
+            "x": 305.0,
+            "y": 128.0,
+            "width": 15.0,
+            "height": 15.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire_Hanabi_1",
+            "x": 321.0,
+            "y": 128.0,
+            "width": 16.0,
+            "height": 15.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire_Hanabi_2",
+            "x": 337.0,
+            "y": 128.0,
+            "width": 15.0,
+            "height": 15.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire_Hanabi_3",
+            "x": 353.0,
+            "y": 128.0,
+            "width": 15.0,
+            "height": 15.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_173",
+            "x": 383.0,
+            "y": 161.0,
+            "width": 18.0,
+            "height": 52.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_174",
+            "x": 417.0,
+            "y": 129.0,
+            "width": 13.0,
+            "height": 15.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_175",
+            "x": 434.0,
+            "y": 129.0,
+            "width": 11.0,
+            "height": 13.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_176",
+            "x": 451.0,
+            "y": 129.0,
+            "width": 9.0,
+            "height": 11.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_177",
+            "x": 496.0,
+            "y": 128.0,
+            "width": 16.0,
+            "height": 16.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_178",
+            "x": 529.0,
+            "y": 127.0,
+            "width": 14.0,
+            "height": 14.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_179",
+            "x": 543.0,
+            "y": 129.0,
+            "width": 18.0,
+            "height": 18.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_180",
+            "x": 560.0,
+            "y": 139.0,
+            "width": 16.0,
+            "height": 27.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_181",
+            "x": 1.0,
+            "y": 143.0,
+            "width": 14.0,
+            "height": 14.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_182",
+            "x": 16.0,
+            "y": 144.0,
+            "width": 16.0,
+            "height": 16.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_183",
+            "x": 49.0,
+            "y": 142.0,
+            "width": 13.0,
+            "height": 11.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_184",
+            "x": 64.0,
+            "y": 161.0,
+            "width": 33.0,
+            "height": 34.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_185",
+            "x": 111.0,
+            "y": 144.0,
+            "width": 10.0,
+            "height": 15.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_186",
+            "x": 119.0,
+            "y": 143.0,
+            "width": 10.0,
+            "height": 15.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_187",
+            "x": 128.0,
+            "y": 137.0,
+            "width": 15.0,
+            "height": 10.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_188",
+            "x": 129.0,
+            "y": 145.0,
+            "width": 15.0,
+            "height": 10.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_189",
+            "x": 159.0,
+            "y": 145.0,
+            "width": 34.0,
+            "height": 18.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_190",
+            "x": 193.0,
+            "y": 143.0,
+            "width": 14.0,
+            "height": 14.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_191",
+            "x": 223.0,
+            "y": 161.0,
+            "width": 17.0,
+            "height": 34.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_192",
+            "x": 242.0,
+            "y": 145.0,
+            "width": 10.0,
+            "height": 18.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_193",
+            "x": 256.0,
+            "y": 145.0,
+            "width": 16.0,
+            "height": 18.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_194",
+            "x": 272.0,
+            "y": 145.0,
+            "width": 16.0,
+            "height": 17.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_195",
+            "x": 304.0,
+            "y": 145.0,
+            "width": 17.0,
+            "height": 17.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_196",
+            "x": 321.0,
+            "y": 145.0,
+            "width": 15.0,
+            "height": 16.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_197",
+            "x": 337.0,
+            "y": 140.0,
+            "width": 12.0,
+            "height": 11.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_198",
+            "x": 343.0,
+            "y": 135.0,
+            "width": 6.0,
+            "height": 6.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_199",
+            "x": 400.0,
+            "y": 144.0,
+            "width": 16.0,
+            "height": 16.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_200",
+            "x": 417.0,
+            "y": 143.0,
+            "width": 14.0,
+            "height": 14.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_201",
+            "x": 434.0,
+            "y": 142.0,
+            "width": 12.0,
+            "height": 12.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_202",
+            "x": 451.0,
+            "y": 141.0,
+            "width": 10.0,
+            "height": 10.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_203",
+            "x": 480.0,
+            "y": 144.0,
+            "width": 17.0,
+            "height": 15.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_204",
+            "x": 497.0,
+            "y": 144.0,
+            "width": 15.0,
+            "height": 15.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_205",
+            "x": 515.0,
+            "y": 142.0,
+            "width": 11.0,
+            "height": 11.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_206",
+            "x": 531.0,
+            "y": 142.0,
+            "width": 11.0,
+            "height": 11.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_207",
+            "x": 549.0,
+            "y": 140.0,
+            "width": 7.0,
+            "height": 7.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_208",
+            "x": 2.0,
+            "y": 157.0,
+            "width": 11.0,
+            "height": 9.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_209",
+            "x": 15.0,
+            "y": 161.0,
+            "width": 18.0,
+            "height": 18.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_210",
+            "x": 33.0,
+            "y": 159.0,
+            "width": 14.0,
+            "height": 14.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_211",
+            "x": 48.0,
+            "y": 161.0,
+            "width": 18.0,
+            "height": 18.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_212",
+            "x": 114.0,
+            "y": 160.0,
+            "width": 11.0,
+            "height": 17.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_213",
+            "x": 128.0,
+            "y": 159.0,
+            "width": 17.0,
+            "height": 11.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_214",
+            "x": 165.0,
+            "y": 155.0,
+            "width": 6.0,
+            "height": 6.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_215",
+            "x": 179.0,
+            "y": 157.0,
+            "width": 10.0,
+            "height": 10.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_216",
+            "x": 194.0,
+            "y": 158.0,
+            "width": 12.0,
+            "height": 12.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_217",
+            "x": 240.0,
+            "y": 161.0,
+            "width": 16.0,
+            "height": 16.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_218",
+            "x": 257.0,
+            "y": 161.0,
+            "width": 14.0,
+            "height": 14.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_219",
+            "x": 274.0,
+            "y": 161.0,
+            "width": 12.0,
+            "height": 13.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_220",
+            "x": 305.0,
+            "y": 159.0,
+            "width": 14.0,
+            "height": 14.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_221",
+            "x": 321.0,
+            "y": 159.0,
+            "width": 14.0,
+            "height": 14.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_222",
+            "x": 337.0,
+            "y": 159.0,
+            "width": 14.0,
+            "height": 14.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_223",
+            "x": 353.0,
+            "y": 159.0,
+            "width": 14.0,
+            "height": 14.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_224",
+            "x": 400.0,
+            "y": 160.0,
+            "width": 16.0,
+            "height": 16.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_225",
+            "x": 417.0,
+            "y": 159.0,
+            "width": 14.0,
+            "height": 14.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_226",
+            "x": 434.0,
+            "y": 158.0,
+            "width": 12.0,
+            "height": 12.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_227",
+            "x": 435.0,
+            "y": 203.0,
+            "width": 30.0,
+            "height": 56.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_228",
+            "x": 480.0,
+            "y": 175.0,
+            "width": 29.0,
+            "height": 23.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_229",
+            "x": 534.0,
+            "y": 173.0,
+            "width": 16.0,
+            "height": 19.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_230",
+            "x": 550.0,
+            "y": 171.0,
+            "width": 26.0,
+            "height": 19.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_231",
+            "x": 3.0,
+            "y": 173.0,
+            "width": 10.0,
+            "height": 10.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_232",
+            "x": 15.0,
+            "y": 177.0,
+            "width": 18.0,
+            "height": 18.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_233",
+            "x": 32.0,
+            "y": 176.0,
+            "width": 16.0,
+            "height": 16.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_234",
+            "x": 48.0,
+            "y": 176.0,
+            "width": 16.0,
+            "height": 16.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_235",
+            "x": 64.0,
+            "y": 193.0,
+            "width": 16.0,
+            "height": 26.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_236",
+            "x": 79.0,
+            "y": 193.0,
+            "width": 17.0,
+            "height": 26.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_237",
+            "x": 114.0,
+            "y": 173.0,
+            "width": 14.0,
+            "height": 9.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_238",
+            "x": 129.0,
+            "y": 173.0,
+            "width": 15.0,
+            "height": 8.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_239",
+            "x": 159.0,
+            "y": 193.0,
+            "width": 18.0,
+            "height": 33.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_240",
+            "x": 177.0,
+            "y": 193.0,
+            "width": 16.0,
+            "height": 34.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_241",
+            "x": 192.0,
+            "y": 193.0,
+            "width": 16.0,
+            "height": 34.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_242",
+            "x": 223.0,
+            "y": 175.0,
+            "width": 18.0,
+            "height": 8.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_243",
+            "x": 240.0,
+            "y": 175.0,
+            "width": 16.0,
+            "height": 8.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_244",
+            "x": 255.0,
+            "y": 175.0,
+            "width": 18.0,
+            "height": 8.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_245",
+            "x": 272.0,
+            "y": 175.0,
+            "width": 16.0,
+            "height": 8.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_246",
+            "x": 303.0,
+            "y": 176.0,
+            "width": 17.0,
+            "height": 17.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_247",
+            "x": 319.0,
+            "y": 176.0,
+            "width": 17.0,
+            "height": 17.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_248",
+            "x": 335.0,
+            "y": 176.0,
+            "width": 17.0,
+            "height": 17.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_249",
+            "x": 351.0,
+            "y": 181.0,
+            "width": 17.0,
+            "height": 22.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_250",
+            "x": 389.0,
+            "y": 200.0,
+            "width": 23.0,
+            "height": 28.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_251",
+            "x": 484.0,
+            "y": 174.0,
+            "width": 6.0,
+            "height": 6.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_252",
+            "x": 505.0,
+            "y": 173.0,
+            "width": 14.0,
+            "height": 16.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_253",
+            "x": 519.0,
+            "y": 174.0,
+            "width": 16.0,
+            "height": 18.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_254",
+            "x": 544.0,
+            "y": 208.0,
+            "width": 32.0,
+            "height": 37.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_255",
+            "x": 551.0,
+            "y": 172.0,
+            "width": 6.0,
+            "height": 6.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_256",
+            "x": 111.0,
+            "y": 191.0,
+            "width": 18.0,
+            "height": 14.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_257",
+            "x": 128.0,
+            "y": 193.0,
+            "width": 17.0,
+            "height": 17.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_258",
+            "x": 223.0,
+            "y": 208.0,
+            "width": 66.0,
+            "height": 32.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_259",
+            "x": 306.0,
+            "y": 191.0,
+            "width": 10.0,
+            "height": 12.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_260",
+            "x": 308.0,
+            "y": 205.0,
+            "width": 25.0,
+            "height": 9.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_261",
+            "x": 323.0,
+            "y": 191.0,
+            "width": 10.0,
+            "height": 14.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_262",
+            "x": 336.0,
+            "y": 207.0,
+            "width": 15.0,
+            "height": 30.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_263",
+            "x": 351.0,
+            "y": 208.0,
+            "width": 17.0,
+            "height": 28.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_264",
+            "x": 417.0,
+            "y": 208.0,
+            "width": 17.0,
+            "height": 30.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_265",
+            "x": 433.0,
+            "y": 208.0,
+            "width": 13.0,
+            "height": 18.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_266",
+            "x": 453.0,
+            "y": 208.0,
+            "width": 7.0,
+            "height": 6.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_267",
+            "x": 484.0,
+            "y": 208.0,
+            "width": 23.0,
+            "height": 14.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_268",
+            "x": 517.0,
+            "y": 208.0,
+            "width": 7.0,
+            "height": 24.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "Fire Effect and Bullet 16x16_269",
+            "x": 532.0,
+            "y": 208.0,
+            "width": 9.0,
+            "height": 29.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        }
+    ]
+}

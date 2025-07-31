@@ -19,6 +19,7 @@ struct particleInfo
 {
 	Vector2 position;	// 이동한 위치 
 	Vector2 dirVec;		// 이동 방향
+	float speed;		// 이동속도
 };
 
 class ParticleRenderer : public RenderComponent
@@ -29,22 +30,42 @@ public:
 	void Render(D2DRenderManager* manager);
 	void OnDestroy();
 
+	// 플레이 함수
 	void Play();
+	bool IsPlay();
 	void Reset();
 	void Pause();
+
+	// 설정 함수
 	void SetLoop(bool value);
+	bool IsLoop();
+
+	void SetAmount(int value);
+	int GetAmount();
+
 	void SetBitmap(std::wstring path);
+	ID2D1Bitmap1* GetBitmap();
+
+	void SetMinSpeed(float value);
+	float GetMinSpeed();
+
+	void SetMaxSpeed(float value);
+	float GetMaxSpeed();
+
+	void SetDuration(float value);
+	float GetDuration();
 
 private:
-	std::shared_ptr<BitmapResource> particleBitmap{};
+	std::shared_ptr<BitmapResource> particleBitmapResource{};
 	std::vector<particleInfo> infos;
 
-	int particleCount = 100;
-	float speed = 1.0f;
+	int particleAmount = 100;	// 출력할 파티클 개수
+	float minSpeed = 1.0f;		// 최소 속도
+	float maxSpeed = 1.0f;		// 최대 속도
+				
+	float timer = 0.0f;			// duration 확인용 타이머
+	float duration = 3.0f;		// 지속시간
 
-	float timer = 0.0f;
-	float duration = 3.0f;
-
-	bool isPlay = false;
-	bool isLoop = false;
+	bool isPlay = false;		// 파티클 플레이 여부
+	bool isLoop = false;		// 파티클 루프 여부 - 루프하면 자동 Reset()호출
 };

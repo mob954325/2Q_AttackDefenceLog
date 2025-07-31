@@ -1,0 +1,25 @@
+{
+    "clipName": "Fire_Hanabi",
+    "loop": false,
+    "texturePath": "Assets/Sprites/Fire Effect and Bullet 16x16.png",
+    "duration": 0.3333333432674408,
+    "frames": [
+        {
+            "sprite": "Fire_Hanabi_0",
+            "time": 0.0
+        },
+        {
+            "sprite": "Fire_Hanabi_1",
+            "time": 0.0833333358168602
+        },
+        {
+            "sprite": "Fire_Hanabi_2",
+            "time": 0.1666666716337204
+        },
+        {
+            "sprite": "Fire_Hanabi_3",
+            "time": 0.25
+        }
+    ],
+    "events": []
+}
