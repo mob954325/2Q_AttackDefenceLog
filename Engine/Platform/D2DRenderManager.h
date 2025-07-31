@@ -19,6 +19,7 @@ public:
 	void SetRenderTransform(D2D1_MATRIX_3X2_F& finalMatrix);
 	void DrawBitmap(ComPtr<ID2D1Bitmap1> bitmap);
 	void DrawBitmap(ComPtr<ID2D1Bitmap1> bitmap, D2D1_RECT_F& destRect, D2D1_RECT_F& srcRect);
+	void DrawBitmap(ComPtr<ID2D1Bitmap1> bitmap, D2D1_RECT_F& destRect, D2D1_RECT_F& srcRect, float capacity);
 	void DrawImage(ComPtr<ID2D1Effect> effect);
 
 	void CreateBrush(const D2D1::ColorF& color, ID2D1SolidColorBrush** pBrush);

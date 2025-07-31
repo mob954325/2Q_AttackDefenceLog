@@ -17,6 +17,9 @@
     <ClCompile Include="TestColliderApp\Scripts\DummyButton.cpp">
       <Filter>Scripts</Filter>
     </ClCompile>
+    <ClCompile Include="TestColliderApp\Scripts\DummyEffectAnimation.cpp">
+      <Filter>Scripts</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TestColliderApp\App\TestColliderApp.h">
@@ -32,6 +35,9 @@
       <Filter>Scripts</Filter>
     </ClInclude>
     <ClInclude Include="TestColliderApp\Scripts\DummyButton.h">
+      <Filter>Scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="TestColliderApp\Scripts\DummyEffectAnimation.h">
       <Filter>Scripts</Filter>
     </ClInclude>
   </ItemGroup>

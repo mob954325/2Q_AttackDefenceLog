@@ -2,6 +2,7 @@
 #include "Datas/SpriteDatas.h"
 #include "Datas/AnimationDatas.h"
 #include "BitmapRenderer.h"
+#include "Components/Rendering/AnimationPlayer.h"
 
 // 
 
@@ -9,6 +10,8 @@ class AnimationRenderer : public BitmapRenderer
 {
 public:
 	void Render(D2DRenderManager* manager) override;
+
+	void CreateBitmapResource(std::wstring filePath);
 
 	/// <summary>
 	/// SpriteSheet json 파일 찾기
@@ -22,24 +25,8 @@ public:
 	/// <param name="filePath">파일 경로</param>
 	void SetAnimationClip(std::wstring filePath);
 
-	int GetFrame() { return frameIndex; }
-
-	void Play() { isPlay = true; }
-	void Stop() { isPlay = false; }
-
 private:
-	SpriteSheet sheet{};
-	AnimationClip clip{};
-
-	D2D1_RECT_F srcRect{};
-
-	bool isPlay = false;
-
-	int frameIndex = 0;
-	int maxFrameIndex = 1;
-
-	float frameTimer = 0.0f;
-	float maxFrameTimer = 0.0f;
+	AnimationPlayer player;
 };
 
 /// 유니티 SpriteEditor 좌표
