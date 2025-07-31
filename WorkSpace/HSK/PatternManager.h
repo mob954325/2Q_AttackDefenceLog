@@ -1,7 +1,9 @@
 ﻿#pragma once
 #include "Components/Rendering/TrailComponent.h"
 #include "Components/Logic/InputSystem.h"
+#include "../WorkSpace/HSK/PatternDrawerComponent.h"
 #include <array>
+#include <queue>
 
 /* 7.30. 한승규
 * 노드(9개)와, 현재 트레일 컴포넌트가 남긴 궤적의 충돌여부를 확인해서
@@ -32,11 +34,14 @@ public:
 	void AddNodes(Vector2 pos, float radius, int i);
 	int GetSkippedNode(int from, int to); // 논리 연산, 중간에 노드가 스킵되었을 가능성을 판단
 
+	std::vector<Line> GetPatternPathPositions();
+
 	const std::deque<int>& GetPattern() const {
 		return pattern;
-	}	
+	}
 private:
 	std::array<Node, 9> nodes;
 	std::deque<int> pattern;
 	D2D1_RECT_F patternBox = { 0,0,0,0 };
+
 };

@@ -3,7 +3,8 @@
 #include "Components/Rendering/TrailComponent.h"
 #include "NodeObj.h"
 #include "Datas/EngineData.h"
-
+#include "../Engine/Resources/ResourceManager.h"
+#include "../WorkSpace/HSK/PatternDrawerComponent.h"
 
 using namespace HSK;
 
@@ -14,6 +15,11 @@ void HSKScene::OnEnterImpl()
 	auto t = obj->AddComponent<TrailComponent>();
 	t->SetOrderInLayer(100);
 	t->SetBitmap(L"../HSK/Test/white_brush_test3.png");
+
+	auto d = obj->AddComponent<PatternDrawerComponent>();
+	d->SetOrderInLayer(80);
+	d->SetBitmap(L"../HSK/Test/test5.png");
+
 	AddGameObject(obj, "trail");
 
 	for (int i = 0; i < 9; ++i) {
@@ -51,18 +57,21 @@ void HSKScene::UpdateImpl()
 	}
 
 	auto t = obj->GetComponent<TrailComponent>();
+	auto d = obj->GetComponent<PatternDrawerComponent>();
+
 	t->isDraw = Input::leftButtonDown;
-	t->isOutFromBox = Input::rightButtonDown;
+
 	obj->GetTransform().SetPosition(Input::MouseX, Input::MouseY);
 	t->isOutFromBox = PM.CheckOutOfBox({ Input::MouseX, Input::MouseY });
-
 	if (t->isNewCached) {
 		PM.CheckTrails(t->cachedTrails);
-		t->isNewCached = false; // 사용했다고 알림
+		d->SetLine(PM.GetPatternPathPositions());
+		t->isNewCached = false; // 사용했다고 알림				
 
 		for (int value : PM.GetPattern()) {
 			std::cout << value << "-";
 		}
 		std::cout << std::endl << std::endl;
 	}
+
 }

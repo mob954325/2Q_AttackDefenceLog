@@ -1,7 +1,12 @@
 ﻿#include "PatternManager.h"
 #include "Components/Base/GameObject.h"
 #include "Components/Rendering/BitmapRenderer.h"
+#include "../Engine/Resources/ResourceManager.h"
+//#include "../Engine/Components/Rendering/LineRenderer.h"
+#include "../Engine/Platform/D2DRenderManager.h"
 
+
+constexpr float PI = 3.141592654f; // 이건 유명한 파이임
 
 void PatternManager::SetNodes(const std::array<GameObject*, 9>& positions, float radius)
 {
@@ -39,7 +44,7 @@ void PatternManager::SetNodes(const std::array<GameObject*, 9>& positions, float
 	};
 }
 
-void PatternManager::AddNodes(Vector2 pos, float radius, int i)
+void PatternManager::AddNodes(Vector2 pos, float radius, int i) // 안썼음 결국
 {
 	nodes[i].position = pos;
 	nodes[i].radius = radius;
@@ -65,6 +70,24 @@ int PatternManager::GetSkippedNode(int from, int to)
 	return -1;
 }
 
+std::vector<Line> PatternManager::GetPatternPathPositions() {
+	std::vector<Line> tmp;
+
+	if (pattern.size() < 2) return tmp; // 점 하나는 안그려줄꺼임
+
+	for (int i = 1; i < pattern.size(); i++) {
+		int fromIndex = pattern[i - 1] - 1; // 1~9를 0~8로 바꾸려고 -1
+		int toIndex = pattern[i] - 1;
+
+		if (fromIndex < 0 || fromIndex >= 9 || toIndex < 0 || toIndex >= 9) continue; // 넘칠일은 없긴 할텐데, 혹시 모르니까 방어로직
+
+		Vector2 from = nodes[fromIndex].position;
+		Vector2 to = nodes[toIndex].position;		
+		tmp.push_back({ from, to });
+	}
+
+	return tmp;
+}
 
 void PatternManager::SetPatternBox(const D2D1_RECT_F& box) // 안씀
 {
@@ -75,12 +98,12 @@ void PatternManager::CheckTrails(const std::deque<TrailStamp>& trails)
 {
 	pattern.clear();
 
-	int lastHit = -1; 
+	int lastHit = -1;
 
 	for (const auto& stamp : trails) { // 트레일 안에 있는것들, 형태는 TrailStamp
-		
+
 		if (stamp.isActive == false) continue;
-		
+
 		Vector2 pos = { stamp.position.x, stamp.position.y };
 
 		for (int i = 0; i < 9; ++i) {

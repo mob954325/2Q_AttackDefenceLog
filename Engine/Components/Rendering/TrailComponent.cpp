@@ -1,10 +1,8 @@
 ﻿#include "TrailComponent.h"
-#include "Components/Camera/Camera.h"
 #include "Scene/SceneManager.h"
-
-#include "Utils/GameTime.h"
-#include "Datas/SpriteDatas.h"
-#include "Utils/DebugUtility.h"
+//#include "Utils/GameTime.h"
+//#include "Datas/SpriteDatas.h"
+//#include "Utils/DebugUtility.h"
 #include "Resources/ResourceManager.h"
 
 constexpr float PI = 3.141592654f; // 이건 유명한 파이임

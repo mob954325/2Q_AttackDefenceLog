@@ -33,7 +33,7 @@ public:
 
 	inline float GetAngle(D2D1_POINT_2F prev, D2D1_POINT_2F current) { // 이전좌표와 현재좌표를 비교해서, 각도(radian) 반환해줌
 		return atan2f(current.y - prev.y, current.x - prev.x); // radian
-	}
+	}	
 
 	//플래그가 좀 많음, 델리게이트 쓰면 깔끔해지는데, 일단 직관적으로 이렇게 설계함
 	bool isDraw = false; // OnOff용
