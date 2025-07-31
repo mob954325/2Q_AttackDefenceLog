@@ -28,6 +28,7 @@ public:
 	void Draw(D2DRenderManager* manager); // 한번 감싼거임, 여기서 for 돌려서 비트맵 찍음
 	void Render(D2DRenderManager* manager) override; // 이거 기반으로 그려짐
 	void SetBitmap(std::wstring path);
+	void SetTailBitmap(std::wstring path);
 	void OnDestroy() override;
 	void Clear(); // 한번에 지우는거임, 큐 비움	
 
@@ -56,4 +57,5 @@ public:
 private:
 	std::deque<TrailStamp> trails; // 큐, 여기에 구조체 담김(좌표, 각도, 수명)
 	std::shared_ptr<BitmapResource> stampBitmap = nullptr; // 찍을 비트맵, 브러쉬 넣으면 됨
+	std::shared_ptr<BitmapResource> tailBitmap = nullptr;
 };

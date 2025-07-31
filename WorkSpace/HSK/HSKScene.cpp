@@ -4,7 +4,7 @@
 #include "NodeObj.h"
 #include "Datas/EngineData.h"
 #include "../Engine/Resources/ResourceManager.h"
-#include "../WorkSpace/HSK/PatternDrawerComponent.h"
+#include "Components/Rendering/PatternDrawerComponent.h"
 
 using namespace HSK;
 
@@ -14,10 +14,13 @@ void HSKScene::OnEnterImpl()
 	obj->SetRenderLayer(EngineData::RenderLayer::UI);
 	auto t = obj->AddComponent<TrailComponent>();
 	t->SetOrderInLayer(100);
-	t->SetBitmap(L"../HSK/Test/white_brush_test3.png");
+	
 
 	auto d = obj->AddComponent<PatternDrawerComponent>();
 	d->SetOrderInLayer(80);
+
+	t->SetBitmap(L"../HSK/Test/test5.png");
+	t->SetTailBitmap(L"../HSK/Test/test_t.png");
 	d->SetBitmap(L"../HSK/Test/test5.png");
 
 	AddGameObject(obj, "trail");

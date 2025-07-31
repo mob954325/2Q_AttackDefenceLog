@@ -119,6 +119,10 @@ void TrailComponent::AddStamp(D2D1_POINT_2F pos) { //스탬프를 찍는건데, 
 			? GetAngle(last.position, interpPos) // 보간의 첫번째(혹은 그냥 하나)는 트레일의 마지막
 			: GetAngle(trails.back().position, interpPos); // 이전에 보간으로 넣어진 값도 고려해서 각 잡기(사실 선형이라 크게 티 안나긴 함)
 		trails.push_back({ interpPos, angle }); // 1 ~ ? 갯수만큼 넣어줌
+		
+		if (trails.size() == 2) {			
+			trails[0].angle = angle;
+		}
 	}
 
 	if (isOutFromBox) {
@@ -141,27 +145,41 @@ void TrailComponent::Draw(D2DRenderManager* manager) {
 
 	if (!IsActiveSelf()) return; // 비활성화 얼리리턴
 
-	for (auto& stamp : trails) { // 큐 전체를 순회하면서
-		D2D1_SIZE_F bmpSize = stampBitmap->GetBitmap()->GetSize(); // 사이즈 대충 구해서 중앙기준으로
-		D2D1_RECT_F destRect = { // 대충 이미지 정 가운데 기준
-		 stamp.position.x - bmpSize.width * 0.5f,
-		 stamp.position.y - bmpSize.height * 0.5f,
-		 stamp.position.x + bmpSize.width * 0.5f,
-		 stamp.position.y + bmpSize.height * 0.5f,
-		};
+	D2D1_SIZE_F tailSize = tailBitmap->GetBitmap()->GetSize(); // 꼬리는 한번만 해주면 될듯
+	D2D1_RECT_F tailSrcRect = { 0.0f, 0.0f, tailSize.width, tailSize.height };// 이건 규격 맞출려고 바꿔주는거임
+
+	D2D1_SIZE_F bmpSize = stampBitmap->GetBitmap()->GetSize(); // 사이즈 대충 구해서 중앙기준으로
+	D2D1_RECT_F srcRect = { 0.0f, 0.0f,	bmpSize.width, bmpSize.height };
+
+	for (int i = 0; i < trails.size(); ++i) { // 큐 전체를 순회하면서
+		const TrailStamp& stamp = trails[i];
 
 		D2D1::Matrix3x2F transform = D2D1::Matrix3x2F::Rotation( // 회전 행렬 생성하는거임
 			stamp.angle * 180.0f / PI,
 			stamp.position
 		);
 
-		manager->SetRenderTransform(transform); // 회전행렬 적용
-		D2D1_RECT_F srcRect = { // 이건 규격 맞출려고 바꿔주는거임
-			0.0f, 0.0f,
-			bmpSize.width, bmpSize.height
-		};
+		if (i == 0 && trails.size() >= 2) {
+			D2D1_RECT_F tailDestRect = {
+			stamp.position.x - tailSize.width * 0.5f,
+			stamp.position.y - tailSize.height * 0.5f,
+			stamp.position.x + tailSize.width * 0.5f,
+			stamp.position.y + tailSize.height * 0.5f
+			};
+			manager->SetRenderTransform(transform);
+			manager->DrawBitmap(tailBitmap->GetBitmap(), tailDestRect, tailSrcRect); // 그려잇
+		}
+		else {
+			D2D1_RECT_F destRect = { // 대충 이미지 정 가운데 기준
+			stamp.position.x - bmpSize.width * 0.5f,
+			stamp.position.y - bmpSize.height * 0.5f,
+			stamp.position.x + bmpSize.width * 0.5f,
+			stamp.position.y + bmpSize.height * 0.5f,
+			};
+			manager->SetRenderTransform(transform);
+			manager->DrawBitmap(stampBitmap->GetBitmap(), destRect, srcRect); // 그려잇
+		}
 
-		manager->DrawBitmap(stampBitmap->GetBitmap(), destRect, srcRect); // 그려잇
 	}
 }
 
@@ -176,6 +194,12 @@ void TrailComponent::Render(D2DRenderManager* manager)
 void TrailComponent::SetBitmap(std::wstring path) // 랩핑한거임, 별거없음
 {
 	stampBitmap = resourceManager->CreateBitmapResource(path);
+	tailBitmap = stampBitmap; // 일단 몸통으로 초기화
+}
+
+void TrailComponent::SetTailBitmap(std::wstring path) //꼬리는 나중에 추가하는걸 추천
+{
+	tailBitmap = resourceManager->CreateBitmapResource(path);
 }
 
 void TrailComponent::OnDestroy() // 이거 안하면 터짐
