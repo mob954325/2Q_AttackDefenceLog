@@ -283,6 +283,7 @@
       <Filter>Math</Filter>
     </ClInclude>
     <ClInclude Include="Components\UI\Slider.h" />
+    <ClInclude Include="Math\EasingFunction.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\Application.cpp">
@@ -435,6 +436,7 @@
       <Filter>Math</Filter>
     </ClCompile>
     <ClCompile Include="Components\UI\Slider.cpp" />
+    <ClCompile Include="Math\EasingFunction.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
