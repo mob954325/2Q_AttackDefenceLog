@@ -13,7 +13,7 @@ void HSKScene::OnEnterImpl()
 	obj->SetRenderLayer(EngineData::RenderLayer::UI);
 	auto t = obj->AddComponent<TrailComponent>();
 	t->SetOrderInLayer(100);
-	t->SetBitmap(L"../HSK/Test/test5.png");
+	t->SetBitmap(L"../HSK/Test/white_brush_test3.png");
 	AddGameObject(obj, "trail");
 
 	for (int i = 0; i < 9; ++i) {
@@ -24,14 +24,14 @@ void HSKScene::OnEnterImpl()
 	}
 
 	m_nodes[0]->GetTransform().SetPosition(300, 200);
-	m_nodes[1]->GetTransform().SetPosition(400, 200);
-	m_nodes[2]->GetTransform().SetPosition(500, 200);
-	m_nodes[3]->GetTransform().SetPosition(300, 300);
-	m_nodes[4]->GetTransform().SetPosition(400, 300);
-	m_nodes[5]->GetTransform().SetPosition(500, 300);
-	m_nodes[6]->GetTransform().SetPosition(300, 400);
-	m_nodes[7]->GetTransform().SetPosition(400, 400);
-	m_nodes[8]->GetTransform().SetPosition(500, 400);
+	m_nodes[1]->GetTransform().SetPosition(450, 200);
+	m_nodes[2]->GetTransform().SetPosition(600, 200);
+	m_nodes[3]->GetTransform().SetPosition(300, 350);
+	m_nodes[4]->GetTransform().SetPosition(450, 350);
+	m_nodes[5]->GetTransform().SetPosition(600, 350);
+	m_nodes[6]->GetTransform().SetPosition(300, 500);
+	m_nodes[7]->GetTransform().SetPosition(450, 500);
+	m_nodes[8]->GetTransform().SetPosition(600, 500);
 }
 
 void HSKScene::OnExitImpl()
@@ -46,7 +46,7 @@ bool isNodeInitialized = false; // 상남자 코딩
 void HSKScene::UpdateImpl()
 {
 	if (!isNodeInitialized) {
-		PM.SetNodes(m_nodes, 80.0f);
+		PM.SetNodes(m_nodes, 45.0f);
 		isNodeInitialized = true;
 	}
 
@@ -58,12 +58,11 @@ void HSKScene::UpdateImpl()
 
 	if (t->isNewCached) {
 		PM.CheckTrails(t->cachedTrails);
-		t->isNewCached = false;
+		t->isNewCached = false; // 사용했다고 알림
 
 		for (int value : PM.GetPattern()) {
 			std::cout << value << "-";
 		}
-
 		std::cout << std::endl;
 	}
 }

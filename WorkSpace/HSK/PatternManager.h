@@ -29,6 +29,7 @@ public:
 	void CheckTrails(const std::deque<TrailStamp>& trails);
 	bool CheckOutOfBox(Vector2 pos);
 	void AddNodes(Vector2 pos, float radius, int i);
+	int GetSkippedNode(int from, int to); // 논리 연산, 중간에 노드가 스킵되었을 가능성을 판단
 
 	const std::deque<int>& GetPattern() const {
 		return pattern;

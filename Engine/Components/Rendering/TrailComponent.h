@@ -40,6 +40,9 @@ public:
 	bool isOutFromBox = true; // 영역밖으로 나가면 true, 뒤에 크기를 자름
 	bool isNewCached = false; // 외부에서 사용하는 플레그, 받은다음 false 해줘야함
 
+	bool WasJustReleased() const { return wasDraw && !isDraw; } // 아 델리게이트 쓰고싶다
+	bool WasJustPressed() const { return !wasDraw && isDraw; }
+
 	float minDistance = 5.0f; // 최소거리, 즉 스탬프들간의 간격임 촘촘하면 부드러워짐
 	float lifeTime = 0.3f; // 이거일단 사용안함, 나중에 update에서 시간 지난거 처리하는식으로 가능함
 	int maxTrailCount = 100; // 최대 길이, 찍히는 비트맵의 갯수

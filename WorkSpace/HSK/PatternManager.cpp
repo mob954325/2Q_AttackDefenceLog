@@ -46,6 +46,25 @@ void PatternManager::AddNodes(Vector2 pos, float radius, int i)
 	nodes[i].isHit = false; // 초기화,
 }
 
+int PatternManager::GetSkippedNode(int from, int to)
+{
+	int ax = (from - 1) % 3; // 가로열 0 1 2
+	int ay = (from - 1) / 3; // 세로열 0 1 2 3 ...
+	int bx = (to - 1) % 3;
+	int by = (to - 1) / 3;
+
+	int mx = (ax + bx) / 2; // x 사이에 임의의 점(중앙)
+	int my = (ay + by) / 2; // y 사이에 임의의 점(중앙)
+
+
+	if ((abs(ax - bx) == 2 && ay == by) || // 수평, 1 3 처럼, 2칸차이 나는데 y 같으면, 0 2뿐이 없음 이것도
+		(abs(ay - by) == 2 && ax == bx) || // 수직, 0 1 2 라서, 2 0 뿐이 없긴함
+		(abs(ax - bx) == 2 && abs(ay - by) == 2) // 대?각 위 두조건을 동시에 만족하면 대각임, 02 02
+		) return my * 3 + mx + 1; // my < 세로 , mx < 가로
+
+	return -1;
+}
+
 
 void PatternManager::SetPatternBox(const D2D1_RECT_F& box) // 안씀
 {
@@ -55,6 +74,8 @@ void PatternManager::SetPatternBox(const D2D1_RECT_F& box) // 안씀
 void PatternManager::CheckTrails(const std::deque<TrailStamp>& trails)
 {
 	pattern.clear();
+
+	int lastHit = -1;
 
 	for (auto stamp : trails) { // 트레일 안에 있는것들, 형태는 TrailStamp
 		Vector2 pos = { stamp.position.x, stamp.position.y };
@@ -71,9 +92,21 @@ void PatternManager::CheckTrails(const std::deque<TrailStamp>& trails)
 			float radiusSq = node.radius * node.radius; // 반지름의 제곱 // 사실상 판정 거리임 반지름으로 보긴 애매할 수 있음
 
 			if (distSq <= radiusSq) { // 충돌 경우수
+				int currentHit = i + 1;
+
+				if (lastHit != -1) { // 첫 노드가 아닌경우에만
+					int skipped = GetSkippedNode(lastHit, currentHit); // 중간값이 있으면 반환됨, 없으면 -1
+					if (skipped != -1 && !nodes[skipped - 1].isHit) { // 발견 됐는데, 아직 충돌이 안되어있으면
+						nodes[skipped - 1].isHit = true; //먼저 처리해서 넣어줌
+						pattern.push_back(skipped);
+						std::cout << "[중간 노드 감지됨] : " << skipped << std::endl;
+					}
+				}
+
 				node.isHit = true;
-				std::cout << "[DEBUG] pushing pattern index: " << (i + 1) << std::endl;
+				std::cout << "[노드 기록] : " << (i + 1) << std::endl;
 				pattern.push_back(i + 1); // 1~9				
+				lastHit = currentHit;
 			}
 		}
 	}
@@ -82,6 +115,8 @@ void PatternManager::CheckTrails(const std::deque<TrailStamp>& trails)
 		nodes[i].isHit = false; // 초기화,
 	}
 }
+
+
 
 bool PatternManager::CheckOutOfBox(Vector2 pos) // AABB < 마우스 나갔는지만 판단해주면 충분함
 {
