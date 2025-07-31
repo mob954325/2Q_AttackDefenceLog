@@ -45,7 +45,7 @@ bool isNodeInitialized = false; // 상남자 코딩
 
 void HSKScene::UpdateImpl()
 {
-	if (!isNodeInitialized) {
+	if (!isNodeInitialized) { // 어쨌든 한번 초기화했죠?
 		PM.SetNodes(m_nodes, 45.0f);
 		isNodeInitialized = true;
 	}
@@ -54,7 +54,7 @@ void HSKScene::UpdateImpl()
 	t->isDraw = Input::leftButtonDown;
 	t->isOutFromBox = Input::rightButtonDown;
 	obj->GetTransform().SetPosition(Input::MouseX, Input::MouseY);
-	t->isOutFromBox = PM.CheckOutOfBox({ Input::MouseX, Input::MouseY }); // AABB < 마우스 나갔는지만 판단해주면 충분함
+	t->isOutFromBox = PM.CheckOutOfBox({ Input::MouseX, Input::MouseY });
 
 	if (t->isNewCached) {
 		PM.CheckTrails(t->cachedTrails);

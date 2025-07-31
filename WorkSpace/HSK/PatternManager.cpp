@@ -75,7 +75,7 @@ void PatternManager::CheckTrails(const std::deque<TrailStamp>& trails)
 {
 	pattern.clear();
 
-	int lastHit = -1;
+	int lastHit = -1; 
 
 	for (auto stamp : trails) { // 트레일 안에 있는것들, 형태는 TrailStamp
 		Vector2 pos = { stamp.position.x, stamp.position.y };
@@ -115,8 +115,6 @@ void PatternManager::CheckTrails(const std::deque<TrailStamp>& trails)
 		nodes[i].isHit = false; // 초기화,
 	}
 }
-
-
 
 bool PatternManager::CheckOutOfBox(Vector2 pos) // AABB < 마우스 나갔는지만 판단해주면 충분함
 {
