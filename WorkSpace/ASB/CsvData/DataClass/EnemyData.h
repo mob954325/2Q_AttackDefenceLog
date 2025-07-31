@@ -16,7 +16,7 @@ public:
 	float enemyHealth;            // 적의 공격력을 저장
 	float enemyDamage;            // 적의 방어력을 저장
 	float enemyCooldown;          // 적의 공격 쿨타임을 저장
-	float enemySpiritdamage;      // 적의 기세 공격력을 저장
+	float enemySpiritdamage;      // 적의 기세 공격력을 저 장
 	float enemySpiritamount;	  // 기세의 총량을 저장   <- 중요!
 	float enemyGuardRate;         // 적의 방어율을 저장
 	std::vector<std::string> enemyPattern;    //적의 패턴을 저장
