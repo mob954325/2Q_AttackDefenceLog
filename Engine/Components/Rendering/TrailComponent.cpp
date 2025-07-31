@@ -86,6 +86,7 @@ void TrailComponent::Clear()
 
 void TrailComponent::AddStamp(D2D1_POINT_2F pos) { //스탬프를 찍는건데, 거리거 너무 멀어지면 보간으로 채워넣음
 	if (!isDraw) return;
+	
 
 	if (trails.empty()) { // 비었다면, 즉 첫번째 스탬프는 각도계산 필요 x
 		trails.push_back({ pos, 0.0f }); // 각도 0으로 처리하고 끝냄
@@ -108,6 +109,9 @@ void TrailComponent::AddStamp(D2D1_POINT_2F pos) { //스탬프를 찍는건데, 
 
 	int steps = static_cast<int>(dist / minDistance); //최소거리가 현재 간격에 몇번들어가는지 확인하는거임
 	//(최소거리보다 커야 생성되니까 기본적으로 1 이상임 + int라 정수임)
+
+	
+
 	for (int i = 1; i <= steps; ++i) { //1 이상이니까 1부터 시작함
 		float t = static_cast<float>(i) / steps; // 보간식, t + 1/t
 		D2D1_POINT_2F interpPos = { // 보간으로 중간 점 생성해줌, 변화량(기울기)응용
@@ -115,9 +119,8 @@ void TrailComponent::AddStamp(D2D1_POINT_2F pos) { //스탬프를 찍는건데, 
 			last.position.y + dy * t
 		};
 
-		float angle = (i == 1) // 보간이 적용되었을때, 어디를 기준으로 각을 잡을껀지임
-			? GetAngle(last.position, interpPos) // 보간의 첫번째(혹은 그냥 하나)는 트레일의 마지막
-			: GetAngle(trails.back().position, interpPos); // 이전에 보간으로 넣어진 값도 고려해서 각 잡기(사실 선형이라 크게 티 안나긴 함)
+		float angle = GetAngle(last.position, interpPos, trails.back().angle);
+
 		trails.push_back({ interpPos, angle }); // 1 ~ ? 갯수만큼 넣어줌
 		
 		if (trails.size() == 2) {			
