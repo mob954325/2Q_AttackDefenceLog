@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "LiveObject.h"
 class Player : public LiveObject
 {
@@ -11,7 +11,10 @@ public:
 	void OnFixedUpdate();
 	void OnDestroy();
 
-	// ÇÃ·¹ÀÌ¾îÀÇ »óÅÂ¸¦ ÃÊ±âÈ­ÇÏ´Â ÇÔ¼ö
+	// í”Œë ˆì´ì–´ì˜ ìƒíƒœë¥¼ ì´ˆê¸°í™”í•˜ëŠ” í•¨ìˆ˜
 	void ResetPlayerState();
+	void SetAllData(std::string tmp, float Object_SpiritAmount);
+private:
+	PlayerData* nowPlayerData = nullptr;
 };
 

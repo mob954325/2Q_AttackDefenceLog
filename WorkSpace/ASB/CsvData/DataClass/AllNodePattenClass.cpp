@@ -1,22 +1,22 @@
-#include "AllNodePattenClass.h"
+ï»¿#include "AllNodePattenClass.h"
 #include "Utils/StringConvert.h"
 
 
 
-//BaseData Å¬·¡½ºÀÇ ÇÔ¼ö¿¡ ¿À¹ö¶óÀÌµå ÇÏ¿© »ç¿ëÇÏ´Â ÇÔ¼ö
-//ÇØ´ç ÀÚ·áÇüÀÇ µ¥ÀÌÅÍ¸¦ ÀúÀåÇÏ´Â ÇÔ¼ö
+//BaseData í´ë˜ìŠ¤ì˜ í•¨ìˆ˜ì— ì˜¤ë²„ë¼ì´ë“œ í•˜ì—¬ ì‚¬ìš©í•˜ëŠ” í•¨ìˆ˜
+//í•´ë‹¹ ìë£Œí˜•ì˜ ë°ì´í„°ë¥¼ ì €ì¥í•˜ëŠ” í•¨ìˆ˜
 void AllNodePattenClass::SetData(std::vector<std::wstring> tmp) {
 	Node_pattern_ID = StringConvert::WstringToString(tmp[0].c_str());
-	for (int i = 1; i < 10; i++) { //ÈÄ¿¡ ÀÌ»óÇÑ °ªµéÀÌ µé¾î¿À´Â °æ¿ìµµ ÀÖÀ½À¸·Î 9°³·Î Á¦ÇÑ(ÇÏµåÄÚµù)
+	for (int i = 1; i < 10; i++) { //í›„ì— ì´ìƒí•œ ê°’ë“¤ì´ ë“¤ì–´ì˜¤ëŠ” ê²½ìš°ë„ ìˆìŒìœ¼ë¡œ 9ê°œë¡œ ì œí•œ(í•˜ë“œì½”ë”©)
 
-		// tmp[i]°¡ nullÀÎ °æ¿ì´Â 0À¸·Î ÀúÀå
+		// tmp[i]ê°€ nullì¸ ê²½ìš°ëŠ” 0ìœ¼ë¡œ ì €ì¥
 		if (tmp[i] == L"null") {
 			Node_Number.push_back(0);
 		}
 
-		//nullÀÌ ¾Æ´Ï¸é wstringÀ» int °ªÀ¸·Î ÀúÀå
+		//nullì´ ì•„ë‹ˆë©´ wstringì„ int ê°’ìœ¼ë¡œ ì €ì¥
 		else {
-			Node_Number.push_back(std::stoi(tmp[i])); //Å¬·¡½ºÀÇ º¤ÅÍ¿¡ À§¿¡ ÀúÀåµÈ º¤ÅÍ¸¦ ¼ıÀÚ·Î º¯È¯ÇÏ¿© ÀúÀå
+			Node_Number.push_back(std::stoi(tmp[i])); //í´ë˜ìŠ¤ì˜ ë²¡í„°ì— ìœ„ì— ì €ì¥ëœ ë²¡í„°ë¥¼ ìˆ«ìë¡œ ë³€í™˜í•˜ì—¬ ì €ì¥
 		}
 	}
 }

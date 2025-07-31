@@ -1,60 +1,159 @@
-#include "CsvDataManager.h"
+ï»¿#include "CsvDataManager.h"
+#include "DataStorage/CsvDataStorage.h"
+////
+#include "DataClass/AllNodePattenClass.h"
+#include "DataClass/EnemyAtkPattenData.h"
+#include "DataClass/EnemyData.h"
+#include "DataClass/PlayerData.h"
 
-template<typename T, typename U>
-U CsvDataManager<T,U>::SetCSV(const std::string& filePath, int skipLine) {
-	std::wifstream file(filePath); // ÆÄÀÏ ½ºÆ®¸² »ı¼º
+// ìŠ¤í‚µ	ë¼ì¸ ìˆ˜ë¥¼ ë°˜í™˜í•˜ëŠ” ê¸°ë³¸ í…œí”Œë¦¿ í•¨ìˆ˜ ì •ì˜
+template<typename T>
+int CsvDataManager::GetSkipLine(T* tag) {}
 
-	U tmpMap; // ÀÓ½Ã ¸Ê »ı¼º
-	if (!file.is_open()) {  // ÆÄÀÏ ¿­±â ½ÇÆĞ ½Ã ¿¡·¯ ¸Ş½ÃÁö Ãâ·Â
-		//std::cout << "ÆÄÀÏÀ» ¿­ ¼ö ¾ø½À´Ï´Ù: " << file << std::endl;
-	}
-
-
-	std::wstring line;	 // ÇöÀç ÁÙÀ» ÀúÀåÇÒ º¯¼ö
-	int countLine = 1;	 // ½ÃÀÛ ¶óÀÎ ¹øÈ£ (1ºÎÅÍ ½ÃÀÛ)
-
-
-	while (std::getline(file, line)) {
-		T* tmpData = new T(); // µ¥ÀÌÅÍ Å¬·¡½ºÀÇ °´Ã¼ »ı¼º
-		if (countLine++ <= skipLine) continue; // Çì´õ °Ç³Ê¶Ù±â
-
-		std::wstringstream ss(line);   // ¹®ÀÚ¿­ ½ºÆ®¸² »ı¼º
-		std::wstring cell;			   // °¢ ¼¿À» ÀúÀåÇÒ º¯¼ö
-		std::vector<std::wstring> row; // ÇöÀç ÇàÀÇ ¼¿µéÀ» ÀúÀåÇÒ º¤ÅÍ
-		std::wstring key;	           // Å°·Î »ç¿ëÇÒ Ã¹ ¹øÂ° ¼¿ÀÇ °ª
-		bool isFirst = true;           // Ã¹ ¹øÂ° ¼¿ÀÎÁö ¿©ºÎ¸¦ È®ÀÎÇÏ´Â ÇÃ·¡±×
-
-		while (std::getline(ss, cell, L',')) {
-			if (isFirst) {		 // Ã¹ ¹øÂ° ¼¿À» Å°·Î »ç¿ë
-				key = cell;
-				isFirst = false;
-			}
-			row.push_back(cell); // ³ª¸ÓÁö ¼¿Àº º¤ÅÍ¿¡ Ãß°¡
-		}
-
-		// µ¥ÀÌÅÍ Å¬·¡½º °´Ã¼¿¡ µ¥ÀÌÅÍ¸¦ ³ÖÀ½
-		// T´Â BaseData¸¦ »ó¼Ó¹Ş´Â Å¬·¡½ºÀÇ °´Ã¼·Î, SetData ÇÔ¼ö°¡ Á¤ÀÇµÇ¾î ÀÖ¾î¾ß ÇÔ
-		tmpData->SetData(row);
-
-
-		// ¿¹¿ÜÃ³¸®
-		// key°¡ ºñ¾îÀÖÀ¸¸é ÀúÀåÇÏÁö ¾ÊÀ½ (º¸È£ ·ÎÁ÷)
-		if (!key.empty()) {
-			tmpMap[key] = tmpData; // Å°¿Í °ª(µ¥ÀÌÅÍÀÇ Æ÷ÀÎÅÍ)ÀÇ ½ÖÀ» ¸Ê¿¡ ÀúÀå
-		}
-	}
-
-	file.close();
-	return tmpMap; // ÀÓ½Ã ¸Ê ¹İÈ¯, ¹İÈ¯¿¡¼­ = ÅëÇØ¼­ °ª º¹»ç
+template<>
+int CsvDataManager::GetSkipLine<AllNodePattenClass>(AllNodePattenClass* tag) {
+	return  SkipLineData[0];
+}
+template<>
+int CsvDataManager::GetSkipLine<EnemyAtkPattenData>(EnemyAtkPattenData* tag) {
+	return SkipLineData[1];
+}
+template<>
+int CsvDataManager::GetSkipLine<EnemyData>(EnemyData* tag) {
+	return SkipLineData[2];
+}
+template<>
+int CsvDataManager::GetSkipLine<PlayerAtkPetternData>(PlayerAtkPetternData* tag) {
+	return SkipLineData[3];
+}
+template<>
+int CsvDataManager::GetSkipLine<PlayerData>(PlayerData* tag) {
+	return SkipLineData[4];
 }
 
 
-// ÄÜ¼Ö¿ë
-// ÀüÃ¼¸¦ ÄÜ¼ÖÃ¢¿¡ ¶ç¿ì´Â ÇÔ¼ö, Å°¿Í °ªÀÇ ½ÖÀ» Ãâ·ÂÇÏ´Â ÇÔ¼ö,
-template<typename T, typename U>
-void CsvDataManager<T, U>::PrintMap() {
-	for (auto it = DataMap.begin(); it != DataMap.end(); ++it) {
 
-		it->second->PrintMap(); // BaseData Å¬·¡½ºÀÇ PrintMap ÇÔ¼ö È£Ãâ
-	}
+
+
+// CreateDataImpl í—¬í¼ í•¨ìˆ˜ ì •ì˜ (ê¸°ë³¸ í…œí”Œë¦¿)
+template<typename T>
+T* CsvDataManager::CreateDataImpl(T* tag) {
+	return nullptr; // ê¸°ë³¸ ì •ì˜ (ì—ëŸ¬ ì²˜ë¦¬ ë˜ëŠ” nullptr ë°˜í™˜)
+}
+
+// CreateDataImpl ëª…ì‹œì  íŠ¹ìˆ˜í™” ì •ì˜
+template<>
+AllNodePattenClass* CsvDataManager::CreateDataImpl<AllNodePattenClass>(AllNodePattenClass* tag) {
+	return allNodePattenStorage.CreateData();
+}
+template<>
+EnemyAtkPattenData* CsvDataManager::CreateDataImpl<EnemyAtkPattenData>(EnemyAtkPattenData* tag) {
+	return enemyAtkPattenStorage.CreateData();
+}
+template<>
+EnemyData* CsvDataManager::CreateDataImpl<EnemyData>(EnemyData* tag) {
+	return enemyDataStorage.CreateData();
+}
+template<>
+PlayerAtkPetternData* CsvDataManager::CreateDataImpl<PlayerAtkPetternData>(PlayerAtkPetternData* tag) {
+	return playerAtkPetternStorage.CreateData();
+}
+template<>
+PlayerData* CsvDataManager::CreateDataImpl<PlayerData>(PlayerData* tag) {
+	return playerDataStorage.CreateData();
+}
+
+
+
+// DispatchSaveData í—¬í¼ í•¨ìˆ˜ ì •ì˜ (ê¸°ë³¸ í…œí”Œë¦¿)
+template<typename T>
+void CsvDataManager::DispatchSaveData(const std::string& key, T* ptr) {
+	static_assert(sizeof(T) == 0, "ì§€ì›ë˜ì§€ ì•ŠëŠ” íƒ€ì…ì…ë‹ˆë‹¤ (ê¸°ë³¸ DispatchSaveData í…œí”Œë¦¿)");
+}
+
+// DispatchSaveData ëª…ì‹œì  íŠ¹ìˆ˜í™” ì •ì˜
+template<>
+void CsvDataManager::DispatchSaveData<AllNodePattenClass>(const std::string& key, AllNodePattenClass* ptr) {
+	allNodePattenStorage.SetData(key, ptr);
+}
+template<>
+void CsvDataManager::DispatchSaveData<EnemyAtkPattenData>(const std::string& key, EnemyAtkPattenData* ptr) {
+	enemyAtkPattenStorage.SetData(key, ptr);
+}
+template<>
+void CsvDataManager::DispatchSaveData<EnemyData>(const std::string& key, EnemyData* ptr) {
+	enemyDataStorage.SetData(key, ptr);
+}
+template<>
+void CsvDataManager::DispatchSaveData<PlayerAtkPetternData>(const std::string& key, PlayerAtkPetternData* ptr) {
+	playerAtkPetternStorage.SetData(key, ptr);
+}
+template<>
+void CsvDataManager::DispatchSaveData<PlayerData>(const std::string& key, PlayerData* ptr) {
+	playerDataStorage.SetData(key, ptr);
+}
+
+
+
+
+
+
+
+
+
+
+// getDataImpl í—¬í¼ í•¨ìˆ˜ ì •ì˜ (ê¸°ë³¸ í…œí”Œë¦¿)
+template<typename T>
+T* CsvDataManager::getDataImpl(T* tag, std::string ID) {
+	return nullptr; // ê¸°ë³¸ ì •ì˜ (ì—ëŸ¬ ì²˜ë¦¬ ë˜ëŠ” nullptr ë°˜í™˜)
+}
+
+// getDataImpl ëª…ì‹œì  íŠ¹ìˆ˜í™” ì •ì˜
+template<>
+AllNodePattenClass* CsvDataManager::getDataImpl<AllNodePattenClass>(AllNodePattenClass* tag, std::string ID) {
+	return allNodePattenStorage.GetData(ID);
+}
+template<>
+EnemyAtkPattenData* CsvDataManager::getDataImpl<EnemyAtkPattenData>(EnemyAtkPattenData* tag, std::string ID) {
+	return enemyAtkPattenStorage.GetData(ID);
+}
+template<>
+EnemyData* CsvDataManager::getDataImpl<EnemyData>(EnemyData* tag, std::string ID) {
+	return enemyDataStorage.GetData(ID);
+}
+template<>
+PlayerAtkPetternData* CsvDataManager::getDataImpl<PlayerAtkPetternData>(PlayerAtkPetternData* tag, std::string ID) {
+	return playerAtkPetternStorage.GetData(ID);
+}
+template<>
+PlayerData* CsvDataManager::getDataImpl<PlayerData>(PlayerData* tag, std::string ID) {
+	return playerDataStorage.GetData(ID);
+}
+
+
+template<typename T>
+void CsvDataManager::PrintMap(T* tag) {
+	std::cout << "PrintMap called for type: null" << std::endl;
+}
+
+// CreateDataImpl ëª…ì‹œì  íŠ¹ìˆ˜í™” ì •ì˜
+template<>
+void CsvDataManager::PrintMap<AllNodePattenClass>(AllNodePattenClass* tag) {
+	allNodePattenStorage.PrintData();
+}
+template<>
+void CsvDataManager::PrintMap<EnemyAtkPattenData>(EnemyAtkPattenData* tag) {
+	enemyAtkPattenStorage.PrintData();
+}
+template<>
+void CsvDataManager::PrintMap<EnemyData>(EnemyData* tag) {
+	enemyDataStorage.PrintData();
+}
+template<>
+void CsvDataManager::PrintMap<PlayerAtkPetternData>(PlayerAtkPetternData* tag) {
+	playerAtkPetternStorage.PrintData();
+}
+template<>
+void CsvDataManager::PrintMap<PlayerData>(PlayerData* tag) {
+	playerDataStorage.PrintData();
 }

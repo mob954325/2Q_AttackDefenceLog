@@ -14,7 +14,6 @@
     <ClCompile Include="CsvData\DataClass\EnemyAtkPattenData.cpp" />
     <ClCompile Include="CsvData\DataStorage\CsvDataStorage.cpp" />
     <ClCompile Include="CsvData\DataClass\EnemyData.cpp" />
-    <ClCompile Include="CsvData\DataClass\PlayerAtkPetternData.cpp" />
     <ClCompile Include="CsvData\DataClass\PlayerData.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -29,7 +28,6 @@
     <ClInclude Include="CsvData\DataClass\EnemyAtkPattenData.h" />
     <ClInclude Include="CsvData\DataStorage\CsvDataStorage.h" />
     <ClInclude Include="CsvData\DataClass\EnemyData.h" />
-    <ClInclude Include="CsvData\DataClass\PlayerAtkPetternData.h" />
     <ClInclude Include="CsvData\DataClass\PlayerData.h" />
   </ItemGroup>
 </Project>

@@ -1,14 +1,14 @@
-#include "LogicTestApplication.h"
+ï»¿#include "LogicTestApplication.h"
 #include "Utils/Singleton.h"
 #include "Scene/SceneManager.h"
 #include "GameLogicTestScene/GameLogicTestScene.h"
 
 void LogicTestApplication::LogicTestApplication::Initialize()
 {
-	// 1. SceneManager¿¡ Scene Ãß°¡ÇÏ±â
-	gameLogicTestScene = new GameLogicTestScene();	// MainMenu ¾À °´Ã¼ »ı¼º
-	Singleton<SceneManager>::GetInstance().AddScene(gameLogicTestScene); // ¾À Ãß°¡
-	Singleton<SceneManager>::GetInstance().Init();	// SceneManager ÃÊ±âÈ­ -> currentScene ÃÊ±âÈ­ ¹× RenderSystemÀÇ RenderLayer ÃÊ±âÈ­
+	// 1. SceneManagerì— Scene ì¶”ê°€í•˜ê¸°
+	gameLogicTestScene = new GameLogicTestScene();	// MainMenu ì”¬ ê°ì²´ ìƒì„±
+	Singleton<SceneManager>::GetInstance().AddScene(gameLogicTestScene); // ì”¬ ì¶”ê°€
+	Singleton<SceneManager>::GetInstance().Init();	// SceneManager ì´ˆê¸°í™” -> currentScene ì´ˆê¸°í™” ë° RenderSystemì˜ RenderLayer ì´ˆê¸°í™”
 }
 
 void LogicTestApplication::LogicTestApplication::Render()

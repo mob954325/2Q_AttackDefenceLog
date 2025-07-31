@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <iostream>
 #include <string>
 #include "Components/Base/MonoBehavior.h"
@@ -7,11 +7,11 @@
 #include "components/Collision/AABBCollider.h"
 #include "Components/Physics/Rigidbody2D.h"
 
-/*2025.07.28 - ¾È¼ººó
- ÇÃ·¹ÀÌ¾î³ª  ÀûµéÀÌ »ó¼Ó¹ŞÀ» ±âº»ÀûÀÎ ¿ÀºêÁ§Æ®
- µé¾î°¡´Â º¯¼ö : ID, ÀÌ¸§ , Ã¼·Â, °ø°İ·Â, ±â¼¼°ø°İ·Â, È¸ÇÇÀ², ¹æ¾îÀ²
- µé¾î°¡´Â ÇÔ¼ö : À§ÀÇ º¯¼ö¸¦ °¡Á®¿À´Â ÇÔ¼ö, ¼³Á¤ÇÏ´Â ÇÔ¼ö  
-			     + ºÎ¸ğ¿¡ ¾ø´Â ÀÚ½ÄÀÇ ¸É¹ö¸¦ °¡Á®¿À´Â ÇÔ¼ö
+/*2025.07.28 - ì•ˆì„±ë¹ˆ
+ í”Œë ˆì´ì–´ë‚˜  ì ë“¤ì´ ìƒì†ë°›ì„ ê¸°ë³¸ì ì¸ ì˜¤ë¸Œì íŠ¸
+ ë“¤ì–´ê°€ëŠ” ë³€ìˆ˜ : ID, ì´ë¦„ , ì²´ë ¥, ê³µê²©ë ¥, ê¸°ì„¸ê³µê²©ë ¥, íšŒí”¼ìœ¨, ë°©ì–´ìœ¨
+ ë“¤ì–´ê°€ëŠ” í•¨ìˆ˜ : ìœ„ì˜ ë³€ìˆ˜ë¥¼ ê°€ì ¸ì˜¤ëŠ” í•¨ìˆ˜, ì„¤ì •í•˜ëŠ” í•¨ìˆ˜  
+			     + ë¶€ëª¨ì— ì—†ëŠ” ìì‹ì˜ ë§´ë²„ë¥¼ ê°€ì ¸ì˜¤ëŠ” í•¨ìˆ˜
 */
 
 
@@ -23,41 +23,44 @@ public:
 
 
 public:
-	//ºÎ¸ğ¿¡ ¾ø´Â ³»¿ëÀ» °¡Á®¿Ã °¡»ó ÇÔ¼öµé
-	virtual float GetTotalImbalance() { return 0; }      // Àû °´Ã¼¿¡¸¸ µé¾î°¥ ¸É¹ö º¯¼ö Ã¤°£À» ºÎ¸ğ °´Ã¼·Î ¹Ş¾Æ¿À±â À§ÇØ ÇÊ¿ä!
-	virtual std::string GetDifficulty() {};   // Àû °´Ã¼¿¡¸¸ µé¾î°¥ ¸É¹ö º¯¼ö ³­ÀÌµµ¸¦ ºÎ¸ğ °´Ã¼·Î ¹Ş¾Æ¿À±â À§ÇØ ÇÊ¿ä!
+	//ë¶€ëª¨ì— ì—†ëŠ” ë‚´ìš©ì„ ê°€ì ¸ì˜¬ ê°€ìƒ í•¨ìˆ˜ë“¤
+	virtual float GetTotalImbalance() { return 0; }      // ì  ê°ì²´ì—ë§Œ ë“¤ì–´ê°ˆ ë§´ë²„ ë³€ìˆ˜ ì±„ê°„ì„ ë¶€ëª¨ ê°ì²´ë¡œ ë°›ì•„ì˜¤ê¸° ìœ„í•´ í•„ìš”!
+	virtual std::string GetDifficulty() {};   // ì  ê°ì²´ì—ë§Œ ë“¤ì–´ê°ˆ ë§´ë²„ ë³€ìˆ˜ ë‚œì´ë„ë¥¼ ë¶€ëª¨ ê°ì²´ë¡œ ë°›ì•„ì˜¤ê¸° ìœ„í•´ í•„ìš”!
 
-	// °ª °¡Á®¿À´Â ÇÔ¼öµé
-	std::string GetID() { return Object_ID; }		                // ID ¹İÈ¯
-	std::string GetName() { return Object_Name; }				    // ÀÌ¸§ ¹İÈ¯
-	float GetHp() { return Object_Hp; }							    // Ã¼·Â ¹İÈ¯
-	float GetAttack() { return Object_Attack; }						// °ø°İ·Â ¹İÈ¯
-	float GetImbalanceAttack() { return Object_ImbalanceAttack; }   // ±â¼¼ °ø°İ·Â ¹İÈ¯
-	float GetDodgeRate() { return Object_DodgeRate; }				// È¸ÇÇÀ² ¹İÈ¯
-	float GetDefenseRate() { return Object_DefenseRate; }			// ¹æ¾îÀ² ¹İÈ¯
 
-	// ¼³Á¤ ÇÔ¼öµé
-	void SetID(const std::string& id) { Object_ID = id; }			// ID ¼³Á¤
-	void SetName(const std::string& name) { Object_Name = name; }	// ÀÌ¸§ ¼³Á¤
-	void SetHp(float hp) { Object_Hp = hp; }						// Ã¼·Â ¼³Á¤
-	void SetAttack(float attack) { Object_Attack = attack; }		// °ø°İ·Â ¼³Á¤
-	void SetImbalanceAttack(float imbalanceAttack) { Object_ImbalanceAttack = imbalanceAttack; } // ±â¼¼ °ø°İ·Â ¼³Á¤
-	void SetDodgeRate(float dodgeRate) { Object_DodgeRate = dodgeRate; }		 // È¸ÇÇÀ² ¼³Á¤
-	void SetDefenseRate(float defenseRate) { Object_DefenseRate = defenseRate; } // ¹æ¾îÀ² ¼³Á¤
+	// ê°’ ê°€ì ¸ì˜¤ëŠ” í•¨ìˆ˜ë“¤
+	std::string GetID() { return Object_ID; }		                // ID ë°˜í™˜
+	std::wstring GetName() { return Object_Name; }				    // ì´ë¦„ ë°˜í™˜
+	float GetHp() { return Object_Hp; }							    // ì²´ë ¥ ë°˜í™˜
+	float GetAttack() { return Object_Attack; }						// ê³µê²©ë ¥ ë°˜í™˜
+	float GetImbalanceAttack() { return Object_SpiritAttack; }   // ê¸°ì„¸ ê³µê²©ë ¥ ë°˜í™˜
+	float GetDefenseRate() { return Object_DefenseRate; }			// ë°©ì–´ìœ¨ ë°˜í™˜
+
+
+	// ì„¤ì • í•¨ìˆ˜ë“¤
+	void SetID(const std::string& id) { Object_ID = id; }			// ID ì„¤ì •
+	void SetName(const std::wstring& name) { Object_Name = name; }	// ì´ë¦„ ì„¤ì •
+	void SetHp(float hp) { Object_Hp = hp; }						// ì²´ë ¥ ì„¤ì •
+	void SetAttack(float attack) { Object_Attack = attack; }		// ê³µê²©ë ¥ ì„¤ì •
+	void SetImbalanceAttack(float imbalanceAttack) { Object_SpiritAttack = imbalanceAttack; } // ê¸°ì„¸ ê³µê²©ë ¥ ì„¤ì •
+	void SetDefenseRate(float defenseRate) { Object_DefenseRate = defenseRate; } // ë°©ì–´ìœ¨ ì„¤ì •
+
+
+	//ê°’ ë³€ê²½ í•¨ìˆ˜
+	void GetDamage(float damageAmount) {Object_Hp -= damageAmount;}
+	void GetSpiritdamage(float SpiritdamageAmount) {}
 	
-	
 
 	
 
 
-private: 
+protected: 
 	std::string Object_ID; 	      // ID
-	std::string Object_Name;      // ÀÌ¸§
-	float Object_Hp;		      // Ã¼·Â
-	float Object_Attack;		  // °ø°İ·Â
-	float Object_ImbalanceAttack; // ±â¼¼ °ø°İ·Â
-	float Object_DodgeRate;       // È¸ÇÇÀ²
-	float Object_DefenseRate;	  // ¹æ¾îÀ²
-
+	std::wstring Object_Name;     // ì´ë¦„
+	float Object_Hp;		      // ì²´ë ¥
+	float Object_Attack;		  // ê³µê²©ë ¥
+	float Object_SpiritAttack;	  // ê¸°ì„¸ ê³µê²©ë ¥
+	float Object_DefenseRate;	  // ë°©ì–´ìœ¨
+	float Object_SpiritAmount;    // ê¸°ì„¸, ê¸°ì„¸ì˜ ì „ì²´ëŠ” ì ì—ë§Œ ì¡´ì¬í•¨ìœ¼ë¡œ ì ì„ ì„¤ì •í•˜ê³  ë‚˜ëˆ ì•¼í• ë“¯?
 };
 

@@ -1,24 +1,29 @@
-#pragma once
+ï»¿#pragma once
 #include "BaseData.h"
 #include <vector>
 
-/*25.07.29 - ¾È¼ººó
- * ¿ªÇÒ :ÀûÀÇ °ø°İ ÆĞÅÏ µ¥ÀÌÅÍ¸¦ ÀúÀåÇÏ´Â Å¬·¡½º
- * ¸É¹ö : °ø°İ ÆĞÅÏÀ» ÀúÀåÇÏ´Â º¤ÅÍ
- * int´Â nullÀ» ÀúÀåÇÒ ¼ö ¾øÀ½À¸·Î 0À¸·Î ´ë½ÅÇÔ!
+/*25.07.29 - ì•ˆì„±ë¹ˆ
+ * ì—­í•  :ì ì˜ ê³µê²© íŒ¨í„´ ë°ì´í„°ë¥¼ ì €ì¥í•˜ëŠ” í´ë˜ìŠ¤
+ * ë§´ë²„ : ê³µê²© íŒ¨í„´ì„ ì €ì¥í•˜ëŠ” ë²¡í„°
+ * intëŠ” nullì„ ì €ì¥í•  ìˆ˜ ì—†ìŒìœ¼ë¡œ 0ìœ¼ë¡œ ëŒ€ì‹ í•¨!
 
 
 */
 
 class EnemyAtkPattenData : public BaseData
 {
-	std::string ePatternID;    // ÀûÀÇ °ø°İ ÆĞÅÏ ID¸¦ ÀúÀå
-	int atkPetternGroup;       // ÀûÀÇ °ø°İ ±×·ìÀ» ÀúÀå
-	std::string eNodepattern;  // ÀûÀÇ ³ëµå ÆĞÅÏÀ» ÀúÀå
-	float eAtkCoolDown;        // ÀûÀÇ °ø°İ ÄğÅ¸ÀÓÀ» ÀúÀå
+public:
+	EnemyAtkPattenData() {};
+	~EnemyAtkPattenData() {};
+	std::string ePatternID;    // ì ì˜ ê³µê²© íŒ¨í„´ IDë¥¼ ì €ì¥
+	int atkPetternGroup;       // ì ì˜ ê³µê²© ê·¸ë£¹ì„ ì €ì¥
+	std::string eNodepattern;  // ì ì˜ ë…¸ë“œ íŒ¨í„´ì„ ì €ì¥
+	float eAtkCoolDown;        // ì ì˜ ê³µê²© ì¿¨íƒ€ì„ì„ ì €ì¥
 
 
-	void SetData(std::vector<std::wstring> tmp)override; // µ¥ÀÌÅÍ ¼³Á¤ ÇÔ¼ö
-	void PrintMap()override; // ¸ÊÀ» ÄÜ¼ÖÃ¢¿¡ Ãâ·Â ÇÔ¼ö, »ó¼Ó¹Ş´Â µ¥ÀÌÅÍ¿¡¼­ ¿À¹ö¶óÀÌµå ÇÏ¿© »ç¿ë
+
+	void SetData(std::vector<std::wstring> tmp)override; // ë°ì´í„° ì„¤ì • í•¨ìˆ˜
+	void PrintMap()override; // ë§µì„ ì½˜ì†”ì°½ì— ì¶œë ¥ í•¨ìˆ˜, ìƒì†ë°›ëŠ” ë°ì´í„°ì—ì„œ ì˜¤ë²„ë¼ì´ë“œ í•˜ì—¬ ì‚¬ìš©
+
 };
 
