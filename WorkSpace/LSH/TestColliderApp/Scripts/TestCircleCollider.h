@@ -5,6 +5,7 @@
 #include "Components/Base/MonoBehavior.h"
 #include "Components/Rendering/TextRenderer.h"
 #include "Components/Collision/CircleCollider.h"
+#include "Components/Rendering/BitmapRenderer.h"
 
 class TestCircleCollider : public MonoBehavior
 {
@@ -22,4 +23,8 @@ public:
 private:
 	CircleCollider* circle{};
 	TextRenderer* infoText{};
+	BitmapRenderer* bitmap{};
+
+	float timer = 0.0f;
+	float maxTimer = 0.8f;
 };

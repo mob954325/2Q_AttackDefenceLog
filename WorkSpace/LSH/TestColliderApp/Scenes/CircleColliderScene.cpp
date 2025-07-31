@@ -6,10 +6,10 @@
 
 void TestCollider::CircleColliderScene::OnEnterImpl()
 {
-	// testCircle = new GameObject();
-	// testCircle->SetName("Test Cirlce");
-	// testCircle->AddComponent<TestCircleCollider>();
-	// AddGameObject(testCircle);
+	testCircle = new GameObject();
+	testCircle->SetName("Test Cirlce");
+	testCircle->AddComponent<TestCircleCollider>();
+	AddGameObject(testCircle);
 
 	//testCircle2 = new GameObject();
 	//testCircle2->SetName("Test Cirlce2");
