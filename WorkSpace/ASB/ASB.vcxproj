@@ -370,7 +370,6 @@
     <ClCompile Include="LogicTestApplication\LogicTestApplication.cpp" />
     <ClCompile Include="LogicTestManager\BettleManager.cpp" />
     <ClCompile Include="LiveObject\Player.cpp" />
-    <ClCompile Include="CsvData\DataClass\PlayerAtkPetternData.cpp" />
     <ClCompile Include="CsvData\DataClass\PlayerData.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -385,7 +384,6 @@
     <ClInclude Include="LiveObject\LiveObject.h" />
     <ClInclude Include="LogicTestApplication\LogicTestApplication.h" />
     <ClInclude Include="LiveObject\Player.h" />
-    <ClInclude Include="CsvData\DataClass\PlayerAtkPetternData.h" />
     <ClInclude Include="CsvData\DataClass\PlayerData.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <windows.h>
 #include <iostream>
 #include <fstream>
@@ -8,171 +8,153 @@
 #include <string>
 #include "Utils/Singleton.h"
 #include "DataStorage/CsvDataStorage.h"
-#include <fcntl.h> // ÄÜ¼ÖÃ¢¿¡ wstringÀ» Ãâ·ÂÇÏ±â À§ÇÑ Çì´õ
+#include "Utils/StringConvert.h"
+#include <fcntl.h> // ì½˜ì†”ì°½ì— wstringì„ ì¶œë ¥í•˜ê¸° ìœ„í•œ í—¤ë”
 #include <io.h>
-/*25.07.29 - ¾È¼ººó.
-	¿ªÇÒ : CsvDataManager Å¬·¡½º´Â CSV ÆÄÀÏÀ» ÀĞ¾î¿Í¼­ µ¥ÀÌÅÍ¸¦ ÀúÀåÇÏ´Â Å¬·¡½º
-		   CSV ÆÄÀÏÀÇ Ã¹ ¹øÂ° ¼¿À» Å°·Î »ç¿ëÇÏ°í, µ¥ÀÌÅÍ Å¬·¡½ºÀÇ Æ÷ÀÎÅÍ¸¦ °ªÀ¸·Î ¸Ê¿¡ ÀúÀåÇÔ
 
-	ÁÖÀÇ : baseData¿¡ ÀÖ´Â µ¥ÀÌÅÍ¸¦ ÀÚ·á±¸Á¶·Î ÀúÀåÇÏ´Â ÇÔ¼ö(SetData)¸¦ È£ÃâÇÔÀ¸·Î ÇØ´ç Å¬·¡½º¸¦ »ç¿ë½Ã baseData¸¦ »ó¼Ó¹Ş´Â°ÍÀÌ ÁÁÀ½
+// í•„ìš”í•œ í´ë˜ìŠ¤ë“¤ì˜ ì „ë°© ì„ ì–¸
+// ì´ í´ë˜ìŠ¤ë“¤ì˜ ì‹¤ì œ ì •ì˜ê°€ ë‹´ê¸´ í—¤ë” íŒŒì¼ë“¤ì´ í¬í•¨ë˜ì–´ì•¼ í•©ë‹ˆë‹¤.
+class AllNodePattenClass;
+class EnemyAtkPattenData;
+class EnemyData;
+class PlayerAtkPetternData;
+class PlayerData;
+class BaseData; // BaseDataê°€ ì •ì˜ëœ í—¤ë”ê°€ í¬í•¨ë˜ì–´ ìˆëŠ”ì§€ í™•ì¸í•˜ì„¸ìš”.
+
+// íŒ¨ì¹˜ë…¸íŠ¸
+/*25.07.29 - ì•ˆì„±ë¹ˆ
+	ì—­í•  : CsvDataManager í´ë˜ìŠ¤ëŠ” CSV íŒŒì¼ì„ ì½ì–´ì™€ì„œ ë°ì´í„°ë¥¼ ì €ì¥í•˜ëŠ” í´ë˜ìŠ¤
+		   CSV íŒŒì¼ì˜ ì²« ë²ˆì§¸ ì…€ì„ í‚¤ë¡œ ì‚¬ìš©í•˜ê³ , ë°ì´í„° í´ë˜ìŠ¤ì˜ í¬ì¸í„°ë¥¼ ê°’ìœ¼ë¡œ ë§µì— ì €ì¥í•¨
+
+	ì£¼ì˜ : baseDataì— ìˆëŠ” ë°ì´í„°ë¥¼ ìë£Œêµ¬ì¡°ë¡œ ì €ì¥í•˜ëŠ” í•¨ìˆ˜(SetData)ë¥¼ í˜¸ì¶œí•¨ìœ¼ë¡œ í•´ë‹¹ í´ë˜ìŠ¤ë¥¼ ì‚¬ìš©ì‹œ baseDataë¥¼ ìƒì†ë°›ëŠ”ê²ƒì´ ì¢‹ìŒ
+
 */
-/*25.07.30 - ¾È¼ººó
-	 ¼öÁ¤ : ¿ø·¡ ±â´ÉÇÔ¼ö¿Í ÀúÀå °´Ã¼°¡ °°ÀÌ ÀÖ¾úÀ¸³ª ÀúÀå ÇÏ´Â °´Ã¼¸¦ µû·Î ºĞ¸®ÇÏ¿© ¸Å´ÏÀú¿¡¼­ °ü¸®ÇÏ´Â ÇüÅÂ·Î º¯È¯
-			¹öÀü c++14¸¦ »ç¿ëÇÏ¿© if constexpr¸¦ »ç¿ëÇÏÁö ¸øÇÔÀ¸·Î, µğ½ºÆĞÄ¡ ÇïÆÛ ÇÔ¼ö¸¦ »ç¿ëÇÏ¿© Å¸ÀÔ¿¡ ¸Â´Â ÇÔ¼ö¸¦ È£ÃâÇÔ
-			¸Å´ÏÀú¸¦ µ¥ÀÌÅÍ¸¦ Ã³¸®ÇÏ´Â Áß¾Ó°ü¸®ÀÚ·Î ¸¸µé°í, ½ÌµéÅæÀ» »ó¼Ó¹Ş¾Æ »ç¶óÁöÁö ¾Ê°Ô ÇÔ
-			°¢ µ¥ÀÌÅÍ¿Í	¸Å´ÏÀú´Â CsvDataStorage Å¬·¡½º¸¦ »ó¼Ó¹Ş¾Æ »ç¿ëÇÔ
-			µğ½ºÆĞÄ¡ ÇïÆÛ ÇÔ¼ö: ÅÛÇÃ¸´ ÀÎ½ºÅÏ½º°¡ °¢ Å¸ÀÔ¿¡ ¸Â°Ô Á¤Àû ¹ÙÀÎµùµÇµµ·Ï ¼³°èµÈ µµ¿ì¹Ì
-								-> ±×³É ÇÔ¼ö¸¦ ¿À¹ö·ÎµåÇÏ¿© ¸Å°³º¯¼ö¿¡ ¸Â´Â ÇÔ¼ö¸¦ È£ÃâÇÏ´Â ¹æ½ÄÀÎµí?
+
+/*25.07.30 - ì•ˆì„±ë¹ˆ
+	ìˆ˜ì • : ì›ë˜ ê¸°ëŠ¥í•¨ìˆ˜ì™€ ì €ì¥ ê°ì²´ê°€ ê°™ì´ ìˆì—ˆìœ¼ë‚˜ ì €ì¥ í•˜ëŠ” ê°ì²´ë¥¼ ë”°ë¡œ ë¶„ë¦¬í•˜ì—¬ ë§¤ë‹ˆì €ì—ì„œ ê´€ë¦¬í•˜ëŠ” í˜•íƒœë¡œ ë³€í™˜
+		   ë²„ì „ c++14ë¥¼ ì‚¬ìš©í•˜ì—¬ if constexprë¥¼ ì‚¬ìš©í•˜ì§€ ëª»í•¨ìœ¼ë¡œ, ë””ìŠ¤íŒ¨ì¹˜ í—¬í¼ í•¨ìˆ˜ë¥¼ ì‚¬ìš©í•˜ì—¬ íƒ€ì…ì— ë§ëŠ” í•¨ìˆ˜ë¥¼ í˜¸ì¶œí•¨
+		   ë§¤ë‹ˆì €ë¥¼ ë°ì´í„°ë¥¼ ì²˜ë¦¬í•˜ëŠ” ì¤‘ì•™ê´€ë¦¬ìë¡œ ë§Œë“¤ê³ , ì‹±ë“¤í†¤ì„ ìƒì†ë°›ì•„ ì‚¬ë¼ì§€ì§€ ì•Šê²Œ í•¨
+		   ê° ë°ì´í„°ì™€ ë§¤ë‹ˆì €ëŠ” CsvDataStorage í´ë˜ìŠ¤ë¥¼ ìƒì†ë°›ì•„ ì‚¬ìš©í•¨
+		   ë””ìŠ¤íŒ¨ì¹˜ í—¬í¼ í•¨ìˆ˜: í…œí”Œë¦¿ ì¸ìŠ¤í„´ìŠ¤ê°€ ê° íƒ€ì…ì— ë§ê²Œ ì •ì  ë°”ì¸ë”©ë˜ë„ë¡ ì„¤ê³„ëœ ë„ìš°ë¯¸
+		   -> ê·¸ëƒ¥ í•¨ìˆ˜ë¥¼ ì˜¤ë²„ë¡œë“œí•˜ì—¬ ë§¤ê°œë³€ìˆ˜ì— ë§ëŠ” í•¨ìˆ˜ë¥¼ í˜¸ì¶œí•˜ëŠ” ë°©ì‹ì¸ë“¯?
+*/
+
+/*25.07.31 - ì•ˆì„±ë¹ˆ
+	ìˆ˜ì • : í…œí”Œë¦¿ì˜ ëª…ì‹œì  êµ¬ì²´í™”ë¥¼ ì´ìš©í•´ì„œ ëª…ì‹œì ìœ¼ë¡œ ë§¤ê°œë³€ìˆ˜ íƒ€ì…ì— ë§ëŠ” í•¨ìˆ˜ ëª…ì‹œì ìœ¼ë¡œ ì§€ì •í•´ì£¼ê³  ì»´íŒŒì¼ëŸ¬ê°€ ê·¸ì— ë§ì¶”ì–´ í•¨ìˆ˜ë¥¼ ì‹¤í–‰
+		   í•˜ë„ë¡ ìˆ˜ì •
+		   ì˜¤ë¥˜ ìˆ˜ì •
+		   skipLineì„ ì™¸ë¶€ì—ì„œ ì…ë ¥í•˜ëŠ” ê²ƒì´ ì•„ë‹ˆë¼ ë¯¸ë¦¬ ë°°ì—´ë¡œ ì €ì¥í•´ë†“ëŠ” í˜•íƒœë¡œ ë³€ê²½
+*/
+
+/* í˜„ì¬ í•¨ìˆ˜
+   ì—­í•  : ë§¤ë‹ˆì €ë¥¼ í…œí”Œë¦¿ìœ¼ë¡œ ë§Œë“¤ì§€ ì•Šê³ , í•¨ìˆ˜ë¥¼ íƒ¬í”Œë¦¿ìœ¼ë¡œ ë§Œë“¤ì–´ì„œ ì—¬ëŸ¬ê°€ì§€ ë°ì´í„°ë¥¼ ê´€ë¦¬í•˜ëŠ” ë°ì´í„° ì¤‘ì•™ê´€ë¦¬ìë¡œ ì„¤ê³„
+
+   í•¨ìˆ˜ : 
+         void SetCSV :  ë°ì´í„° ì‹œíŠ¸ì—ì„œ ê°’ì„ ì½ê³  ê° ë°ì´í„° ì €ì¥ì†Œì— ë°ì´í„°ë¥¼ ì €ì¥
+		 void PrintMap(T* Tag) : ë°ì´í„° ì „ë¶€ë¥¼ ì½˜ì†”ì°½ì— ë„ì›€
+		 int GetSkipLine(T* tag) : ê° ë°ì´í„°ì‹œíŠ¸ë§ˆë‹¤ ê±´ë„ˆëŒ ì¤„ì˜ ìˆ˜ë¥¼ ë°›ì•„ì˜¤ëŠ” í•¨ìˆ˜
 */
 
 
 class CsvDataManager : public Singleton<CsvDataManager>
 {
 public:
-	CsvDataManager() = default; // »ı¼ºÀÚ
-	~CsvDataManager() override; // ¼Ò¸êÀÚ
-	friend class Singleton<CsvDataManager>; // ½Ì±ÛÅæ ÆĞÅÏÀ» »ç¿ëÇÏ±â À§ÇÑ Ä£±¸ Å¬·¡½º ¼±¾ğ
+	friend class Singleton<CsvDataManager>;
+
 public:
-	// ¸Å°³º¯¼ö  : CSV ÆÄÀÏÀÇ °æ·Î, ÆÄÀÏ ³»ºÎ ½ºÅµÇÒ ¶óÀÎÀÇ ¼ö
-	// CSV ÆÄÀÏÀ» ÀĞ¾î¿Í¼­ std::unordered_map¿¡ ÀúÀåÇÏ´Â ÇÔ¼ö
+	template<typename T>
+	void SetCSV(std::string filePath);
+
+	// PrintMap í—¬í¼ í•¨ìˆ˜ ì„ ì–¸ (í´ë˜ìŠ¤ ë‚´ì—ëŠ” ì„ ì–¸ë§Œ)
+	template<typename T>
+	void PrintMap(T* Tag);
+
 
 	template<typename T>
-	void SetCSV(const std::string filePath, int skipLine);
-	
-	// µ¥ÀÌÅÍ Å¸ÀÔÀ» ¹ÙÅÁÀ¸·Î ¸ÊÀ» Ã£°í, ID¿¡ ÇØ´çÇÏ´Â µ¥ÀÌÅÍÀÇ Æ÷ÀÎÅÍ¸¦ ¹İÈ¯ÇÔ 
+	int GetSkipLine(T* tag);
+
+	// GetData í—¬í¼ í•¨ìˆ˜ ì„ ì–¸ (í´ë˜ìŠ¤ ë‚´ì—ëŠ” ì„ ì–¸ë§Œ)
 	template<typename T>
-	T* GetCSV(const std::string DataID);
-
-
-	// ÄÜ¼Ö¿ë
-	// ÀüÃ¼¸¦ ÄÜ¼ÖÃ¢¿¡ ¶ç¿ì´Â ÇÔ¼ö, Å°¿Í °ªÀÇ ½ÖÀ» Ãâ·ÂÇÏ´Â ÇÔ¼ö
-	void PrintMap();
+	T* getDataImpl(T* tag, std::string ID);
 
 	
 private:
-	// CSV µ¥ÀÌÅÍ ÀúÀå Å¬·¡½º
+	// CSV ë°ì´í„° ì €ì¥ í´ë˜ìŠ¤ ì¸ìŠ¤í„´ìŠ¤
 	CsvDataStorage<AllNodePattenClass> allNodePattenStorage;
 	CsvDataStorage<EnemyAtkPattenData> enemyAtkPattenStorage;
 	CsvDataStorage<EnemyData> enemyDataStorage;
 	CsvDataStorage<PlayerAtkPetternData> playerAtkPetternStorage;
 	CsvDataStorage<PlayerData> playerDataStorage;
-	
 
-	//CreateDate ÇïÆÛ ÇÔ¼ö
+	// CreateDataImpl í—¬í¼ í•¨ìˆ˜ ì„ ì–¸ (í´ë˜ìŠ¤ ë‚´ì—ëŠ” ì„ ì–¸ë§Œ)
 	template<typename T>
-	T* CreateDataImpl(T* tag) {  return nullptr; } // ±âº» Á¤ÀÇ (¿¡·¯ Ã³¸®)
-	AllNodePattenClass* CreateDataImpl(AllNodePattenClass* tag) { return allNodePattenStorage.CreateData(); }
-	EnemyAtkPattenData* CreateDataImpl(EnemyAtkPattenData* tag) { return enemyAtkPattenStorage.CreateData(); }
-	EnemyData* CreateDataImpl(EnemyData* tag) { return enemyDataStorage.CreateData(); }
-	PlayerAtkPetternData* CreateDataImpl(PlayerAtkPetternData* tag) { return playerAtkPetternStorage.CreateData(); }
-	PlayerData* CreateDataImpl(PlayerData* tag) { return playerDataStorage.CreateData(); }
+	T* CreateDataImpl(T* tag);
 
-	//SaveDataImpl ÇïÆÛ Èû¼ö
-	void SaveDataImpl(const std::string& key, AllNodePattenClass* data) { allNodePattenStorage.SetData(key, data); }
-	void SaveDataImpl(const std::string& key, EnemyAtkPattenData* data) { enemyAtkPattenStorage.SetData(key, data); }
-	void SaveDataImpl(const std::string& key, EnemyData* data) { enemyDataStorage.SetData(key, data); }
-	void SaveDataImpl(const std::string& key, PlayerAtkPetternData* data) { playerAtkPetternStorage.SetData(key, data); }
-	void SaveDataImpl(const std::string& key, PlayerData* data) { playerDataStorage.SetData(key, data); }
 
-	//
+	// DispatchSaveData í—¬í¼ í•¨ìˆ˜ ì„ ì–¸ (í´ë˜ìŠ¤ ë‚´ì—ëŠ” ì„ ì–¸ë§Œ)
 	template<typename T>
-	void DispatchSaveData(const std::string& key, T* ptr) {
-		static_assert(sizeof(T) == 0, "Áö¿øµÇÁö ¾Ê´Â Å¸ÀÔÀÔ´Ï´Ù");
-	}
-	template<>
-	void DispatchSaveData<AllNodePattenClass>(const std::string& key, AllNodePattenClass* ptr) {
-		allNodePattenStorage.SetData(key, ptr);
-	}
-	template<>
-	void DispatchSaveData<EnemyData>(const std::string& key, EnemyData* ptr) {
-		enemyDataStorage.SetData(key, ptr);
-	}
-	template<>
-	void DispatchSaveData<PlayerAtkPetternData>(const std::string& key, PlayerAtkPetternData* ptr) {
-		playerAtkPetternStorage.SetData(key, ptr);
-	}
-	template<>
-	void DispatchSaveData<PlayerData>(const std::string& key, PlayerData* ptr) {
-		playerDataStorage.SetData(key, ptr);
-	}
+	void DispatchSaveData(const std::string& key, T* ptr);
 
-	//GetData ÇïÆÛ
-	AllNodePattenClass* getDataImpl(AllNodePattenClass* tag, std::string ID) 
-		{ return allNodePattenStorage.GetData(ID); }
-	EnemyAtkPattenData* getDataImpl(EnemyAtkPattenData* tag, std::string ID)
-		{return enemyAtkPattenStorage.GetData(ID);}
-	EnemyData* getDataImpl(EnemyData* tag, std::string ID)
-		{return enemyDataStorage.GetData(ID);}
-	PlayerAtkPetternData* getDataImpl(PlayerAtkPetternData* tag, std::string ID)
-		{return playerAtkPetternStorage.GetData(ID);}
-	PlayerData* getDataImpl(PlayerData* tag, std::string ID)
-		{return playerDataStorage.GetData(ID);}
+
+
+	// ìŠ¤í‚µë¼ì¸ì„ ì €ì¥í•˜ëŠ” ë°ì´í„°
+	// ë°ì´í„°ì— ìœ— ì¤„ì´ ì¶”ê°€ë˜ë©´ ì¶”ê°€ë¡œ ì¡°ì •í•„ìš”!!!!
+	//0 : AllNodePattenClass, EnemyAtkPattenData, EnemyData, PlayerAtkPetternData, PlayerData
+	int SkipLineData[5] = { 5,5,5,11,5 };
+
 };
 
 
-//if constexpr :  Á¶°Ç¿¡ ¸Â´Â ºĞ±â´Â ¾Æ¿¹ ÄÄÆÄÀÏµÇ°í Á¶°ÇÀÌ ¸ÂÁö ¾Ê´Â ºĞ±â´Â ÄÄÆÄÀÏµÇÁö ¾ÊÀ½
-
-
-
+// SetCSV í…œí”Œë¦¿ ë©¤ë²„ í•¨ìˆ˜ ì •ì˜
 template<typename T>
-void CsvDataManager::SetCSV(const std::string filePath, int skipLine) {
-	static_assert(std::is_base_of_v<BaseData, T>); // T°¡ BaseData¸¦ »ó¼Ó¹Ş´ÂÁö È®ÀÎÇÏ´Â ¹®Àå
+void CsvDataManager::SetCSV(std::string filePath) {
+	static_assert(std::is_base_of_v<BaseData, T>, "TëŠ” BaseDataë¥¼ ìƒì†ë°›ì•„ì•¼ í•©ë‹ˆë‹¤.");
 
+	
 
-	//µ¥ÀÌÅÍ Å¬·¡½º TÀÇ Å¸ÀÔÀ» °Ë»çÇØ¼­ °°´Ù¸é µ¥ÀÌÅÍ ÀúÀå¼Ò¿¡¼­ µ¥ÀÌÅÍ Å¬·¹½º »ı¼ºÇÔ¼ö È£Ãâ
-	T* tmpData = CreateDataImpl(static_cast<T*>(nullptr));
-
-	std::wifstream file(filePath); // ÆÄÀÏ ½ºÆ®¸² »ı¼º
-	if (!file.is_open()) {  // ÆÄÀÏ ¿­±â ½ÇÆĞ ½Ã ¿¡·¯ ¸Ş½ÃÁö Ãâ·Â
-		//std::cout << "ÆÄÀÏÀ» ¿­ ¼ö ¾ø½À´Ï´Ù: " << file << std::endl;
+	std::wifstream file(filePath);
+	file.imbue(std::locale(".UTF-8"));
+	if (!file.is_open()) {
+		std::cout << L"íŒŒì¼ì„ ì—´ ìˆ˜ ì—†ìŠµë‹ˆë‹¤: " << filePath << std::endl;
+		return;
 	}
 
-	// °¢ µ¥ÀÌÅÍ Å¸ÀÔ¿¡ µû¶ó¼­ »ı¼ºµÇ´Â º¯¼ö°¡ ´Ù¸§
-
-
-	std::wstring line;	 // ÇöÀç ÁÙÀ» ÀúÀåÇÒ º¯¼ö
-	int countLine = 1;	 // ½ÃÀÛ ¶óÀÎ ¹øÈ£ (1ºÎÅÍ ½ÃÀÛ)
-
+	std::wstring line;
+	int countLine = 1;
+	int skipLineNum = GetSkipLine(static_cast<T*>(nullptr));
 
 	while (std::getline(file, line)) {
-		if (countLine++ <= skipLine) continue; // Çì´õ °Ç³Ê¶Ù±â
-
-
-		std::wstringstream ss(line);   // ¹®ÀÚ¿­ ½ºÆ®¸² »ı¼º
-		std::wstring cell;			   // °¢ ¼¿À» ÀúÀåÇÒ º¯¼ö
-		std::vector<std::wstring> row; // ÇöÀç ÇàÀÇ ¼¿µéÀ» ÀúÀåÇÒ º¤ÅÍ
-		std::wstring key;	           // Å°·Î »ç¿ëÇÒ Ã¹ ¹øÂ° ¼¿ÀÇ °ª
-		bool isFirst = true;           // Ã¹ ¹øÂ° ¼¿ÀÎÁö ¿©ºÎ¸¦ È®ÀÎÇÏ´Â ÇÃ·¡±×
+		if (countLine++ <= skipLineNum) continue;
+		T* tmpData = CreateDataImpl(static_cast<T*>(nullptr));
+		std::wstringstream ss(line);
+		std::vector<std::wstring> row;
+		std::wstring cell;
+		std::string key;
+		bool isFirst = true;
 
 		while (std::getline(ss, cell, L',')) {
-			if (isFirst) {		 // Ã¹ ¹øÂ° ¼¿À» Å°·Î »ç¿ë
-				key = cell;
+			if (isFirst) {
+				key = StringConvert::WstringToString(cell.c_str());
 				isFirst = false;
 			}
-			row.push_back(cell); // ³ª¸ÓÁö ¼¿Àº º¤ÅÍ¿¡ Ãß°¡
+			row.push_back(cell);
 		}
 
-		//µ¥ÀÌÅÍ Å¬·¡½º °´Ã¼¿¡ ÇÑ ÇàÀÇ µ¥ÀÌÅÍ¸¦ vector<wstring>·Î °ªÀ» ³Ö¾îÁÜ
-		tmpData->SetData(row); // SetData ÇÔ¼ö¸¦ È£ÃâÇÏ¿© µ¥ÀÌÅÍ¸¦ ¼³Á¤
+		if (tmpData) {
+			tmpData->SetData(row);
+		}
+		else {
+			std::wcerr << L"CreateDataImplì´ nullptrì„ ë°˜í™˜í–ˆìŠµë‹ˆë‹¤. ë°ì´í„° ìƒì„±ì„ ê±´ë„ˆëœë‹ˆë‹¤." << std::endl;
+			continue;
+		}
 
-
-
-
-		// ¿¹¿ÜÃ³¸®
-		// key°¡ ºñ¾îÀÖÀ¸¸é ÀúÀåÇÏÁö ¾ÊÀ½ (º¸È£ ·ÎÁ÷)
-		//
 		if (!key.empty()) {
-			//SaveDataImpl(key, tmpData); // SaveDataImpl ÇÔ¼ö¸¦ È£ÃâÇÏ¿© µ¥ÀÌÅÍ¸¦ ÀúÀå
-			this->DispatchSaveData(key, tmpData); // DispatchSaveData ÇÔ¼ö¸¦ È£ÃâÇÏ¿© µ¥ÀÌÅÍ¸¦ ÀúÀå
+			// DispatchSaveData í•¨ìˆ˜ë¥¼ í˜¸ì¶œí•˜ì—¬ ë°ì´í„°ë¥¼ ì €ì¥ (íƒœê·¸ ë””ìŠ¤íŒ¨ì¹˜)
+			DispatchSaveData<T>(key, tmpData);
 		}
 	}
-	// µ¥ÀÌÅÍ¸¦ ÀúÀåÇÏ´Â ÇÔ¼ö ÇÊ¿äÇÔ!!!
 	file.close();
 }
 
 
-
-template<typename T>
-T* CsvDataManager::GetCSV(const std::string DataID) {
-	return getDataImpl(static_cast<T*>(nullptr), DataID);
-}
+// ê° ë°ì´í„°ì˜ ìŠ¤í‚µë¼ì¸ì„ ì €ì¥í•˜ëŠ” êµ¬ì¡°ì²´

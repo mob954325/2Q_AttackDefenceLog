@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <string>
 #include <unordered_map>
 #include <typeinfo>
@@ -6,11 +6,10 @@
 #include "../DataClass/AllNodePattenClass.h"
 #include "../DataClass/EnemyAtkPattenData.h"
 #include "../DataClass/EnemyData.h"
-#include "../DataClass/PlayerAtkPetternData.h"
 #include "../DataClass/PlayerData.h"
 
-/*2025.07.30 - ¾È¼ººó
-   ¿ªÇÒ : CsvDataStorage Å¬·¡½º´Â CSV ÆÄÀÏ¿¡¼­ ÀĞ¾î¿Â µ¥ÀÌÅÍ¸¦ unordered_map¿¡ ÀúÀåÇÏ´Â Å¬·¡½º 
+/*2025.07.30 - ì•ˆì„±ë¹ˆ
+   ì—­í•  : CsvDataStorage í´ë˜ìŠ¤ëŠ” CSV íŒŒì¼ì—ì„œ ì½ì–´ì˜¨ ë°ì´í„°ë¥¼ unordered_mapì— ì €ì¥í•˜ëŠ” í´ë˜ìŠ¤ 
 	
 */
 
@@ -19,40 +18,44 @@
 class CsvDataManager;
 
 
-// ½ºÅä¸®ÁöµéÀÌ »ó¼Ó ¹ŞÀ» º£ÀÌ½º ½ºÅä¸®Áö Å¬·¡½º
+// ìŠ¤í† ë¦¬ì§€ë“¤ì´ ìƒì† ë°›ì„ ë² ì´ìŠ¤ ìŠ¤í† ë¦¬ì§€ í´ë˜ìŠ¤
 template<typename T>
 class CsvDataStorage
-{ // CSV µ¥ÀÌÅÍ ÀúÀå Å¬·¡½º
-  // ¸Ê :   Å° : °¢ ¿¢¼¿ÀÇ Ã¹ ¹øÂ° °ª    °ª : ÇØ´ç ÇàÀÇ µ¥ÀÌÅÍ¸¦ ÀúÀåÇÏ´Â Å¬·¡½ºÀÇ Æ÷ÀÎÅÍ
+{ // CSV ë°ì´í„° ì €ì¥ í´ë˜ìŠ¤
+  // ë§µ :   í‚¤ : ê° ì—‘ì…€ì˜ ì²« ë²ˆì§¸ ê°’    ê°’ : í•´ë‹¹ í–‰ì˜ ë°ì´í„°ë¥¼ ì €ì¥í•˜ëŠ” í´ë˜ìŠ¤ì˜ í¬ì¸í„°
 public:
 	CsvDataStorage() {};
 	virtual ~CsvDataStorage() {};
-	friend class Singleton<CsvDataManager>; // ½Ì±ÛÅæ ÆĞÅÏÀ» »ç¿ëÇÏ±â À§ÇÑ Ä£±¸ Å¬·¡½º ¼±¾ğ
+	friend class Singleton<CsvDataManager>; // ì‹±ê¸€í†¤ íŒ¨í„´ì„ ì‚¬ìš©í•˜ê¸° ìœ„í•œ ì¹œêµ¬ í´ë˜ìŠ¤ ì„ ì–¸
 
 private:
 	std::unordered_map<std::string, T* > DataMap;
 
 public:
 
-	// µ¥ÀÌÅÍ Å¬·¡½ºÀÇ °´Ã¼ »ı¼º
-	T*  CreateData(){
+	// ë°ì´í„° í´ë˜ìŠ¤ì˜ ê°ì²´ ìƒì„±
+	T* CreateData() {
 		T* tmpData = new T();
 		return tmpData;
 	}
 
 
-	// Å°¿Í °ª(µ¥ÀÌÅÍÀÇ Æ÷ÀÎÅÍ)ÀÇ ½ÖÀ» ¸Ê¿¡ ÀúÀå
+	// í‚¤ì™€ ê°’(ë°ì´í„°ì˜ í¬ì¸í„°)ì˜ ìŒì„ ë§µì— ì €ì¥
 	void SetData(const std::string DataID, T* tmpData) {
-		DataMap[DataID] = tmpData; 
+		DataMap[DataID] = tmpData;
 	}
 
-	// µ¥ÀÌÅÍ¸¦ °¡Áö´Â ÇÔ¼ö
+	// ë°ì´í„°ë¥¼ ê°€ì§€ëŠ” í•¨ìˆ˜
 	T* GetData(const std::string DataID) {
 		auto it = DataMap.find(DataID);
 		if (it != DataMap.end()) {
 			return it->second;
 		}
 	}
+
+	void PrintData() {
+		for (const auto& pair : DataMap) {
+			pair.second->PrintMap(); // BaseData í´ë˜ìŠ¤ì˜ PrintMap í•¨ìˆ˜ í˜¸ì¶œ
+		}
+	}
 };
-
-

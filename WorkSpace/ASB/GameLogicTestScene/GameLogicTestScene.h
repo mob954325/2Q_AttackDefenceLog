@@ -1,13 +1,13 @@
-#pragma once
+ï»¿#pragma once
 
 #include <vector>
 #include <iostream>
 #include "Scene/Scene.h"
 #include "Components/Base/GameObject.h"
 
-/*2025.07.28 - ¾È¼ººó
- °ÔÀÓ ·ÎÁ÷ Å×½ºÆ® ¾À
- ³ªÁß¿¡ »ç¿ëÇÒ SceneÀº µû·Î ¸¸µé¿¹Á¤
+/*2025.07.28 - ì•ˆì„±ë¹ˆ
+ ê²Œì„ ë¡œì§ í…ŒìŠ¤íŠ¸ ì”¬
+ ë‚˜ì¤‘ì— ì‚¬ìš©í•  Sceneì€ ë”°ë¡œ ë§Œë“¤ì˜ˆì •
 
 */
 

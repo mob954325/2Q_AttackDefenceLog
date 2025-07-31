@@ -1,25 +1,30 @@
-#pragma once
+ï»¿#pragma once
 #include "BaseData.h"
 
-/*2025.07.29 - ¾È¼ººó
+/*2025.07.29 - ì•ˆì„±ë¹ˆ
 
-    ÁÖÀÇ : ÀûÀÇ Á¤º¸¸¦ ºÒ·¯¿Ã ¶§, ÇÊ¿äÇÑ ID°¡ ´Ù¸£°Å³ª ´Ù¸¥°ÍÀ» ±âÁØÀ¸·Îµµ ÇÒ ¼ö ÀÖÀ½ -> ÃßÈÄ ¼öÁ¤¿¹Á¤
+    ì£¼ì˜ : ì ì˜ ì •ë³´ë¥¼ ë¶ˆëŸ¬ì˜¬ ë•Œ, í•„ìš”í•œ IDê°€ ë‹¤ë¥´ê±°ë‚˜ ë‹¤ë¥¸ê²ƒì„ ê¸°ì¤€ìœ¼ë¡œë„ í•  ìˆ˜ ìˆìŒ -> ì¶”í›„ ìˆ˜ì •ì˜ˆì •
 */ 
 class EnemyData : public BaseData
 {
 public:
 	EnemyData() {};
 	~EnemyData() {};
-	std::string enemyID;          // ÀûÀÇ ID¸¦ ÀúÀå
-	std::string enemyName;        // ÀûÀÇ ÀÌ¸§À» ÀúÀå
-	std::string enemyDifficulty;  // ÀûÀÇ ³­ÀÌµµ¸¦ ÀúÀå   <- Áß¿ä!
-	float enemyHealth;            // ÀûÀÇ °ø°İ·ÂÀ» ÀúÀå
-	float enemyDamage;            // ÀûÀÇ ¹æ¾î·ÂÀ» ÀúÀå
-	float enemyCooldown;          // ÀûÀÇ °ø°İ ÄğÅ¸ÀÓÀ» ÀúÀå
-	float enemySpiritdamage;      // ÀûÀÇ ±â¼¼ °ø°İ·ÂÀ» ÀúÀå
-	float enemySpiritamount;	  // ±â¼¼ÀÇ ÃÑ·®À» ÀúÀå   <- Áß¿ä!
-	float eMoveSpeed;         // ÀûÀÇ ÀÌµ¿ ¼Óµµ¸¦ ÀúÀå
-	void SetData(std::vector<std::wstring> tmp) override; // µ¥ÀÌÅÍ ¼³Á¤ ÇÔ¼ö
-	void PrintMap() override; // ÄÜ¼ÖÃ¢¿¡ µ¥ÀÌÅÍ Ãâ·Â
+	std::string enemyID;          // ì ì˜ IDë¥¼ ì €ì¥
+	std::wstring enemyName;        // ì ì˜ ì´ë¦„ì„ ì €ì¥
+	std::string enemyDifficulty;  // ì ì˜ ë‚œì´ë„ë¥¼ ì €ì¥   <- ì¤‘ìš”!
+	float enemyHealth;            // ì ì˜ ê³µê²©ë ¥ì„ ì €ì¥
+	float enemyDamage;            // ì ì˜ ë°©ì–´ë ¥ì„ ì €ì¥
+	float enemyCooldown;          // ì ì˜ ê³µê²© ì¿¨íƒ€ì„ì„ ì €ì¥
+	float enemySpiritdamage;      // ì ì˜ ê¸°ì„¸ ê³µê²©ë ¥ì„ ì €ì¥
+	float enemySpiritamount;	  // ê¸°ì„¸ì˜ ì´ëŸ‰ì„ ì €ì¥   <- ì¤‘ìš”!
+	float enemyGuardRate;         // ì ì˜ ë°©ì–´ìœ¨ì„ ì €ì¥
+	std::vector<std::string> enemyPattern;    //ì ì˜ íŒ¨í„´ì„ ì €ì¥
+	//std::unordered_map<std::string, std::string> enemySprite;  // ì ì˜ ìŠ¤í”„ë¼ì´íŠ¸ë¥¼ ì €ì¥
+
+
+	void SetData(std::vector<std::wstring> tmp) override ; // ë°ì´í„° ì„¤ì • í•¨ìˆ˜
+	void PrintMap() override ; // ì½˜ì†”ì°½ì— ë°ì´í„° ì¶œë ¥
+
 };
 

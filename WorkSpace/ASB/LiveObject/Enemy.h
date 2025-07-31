@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "LiveObject.h"
 
 class Enemy : public LiveObject
@@ -7,11 +7,14 @@ public:
 	Enemy() {};
 	~Enemy() {};
 public:
-	float GetTotalImbalance() override { return TotalImbalance; };
-	std::string GetDifficulty() override { return Difficulty; } // ³­ÀÌµµ ¹İÈ¯
+	float GetTotalImbalance() override { return TotalSpiritAmount; };
+	std::string GetDifficulty() override { return Difficulty; } // ë‚œì´ë„ ë°˜í™˜
+	void SetAllData(std::string tmp);
 
 private:
-	float TotalImbalance = 0.0f; // ÀûÀÇ ÃÑ Ã¤°£
-	std::string Difficulty;       // ÀûÀÇ ³­ÀÌµµ 
+	float TotalSpiritAmount = 0.0f; // ì ì˜ ì´ ì±„ê°„
+	std::string Difficulty;       // ì ì˜ ë‚œì´ë„ 
+	EnemyData* nowEnemyData = nullptr; // í˜„ì¬ ì ì˜ ë°ì´í„° í´ë˜ìŠ¤ë¥¼ ë‹´ì„ ë³€ìˆ˜
+
 };
 

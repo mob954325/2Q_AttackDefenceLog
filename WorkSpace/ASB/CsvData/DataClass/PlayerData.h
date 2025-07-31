@@ -1,13 +1,49 @@
-#pragma once
+ï»¿#pragma once
 #include "BaseData.h"
+
+/*
+
+*/
 
 class PlayerData : public BaseData
 {
 public:
-	PlayerData() {};
-	~PlayerData() {};
+	std::string Character_ID;
+	std::wstring Character_name;
+	float Character_helath;
+	float Character_damage;
+	float Character_spritdamage;
+	float Character_guard_rate;
+	//string Character_sprite_idle;
+	//string Character_sprite_attack;
+	//string Character_sprite_guard;
+	//string Character_sprite_hit;
+	//string Character_sprite_evade;
+	//string Character_sprite_down;
 
-	void SetData(std::vector<std::wstring> tmp)override; // µ¥ÀÌÅÍ ¼³Á¤ ÇÔ¼ö
-	void PrintMap()override; // ¸ÊÀ» ÄÜ¼ÖÃ¢¿¡ Ãâ·Â ÇÔ¼ö, »ó¼Ó¹Ş´Â µ¥ÀÌÅÍ¿¡¼­ ¿À¹ö¶óÀÌµå ÇÏ¿© »ç¿ë
+
+	int skipLine = 5; // ì‹œíŠ¸ì—ì„œ ìŠ¤í‚µí•  ë¼ì¸ ìˆ˜
+	
+	
+public:
+	void SetData(std::vector<std::wstring> tmp)override;
+
+	int GetIntV(const std::string& name);
+	std::string GetStringV(const std::string& name);
+	void PrintMap()override;
 };
 
+
+class PlayerAtkPetternData : public BaseData
+{
+public:
+	std::string Player_pattern_ID;
+	std::string Node_pattern01;
+	std::string Node_pattern02;
+
+public:
+	void SetData(std::vector<std::wstring> tmp)override;
+	std::string GetStringV(const std::string& name);
+	void PrintMap()override;
+
+};
