@@ -1,11 +1,11 @@
-#include "PatternManager.h"
+ï»¿#include "PatternManager.h"
 #include "Components/Base/GameObject.h"
 #include "Components/Rendering/BitmapRenderer.h"
 
 
 void PatternManager::SetNodes(const std::array<GameObject*, 9>& positions, float radius)
 {
-	Vector2 minNode{ FLT_MAX, FLT_MAX }; //±Ø°ª?ÀÌ¶ó°íÇÔ
+	Vector2 minNode{ FLT_MAX, FLT_MAX }; //ê·¹ê°’?ì´ë¼ê³ í•¨
 	Vector2 maxNode{ -FLT_MAX, -FLT_MAX };
 
 
@@ -16,16 +16,16 @@ void PatternManager::SetNodes(const std::array<GameObject*, 9>& positions, float
 		Vector2 offset = { bmpSize.width * 0.5f, bmpSize.height * 0.5f };
 		Vector2 center = mat + offset;
 
-		nodes[i].position = center; //ºñ±³¿ëÀ¸·Î Àá½Ã »©µÒ
+		nodes[i].position = center; //ë¹„êµìš©ìœ¼ë¡œ ì ì‹œ ë¹¼ë‘ 
 		nodes[i].radius = radius;
-		nodes[i].isHit = false; // ÃÊ±âÈ­,
+		nodes[i].isHit = false; // ì´ˆê¸°í™”,
 
 		std::cout << nodes[i].position << std::endl;
 
-		if (center.x < minNode.x) minNode.x = center.x; // ÃÖ¼Ò³ëµåº¸´Ù ÀÛÀº°ªÀÏ°æ¿ì, °»½Å
+		if (center.x < minNode.x) minNode.x = center.x; // ìµœì†Œë…¸ë“œë³´ë‹¤ ì‘ì€ê°’ì¼ê²½ìš°, ê°±ì‹ 
 		if (center.y < minNode.y) minNode.y = center.y;
 
-		if (center.x > maxNode.x) maxNode.x = center.x; // ÃÖ´ë³ëµåº¸´Ù Å« °ªÀÏ°æ¿ì °»½Å
+		if (center.x > maxNode.x) maxNode.x = center.x; // ìµœëŒ€ë…¸ë“œë³´ë‹¤ í° ê°’ì¼ê²½ìš° ê°±ì‹ 
 		if (center.y > maxNode.y) maxNode.y = center.y;
 	}
 
@@ -43,30 +43,30 @@ void PatternManager::AddNodes(Vector2 pos, float radius, int i)
 {
 	nodes[i].position = pos;
 	nodes[i].radius = radius;
-	nodes[i].isHit = false; // ÃÊ±âÈ­,
+	nodes[i].isHit = false; // ì´ˆê¸°í™”,
 }
 
 int PatternManager::GetSkippedNode(int from, int to)
 {
-	int ax = (from - 1) % 3; // °¡·Î¿­ 0 1 2
-	int ay = (from - 1) / 3; // ¼¼·Î¿­ 0 1 2 3 ...
+	int ax = (from - 1) % 3; // ê°€ë¡œì—´ 0 1 2
+	int ay = (from - 1) / 3; // ì„¸ë¡œì—´ 0 1 2 3 ...
 	int bx = (to - 1) % 3;
 	int by = (to - 1) / 3;
 
-	int mx = (ax + bx) / 2; // x »çÀÌ¿¡ ÀÓÀÇÀÇ Á¡(Áß¾Ó)
-	int my = (ay + by) / 2; // y »çÀÌ¿¡ ÀÓÀÇÀÇ Á¡(Áß¾Ó)
+	int mx = (ax + bx) / 2; // x ì‚¬ì´ì— ì„ì˜ì˜ ì (ì¤‘ì•™)
+	int my = (ay + by) / 2; // y ì‚¬ì´ì— ì„ì˜ì˜ ì (ì¤‘ì•™)
 
 
-	if ((abs(ax - bx) == 2 && ay == by) || // ¼öÆò, 1 3 Ã³·³, 2Ä­Â÷ÀÌ ³ª´Âµ¥ y °°À¸¸é, 0 2»ÓÀÌ ¾øÀ½ ÀÌ°Íµµ
-		(abs(ay - by) == 2 && ax == bx) || // ¼öÁ÷, 0 1 2 ¶ó¼­, 2 0 »ÓÀÌ ¾ø±äÇÔ
-		(abs(ax - bx) == 2 && abs(ay - by) == 2) // ´ë?°¢ À§ µÎÁ¶°ÇÀ» µ¿½Ã¿¡ ¸¸Á·ÇÏ¸é ´ë°¢ÀÓ, 02 02
-		) return my * 3 + mx + 1; // my < ¼¼·Î , mx < °¡·Î
+	if ((abs(ax - bx) == 2 && ay == by) || // ìˆ˜í‰, 1 3 ì²˜ëŸ¼, 2ì¹¸ì°¨ì´ ë‚˜ëŠ”ë° y ê°™ìœ¼ë©´, 0 2ë¿ì´ ì—†ìŒ ì´ê²ƒë„
+		(abs(ay - by) == 2 && ax == bx) || // ìˆ˜ì§, 0 1 2 ë¼ì„œ, 2 0 ë¿ì´ ì—†ê¸´í•¨
+		(abs(ax - bx) == 2 && abs(ay - by) == 2) // ëŒ€?ê° ìœ„ ë‘ì¡°ê±´ì„ ë™ì‹œì— ë§Œì¡±í•˜ë©´ ëŒ€ê°ì„, 02 02
+		) return my * 3 + mx + 1; // my < ì„¸ë¡œ , mx < ê°€ë¡œ
 
 	return -1;
 }
 
 
-void PatternManager::SetPatternBox(const D2D1_RECT_F& box) // ¾È¾¸
+void PatternManager::SetPatternBox(const D2D1_RECT_F& box) // ì•ˆì”€
 {
 	patternBox = box;
 }
@@ -77,34 +77,34 @@ void PatternManager::CheckTrails(const std::deque<TrailStamp>& trails)
 
 	int lastHit = -1;
 
-	for (auto stamp : trails) { // Æ®·¹ÀÏ ¾È¿¡ ÀÖ´Â°Íµé, ÇüÅÂ´Â TrailStamp
+	for (auto stamp : trails) { // íŠ¸ë ˆì¼ ì•ˆì— ìˆëŠ”ê²ƒë“¤, í˜•íƒœëŠ” TrailStamp
 		Vector2 pos = { stamp.position.x, stamp.position.y };
 
 		for (int i = 0; i < 9; ++i) {
 
-			auto& node = nodes[i]; // Node ±¸Á¶Ã¼
+			auto& node = nodes[i]; // Node êµ¬ì¡°ì²´
 
-			if (node.isHit) continue; // ÀÌ¹Ì ÆÇÁ¤ÇÑ°Ç °Ç³Ê¶Ü
+			if (node.isHit) continue; // ì´ë¯¸ íŒì •í•œê±´ ê±´ë„ˆëœ€
 
-			float dx = pos.x - node.position.x; // xÃà Â÷ÀÌ
-			float dy = pos.y - node.position.y; // yÃà Â÷ÀÌ
-			float distSq = dx * dx + dy * dy; // ÇÇÅ¸°í¶ó½º
-			float radiusSq = node.radius * node.radius; // ¹İÁö¸§ÀÇ Á¦°ö // »ç½Ç»ó ÆÇÁ¤ °Å¸®ÀÓ ¹İÁö¸§À¸·Î º¸±ä ¾Ö¸ÅÇÒ ¼ö ÀÖÀ½
+			float dx = pos.x - node.position.x; // xì¶• ì°¨ì´
+			float dy = pos.y - node.position.y; // yì¶• ì°¨ì´
+			float distSq = dx * dx + dy * dy; // í”¼íƒ€ê³ ë¼ìŠ¤
+			float radiusSq = node.radius * node.radius; // ë°˜ì§€ë¦„ì˜ ì œê³± // ì‚¬ì‹¤ìƒ íŒì • ê±°ë¦¬ì„ ë°˜ì§€ë¦„ìœ¼ë¡œ ë³´ê¸´ ì• ë§¤í•  ìˆ˜ ìˆìŒ
 
-			if (distSq <= radiusSq) { // Ãæµ¹ °æ¿ì¼ö
+			if (distSq <= radiusSq) { // ì¶©ëŒ ê²½ìš°ìˆ˜
 				int currentHit = i + 1;
 
-				if (lastHit != -1) { // Ã¹ ³ëµå°¡ ¾Æ´Ñ°æ¿ì¿¡¸¸
-					int skipped = GetSkippedNode(lastHit, currentHit); // Áß°£°ªÀÌ ÀÖÀ¸¸é ¹İÈ¯µÊ, ¾øÀ¸¸é -1
-					if (skipped != -1 && !nodes[skipped - 1].isHit) { // ¹ß°ß µÆ´Âµ¥, ¾ÆÁ÷ Ãæµ¹ÀÌ ¾ÈµÇ¾îÀÖÀ¸¸é
-						nodes[skipped - 1].isHit = true; //¸ÕÀú Ã³¸®ÇØ¼­ ³Ö¾îÁÜ
+				if (lastHit != -1) { // ì²« ë…¸ë“œê°€ ì•„ë‹Œê²½ìš°ì—ë§Œ
+					int skipped = GetSkippedNode(lastHit, currentHit); // ì¤‘ê°„ê°’ì´ ìˆìœ¼ë©´ ë°˜í™˜ë¨, ì—†ìœ¼ë©´ -1
+					if (skipped != -1 && !nodes[skipped - 1].isHit) { // ë°œê²¬ ëëŠ”ë°, ì•„ì§ ì¶©ëŒì´ ì•ˆë˜ì–´ìˆìœ¼ë©´
+						nodes[skipped - 1].isHit = true; //ë¨¼ì € ì²˜ë¦¬í•´ì„œ ë„£ì–´ì¤Œ
 						pattern.push_back(skipped);
-						std::cout << "[Áß°£ ³ëµå °¨ÁöµÊ] : " << skipped << std::endl;
+						std::cout << "[ì¤‘ê°„ ë…¸ë“œ ê°ì§€ë¨] : " << skipped << std::endl;
 					}
 				}
 
 				node.isHit = true;
-				std::cout << "[³ëµå ±â·Ï] : " << (i + 1) << std::endl;
+				std::cout << "[ë…¸ë“œ ê¸°ë¡] : " << (i + 1) << std::endl;
 				pattern.push_back(i + 1); // 1~9				
 				lastHit = currentHit;
 			}
@@ -112,13 +112,13 @@ void PatternManager::CheckTrails(const std::deque<TrailStamp>& trails)
 	}
 
 	for (int i = 0; i < 9; ++i) {
-		nodes[i].isHit = false; // ÃÊ±âÈ­,
+		nodes[i].isHit = false; // ì´ˆê¸°í™”,
 	}
 }
 
 
 
-bool PatternManager::CheckOutOfBox(Vector2 pos) // AABB < ¸¶¿ì½º ³ª°¬´ÂÁö¸¸ ÆÇ´ÜÇØÁÖ¸é ÃæºĞÇÔ
+bool PatternManager::CheckOutOfBox(Vector2 pos) // AABB < ë§ˆìš°ìŠ¤ ë‚˜ê°”ëŠ”ì§€ë§Œ íŒë‹¨í•´ì£¼ë©´ ì¶©ë¶„í•¨
 {
 	return (pos.x < patternBox.left || pos.x > patternBox.right ||
 		pos.y < patternBox.top || pos.y > patternBox.bottom);

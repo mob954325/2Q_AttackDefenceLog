@@ -1,4 +1,4 @@
-#include "HSKScene.h"
+ï»¿#include "HSKScene.h"
 #include "Components/Logic/InputSystem.h"
 #include "Components/Rendering/TrailComponent.h"
 #include "NodeObj.h"
@@ -41,7 +41,7 @@ void HSKScene::OnExitImpl()
 
 }
 
-bool isNodeInitialized = false; // »ó³²ÀÚ ÄÚµù
+bool isNodeInitialized = false; // ìƒë‚¨ìž ì½”ë”©
 
 void HSKScene::UpdateImpl()
 {
@@ -54,15 +54,15 @@ void HSKScene::UpdateImpl()
 	t->isDraw = Input::leftButtonDown;
 	t->isOutFromBox = Input::rightButtonDown;
 	obj->GetTransform().SetPosition(Input::MouseX, Input::MouseY);
-	t->isOutFromBox = PM.CheckOutOfBox({ Input::MouseX, Input::MouseY }); // AABB < ¸¶¿ì½º ³ª°¬´ÂÁö¸¸ ÆÇ´ÜÇØÁÖ¸é ÃæºÐÇÔ
+	t->isOutFromBox = PM.CheckOutOfBox({ Input::MouseX, Input::MouseY }); // AABB < ë§ˆìš°ìŠ¤ ë‚˜ê°”ëŠ”ì§€ë§Œ íŒë‹¨í•´ì£¼ë©´ ì¶©ë¶„í•¨
 
 	if (t->isNewCached) {
 		PM.CheckTrails(t->cachedTrails);
-		t->isNewCached = false; // »ç¿ëÇß´Ù°í ¾Ë¸²
+		t->isNewCached = false; // ì‚¬ìš©í–ˆë‹¤ê³  ì•Œë¦¼
 
 		for (int value : PM.GetPattern()) {
 			std::cout << value << "-";
 		}
-		std::cout << std::endl;
+		std::cout << std::endl << std::endl;
 	}
 }
