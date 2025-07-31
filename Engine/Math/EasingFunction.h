@@ -1,15 +1,18 @@
-#pragma once
+ï»¿#pragma once
 #include <functional>
 #include <unordered_map>
 
-
 /*
-25.07.31 | ÀÛ¼ºÀÚ : ±èÁ¤Çö
-»ç¿ë¹ıÀº EasingList[InBounce](5.0f);
-key°ªÀº enum ¸®½ºÆ®ÀÎ EasingEffect¿¡¼­ °ñ¶ó¼­ »ç¿ë
-https://easings.net/ ±×·¡ÇÁ Âü°í »çÀÌÆ®
-Lnear´Â ÀÏÂ÷ÇÔ¼ö
+
+25.07.31 | ì‘ì„±ì : ê¹€ì •í˜„
+ì‚¬ìš©ë²•ì€ EasingList[InBounce](5.0f);
+keyê°’ì€ enum ë¦¬ìŠ¤íŠ¸ì¸ EasingEffectì—ì„œ ê³¨ë¼ì„œ ì‚¬ìš©
+https://easings.net/ ê·¸ë˜í”„ ì°¸ê³  ì‚¬ì´íŠ¸
+LnearëŠ” ì¼ì°¨í•¨ìˆ˜
+
 */
+
+
 enum EasingEffect
 {
 	// Linear
@@ -126,6 +129,7 @@ float easeInOutBounce(float x);
 
 #pragma endregion
 
+//static mapìœ¼ë¡œ ë¬¶ìŒ
 static std::unordered_map<EasingEffect, std::function<float(float)>> EasingList
 {
 	{Linear, easeLinear},
