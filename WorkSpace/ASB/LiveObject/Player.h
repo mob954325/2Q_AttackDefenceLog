@@ -16,5 +16,6 @@ public:
 	void SetAllData(std::string tmp, float Object_SpiritAmount);
 private:
 	PlayerData* nowPlayerData = nullptr;
+
 };
 

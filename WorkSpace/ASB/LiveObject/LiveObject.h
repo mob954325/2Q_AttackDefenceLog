@@ -42,13 +42,14 @@ public:
 	void SetName(const std::wstring& name) { Object_Name = name; }	// 이름 설정
 	void SetHp(float hp) { Object_Hp = hp; }						// 체력 설정
 	void SetAttack(float attack) { Object_Attack = attack; }		// 공격력 설정
-	void SetImbalanceAttack(float imbalanceAttack) { Object_SpiritAttack = imbalanceAttack; } // 기세 공격력 설정
+	void SetSpiritAttack(float SpiritAttack) { Object_SpiritAttack = SpiritAttack; } // 기세 공격력 설정
 	void SetDefenseRate(float defenseRate) { Object_DefenseRate = defenseRate; } // 방어율 설정
 
 
 	//값 변경 함수
-	void GetDamage(float damageAmount) {Object_Hp -= damageAmount;}
-	void GetSpiritdamage(float SpiritdamageAmount) {}
+	void GetDamage(float damageAmount) {Object_Hp -= damageAmount;} 
+	void GetSpiritdamage(float SpiritdamageAmount) { Object_SpiritAmount -= SpiritdamageAmount; }
+	void RestoreSpirit() { Object_nowSpiritAmount = Object_SpiritAmount; }// 적의 기세를 받아 사용함
 	
 
 	
