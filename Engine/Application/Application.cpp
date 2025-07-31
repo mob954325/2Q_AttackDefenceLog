@@ -234,7 +234,7 @@ void Application::Run()
 	MSG msg = {};
 	while (msg.message != WM_QUIT)
 	{
-		Input::ResetMouseEventFrameState();	// 07 27 추가 : 마우스 이벤트는 윈도우 메세지를 받기때문에 메세지 받기전에 초기화
+		Input::ResetMouseEventFrameState();
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 		{
 			TranslateMessage(&msg);
