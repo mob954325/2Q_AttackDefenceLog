@@ -24,17 +24,15 @@ struct Node {
 
 class PatternManager {
 public:
-	void SetNodes(const std::array<GameObject*, 9>& positions, float radius);
+	void SetNodes(const std::array<GameObject*, 9>& positions, float radius); // 최대 최소 크기를 기록해놨다가, AABB 박스 만들어주는 기능도 포함됨
 	void SetPatternBox(const D2D1_RECT_F& box);
 	void CheckTrails(const std::deque<TrailStamp>& trails);
-	void CheckOutOfBox(Vector2 pos);
+	bool CheckOutOfBox(Vector2 pos);
 	void AddNodes(Vector2 pos, float radius, int i);
 
 	const std::deque<int>& GetPattern() const {
 		return pattern;
-	}
-
-	bool isMousOut = false;
+	}	
 private:
 	std::array<Node, 9> nodes;
 	std::deque<int> pattern;

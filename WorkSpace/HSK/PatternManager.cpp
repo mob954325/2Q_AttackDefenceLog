@@ -4,20 +4,39 @@
 
 
 void PatternManager::SetNodes(const std::array<GameObject*, 9>& positions, float radius)
-{	
-	for (int i = 0; i < 9; ++i) {		
+{
+	Vector2 minNode{ FLT_MAX, FLT_MAX }; //극값?이라고함
+	Vector2 maxNode{ -FLT_MAX, -FLT_MAX };
+
+
+	for (int i = 0; i < 9; ++i) {
 		auto bmpSize = positions[i]->GetComponent<BitmapRenderer>()->GetResource()->GetBitmap()->GetSize();
 		Vector2 mat = positions[i]->GetTransform().GetPosition();
-		
-		Vector2 offset = { bmpSize.width * 0.5f, bmpSize.height * 0.5f };
 
-		nodes[i].position = mat + offset;
-		
+		Vector2 offset = { bmpSize.width * 0.5f, bmpSize.height * 0.5f };
+		Vector2 center = mat + offset;
+
+		nodes[i].position = center; //비교용으로 잠시 빼둠
 		nodes[i].radius = radius;
 		nodes[i].isHit = false; // 초기화,
 
-		std::cout << nodes[i].position<<std::endl;
+		std::cout << nodes[i].position << std::endl;
+
+		if (center.x < minNode.x) minNode.x = center.x; // 최소노드보다 작은값일경우, 갱신
+		if (center.y < minNode.y) minNode.y = center.y;
+
+		if (center.x > maxNode.x) maxNode.x = center.x; // 최대노드보다 큰 값일경우 갱신
+		if (center.y > maxNode.y) maxNode.y = center.y;
 	}
+
+	float padding = radius * 1.5f;
+
+	patternBox = {
+		minNode.x - padding,
+		minNode.y - padding,
+		maxNode.x + padding,
+		maxNode.y + padding
+	};
 }
 
 void PatternManager::AddNodes(Vector2 pos, float radius, int i)
@@ -28,7 +47,7 @@ void PatternManager::AddNodes(Vector2 pos, float radius, int i)
 }
 
 
-void PatternManager::SetPatternBox(const D2D1_RECT_F& box)
+void PatternManager::SetPatternBox(const D2D1_RECT_F& box) // 안씀
 {
 	patternBox = box;
 }
@@ -64,12 +83,10 @@ void PatternManager::CheckTrails(const std::deque<TrailStamp>& trails)
 	}
 }
 
-void PatternManager::CheckOutOfBox(Vector2 pos) // AABB < 마우스 나갔는지만 판단해주면 충분함
+bool PatternManager::CheckOutOfBox(Vector2 pos) // AABB < 마우스 나갔는지만 판단해주면 충분함
 {
-	if (pos.x < patternBox.left || pos.x > patternBox.right || pos.y < patternBox.top || pos.y > patternBox.bottom)
-		isMousOut = true;
-	else
-		isMousOut = false;
+	return (pos.x < patternBox.left || pos.x > patternBox.right ||
+		pos.y < patternBox.top || pos.y > patternBox.bottom);
 }
 
 
