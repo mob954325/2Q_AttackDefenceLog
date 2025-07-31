@@ -3,6 +3,7 @@
 
 void DummyButton::OnCreate()
 {
+	owner->GetTransform().SetUnityCoords(false);
 	button = owner->AddComponent<Button>();
 }
 

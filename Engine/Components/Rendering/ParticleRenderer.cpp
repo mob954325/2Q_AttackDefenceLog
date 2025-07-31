@@ -18,7 +18,7 @@ void ParticleRenderer::OnStart()
 		Vector2 vec = GameRandom::RandomInsideUnitCircle();
 		float randSpeed = GameRandom::RandomRange(minSpeed, maxSpeed);
 		infos.push_back({ { 0, 0 }, { vec.x, vec.y}, randSpeed });
-	}
+	}	
 }
 
 void ParticleRenderer::Render(D2DRenderManager* manager)
@@ -30,39 +30,87 @@ void ParticleRenderer::Render(D2DRenderManager* manager)
 		return;
 	}
 
-	float delta = Singleton<GameTime>::GetInstance().GetDeltaTime();
-	for (int i = 0; i < particleAmount; i++)
+	if (isPlay)
 	{
-		D2D1_MATRIX_3X2_F mat = owner->GetTransform().GetFinalMatrix();
-		
-		if (isPlay) // 플레이 중일 때만 위치 갱신
+		float delta = Singleton<GameTime>::GetInstance().GetDeltaTime();
+		for (int i = 0; i < particleAmount; i++)
 		{
-			Vector2 dir = infos[i].dirVec;
-			float speed = infos[i].speed;
+			D2D1_MATRIX_3X2_F mat = owner->GetTransform().GetFinalMatrix();
+			
+			if (isPlay) // 플레이 중일 때만 위치 갱신
+			{
+				Vector2 dir = infos[i].dirVec;
+				float speed = infos[i].speed;
 
-			infos[i].position.x += dir.x * speed + delta;
-			infos[i].position.y += dir.y * speed + delta;
+				infos[i].position.x += dir.x * speed + delta;
+				infos[i].position.y += dir.y * speed + delta;
+			}
+
+			// 회전 각도 계산
+			if (seeDirection)
+			{
+				Vector2 dir = infos[i].dirVec;
+				float angle = atan2f(dir.y, dir.x);
+				float cosTheta = cosf(angle);
+				float sinTheta = sinf(angle);
+
+				// 회전 행렬 구성 
+				// 기존 mat와 회전 행렬의 수동 곱
+				D2D1_MATRIX_3X2_F rotation = {
+					cosTheta,  sinTheta,
+				   -sinTheta,  cosTheta,
+					0.0f,      0.0f
+				};
+
+				D2D1_MATRIX_3X2_F result;
+				result.m11 = mat.m11 * rotation.m11 + mat.m12 * rotation.m21;
+				result.m12 = mat.m11 * rotation.m12 + mat.m12 * rotation.m22;
+				result.m21 = mat.m21 * rotation.m11 + mat.m22 * rotation.m21;
+				result.m22 = mat.m21 * rotation.m12 + mat.m22 * rotation.m22;
+				result.dx = mat.dx;
+				result.dy = mat.dy;
+				mat = result;
+			}
+
+			// 위치 적용
 			mat.dx += infos[i].position.x;
 			mat.dy += infos[i].position.y;
 
+			if (useGravity && infos[i].dirVec.y > -1.0f) infos[i].dirVec.y += delta;
+
+			manager->SetRenderTransform(mat); // 갱신한 위치로 이동
+			Vector2 ownerPosition = owner->GetTransform().GetPosition();
+
+			// bitmap 출력
+			if (showType == ParticleShowType::Single)
+			{
+				D2D1_SIZE_F size = particleBitmapResource->GetBitmap()->GetSize();
+				D2D1_RECT_F dest = { ownerPosition.x, ownerPosition.y, ownerPosition.x + size.width, ownerPosition.y + size.height };
+				D2D1_RECT_F src = { 0, 0,	 size.width, size.height };
+
+				manager->DrawBitmap(particleBitmapResource->GetBitmap(), dest, src, remainFadeOut / fadeOutTime); // 출력
+			}
+			else if(showType == ParticleShowType::Animation)
+			{			
+				D2D1_RECT_F dest = player.GetDestRect();
+				D2D1_RECT_F src = player.GetSrcRect();
+				manager->DrawBitmap(player.GetBitmapResource().GetBitmap(), dest, src, remainFadeOut / fadeOutTime);
+
+			}
+			else if (showType == ParticleShowType::RandomSingle)
+			{
+				player.SetCurrentFrame(infos[i].frameIndex);
+				D2D1_RECT_F dest = player.GetDestRect();
+				D2D1_RECT_F src = player.GetSrcRect();
+				manager->DrawBitmap(player.GetBitmapResource().GetBitmap(), dest, src, remainFadeOut / fadeOutTime);
+			}
 		}
-		else
-		{
-			mat.dx += infos[i].position.x;
-			mat.dy += infos[i].position.y;
-		}
 
-		manager->SetRenderTransform(mat); // 갱신한 위치로 이동
 
-		D2D1_SIZE_F size = particleBitmapResource->GetBitmap()->GetSize();
-		Vector2 ownerPosition = owner->GetTransform().GetPosition();
-		D2D1_RECT_F dest = { ownerPosition.x, ownerPosition.y, ownerPosition.x + size.width, ownerPosition.y + size.height };
-		D2D1_RECT_F src = { 0, 0, size.width, size.height };
-
-		manager->DrawBitmap(particleBitmapResource->GetBitmap(), dest, src, 1 - timer / duration); // 출력
+		timer += delta;
+		remainFadeOut -= delta;
+		player.Update(delta);
 	}
-
-	if (isPlay) timer += delta;
 }
 
 void ParticleRenderer::OnDestroy()
@@ -81,30 +129,28 @@ bool ParticleRenderer::IsPlay()
 
 void ParticleRenderer::Reset()
 {
-	std::for_each(infos.begin(), infos.end(), [](particleInfo& info)
+	std::for_each(infos.begin(), infos.end(), [&](ParticleInfo& info)
 		{
 			// dirVec 다시 추가
 			Vector2 vec = GameRandom::RandomInsideUnitCircle();
 			info.dirVec = { vec.x, vec.y };
 			info.position = Vector2::Zero(); // 포지션 초기화
+			info.frameIndex = GameRandom::RandomRange(0, player.GetMaxFrame());
 		});
 
 	timer = 0.0f;
+	remainFadeOut = fadeOutTime;
 }
 
 void ParticleRenderer::Pause()
 {
 	isPlay = false;
+	player.Pause();
 }
 
 void ParticleRenderer::SetLoop(bool value)
 {
 	isLoop = value;
-}
-
-bool ParticleRenderer::IsLoop()
-{
-	return isLoop;
 }
 
 void ParticleRenderer::SetAmount(int value)
@@ -118,11 +164,6 @@ void ParticleRenderer::SetAmount(int value)
 		float randSpeed = GameRandom::RandomRange(minSpeed, maxSpeed);
 		infos.push_back({ { 0, 0 }, { vec.x, vec.y}, randSpeed });
 	}
-}
-
-int ParticleRenderer::GetAmount()
-{
-	return particleAmount;
 }
 
 void ParticleRenderer::SetBitmap(std::wstring path)
@@ -140,7 +181,7 @@ void ParticleRenderer::SetMinSpeed(float value)
 	minSpeed = value;
 }
 
-float ParticleRenderer::GetMinSpeed()
+float ParticleRenderer::GetMinSpeed() const
 {
 	return minSpeed;
 }
@@ -150,7 +191,7 @@ void ParticleRenderer::SetMaxSpeed(float value)
 	maxSpeed = value;
 }
 
-float ParticleRenderer::GetMaxSpeed()
+float ParticleRenderer::GetMaxSpeed() const
 {
 	return maxSpeed;
 }
@@ -160,7 +201,42 @@ void ParticleRenderer::SetDuration(float value)
 	duration = value;
 }
 
-float ParticleRenderer::GetDuration()
+float ParticleRenderer::GetDuration() const
 {
 	return duration;
+}
+
+void ParticleRenderer::SetAnimPlayer(std::wstring sheetPath, std::wstring sheetDataPath, std::wstring clipPath)
+{
+	// 애니메이션 정보 추가
+	player.SetBitmapResource(*resourceManager->CreateBitmapResource(sheetPath));
+	player.SetSpriteSheet(sheetDataPath);
+	player.SetAnimationClip(clipPath);
+	player.Play();
+
+	for (int i = 0; i < particleAmount; i++)
+	{
+		infos[i].frameIndex = GameRandom::RandomRange(0, player.GetMaxFrame());
+	}
+}
+
+void ParticleRenderer::SetShowType(ParticleShowType type)
+{
+	showType = type;
+}
+
+void ParticleRenderer::SetFadeOutTime(float value)
+{
+	fadeOutTime = value;
+	remainFadeOut = value;
+}
+
+void ParticleRenderer::SetGravity(bool value)
+{
+	useGravity = value;
+}
+
+void ParticleRenderer::SetSeeDirection(bool value)
+{
+	seeDirection = value;
 }
