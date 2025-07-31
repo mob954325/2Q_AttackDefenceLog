@@ -15,8 +15,8 @@
 struct TrailStamp { // 게임오브젝트를 대체하는 구조체, 비트맵 컴포넌트만 요구하기 때문에 가볍게 사용
 	D2D1_POINT_2F position; // 좌표
 	float angle; // 각도(계산 해야함)
-
 	float timestamp; // 기능 사용 안함, 나중에 시간비례해서 삭제하고 싶으면, update쪽에서 조건 넣어주면 됨
+	bool isActive = true; // 판정이 살아있는지 여부임
 };
 
 class TrailComponent : public RenderComponent
@@ -29,7 +29,8 @@ public:
 	void Render(D2DRenderManager* manager) override; // 이거 기반으로 그려짐
 	void SetBitmap(std::wstring path);
 	void OnDestroy() override;
-	void Clear(); // 한번에 지우는거임, 큐 비움
+	void Clear(); // 한번에 지우는거임, 큐 비움	
+
 	inline float GetAngle(D2D1_POINT_2F prev, D2D1_POINT_2F current) { // 이전좌표와 현재좌표를 비교해서, 각도(radian) 반환해줌
 		return atan2f(current.y - prev.y, current.x - prev.x); // radian
 	}
@@ -39,6 +40,8 @@ public:
 	bool wasDraw = false; // isDraw를 한번 저장해뒀다가 비교함, 즉 변경지점을 찾는 비교용 버퍼
 	bool isOutFromBox = true; // 영역밖으로 나가면 true, 뒤에 크기를 자름
 	bool isNewCached = false; // 외부에서 사용하는 플레그, 받은다음 false 해줘야함
+
+	bool isFadingOut = false;
 
 	bool WasJustReleased() const { return wasDraw && !isDraw; } // 외부에서 상태 확인할때 씀
 	bool WasJustPressed() const { return !wasDraw && isDraw; }

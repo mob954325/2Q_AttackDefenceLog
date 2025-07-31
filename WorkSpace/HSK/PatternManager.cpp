@@ -77,7 +77,10 @@ void PatternManager::CheckTrails(const std::deque<TrailStamp>& trails)
 
 	int lastHit = -1; 
 
-	for (auto stamp : trails) { // 트레일 안에 있는것들, 형태는 TrailStamp
+	for (const auto& stamp : trails) { // 트레일 안에 있는것들, 형태는 TrailStamp
+		
+		if (stamp.isActive == false) continue;
+		
 		Vector2 pos = { stamp.position.x, stamp.position.y };
 
 		for (int i = 0; i < 9; ++i) {
