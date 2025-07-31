@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Scene/Scene.h"
 #include "PatternManager.h"
 
@@ -16,6 +16,6 @@ namespace HSK
 
 		std::array<GameObject*, 9> m_nodes;
 
-		PatternManager PM;
+		PatternManager PM;		
 	};
 }

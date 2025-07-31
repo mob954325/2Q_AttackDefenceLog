@@ -1,19 +1,22 @@
-#pragma once
+ï»¿#pragma once
 #include "Components/Rendering/TrailComponent.h"
 #include "Components/Logic/InputSystem.h"
+#include "../WorkSpace/HSK/PatternDrawerComponent.h"
 #include <array>
+#include <queue>
 
-/* 7.30. ÇÑ½Â±Ô
-* ³ëµå(9°³)¿Í, ÇöÀç Æ®·¹ÀÏ ÄÄÆ÷³ÍÆ®°¡ ³²±ä ±ËÀûÀÇ Ãæµ¹¿©ºÎ¸¦ È®ÀÎÇØ¼­
-* °á°ú°ª(¾î¶² ³ëµå¸¦ Åë°ú-Ãæµ¹ ÇÏ¿´´ÂÁö)¸¦ ¹İÈ¯ÇØÁÖ´Â ¸Å´ÏÀú
-* Áï, 1 3 2 ÀÌ·±½ÄÀ¸·Î ¹è¿­À» ¹ñÀ» ¿¹Á¤ÀÓ
-* + Ãß°¡ÀûÀ¸·Î, ÆĞÅÏ ¿µ¿ª(»ç°¢Çü) ¹ÛÀ¸·Î ³ª°£°É ÆÇ´ÜÇØ¼­
-* Æ®·¹ÀÏÀ» ²÷¾îÁÖ´Â(°¨¼Ò½ÃÅ°´Â) ÇÃ·¡±×¸¦ Å°´Â ¿ªÇÒµµÇÔ
-* ÆĞÅÏ °ü·ÃµÈ °ü¸®´Â ¿©±â¼­ Ã³¸®ÇÒ ¿¹Á¤
+/* 7.30. í•œìŠ¹ê·œ
+* ë…¸ë“œ(9ê°œ)ì™€, í˜„ì¬ íŠ¸ë ˆì¼ ì»´í¬ë„ŒíŠ¸ê°€ ë‚¨ê¸´ ê¶¤ì ì˜ ì¶©ëŒì—¬ë¶€ë¥¼ í™•ì¸í•´ì„œ
+* ê²°ê³¼ê°’(ì–´ë–¤ ë…¸ë“œë¥¼ í†µê³¼-ì¶©ëŒ í•˜ì˜€ëŠ”ì§€)ë¥¼ ë°˜í™˜í•´ì£¼ëŠ” ë§¤ë‹ˆì €
+* ì¦‰, 1 3 2 ì´ëŸ°ì‹ìœ¼ë¡œ ë°°ì—´ì„ ë±‰ì„ ì˜ˆì •ì„
+* + ì¶”ê°€ì ìœ¼ë¡œ, íŒ¨í„´ ì˜ì—­(ì‚¬ê°í˜•) ë°–ìœ¼ë¡œ ë‚˜ê°„ê±¸ íŒë‹¨í•´ì„œ
+* íŠ¸ë ˆì¼ì„ ëŠì–´ì£¼ëŠ”(ê°ì†Œì‹œí‚¤ëŠ”) í”Œë˜ê·¸ë¥¼ í‚¤ëŠ” ì—­í• ë„í•¨
+* íŒ¨í„´ ê´€ë ¨ëœ ê´€ë¦¬ëŠ” ì—¬ê¸°ì„œ ì²˜ë¦¬í•  ì˜ˆì •
 */
 
-/* ±â´É 1 : µî·ÏµÈ ³ëµå(9°³)¿Í, ÀÔ·ÂµÈ Å¥(cachedTrails) Ãæµ¹Ã³¸® (Ãæµ¹ ¼ø¼­)¸¦ ¹è¿­(Å¥)·Î ¸¸µé¾î¼­ ¹İÈ¯ ex) 1 3 2 4 5 6 8
-*  ±â´É 2 : µî·ÏµÈ ¹Ú½º(ÆĞÅÏ Å©±â) ¹ÛÀ¸·Î ¸¶¿ì½º°¡ ³ª°¡´Â°É °¨ÁöÇÏ¸é, ÇÃ·¡±×º¯È¯ÇØÁÜ
+/* ê¸°ëŠ¥ 1 : ë“±ë¡ëœ ë…¸ë“œ(9ê°œ)ì™€, ì…ë ¥ëœ í(cachedTrails) ì¶©ëŒì²˜ë¦¬ (ì¶©ëŒ ìˆœì„œ)ë¥¼ ë°°ì—´(í)ë¡œ ë§Œë“¤ì–´ì„œ ë°˜í™˜ ex) 1 3 2 4 5 6 8
+*  ê¸°ëŠ¥ 2 : ë“±ë¡ëœ ë°•ìŠ¤(íŒ¨í„´ í¬ê¸°) ë°–ìœ¼ë¡œ ë§ˆìš°ìŠ¤ê°€ ë‚˜ê°€ëŠ”ê±¸ ê°ì§€í•˜ë©´, í”Œë˜ê·¸ë³€í™˜í•´ì¤Œ
+*  ê¸°ëŠ¥ 3 : ìŠ¤í‚µëœ ë…¸ë“œ(ì˜ˆë¥¼ë“¤ì–´ 1, 3ì˜ ê²½ìš° 2ì²˜ëŸ¼) ë¥¼ ì°¾ì•„ì„œ ë“±ë¡í•´ì¤Œ
 */
 
 struct Node {
@@ -24,19 +27,21 @@ struct Node {
 
 class PatternManager {
 public:
-	void SetNodes(const std::array<GameObject*, 9>& positions, float radius);
+	void SetNodes(const std::array<GameObject*, 9>& positions, float radius); // ìµœëŒ€ ìµœì†Œ í¬ê¸°ë¥¼ ê¸°ë¡í•´ë†¨ë‹¤ê°€, AABB ë°•ìŠ¤ ë§Œë“¤ì–´ì£¼ëŠ” ê¸°ëŠ¥ë„ í¬í•¨ë¨
 	void SetPatternBox(const D2D1_RECT_F& box);
 	void CheckTrails(const std::deque<TrailStamp>& trails);
-	void CheckOutOfBox(Vector2 pos);
+	bool CheckOutOfBox(Vector2 pos);
 	void AddNodes(Vector2 pos, float radius, int i);
+	int GetSkippedNode(int from, int to); // ë…¼ë¦¬ ì—°ì‚°, ì¤‘ê°„ì— ë…¸ë“œê°€ ìŠ¤í‚µë˜ì—ˆì„ ê°€ëŠ¥ì„±ì„ íŒë‹¨
+
+	std::vector<Line> GetPatternPathPositions();
 
 	const std::deque<int>& GetPattern() const {
 		return pattern;
 	}
-
-	bool isMousOut = false;
 private:
 	std::array<Node, 9> nodes;
 	std::deque<int> pattern;
 	D2D1_RECT_F patternBox = { 0,0,0,0 };
+
 };

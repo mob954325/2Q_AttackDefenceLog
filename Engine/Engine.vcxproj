@@ -338,6 +338,8 @@
     <ClInclude Include="Components\UI\Button.h" />
     <ClInclude Include="Components\Collision\CircleCollider.h" />
     <ClInclude Include="Components\Rendering\ParticleRenderer.h" />
+    <ClInclude Include="Components\Rendering\LineRenderer.h" />
+    <ClInclude Include="Math\EasingFunction.h" />
     <ClInclude Include="Math\GameRandom.h" />
     <ClInclude Include="Components\UI\Slider.h" />
     <ClInclude Include="Systems\AudioSystem.h" />
@@ -417,6 +419,8 @@
     <ClCompile Include="Components\UI\Button.cpp" />
     <ClCompile Include="Components\Collision\CircleCollider.cpp" />
     <ClCompile Include="Components\Rendering\ParticleRenderer.cpp" />
+    <ClCompile Include="Components\Rendering\LineRenderer.cpp" />
+    <ClCompile Include="Math\EasingFunction.cpp" />
     <ClCompile Include="Math\GameRandom.cpp" />
     <ClCompile Include="Components\UI\Slider.cpp" />
     <ClCompile Include="Systems\AudioSystem.cpp" />

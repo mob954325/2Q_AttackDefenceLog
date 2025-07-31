@@ -1,54 +1,59 @@
-#pragma once
+ï»¿#pragma once
 
 #include "Components/Rendering/RenderComponent.h"
 #include "Platform/D2DRenderManager.h"
 #include "Resources/BitmapResource.h"
 #include <deque>
 
-/* 07.29. ÇÑ½Â±Ô
-* Æ®·¹ÀÏ ÄÄÆ÷³ÍÆ®
-* ¿ÀºêÁ§Æ®¿¡ ºÙ¿©ÁÖ¸é, ±× ¿ÀºêÁ§Æ®ÀÇ ÁÂÇ¥°¡ ¼öÄ¡ ÀÌÇÏ·Î º¯°æµÇ¸é
-* ÀÌ¹ÌÁö¸¦ ¹Ú¾ÆµÒ
-* Áï, ½ºÅÆÇÁ¸¦ ÂªÀº °£°İÀ¸·Î ¿©·¯¹ø Âï¾î¼­ ¼±À» ¸¸µå´Â ÄÄÆ÷³ÍÆ®ÀÓ
-* ÀÌ¹ÌÁö ¸®¼Ò½ºµéÀ» ¿©·¯°³ ¸¸µé¾î¾ßÇØ¼­ °¡º­¿î ±¸Á¶Ã¼·Î °ÔÀÓ¿ÀºêÁ§Æ®¸¦ ´ëÃ¼ÇÔ
+/* 07.31. í•œìŠ¹ê·œ
+* íŠ¸ë ˆì¼ ì»´í¬ë„ŒíŠ¸
+* ì˜¤ë„ˆì˜ íŠ¸ëœìŠ¤í¼ì„ ì¶”ì í•´, ìµœì†Œê±°ë¦¬ ì´ìƒìœ¼ë¡œ ë³€ë™ì´ ìƒê¸°ë©´, ê·¸ìë¦¬ì— ì´ë¯¸ì§€ë¥¼ ë°•ì•„ë„£ìŒ
+* ì¦‰, ìˆ˜ë§ì€ ì ë“¤ì´ ì´ì–´ì§€ë©´ì„œ ì„ ì´ë˜ëŠ” êµ¬ì¡°
+* ì´ë¯¸ì§€ ë¦¬ì†ŒìŠ¤ë¥¼ ë§ì´ ì‚¬ìš©í•˜ë‹¤ë³´ë‹ˆ, ê°€ë²¼ìš´ êµ¬ì¡°ì²´ì™€ íë¥¼ ì´ìš©í•´ì„œ ëœë”í•¨
 */
 
-struct TrailStamp { // °ÔÀÓ¿ÀºêÁ§Æ®¸¦ ´ëÃ¼ÇÏ´Â ±¸Á¶Ã¼, ¾îÂ÷ÇÇ ºñÆ®¸Ê ÄÄÆ÷³ÍÆ®¸¸ ¿ä±¸ÇÏ±â ¶§¹®¿¡ °¡º±°Ô »ç¿ë
-	D2D1_POINT_2F position; // ÁÂÇ¥
-	float angle; // °¢µµ(°è»ê ÇØ¾ßÇÔ)
-
-	float timestamp; // ±â´É »ç¿ë ¾ÈÇÔ
+struct TrailStamp { // ê²Œì„ì˜¤ë¸Œì íŠ¸ë¥¼ ëŒ€ì²´í•˜ëŠ” êµ¬ì¡°ì²´, ë¹„íŠ¸ë§µ ì»´í¬ë„ŒíŠ¸ë§Œ ìš”êµ¬í•˜ê¸° ë•Œë¬¸ì— ê°€ë³ê²Œ ì‚¬ìš©
+	D2D1_POINT_2F position; // ì¢Œí‘œ
+	float angle; // ê°ë„(ê³„ì‚° í•´ì•¼í•¨)
+	float timestamp; // ê¸°ëŠ¥ ì‚¬ìš© ì•ˆí•¨, ë‚˜ì¤‘ì— ì‹œê°„ë¹„ë¡€í•´ì„œ ì‚­ì œí•˜ê³  ì‹¶ìœ¼ë©´, updateìª½ì—ì„œ ì¡°ê±´ ë„£ì–´ì£¼ë©´ ë¨
+	bool isActive = true; // íŒì •ì´ ì‚´ì•„ìˆëŠ”ì§€ ì—¬ë¶€ì„
 };
 
 class TrailComponent : public RenderComponent
 {
 public:
-	void Update(); // ³ëµå »èÁ¦ + ÇÃ·¡±× Ã³¸®¿ë
+	void Update(); // ë…¸ë“œ ì‚­ì œ + í”Œë˜ê·¸ ì²˜ë¦¬ìš©
 
 	void AddStamp(D2D1_POINT_2F pos);
-	void Draw(D2DRenderManager* manager); // ÇÑ¹ø °¨½Ñ°ÅÀÓ, ¿©±â¼­ for µ¹·Á¼­ ºñÆ®¸Ê ÂïÀ½
-	void Render(D2DRenderManager* manager) override; // ÀÌ°Å ±â¹İÀ¸·Î ±×·ÁÁü
+	void Draw(D2DRenderManager* manager); // í•œë²ˆ ê°ì‹¼ê±°ì„, ì—¬ê¸°ì„œ for ëŒë ¤ì„œ ë¹„íŠ¸ë§µ ì°ìŒ
+	void Render(D2DRenderManager* manager) override; // ì´ê±° ê¸°ë°˜ìœ¼ë¡œ ê·¸ë ¤ì§
 	void SetBitmap(std::wstring path);
 	void OnDestroy() override;
-	void Clear(); // ÇÑ¹ø¿¡ Áö¿ì´Â°ÅÀÓ, Å¥ ºñ¿ò
-	inline float GetAngle(D2D1_POINT_2F prev, D2D1_POINT_2F current) { // ÀÌÀüÁÂÇ¥¿Í ÇöÀçÁÂÇ¥¸¦ ºñ±³ÇØ¼­, °¢µµ(radian) ¹İÈ¯ÇØÁÜ
+	void Clear(); // í•œë²ˆì— ì§€ìš°ëŠ”ê±°ì„, í ë¹„ì›€	
+
+	inline float GetAngle(D2D1_POINT_2F prev, D2D1_POINT_2F current) { // ì´ì „ì¢Œí‘œì™€ í˜„ì¬ì¢Œí‘œë¥¼ ë¹„êµí•´ì„œ, ê°ë„(radian) ë°˜í™˜í•´ì¤Œ
 		return atan2f(current.y - prev.y, current.x - prev.x); // radian
-	}
+	}	
 
-	bool isDraw = false; // OnOff¿ë
-	bool wasDraw = false; // isDraw¸¦ ÇÑ¹ø ÀúÀåÇØµ×´Ù°¡ ºñ±³ÇÔ, Áï º¯°æÁöÁ¡À» Ã£´Â ºñ±³¿ë ¹öÆÛ
-	bool isOutFromBox = true; // ¿µ¿ª¹ÛÀ¸·Î ³ª°¡¸é true, µÚ¿¡ Å©±â¸¦ ÀÚ¸§
-	bool isNewCached = false; // ¿ÜºÎ¿¡¼­ »ç¿ëÇÏ´Â ÇÃ·¹±×, ¹ŞÀº´ÙÀ½ false ÇØÁà¾ßÇÔ
+	//í”Œë˜ê·¸ê°€ ì¢€ ë§ìŒ, ë¸ë¦¬ê²Œì´íŠ¸ ì“°ë©´ ê¹”ë”í•´ì§€ëŠ”ë°, ì¼ë‹¨ ì§ê´€ì ìœ¼ë¡œ ì´ë ‡ê²Œ ì„¤ê³„í•¨
+	bool isDraw = false; // OnOffìš©
+	bool wasDraw = false; // isDrawë¥¼ í•œë²ˆ ì €ì¥í•´ë’€ë‹¤ê°€ ë¹„êµí•¨, ì¦‰ ë³€ê²½ì§€ì ì„ ì°¾ëŠ” ë¹„êµìš© ë²„í¼
+	bool isOutFromBox = true; // ì˜ì—­ë°–ìœ¼ë¡œ ë‚˜ê°€ë©´ true, ë’¤ì— í¬ê¸°ë¥¼ ìë¦„
+	bool isNewCached = false; // ì™¸ë¶€ì—ì„œ ì‚¬ìš©í•˜ëŠ” í”Œë ˆê·¸, ë°›ì€ë‹¤ìŒ false í•´ì¤˜ì•¼í•¨
 
-	float minDistance = 5.0f; // ÃÖ¼Ò°Å¸®, Áï ½ºÅÆÇÁµé°£ÀÇ °£°İÀÓ ÃÎÃÎÇÏ¸é ºÎµå·¯¿öÁü
-	float lifeTime = 0.3f; // ÀÌ°ÅÀÏ´Ü »ç¿ë¾ÈÇÔ, ³ªÁß¿¡ update¿¡¼­ ½Ã°£ Áö³­°Å Ã³¸®ÇÏ´Â½ÄÀ¸·Î °¡´ÉÇÔ
-	int maxTrailCount = 100; // ÃÖ´ë ±æÀÌ, ÂïÈ÷´Â ºñÆ®¸ÊÀÇ °¹¼ö
+	bool isFadingOut = false;
 
-	std::deque<TrailStamp> cachedTrails; // ÀÌ°Ç ÀúÀå¿ëÀÓ(°ø°³µÊ) - °»½ÅÀº »èÁ¦µÇ±âÀü¿¡
+	bool WasJustReleased() const { return wasDraw && !isDraw; } // ì™¸ë¶€ì—ì„œ ìƒíƒœ í™•ì¸í• ë•Œ ì”€
+	bool WasJustPressed() const { return !wasDraw && isDraw; }
+
+	float minDistance = 5.0f; // ìµœì†Œê±°ë¦¬, ì¦‰ ìŠ¤íƒ¬í”„ë“¤ê°„ì˜ ê°„ê²©ì„ ì´˜ì´˜í•˜ë©´ ë¶€ë“œëŸ¬ì›Œì§
+	float lifeTime = 0.3f; // ì´ê±°ì¼ë‹¨ ì‚¬ìš©ì•ˆí•¨, ë‚˜ì¤‘ì— updateì—ì„œ ì‹œê°„ ì§€ë‚œê±° ì²˜ë¦¬í•˜ëŠ”ì‹ìœ¼ë¡œ ê°€ëŠ¥í•¨
+	int maxTrailCount = 100; // ìµœëŒ€ ê¸¸ì´, ì°íˆëŠ” ë¹„íŠ¸ë§µì˜ ê°¯ìˆ˜
+
+	std::deque<TrailStamp> cachedTrails; // ì´ê±´ ì €ì¥ìš©ì„(ê³µê°œë¨) - ì‹ ê·œ ê°±ì‹ ì€ ëœë”ìš©ìœ¼ë¡œ ì‚¬ìš©ë˜ëŠ” í(trails)ê°€ ì‚­ì œë˜ê¸°ì „ì—
 
 	// ID2D1Bitmap1* stampBitmap = nullptr;
 private:
-
-	std::deque<TrailStamp> trails; // Å¥, ¿©±â¿¡ ±¸Á¶Ã¼ ´ã±è(ÁÂÇ¥, °¢µµ, ¼ö¸í)
-	std::shared_ptr<BitmapResource> stampBitmap = nullptr; // ÂïÀ» ºñÆ®¸Ê, ºê·¯½¬ ³ÖÀ¸¸é µÊ
+	std::deque<TrailStamp> trails; // í, ì—¬ê¸°ì— êµ¬ì¡°ì²´ ë‹´ê¹€(ì¢Œí‘œ, ê°ë„, ìˆ˜ëª…)
+	std::shared_ptr<BitmapResource> stampBitmap = nullptr; // ì°ì„ ë¹„íŠ¸ë§µ, ë¸ŒëŸ¬ì‰¬ ë„£ìœ¼ë©´ ë¨
 };

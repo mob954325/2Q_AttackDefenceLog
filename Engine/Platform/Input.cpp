@@ -53,9 +53,9 @@ bool Input::IsMouseDown(MouseButton button)
 
 void Input::ResetMouseEventFrameState()
 {
-    MouseDeltaX = 0.0f;
-    MouseDeltaY = 0.0f;
-    wheelDelta = 0.0f;
+    Input::MouseDeltaX = 0.0f;
+    Input::MouseDeltaY = 0.0f;
+    Input::wheelDelta = 0.0f;
 }
 
 void Input::ProcessMouseMessage(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -71,10 +71,15 @@ void Input::ProcessMouseMessage(HWND hwnd, UINT message, WPARAM wParam, LPARAM l
         IsMouseInside = true;
     }
 
-    Input::MouseDeltaX = LOWORD(lParam) - Input::MouseX;
-    Input::MouseDeltaY = HIWORD(lParam) - Input::MouseY;
-    Input::MouseX = LOWORD(lParam);
-    Input::MouseY = HIWORD(lParam);
+    if (message == WM_MOUSEMOVE)
+    {
+        int newMouseX = LOWORD(lParam);
+        int newMouseY = HIWORD(lParam);
+        Input::MouseDeltaX = newMouseX - Input::MouseX;
+        Input::MouseDeltaY = newMouseY - Input::MouseY;
+        Input::MouseX = newMouseX;
+        Input::MouseY = newMouseY;
+    }
 
     switch (message)
     {

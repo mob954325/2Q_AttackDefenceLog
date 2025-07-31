@@ -109,6 +109,18 @@ void D2DRenderManager::DrawCircle(ID2D1Brush* brush, FLOAT radius, FLOAT width, 
 	m_d2dDeviceContext->DrawEllipse({{0, 0}, radius, radius}, brush, width, strokeStyle); // NOTE: 만약 타원이 필요하면 raidus를 쪼개면 됨., 위치가 0인 이유는 SetTransform으로 위치를 옮기기 때문
 }
 
+void D2DRenderManager::DrawLine(ID2D1Brush* brush, D2D1_POINT_2F p1, D2D1_POINT_2F p2, FLOAT width, ID2D1StrokeStyle* strokeStyle)
+{
+	m_d2dDeviceContext->DrawLine(p1, p2, brush, width, strokeStyle);
+}
+
+void D2DRenderManager::DrawLine(ID2D1Brush* brush, Vector2 p1, Vector2 p2, FLOAT width, ID2D1StrokeStyle* strokeStyle)
+{
+	D2D1_POINT_2F d2dpoint1 = { p1.x, p1.y };
+	D2D1_POINT_2F d2dpoint2 = { p2.x, p2.y };
+	DrawLine(brush, d2dpoint1, d2dpoint2, width, strokeStyle);
+}
+
 void D2DRenderManager::PrintText(const wchar_t* str, float left, float top, bool isWorld)
 {
 	if (!m_d2dDeviceContext || !m_pBrush) return;
