@@ -2,23 +2,41 @@
 #include "Components/Rendering/RenderComponent.h"
 #include "Resources/BitmapResource.h"
 #include "Math/Vector2.h"
+#include "Components/Rendering/AnimationRenderer.h"
+#include "Components/Rendering/AnimationPlayer.h"
 
-/// 0730 | 작성자 : 이성호
-/// 파티클 컴포넌트로 particleInfo를 기준으로 prticleBitmap을 particleCount 만큼 출력한다.
-/// Play Reset Pause로 실행 리셋 정지를 할 수 있다.
+/* 0730 | 작성자 : 이성호
+	파티클 컴포넌트로 particleInfo를 기준으로 prticleBitmap을 particleCount 만큼 출력한다.
+	Play Reset Pause로 실행 리셋 정지를 할 수 있다. 
+*/
 
-/// TODO:
-/// 최소속도 최대 속도 설정가능해야함
-/// 원으로 터지게 변경 -> 이거 해결함 0730
-/// 페이드 추가하기
+/* 07 31 | 작성자 : 이성호
+*	추가 내용
+		1. 파티클 출력 타입
+		2. 최소 - 최대 속도
+		3. 애니메이션 등록 함수
+		4. 페이드 아웃 시간
+*/
+
+/// <summary>
+/// 파티클 출력 타입
+/// </summary>
+enum ParticleShowType
+{
+	Single = 0,		// 단일 비트맵
+	Animation,		// 애니메이션
+	RandomSingle	// 시트 위치 중 무작위 출력
+};
 
 /// <summary>
 /// 각 파티클 정보
 /// </summary>
-struct particleInfo
+struct ParticleInfo
 {
 	Vector2 position;	// 이동한 위치 
 	Vector2 dirVec;		// 이동 방향
+	float speed;		// 이동속도
+	int frameIndex = 0;		// 현재 이미지 프레임 인덱스
 };
 
 class ParticleRenderer : public RenderComponent
@@ -29,22 +47,56 @@ public:
 	void Render(D2DRenderManager* manager);
 	void OnDestroy();
 
+	// 플레이 함수
 	void Play();
+	bool IsPlay();
 	void Reset();
 	void Pause();
+
+	// 설정 함수
 	void SetLoop(bool value);
+
+	void SetAmount(int value);
+
 	void SetBitmap(std::wstring path);
+	ID2D1Bitmap1* GetBitmap();
+
+	void SetMinSpeed(float value);
+	float GetMinSpeed() const;
+
+	void SetMaxSpeed(float value);
+	float GetMaxSpeed() const;
+
+	void SetDuration(float value);
+	float GetDuration() const;
+
+	void SetAnimPlayer(std::wstring sheetPath, std::wstring sheetDataPath, std::wstring clipPath);
+	void SetShowType(ParticleShowType type);
+
+	void SetFadeOutTime(float value);
+
+	void SetGravity(bool value);
+	void SetSeeDirection(bool value);
 
 private:
-	std::shared_ptr<BitmapResource> particleBitmap{};
-	std::vector<particleInfo> infos;
+	std::shared_ptr<BitmapResource> particleBitmapResource{};
+	std::vector<ParticleInfo> infos;
 
-	int particleCount = 100;
-	float speed = 1.0f;
+	int particleAmount = 100;	// 출력할 파티클 개수
+	float minSpeed = 1.0f;		// 최소 속도
+	float maxSpeed = 1.0f;		// 최대 속도
+				
+	float timer = 0.0f;			// duration 확인용 타이머
+	float duration = 3.0f;		// 지속시간
+	float fadeOutTime = 4.0f;	// 사라지는 시간
+	float remainFadeOut = 4.0f; // 남은 fadeOutTime - 해당 시간으로 capacity 반영
 
-	float timer = 0.0f;
-	float duration = 3.0f;
+	bool isPlay = false;		// 파티클 플레이 여부
+	bool isLoop = false;		// 파티클 루프 여부 - 루프하면 자동 Reset()호출
+	bool useGravity = false;	// 중력 사용 여부
+	bool seeDirection = true;	// 방향으로 바라보기 여부
 
-	bool isPlay = false;
-	bool isLoop = false;
+	ParticleShowType showType = Single; // 파티클 출력 타입
+
+	AnimationPlayer player; // 파티클이 애니메이션이면 사용
 };

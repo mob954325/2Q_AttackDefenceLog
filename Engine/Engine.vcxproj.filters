@@ -283,6 +283,7 @@
       <Filter>Math</Filter>
     </ClInclude>
     <ClInclude Include="Components\UI\Slider.h" />
+    <ClInclude Include="Components\Rendering\AnimationPlayer.h" />
     <ClInclude Include="Math\EasingFunction.h" />
     <ClInclude Include="Components\Rendering\LineRenderer.h">
       <Filter>Components\Rendering</Filter>
@@ -439,6 +440,7 @@
       <Filter>Math</Filter>
     </ClCompile>
     <ClCompile Include="Components\UI\Slider.cpp" />
+    <ClCompile Include="Components\Rendering\AnimationPlayer.cpp" />
     <ClCompile Include="Math\EasingFunction.cpp" />
     <ClCompile Include="Components\Rendering\LineRenderer.cpp">
       <Filter>Components\Rendering</Filter>

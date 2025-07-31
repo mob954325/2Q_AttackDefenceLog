@@ -9,17 +9,33 @@ void DummyCircleCollider::OnCreate()
 	owner->GetTransform().SetUnityCoords(true);
 
 	circle = owner->AddComponent<CircleCollider>();
-	circle->SetRadius(20.0f);
 
 	input = owner->AddComponent<InputSystem>();
 
 	particle = owner->AddComponent<ParticleRenderer>();
+
+	owner->GetTransform().SetRotation(180);
 }
 
 void DummyCircleCollider::OnStart()
 {
 	target = owner->GetQuery()->FindByName("Test Cirlce");
-	particle->SetBitmap(L"../../Resource/Mushroom.png");
+
+	circle->SetRadius(20.0f);
+
+	particle->SetBitmap(L"../../Resource/Particles/spark_1.png");
+	particle->SetLoop(true);
+	particle->SetMinSpeed(0.5f);
+	particle->SetMaxSpeed(2.0f);
+	particle->SetDuration(0.8f);
+	particle->SetFadeOutTime(0.7f);
+	particle->SetAmount(20);
+	particle->SetAnimPlayer(L"../../Resource/Particles/Test/FireEffectSheet.png",
+		L"../../Resource/Json/Test_Paticles/FireEffectSheet.json",
+		L"../../Resource/Json/Test_Paticles/Fire_Boom_anim.json");
+	particle->SetShowType(ParticleShowType::Single);
+	particle->SetGravity(true);
+	particle->SetSeeDirection(true);
 }
 
 void DummyCircleCollider::OnFixedUpdate()
@@ -29,6 +45,9 @@ void DummyCircleCollider::OnFixedUpdate()
 void DummyCircleCollider::OnUpdate()
 {
 	HandleInput();
+
+	// owner->GetTransform().SetPosition(-EngineData::SceenWidth / 2 + Input::MouseX, EngineData::SceenHeight / 2 - Input::MouseY);
+	// std::cout << owner->GetTransform().GetPosition() << std::endl;
 
 	if (input->IsKeyPressed('Q'))
 	{
