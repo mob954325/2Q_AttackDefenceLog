@@ -11,8 +11,6 @@ public:
 	void SetRect(D2D1_RECT_F rect);
 	void SetWidth(FLOAT width);
 	void SetStyle(ID2D1StrokeStyle* style);
-	void SetIsShow(bool value);
-
 
 private:
 	D2D1_POINT_2F MatrixTransform(const D2D1_POINT_2F& point, const D2D1_MATRIX_3X2_F& matrix);
