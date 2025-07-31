@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Application/Application.h"
 class GameLogicTestScene;
 class LogicTestApplication : public Application

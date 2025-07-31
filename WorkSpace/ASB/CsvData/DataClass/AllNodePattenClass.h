@@ -1,12 +1,12 @@
-#pragma once
+ï»¿#pragma once
 #include <string>
 #include "BaseData.h"
 
 
-/*25.07.29 - ¾È¼ººó
-	¿ªÇÒ : AllNodePattenClass Å¬·¡½º´Â ³ëµå ÆĞÅÏ µ¥ÀÌÅÍ¸¦ ÀúÀåÇÏ´Â Å¬·¡½º
-	¸É¹ö : ID¿Í ³ëµå ¼ıÀÚ¸¦ ÀúÀåÇÏ´Â º¤ÅÍ
-	int´Â nullÀ» ÀúÀåÇÒ ¼ö ¾øÀ½À¸·Î 0À¸·Î ´ë½ÅÇÔ!
+/*25.07.29 - ì•ˆì„±ë¹ˆ
+	ì—­í•  : AllNodePattenClass í´ë˜ìŠ¤ëŠ” ë…¸ë“œ íŒ¨í„´ ë°ì´í„°ë¥¼ ì €ì¥í•˜ëŠ” í´ë˜ìŠ¤
+	ë§´ë²„ : IDì™€ ë…¸ë“œ ìˆ«ìë¥¼ ì €ì¥í•˜ëŠ” ë²¡í„°
+	intëŠ” nullì„ ì €ì¥í•  ìˆ˜ ì—†ìŒìœ¼ë¡œ 0ìœ¼ë¡œ ëŒ€ì‹ í•¨!
 */
 
 class AllNodePattenClass : public BaseData 
@@ -14,10 +14,13 @@ class AllNodePattenClass : public BaseData
 public:
 	AllNodePattenClass() {};
 	~AllNodePattenClass() {};
-	std::string Node_pattern_ID;  // ³ëµå ÆĞÅÏÀÇ ID¸¦ ÀúÀå
-	std::vector<int> Node_Number; // ³ëµå ÆĞÅÏÀ» ÀúÀåÇÏ´Â º¤ÅÍ, ÃÖ´ë 9°³ ³ëµå°¡ µé¾î°¥ ¼ö ÀÖÀ½
+	std::string Node_pattern_ID;  // ë…¸ë“œ íŒ¨í„´ì˜ IDë¥¼ ì €ì¥
+	std::vector<int> Node_Number; // ë…¸ë“œ íŒ¨í„´ì„ ì €ì¥í•˜ëŠ” ë²¡í„°, ìµœëŒ€ 9ê°œ ë…¸ë“œê°€ ë“¤ì–´ê°ˆ ìˆ˜ ìˆìŒ
 
-	void SetData(std::vector<std::wstring> tmp) override; // µ¥ÀÌÅÍ ¼³Á¤ ÇÔ¼ö
-	void PrintMap() override; //ÄÜ¼ÖÃ¢¿¡ µ¥ÀÌÅÍ Ãâ·Â 
+
+
+	void SetData(std::vector<std::wstring> tmp) override; // ë°ì´í„° ì„¤ì • í•¨ìˆ˜
+	void PrintMap() override; //ì½˜ì†”ì°½ì— ë°ì´í„° ì¶œë ¥ 
+
 };
 

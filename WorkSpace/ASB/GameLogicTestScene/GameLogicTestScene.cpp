@@ -1,15 +1,21 @@
-#include "GameLogicTestScene.h"
+ï»¿#include "GameLogicTestScene.h"
 #include "LiveObject/LiveObject.h"
-#include "../DataStorage/CsvDataManager.h"
-#include "../DataClass/AllNodePattenClass.h"
+#include "../CsvData/DataClass/AllNodePattenClass.h"
+#include "../CsvData/DataClass/PlayerData.h"
+#include "../CsvData/DataClass/EnemyData.h"
+#include "../CsvData/CsvDataManager.h"
+
+#include "Utils/Singleton.h"
 void GameLogicTestScene::OnEnterImpl()
 {
-	//menuObj = new GameObject(); // GameObject °´Ã¼ »ı¼º
-	//menuObj->AddComponent<MenuTextObject>(); // MonoBehaivor µî·Ï
-	//AddGameObject(menuObj);	// Scene¿¡ GameObject Ãß°¡
-	CsvDataManager<AllNodePattenClass> CsvDataManager; // CsvDataManager °´Ã¼ »ı¼º
-	CsvDataManager.SetCSV("../../Resource/DataTable/³ëµå ÀüÃ¼ ÆĞÅÏ Å×ÀÌºí.csv", 5); // µ¥ÀÌÅÍ ÆÄÀÏ ÀĞ¾î¿À±â
-	CsvDataManager.PrintMap();
+	//menuObj = new GameObject(); // GameObject ê°ì²´ ìƒì„±
+	//menuObj->AddComponent<MenuTextObject>(); // MonoBehaivor ë“±ë¡
+	//AddGameObject(menuObj);	// Sceneì— GameObject ì¶”ê°€
+	
+	EnemyData* tmp = nullptr;
+	CsvDataManager::GetInstance().SetCSV<EnemyData>("../../Resource/DataTable/ì  ë°ì´í„° í…Œì´ë¸”.csv"); // ë°ì´í„° íŒŒì¼ ì½ì–´ì˜¤ê¸°
+	tmp = CsvDataManager::GetInstance().getDataImpl<EnemyData>(tmp, "EI_006");
+	tmp->PrintMap();
 }
 
 void GameLogicTestScene::OnExitImpl()

@@ -2,7 +2,7 @@
 * 데이터 테이블에 문제가 있거나 질문사항이 있다면 '이기석' 혹은 '진승오' 에게 연락 부탁드립니다.,,,,,,,,,
 노드 패턴 ID,노드 넘버01,노드 넘버02,노드 넘버03,노드 넘버04,노드 넘버05,노드 넘버06,노드 넘버07,노드 넘버08,노드 넘버09
 string,int,int,int,int,int,int,int,int,int
-Node_pattern_ID,Node_number01,Node_number01Node_number01,Node_number03,Node_number04,Node_number05,Node_number06,Node_number07,Node_number08,Node_number09
+Node_pattern_ID,Node_number01,Node_number02,Node_number03,Node_number04,Node_number05,Node_number06,Node_number07,Node_number08,Node_number09
 NP_001,1,2,3,null,null,null,null,null,null
 NP_002,1,2,4,null,null,null,null,null,null
 NP_003,1,2,5,null,null,null,null,null,null
