@@ -1,21 +1,81 @@
 ﻿#include "TrailComponent.h"
-#include "Components/Camera/Camera.h"
 #include "Scene/SceneManager.h"
-
-#include "Utils/GameTime.h"
-#include "Datas/SpriteDatas.h"
-#include "Utils/DebugUtility.h"
+//#include "Utils/GameTime.h"
+//#include "Datas/SpriteDatas.h"
+//#include "Utils/DebugUtility.h"
 #include "Resources/ResourceManager.h"
 
 constexpr float PI = 3.141592654f; // 이건 유명한 파이임
 
 void TrailComponent::Update() { // 여기서 삭제(정리)처리해주면 됨
-	
+
 	if (wasDraw && !isDraw) { // 이후상태 true + 현재상태 false, 즉 꺼질때 한번
 		cachedTrails = trails;
 		isNewCached = true;		// 갱신 되었다고 외부에 알려주는 플래그
-		Clear(); // 지움
+
+		//Clear(); // 한번에 지우기
+		//isFadingOut = true; // 여러번 천천히 나눠서		
+
+		for (auto& stamp : trails) { // 계속해서 지우기
+			stamp.isActive = false; // 다 비활성화
+		}
 	}
+	/*
+	if (!wasDraw && isDraw)
+		isFadingOut = false;
+
+	if (isFadingOut) {
+		for (int i = 0; i < 3 && !trails.empty(); ++i) {
+			trails.pop_front();
+		}
+		if (trails.empty())
+			isFadingOut = false;
+	}
+	*/
+
+	/*
+	if (!trails.empty()) {
+		int removed = 0;
+		while (!trails.empty() && removed < 4) {
+			if (!trails.front().isActive) {
+				trails.pop_front();
+				++removed;
+			}
+			else {
+				break; // 앞에 살아있는 게 있으면 그 뒤는 아직 놔둬야 함
+			}
+		}
+	}
+	*/
+
+	if (!trails.empty()) {
+		int inactiveCount = 0; // 몇개 지워야하는지 총량 계산
+		for (const auto& stamp : trails) {
+			if (!stamp.isActive)
+				++inactiveCount;
+			else
+				break; // 연속이니까, 어차피 필요없음
+		}
+
+		// 커스텀
+		int deleteCount = inactiveCount / 10; // 10% 지움
+		if (deleteCount < 3 && inactiveCount > 0) deleteCount = 3; // 3개씩은 지우자
+		else if (deleteCount > inactiveCount) deleteCount = inactiveCount;
+
+		// 본격 삭제
+		int removed = 0;
+		while (!trails.empty() && removed < deleteCount) {
+			if (!trails.front().isActive) {
+				trails.pop_front();
+				++removed;
+			}
+			else {
+				break; // 살아있는거 만나면 중단
+			}
+		}
+	}
+
+
 	wasDraw = isDraw; // 버퍼 갱신
 }
 
@@ -25,7 +85,7 @@ void TrailComponent::Clear()
 }
 
 void TrailComponent::AddStamp(D2D1_POINT_2F pos) { //스탬프를 찍는건데, 거리거 너무 멀어지면 보간으로 채워넣음
-	if (!isDraw) return; 
+	if (!isDraw) return;
 
 	if (trails.empty()) { // 비었다면, 즉 첫번째 스탬프는 각도계산 필요 x
 		trails.push_back({ pos, 0.0f }); // 각도 0으로 처리하고 끝냄
@@ -33,6 +93,11 @@ void TrailComponent::AddStamp(D2D1_POINT_2F pos) { //스탬프를 찍는건데, 
 	}
 
 	const TrailStamp& last = trails.back(); // 꼬리에 있는거 빌려옴
+
+	if (!last.isActive) {
+		trails.push_back({ pos, 0.0f });
+		return;
+	}
 
 	float dx = pos.x - last.position.x; // X 변화량
 	float dy = pos.y - last.position.y; // y 변화량
@@ -70,8 +135,8 @@ void TrailComponent::AddStamp(D2D1_POINT_2F pos) { //스탬프를 찍는건데, 
 	}
 }
 
-void TrailComponent::Draw(D2DRenderManager* manager) { 
-	
+void TrailComponent::Draw(D2DRenderManager* manager) {
+
 	if (!stampBitmap) return; // 비트맵 없으면 얼리리턴
 
 	if (!IsActiveSelf()) return; // 비활성화 얼리리턴
@@ -115,5 +180,5 @@ void TrailComponent::SetBitmap(std::wstring path) // 랩핑한거임, 별거없�
 
 void TrailComponent::OnDestroy() // 이거 안하면 터짐
 {
-	stampBitmap.reset(); 
+	stampBitmap.reset();
 }

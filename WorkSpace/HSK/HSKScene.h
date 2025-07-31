@@ -16,6 +16,6 @@ namespace HSK
 
 		std::array<GameObject*, 9> m_nodes;
 
-		PatternManager PM;
+		PatternManager PM;		
 	};
 }

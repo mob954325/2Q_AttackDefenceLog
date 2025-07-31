@@ -14,6 +14,9 @@
     <ClCompile Include="NodeObj.cpp">
       <Filter>Obj</Filter>
     </ClCompile>
+    <ClCompile Include="PatternDrawerComponent.cpp">
+      <Filter>Comp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HSKScene.h">
@@ -27,6 +30,9 @@
     </ClInclude>
     <ClInclude Include="NodeObj.h">
       <Filter>Obj</Filter>
+    </ClInclude>
+    <ClInclude Include="PatternDrawerComponent.h">
+      <Filter>Comp</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
