@@ -5,17 +5,12 @@
 
 constexpr float PI = 3.141592654f; // 이건 진짜진짜 유명한 파이임
 
-void PatternDrawerComponent::Draw(const std::queue<Line>& lines)
+//라인(vector2 2개 묶음)이 담긴 큐를 받으면, 그 큐를 이어서 그려줌
+void PatternDrawerComponent::Draw(const std::vector<Line>& lines)
 {	
-	linesToDraw.clear();
-
-	std::queue<Line> copy = lines;
-	while (!copy.empty()) {
-		linesToDraw.push_back(copy.front());
-		copy.pop();
-	}
-
-	isPlaying = true; // 그릴 게 있으면
+	linesToDraw = lines;
+	isPlaying = true;
+	timer = 0.0f;
 }
 
 void PatternDrawerComponent::Render(D2DRenderManager* manager)

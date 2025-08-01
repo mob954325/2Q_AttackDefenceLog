@@ -20,7 +20,7 @@ class PatternDrawerComponent : public RenderComponent
 {
 public:
 
-	void Draw(const std::queue<Line>& lines);
+	void Draw(const std::vector<Line>& lines);
 	void Render(D2DRenderManager* manager) override;
 	void SetBitmap(std::wstring path);
 	void SetLine(std::vector<Line> L) {

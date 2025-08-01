@@ -16,7 +16,8 @@ struct TrailStamp { // 게임오브젝트를 대체하는 구조체, 비트맵 �
 	D2D1_POINT_2F position; // 좌표
 	float angle; // 각도(계산 해야함)
 	float timestamp; // 기능 사용 안함, 나중에 시간비례해서 삭제하고 싶으면, update쪽에서 조건 넣어주면 됨
-	bool isActive = true; // 판정이 살아있는지 여부임
+	float alpha = 1.0f; // 투명도 + 0.0f 되면 Update에서 제거됨
+	bool isActive = true; // 판정이 살아있는지 여부임	
 };
 
 class TrailComponent : public RenderComponent
@@ -59,10 +60,12 @@ public:
 	float minDistance = 5.0f; // 최소거리, 즉 스탬프들간의 간격임 촘촘하면 부드러워짐
 	float lifeTime = 0.3f; // 이거일단 사용안함, 나중에 update에서 시간 지난거 처리하는식으로 가능함
 	int maxTrailCount = 100; // 최대 길이, 찍히는 비트맵의 갯수
+	float fadeSpeed = 0.7f; // 수명 다한 브러쉬의 삭제속도임
 
 	std::deque<TrailStamp> cachedTrails; // 이건 저장용임(공개됨) - 신규 갱신은 랜더용으로 사용되는 큐(trails)가 삭제되기전에
 
 	// ID2D1Bitmap1* stampBitmap = nullptr;
+
 private:
 	std::deque<TrailStamp> trails; // 큐, 여기에 구조체 담김(좌표, 각도, 수명)
 	std::shared_ptr<BitmapResource> stampBitmap = nullptr; // 찍을 비트맵, 브러쉬 넣으면 됨
