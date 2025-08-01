@@ -20,6 +20,18 @@
     <ClCompile Include="TestColliderApp\Scripts\DummyEffectAnimation.cpp">
       <Filter>Scripts</Filter>
     </ClCompile>
+    <ClCompile Include="TestColliderApp\Scripts\SliceObject\PieceObject.cpp">
+      <Filter>Scripts\SliceObject</Filter>
+    </ClCompile>
+    <ClCompile Include="TestColliderApp\Scripts\SliceObject\TestSliceObject.cpp">
+      <Filter>Scripts\SliceObject</Filter>
+    </ClCompile>
+    <ClCompile Include="TestColliderApp\Scripts\SliceObject\TestSliceCursor.cpp">
+      <Filter>Scripts\SliceObject</Filter>
+    </ClCompile>
+    <ClCompile Include="TestColliderApp\Scenes\SliceObjectScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TestColliderApp\App\TestColliderApp.h">
@@ -40,6 +52,18 @@
     <ClInclude Include="TestColliderApp\Scripts\DummyEffectAnimation.h">
       <Filter>Scripts</Filter>
     </ClInclude>
+    <ClInclude Include="TestColliderApp\Scripts\SliceObject\PieceObject.h">
+      <Filter>Scripts\SliceObject</Filter>
+    </ClInclude>
+    <ClInclude Include="TestColliderApp\Scripts\SliceObject\TestSliceObject.h">
+      <Filter>Scripts\SliceObject</Filter>
+    </ClInclude>
+    <ClInclude Include="TestColliderApp\Scripts\SliceObject\TestSliceCursor.h">
+      <Filter>Scripts\SliceObject</Filter>
+    </ClInclude>
+    <ClInclude Include="TestColliderApp\Scenes\SliceObjectScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="App">
@@ -50,6 +74,9 @@
     </Filter>
     <Filter Include="Scripts">
       <UniqueIdentifier>{40aa62a8-f8f3-4da1-a9d7-a5dcea343c28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\SliceObject">
+      <UniqueIdentifier>{a8d5482c-9273-4cf9-a820-f8f8f4f88eb6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

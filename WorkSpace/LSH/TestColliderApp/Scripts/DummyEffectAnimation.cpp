@@ -1,5 +1,6 @@
 ﻿#include "DummyEffectAnimation.h"
 #include "Components/Base/GameObject.h"
+#include "Utils/GameTime.h"
 
 void DummyEffectAnimation::OnCreate()
 {
@@ -15,4 +16,21 @@ void DummyEffectAnimation::OnStart()
 
 void DummyEffectAnimation::OnDestroy()
 {
+}
+
+void DummyEffectAnimation::OnUpdate()
+{
+	if (timer > maxTimer)
+	{
+		owner->GetTransform().SetScale(0.0f, 0.0f);
+		timer = 0.0f;
+	}
+	else
+	{
+		float delta = Singleton<GameTime>::GetInstance().GetDeltaTime();
+		float scaleValue = 3.0f;
+		timer += delta;
+		Vector2 scale = owner->GetTransform().GetScale();
+		owner->GetTransform().SetScale(scale.x + delta * scaleValue, scale.y + delta * scaleValue);
+	}
 }
