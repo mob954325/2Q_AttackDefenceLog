@@ -288,6 +288,9 @@
     <ClInclude Include="Components\Rendering\LineRenderer.h">
       <Filter>Components\Rendering</Filter>
     </ClInclude>
+    <ClInclude Include="Components\Rendering\PatternDrawerComponent.h">
+      <Filter>Components\Rendering</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\Application.cpp">
@@ -443,6 +446,9 @@
     <ClCompile Include="Components\Rendering\AnimationPlayer.cpp" />
     <ClCompile Include="Math\EasingFunction.cpp" />
     <ClCompile Include="Components\Rendering\LineRenderer.cpp">
+      <Filter>Components\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\Rendering\PatternDrawerComponent.cpp">
       <Filter>Components\Rendering</Filter>
     </ClCompile>
   </ItemGroup>
