@@ -29,5 +29,6 @@
     <ClInclude Include="CsvData\DataStorage\CsvDataStorage.h" />
     <ClInclude Include="CsvData\DataClass\EnemyData.h" />
     <ClInclude Include="CsvData\DataClass\PlayerData.h" />
+    <ClInclude Include="LogicTestManager\BettleManager.h" />
   </ItemGroup>
 </Project>

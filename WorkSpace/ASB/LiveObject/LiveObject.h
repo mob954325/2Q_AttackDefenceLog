@@ -49,7 +49,6 @@ public:
 	//값 변경 함수
 	void GetDamage(float damageAmount) {Object_Hp -= damageAmount;} 
 	void GetSpiritdamage(float SpiritdamageAmount) { Object_SpiritAmount -= SpiritdamageAmount; }
-	void RestoreSpirit() { Object_nowSpiritAmount = Object_SpiritAmount; }// 적의 기세를 받아 사용함
 	
 
 	

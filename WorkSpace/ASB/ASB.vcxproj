@@ -385,6 +385,7 @@
     <ClInclude Include="LogicTestApplication\LogicTestApplication.h" />
     <ClInclude Include="LiveObject\Player.h" />
     <ClInclude Include="CsvData\DataClass\PlayerData.h" />
+    <ClInclude Include="LogicTestManager\BettleManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
