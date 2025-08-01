@@ -48,10 +48,12 @@ public:
 	void ChangeButtonPosition(float x);
 
 	//Button안보이는용도(체력바)
+
 	void ButtonShow(bool setvalue);
 
 	//
 	size_t AddOnClickEvent(std::function<void(float)> fn);
+
 	void RemoveOnClickEventById(size_t id);
 
 	//
@@ -67,10 +69,12 @@ public:
 
 	float GetPointValue();
 
+
 private:
 	BitmapRenderer* GaugeBackground{};
 	BitmapRenderer* GaugeBar{};
 	BitmapRenderer* BarButton{};
+
 
 
 	D2D1_RECT_F GaugeBarBackGroundDestRect{};
@@ -83,11 +87,10 @@ private:
 	D2D1_RECT_F ButtonRect{};
 	D2D1_RECT_F BackGroundRect{};
 
-
-
 	//비트맵 사이즈 변수
 	D2D1_SIZE_F size;
 	D2D1_SIZE_F sizeButton;
+
 	D2D1_SIZE_F sizeBackground;
 
 	bool HandleValue = true;
@@ -95,6 +98,7 @@ private:
 	bool OnButton = false;
 
 	bool checkPush = false;
+
 
 	EventDelegate<float> onClickEvent; // void()형만 받는 클릭 이벤트 
 };
