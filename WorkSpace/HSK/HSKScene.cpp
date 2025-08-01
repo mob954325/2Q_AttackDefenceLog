@@ -19,8 +19,8 @@ void HSKScene::OnEnterImpl()
 	auto d = obj->AddComponent<PatternDrawerComponent>();
 	d->SetOrderInLayer(80);
 
-	t->SetBitmap(L"../HSK/Test/test5.png");
-	t->SetTailBitmap(L"../HSK/Test/test_t.png");
+	t->SetBitmap(L"../HSK/Test/white_brush_test3.png");
+	//t->SetTailBitmap(L"../HSK/Test/test_t.png");
 	d->SetBitmap(L"../HSK/Test/test5.png");
 
 	AddGameObject(obj, "trail");
@@ -68,7 +68,10 @@ void HSKScene::UpdateImpl()
 	t->isOutFromBox = PM.CheckOutOfBox({ Input::MouseX, Input::MouseY });
 	if (t->isNewCached) {
 		PM.CheckTrails(t->cachedTrails);
+		const auto& vec = PM.GetPatternPathPositions();
 		d->SetLine(PM.GetPatternPathPositions());
+		if (!vec.empty())
+			t->Clear();		
 		t->isNewCached = false; // 사용했다고 알림				
 
 		for (int value : PM.GetPattern()) {
