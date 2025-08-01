@@ -6,6 +6,7 @@
 #include "Systems/PhysicSystem.h"
 #include "Systems/MonoBehaviorSystem.h"
 #include "Components/Camera/CameraManager.h"
+#include "Systems/UISystem.h"
 
 SceneManager::~SceneManager()
 {
@@ -48,6 +49,7 @@ void SceneManager::CheckSceneLoad()
 			Singleton<CameraManager>::GetInstance().ClearAll();
 			Singleton<RenderSystem>::GetInstance().ClearAll();
 			Singleton<MonoBehaviorSystem>::GetInstance().ClearAll();
+			Singleton<UISystem>::GetInstance().ClearAll();
 		}
 
 		// 씬 교체
