@@ -37,9 +37,31 @@ void TrailComponent::Update() { // 여기서 삭제(정리)처리해주면 됨
 		else if (toFade > inactiveCount) toFade = inactiveCount;
 
 		//==========================================================================			
+// 		for (int i = 0; i < trails.size(); i++) {
+// 			auto& stamp = trails[i];
+// 
+// 			if (!stamp.isActive) {
+// 				if (stamp.alpha >= 0.9999f) {
+// 					if (toFade-- <= 0)
+// 						continue;
+// 				}
+// 				stamp.alpha -= fadeSpeed * delta;
+// 				if (stamp.alpha < 0.0f)
+// 					stamp.alpha = 0.0f;
+// 			}
+// 			else { //active true
+// 				if (i < 50 )
+// 					stamp.alpha = (i+1) * 0.02f;
+// 			}
+// 		}
 
-		for (auto& stamp : trails) {
+		//지렁이 같음
+		int activeIndex = 0;
+		for (int i = 0; i < trails.size(); i++) {
+			auto& stamp = trails[i];
+
 			if (!stamp.isActive) {
+				// 삭제 중 처리
 				if (stamp.alpha >= 0.9999f) {
 					if (toFade-- <= 0)
 						continue;
@@ -47,6 +69,13 @@ void TrailComponent::Update() { // 여기서 삭제(정리)처리해주면 됨
 				stamp.alpha -= fadeSpeed * delta;
 				if (stamp.alpha < 0.0f)
 					stamp.alpha = 0.0f;
+			}
+			else {
+				// active 순서에 따라 alpha 설정
+				if (activeIndex < 100)
+					stamp.alpha = (activeIndex + 1) * 0.01f;
+
+				++activeIndex; // 오직 isActive == true인 경우에만 증가
 			}
 		}
 	}

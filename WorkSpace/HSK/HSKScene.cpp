@@ -19,7 +19,7 @@ void HSKScene::OnEnterImpl()
 	auto d = obj->AddComponent<PatternDrawerComponent>();
 	d->SetOrderInLayer(80);
 
-	t->SetBitmap(L"../HSK/Test/white_brush_test3.png");
+	t->SetBitmap(L"../HSK/Test/test5.png");
 	//t->SetTailBitmap(L"../HSK/Test/test_t.png");
 	d->SetBitmap(L"../HSK/Test/test5.png");
 
@@ -32,15 +32,16 @@ void HSKScene::OnEnterImpl()
 		AddGameObject(m_nodes[i], name);
 	}
 
-	m_nodes[0]->GetTransform().SetPosition(300, 200);
-	m_nodes[1]->GetTransform().SetPosition(450, 200);
-	m_nodes[2]->GetTransform().SetPosition(600, 200);
-	m_nodes[3]->GetTransform().SetPosition(300, 350);
-	m_nodes[4]->GetTransform().SetPosition(450, 350);
-	m_nodes[5]->GetTransform().SetPosition(600, 350);
-	m_nodes[6]->GetTransform().SetPosition(300, 500);
-	m_nodes[7]->GetTransform().SetPosition(450, 500);
-	m_nodes[8]->GetTransform().SetPosition(600, 500);
+	float n = 150.0f;
+	for (int i = 0; i < 9; ++i) {
+		int col = i % 3; // 0 1 2
+		int row = i / 3; // 0 1 2
+
+		float x = 720.0f + col * n; 
+		float y = 405.0f + row * n; 
+
+		m_nodes[i]->GetTransform().SetPosition(x, y);
+	}
 }
 
 void HSKScene::OnExitImpl()
