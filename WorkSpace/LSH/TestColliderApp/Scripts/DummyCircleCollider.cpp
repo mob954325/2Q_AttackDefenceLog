@@ -13,8 +13,6 @@ void DummyCircleCollider::OnCreate()
 	input = owner->AddComponent<InputSystem>();
 
 	particle = owner->AddComponent<ParticleRenderer>();
-
-	owner->GetTransform().SetRotation(180);
 }
 
 void DummyCircleCollider::OnStart()
@@ -23,19 +21,20 @@ void DummyCircleCollider::OnStart()
 
 	circle->SetRadius(20.0f);
 
-	particle->SetBitmap(L"../../Resource/Particles/spark_1.png");
+	particle->SetBitmap(L"../../Resource/Particles/Test/Arrow.png");
 	particle->SetLoop(true);
-	particle->SetMinSpeed(0.5f);
-	particle->SetMaxSpeed(2.0f);
+	particle->SetMinSpeed(0.3f);
+	particle->SetMaxSpeed(5.0f);
 	particle->SetDuration(0.8f);
 	particle->SetFadeOutTime(0.7f);
-	particle->SetAmount(20);
-	particle->SetAnimPlayer(L"../../Resource/Particles/Test/FireEffectSheet.png",
-		L"../../Resource/Json/Test_Paticles/FireEffectSheet.json",
-		L"../../Resource/Json/Test_Paticles/Fire_Boom_anim.json");
-	particle->SetShowType(ParticleShowType::Single);
+	particle->SetAmount(30);
+	particle->SetAnimPlayer(L"../../Resource/Particles/SparkSheet.png",
+		L"../../Resource/Json/SparkSheet/SparkSheet_sprites.json",
+		L"../../Resource/Json/SparkSheet/Red_Spark_anim.json");
+	particle->SetShowType(ParticleShowType::RandomSingle);
 	particle->SetGravity(true);
 	particle->SetSeeDirection(true);
+	particle->SetDecreasing(true);
 }
 
 void DummyCircleCollider::OnFixedUpdate()
@@ -78,19 +77,19 @@ void DummyCircleCollider::OnDestroy()
 void DummyCircleCollider::OnColliderEnter(GameObject* collider)
 {
 	// std::cout << ">>> Dummy 충돌시작 >>>" << std::endl;
-	if (*collider == *target)
-	{
-		std::cout << "찾음" << std::endl;
-	}
-	else
-	{
-		std::cout << "target 오브젝트가 아님" << std::endl;
-	}
+	//if (*collider == *target)
+	//{
+	//	std::cout << "찾음" << std::endl;
+	//}
+	//else
+	//{
+	//	std::cout << "target 오브젝트가 아님" << std::endl;
+	//}
 }
 
 void DummyCircleCollider::OnColliderStay(GameObject* collider)
 {
-	std::cout << ">>> Dummy 충돌 중 >>>" << " [ " << collider->GetName() << " ] " << std::endl;
+	//std::cout << ">>> Dummy 충돌 중 >>>" << " [ " << collider->GetName() << " ] " << std::endl;
 }
 
 void DummyCircleCollider::OnColliderExit(GameObject* collider)

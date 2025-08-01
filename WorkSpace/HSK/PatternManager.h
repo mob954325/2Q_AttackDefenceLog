@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "Components/Rendering/TrailComponent.h"
+#include "Components/Rendering/PatternDrawerComponent.h"
 #include "Components/Logic/InputSystem.h"
-#include "../WorkSpace/HSK/PatternDrawerComponent.h"
 #include <array>
 #include <queue>
 

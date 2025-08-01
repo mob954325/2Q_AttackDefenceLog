@@ -1,4 +1,4 @@
-#include "NodeObj.h"
+ï»¿#include "NodeObj.h"
 #include "Scene/SceneManager.h"
 #include "Utils/GameTime.h"
 #include "Components/Base/GameObject.h"
@@ -9,7 +9,7 @@ void NodeObj::OnStart()
 	owner->SetRenderLayer(EngineData::RenderLayer::GameObject);
 	bitmapRenderer = owner->AddComponent<BitmapRenderer>();
 	bitmapRenderer->CreateBitmapResource(L"../HSK/Test/ui03.png");
-	bitmapRenderer->SetOrderInLayer(-1); // ÀÌ°Å ±×·³ ³ªÁß¿¡ ¹ÛÀ¸·Î »©¾ßÇÒ ¼ö ÀÖÀ½ Àß Àû¿ëµÇ´ÂÁö ¸ô·çÀÓ
+	bitmapRenderer->SetOrderInLayer(-1); // ì´ê±° ê·¸ëŸ¼ ë‚˜ì¤‘ì— ë°–ìœ¼ë¡œ ë¹¼ì•¼í•  ìˆ˜ ìžˆìŒ ìž˜ ì ìš©ë˜ëŠ”ì§€ ëª°ë£¨ìž„
 	size = bitmapRenderer->GetResource()->GetBitmap()->GetSize(); 
 	auto c = owner->AddComponent<CircleCollider>();
 	owner->GetTransform().SetUnityCoords(false);

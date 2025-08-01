@@ -25,6 +25,7 @@ void CollisionSystem::UnRegister(CollisionComponent* comp)
 void CollisionSystem::ClearAll()
 {
 	components.clear();
+	prevPairs.clear();
 }
 
 void CollisionSystem::FixedUpdate(std::vector<CollisionInfo>& outInfos)

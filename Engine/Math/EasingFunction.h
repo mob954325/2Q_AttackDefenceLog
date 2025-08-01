@@ -9,9 +9,9 @@
 key값은 enum 리스트인 EasingEffect에서 골라서 사용
 https://easings.net/ 그래프 참고 사이트
 Lnear는 일차함수
-
 */
 
+// NOTE : 매개변수는 0에서 1사이 값을 넣어야함
 
 enum EasingEffect
 {
