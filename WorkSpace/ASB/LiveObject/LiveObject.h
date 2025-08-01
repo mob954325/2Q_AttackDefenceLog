@@ -6,12 +6,21 @@
 #include "Components/Logic/InputSystem.h"
 #include "components/Collision/AABBCollider.h"
 #include "Components/Physics/Rigidbody2D.h"
+#include <queue>
+
+// 주의!!! 씬 단위로 델타타임을 고정시킬 예정이라서 씬의 업데이트 처음에 무조건 시간 받아오기!!!!
 
 /*2025.07.28 - 안성빈
  플레이어나  적들이 상속받을 기본적인 오브젝트
  들어가는 변수 : ID, 이름 , 체력, 공격력, 기세공격력, 회피율, 방어율
  들어가는 함수 : 위의 변수를 가져오는 함수, 설정하는 함수  
 			     + 부모에 없는 자식의 맴버를 가져오는 함수
+*/
+
+/*25.08.01 - 안성빈
+	배틀 매니저에서 함수만 호출하여 사용할 수 있도록 함수 분할중
+	지금은 기능에 따라 다 분해하고 있지만 이후에 같이 실행되는 것은 함수를 병합할 예정
+	-> 기능을 따로 정리하고 눈에 안들어오는 상태로 구현할려고하니까 머리가 안돌아감 ㅡ.ㅡ
 */
 
 
@@ -33,17 +42,18 @@ public:
 	std::wstring GetName() { return Object_Name; }				    // 이름 반환
 	float GetHp() { return Object_Hp; }							    // 체력 반환
 	float GetAttack() { return Object_Attack; }						// 공격력 반환
-	float GetImbalanceAttack() { return Object_SpiritAttack; }   // 기세 공격력 반환
+	float GetImbalanceAttack() { return Object_SpiritAttack; }		// 기세 공격력 반환
 	float GetDefenseRate() { return Object_DefenseRate; }			// 방어율 반환
 
 
 	// 설정 함수들
-	void SetID(const std::string& id) { Object_ID = id; }			// ID 설정
-	void SetName(const std::wstring& name) { Object_Name = name; }	// 이름 설정
-	void SetHp(float hp) { Object_Hp = hp; }						// 체력 설정
-	void SetAttack(float attack) { Object_Attack = attack; }		// 공격력 설정
+	void SetID(const std::string& id) { Object_ID = id; }							 // ID 설정
+	void SetName(const std::wstring& name) { Object_Name = name; }					 // 이름 설정
+	void SetHp(float hp) { Object_Hp = hp; }									     // 체력 설정
+	void SetAttack(float attack) { Object_Attack = attack; }						 // 공격력 설정
 	void SetSpiritAttack(float SpiritAttack) { Object_SpiritAttack = SpiritAttack; } // 기세 공격력 설정
-	void SetDefenseRate(float defenseRate) { Object_DefenseRate = defenseRate; } // 방어율 설정
+	void SetDefenseRate(float defenseRate) { Object_DefenseRate = defenseRate; }     // 방어율 설정
+	
 
 
 	//값 변경 함수
@@ -51,7 +61,19 @@ public:
 	void GetSpiritdamage(float SpiritdamageAmount) { Object_SpiritAmount -= SpiritdamageAmount; }
 	
 
-	
+	//각 객체의 업데이트에 들어갈 함수
+	virtual void SetDeltaTime(float deltaTime) = 0; //씬 단위로 델타타임을 통일!!!! -> 시간을 받아야함
+	virtual void CalCooTime() = 0;     //각 객체의 쿨타임을 계산
+	virtual void SetCoolTime() = 0;    //각 객체의 쿨타임이 0이 되었을 때, 다음 쿨타임을 설정함
+	virtual void CalSpiritTime() = 0;  //이거는 플레이어 : -0.3,  적 : +0.3  고정!!!
+
+	//배틀 매니저에 들어갈 스탯 계산할 함수
+	virtual void SelectPatten() = 0;   //각 객체가 사용할 패턴을 고름
+	//void SetGuideLine() {}		   //쿨타임 확인 후, 가이드라인, 적 공격 라인 생성 -> 렌더러의 영역?
+	//void GetPatten() {}			   //현재 마우스의 입력 받기  -> 승규님 데이터 받기
+	virtual void DeciedState(const std::queue<int> tmpqueue) = 0;  //큐와 현재 패턴을 비교
+	virtual void CalStat() = 0;   //여기서 계산
+
 
 
 protected: 
@@ -61,6 +83,14 @@ protected:
 	float Object_Attack;		  // 공격력
 	float Object_SpiritAttack;	  // 기세 공격력
 	float Object_DefenseRate;	  // 방어율
-	float Object_SpiritAmount;    // 기세, 기세의 전체는 적에만 존재함으로 적을 설정하고 나눠야할듯?
+
+	float Object_SpiritAmount;    // 전체 기세
+	float Object_NowSpiritAmount; // 현재 기세 
+	float Object_OverTimeSpirit;  // 기세 감소 시간을 저장할 변수 
+
+	float Object_CoolTime;		  // 쿨타임 
+	float Object_nowCoolTime;	  // 현재 쿨타임
+
+	float SceneDeltaTime;	      // 씬의 델타타임
 };
 

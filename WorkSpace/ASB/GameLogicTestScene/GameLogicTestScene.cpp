@@ -4,10 +4,23 @@
 #include "../CsvData/DataClass/PlayerData.h"
 #include "../CsvData/DataClass/EnemyData.h"
 #include "../CsvData/CsvDataManager.h"
-
+#include "Utils/GameTime.h"
 #include "Utils/Singleton.h"
+
+/*
+	업데이트 순서
+    플레이어  업데이트 : 대부분 시간에 따라 변화하는 것들 처리
+    적 업데이트
+    배들 매니저 업데이트
+    state 매니저 업데이트
+
+	!!! 주의 !!!
+	씬 단위로 시간을 통일시키기!!
+ */
+
 void GameLogicTestScene::OnEnterImpl()
 {
+
 	//menuObj = new GameObject(); // GameObject 객체 생성
 	//menuObj->AddComponent<MenuTextObject>(); // MonoBehaivor 등록
 	//AddGameObject(menuObj);	// Scene에 GameObject 추가
