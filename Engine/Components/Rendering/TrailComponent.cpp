@@ -109,9 +109,7 @@ void TrailComponent::AddStamp(D2D1_POINT_2F pos) { //스탬프를 찍는건데, 
 
 	int steps = static_cast<int>(dist / minDistance); //최소거리가 현재 간격에 몇번들어가는지 확인하는거임
 	//(최소거리보다 커야 생성되니까 기본적으로 1 이상임 + int라 정수임)
-
 	
-
 	for (int i = 1; i <= steps; ++i) { //1 이상이니까 1부터 시작함
 		float t = static_cast<float>(i) / steps; // 보간식, t + 1/t
 		D2D1_POINT_2F interpPos = { // 보간으로 중간 점 생성해줌, 변화량(기울기)응용
@@ -162,7 +160,7 @@ void TrailComponent::Draw(D2DRenderManager* manager) {
 			stamp.position
 		);
 
-		if (i == 0 && trails.size() >= 2) {
+		if (i < 3 && trails.size() >= 3) {
 			D2D1_RECT_F tailDestRect = {
 			stamp.position.x - tailSize.width * 0.5f,
 			stamp.position.y - tailSize.height * 0.5f,

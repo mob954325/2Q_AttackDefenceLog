@@ -37,7 +37,7 @@ public:
 		float dy = current.y - prev.y;
 
 		float distSq = dx * dx + dy * dy;
-		const float thresholdSq = 49.0f;
+		const float thresholdSq = 25.0f;
 
 		if (distSq < thresholdSq)
 			return prevAngle; // 너무 작으면 그냥 기존 각도 유지
