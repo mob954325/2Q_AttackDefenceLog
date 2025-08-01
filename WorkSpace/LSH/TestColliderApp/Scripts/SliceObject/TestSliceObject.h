@@ -20,6 +20,10 @@
 
 // TODO : 닿은 그리드 위치 기준으로 오브젝트 분해하기
 
+// NOTE:
+// start와 end에 따라서 기울기를 정해서 날리기
+// 각 각 start와  end가 존재하면 기울기에 따라 진입 인덱스와 나가는 위치 인덱스가 다를 것임!
+
 class TestSliceObject : public MonoBehavior
 {
 public:
@@ -37,6 +41,9 @@ private:
 	std::vector<PieceObject*> pieces; // 12시 부터 1 2 3 4 5 6...
 	std::vector<D2D1_RECT_F> grids;
 	std::vector<BoxRenderer*> boxes; // debug
+
+	bool isOverraped = false; // 최초 닿았는지 확인
+	
 };
 
 // 15도씩 8방향 16개 이미지
