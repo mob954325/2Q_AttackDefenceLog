@@ -333,6 +333,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Components\Rendering\PatternDrawerComponent.h" />
     <ClInclude Include="Components\Rendering\AnimationPlayer.h" />
     <ClInclude Include="Components\Rendering\TrailComponent.h" />
     <ClInclude Include="Components\UI\Button.h" />
@@ -391,6 +392,7 @@
     <ClInclude Include="Systems\TransformSystem.h" />
     <ClInclude Include="Components\UI\UIComponent.h" />
     <ClInclude Include="Systems\UISystem.h" />
+    <ClInclude Include="Utils\HCURSORChange.h" />
     <ClInclude Include="Utils\TypeCastUtil.h" />
     <ClInclude Include="Utils\StringConvert.h" />
     <ClInclude Include="Systems\RenderSystem.h" />
@@ -414,6 +416,7 @@
     <ClInclude Include="Math\Vector2.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Components\Rendering\PatternDrawerComponent.cpp" />
     <ClCompile Include="Components\Rendering\AnimationPlayer.cpp" />
     <ClCompile Include="Components\Rendering\TrailComponent.cpp" />
     <ClCompile Include="Components\UI\Button.cpp" />
@@ -455,6 +458,7 @@
     <ClCompile Include="Systems\TransformSystem.cpp" />
     <ClCompile Include="Components\UI\UIComponent.cpp" />
     <ClCompile Include="Systems\UISystem.cpp" />
+    <ClCompile Include="Utils\HCURSORChange.cpp" />
     <ClCompile Include="Utils\TypeCastUtil.cpp" />
     <ClCompile Include="Utils\StringConvert.cpp" />
     <ClCompile Include="Systems\ScriptSystem.cpp" />

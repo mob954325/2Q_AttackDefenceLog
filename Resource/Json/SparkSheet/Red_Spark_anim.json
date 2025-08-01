@@ -1,0 +1,21 @@
+{
+    "clipName": "Red_Spark",
+    "loop": false,
+    "texturePath": "Assets/Sprites/SparkSheet.png",
+    "duration": 0.25,
+    "frames": [
+        {
+            "sprite": "Red_Spark_0",
+            "time": 0.0
+        },
+        {
+            "sprite": "Red_Spark_1",
+            "time": 0.0833333358168602
+        },
+        {
+            "sprite": "Red_Spark_2",
+            "time": 0.1666666716337204
+        }
+    ],
+    "events": []
+}

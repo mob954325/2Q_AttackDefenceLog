@@ -28,12 +28,22 @@ public:
 	void Draw(D2DRenderManager* manager); // 한번 감싼거임, 여기서 for 돌려서 비트맵 찍음
 	void Render(D2DRenderManager* manager) override; // 이거 기반으로 그려짐
 	void SetBitmap(std::wstring path);
+	void SetTailBitmap(std::wstring path);
 	void OnDestroy() override;
 	void Clear(); // 한번에 지우는거임, 큐 비움	
 
-	inline float GetAngle(D2D1_POINT_2F prev, D2D1_POINT_2F current) { // 이전좌표와 현재좌표를 비교해서, 각도(radian) 반환해줌
-		return atan2f(current.y - prev.y, current.x - prev.x); // radian
-	}	
+	inline float GetAngle(D2D1_POINT_2F prev, D2D1_POINT_2F current, float prevAngle) { // 이전좌표와 현재좌표를 비교해서, 각도(radian) 반환해줌
+		float dx = current.x - prev.x;
+		float dy = current.y - prev.y;
+
+		float distSq = dx * dx + dy * dy;
+		const float thresholdSq = 25.0f;
+
+		if (distSq < thresholdSq)
+			return prevAngle; // 너무 작으면 그냥 기존 각도 유지
+
+		return atan2f(dy, dx); // 제대로 계산
+	}
 
 	//플래그가 좀 많음, 델리게이트 쓰면 깔끔해지는데, 일단 직관적으로 이렇게 설계함
 	bool isDraw = false; // OnOff용
@@ -56,4 +66,5 @@ public:
 private:
 	std::deque<TrailStamp> trails; // 큐, 여기에 구조체 담김(좌표, 각도, 수명)
 	std::shared_ptr<BitmapResource> stampBitmap = nullptr; // 찍을 비트맵, 브러쉬 넣으면 됨
+	std::shared_ptr<BitmapResource> tailBitmap = nullptr;
 };

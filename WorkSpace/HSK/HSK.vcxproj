@@ -343,14 +343,12 @@
     <ClCompile Include="HSKApp.cpp" />
     <ClCompile Include="HSKScene.cpp" />
     <ClCompile Include="NodeObj.cpp" />
-    <ClCompile Include="PatternDrawerComponent.cpp" />
     <ClCompile Include="PatternManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HSKApp.h" />
     <ClInclude Include="HSKScene.h" />
     <ClInclude Include="NodeObj.h" />
-    <ClInclude Include="PatternDrawerComponent.h" />
     <ClInclude Include="PatternManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
