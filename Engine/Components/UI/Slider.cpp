@@ -5,49 +5,65 @@
 
 void Slider::OnStart()
 {
-	GaugeBackground = owner->AddComponent<BitmapRenderer>();
-	GaugeBackground->CreateBitmapResource(L"../../Resource/UI/TestGauge/backgroundBar.png");
-	
+
 	GaugeBar = owner->AddComponent<BitmapRenderer>();
 	GaugeBar->SetUseCustomRect(true);
 	GaugeBar->SetOrderInLayer(2);
 	GaugeBar->CreateBitmapResource(L"../../Resource/UI/TestGauge/Bar.png");
 	size = GaugeBar->GetResource()->GetBitmap()->GetSize();
+	
+	//변동값
 	GaugeBarRect.bottom = size.height;
-	GaugeBarRect.right = size.width/2;
+	GaugeBarRect.right = size.width;
+
+
+
+
+	GaugeBackground = owner->AddComponent<BitmapRenderer>();
+	GaugeBackground->CreateBitmapResource(L"../../Resource/UI/TestGauge/backgroundBar.png");
+	GaugeBackground->SetUseCustomRect(true);
+	GaugeBackground->SetOrderInLayer(5);
+	sizeBackground = GaugeBackground->GetResource()->GetBitmap()->GetSize();
+	//변동값
+	GaugeBarBackGroundSrcRect.right = sizeBackground.width;
+	GaugeBarBackGroundSrcRect.bottom = sizeBackground.height;
+	GaugeBarBackGroundDestRect.right = sizeBackground.width;
+	GaugeBarBackGroundDestRect.bottom = sizeBackground.height;
+
+
 
 	BarButton = owner->AddComponent<BitmapRenderer>();
 	BarButton->SetUseCustomRect(true);
-	BarButton->SetOrderInLayer(3);
+	BarButton->SetOrderInLayer(7);
 	BarButton->CreateBitmapResource(L"../../Resource/UI/TestGauge/BarBotton.png");
 
 	sizeButton = BarButton->GetResource()->GetBitmap()->GetSize();
 
+	//고정값
 	BarButSrctonRect.bottom = sizeButton.height;
 	BarButSrctonRect.right = sizeButton.width;
 
+	//변동값
 	ButtonDestRect.bottom = sizeButton.height;
-	ButtonDestRect.left = size.width / 2 - sizeButton.width/2;
-	ButtonDestRect.right = size.width / 2 + sizeButton.width/2;
+	ButtonDestRect.left = size.width - sizeButton.width/2;
+	ButtonDestRect.right = size.width + sizeButton.width/2;
+
+	//테스트용 함수
+	onClickEvent.Add([](float value) { std::cout << value << std::endl; });
 }
 
 void Slider::Update()
 {
-	GaugeBar->SetSrcRect(GetGaugeRectValue());
-	GaugeBar->SetDestRect(GetGaugeRectValue());
+	 GaugeBar->SetSrcRect(GetGaugeRectValue());
+	 GaugeBar->SetDestRect(GetGaugeRectValue());
 
 	BarButton->SetSrcRect(BarButSrctonRect);
 	BarButton->SetDestRect(ButtonDestRect);
 
-	ButtonEvent();
+	GaugeBackground->SetSrcRect(GaugeBarBackGroundSrcRect);
+	GaugeBackground->SetDestRect(GaugeBarBackGroundDestRect);
 
-	//std::cout << BarButSrctonRect.left << std::endl;
-	//std::cout << BarButSrctonRect.right << std::endl;
-	//std::cout << BarButSrctonRect.top << std::endl;
-	//std::cout << BarButSrctonRect.bottom << std::endl;
-
-
-
+	if(HandleValue) ButtonEvent();
 }
 
 
@@ -59,8 +75,9 @@ void Slider::Update()
 //}
 
 void Slider::SetGaugeBackgroundImage(std::wstring path)
-{
+{	
 	GaugeBackground->CreateBitmapResource(path);
+	SetBackSize();
 }
 
 BitmapRenderer* Slider::GetGaugeBackgroundImage()
@@ -71,6 +88,7 @@ BitmapRenderer* Slider::GetGaugeBackgroundImage()
 void Slider::SetGaugeBarImage(std::wstring path)
 {
 	GaugeBar->CreateBitmapResource(path);
+	SetSize();	
 }
 
 BitmapRenderer* Slider::GetGaugeBarImage()
@@ -81,6 +99,7 @@ BitmapRenderer* Slider::GetGaugeBarImage()
 void Slider::SetGaugeButtonImage(std::wstring path)
 {
 	BarButton->CreateBitmapResource(path);
+	sizeButton = BarButton->GetResource()->GetBitmap()->GetSize();
 }
 
 BitmapRenderer* Slider::GetGaugeButtonImage()
@@ -100,6 +119,9 @@ D2D1_RECT_F Slider::GetGaugeRectValue()
 
 void Slider::ChangeGauge(float x)
 {
+	std::cout << size.width << std::endl;
+	std::cout << GaugeBarRect.right << std::endl;
+
 	/*D2D1_SIZE_F size = GaugeBar->GetResource()->GetBitmap()->GetSize();*/
 	if (pivotIsLeft) {
 		if ((GaugeBarRect.right < size.width && GaugeBarRect.right > 0))
@@ -112,17 +134,17 @@ void Slider::ChangeGauge(float x)
 			if (GaugeBarRect.right <= 0) { GaugeBarRect.right = 0.1f; }
 		}
 	}
-	else {
-		if ((GaugeBarRect.right < size.width && GaugeBarRect.right > 0))
-		{
-			GaugeBarRect.right -= x;
-		}
-		else
-		{
-			if (GaugeBarRect.right >= -size.width) { GaugeBarRect.right = -size.width + 0.1f; }
-			if (GaugeBarRect.right >= 0) { GaugeBarRect.right = -0.1f; }
-		}
-	}
+	//else {
+	//	if ((GaugeBarRect.right < size.width && GaugeBarRect.right > 0))
+	//	{
+	//		GaugeBarRect.right -= x;
+	//	}
+	//	else
+	//	{
+	//		if (GaugeBarRect.right >= -size.width) { GaugeBarRect.right = -size.width + 0.1f; }
+	//		if (GaugeBarRect.right >= 0) { GaugeBarRect.right = -0.1f; }
+	//	}
+	//}
 }
 
 //x는 좌표값
@@ -159,16 +181,17 @@ void Slider::ChangeButtonPosition(float x)
 	//}
 }
 
-void Slider::ButtShow(bool setvalue)
+void Slider::ButtonShow(bool setvalue)
 {
+	HandleValue = setvalue;
 	BarButton->SetActive(setvalue);
 }
 
-size_t Slider::AddOnClickEvent(std::function<void()> fn)
+size_t Slider::AddOnClickEvent(std::function<void(float)> fn)
 {
 	//이벤트를 등록하고 그 ID를 return
-	/*size_t ID = onClickEvent.Add(fn);*/
-	/*return ID;*/
+	size_t ID = onClickEvent.Add(fn);
+	return ID;
 }
 
 void Slider::RemoveOnClickEventById(size_t id)
@@ -190,6 +213,31 @@ bool Slider::IsMouseOverBackground(const Vector2& mousePos) const
 		mousePos.x <= BackGroundRect.right &&	// 오른쪽 
 		mousePos.y >= BackGroundRect.top &&		// 위
 		mousePos.y <= BackGroundRect.bottom;	// 아래
+}
+
+void Slider::SetSize()
+{
+	size = GaugeBar->GetResource()->GetBitmap()->GetSize();
+	GaugeBarRect.bottom = size.height;
+	GaugeBarRect.right = size.width;
+	//고정값
+	BarButSrctonRect.bottom = sizeButton.height;
+	BarButSrctonRect.right = sizeButton.width;
+
+	//변동값
+	ButtonDestRect.bottom = sizeButton.height;
+	ButtonDestRect.left = size.width - sizeButton.width / 2;
+	ButtonDestRect.right = size.width + sizeButton.width / 2;
+
+}
+
+void Slider::SetBackSize()
+{
+	sizeBackground = GaugeBackground->GetResource()->GetBitmap()->GetSize();
+	GaugeBarBackGroundSrcRect.right = sizeBackground.width;
+	GaugeBarBackGroundSrcRect.bottom = sizeBackground.height;
+	GaugeBarBackGroundDestRect.right = sizeBackground.width;
+	GaugeBarBackGroundDestRect.bottom = sizeBackground.height;
 }
 
 void Slider::ButtonEvent()
@@ -230,10 +278,11 @@ void Slider::ButtonEvent()
 
 		if (Input::leftButtonDown)
 		{
+			checkPush = true;
 			if(Input::MouseDeltaX != 0){
-
+			ChangeGauge(Input::MouseDeltaX);
 			ChangeButtonPosition(Input::MouseDeltaX);
-			std::cout << "마우스 버튼 클릭 감지" << std::endl;
+			/*std::cout << "마우스 버튼 클릭 감지" << std::endl;*/
 
 
 
@@ -241,8 +290,10 @@ void Slider::ButtonEvent()
 		}
 		else if (!Input::leftButtonDown)
 		{
-			/*onClickEvent.Invoke(float);*/
-			/*onClickEvent.Add([](float value) { std::cout << value << std::endl; });*/
+			if (checkPush) {
+				onClickEvent.Invoke(GetPointValue());
+				checkPush = false;
+			}
 		}
 	}
 	else OnButton = false;
@@ -252,7 +303,8 @@ void Slider::ButtonEvent()
 		/*std::cout << "마우스 게이지 배경 지나감 감지" << std::endl;*/
 		if (Input::leftButtonDown)
 		{
-			std::cout << mouseVec.x << std::endl;
+			/*std::cout << mouseVec.x << std::endl;*/
+			ChangeGauge(mouseVec.x - ButtonDestRect.right + sizeButton.width / 2);
 			ChangeButtonPosition(mouseVec.x - ButtonDestRect.right + sizeButton.width / 2);
 		}
 	}
@@ -261,5 +313,11 @@ void Slider::ButtonEvent()
 void Slider::SetDelegate(std::function<void(float)> fn)
 {
 	onClickEvent.Add(fn);
+}
+
+float Slider::GetPointValue()
+{
+	float value = GaugeBarRect.right / size.width ;
+	return value;
 }
 

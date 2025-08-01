@@ -21,12 +21,18 @@ void MusicScript::MusicScript::OnCreate()
 	
 	/*owner->GetTransform().SetPosition(-100.0f, -100.0f);*/
 	owner->GetTransform().SetUnityCoords(false);
+	
 
 }
 
 void MusicScript::MusicScript::OnStart()
 {
 	owner->GetComponent<FModComponent>()->AddSound(componentList);
+	owner->GetComponent<Slider>()->ButtonShow(false);
+	owner->GetComponent<Slider>()->SetGaugeBackgroundImage(L"../../Resource/UI/TestGauge/hp_ui_01.png");
+	owner->GetComponent<Slider>()->SetGaugeBarImage(L"../../Resource/UI/TestGauge/hp_ui_02.png");
+	//owner->GetComponent<Slider>()->SetGaugeBackgroundImage(L"../../Resource/UI/TestGauge/hp_ui_01.png");
+	//owner->GetComponent<Slider>()->SetGaugeBarImage(L"../../Resource/UI/TestGauge/hp_ui_01.png");
 }
 
 void MusicScript::MusicScript::OnDestroy()
