@@ -5,6 +5,7 @@
 #include "Utils/Singleton.h"
 #include "algorithm"
 #include "Math/GameRandom.h"
+#include "Math/EasingFunction.h"
 
 void ParticleRenderer::OnCreate()
 {
@@ -19,6 +20,9 @@ void ParticleRenderer::OnStart()
 		float randSpeed = GameRandom::RandomRange(minSpeed, maxSpeed);
 		infos.push_back({ { 0, 0 }, { vec.x, vec.y}, randSpeed });
 	}	
+
+	baseScaleX = owner->GetTransform().GetFinalMatrix().m11;
+	baseScaleY = owner->GetTransform().GetFinalMatrix().m22;
 }
 
 void ParticleRenderer::Render(D2DRenderManager* manager)
@@ -44,6 +48,13 @@ void ParticleRenderer::Render(D2DRenderManager* manager)
 
 				infos[i].position.x += dir.x * speed + delta;
 				infos[i].position.y += dir.y * speed + delta;
+			}
+
+			if (isDecreasing)
+			{
+				float scale = EasingList[EasingEffect::OutSine](decreasingTimer / duration);
+				mat.m11 = baseScaleX * scale;
+				mat.m22 = baseScaleY * scale;
 			}
 
 			// 회전 각도 계산
@@ -76,7 +87,11 @@ void ParticleRenderer::Render(D2DRenderManager* manager)
 			mat.dx += infos[i].position.x;
 			mat.dy += infos[i].position.y;
 
-			if (useGravity && infos[i].dirVec.y > -1.0f) infos[i].dirVec.y += delta;
+			// 중력 적용
+			if (useGravity && infos[i].dirVec.y > -1.0f)
+			{
+				infos[i].dirVec.y += delta;
+			}
 
 			manager->SetRenderTransform(mat); // 갱신한 위치로 이동
 			Vector2 ownerPosition = owner->GetTransform().GetPosition();
@@ -108,7 +123,8 @@ void ParticleRenderer::Render(D2DRenderManager* manager)
 
 
 		timer += delta;
-		remainFadeOut -= delta;
+		if (remainFadeOut > 0.0f) remainFadeOut -= delta;
+		if (decreasingTimer > 0.0f) decreasingTimer -= delta;
 		player.Update(delta);
 	}
 }
@@ -138,8 +154,14 @@ void ParticleRenderer::Reset()
 			info.frameIndex = GameRandom::RandomRange(0, player.GetMaxFrame());
 		});
 
+	// 타이머 초기화
 	timer = 0.0f;
 	remainFadeOut = fadeOutTime;
+	decreasingTimer = duration;
+
+	// 크기 확인
+	baseScaleX = owner->GetTransform().GetFinalMatrix().m11;
+	baseScaleY = owner->GetTransform().GetFinalMatrix().m22;
 }
 
 void ParticleRenderer::Pause()
@@ -199,6 +221,7 @@ float ParticleRenderer::GetMaxSpeed() const
 void ParticleRenderer::SetDuration(float value)
 {
 	duration = value;
+	decreasingTimer = duration;
 }
 
 float ParticleRenderer::GetDuration() const
@@ -239,4 +262,9 @@ void ParticleRenderer::SetGravity(bool value)
 void ParticleRenderer::SetSeeDirection(bool value)
 {
 	seeDirection = value;
+}
+
+void ParticleRenderer::SetDecreasing(bool value)
+{
+	isDecreasing = value;
 }

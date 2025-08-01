@@ -1,4 +1,4 @@
-#include "MusicScript.h"
+﻿#include "MusicScript.h"
 #include "Components/Base/GameObject.h"
 #include "Components/Fmod/FModComponent.h"
 #include <iostream>
@@ -17,13 +17,22 @@ void MusicScript::MusicScript::OnCreate()
 	owner->AddComponent<FModComponent>();
 
 	owner->AddComponent<Slider>();
-	owner->GetTransform().SetPosition(-100.0f, -100.0f);
+	
+	
+	/*owner->GetTransform().SetPosition(-100.0f, -100.0f);*/
+	owner->GetTransform().SetUnityCoords(false);
+	
 
 }
 
 void MusicScript::MusicScript::OnStart()
 {
 	owner->GetComponent<FModComponent>()->AddSound(componentList);
+	owner->GetComponent<Slider>()->ButtonShow(false);
+	owner->GetComponent<Slider>()->SetGaugeBackgroundImage(L"../../Resource/UI/TestGauge/hp_ui_01.png");
+	owner->GetComponent<Slider>()->SetGaugeBarImage(L"../../Resource/UI/TestGauge/hp_ui_02.png");
+	//owner->GetComponent<Slider>()->SetGaugeBackgroundImage(L"../../Resource/UI/TestGauge/hp_ui_01.png");
+	//owner->GetComponent<Slider>()->SetGaugeBarImage(L"../../Resource/UI/TestGauge/hp_ui_01.png");
 }
 
 void MusicScript::MusicScript::OnDestroy()
@@ -37,34 +46,34 @@ void MusicScript::MusicScript::CheckInput()
 	{
 		owner->GetComponent<Slider>()->ChangeGauge(-1);
 		owner->GetComponent<Slider>()->ChangeButtonPosition(-1);
-		std::cout << "w �Էµ�" << std::endl;
+		std::cout << "w 입력됨" << std::endl;
 	}
 	if (input->IsKeyDown('S'))
 	{
 		owner->GetComponent<Slider>()->ChangeGauge(1);
 		owner->GetComponent<Slider>()->ChangeButtonPosition(1);
-		std::cout << "s �Էµ�" << std::endl;
+		std::cout << "s 입력됨" << std::endl;
 	}
 
 	//if (input->IsKeyPressed('A'))
 	//{
 	//	owner->GetComponent<FModComponent>()->PlaySound(L"Attack02");
-	//	std::cout << "a �Էµ�" << std::endl;
+	//	std::cout << "a 입력됨" << std::endl;
 	//}
 	//if (input->IsKeyPressed('S'))
 	//{
 	//	owner->GetComponent<FModComponent>()->PlaySound(L"Attack03");
-	//	std::cout << "s �Էµ�" << std::endl;
+	//	std::cout << "s 입력됨" << std::endl;
 	//}
 	//if (input->IsKeyPressed('D'))
 	//{
 	//	owner->GetComponent<FModComponent>()->PlaySound(L"Bgm01");
-	//	std::cout << "d �Էµ�" << std::endl;
+	//	std::cout << "d 입력됨" << std::endl;
 	//}
 	//if (input->IsKeyPressed('P'))
 	//{
 	//	owner->GetComponent<FModComponent>()->PlaySound(L"Bgm02");
-	//	std::cout << "p �Էµ�" << std::endl;
+	//	std::cout << "p 입력됨" << std::endl;
 	//}
 	//if (input->IsKeyPressed('N')) AudioSystem::GetInstance().PauseSound();
 	//if (input->IsKeyPressed('M')) AudioSystem::GetInstance().AgainstSound();

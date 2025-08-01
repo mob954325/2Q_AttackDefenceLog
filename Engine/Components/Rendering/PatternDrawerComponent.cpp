@@ -49,7 +49,7 @@ void PatternDrawerComponent::Render(D2DRenderManager* manager)
 			D2D1_RECT_F dest = {
 				pos.x - bmpSize.width * 0.5f,
 				pos.y - bmpSize.height * 0.5f,
-				pos.x + bmpSize.width * 0.5f,
+				pos.x + bmpSize.width *		0.5f,
 				pos.y + bmpSize.height * 0.5f
 			};
 
