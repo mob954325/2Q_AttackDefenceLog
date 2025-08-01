@@ -15,5 +15,6 @@ namespace TestCollider
 		GameObject* testCircle2{};
 		GameObject* dummyCircle{};
 		GameObject* dummyButton{};
+		GameObject* dummyEffectAnimation{};
 	};
 }

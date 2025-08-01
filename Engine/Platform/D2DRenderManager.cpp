@@ -84,6 +84,11 @@ void D2DRenderManager::DrawBitmap(Microsoft::WRL::ComPtr<ID2D1Bitmap1> bitmap, D
 	m_d2dDeviceContext->DrawBitmap(bitmap.Get(), &destRect, 1.0f, D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, &srcRect);
 }
 
+void D2DRenderManager::DrawBitmap(ComPtr<ID2D1Bitmap1> bitmap, D2D1_RECT_F& destRect, D2D1_RECT_F& srcRect, float capacity)
+{
+	m_d2dDeviceContext->DrawBitmap(bitmap.Get(), &destRect, capacity, D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, &srcRect);
+}
+
 void D2DRenderManager::DrawImage(Microsoft::WRL::ComPtr<ID2D1Effect> effect)
 {
 	m_d2dDeviceContext->DrawImage(effect.Get());

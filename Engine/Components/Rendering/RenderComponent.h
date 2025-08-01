@@ -20,5 +20,5 @@ public:
 protected:	
 	D2DRenderManager* renderManager{};
 	BitmapResourceManager* resourceManager{};
-	int orderInLayer = 0;
+	int orderInLayer = 0; // 이거 어디서 작동되는지 확인하기
 };

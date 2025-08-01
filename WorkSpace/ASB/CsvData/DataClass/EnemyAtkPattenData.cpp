@@ -1,12 +1,12 @@
-#include "EnemyAtkPattenData.h"
+ï»¿#include "EnemyAtkPattenData.h"
 #include "Utils/StringConvert.h"
 
 
 void EnemyAtkPattenData::SetData(std::vector<std::wstring> tmp) {
-	ePatternID = StringConvert::WstringToString(tmp[0].c_str()); // ÀûÀÇ °ø°İ ÆĞÅÏ ID¸¦ ÀúÀå
-	atkPetternGroup = std::stoi(tmp[1]);       // ÀûÀÇ °ø°İ ±×·ìÀ» ÀúÀå
-	eNodepattern = StringConvert::WstringToString(tmp[2].c_str());;  // ÀûÀÇ ³ëµå ÆĞÅÏÀ» ÀúÀå
-	eAtkCoolDown = std::stof(tmp[3].c_str()); // ÀûÀÇ °ø°İ ÄğÅ¸ÀÓÀ» ÀúÀå
+	ePatternID = StringConvert::WstringToString(tmp[0].c_str()); // ì ì˜ ê³µê²© íŒ¨í„´ IDë¥¼ ì €ì¥
+	atkPetternGroup = std::stoi(tmp[1]);       // ì ì˜ ê³µê²© ê·¸ë£¹ì„ ì €ì¥
+	eNodepattern = StringConvert::WstringToString(tmp[2].c_str());;  // ì ì˜ ë…¸ë“œ íŒ¨í„´ì„ ì €ì¥
+	eAtkCoolDown = std::stof(tmp[3].c_str()); // ì ì˜ ê³µê²© ì¿¨íƒ€ì„ì„ ì €ì¥
 }
 
 void EnemyAtkPattenData::PrintMap() {
