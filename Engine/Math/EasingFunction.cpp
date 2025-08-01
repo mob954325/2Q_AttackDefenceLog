@@ -1,9 +1,7 @@
-#include "EasingFunction.h"
+﻿#include "EasingFunction.h"
 #include <cmath>
 const double PI = 3.14159265358979323846;
 const float PI_F = 3.14159265f;
-
-
 
 float easeLinear(float x) { return x; }
 
