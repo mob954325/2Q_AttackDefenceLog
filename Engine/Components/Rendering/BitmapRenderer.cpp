@@ -11,7 +11,7 @@ void BitmapRenderer::Render(D2DRenderManager* manager)
 {
 	if (!IsActiveSelf()) return;
 
-	if (m_bitmapResource != nullptr)
+	if (m_bitmapResource != nullptr && m_bitmapResource->GetBitmap())
 	{
 		D2D1_MATRIX_3X2_F mat = owner->GetTransform().GetFinalMatrix();
 		
@@ -26,6 +26,21 @@ void BitmapRenderer::Render(D2DRenderManager* manager)
 		else
 		{
 			manager->DrawBitmap(m_bitmapResource->GetBitmap(), destRect, srcRect); // 0730 : 작성자 : 이성호, rect로 직접 수정할 수 있게 코드 추가
+		}
+	}
+	else
+	{
+		if (m_bitmapResource == nullptr)
+		{
+			std::cerr << "[RenderComponent] Failed to render: m_bitmapResource is nullptr." << std::endl;
+		}
+		else if (m_bitmapResource->GetBitmap() == nullptr)
+		{
+			std::cerr << "[RenderComponent] Failed to render: m_bitmapResource->GetBitmap() is nullptr." << std::endl;
+		}
+		else
+		{
+			std::cerr << "[RenderComponent] Unknown error occurred in rendering." << std::endl;
 		}
 	}
 }

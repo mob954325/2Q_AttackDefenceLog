@@ -1,8 +1,9 @@
 ﻿#include "DummyCircleCollider.h"
 #include "Components/Base/GameObject.h"
 #include "Platform/Input.h"
-
 #include "TestCircleCollider.h"
+
+#include "Scene/SceneManager.h"
 
 void DummyCircleCollider::OnCreate()
 {
@@ -27,7 +28,7 @@ void DummyCircleCollider::OnStart()
 	particle->SetMaxSpeed(5.0f);
 	particle->SetDuration(0.8f);
 	particle->SetFadeOutTime(0.7f);
-	particle->SetAmount(30);
+	particle->SetAmount(33330);
 	particle->SetAnimPlayer(L"../../Resource/Particles/SparkSheet.png",
 		L"../../Resource/Json/SparkSheet/SparkSheet_sprites.json",
 		L"../../Resource/Json/SparkSheet/Red_Spark_anim.json");
@@ -67,6 +68,12 @@ void DummyCircleCollider::OnUpdate()
 	if (input->IsKeyPressed('T'))
 	{
 		particle->SetLoop(false);
+	}
+
+	// change Scene -> SliceObjectScene
+	if (input->IsKeyPressed('1'))
+	{
+		Singleton<SceneManager>::GetInstance().LoadScene(1);
 	}
 }
 

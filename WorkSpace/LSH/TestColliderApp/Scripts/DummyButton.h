@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "Components/Base/MonoBehavior.h"
 #include "Components/UI/Button.h"
+#include "Components/Rendering/TextRenderer.h"
 
 class DummyButton : public MonoBehavior
 {
@@ -17,7 +18,8 @@ private:
 	void SetValue(int value);
 
 	Button* button{};
-	
+	TextRenderer* fpsText{};
+
 	int value = 0;
 };
 

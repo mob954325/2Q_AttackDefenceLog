@@ -99,7 +99,7 @@ void Rigidbody2D::Intergrate(std::vector<CollisionInfo>& collisions, float delta
 				if(useGravity)
 				{ 
 					// 중력의 법선 성분 제거
-					float gDotN = adjustGravity.Dot(normal);
+					float gDotN = Vector2::Dot(adjustGravity, normal);
 					if (gDotN < 0)
 					{
 						adjustGravity -= normal * gDotN;
@@ -204,7 +204,7 @@ Vector2 Rigidbody2D::CalculateCollisionResponse(const CollisionInfo& info)
 	Vector2 normal = info.normal;
 
 	// velocity를 법선 방향으로 투영
-	float vDotN = velocity.Dot(normal);
+	float vDotN = Vector2::Dot(velocity, normal);
 
 	// 마찰과 탄성
 	if (vDotN < 0) // 침투 방향일 때만 제거
@@ -217,7 +217,7 @@ Vector2 Rigidbody2D::CalculateCollisionResponse(const CollisionInfo& info)
 		Vector2 vt = velocity - vn;			 // velocity의 접선 성분
 		Vector2 tangent = vt.Normalize();	 // 접선 방향
 
-		float vDotT = velocity.Dot(tangent); // 접속 속도 크기
+		float vDotT = Vector2::Dot(velocity, tangent); // 접속 속도 크기
 
 		// 마찰 반응
 		Vector2 impulseN = -friction * vDotT * tangent; // 부딪칠 때
