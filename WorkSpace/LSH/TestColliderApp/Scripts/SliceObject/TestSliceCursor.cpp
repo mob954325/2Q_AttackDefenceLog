@@ -1,5 +1,6 @@
 ﻿#include "TestSliceCursor.h"
 #include "Components/Base/GameObject.h"
+#include "Scene/SceneManager.h"
 
 void TestSliceCursor::OnCreate()
 {
@@ -12,24 +13,16 @@ void TestSliceCursor::OnStart()
 
 void TestSliceCursor::OnUpdate()
 {
-	if (input->IsKeyPressed('E'))
-	{
-		if ((*target) != 0)
-		{
-			target->Spread();
-		}
-	}
-
 	if (input->IsKeyPressed('R'))
 	{
-		if ((*target) != 0)
+		for (auto obj : targets)
 		{
-			target->Reset();
+			obj->Reset();
 		}
 	}
 }
 
-void TestSliceCursor::SetSliceTarget(TestSliceObject* obj)
+void TestSliceCursor::SetSliceTarget(std::vector<SliceObject*>& obj)
 {
-	target = obj;
+	targets = obj;
 }

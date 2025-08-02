@@ -10,9 +10,9 @@ void PieceObject::OnCreate()
 
 void PieceObject::OnUpdate()
 {
-	if (isMove /*&& (easingTime <= maxEasingTime)*/)
+	if (isMove && (easingTime <= maxEasingTime))
 	{
-		//float x = EasingList[EasingEffect::InOutExpo](easingTime);
+		float x = EasingList[EasingEffect::InOutQuint](easingTime);
 		owner->GetTransform().Translate(moveDir * speed);
 		easingTime += Singleton<GameTime>::GetInstance().GetDeltaTime();
 	}
@@ -42,4 +42,5 @@ void PieceObject::Reset()
 {
 	owner->GetTransform().SetPosition(0, 0);
 	isMove = false;
+	easingTime = 0.0f;
 }

@@ -343,7 +343,7 @@
     <ClCompile Include="TestColliderApp\App\TestColliderApp.cpp" />
     <ClCompile Include="TestColliderApp\Scenes\CircleColliderScene.cpp" />
     <ClCompile Include="TestColliderApp\Scripts\TestCircleCollider.cpp" />
-    <ClCompile Include="TestColliderApp\Scripts\SliceObject\TestSliceObject.cpp" />
+    <ClCompile Include="TestColliderApp\Scripts\SliceObject\SliceObject.cpp" />
     <ClCompile Include="TestColliderApp\Scripts\SliceObject\TestSliceCursor.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -355,7 +355,7 @@
     <ClInclude Include="TestColliderApp\App\TestColliderApp.h" />
     <ClInclude Include="TestColliderApp\Scenes\CircleColliderScene.h" />
     <ClInclude Include="TestColliderApp\Scripts\TestCircleCollider.h" />
-    <ClInclude Include="TestColliderApp\Scripts\SliceObject\TestSliceObject.h" />
+    <ClInclude Include="TestColliderApp\Scripts\SliceObject\SliceObject.h" />
     <ClInclude Include="TestColliderApp\Scripts\SliceObject\TestSliceCursor.h" />
   </ItemGroup>
   <ItemGroup>
