@@ -335,20 +335,28 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application\Game.cpp" />
+    <ClCompile Include="TestColliderApp\Scenes\SliceObjectScene.cpp" />
+    <ClCompile Include="TestColliderApp\Scripts\SliceObject\PieceObject.cpp" />
     <ClCompile Include="TestColliderApp\Scripts\DummyEffectAnimation.cpp" />
     <ClCompile Include="TestColliderApp\Scripts\DummyButton.cpp" />
     <ClCompile Include="TestColliderApp\Scripts\DummyCircleCollider.cpp" />
     <ClCompile Include="TestColliderApp\App\TestColliderApp.cpp" />
     <ClCompile Include="TestColliderApp\Scenes\CircleColliderScene.cpp" />
     <ClCompile Include="TestColliderApp\Scripts\TestCircleCollider.cpp" />
+    <ClCompile Include="TestColliderApp\Scripts\SliceObject\SliceObject.cpp" />
+    <ClCompile Include="TestColliderApp\Scripts\SliceObject\TestSliceCursor.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="TestColliderApp\Scenes\SliceObjectScene.h" />
+    <ClInclude Include="TestColliderApp\Scripts\SliceObject\PieceObject.h" />
     <ClInclude Include="TestColliderApp\Scripts\DummyEffectAnimation.h" />
     <ClInclude Include="TestColliderApp\Scripts\DummyButton.h" />
     <ClInclude Include="TestColliderApp\Scripts\DummyCircleCollider.h" />
     <ClInclude Include="TestColliderApp\App\TestColliderApp.h" />
     <ClInclude Include="TestColliderApp\Scenes\CircleColliderScene.h" />
     <ClInclude Include="TestColliderApp\Scripts\TestCircleCollider.h" />
+    <ClInclude Include="TestColliderApp\Scripts\SliceObject\SliceObject.h" />
+    <ClInclude Include="TestColliderApp\Scripts\SliceObject\TestSliceCursor.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Engine\Engine.vcxproj">
