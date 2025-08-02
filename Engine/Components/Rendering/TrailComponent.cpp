@@ -37,31 +37,12 @@ void TrailComponent::Update() { // 여기서 삭제(정리)처리해주면 됨
 		else if (toFade > inactiveCount) toFade = inactiveCount;
 
 		//==========================================================================			
-// 		for (int i = 0; i < trails.size(); i++) {
-// 			auto& stamp = trails[i];
-// 
-// 			if (!stamp.isActive) {
-// 				if (stamp.alpha >= 0.9999f) {
-// 					if (toFade-- <= 0)
-// 						continue;
-// 				}
-// 				stamp.alpha -= fadeSpeed * delta;
-// 				if (stamp.alpha < 0.0f)
-// 					stamp.alpha = 0.0f;
-// 			}
-// 			else { //active true
-// 				if (i < 50 )
-// 					stamp.alpha = (i+1) * 0.02f;
-// 			}
-// 		}
-
-		//지렁이 같음
 		int activeIndex = 0;
+
 		for (int i = 0; i < trails.size(); i++) {
 			auto& stamp = trails[i];
 
 			if (!stamp.isActive) {
-				// 삭제 중 처리
 				if (stamp.alpha >= 0.9999f) {
 					if (toFade-- <= 0)
 						continue;
@@ -70,14 +51,23 @@ void TrailComponent::Update() { // 여기서 삭제(정리)처리해주면 됨
 				if (stamp.alpha < 0.0f)
 					stamp.alpha = 0.0f;
 			}
-			else {
-				// active 순서에 따라 alpha 설정
-				if (activeIndex < 100)
-					stamp.alpha = (activeIndex + 1) * 0.01f;
+			else { //active = true				
+				if (activeIndex < 50) { // 0 ~ 200(활성화 된 노드만 카운트)
+					float targetAlpha = (activeIndex + 1) * 0.02f; // 0.02 ~ 0.02 * 50( 1.0)
 
-				++activeIndex; // 오직 isActive == true인 경우에만 증가
+					if (stamp.alpha > targetAlpha) {
+						stamp.alpha -= fadeSpeed * delta;
+						if (stamp.alpha < targetAlpha)
+							stamp.alpha = targetAlpha;
+					}
+					else {
+						stamp.alpha = targetAlpha;
+					}
+				}
+				++activeIndex;
 			}
 		}
+
 	}
 
 	//==========================================================================
@@ -165,7 +155,8 @@ void TrailComponent::Draw(D2DRenderManager* manager) {
 	D2D1_SIZE_F bmpSize = stampBitmap->GetBitmap()->GetSize(); // 사이즈 대충 구해서 중앙기준으로
 	D2D1_RECT_F srcRect = { 0.0f, 0.0f,	bmpSize.width, bmpSize.height };
 
-	const int fadeCount = 1;
+	D2D1_SIZE_F headSize = headBitmap->GetBitmap()->GetSize();
+	D2D1_RECT_F headSrcRect = { 0.0f, 0.0f, headSize.width, headSize.height };
 
 	for (int i = 0; i < trails.size(); ++i) { // 큐 전체를 순회하면서
 		const TrailStamp& stamp = trails[i];
@@ -174,29 +165,21 @@ void TrailComponent::Draw(D2DRenderManager* manager) {
 			stamp.angle * 180.0f / PI,
 			stamp.position
 		);
-
-		// 		if (i < 3 && trails.size() >= 3) {
-		// 			D2D1_RECT_F tailDestRect = {
-		// 			stamp.position.x - tailSize.width * 0.5f,
-		// 			stamp.position.y - tailSize.height * 0.5f,
-		// 			stamp.position.x + tailSize.width * 0.5f,
-		// 			stamp.position.y + tailSize.height * 0.5f
-		// 			};
-		// 
-		// 			manager->SetRenderTransform(transform);
-		// 			manager->DrawBitmap(tailBitmap->GetBitmap(), tailDestRect, tailSrcRect, stamp.alpha); // 그려잇
-		// 		}
-		// 		else {
 		D2D1_RECT_F destRect = { // 대충 이미지 정 가운데 기준
-		stamp.position.x - bmpSize.width * 0.5f,
-		stamp.position.y - bmpSize.height * 0.5f,
-		stamp.position.x + bmpSize.width * 0.5f,
-		stamp.position.y + bmpSize.height * 0.5f,
+			stamp.position.x - bmpSize.width * 0.5f,
+			stamp.position.y - bmpSize.height * 0.5f,
+			stamp.position.x + bmpSize.width * 0.5f,
+			stamp.position.y + bmpSize.height * 0.5f,
 		};
 
 		manager->SetRenderTransform(transform);
-		manager->DrawBitmap(stampBitmap->GetBitmap(), destRect, srcRect, stamp.alpha); // 그려잇
 
+		if (i < 3 && trails.size() >= 3) // 꼬리
+			manager->DrawBitmap(tailBitmap->GetBitmap(), destRect, tailSrcRect, stamp.alpha); // 그려잇
+		else if ((i >= (static_cast<int>(trails.size()) - 3))) // 머리
+			manager->DrawBitmap(headBitmap->GetBitmap(), destRect, headSrcRect, stamp.alpha); // 그려잇		
+		else // 몸통
+			manager->DrawBitmap(stampBitmap->GetBitmap(), destRect, srcRect, stamp.alpha); // 그려잇
 	}
 }
 
@@ -212,11 +195,17 @@ void TrailComponent::SetBitmap(std::wstring path) // 랩핑한거임, 별거없�
 {
 	stampBitmap = resourceManager->CreateBitmapResource(path);
 	tailBitmap = stampBitmap; // 일단 몸통으로 초기화
+	headBitmap = stampBitmap; // 머리도 초기화
 }
 
 void TrailComponent::SetTailBitmap(std::wstring path) //꼬리는 나중에 추가하는걸 추천
 {
 	tailBitmap = resourceManager->CreateBitmapResource(path);
+}
+
+void TrailComponent::SetHeadBitmap(std::wstring path)
+{
+	headBitmap = resourceManager->CreateBitmapResource(path);
 }
 
 void TrailComponent::OnDestroy() // 이거 안하면 터짐

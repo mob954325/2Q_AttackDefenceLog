@@ -30,6 +30,7 @@ public:
 	void Render(D2DRenderManager* manager) override; // 이거 기반으로 그려짐
 	void SetBitmap(std::wstring path);
 	void SetTailBitmap(std::wstring path);
+	void SetHeadBitmap(std::wstring path);
 	void OnDestroy() override;
 	void Clear(); // 한번에 지우는거임, 큐 비움	
 
@@ -60,7 +61,7 @@ public:
 	float minDistance = 5.0f; // 최소거리, 즉 스탬프들간의 간격임 촘촘하면 부드러워짐
 	float lifeTime = 0.3f; // 이거일단 사용안함, 나중에 update에서 시간 지난거 처리하는식으로 가능함
 	int maxTrailCount = 100; // 최대 길이, 찍히는 비트맵의 갯수
-	float fadeSpeed = 0.7f; // 수명 다한 브러쉬의 삭제속도임
+	float fadeSpeed = 0.4f; // 수명 다한 브러쉬의 삭제속도임
 
 	std::deque<TrailStamp> cachedTrails; // 이건 저장용임(공개됨) - 신규 갱신은 랜더용으로 사용되는 큐(trails)가 삭제되기전에
 
@@ -70,4 +71,5 @@ private:
 	std::deque<TrailStamp> trails; // 큐, 여기에 구조체 담김(좌표, 각도, 수명)
 	std::shared_ptr<BitmapResource> stampBitmap = nullptr; // 찍을 비트맵, 브러쉬 넣으면 됨
 	std::shared_ptr<BitmapResource> tailBitmap = nullptr;
+	std::shared_ptr<BitmapResource> headBitmap = nullptr;
 };

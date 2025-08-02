@@ -20,7 +20,8 @@ void HSKScene::OnEnterImpl()
 	d->SetOrderInLayer(80);
 
 	t->SetBitmap(L"../HSK/Test/test5.png");
-	//t->SetTailBitmap(L"../HSK/Test/test_t.png");
+	t->SetTailBitmap(L"../HSK/Test/test1.png");
+	t->SetHeadBitmap(L"../HSK/Test/white_brush_test3.png");
 	d->SetBitmap(L"../HSK/Test/test5.png");
 
 	AddGameObject(obj, "trail");
