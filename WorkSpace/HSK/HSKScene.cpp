@@ -12,9 +12,9 @@ void HSKScene::OnEnterImpl()
 {
 	obj = new GameObject();
 	obj->SetRenderLayer(EngineData::RenderLayer::UI);
-	auto t = obj->AddComponent<TrailComponent>();
-	t->SetOrderInLayer(100);
 	
+	auto t = obj->AddComponent<TrailComponent>();
+	t->SetOrderInLayer(100);	
 
 	auto d = obj->AddComponent<PatternDrawerComponent>();
 	d->SetOrderInLayer(80);
@@ -68,13 +68,13 @@ void HSKScene::UpdateImpl()
 
 	obj->GetTransform().SetPosition(Input::MouseX, Input::MouseY);
 	t->isOutFromBox = PM.CheckOutOfBox({ Input::MouseX, Input::MouseY });
+
 	if (t->isNewCached) {
-		PM.CheckTrails(t->cachedTrails);
+		PM.CheckTrails(t->CheckingCachedTrails());
 		const auto& vec = PM.GetPatternPathPositions();
 		d->SetLine(PM.GetPatternPathPositions());
 		if (!vec.empty())
-			t->Clear();		
-		t->isNewCached = false; // 사용했다고 알림				
+			t->Clear();				
 
 		for (int value : PM.GetPattern()) {
 			std::cout << value << "-";
