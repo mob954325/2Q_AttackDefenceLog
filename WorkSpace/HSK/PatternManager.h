@@ -31,7 +31,6 @@ public:
 	void SetPatternBox(const D2D1_RECT_F& box);
 	void CheckTrails(const std::deque<TrailStamp>& trails);
 	bool CheckOutOfBox(Vector2 pos);
-	void AddNodes(Vector2 pos, float radius, int i);
 	int GetSkippedNode(int from, int to); // 논리 연산, 중간에 노드가 스킵되었을 가능성을 판단
 
 	std::vector<Line> GetPatternPathPositions();
@@ -39,6 +38,9 @@ public:
 	const std::deque<int>& GetPattern() const {
 		return pattern;
 	}
+
+	float padding = 0.0f; // 0이면 반지름의 1.5배로 처리해줌
+
 private:
 	std::array<Node, 9> nodes;
 	std::deque<int> pattern;

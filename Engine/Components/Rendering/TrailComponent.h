@@ -62,7 +62,7 @@ public:
 
 	std::deque<TrailStamp> cachedTrails; // 이건 저장용임(공개됨) - 신규 갱신은 랜더용으로 사용되는 큐(trails)가 삭제되기전에
 	
-	inline const std::deque<TrailStamp>& CheckingcaChedTrails() {
+	inline const std::deque<TrailStamp>& CheckingCachedTrails() {
 		isNewCached = false;
 		return cachedTrails;
 	}

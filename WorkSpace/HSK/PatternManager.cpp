@@ -2,9 +2,7 @@
 #include "Components/Base/GameObject.h"
 #include "Components/Rendering/BitmapRenderer.h"
 #include "../Engine/Resources/ResourceManager.h"
-//#include "../Engine/Components/Rendering/LineRenderer.h"
 #include "../Engine/Platform/D2DRenderManager.h"
-
 
 constexpr float PI = 3.141592654f; // 이건 유명한 파이임
 
@@ -12,7 +10,6 @@ void PatternManager::SetNodes(const std::array<GameObject*, 9>& positions, float
 {
 	Vector2 minNode{ FLT_MAX, FLT_MAX }; //극값?이라고함
 	Vector2 maxNode{ -FLT_MAX, -FLT_MAX };
-
 
 	for (int i = 0; i < 9; ++i) {
 		auto bmpSize = positions[i]->GetComponent<BitmapRenderer>()->GetResource()->GetBitmap()->GetSize();
@@ -32,11 +29,11 @@ void PatternManager::SetNodes(const std::array<GameObject*, 9>& positions, float
 
 		if (center.x > maxNode.x) maxNode.x = center.x; // 최대노드보다 큰 값일경우 갱신
 		if (center.y > maxNode.y) maxNode.y = center.y;
-	}
+	}	
 
-	float padding = radius * 1.5f;
+	if (padding == 0.0f) padding = radius * 1.5f;
 
-	patternBox = {
+	patternBox = { // 자동으로 박스 찾아줌
 		minNode.x - padding,
 		minNode.y - padding,
 		maxNode.x + padding,
@@ -44,12 +41,7 @@ void PatternManager::SetNodes(const std::array<GameObject*, 9>& positions, float
 	};
 }
 
-void PatternManager::AddNodes(Vector2 pos, float radius, int i) // 안썼음 결국
-{
-	nodes[i].position = pos;
-	nodes[i].radius = radius;
-	nodes[i].isHit = false; // 초기화,
-}
+//==========================================================================
 
 int PatternManager::GetSkippedNode(int from, int to)
 {
@@ -61,7 +53,6 @@ int PatternManager::GetSkippedNode(int from, int to)
 	int mx = (ax + bx) / 2; // x 사이에 임의의 점(중앙)
 	int my = (ay + by) / 2; // y 사이에 임의의 점(중앙)
 
-
 	if ((abs(ax - bx) == 2 && ay == by) || // 수평, 1 3 처럼, 2칸차이 나는데 y 같으면, 0 2뿐이 없음 이것도
 		(abs(ay - by) == 2 && ax == bx) || // 수직, 0 1 2 라서, 2 0 뿐이 없긴함
 		(abs(ax - bx) == 2 && abs(ay - by) == 2) // 대?각 위 두조건을 동시에 만족하면 대각임, 02 02
@@ -69,6 +60,8 @@ int PatternManager::GetSkippedNode(int from, int to)
 
 	return -1;
 }
+
+//==========================================================================
 
 std::vector<Line> PatternManager::GetPatternPathPositions() {
 	std::vector<Line> tmp;
@@ -89,17 +82,13 @@ std::vector<Line> PatternManager::GetPatternPathPositions() {
 	return tmp;
 }
 
-void PatternManager::SetPatternBox(const D2D1_RECT_F& box) // 안씀
-{
-	patternBox = box;
-}
+//==========================================================================
 
 void PatternManager::CheckTrails(const std::deque<TrailStamp>& trails)
 {
 	pattern.clear();
 
 	int lastHit = -1;
-
 	for (const auto& stamp : trails) { // 트레일 안에 있는것들, 형태는 TrailStamp
 
 		if (stamp.isActive == false) continue;
@@ -114,7 +103,7 @@ void PatternManager::CheckTrails(const std::deque<TrailStamp>& trails)
 
 			float dx = pos.x - node.position.x; // x축 차이
 			float dy = pos.y - node.position.y; // y축 차이
-			float distSq = dx * dx + dy * dy; // 피타고라스
+			float distSq = dx * dx + dy * dy; // 피타고라파덕
 			float radiusSq = node.radius * node.radius; // 반지름의 제곱 // 사실상 판정 거리임 반지름으로 보긴 애매할 수 있음
 
 			if (distSq <= radiusSq) { // 충돌 경우수
@@ -148,5 +137,7 @@ bool PatternManager::CheckOutOfBox(Vector2 pos) // AABB < 마우스 나갔는지
 		pos.y < patternBox.top || pos.y > patternBox.bottom);
 }
 
-
-
+void PatternManager::SetPatternBox(const D2D1_RECT_F& box) // 안씀, 9개 노드들의 최대 x y 값으로 초기 등록시 처리해줌
+{
+	patternBox = box;
+}
