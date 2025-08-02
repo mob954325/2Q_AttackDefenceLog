@@ -18,9 +18,8 @@ struct TrailStamp { // 게임오브젝트를 대체하는 구조체, 비트맵 �
 	float alpha = 1.0f; // 투명도 + 0.0f 되면 Update에서 제거됨
 	bool isActive = true; // 판정이 살아있는지 여부임	
 	//float timestamp; // 기능 사용 안함, 나중에 시간비례해서 삭제하고 싶으면, update쪽에서 조건 넣어주면 됨
-
-	float fadeTimer = 0.0f; // 연출용 타이머
-	static constexpr float fadeDuration = 1.0f; // 사라지는 데 걸리는 시간 (스-테틱이라 한번만 생기지롱)
+	//float fadeTimer = 0.0f; // 연출용 타이머
+	//static constexpr float fadeDuration = 1.0f; // 사라지는 데 걸리는 시간 (스-테틱이라 한번만 생기지롱) 
 };
 
 //==========================================================================

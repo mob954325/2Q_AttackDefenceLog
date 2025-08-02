@@ -8,7 +8,7 @@ constexpr float PI = 3.141592654f; // 이건 유명한 파이임
 void TrailComponent::Update() { // 여기서 삭제(정리)처리해주면 됨
 	float delta = GameTime::GetInstance().GetDeltaTime();
 
-	if (WasJustReleased()) { // 이후상태 true + 현재상태 false, 즉 꺼질때 한번 // 삭제되는 조건 1##
+	if (WasJustReleased()) { // 꺼질때 한번
 		cachedTrails = trails; // 캐싱하고
 		isNewCached = true;		// 갱신 되었다고 외부에 알려주는 플래그
 
@@ -136,7 +136,7 @@ void TrailComponent::AddStamp(D2D1_POINT_2F pos) { //스탬프를 찍는건데, 
 
 		for (auto& stamp : trails) {
 			stamp.isActive = false;
-			stamp.fadeTimer = 0.0f;
+			//stamp.fadeTimer = 0.0f;
 			if (--over <= 0) break;
 		}
 	}
