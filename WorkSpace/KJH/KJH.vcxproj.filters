@@ -11,6 +11,8 @@
     <ClCompile Include="DataStorage\CsvDataStorage.cpp" />
     <ClCompile Include="DataStorage\NodeData.cpp" />
     <ClCompile Include="DataStorage\DataClass\PlayerData.cpp" />
+    <ClCompile Include="Script\TestObject.cpp" />
+    <ClCompile Include="Script\TestObject2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Script\MusicScript.h" />
@@ -22,5 +24,7 @@
     <ClInclude Include="DataStorage\CsvDataStorage.h" />
     <ClInclude Include="DataStorage\NodeData.h" />
     <ClInclude Include="DataStorage\DataClass\PlayerData.h" />
+    <ClInclude Include="Script\TestObject.h" />
+    <ClInclude Include="Script\TestObject2.h" />
   </ItemGroup>
 </Project>

@@ -25,6 +25,14 @@ public:
 	D2D1_MATRIX_3X2_F GetMatrix() const;
 	D2D1_MATRIX_3X2_F GetInvertMatrix() const;
 
+	//카메라의 중점좌표 (카메라 붙이는 곳, owner의 좌표)
+	D2D1_POINT_2F zoomFocusScreen;
+
+	D2D1_MATRIX_3X2_F invCameraMatrix;
+	//cameraMatrix.Invert(&invCameraMatrix);
+	//D2D1_POINT_2F zoomFocusWorld = invCameraMatrix.TransformPoint(zoomFocusScreen);
+
+
 	Transform& GetTransform() const;
 
 	int& GetPriority();

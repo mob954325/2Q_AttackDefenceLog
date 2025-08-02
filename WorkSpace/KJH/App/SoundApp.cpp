@@ -16,10 +16,11 @@ void SoundApp::SoundApp::Initialize()
 	MessageBox(NULL, buffer, L"실제 시도 중인 파일 경로", MB_OK);*/
 
 
+	__super::Initialize();
+
 	testScene = new TestScene::TestScene();
 	Singleton<SceneManager>::GetInstance().AddScene(testScene);
 	Singleton<SceneManager>::GetInstance().Init();
-	__super::Initialize();
 	AudioSystem::GetInstance().Initialize(128);
 	AudioSystem::GetInstance().Register(musiclist);
 

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Scene/Scene.h"
 #include "Datas/SoundDatas.h"
 
@@ -13,5 +13,7 @@ namespace TestScene
 
 	private:
 		GameObject* MusicBox{};
+		GameObject* CameTest{};
+		GameObject* CameTest2{};
 	};
 }
