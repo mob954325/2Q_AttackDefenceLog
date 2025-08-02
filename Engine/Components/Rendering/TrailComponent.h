@@ -5,7 +5,6 @@
 #include "Resources/BitmapResource.h"
 #include <deque>
 
-//==========================================================================
 /* 07.31. 한승규
 * 트레일 컴포넌트
 * 오너의 트랜스폼을 추적해, 최소거리 이상으로 변동이 생기면, 그자리에 이미지를 박아넣음
@@ -15,10 +14,13 @@
 
 struct TrailStamp { // 게임오브젝트를 대체하는 구조체, 비트맵 컴포넌트만 요구하기 때문에 가볍게 사용
 	D2D1_POINT_2F position; // 좌표
-	float angle; // 각도(계산 해야함)
-	float timestamp; // 기능 사용 안함, 나중에 시간비례해서 삭제하고 싶으면, update쪽에서 조건 넣어주면 됨
+	float angle; // 각도(계산 해야함)	
 	float alpha = 1.0f; // 투명도 + 0.0f 되면 Update에서 제거됨
 	bool isActive = true; // 판정이 살아있는지 여부임	
+	//float timestamp; // 기능 사용 안함, 나중에 시간비례해서 삭제하고 싶으면, update쪽에서 조건 넣어주면 됨
+
+	float fadeTimer = 0.0f; // 연출용 타이머
+	static constexpr float fadeDuration = 1.0f; // 사라지는 데 걸리는 시간 (스-테틱이라 한번만 생기지롱)
 };
 
 //==========================================================================
@@ -54,11 +56,19 @@ public:
 	bool WasJustReleased() const { return wasDraw && !isDraw; } // 외부에서 상태 확인할때 씀
 	bool WasJustPressed() const { return !wasDraw && isDraw; }
 
-	float minDistance = 5.0f;	// 최소거리, 즉 스탬프들간의 간격임 촘촘하면(작으면) 부드러워짐
-	int maxTrailCount = 100;	// 최대 갯수, 찍히는 비트맵의 갯수
+	float minDistance = 5.0f;	// 최소거리, 즉 스탬프들간의 간격임 촘촘하면(작으면) 부드러워짐	
 	float fadeSpeed = 0.4f;		// 수명 다한 브러쉬의 삭제속도임
 
-	float lifeTime = 0.3f;		// 이거일단 사용안함, 나중에 update에서 시간 지난거 처리하는식으로 가능함
+	int maxTrailCount = 100;	// 최대 갯수, 찍히는 비트맵의 갯수
+	int maxIndex = maxTrailCount / 2; // 투명도 곡선 계산에서 사용됨
+
+	int deleteStepDivider = 10; // 역수임, 1/N 으로 들어가고 삭제 발생시 얼마나 지울지임
+
+	int headIndex = 30.0f; // 큐의 뒤에서 - 시각적으로는 앞에서부터 (범위값임)
+	int tailIndex = 10.0f; // 큐의 앞에서 - 시각적으로는 뒤에서부터 (범위값임)
+	
+
+	//float lifeTime = 0.3f;		// 이거일단 사용안함, 나중에 update에서 시간 지난거 처리하는식으로 가능함
 
 	std::deque<TrailStamp> cachedTrails; // 이건 저장용임(공개됨) - 신규 갱신은 랜더용으로 사용되는 큐(trails)가 삭제되기전에
 	

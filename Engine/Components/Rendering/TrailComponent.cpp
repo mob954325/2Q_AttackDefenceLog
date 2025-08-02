@@ -28,7 +28,7 @@ void TrailComponent::Update() { // 여기서 삭제(정리)처리해주면 됨
 				break; // 연속되는 값이라, 하나 아니면 뒤에는 전부 아님
 		}
 
-		int toFade = inactiveCount / 10; // 10% 지움
+		int toFade = inactiveCount / deleteStepDivider; // 1/N씩 지움
 		if (toFade < 3 && inactiveCount > 0) toFade = 3; // 최소 3개씩은 지우자
 		else if (toFade > inactiveCount) toFade = inactiveCount;
 
@@ -40,16 +40,22 @@ void TrailComponent::Update() { // 여기서 삭제(정리)처리해주면 됨
 
 			if (!stamp.isActive) {
 				if (stamp.alpha >= 0.9999f) {
-					if (toFade-- <= 0)
-						continue;
+					if (toFade-- <= 0) continue;
 				}
+
 				stamp.alpha -= fadeSpeed * delta;
 				if (stamp.alpha < 0.0f)
 					stamp.alpha = 0.0f;
 			}
-			else { //active = true				
-				if (activeIndex < 50) { // 0 ~ 200(활성화 된 노드만 카운트)
-					float targetAlpha = (activeIndex + 1) * 0.02f; // 0.02 ~ 0.02 * 50( 1.0)
+			else { //active = true								
+				if (activeIndex < maxIndex) { // 전체 길이의 절반에 투명도를 적용함
+					float t = static_cast<float>(activeIndex) / maxIndex; // 0.0 ~ 1.0
+					float targetAlpha = std::sin(t * (PI * 0.5f)); // 0.0 ~ 1.0 자연 곡선 // sin(t * π/2)
+
+					constexpr float minAlpha = 0.01f; // 0.0 되버리면 삭제대상이 되버림
+
+					if (targetAlpha < minAlpha)
+						targetAlpha = minAlpha;
 
 					if (stamp.alpha > targetAlpha) {
 						stamp.alpha -= fadeSpeed * delta;
@@ -119,7 +125,7 @@ void TrailComponent::AddStamp(D2D1_POINT_2F pos) { //스탬프를 찍는건데, 
 		trails.push_back({ interpPos, angle }); // 1 ~ ? 갯수만큼 넣어줌
 
 		if (trails.size() == 2)
-			trails[0].angle = angle;
+			trails[0].angle = angle; // 첫 지점이 0.0f인데, 자연스럽게 방향성을 덮어씌우는 거임
 	}
 
 	//==========================================================================
@@ -130,6 +136,7 @@ void TrailComponent::AddStamp(D2D1_POINT_2F pos) { //스탬프를 찍는건데, 
 
 		for (auto& stamp : trails) {
 			stamp.isActive = false;
+			stamp.fadeTimer = 0.0f;
 			if (--over <= 0) break;
 		}
 	}
@@ -151,7 +158,7 @@ void TrailComponent::Draw(D2DRenderManager* manager) {
 
 	D2D1_SIZE_F headSize = headBitmap->GetBitmap()->GetSize();
 	D2D1_RECT_F headSrcRect = { 0.0f, 0.0f, headSize.width, headSize.height };
-	
+
 	//==========================================================================
 
 	for (int i = 0; i < trails.size(); ++i) { // 큐 전체를 순회하면서
@@ -172,9 +179,9 @@ void TrailComponent::Draw(D2DRenderManager* manager) {
 
 		//==========================================================================
 
-		if (i < 3 && trails.size() >= 3) // 꼬리
+		if (i < 3 && trails.size() >= tailIndex) // 꼬리
 			manager->DrawBitmap(tailBitmap->GetBitmap(), destRect, tailSrcRect, stamp.alpha); // 그려잇
-		else if ((i >= (static_cast<int>(trails.size()) - 3))) // 머리(-3했을때, 오버플로우 가능성 있음, 그래서 int로 캐스팅함)
+		else if ((i >= (static_cast<int>(trails.size()) - headIndex))) // 머리(-3했을때, 오버플로우 가능성 있음, 그래서 int로 캐스팅함)
 			manager->DrawBitmap(headBitmap->GetBitmap(), destRect, headSrcRect, stamp.alpha); // 그려잇		
 		else // 몸통
 			manager->DrawBitmap(stampBitmap->GetBitmap(), destRect, srcRect, stamp.alpha); // 그려잇
