@@ -34,7 +34,8 @@ struct Vector2
 	friend std::ostream& operator<<(std::ostream& os, Vector2 vec);
 
 	bool IsZero() const;
-	float Dot(const Vector2& other);
+	static float Dot(const Vector2& lhs, const Vector2& rhs);
+	static float Cross(const Vector2& lhs, const Vector2& rhs);
 	Vector2	Lerp(Vector2& start, Vector2& end, float t);
 	float Megnituede() const;
 	float SqrMegnitude() const;
