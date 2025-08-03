@@ -131,6 +131,7 @@ void ParticleRenderer::Render(D2DRenderManager* manager)
 
 void ParticleRenderer::OnDestroy()
 {
+	particleBitmapResource.reset();
 }
 
 void ParticleRenderer::Play()

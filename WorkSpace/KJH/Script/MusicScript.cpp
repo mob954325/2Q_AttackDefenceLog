@@ -21,8 +21,6 @@ void MusicScript::MusicScript::OnCreate()
 	
 	/*owner->GetTransform().SetPosition(-100.0f, -100.0f);*/
 	owner->GetTransform().SetUnityCoords(false);
-	
-
 }
 
 void MusicScript::MusicScript::OnStart()

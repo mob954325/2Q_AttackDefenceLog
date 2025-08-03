@@ -106,9 +106,14 @@ bool Vector2::IsZero() const
 	return x < FLT_EPSILON + 1.1e-13f && y < FLT_EPSILON + 1.1e-13f;
 }
 
-float Vector2::Dot(const Vector2& other)
+float Vector2::Dot(const Vector2& lhs, const Vector2& rhs)
 {
-	return x * other.x + y * other.y;
+	return lhs.x * rhs.x + lhs.y * rhs.y;
+}
+
+float Vector2::Cross(const Vector2& lhs, const Vector2& rhs)
+{
+	return lhs.x * rhs.y - lhs.y * rhs.x;
 }
 
 float Vector2::Megnituede() const

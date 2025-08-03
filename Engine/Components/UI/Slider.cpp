@@ -11,8 +11,8 @@ void Slider::OnStart()
 	GaugeBar->SetOrderInLayer(2);
 	GaugeBar->CreateBitmapResource(L"../../Resource/UI/TestGauge/Bar.png");
 	size = GaugeBar->GetResource()->GetBitmap()->GetSize();
-	
-	//변동값
+
+
 	GaugeBarRect.bottom = size.height;
 	GaugeBarRect.right = size.width;
 
@@ -39,11 +39,13 @@ void Slider::OnStart()
 
 	sizeButton = BarButton->GetResource()->GetBitmap()->GetSize();
 
-	//고정값
+
 	BarButSrctonRect.bottom = sizeButton.height;
 	BarButSrctonRect.right = sizeButton.width;
 
-	//변동값
+	BarButSrctonRect.bottom = sizeButton.height;
+	BarButSrctonRect.right = sizeButton.width;
+
 	ButtonDestRect.bottom = sizeButton.height;
 	ButtonDestRect.left = size.width - sizeButton.width/2;
 	ButtonDestRect.right = size.width + sizeButton.width/2;
@@ -64,6 +66,8 @@ void Slider::Update()
 	GaugeBackground->SetDestRect(GaugeBarBackGroundDestRect);
 
 	if(HandleValue) ButtonEvent();
+
+	ButtonEvent();
 }
 
 
@@ -119,9 +123,6 @@ D2D1_RECT_F Slider::GetGaugeRectValue()
 
 void Slider::ChangeGauge(float x)
 {
-	std::cout << size.width << std::endl;
-	std::cout << GaugeBarRect.right << std::endl;
-
 	/*D2D1_SIZE_F size = GaugeBar->GetResource()->GetBitmap()->GetSize();*/
 	if (pivotIsLeft) {
 		if ((GaugeBarRect.right < size.width && GaugeBarRect.right > 0))
@@ -150,6 +151,10 @@ void Slider::ChangeGauge(float x)
 //x는 좌표값
 void Slider::ChangeButtonPosition(float x)
 {
+	/*ButtonDestRect.left = size.width / 2 - sizeButton.width / 2;
+	ButtonDestRect.right = size.width / 2 + sizeButton.width / 2;*/
+	/*D2D1_SIZE_F size = GaugeBar->GetResource()->GetBitmap()->GetSize();
+	D2D1_SIZE_F sizeButton = BarButton->GetResource()->GetBitmap()->GetSize();*/
 	if (pivotIsLeft) {
 		if ((ButtonDestRect.right -sizeButton.width / 2 < size.width && ButtonDestRect.right - sizeButton.width / 2 > 0))
 		{
@@ -215,6 +220,7 @@ bool Slider::IsMouseOverBackground(const Vector2& mousePos) const
 		mousePos.y <= BackGroundRect.bottom;	// 아래
 }
 
+
 void Slider::SetSize()
 {
 	size = GaugeBar->GetResource()->GetBitmap()->GetSize();
@@ -265,8 +271,6 @@ void Slider::ButtonEvent()
 	//std::cout << ButtonDestRect.left << std::endl;
 	/*std::cout << BackGroundRect.right << std::endl;*/
 
-	/*std::cout << "asdf ::::: " << Input::MouseDeltaX << std::endl;*/
-
 	//std::cout << Input::MouseDeltaX << std::endl;
 	/*std::cout << BackGroundRect.right << std::endl;*/
 	
@@ -274,6 +278,7 @@ void Slider::ButtonEvent()
 	if (IsMouseOver(mouseVec))
 	{
 		OnButton = true;
+
 		/*std::cout << "마우스 버튼 위 지나감 감지" << std::endl;*/
 
 		if (Input::leftButtonDown)
@@ -300,6 +305,7 @@ void Slider::ButtonEvent()
 	
 	if (IsMouseOverBackground(mouseVec) && !OnButton)
 	{
+
 		/*std::cout << "마우스 게이지 배경 지나감 감지" << std::endl;*/
 		if (Input::leftButtonDown)
 		{

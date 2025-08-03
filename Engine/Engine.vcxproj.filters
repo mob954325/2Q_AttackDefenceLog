@@ -288,6 +288,7 @@
     <ClInclude Include="Components\Rendering\LineRenderer.h">
       <Filter>Components\Rendering</Filter>
     </ClInclude>
+    <ClInclude Include="Utils\HCURSORChange.h" />
     <ClInclude Include="Components\Rendering\PatternDrawerComponent.h">
       <Filter>Components\Rendering</Filter>
     </ClInclude>
@@ -448,6 +449,7 @@
     <ClCompile Include="Components\Rendering\LineRenderer.cpp">
       <Filter>Components\Rendering</Filter>
     </ClCompile>
+    <ClCompile Include="Utils\HCURSORChange.cpp" />
     <ClCompile Include="Components\Rendering\PatternDrawerComponent.cpp">
       <Filter>Components\Rendering</Filter>
     </ClCompile>

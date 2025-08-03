@@ -12,5 +12,6 @@ namespace TestCollider
 
 	private:
 		Scene* testColliderScene{};
+		Scene* testSliceScene{};
 	};
 }
