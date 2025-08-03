@@ -31,6 +31,7 @@ public:
 	virtual ~LiveObject() {};
 
 
+
 public:
 	//부모에 없는 내용을 가져올 가상 함수들
 	virtual float GetTotalImbalance() { return 0; }      // 적 객체에만 들어갈 맴버 변수 채간을 부모 객체로 받아오기 위해 필요!
@@ -69,10 +70,14 @@ public:
 
 	//배틀 매니저에 들어갈 스탯 계산할 함수
 	virtual void SelectPatten() = 0;   //각 객체가 사용할 패턴을 고름
-	//void SetGuideLine() {}		   //쿨타임 확인 후, 가이드라인, 적 공격 라인 생성 -> 렌더러의 영역?
-	//void GetPatten() {}			   //현재 마우스의 입력 받기  -> 승규님 데이터 받기
+	virtual std::vector<int> GetNowPatten() = 0;   //각 객체가 현재 패턴을 반환함
 	virtual void DeciedState(const std::queue<int> tmpqueue) = 0;  //큐와 현재 패턴을 비교
 	virtual void CalStat() = 0;   //여기서 계산
+	void SetAttackFlag(bool tmpisAttack) { isAttack = tmpisAttack; }
+
+
+	// 오브젝트의 start에 들어갈 함수
+	virtual void SetState() = 0;
 
 
 
@@ -92,5 +97,16 @@ protected:
 	float Object_nowCoolTime;	  // 현재 쿨타임
 
 	float SceneDeltaTime;	      // 씬의 델타타임
+
+	std::vector<std::string> Object_State;  //문자열 상태로  state 저장
+	std::string nowState;
+
+
+	
+public:
+	//배틀 매니저에서 사용할 flag
+	bool isAttack = false;		 // 공격 후에 새로운 공격 데이터를 세팅할 트리거
+	bool isZeroCool = false;     // 쿨타임이 0 이하로 내려감!! 
+	
 };
 
