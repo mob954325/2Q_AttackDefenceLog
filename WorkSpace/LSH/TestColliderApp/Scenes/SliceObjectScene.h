@@ -15,5 +15,6 @@ private:
 
 	std::vector<SplitObject*> sliceTargets{};
 	GameObject* cursor{};
+	GameObject* slice{};
 };
 

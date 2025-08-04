@@ -292,6 +292,9 @@
     <ClInclude Include="Components\Rendering\PatternDrawerComponent.h">
       <Filter>Components\Rendering</Filter>
     </ClInclude>
+    <ClInclude Include="Components\Rendering\SliceRenderer.h">
+      <Filter>Components\Rendering</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\Application.cpp">
@@ -451,6 +454,9 @@
     </ClCompile>
     <ClCompile Include="Utils\HCURSORChange.cpp" />
     <ClCompile Include="Components\Rendering\PatternDrawerComponent.cpp">
+      <Filter>Components\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\Rendering\SliceRenderer.cpp">
       <Filter>Components\Rendering</Filter>
     </ClCompile>
   </ItemGroup>

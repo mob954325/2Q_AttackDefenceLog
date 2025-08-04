@@ -1,0 +1,88 @@
+{
+    "texture": "attack_line_spreadsheet.png",
+    "textureWidth": 5463,
+    "textureHeight": 153,
+    "sprites": [
+        {
+            "name": "attack_line_spreadsheet_0",
+            "x": 0.0,
+            "y": 153.0,
+            "width": 607.0,
+            "height": 153.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "attack_line_spreadsheet_1",
+            "x": 607.0,
+            "y": 153.0,
+            "width": 607.0,
+            "height": 153.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "attack_line_spreadsheet_2",
+            "x": 1214.0,
+            "y": 153.0,
+            "width": 607.0,
+            "height": 153.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "attack_line_spreadsheet_3",
+            "x": 1821.0,
+            "y": 153.0,
+            "width": 607.0,
+            "height": 153.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "attack_line_spreadsheet_4",
+            "x": 2428.0,
+            "y": 153.0,
+            "width": 607.0,
+            "height": 153.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "attack_line_spreadsheet_5",
+            "x": 3035.0,
+            "y": 153.0,
+            "width": 607.0,
+            "height": 153.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "attack_line_spreadsheet_6",
+            "x": 3642.0,
+            "y": 153.0,
+            "width": 607.0,
+            "height": 153.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "attack_line_spreadsheet_7",
+            "x": 4249.0,
+            "y": 153.0,
+            "width": 607.0,
+            "height": 153.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "attack_line_spreadsheet_8",
+            "x": 4856.0,
+            "y": 153.0,
+            "width": 607.0,
+            "height": 153.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        }
+    ]
+}

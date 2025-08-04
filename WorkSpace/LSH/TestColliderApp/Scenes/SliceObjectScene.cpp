@@ -1,9 +1,11 @@
 ﻿#include "SliceObjectScene.h"
 #include "TestColliderApp/Scripts/SliceObject/TestSliceCursor.h"
 #include "Utils/StringConvert.h"
+#include "TestColliderApp/Scripts/SliceObject/SliceObject.h"
 
 void SliceObjectScene::OnEnterImpl()
 {	
+	// create nodes
 	for (int i = 0; i < 9; i++)
 	{
 		int x = i % 3;
@@ -13,12 +15,21 @@ void SliceObjectScene::OnEnterImpl()
 		sliceTargets[i]->owner->GetTransform().SetPosition(-250 + x * 150, y * 150);
 	}
 	
+	// create cursor GameObject
 	cursor = new GameObject();
 	cursor->SetName("cursor");
 	AddGameObject(cursor);
 
 	TestSliceCursor* comp2 = cursor->AddComponent<TestSliceCursor>();
 	comp2->SetSliceTarget(sliceTargets);
+
+	// create sliceObject
+	slice = new GameObject();
+	slice->SetName("slice");
+	AddGameObject(cursor);
+
+	SliceObject* comp3 = slice->AddComponent<SliceObject>();
+	slice->GetTransform().SetPosition(-200, -200);
 }
 
 void SliceObjectScene::OnExitImpl()
