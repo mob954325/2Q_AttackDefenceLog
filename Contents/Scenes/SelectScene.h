@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "Scripts/SceneCore.h"
 
-class MenuScene : public Scene
+class SelectScene : public Scene
 {
 protected:
 	void OnEnterImpl() override;

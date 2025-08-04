@@ -21,12 +21,51 @@
     <ClCompile Include="Scenes\MenuScene.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
+    <ClCompile Include="Scenes\EndScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scenes\SelectScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scenes\Stage1.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scenes\Stage2.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scenes\Stage3.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scenes\TitleScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameApp.h">
       <Filter>App</Filter>
     </ClInclude>
     <ClInclude Include="Scenes\MenuScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes\EndScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes\SelectScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes\Stage1.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes\Stage2.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes\Stage3.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\SceneCore.h">
+      <Filter>Scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes\TitleScene.h">
       <Filter>Scene</Filter>
     </ClInclude>
   </ItemGroup>

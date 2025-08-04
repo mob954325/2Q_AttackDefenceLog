@@ -14,5 +14,12 @@ public:
 
 private:
 	// 여기에 Scene 데이터 추가하기
+	Scene* titleScene;
 	Scene* menuScene;
+	Scene* selectScene;
+	Scene* endScene;
+
+	Scene* stage1;
+	Scene* stage2;
+	Scene* stage3;
 };

@@ -108,7 +108,10 @@ void TrailComponent::AddStamp(D2D1_POINT_2F pos) { //스탬프를 찍는건데, 
 	float dist = sqrtf(dx * dx + dy * dy); // 피타고라그래고리오고라파덕
 
 	if (dist < minDistance) // 가장 마지막에 찍힌 스탬프에서 일정거리 이상으로 좌표변동이 일어나야함
+	{
+		AddHoldStamp();
 		return;
+	}
 
 	int steps = static_cast<int>(dist / minDistance); //최소거리가 현재 간격에 몇번들어가는지 확인하는거임
 	//(최소거리보다 커야 생성되니까 기본적으로 1 이상임 + int라 정수임)
@@ -179,9 +182,11 @@ void TrailComponent::Draw(D2DRenderManager* manager) {
 
 		//==========================================================================
 
-		if (i < 3 && trails.size() >= tailIndex) // 꼬리
+		int head = (static_cast<int>(trails.size()) - headIndex);
+
+		if (i < tailIndex && head > i) // 꼬리
 			manager->DrawBitmap(tailBitmap->GetBitmap(), destRect, tailSrcRect, stamp.alpha); // 그려잇
-		else if ((i >= (static_cast<int>(trails.size()) - headIndex))) // 머리(-3했을때, 오버플로우 가능성 있음, 그래서 int로 캐스팅함)
+		else if (i >= head && stamp.isActive) // 머리(-했을때, 오버플로우 가능성 있음, 그래서 int로 캐스팅함)
 			manager->DrawBitmap(headBitmap->GetBitmap(), destRect, headSrcRect, stamp.alpha); // 그려잇		
 		else // 몸통
 			manager->DrawBitmap(stampBitmap->GetBitmap(), destRect, srcRect, stamp.alpha); // 그려잇
@@ -205,6 +210,7 @@ void TrailComponent::SetBitmap(std::wstring path) // 랩핑한거임, 별거없�
 	stampBitmap = resourceManager->CreateBitmapResource(path);
 	tailBitmap = stampBitmap; // 일단 몸통으로 초기화
 	headBitmap = stampBitmap; // 머리도 초기화
+	holdBitmap = stampBitmap; // 몰라 이것도 초기화
 }
 
 void TrailComponent::SetTailBitmap(std::wstring path) //꼬리는 나중에 추가하는걸 추천
@@ -215,6 +221,23 @@ void TrailComponent::SetTailBitmap(std::wstring path) //꼬리는 나중에 추�
 void TrailComponent::SetHeadBitmap(std::wstring path)
 {
 	headBitmap = resourceManager->CreateBitmapResource(path);
+}
+
+void TrailComponent::SetHoldBitmap(std::wstring path)
+{
+	holdBitmap = resourceManager->CreateBitmapResource(path);
+}
+
+void TrailComponent::AddHoldStamp() // 마우스 - 위치가 오랫동안 변하지 않으면 작동함
+{	
+	if (!allowHold) return;
+	
+	
+
+
+
+
+
 }
 
 void TrailComponent::OnDestroy() // 이거 안하면 터짐
