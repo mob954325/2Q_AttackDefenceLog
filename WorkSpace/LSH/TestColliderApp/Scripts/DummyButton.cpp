@@ -27,7 +27,8 @@ void DummyButton::OnUpdate()
 {
 	std::wstring str = std::to_wstring(Singleton<DebugUtility>::GetInstance().GetFPSCount());
 	fpsText->SetText(str);
-	
+
+	// DebugUtility::DebugLog("DummyButton Update");
 }
 
 void DummyButton::OnFixedUpdate()

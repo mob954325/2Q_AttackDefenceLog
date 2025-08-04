@@ -47,13 +47,13 @@ void SliceObjectScene::CreatePieces(std::vector<PieceObject*>& out)
 	}
 }
 
-SliceObject* SliceObjectScene::CreateGridNode()
+SplitObject* SliceObjectScene::CreateGridNode()
 {
 	GameObject* obj = new GameObject();
 	obj->SetName("SliceTargetObject");
 	AddGameObject(obj);
 
-	SliceObject* comp1 = obj->AddComponent<SliceObject>();
+	SplitObject* comp1 = obj->AddComponent<SplitObject>();
 	std::vector<PieceObject*> out;
 	CreatePieces(out);
 	comp1->SetImages(out);
