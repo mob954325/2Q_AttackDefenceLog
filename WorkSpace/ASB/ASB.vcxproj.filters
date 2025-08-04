@@ -15,6 +15,7 @@
     <ClCompile Include="CsvData\DataStorage\CsvDataStorage.cpp" />
     <ClCompile Include="CsvData\DataClass\EnemyData.cpp" />
     <ClCompile Include="CsvData\DataClass\PlayerData.cpp" />
+    <ClCompile Include="Component\StateController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameLogicTestScene\GameLogicTestScene.h" />
@@ -30,5 +31,6 @@
     <ClInclude Include="CsvData\DataClass\EnemyData.h" />
     <ClInclude Include="CsvData\DataClass\PlayerData.h" />
     <ClInclude Include="LogicTestManager\BettleManager.h" />
+    <ClInclude Include="Component\StateController.h" />
   </ItemGroup>
 </Project>

@@ -44,15 +44,18 @@ public:
 	void SetCoolTime() override;	//쿨타임이 0이 되었을 때, 플레이어의 쿨타임 설정
 	
 	//스테이트 설정하는 함수
-	void SetState() override;
-	
+	void SetState(std::string setStateName) override;
+	void OnCreateState() override;
 
+	//플래그를 체크할 함수
+	void ChangePatten() override;
+ 
 private:
-
-
 	std::vector<std::string> PattenID;    
 	PlayerData* nowPlayerData = nullptr; // 받아올 데이터를 가리키는 포인터
 	PlayerAtkPetternData* nowPlayerPattenData = nullptr; //사용할 패턴 데이터를 가리키는 포인터
-
+	PlayerAtkPetternData* prePlayerPattenData = nullptr;
+	StateController<Player> m_State;  //오브젝트 들은 State 내부에서 받을 수 있도록 포인터 생성
+	std::string PrePattenID;  // 이전 패턴의 ID
 };
 

@@ -6,6 +6,7 @@
 #include "Components/Logic/InputSystem.h"
 #include "components/Collision/AABBCollider.h"
 #include "Components/Physics/Rigidbody2D.h"
+#include "../Component/StateController.h"
 #include <queue>
 
 // 주의!!! 씬 단위로 델타타임을 고정시킬 예정이라서 씬의 업데이트 처음에 무조건 시간 받아오기!!!!
@@ -43,10 +44,12 @@ public:
 	std::wstring GetName() { return Object_Name; }				    // 이름 반환
 	float GetHp() { return Object_Hp; }							    // 체력 반환
 	float GetAttack() { return Object_Attack; }						// 공격력 반환
-	float GetImbalanceAttack() { return Object_SpiritAttack; }		// 기세 공격력 반환
+	float GetSpiritAttack() { return Object_SpiritAttack; }		// 기세 공격력 반환
 	float GetDefenseRate() { return Object_DefenseRate; }			// 방어율 반환
+	float GetPlayingAttackTime() const {return Object_PlayingAttackTime;}  //가이드라인이 떠있는 시간
+	float GetNowPlayingAttackTime() const {return Object_nowPlayingAttackTime;} //현채 가이드라인이 뜬 기간
 
-
+	
 	// 설정 함수들
 	void SetID(const std::string& id) { Object_ID = id; }							 // ID 설정
 	void SetName(const std::wstring& name) { Object_Name = name; }					 // 이름 설정
@@ -54,12 +57,14 @@ public:
 	void SetAttack(float attack) { Object_Attack = attack; }						 // 공격력 설정
 	void SetSpiritAttack(float SpiritAttack) { Object_SpiritAttack = SpiritAttack; } // 기세 공격력 설정
 	void SetDefenseRate(float defenseRate) { Object_DefenseRate = defenseRate; }     // 방어율 설정
+	void SetPlayingAttackTime(float time) {Object_PlayingAttackTime = time;}		 // 가이드라인이 떠있는 시간 설정
 	
 
 
 	//값 변경 함수
 	void GetDamage(float damageAmount) {Object_Hp -= damageAmount;} 
 	void GetSpiritdamage(float SpiritdamageAmount) { Object_SpiritAmount -= SpiritdamageAmount; }
+	void RestoreSpiritDamage(float SpiritRestoreAmount) { Object_SpiritAmount += SpiritRestoreAmount; }
 	
 
 	//각 객체의 업데이트에 들어갈 함수
@@ -73,11 +78,12 @@ public:
 	virtual std::vector<int> GetNowPatten() = 0;   //각 객체가 현재 패턴을 반환함
 	virtual void DeciedState(const std::queue<int> tmpqueue) = 0;  //큐와 현재 패턴을 비교
 	virtual void CalStat() = 0;   //여기서 계산
-	void SetAttackFlag(bool tmpisAttack) { isAttack = tmpisAttack; }
+	virtual void ChangePatten() = 0;  // 패턴이 변했는지 체크
 
 
-	// 오브젝트의 start에 들어갈 함수
-	virtual void SetState() = 0;
+	//state에 관련된 함수
+	virtual void SetState(std::string setStateName) = 0;
+	virtual void OnCreateState() = 0;
 
 
 
@@ -93,20 +99,27 @@ protected:
 	float Object_NowSpiritAmount; // 현재 기세 
 	float Object_OverTimeSpirit;  // 기세 감소 시간을 저장할 변수 
 
-	float Object_CoolTime;		  // 쿨타임 
-	float Object_nowCoolTime;	  // 현재 쿨타임
+	float Object_CoolTime;		  // 공격 대기시간
+	float Object_nowCoolTime;	  // 현재 대기시간
+
+	float Object_PlayingAttackTime; //패턴의 입력 대기 시간
+	float Object_nowPlayingAttackTime; //현재 패턴의 입력 대기 시간
+
+	
 
 	float SceneDeltaTime;	      // 씬의 델타타임
 
-	std::vector<std::string> Object_State;  //문자열 상태로  state 저장
-	std::string nowState;
+	float NodeTime;				  // 가이드라인의 판정 시간
+
+
 
 
 	
 public:
 	//배틀 매니저에서 사용할 flag
-	bool isAttack = false;		 // 공격 후에 새로운 공격 데이터를 세팅할 트리거
-	bool isZeroCool = false;     // 쿨타임이 0 이하로 내려감!! 
+	bool isPattenChange = false;   //공격 패턴이 변했는지
+	bool isPattenCooldown = false; //공격 패턴의 쿨타임이 줄어드는지
+	bool isPlayingPatten = false;  //공격 패턴이 실행되고 있는지
 	
 };
 
