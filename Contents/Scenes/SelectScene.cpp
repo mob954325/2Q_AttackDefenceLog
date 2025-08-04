@@ -10,18 +10,15 @@ void SelectScene::OnEnterImpl()
 
 	auto t = testObj->AddComponent<TestObject>();
 
-	
-// 	auto r = testObj->AddComponent<BitmapRenderer>();
-// 	r->CreateBitmapResource(L"../WorkSpace/HSK/Test/test2.png");
-	
-	
-	
-
+	// 	auto r = testObj->AddComponent<BitmapRenderer>();
+	// 	r->CreateBitmapResource(L"../WorkSpace/HSK/Test/test2.png");
+		
 	AddGameObject(testObj);
 
 	inputObj = new GameObject();
 	inputObj->AddComponent<InputObject>();
 	AddGameObject(inputObj);
+	
 }
 
 void SelectScene::OnExitImpl()
@@ -33,23 +30,15 @@ int num = 0;
 
 void SelectScene::UpdateImpl()
 {
-	auto t = testObj->GetComponent<TestObject>();
-	t->Test();
-	// 	if (Input::leftButtonDown) {
-	// 		num++;
-	// 
-	// 		if(num == 1)
-	// 			Singleton<SceneManager>::GetInstance().LoadScene(STAGE1);
-	// 		if(num == 2)
-	// 			Singleton<SceneManager>::GetInstance().LoadScene(STAGE2);
-	// 		if (num == 3) {
-	// 			num = 0;
-	// 			Singleton<SceneManager>::GetInstance().LoadScene(STAGE3);
-	// 		}			
-	// 	}
+	auto t = testObj->GetComponent<TestObject>();	
 
 	auto input = inputObj->GetComponent<InputSystem>();
-	if (input->IsKeyPressed('3')) {
+
+	if (input->IsKeyPressed('2')) {		
+		testObj->GetComponent<BitmapRenderer>()->CreateBitmapResource(L"../WorkSpace/HSK/Test/test2.png");
+	}
+
+	if (input->IsKeyPressed('1')) {
 		Singleton<SceneManager>::GetInstance().LoadScene(STAGE1);
 	}
 	if (input->IsKeyPressed('4')) {

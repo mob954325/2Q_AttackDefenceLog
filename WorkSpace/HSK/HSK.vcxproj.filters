@@ -8,13 +8,13 @@
     <ClCompile Include="HSKApp.cpp">
       <Filter>App</Filter>
     </ClCompile>
-    <ClCompile Include="PatternManager.cpp">
-      <Filter>manag</Filter>
-    </ClCompile>
     <ClCompile Include="NodeObj.cpp">
       <Filter>Obj</Filter>
     </ClCompile>
     <ClCompile Include="EffectManager.cpp">
+      <Filter>manag</Filter>
+    </ClCompile>
+    <ClCompile Include="PatternManager.cpp">
       <Filter>manag</Filter>
     </ClCompile>
   </ItemGroup>
@@ -25,13 +25,13 @@
     <ClInclude Include="HSKApp.h">
       <Filter>App</Filter>
     </ClInclude>
-    <ClInclude Include="PatternManager.h">
-      <Filter>manag</Filter>
-    </ClInclude>
     <ClInclude Include="NodeObj.h">
       <Filter>Obj</Filter>
     </ClInclude>
     <ClInclude Include="EffectManager.h">
+      <Filter>manag</Filter>
+    </ClInclude>
+    <ClInclude Include="PatternManager.h">
       <Filter>manag</Filter>
     </ClInclude>
   </ItemGroup>

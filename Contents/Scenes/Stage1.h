@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "Scripts/SceneCore.h"
+#include "../Objects/Manager/PatternManager.h"
 
 class Stage1 : public Scene
 {
@@ -10,4 +11,8 @@ protected:
 
 private:
 	GameObject* inputObj;
+	GameObject* trail;
+
+	std::array<GameObject*, 9> m_nodes;
+	PatternManager PM;
 };

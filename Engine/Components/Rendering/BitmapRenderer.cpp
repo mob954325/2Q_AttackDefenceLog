@@ -57,7 +57,7 @@ void BitmapRenderer::OnDestroy()
 
 void BitmapRenderer::CreateBitmapResource(std::wstring filePath)
 {
-	m_bitmapResource = resourceManager->CreateBitmapResource(filePath);
+ 	m_bitmapResource = resourceManager->CreateBitmapResource(filePath);
 }
 
 std::shared_ptr<BitmapResource> BitmapRenderer::GetResource()

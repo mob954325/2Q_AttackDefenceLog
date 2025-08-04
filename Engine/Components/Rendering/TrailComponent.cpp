@@ -230,14 +230,7 @@ void TrailComponent::SetHoldBitmap(std::wstring path)
 
 void TrailComponent::AddHoldStamp() // 마우스 - 위치가 오랫동안 변하지 않으면 작동함
 {	
-	if (!allowHold) return;
-	
-	
-
-
-
-
-
+	if (!allowHold) return;		
 }
 
 void TrailComponent::OnDestroy() // 이거 안하면 터짐

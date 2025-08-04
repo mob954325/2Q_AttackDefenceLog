@@ -16,23 +16,29 @@
     <Filter Include="Objects\TitleScene">
       <UniqueIdentifier>{58ad0f72-a0f3-43ae-bd4b-e0f20430317b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Objects\EndScene">
-      <UniqueIdentifier>{0a575401-185b-4db7-90a4-55a20f5f029d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Objects\MenuScene">
-      <UniqueIdentifier>{774717f3-9570-482e-8052-dea77393eb06}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Objects\Stage">
       <UniqueIdentifier>{4d699e70-f2ca-4084-91ca-79a5a1eea7f3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Objects\SelectScene">
-      <UniqueIdentifier>{2c2bdabf-7125-4214-8ae9-e42aa67304ac}</UniqueIdentifier>
     </Filter>
     <Filter Include="Scene\.h">
       <UniqueIdentifier>{9eff161a-10d2-4685-9fa3-c8045f3120d7}</UniqueIdentifier>
     </Filter>
     <Filter Include="Scene\.cpp">
       <UniqueIdentifier>{268f4596-4b94-42fb-af54-1c620c1b15c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\Manager">
+      <UniqueIdentifier>{30819737-9d94-49c4-8c52-e91222f06f68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\SceneObject">
+      <UniqueIdentifier>{3a38e3c2-cff4-4284-be6f-55664643283d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\SceneObject\EndScene">
+      <UniqueIdentifier>{0a575401-185b-4db7-90a4-55a20f5f029d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\SceneObject\MenuScene">
+      <UniqueIdentifier>{774717f3-9570-482e-8052-dea77393eb06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\SceneObject\SelectScene">
+      <UniqueIdentifier>{2c2bdabf-7125-4214-8ae9-e42aa67304ac}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -72,6 +78,12 @@
     <ClCompile Include="Objects\InputObject.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="Objects\Manager\PatternManager.cpp">
+      <Filter>Objects\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\MouseTrailObject.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameApp.h">
@@ -108,6 +120,12 @@
       <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="Objects\InputObject.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Manager\PatternManager.h">
+      <Filter>Objects\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\MouseTrailObject.h">
       <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>
