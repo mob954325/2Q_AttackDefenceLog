@@ -37,6 +37,9 @@ public:
 	void SetBitmap(std::wstring path);
 	void SetTailBitmap(std::wstring path);
 	void SetHeadBitmap(std::wstring path);
+	void SetHoldBitmap(std::wstring path);
+
+	void AddHoldStamp();
 	
 	void OnDestroy() override;	
 
@@ -51,6 +54,8 @@ public:
 	
 	bool isOutFromBox = true; // 영역밖으로 나가면 true, 뒤에 크기를 자름
 	bool isNewCached = false; // 외부에서 사용하는 플레그, 받은다음 false 해줘야함
+
+	bool allowHold = true; // 가만히 있으면, hold스탬프 추가할껀지	
 	
 	bool WasJustReleased() const { return wasDraw && !isDraw; } // 외부에서 상태 확인할때 씀
 	bool WasJustPressed() const { return !wasDraw && isDraw; }
@@ -63,8 +68,8 @@ public:
 
 	int deleteStepDivider = 10; // 역수임, 1/N 으로 들어가고 삭제 발생시 얼마나 지울지임
 
-	int headIndex = 30.0f; // 큐의 뒤에서 - 시각적으로는 앞에서부터 (범위값임)
-	int tailIndex = 10.0f; // 큐의 앞에서 - 시각적으로는 뒤에서부터 (범위값임)
+	int headIndex = 5; // 큐의 뒤에서 - 시각적으로는 앞에서부터 (범위값임)
+	int tailIndex = 5; // 큐의 앞에서 - 시각적으로는 뒤에서부터 (범위값임)
 	
 
 	//float lifeTime = 0.3f;		// 이거일단 사용안함, 나중에 update에서 시간 지난거 처리하는식으로 가능함
@@ -81,4 +86,7 @@ private:
 	std::shared_ptr<BitmapResource> stampBitmap = nullptr; // 찍을 비트맵, 브러쉬 넣으면 됨
 	std::shared_ptr<BitmapResource> tailBitmap = nullptr;
 	std::shared_ptr<BitmapResource> headBitmap = nullptr;
+	std::shared_ptr<BitmapResource> holdBitmap = nullptr;
+
+	float holdAlpha = 0.0f;
 };

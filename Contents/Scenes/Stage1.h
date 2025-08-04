@@ -1,7 +1,8 @@
 ﻿#pragma once
 #include "Scripts/SceneCore.h"
+#include "../Objects/Manager/PatternManager.h"
 
-class MenuScene : public Scene
+class Stage1 : public Scene
 {
 protected:
 	void OnEnterImpl() override;
@@ -9,7 +10,9 @@ protected:
 	void UpdateImpl() override;
 
 private:
-	GameObject* testObj;
 	GameObject* inputObj;
+	GameObject* trail;
 
+	std::array<GameObject*, 9> m_nodes;
+	PatternManager PM;
 };
