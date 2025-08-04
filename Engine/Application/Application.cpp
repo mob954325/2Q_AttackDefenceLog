@@ -72,19 +72,18 @@ void Application::Initialize()
 		D3D11_SDK_VERSION, m_d3dDevice.GetAddressOf(), &featureLevel, nullptr);
 
 	// D2D 팩토리 및 디바이스 생성
-	ComPtr<ID2D1Factory8> d2dFactory;
 	D2D1_FACTORY_OPTIONS options = {
 #ifdef _DEBUG
 		D2D1_DEBUG_LEVEL_INFORMATION
 #endif // _DEBUG
 
 	};
-	D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, options, d2dFactory.GetAddressOf());
+	D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, options, m_d2d1Factory.GetAddressOf());
 
 	ComPtr<IDXGIDevice> dxgiDevice;
 	m_d3dDevice.As(&dxgiDevice);
 	ComPtr<ID2D1Device7> d2dDevice;
-	d2dFactory->CreateDevice((dxgiDevice.Get()), d2dDevice.GetAddressOf());
+	m_d2d1Factory->CreateDevice((dxgiDevice.Get()), d2dDevice.GetAddressOf());
 	d2dDevice->CreateDeviceContext(D2D1_DEVICE_CONTEXT_OPTIONS_NONE, m_d2dDeviceContext.GetAddressOf());
 
 	ComPtr<IDXGIFactory7> dxgiFactory;
@@ -115,6 +114,7 @@ void Application::Initialize()
 	m_D2DRenderManager = new D2DRenderManager;
 	m_D2DRenderManager->Initialize();
 	m_D2DRenderManager->SetD2D1DeviceContext7(m_d2dDeviceContext.Get());
+	m_D2DRenderManager->SetD2D8Factory(m_d2d1Factory.Get());
 
 	// BitmapResourceManager 초기화
 	m_ResourceManager = new BitmapResourceManager(m_D2DRenderManager);

@@ -69,6 +69,16 @@ void D2DRenderManager::SetD2D1DeviceContext7(ID2D1DeviceContext7* pD2D1DeviceCon
 	}
 }
 
+void D2DRenderManager::SetD2D8Factory(ID2D1Factory8* pD2D1Factory)
+{
+	m_d2d1Factory8 = pD2D1Factory;
+}
+
+ComPtr<ID2D1Factory8> D2DRenderManager::GetFactory()
+{
+	return m_d2d1Factory8;
+}
+
 void D2DRenderManager::SetRenderTransform(D2D1_MATRIX_3X2_F& finalMatrix)
 {
 	m_d2dDeviceContext->SetTransform(finalMatrix); // NOTE: Direct2D가 이후에 그릴 모든 도형/텍스트/이미지 등에 적용활 좌표 변환 행렬 설정 함수

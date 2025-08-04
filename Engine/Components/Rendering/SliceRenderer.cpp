@@ -9,6 +9,12 @@ void SliceRenderer::OnCreate()
 
 void SliceRenderer::OnStart()
 {
+	HRESULT hr;
+	hr = renderManager->GetFactory()->CreatePathGeometry(&pathGeometry1);
+	assert(SUCCEEDED(hr) && " fail create pathGeometry1");
+
+	hr = renderManager->GetFactory()->CreatePathGeometry(&pathGeometry2);
+	assert(SUCCEEDED(hr) && " fail create pathGeometry2");
 }
 
 void SliceRenderer::OnDestroy()
@@ -22,13 +28,9 @@ void SliceRenderer::Render(D2DRenderManager* manager)
 	if (!IsActiveSelf()) return;
 
 	D2D1_MATRIX_3X2_F fmat = owner->GetTransform().GetFinalMatrix();
+	D2D1_MATRIX_3X2_F fmat1 = fmat;
+	D2D1_MATRIX_3X2_F fmat2 = fmat;
 
-	// test code
-	fmat.m11 += 2.0f;
-	fmat.m21 -= 2.0f;
-
-	renderManager->SetRenderTransform(fmat);
-	if(slice1) renderManager->DrawBitmap(slice1);
 }
 
 void SliceRenderer::SetOriginal(std::wstring path)
@@ -49,10 +51,12 @@ void SliceRenderer::Slice(const Vector2& dirVec)
 	D2D1_SIZE_F size = originBitmap->GetBitmap()->GetSize();
 	D2D1_POINT_2U destPoint = { 0,0 };
 	D2D1_RECT_U srcRect = { 0,0, size.width, size.height };
-	slice1->CopyFromBitmap(&destPoint, originBitmap->GetBitmap().Get(), &srcRect);
+	slice1 = originBitmap->GetBitmap();
+	slice2 = originBitmap->GetBitmap();
 
 	// test code
 	slice1Info = { {200,200}, D2D1::Matrix3x2F::Identity(), 1 };
+	slice2Info = { {200,200 - 20}, D2D1::Matrix3x2F::Identity(), 1 };
 }
 
 void SliceRenderer::Reset()

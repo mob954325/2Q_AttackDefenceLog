@@ -218,7 +218,7 @@ void SplitObject::SliceDiagonalLeft()
 		int curr = i + 1;
 		if (curr <= size / 2)
 		{
-			pieces[curr]->SetMoveDirection({ 0.45f, -0.45f }); // 우측 하단
+			pieces[curr]->SetMoveDirection({ -0.45f, -0.45f }); // 우측 하단
 		}
 		else
 		{

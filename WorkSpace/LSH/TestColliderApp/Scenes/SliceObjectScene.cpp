@@ -11,7 +11,7 @@ void SliceObjectScene::OnEnterImpl()
 		int x = i % 3;
 		int y = i / 3;
 		sliceTargets.push_back(CreateGridNode());
-
+	
 		sliceTargets[i]->owner->GetTransform().SetPosition(-250 + x * 150, y * 150);
 	}
 	
@@ -19,14 +19,14 @@ void SliceObjectScene::OnEnterImpl()
 	cursor = new GameObject();
 	cursor->SetName("cursor");
 	AddGameObject(cursor);
-
+	
 	TestSliceCursor* comp2 = cursor->AddComponent<TestSliceCursor>();
 	comp2->SetSliceTarget(sliceTargets);
-
-	// create sliceObject
+	
+	// // create sliceObject
 	slice = new GameObject();
 	slice->SetName("slice");
-	AddGameObject(cursor);
+	AddGameObject(slice);
 
 	SliceObject* comp3 = slice->AddComponent<SliceObject>();
 	slice->GetTransform().SetPosition(-200, -200);
