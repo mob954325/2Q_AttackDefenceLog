@@ -338,6 +338,15 @@
       <Project>{9f8b7d36-e4aa-4c3f-aade-81fb4ba00603}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Application\Game.cpp" />
+    <ClCompile Include="Application\GameApp.cpp" />
+    <ClCompile Include="Scenes\MenuScene.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Application\GameApp.h" />
+    <ClInclude Include="Scenes\MenuScene.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

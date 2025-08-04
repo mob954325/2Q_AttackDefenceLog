@@ -3,6 +3,7 @@
 #include "TestColliderApp/Scripts/DummyCircleCollider.h"
 #include "TestColliderApp/Scripts/DummyButton.h"
 #include "TestColliderApp/Scripts/DummyEffectAnimation.h"
+#include "Utils/DebugUtility.h"
 
 void TestCollider::CircleColliderScene::OnEnterImpl()
 {
@@ -40,4 +41,5 @@ void TestCollider::CircleColliderScene::OnExitImpl()
 
 void TestCollider::CircleColliderScene::UpdateImpl()
 {
+	// DebugUtility::DebugLog("Scene Udpate Log");
 }

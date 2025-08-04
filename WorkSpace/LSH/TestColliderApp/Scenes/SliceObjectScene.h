@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "Scene/Scene.h"
 #include "TestColliderApp/Scripts/SliceObject/PieceObject.h"
-#include "TestColliderApp/Scripts/SliceObject/SliceObject.h"
+#include "TestColliderApp/Scripts/SliceObject/SplitObject.h"
 
 class SliceObjectScene : public Scene
 {
@@ -11,9 +11,9 @@ protected:
 	void UpdateImpl() override;
 private:
 	void CreatePieces(std::vector<PieceObject*>& out);
-	SliceObject* CreateGridNode();
+	SplitObject* CreateGridNode();
 
-	std::vector<SliceObject*> sliceTargets{};
+	std::vector<SplitObject*> sliceTargets{};
 	GameObject* cursor{};
 };
 

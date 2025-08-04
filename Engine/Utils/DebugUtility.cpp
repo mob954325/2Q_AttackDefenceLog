@@ -6,6 +6,8 @@
 
 #include "GameTime.h"
 
+int DebugUtility::frameCount = 0;
+
 void DebugUtility::GetDxgiAdapter(Microsoft::WRL::ComPtr<ID3D11Device> d3dDevice, Microsoft::WRL::ComPtr<IDXGIDevice> dxgiDevice)
 {
 	Microsoft::WRL::ComPtr<IDXGIAdapter> tempDxgiAdapter;	
@@ -57,12 +59,28 @@ void DebugUtility::PrintMemoryUsage()
 
 void DebugUtility::Print(std::wstring str)
 {
-	std::cout << str.c_str() << std::endl;
+	std::cout << "[" << frameCount << "]" << str.c_str() << std::endl;
 }
 
 void DebugUtility::Print(std::string str)
 {
-	std::cout << str << std::endl;
+	std::cout << "[" << frameCount << "]" << str << std::endl;
+}
+
+void DebugUtility::DebugLog(std::wstring str)
+{
+	std::wstring output = L"[" + std::to_wstring(frameCount) + L"]";
+	output += str;
+	output += L"\n";
+	OutputDebugStringW(output.c_str());
+}
+
+void DebugUtility::DebugLog(std::string str)
+{
+	std::string output = "[" + std::to_string(frameCount) + "]";
+	output += str;
+	output += "\n";
+	OutputDebugStringA(output.c_str());
 }
 
 void DebugUtility::UpdateFPSCount()
@@ -76,6 +94,8 @@ void DebugUtility::UpdateFPSCount()
 		fpsCount = cachedFpsCount;
 		cachedFpsCount = 0;
 	}
+
+	frameCount++;
 }
 
 int DebugUtility::GetFPSCount()

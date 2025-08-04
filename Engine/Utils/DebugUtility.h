@@ -16,6 +16,9 @@ public:
 	void PrintMemoryUsage();
 	static void Print(std::wstring str);
 	static void Print(std::string str);
+	static void DebugLog(std::wstring str);
+	static void DebugLog(std::string str);
+
 	void UpdateFPSCount();
 	int GetFPSCount();
 
@@ -29,4 +32,6 @@ private:
 	float fpsTimer = 0.0f;
 	int cachedFpsCount = 0;
 	int fpsCount = 0;
+
+	static int frameCount; // 프레임이 얼마나 지나갔는지 확인하는 변수 - 같은 숫자면 같은 프레임에서 실행됨
 };
