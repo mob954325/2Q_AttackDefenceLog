@@ -22,7 +22,7 @@ void TestSliceCursor::OnUpdate()
 	}
 }
 
-void TestSliceCursor::SetSliceTarget(std::vector<SliceObject*>& obj)
+void TestSliceCursor::SetSliceTarget(std::vector<SplitObject*>& obj)
 {
 	targets = obj;
 }

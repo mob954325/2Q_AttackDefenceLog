@@ -1,4 +1,6 @@
 ﻿#include <windows.h>
+#include "Application/GameApp.h"
+
 /// <summary>
 /// 프로그램 winMain
 /// </summary>
@@ -9,9 +11,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 {
     CoInitialize(nullptr);  // COM 초기화
 
-    // 25.07.28 - 이성호
-    // 실행할 Application 클래스 여기에 작성하기
-    // Fork test comment
+    GameApp app = GameApp();
+
+    app.Initialize();
+    app.Run();
+    app.Uninitialize();
 
     CoUninitialize();        // COM 해제
     return (int)1;

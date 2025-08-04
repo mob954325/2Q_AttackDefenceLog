@@ -6,7 +6,7 @@
 #include "Components/Logic/InputSystem.h"
 
 /* 0801 | 작성자 이성호
-*  기능 : PiceObject를 관리하는 monobehaivor로 콜라이더 감지 및 조각을 이동시키는 제어 스크립트
+*  기능 : PieceObject를 관리하는 monobehaivor로 콜라이더 감지 및 조각을 이동시키는 제어 스크립트
 */
 
 /*
@@ -30,7 +30,7 @@ enum OverlapState
 	End,
 };
 
-class SliceObject : public MonoBehavior
+class SplitObject : public MonoBehavior
 {
 public:
 	void OnCreate() override;
