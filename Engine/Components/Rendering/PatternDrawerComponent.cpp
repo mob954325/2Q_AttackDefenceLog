@@ -6,23 +6,16 @@
 constexpr float PI = 3.141592654f; // 이건 진짜진짜 유명한 파이임
 
 //라인(vector2 2개 묶음)이 담긴 큐를 받으면, 그 큐를 이어서 그려줌
-void PatternDrawerComponent::Draw(const std::vector<Line>& lines)
-{	
-	linesToDraw = lines;
-	isPlaying = true;
-	timer = 0.0f;
-}
 
-void PatternDrawerComponent::Render(D2DRenderManager* manager)
+void PatternDrawerComponent::Render(D2DRenderManager* manager) // 사실상, trailComponent 내부에 보간식을 떼온거임
 {
 	if (!IsActiveSelf()) return; // 비활성화 얼리리턴
 
 	if (!isPlaying || !stampBmp) return;
 
 	timer += GameTime::GetInstance().GetDeltaTime();
-	if (timer >= 1.0f) {
+	if (timer >= duration)
 		isPlaying = false;
-	}
 
 	auto bmpSize = stampBmp->GetBitmap()->GetSize();
 	D2D1_RECT_F srcRect = { 0, 0, bmpSize.width, bmpSize.height };
@@ -30,10 +23,11 @@ void PatternDrawerComponent::Render(D2DRenderManager* manager)
 	for (auto& line : linesToDraw) {
 		Vector2 from = line.from;
 		Vector2 to = line.to;
-
-		Vector2 delta = to - from;
-		float dist = sqrtf(delta.x * delta.x + delta.y * delta.y);
-		int steps = static_cast<int>(dist / 10.0f); // 커스텀 지점임
+		Vector2 delta = to - from; // 기울기잖슴
+		float dist = sqrtf(delta.x * delta.x + delta.y * delta.y); // 길이잖슴
+		
+		int steps = static_cast<int>(dist / minDistance); 
+		
 		if (steps < 1)
 			steps = 1;
 
@@ -44,7 +38,7 @@ void PatternDrawerComponent::Render(D2DRenderManager* manager)
 			D2D1_RECT_F dest = {
 				pos.x - bmpSize.width * 0.5f,
 				pos.y - bmpSize.height * 0.5f,
-				pos.x + bmpSize.width *		0.5f,
+				pos.x + bmpSize.width * 0.5f,
 				pos.y + bmpSize.height * 0.5f
 			};
 
@@ -54,7 +48,7 @@ void PatternDrawerComponent::Render(D2DRenderManager* manager)
 			manager->SetRenderTransform(transform);
 			manager->DrawBitmap(stampBmp->GetBitmap().Get(), dest, srcRect);
 		}
-	}	
+	}
 }
 
 void PatternDrawerComponent::SetBitmap(std::wstring path)
