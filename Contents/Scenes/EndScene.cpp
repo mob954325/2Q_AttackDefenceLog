@@ -8,6 +8,7 @@ void EndScene::OnEnterImpl()
 
 void EndScene::OnExitImpl()
 {
+	std::cout << "엔드씬 이탈" << std::endl;
 }
 
 void EndScene::UpdateImpl()

@@ -1,5 +1,5 @@
 ﻿#include "SelectScene.h"
-#include "../Engine/Platform/Input.h"
+#include "../Engine/Components/Logic/InputSystem.h"
 
 void SelectScene::OnEnterImpl()
 {
@@ -8,11 +8,23 @@ void SelectScene::OnEnterImpl()
 
 void SelectScene::OnExitImpl()
 {
+	std::cout << "선택씬 이탈" << std::endl;
 }
+
+int num = 0;
 
 void SelectScene::UpdateImpl()
 {
 	if (Input::leftButtonDown) {
-		Singleton<SceneManager>::GetInstance().LoadScene(STAGE1);
+		num++;
+
+		if(num == 1)
+			Singleton<SceneManager>::GetInstance().LoadScene(STAGE1);
+		if(num == 2)
+			Singleton<SceneManager>::GetInstance().LoadScene(STAGE2);
+		if (num == 3) {
+			num = 0;
+			Singleton<SceneManager>::GetInstance().LoadScene(STAGE3);
+		}			
 	}
 }

@@ -1,5 +1,5 @@
 ﻿#include "MenuScene.h"
-#include "../Engine/Platform/Input.h"
+#include "../Engine/Components/Logic/InputSystem.h"
 
 void MenuScene::OnEnterImpl()
 {
@@ -8,6 +8,7 @@ void MenuScene::OnEnterImpl()
 
 void MenuScene::OnExitImpl()
 {
+	std::cout << "메뉴씬 이탈" << std::endl;
 }
 
 void MenuScene::UpdateImpl()

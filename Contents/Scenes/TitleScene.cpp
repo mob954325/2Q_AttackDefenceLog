@@ -8,6 +8,7 @@ void TitleScene::OnEnterImpl()
 
 void TitleScene::OnExitImpl()
 {
+	std::cout << "타이틀씬 이탈" << std::endl;
 }
 
 void TitleScene::UpdateImpl()
