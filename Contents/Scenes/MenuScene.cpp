@@ -1,5 +1,6 @@
 ﻿#include "MenuScene.h"
 #include "../Engine/Components/Logic/InputSystem.h"
+#include "../Objects/InputObject.h"
 
 #include "../Objects/TestObject.h"
 
@@ -9,7 +10,11 @@ void MenuScene::OnEnterImpl()
 
 	testObj = new GameObject();
 	testObj->AddComponent<TestObject>();
-	AddGameObject(testObj, "testobj");
+	AddGameObject(testObj);
+
+	inputObj = new GameObject();
+	inputObj -> AddComponent<InputObject>();
+	AddGameObject(inputObj);
 }
 
 void MenuScene::OnExitImpl()
@@ -20,6 +25,11 @@ void MenuScene::OnExitImpl()
 void MenuScene::UpdateImpl()
 {
 	if (Input::leftButtonDown) {
+		Singleton<SceneManager>::GetInstance().LoadScene(SELECT);
+	}
+
+	auto input = inputObj->GetComponent<InputSystem>();
+	if (input->IsKeyPressed('2')) {
 		Singleton<SceneManager>::GetInstance().LoadScene(SELECT);
 	}
 }

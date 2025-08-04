@@ -10,6 +10,11 @@ public:
 	void OnUpdate() override;
 	void OnDestroy() override;
 	D2D1_SIZE_F GetSize() { return size; };
+	void Test() {
+		//¾Æ.
+		//
+	}
+
 
 protected:
 	D2D1_SIZE_F size;

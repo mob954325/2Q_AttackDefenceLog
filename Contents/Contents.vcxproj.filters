@@ -69,6 +69,9 @@
     <ClCompile Include="Objects\TestObject.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="Objects\InputObject.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameApp.h">
@@ -102,6 +105,9 @@
       <Filter>Objects\Stage</Filter>
     </ClInclude>
     <ClInclude Include="Objects\TestObject.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\InputObject.h">
       <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>

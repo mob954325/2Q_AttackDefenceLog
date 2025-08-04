@@ -9,5 +9,5 @@ protected:
 	void UpdateImpl() override;
 
 private:
-
+	GameObject* inputObj;
 };

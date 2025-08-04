@@ -341,6 +341,7 @@
   <ItemGroup>
     <ClCompile Include="Application\Game.cpp" />
     <ClCompile Include="Application\GameApp.cpp" />
+    <ClCompile Include="Objects\InputObject.cpp" />
     <ClCompile Include="Objects\Stage\NodeObject.cpp" />
     <ClCompile Include="Objects\TestObject.cpp" />
     <ClCompile Include="Scenes\EndScene.cpp" />
@@ -353,6 +354,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameApp.h" />
+    <ClInclude Include="Objects\InputObject.h" />
     <ClInclude Include="Objects\Stage\NodeObject.h" />
     <ClInclude Include="Objects\TestObject.h" />
     <ClInclude Include="Scenes\EndScene.h" />

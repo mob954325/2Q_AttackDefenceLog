@@ -1,9 +1,13 @@
 ﻿#include "Stage1.h"
 #include "../Engine/Components/Logic/InputSystem.h"
+#include "../Objects/InputObject.h"
 
 void Stage1::OnEnterImpl()
 {
 	std::cout << "스테이지1 진입" << std::endl;
+	inputObj = new GameObject();
+	inputObj->AddComponent<InputObject>();
+	AddGameObject(inputObj);
 }
 
 void Stage1::OnExitImpl()
@@ -14,6 +18,10 @@ void Stage1::OnExitImpl()
 void Stage1::UpdateImpl()
 {
 	if (Input::leftButtonDown) {
+		Singleton<SceneManager>::GetInstance().LoadScene(END);
+	}
+	auto input = inputObj->GetComponent<InputSystem>();
+	if (input->IsKeyPressed('6')) {
 		Singleton<SceneManager>::GetInstance().LoadScene(END);
 	}
 }
