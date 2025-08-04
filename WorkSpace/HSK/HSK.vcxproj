@@ -339,6 +339,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="HSKApp.cpp" />
     <ClCompile Include="HSKScene.cpp" />
@@ -346,6 +347,7 @@
     <ClCompile Include="PatternManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="EffectManager.h" />
     <ClInclude Include="HSKApp.h" />
     <ClInclude Include="HSKScene.h" />
     <ClInclude Include="NodeObj.h" />

@@ -14,6 +14,9 @@
     <ClCompile Include="NodeObj.cpp">
       <Filter>Obj</Filter>
     </ClCompile>
+    <ClCompile Include="EffectManager.cpp">
+      <Filter>manag</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HSKScene.h">
@@ -27,6 +30,9 @@
     </ClInclude>
     <ClInclude Include="NodeObj.h">
       <Filter>Obj</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectManager.h">
+      <Filter>manag</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
