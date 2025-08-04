@@ -42,8 +42,7 @@ public:
 	float padding = 0.0f; // 0이면 반지름의 1.5배로 처리해줌
 
 private:
-	std::array<Node, 9> nodes;
+	std::array<Node, 9> nodes;	
 	std::deque<int> pattern;
-	D2D1_RECT_F patternBox = { 0,0,0,0 };
-
+	D2D1_RECT_F patternBox = { 0,0,0,0 };		
 };

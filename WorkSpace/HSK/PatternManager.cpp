@@ -8,6 +8,7 @@ constexpr float PI = 3.141592654f; // 이건 유명한 파이임
 
 void PatternManager::SetNodes(const std::array<GameObject*, 9>& positions, float radius)
 {
+
 	Vector2 minNode{ FLT_MAX, FLT_MAX }; //극값?이라고함
 	Vector2 maxNode{ -FLT_MAX, -FLT_MAX };
 
@@ -29,7 +30,7 @@ void PatternManager::SetNodes(const std::array<GameObject*, 9>& positions, float
 
 		if (center.x > maxNode.x) maxNode.x = center.x; // 최대노드보다 큰 값일경우 갱신
 		if (center.y > maxNode.y) maxNode.y = center.y;
-	}	
+	}
 
 	if (padding == 0.0f) padding = radius * 1.5f;
 
@@ -75,7 +76,7 @@ std::vector<Line> PatternManager::GetPatternPathPositions() {
 		if (fromIndex < 0 || fromIndex >= 9 || toIndex < 0 || toIndex >= 9) continue; // 넘칠일은 없긴 할텐데, 혹시 모르니까 방어로직
 
 		Vector2 from = nodes[fromIndex].position;
-		Vector2 to = nodes[toIndex].position;		
+		Vector2 to = nodes[toIndex].position;
 		tmp.push_back({ from, to });
 	}
 
