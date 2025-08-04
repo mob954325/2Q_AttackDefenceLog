@@ -23,7 +23,7 @@
     <ClCompile Include="TestColliderApp\Scripts\SliceObject\PieceObject.cpp">
       <Filter>Scripts\SliceObject</Filter>
     </ClCompile>
-    <ClCompile Include="TestColliderApp\Scripts\SliceObject\SliceObject.cpp">
+    <ClCompile Include="TestColliderApp\Scripts\SliceObject\SplitObject.cpp">
       <Filter>Scripts\SliceObject</Filter>
     </ClCompile>
     <ClCompile Include="TestColliderApp\Scripts\SliceObject\TestSliceCursor.cpp">
@@ -55,7 +55,7 @@
     <ClInclude Include="TestColliderApp\Scripts\SliceObject\PieceObject.h">
       <Filter>Scripts\SliceObject</Filter>
     </ClInclude>
-    <ClInclude Include="TestColliderApp\Scripts\SliceObject\SliceObject.h">
+    <ClInclude Include="TestColliderApp\Scripts\SliceObject\SplitObject.h">
       <Filter>Scripts\SliceObject</Filter>
     </ClInclude>
     <ClInclude Include="TestColliderApp\Scripts\SliceObject\TestSliceCursor.h">

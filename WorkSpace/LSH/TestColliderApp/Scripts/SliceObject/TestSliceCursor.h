@@ -10,10 +10,10 @@ public:
 	void OnStart() override;
 	void OnUpdate() override;
 
-	void SetSliceTarget(std::vector<SliceObject*>& obj); // 임시
+	void SetSliceTarget(std::vector<SplitObject*>& obj); // 임시
 
 private:
 	InputSystem* input{};
-	std::vector<SliceObject*> targets{};
+	std::vector<SplitObject*> targets{};
 };
 
