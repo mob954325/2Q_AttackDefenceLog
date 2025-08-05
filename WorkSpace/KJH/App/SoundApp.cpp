@@ -3,6 +3,7 @@
 #include "Components/Logic/InputSystem.h"
 #include "Scene/SceneManager.h"
 #include "Scene/TestScene.h"
+#include "Resources/Loaders/CsvLoader.h"
 
 
 void SoundApp::SoundApp::Initialize()
@@ -15,14 +16,23 @@ void SoundApp::SoundApp::Initialize()
 	GetFullPathName(L"../../Resource/UI/TestMouse/idle.png", MAX_PATH, buffer, nullptr);
 	MessageBox(NULL, buffer, L"실제 시도 중인 파일 경로", MB_OK);*/
 
-
 	__super::Initialize();
+
+	LoadCSV<SoundResource>::SetCSV(L"../../Resource/DataTable/AllSoundList2.csv", soundList);
+
+	// 출력 테스트
+	//for (const auto& sound : soundList) {
+	//	std::wcout /*<< L"[ID] " << sound.id*/
+	//		<< L", [Path] " << sound.path
+	//		/*<< L", [Mode] " << sound.mode*/
+	//		<< std::endl;
+	//}
 
 	testScene = new TestScene::TestScene();
 	Singleton<SceneManager>::GetInstance().AddScene(testScene);
 	Singleton<SceneManager>::GetInstance().Init();
 	AudioSystem::GetInstance().Initialize(128);
-	AudioSystem::GetInstance().Register(musiclist);
+	AudioSystem::GetInstance().Register(soundList);
 
 
 	hCursorDefault = mouse.LoadPngCursor(L"../../Resource/UI/TestMouse/idle.png");

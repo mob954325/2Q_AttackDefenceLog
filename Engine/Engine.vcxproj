@@ -344,6 +344,7 @@
     <ClInclude Include="Math\EasingFunction.h" />
     <ClInclude Include="Math\GameRandom.h" />
     <ClInclude Include="Components\UI\Slider.h" />
+    <ClInclude Include="Resources\Loaders\CsvLoader.h" />
     <ClInclude Include="Components\Rendering\SliceRenderer.h" />
     <ClInclude Include="Systems\AudioSystem.h" />
     <ClInclude Include="Components\Fmod\FModComponent.h" />
@@ -426,9 +427,11 @@
     <ClCompile Include="Components\Collision\CircleCollider.cpp" />
     <ClCompile Include="Components\Rendering\ParticleRenderer.cpp" />
     <ClCompile Include="Components\Rendering\LineRenderer.cpp" />
+    <ClCompile Include="Datas\SoundDatas.cpp" />
     <ClCompile Include="Math\EasingFunction.cpp" />
     <ClCompile Include="Math\GameRandom.cpp" />
     <ClCompile Include="Components\UI\Slider.cpp" />
+    <ClCompile Include="Resources\Loaders\CsvLoader.cpp" />
     <ClCompile Include="Components\Rendering\SliceRenderer.cpp" />
     <ClCompile Include="Systems\AudioSystem.cpp" />
     <ClCompile Include="Components\Fmod\FModComponent.cpp" />
