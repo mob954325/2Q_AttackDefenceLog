@@ -5,6 +5,7 @@
 #include "../CsvData/CsvDataManager.h"
 #include "../LogicTestManager/AttackPatternManager.h"
 #include "Components/Base/GameObject.h"
+#include "Utils/GameTime.h"
 
 
 // 각 값은 해당 함수가 출력 중일때, 각 플레그 변화
@@ -13,14 +14,18 @@
 //  isPattenCooldoown I   F   I    T      I     F		  I      F      I  
 //
 
-
+void Player::OnCreate() {
+	
+}
 
 void Player::OnStart() {
-	m_State = owner->GetComponent<StateController<Player>>();
+	m_State = owner->GetComponent<StateController>();
+	SetStatData("CI_001");
 	SelectPatten(); // 공격을 했으면 다른 패턴 세팅
 	SetCoolTime();  // 쿨타임 다시 설정
+	OnCreateState();
+	SetState("Player_Idle");
 	isPattenCooldown = false;
-
 }
 
 
@@ -31,7 +36,7 @@ void Player::OnUpdate() {
 		CalSpiritTime();		// 1초마다 기세게이지 감소
 		AddPattenLoop();		// 패턴을 추가하는 루프
 	}
-
+	
 	
 }
 
@@ -73,7 +78,7 @@ void Player::OnCreateState() {
 
 // 플레이어 데이터에는 기세가 없음으로 적을 생성 후, 기세를 매개변수에 넣어주기!!
 // 패턴을 세팅하는 것은 처음?
-void Player::SetStatData(std::string tmp,float enemy_SpiritAmount) {
+void Player::SetStatData(std::string tmp) {
 	nowPlayerData = CsvDataManager::GetInstance().getDataImpl(nowPlayerData, tmp);
 	Object_ID = nowPlayerData->Character_ID;					 // ID
 	Object_Name = nowPlayerData->Character_name;				 // 이름
@@ -81,12 +86,16 @@ void Player::SetStatData(std::string tmp,float enemy_SpiritAmount) {
 	Object_Attack = nowPlayerData->Character_damage;			 // 공격력
 	Object_SpiritAttack = nowPlayerData->Character_spritdamage;  // 기세 공격력
 	Object_DefenseRate = nowPlayerData->Character_guard_rate;	 // 방어율
-	Object_SpiritAmount = enemy_SpiritAmount;					 // 기세의 총량을 설정
-	Object_NowSpiritAmount = enemy_SpiritAmount / 2.0f;
+	
 	PattenID = CsvDataManager::GetInstance().GetIDData(nowPlayerPattenData); // 패턴 데이터의 ID를 미리 받음
 
 	Object_CoolTime = 1.0f ;                                     //일단 쿨타임 1로 고정! -> 추후 변경가능
 	Object_nowCoolTime = 0.0f;									 //
+}
+
+void Player::SetSpiritData(float enemy_SpiritAmount) {
+	Object_SpiritAmount = enemy_SpiritAmount;					 // 기세의 총량을 설정
+	Object_NowSpiritAmount = enemy_SpiritAmount / 2.0f;
 }
 
 //패턴 ID에 맞는 데이터를 포인터로 가리킴
@@ -98,7 +107,7 @@ void Player::SetAttackPattenData(std::string PattID) {
 
 
 // 플레이어의 가이드 패턴2개를 패턴매니저에 등록
-std::vector<int> Player::SetNowPatten() {
+void Player::SetNowPatten() {
 	AllNodePattenClass* tmpNode = nullptr;
 	std::vector<int> tmp; // 저장한 벡터 선언
 	std::vector<int> tmp2;
@@ -167,7 +176,7 @@ void Player::CalSpiritTime() {
 		Object_NowSpiritAmount -= 0.3f;									 //초당 0.3씩 감소
 		Object_OverTimeSpirit = std::fmod(Object_OverTimeSpirit, 1.0f);  //실수형 나머지 연산자
 	}
-	Object_OverTimeSpirit += SceneDeltaTime;
+	Object_OverTimeSpirit += GameTime::GetInstance().GetDeltaTime();
 }
 
 
@@ -180,7 +189,7 @@ void Player::AddPattenLoop() {
 	// isPattenCooldown : F  -> 계산 X
 	if(isPattenCooldown){
 		// 패턴의 입력대기시간 카운트
-		Object_nowPlayingAttackTime += SceneDeltaTime;
+		Object_nowPlayingAttackTime += GameTime::GetInstance().GetDeltaTime();
 		// 현재 시간이  정해진 대기시간보다 크거나 같을 경우 
 		if (Object_nowPlayingAttackTime >= Object_PlayingAttackTime) {
 			isPattenCooldown = false;

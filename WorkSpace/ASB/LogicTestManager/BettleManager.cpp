@@ -5,27 +5,28 @@
 #include "../LiveObject/Enemy.h"
 #include "../LiveObject/LiveObject.h"
 #include "AttackPatternManager.h"
+#include "Components/Base/GameObject.h"
 
 
 
 
 
 
-//void BettleManager::OnStart() {
-//	SetGuideLine();
-//}
-//
-//void BettleManager::Update() {
-//
-//}
-//
+void BettleManager::OnStart() {
+	m_Enemy = owner->GetQuery()->FindByName("Enemytmp")->GetComponent<Enemy>();
+	m_Player = owner->GetQuery()->FindByName("Playertmp")->GetComponent<Player>();
+	m_Player->SetSpiritData(m_Enemy->GetSpiritAmount());
+}
+
+void BettleManager::OnUpdate() {
+
+}
+
 
 
 
 // -> 생성자로 넣어야 할듯?
-void BettleManager::SetForStart(Player* nowPlayer, Enemy* nowEnemy, AttackPatternManager& pattenManager) {
-	m_Player = nowPlayer;
-	m_Enemy = nowEnemy;
+void BettleManager::SetForStart(AttackPatternManager& pattenManager) {
 	m_PattenManager = pattenManager;
 }
 
@@ -33,8 +34,7 @@ void BettleManager::SetForStart(Player* nowPlayer, Enemy* nowEnemy, AttackPatter
 //Scene에서 deltaTime 설정 -> 임시 -> 없어도 됨!!
 void BettleManager::SetDeltaTime(float deltaTime) { 
 	m_DeltaTime = deltaTime; 
-	m_Player->SetDeltaTime(deltaTime);
-	m_Enemy->SetDeltaTime(deltaTime);
+
 }
 
 

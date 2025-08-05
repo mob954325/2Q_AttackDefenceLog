@@ -6,6 +6,7 @@
 #include "../CsvData/DataClass/EnemyData.h"
 #include "../CsvData/CsvDataManager.h"
 #include "../Component/StateController.h"
+#include "Utils/GameTime.h"
 
 
 
@@ -20,7 +21,8 @@
 
 
 void Enemy::OnStart() {
-	m_State = owner->GetComponent<StateController<Enemy>>();
+	m_State = owner->GetComponent<StateController>();
+	SetStatData("EI_001");
 	SelectPatten(); //  패턴 세팅
 	SetCoolTime();  // 쿨타임 설정
 	isPattenCooldown = false;
@@ -82,6 +84,7 @@ void Enemy::SetStatData(std::string tmp) {
 	Object_SpiritAttack = nowEnemyData->enemySpiritdamage; // 기세 공격력
 	Object_DefenseRate = nowEnemyData->enemyGuardRate;	   // 방어율
 	Object_SpiritAmount = nowEnemyData->enemySpiritamount; // 기세
+	Object_NowSpiritAmount = Object_SpiritAmount / 2.0f;   // 현재 기세 설정
 	Difficulty = nowEnemyData->enemyDifficulty;			   // 난이도 -> 아마 필요없을듯?
 
 	PattenID = nowEnemyData->enemyPattern;                 // 적의 패턴 가져오기
@@ -99,7 +102,7 @@ void Enemy::AddPattenLoop() {
 	// isPattenCooldown : F  -> 계산 X
 	if (isPattenCooldown) {
 		// 패턴의 입력대기시간 카운트
-		Object_nowPlayingAttackTime += SceneDeltaTime;
+		Object_nowPlayingAttackTime += GameTime::GetInstance().GetDeltaTime();
 		// 현재 시간이  정해진 대기시간보다 크거나 같을 경우 
 		if (Object_nowPlayingAttackTime >= Object_PlayingAttackTime) {
 			isPattenCooldown = false;
@@ -120,7 +123,7 @@ void Enemy::SelectPatten() {   //각 객체가 사용할 패턴을 고름
 	while (1) {
 		std::random_device rd;
 		std::mt19937 gen(rd());
-		std::uniform_int_distribution<> dist(1, PattenID.size()); // 1 ~ 10 사이의 정수
+		std::uniform_int_distribution<> dist(1, PattenID.size());
 		int randomValue = dist(gen);
 		SetAttackPattenData(PattenID[randomValue - 1]);
 		if (preEnemyPattenData != nowEnemyPattenData)
@@ -137,7 +140,7 @@ void Enemy::SetAttackPattenData(std::string PattID) {
 
 
 //적의 가이드 패턴을 패턴매니저에 등록
-std::vector<int> Enemy::SetNowPatten() {
+void  Enemy::SetNowPatten() {
 	AllNodePattenClass* tmpNode = nullptr;
 	std::vector<int> tmp; // 저장한 벡터 선언
 	tmpNode = CsvDataManager::GetInstance().getDataImpl(tmpNode, nowEnemyPattenData->eNodepattern); //포인터에  패턴 1 주소 저장			
@@ -182,7 +185,7 @@ void Enemy::CalSpiritTime() {
 		Object_NowSpiritAmount += 0.3f;									 //초당 0.3씩 감소
 		Object_OverTimeSpirit = std::fmod(Object_OverTimeSpirit, 1.0f);  //실수형 나머지 연산자
 	}
-	Object_OverTimeSpirit += SceneDeltaTime;
+	Object_OverTimeSpirit += GameTime::GetInstance().GetDeltaTime();
 }
 
 

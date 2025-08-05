@@ -7,14 +7,16 @@ public:
 	State() {};
 	~State() {};
 
-	virtual void Onstart() {
+	void OnStart() {
 		nowTimer = 0.0f;
 		isNextState = false;
 	};
 
-	virtual void OnExit() {};
+	void OnExit() {
+		
+	};
 
-	virtual void Update(float deltaTime) {
+	void Update(float deltaTime) {
 		if (existTransition || nowTimer < ToNextTimer)
 			nowTimer += deltaTime;
 
@@ -30,30 +32,30 @@ public:
 
 	State* nextState = nullptr;
 	std::string stateName;
-private:
 	float ToNextTimer = 0.0f;
 	float nowTimer = 0.0f;
 	bool  existTransition = false;
 	bool  isNextState = false;
+private:
+	
 };
 
 
 
 // 역할 state 결정 담당
-template<typename T>
 class StateController : public MonoBehavior {
 public:
 	StateController() {};
 	~StateController() {};
 
 private:
-	std::unordered_map<std::string, T*>  StateStorage;
-	T* nowState = nullptr;
+	std::unordered_map<std::string, State*>  StateStorage;
+	State* nowState = nullptr;
 
 public:
 	//state를 생성함
 	void CreateState(std::string stateName) {
-		T* tmpState = new T();
+		State* tmpState = new State();
 		StateStorage[stateName] = tmpState;
 		tmpState->stateName = stateName;
 	}
@@ -70,14 +72,14 @@ public:
 	// 다음 State 설정
 	void SetNextState(std::string stateName, std::string NextstateName) {
 		State* tmpState = nullptr;
-		auto it = StateStorage.find(stateName);
-		if (it != StateStorage.end()) {
-			tmpState = it->second;
+		auto it1 = StateStorage.find(stateName);
+		if (it1 != StateStorage.end()) {
+			tmpState = it1->second;
 		}
 
-		auto it = StateStorage.find(stateName);
-		if (it != StateStorage.end()) {
-			tmpState->nextState = it->second;
+		auto it2 = StateStorage.find(stateName);
+		if (it2 != StateStorage.end()) {
+			tmpState->nextState = it2->second;
 		}
 	}
 
@@ -92,7 +94,7 @@ public:
 
 	// 내부에서 transition에 따라서 State 를 결정 할 함수
 	void GoNextState() {
-		if (nowState->nextState != " " || nowState->isNextState)
+		if (nowState->nextState != nullptr || nowState->isNextState)
 		{
 			nowState = nowState->nextState;
 		}

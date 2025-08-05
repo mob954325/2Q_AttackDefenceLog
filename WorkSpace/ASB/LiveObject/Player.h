@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "LiveObject.h"
 #include "../CsvData/DataClass/PlayerData.h"
+#include "../Component/StateController.h"
 
 
 /* 25.08.01
@@ -20,18 +21,19 @@ public:
 	void OnCreate() override;
 	void OnStart() override;
 	void OnUpdate() override;
-	void OnFixedUpdate() override;
-	void OnDestroy() override;
+	void OnFixedUpdate() override {};
+	void OnDestroy() override {};
 	
 
 	// 플레이어의 상태를 초기화하는 함수
-	void SetStatData(std::string tmp, float Object_SpiritAmount); // 스탯 데이터를 데이터에서 불러와 저장함
+	void SetStatData(std::string tmp); // 스탯 데이터를 데이터에서 불러와 저장함
+	void SetSpiritData(float enemy_SpiritAmount); // 배틀매니저에서 적을 불러와서 생성함!!
 	void SetAttackPattenData(std::string PattID); //  패턴ID에 맞는 가이드라인 데이터를 불러옴
 	void ResetSpiritAmount();
 
 	// 배틀 매니저에서 사용될 함수
 	void SelectPatten() override;   //플레이어가 사용할 패턴을 고름
-	std::vector<int> SetNowPatten() override;   //플레이어의 현재 패턴의 노드를 반환함
+	void SetNowPatten() override;   //플레이어의 현재 패턴의 노드를 반환함
 
 
 	//업데이트에 들어갈 시간에 따라 변하는 함수들
@@ -51,7 +53,7 @@ private:
 	PlayerData* nowPlayerData = nullptr; // 받아올 데이터를 가리키는 포인터
 	PlayerAtkPetternData* nowPlayerPattenData = nullptr; //사용할 패턴 데이터를 가리키는 포인터
 	PlayerAtkPetternData* prePlayerPattenData = nullptr;
-	StateController<Player>* m_State;  //오브젝트 들은 State 내부에서 받을 수 있도록 포인터 생성
+	StateController* m_State;  //오브젝트 들은 State 내부에서 받을 수 있도록 포인터 생성
 	std::string PrePattenID;		  // 이전 패턴의 ID
 };
 

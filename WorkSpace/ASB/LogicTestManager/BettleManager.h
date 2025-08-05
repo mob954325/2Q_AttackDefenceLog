@@ -16,9 +16,9 @@ public:
 	~BettleManager() {};
 
 	void OnCreate() {};
-	void OnStart() {};
+	void OnStart() ;
 	void OnDestroy() {};
-	void OnUpdate() {};
+	void OnUpdate() ;
 	void OnFixedUpdate() {};
 
 private:
@@ -35,7 +35,7 @@ private:
 
 public:
 	//Scene의 Start에 들어갈 것들
-	void SetForStart(Player* nowPlayer, Enemy* nowEnemy, AttackPatternManager& pattenManager); //-> 이거는 생성자에 넣을수도?
+	void SetForStart(AttackPatternManager& pattenManager); //-> 이거는 생성자에 넣을수도?
 	void SetDeltaTime(float deltaTime);			        //Scene에서 deltaTime 설정
 	int RandomReturn(int MaxInt);
 };

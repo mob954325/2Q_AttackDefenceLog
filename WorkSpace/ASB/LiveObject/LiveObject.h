@@ -44,7 +44,7 @@ public:
 	float GetDefenseRate() { return Object_DefenseRate; }			// 방어율 반환
 	float GetPlayingAttackTime() const {return Object_PlayingAttackTime;}  //가이드라인이 떠있는 시간
 	float GetNowPlayingAttackTime() const {return Object_nowPlayingAttackTime;} //현채 가이드라인이 뜬 기간
-
+	float GetSpiritAmount() { return Object_SpiritAmount; }
 	
 	// 설정 함수들
 	void SetID(const std::string& id) { Object_ID = id; }							 // ID 설정
@@ -64,14 +64,13 @@ public:
 	
 
 	//각 객체의 업데이트에 들어갈 함수
-	virtual void SetDeltaTime(float deltaTime) = 0; //씬 단위로 델타타임을 통일!!!! -> 시간을 받아야함
+	//virtual void SetDeltaTime(float deltaTime) = 0; //씬 단위로 델타타임을 통일!!!! -> 시간을 받아야함
 	virtual void SetCoolTime() = 0;    //각 객체의 쿨타임이 0이 되었을 때, 다음 쿨타임을 설정함
 	virtual void CalSpiritTime() = 0;  //이거는 플레이어 : -0.3,  적 : +0.3  고정!!!
 
 	//배틀 매니저에 들어갈 스탯 계산할 함수
 	virtual void SelectPatten() = 0;   //각 객체가 사용할 패턴을 고름
-	virtual std::vector<int> SetNowPatten() = 0;   //각 객체가 현재 패턴을 반환함
-	virtual void CalStat() = 0;   //여기서 계산
+	virtual void SetNowPatten() = 0;   //각 객체가 현재 패턴을 반환함
 	virtual void AddPattenLoop() = 0;  // 각 플래그를 관리하여 패턴을 추가하는 코드
 	
 
@@ -102,8 +101,6 @@ protected:
 
 	AttackPatternManager m_PattenManager; // 패턴 매니저를  참조로 받아  사용할 변수
 	
-
-	float SceneDeltaTime;	      // 씬의 델타타임
 
 	float NodeTime;				  // 가이드라인의 판정 시간
 	

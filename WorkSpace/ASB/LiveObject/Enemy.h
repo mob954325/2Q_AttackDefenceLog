@@ -2,6 +2,7 @@
 #include "LiveObject.h"
 #include "../CsvData/DataClass/EnemyData.h"
 #include "../CsvData/DataClass/EnemyAtkPattenData.h"
+#include "../Component/StateController.h"
 
 
 
@@ -11,15 +12,15 @@ class Enemy : public LiveObject
 public:
 	Enemy() = default;
 	~Enemy() = default;
-	void OnCreate();
+	void OnCreate() {};
 	void OnStart();
 	void OnUpdate();
-	void OnFixedUpdate();
-	void OnDestroy();
+	void OnFixedUpdate() {};
+	void OnDestroy() {};
 
 
 	// 플레이어의 상태를 초기화하는 함수
-	void ResetPlayerState();
+	void ResetPlayerState() {};
 	void SetStatData(std::string tmp); // 스탯 데이터를 데이터에서 불러와 저장함
 
 	//패턴 ID에 맞는 데이터를 포인터로 가리킴
@@ -29,7 +30,7 @@ public:
 
 	// 배틀 매니저에서 사용될 함수
 	void SelectPatten() override;   //플레이어가 사용할 패턴을 고름
-	std::vector<int> SetNowPatten() override;   //플레이어의 현재 패턴의 노드를 반환함
+	void SetNowPatten() override;   //플레이어의 현재 패턴의 노드를 반환함
 
 
 
@@ -51,7 +52,7 @@ private:
 	std::vector<std::string> PattenID;
 	EnemyAtkPattenData* nowEnemyPattenData = nullptr; //사용할 패턴 데이터를 가리키는 포인터
 	EnemyAtkPattenData* preEnemyPattenData = nullptr;
-	StateController<Enemy>* m_State = nullptr;  //오브젝트 들은 State 내부에서 받을 수 있도록 포인터 생성
+	StateController* m_State = nullptr;  //오브젝트 들은 State 내부에서 받을 수 있도록 포인터 생성
 	std::string PrePattenID;  // 이전 패턴의 ID
 	float enermyTimePercent; // 패링 퍼센트 계산
 private:
