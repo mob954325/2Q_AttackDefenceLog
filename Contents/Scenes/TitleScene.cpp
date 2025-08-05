@@ -1,6 +1,8 @@
 ﻿#include "TitleScene.h"
 #include "../Engine/Components/Logic/InputSystem.h"
 #include "Objects/InputObject.h"
+#include "Objects/MouseTrailObject.h"
+#include "Objects/TitleScene/TitleSceneBGI.h"
 
 void TitleScene::OnEnterImpl()
 {
@@ -8,6 +10,14 @@ void TitleScene::OnEnterImpl()
 	inputObj = new GameObject();
 	inputObj->AddComponent<InputObject>();
 	AddGameObject(inputObj);
+
+	backGroundImg = new GameObject();
+	backGroundImg->AddComponent<TitleSceneBGI>();
+	AddGameObject(backGroundImg, "TitleBGI");
+	
+	trail = new GameObject();
+	trail->AddComponent<MouseTrailObject>();
+	AddGameObject(trail, "MouseTrail");
 }
 
 void TitleScene::OnExitImpl()
@@ -17,12 +27,8 @@ void TitleScene::OnExitImpl()
 
 void TitleScene::UpdateImpl()
 {
-	if (Input::leftButtonDown) {
-		Singleton<SceneManager>::GetInstance().LoadScene(MENU);
-	}
-
 	auto input = inputObj->GetComponent<InputSystem>();
-	if (input->IsKeyPressed('7')) {
+	if (input->IsKeyPressed('1')) {
 		Singleton<SceneManager>::GetInstance().LoadScene(MENU);
 	}
 }

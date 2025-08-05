@@ -341,11 +341,16 @@
   <ItemGroup>
     <ClCompile Include="Application\Game.cpp" />
     <ClCompile Include="Application\GameApp.cpp" />
+    <ClCompile Include="Objects\EndScene\EndSceneBGI.cpp" />
     <ClCompile Include="Objects\InputObject.cpp" />
     <ClCompile Include="Objects\Manager\PatternManager.cpp" />
+    <ClCompile Include="Objects\MenuScene\MenuSceneBGI.cpp" />
     <ClCompile Include="Objects\MouseTrailObject.cpp" />
+    <ClCompile Include="Objects\SelectScene\SelectSceneBGI.cpp" />
     <ClCompile Include="Objects\Stage\NodeObject.cpp" />
+    <ClCompile Include="Objects\Stage\StageBGI.cpp" />
     <ClCompile Include="Objects\TestObject.cpp" />
+    <ClCompile Include="Objects\TitleScene\TitleSceneBGI.cpp" />
     <ClCompile Include="Scenes\EndScene.cpp" />
     <ClCompile Include="Scenes\MenuScene.cpp" />
     <ClCompile Include="Scenes\SelectScene.cpp" />
@@ -356,11 +361,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameApp.h" />
+    <ClInclude Include="Objects\EndScene\EndSceneBGI.h" />
     <ClInclude Include="Objects\InputObject.h" />
     <ClInclude Include="Objects\Manager\PatternManager.h" />
+    <ClInclude Include="Objects\MenuScene\MenuSceneBGI.h" />
     <ClInclude Include="Objects\MouseTrailObject.h" />
+    <ClInclude Include="Objects\SelectScene\SelectSceneBGI.h" />
     <ClInclude Include="Objects\Stage\NodeObject.h" />
+    <ClInclude Include="Objects\Stage\StageBGI.h" />
     <ClInclude Include="Objects\TestObject.h" />
+    <ClInclude Include="Objects\TitleScene\TitleSceneBGI.h" />
     <ClInclude Include="Scenes\EndScene.h" />
     <ClInclude Include="Scenes\MenuScene.h" />
     <ClInclude Include="Scenes\SelectScene.h" />

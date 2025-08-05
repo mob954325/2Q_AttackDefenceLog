@@ -72,6 +72,9 @@ private:
 
 	std::vector<Vector2> points;
 
+	// 그릴 기하학범위
+	Microsoft::WRL::ComPtr<ID2D1PathGeometry> pathGeometry1;
+	Microsoft::WRL::ComPtr<ID2D1PathGeometry> pathGeometry2;
 	ID2D1GeometrySink* pSink = NULL; // 기하학 범위를 그릴 sink
 
 	std::vector<LineRenderer*> lrs;

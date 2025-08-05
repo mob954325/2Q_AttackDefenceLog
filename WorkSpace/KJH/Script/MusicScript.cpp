@@ -4,6 +4,8 @@
 #include <iostream>
 #include "Systems/AudioSystem.h"
 #include "Components/UI/Slider.h"
+//#include "Components/Camera/CameraManager.h"
+#include "Math/Vector2.h" 
 
 
 void MusicScript::MusicScript::OnUpdate()
@@ -17,10 +19,20 @@ void MusicScript::MusicScript::OnCreate()
 	owner->AddComponent<FModComponent>();
 
 	owner->AddComponent<Slider>();
+
+	/*Came = owner->AddComponent<Camera>();
+
+	Singleton<CameraManager>::GetInstance().Register(new CameraInfo(Came->GetPriority(), Came));*/
 	
 	
 	/*owner->GetTransform().SetPosition(-100.0f, -100.0f);*/
 	owner->GetTransform().SetUnityCoords(false);
+
+
+	TestImage3 = owner->AddComponent<BitmapRenderer>();
+	TestImage3->CreateBitmapResource(L"../../Resource/UI/TestImage/test3.png");
+
+	/*owner->GetTransform().SetOffset(-TestImage3->GetResource()->GetBitmap()->GetSize().width / 2, TestImage->GetResource()->GetBitmap()->GetSize().height / 2);*/
 }
 
 void MusicScript::MusicScript::OnStart()
@@ -53,11 +65,62 @@ void MusicScript::MusicScript::CheckInput()
 		std::cout << "s 입력됨" << std::endl;
 	}
 
-	//if (input->IsKeyPressed('A'))
+	//if (input->IsKeyPressed('P') &&Input::leftButtonDown)
 	//{
-	//	owner->GetComponent<FModComponent>()->PlaySound(L"Attack02");
-	//	std::cout << "a 입력됨" << std::endl;
+	//	D2D1_POINT_2F mouseVec = { Input::MouseX, Input::MouseY };
+	//	Camera* cam = owner->GetComponent<Camera>();
+	//	cam->ZoomCameraToPoint(mouseVec, 2);
 	//}
+
+	//if (input->IsKeyPressed('O') && Input::leftButtonDown)
+	//{
+	//	D2D1_POINT_2F mouseVec = { Input::MouseX, Input::MouseY };
+	//	Camera* cam = owner->GetComponent<Camera>();
+	//	cam->ZoomCameraToPoint(mouseVec, 0.5);
+	//}
+
+	Vector2 Vector1{};
+	/*A = 0.0f;*/
+
+	//if (input->IsKeyPressed(VK_LEFT))
+	//{
+	//	/*Vector1.x -= 1.0f;*/
+	//	A -= 15.0f;
+	//}
+	//if (input->IsKeyPressed(VK_RIGHT))
+	//{
+	//	/*Vector1.x += 1.0f;*/
+	//	A += 15.0f;
+	//}
+
+	if (input->IsKeyDown(VK_LEFT))
+	{
+		/*Vector1.x -= 1.0f;*/
+			A -= 45.0f;
+	}
+	if (input->IsKeyDown(VK_RIGHT))
+	{
+		/*Vector1.x += 1.0f;*/
+			A += 45.0f; 
+	}
+	if (input->IsKeyDown(VK_UP))
+	{
+		Vector1.y += 1.0f;
+	}
+	if (input->IsKeyDown(VK_DOWN))
+	{
+		Vector1.y -= 1.0f;
+	}
+
+	
+
+	owner->GetTransform().SetRotation(A);
+	owner->GetTransform().Translate(Vector1);
+	if (input->IsKeyPressed('A'))
+	{
+		owner->GetComponent<FModComponent>()->PlaySound(L"Attack02");
+		std::cout << "a 입력됨" << std::endl;
+	}
 	//if (input->IsKeyPressed('S'))
 	//{
 	//	owner->GetComponent<FModComponent>()->PlaySound(L"Attack03");

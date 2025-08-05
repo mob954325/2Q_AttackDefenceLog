@@ -9,15 +9,14 @@ void MouseTrailObject::OnStart()
 {
 	owner->SetRenderLayer(EngineData::RenderLayer::UI);	
 	auto t = owner->AddComponent<TrailComponent>();	
-	auto d = owner->AddComponent<PatternDrawerComponent>();
-	
-	d->SetOrderInLayer(80);
-	d->SetBitmap(L"../WorkSpace/HSK/Test/test5.png");
-
-	t->SetOrderInLayer(100);	
+	t->SetOrderInLayer(100);
 	t->SetBitmap(L"../WorkSpace/HSK/Test/test5.png");
 	t->SetTailBitmap(L"../WorkSpace/HSK/Test/test1.png");
 	t->SetHeadBitmap(L"../WorkSpace/HSK/Test/white_brush_test3.png");	
+	
+	auto d = owner->AddComponent<PatternDrawerComponent>();
+	d->SetOrderInLayer(80);
+	d->SetBitmap(L"../WorkSpace/HSK/Test/test5.png");
 }
 
 void MouseTrailObject::OnUpdate()

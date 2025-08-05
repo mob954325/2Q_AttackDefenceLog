@@ -11,5 +11,5 @@ protected:
 private:
 	GameObject* testObj;
 	GameObject* inputObj;
-
+	GameObject* trail;
 };

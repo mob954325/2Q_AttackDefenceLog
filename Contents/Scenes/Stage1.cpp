@@ -7,6 +7,8 @@
 #include "../Objects/InputObject.h"
 #include "../Objects/Stage/NodeObject.h"
 #include "../Objects/MouseTrailObject.h"
+#include "../Objects/Stage/StageBGI.h"
+
 
 void Stage1::OnEnterImpl()
 {
@@ -15,7 +17,7 @@ void Stage1::OnEnterImpl()
 	inputObj = new GameObject();
 	inputObj->AddComponent<InputObject>();
 	AddGameObject(inputObj, "InputStage1");
-
+	
 	trail = new GameObject();
 	trail->AddComponent<MouseTrailObject>();
 	AddGameObject(trail, "MouseTrail");
@@ -31,21 +33,26 @@ void Stage1::OnEnterImpl()
 
 	//===================================================================
 
-	float n = 150.0f; // 노드간의 간격
+	float n = 200.0f; // 노드간의 간격
 
 	for (int i = 0; i < 9; ++i) {
-		int col = i % 3; // 0 1 2
-		int row = i / 3; // 0 1 2
+		int col = i % 3 - 1; // -1 0 1
+		int row = i / 3 - 1; // -1 0 1
 
-		float x = 720.0f + col * n;
-		float y = 405.0f + row * n;
+		float x = 960.0f + col * n;
+		float y = 540.0f + row * n;
 
 		m_nodes[i]->GetTransform().SetPosition(x, y);
 	}
+
+	stageBGI = new GameObject();
+	stageBGI->AddComponent<StageBGI>();
+	AddGameObject(stageBGI);
 }
 
 void Stage1::OnExitImpl()
 {
+
 	std::cout << "스테이지1 이탈" << std::endl;
 }
 
@@ -60,6 +67,7 @@ void Stage1::UpdateImpl()
 	t->isOutFromBox = PM.CheckOutOfBox({ Input::MouseX, Input::MouseY }); // 마우스 좌표 기반으로, 박스 밖으로 나갔는지 확인
 		
 	if (t->isNewCached) { // 새로운 노드 발생하면		
+
 		PM.CheckTrails(t->CheckingCachedTrails());
 		const auto& vec = PM.GetPatternPathPositions(); // 여기에 담김!!! 1 3 2 4 이런거 <<<<< (연결지점)
 
@@ -70,12 +78,13 @@ void Stage1::UpdateImpl()
 
 		for (int value : PM.GetPattern()) { std::cout << value << "-"; }
 		std::cout << std::endl << std::endl;
+
 	}		
 
 	//===================================================================
 
 	auto input = inputObj->GetComponent<InputSystem>();
-	if (input->IsKeyPressed('3')) {
+	if (input->IsKeyPressed('2')) {
 		Singleton<SceneManager>::GetInstance().LoadScene(END);
 	}
 }

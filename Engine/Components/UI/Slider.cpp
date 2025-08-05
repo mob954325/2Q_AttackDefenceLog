@@ -8,7 +8,7 @@ void Slider::OnStart()
 
 	GaugeBar = owner->AddComponent<BitmapRenderer>();
 	GaugeBar->SetUseCustomRect(true);
-	GaugeBar->SetOrderInLayer(2);
+	GaugeBar->SetOrderInLayer(5);
 	GaugeBar->CreateBitmapResource(L"../../Resource/UI/TestGauge/Bar.png");
 	size = GaugeBar->GetResource()->GetBitmap()->GetSize();
 
@@ -22,7 +22,7 @@ void Slider::OnStart()
 	GaugeBackground = owner->AddComponent<BitmapRenderer>();
 	GaugeBackground->CreateBitmapResource(L"../../Resource/UI/TestGauge/backgroundBar.png");
 	GaugeBackground->SetUseCustomRect(true);
-	GaugeBackground->SetOrderInLayer(5);
+	GaugeBackground->SetOrderInLayer(6);
 	sizeBackground = GaugeBackground->GetResource()->GetBitmap()->GetSize();
 	//변동값
 	GaugeBarBackGroundSrcRect.right = sizeBackground.width;
@@ -66,8 +66,6 @@ void Slider::Update()
 	GaugeBackground->SetDestRect(GaugeBarBackGroundDestRect);
 
 	if(HandleValue) ButtonEvent();
-
-	ButtonEvent();
 }
 
 
