@@ -24,7 +24,7 @@ void SelectScene::OnEnterImpl()
 	trail->AddComponent<MouseTrailObject>();
 	AddGameObject(trail, "MouseTrail");
 	
-	
+	testObj->GetComponent<BitmapRenderer>()->CreateBitmapResource(L"../WorkSpace/HSK/Test/test2.png");
 
 }
 
@@ -39,7 +39,7 @@ void SelectScene::OnExitImpl()
 void SelectScene::UpdateImpl()
 {
 	if (start) {
-		testObj->GetComponent<BitmapRenderer>()->CreateBitmapResource(L"../WorkSpace/HSK/Test/test2.png");
+		//testObj->GetComponent<BitmapRenderer>()->CreateBitmapResource(L"../WorkSpace/HSK/Test/test2.png");
 		start = false;
 	}
 

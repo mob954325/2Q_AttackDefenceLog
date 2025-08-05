@@ -333,6 +333,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Components\Rendering\ChainDrawerComponent.h" />
     <ClInclude Include="Components\Rendering\PatternDrawerComponent.h" />
     <ClInclude Include="Components\Rendering\AnimationPlayer.h" />
     <ClInclude Include="Components\Rendering\TrailComponent.h" />
@@ -417,6 +418,7 @@
     <ClInclude Include="Math\Vector2.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Components\Rendering\ChainDrawerComponent.cpp" />
     <ClCompile Include="Components\Rendering\PatternDrawerComponent.cpp" />
     <ClCompile Include="Components\Rendering\AnimationPlayer.cpp" />
     <ClCompile Include="Components\Rendering\TrailComponent.cpp" />

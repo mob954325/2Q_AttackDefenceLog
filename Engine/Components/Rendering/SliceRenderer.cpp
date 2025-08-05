@@ -9,11 +9,11 @@ void SliceRenderer::OnCreate()
 
 void SliceRenderer::OnStart()
 {
-	HRESULT hr;
-	hr = renderManager->GetFactory()->CreatePathGeometry(&pathGeometry1);
+	HRESULT hr = S_OK;
+	//hr = renderManager->GetFactory()->CreatePathGeometry(&pathGeometry1);
 	assert(SUCCEEDED(hr) && " fail create pathGeometry1");
 
-	hr = renderManager->GetFactory()->CreatePathGeometry(&pathGeometry2);
+	//hr = renderManager->GetFactory()->CreatePathGeometry(&pathGeometry2);
 	assert(SUCCEEDED(hr) && " fail create pathGeometry2");
 }
 

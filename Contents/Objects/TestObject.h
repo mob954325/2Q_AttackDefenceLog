@@ -6,6 +6,7 @@
 class TestObject : public MonoBehavior
 {
 public:
+	void OnCreate() override;
 	void OnStart() override;
 	void OnUpdate() override;
 	void OnDestroy() override;
