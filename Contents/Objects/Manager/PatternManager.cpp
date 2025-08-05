@@ -13,11 +13,11 @@ void PatternManager::SetNodes(const std::array<GameObject*, 9>& positions, float
 	Vector2 maxNode{ -FLT_MAX, -FLT_MAX };
 
 	for (int i = 0; i < 9; ++i) {
-		auto bmpSize = positions[i]->GetComponent<BitmapRenderer>()->GetResource()->GetBitmap()->GetSize();
+		//auto bmpSize = positions[i]->GetComponent<BitmapRenderer>()->GetResource()->GetBitmap()->GetSize();
 		Vector2 mat = positions[i]->GetTransform().GetPosition();
 
-		Vector2 offset = { bmpSize.width * 0.5f, bmpSize.height * 0.5f };
-		Vector2 center = mat + offset;
+		//Vector2 offset = { bmpSize.width * 0.5f, bmpSize.height * 0.5f };
+		Vector2 center = mat; // +offset;
 
 		nodes[i].position = center; //비교용으로 잠시 빼둠
 		nodes[i].radius = radius;

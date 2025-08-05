@@ -13,7 +13,6 @@ public:
 
 protected:
 	D2D1_SIZE_F size;
-	BitmapRenderer* bitmapRenderer{};
-	std::shared_ptr<BitmapResource> stampBitmap = nullptr;
+	BitmapRenderer* bitmapRenderer{};	
 };
 

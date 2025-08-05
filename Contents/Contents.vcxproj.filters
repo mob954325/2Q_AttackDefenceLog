@@ -84,6 +84,21 @@
     <ClCompile Include="Objects\MouseTrailObject.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="Objects\EndScene\EndSceneBGI.cpp">
+      <Filter>Objects\SceneObject\EndScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\MenuScene\MenuSceneBGI.cpp">
+      <Filter>Objects\SceneObject\MenuScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\SelectScene\SelectSceneBGI.cpp">
+      <Filter>Objects\SceneObject\SelectScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\TitleScene\TitleSceneBGI.cpp">
+      <Filter>Objects\TitleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Stage\StageBGI.cpp">
+      <Filter>Objects\Stage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameApp.h">
@@ -127,6 +142,21 @@
     </ClInclude>
     <ClInclude Include="Objects\MouseTrailObject.h">
       <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\EndScene\EndSceneBGI.h">
+      <Filter>Objects\SceneObject\EndScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\MenuScene\MenuSceneBGI.h">
+      <Filter>Objects\SceneObject\MenuScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\SelectScene\SelectSceneBGI.h">
+      <Filter>Objects\SceneObject\SelectScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\TitleScene\TitleSceneBGI.h">
+      <Filter>Objects\TitleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Stage\StageBGI.h">
+      <Filter>Objects\Stage</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

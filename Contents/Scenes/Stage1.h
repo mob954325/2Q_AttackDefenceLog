@@ -12,6 +12,7 @@ protected:
 private:
 	GameObject* inputObj;
 	GameObject* trail;
+	GameObject* stageBGI;
 
 	std::array<GameObject*, 9> m_nodes;
 	PatternManager PM;
