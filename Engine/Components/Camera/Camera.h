@@ -20,12 +20,12 @@
 /// 흔들림 함수를 사용할때는 MonoBehavior 오브젝트의 Update에 아래와같이 구성
 /// if (ShakeValue && counttime < maxtimer)		//몇초간 흔들릴지
 //	{
-//		Came->ShakeCamera(counttime += Singleton<GameTime>::GetInstance().GetDeltaTime());		//delta값을 누적시켜 넘겨줌
+//		Came->ShakeCamera(counttime += Singleton<GameTime>::GetInstance().GetDeltaTime(), counttime += Singleton<GameTime>::GetInstance().GetDeltaTime());		//delta값을 누적시켜 넘겨줌 /  x,y 흔들림값 추가 , 변수따로빼서 넘겨주는게 더좋음
 //	}
 //	else if (counttime >= maxtimer)			// 흔들림이 끝난후
 //	{
 //		Came->SetShakeActive(false);		// 흔들림 함수 false
-//		Came->ShakeCamera(0);				// 0전달후 원래의 위치로 돌아감
+//		Came->ShakeCamera(0, 0);			// 0전달후 원래의 위치로 돌아감
 //		ShakeValue = false;					// 흔들림 false로
 //	}
 // 
@@ -37,7 +37,8 @@
 //		counttime = 0;
 //	}
 //
-//
+//카메라 줌인, 줌아웃일때 흔들림보정추가 //계산식 GetOffset 에 추가됨
+//카메라 상하좌우로 흔들릴수 있도록 넘겨받는 매개변수 추가
 /// </remarks>
 class Camera : public Component
 {
@@ -87,7 +88,7 @@ public:
 	void ResetLocalTrans();
 
 	//클라이언트에서 누적된 deltatime을 받아 좌우로 이동하는 함수
-	void ShakeCamera(float externalAmplitude);
+	void ShakeCamera(float externalAmplitudeX, float externalAmplitudeY);
 
 	//Period 주기 , Amplitude 진폭 셋팅하는 함수 
 	void SetWave(float _Period, float _Amplitude);
