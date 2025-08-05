@@ -7,6 +7,7 @@
 #include "components/Collision/AABBCollider.h"
 #include "Components/Physics/Rigidbody2D.h"
 #include "../Component/StateController.h"
+#include "../LogicTestManager/AttackPatternManager.h"
 #include <queue>
 
 // 주의!!! 씬 단위로 델타타임을 고정시킬 예정이라서 씬의 업데이트 처음에 무조건 시간 받아오기!!!!
@@ -34,11 +35,6 @@ public:
 
 
 public:
-	//부모에 없는 내용을 가져올 가상 함수들
-	virtual float GetTotalImbalance() { return 0; }      // 적 객체에만 들어갈 맴버 변수 채간을 부모 객체로 받아오기 위해 필요!
-	virtual std::string GetDifficulty() {};   // 적 객체에만 들어갈 맴버 변수 난이도를 부모 객체로 받아오기 위해 필요!
-
-
 	// 값 가져오는 함수들
 	std::string GetID() { return Object_ID; }		                // ID 반환
 	std::wstring GetName() { return Object_Name; }				    // 이름 반환
@@ -62,24 +58,22 @@ public:
 
 
 	//값 변경 함수
-	void GetDamage(float damageAmount) {Object_Hp -= damageAmount;} 
+	void GetDamage(float damageAmount) {Object_Hp -= damageAmount;}
 	void GetSpiritdamage(float SpiritdamageAmount) { Object_SpiritAmount -= SpiritdamageAmount; }
 	void RestoreSpiritDamage(float SpiritRestoreAmount) { Object_SpiritAmount += SpiritRestoreAmount; }
 	
 
 	//각 객체의 업데이트에 들어갈 함수
 	virtual void SetDeltaTime(float deltaTime) = 0; //씬 단위로 델타타임을 통일!!!! -> 시간을 받아야함
-	virtual void CalCooTime() = 0;     //각 객체의 쿨타임을 계산
 	virtual void SetCoolTime() = 0;    //각 객체의 쿨타임이 0이 되었을 때, 다음 쿨타임을 설정함
 	virtual void CalSpiritTime() = 0;  //이거는 플레이어 : -0.3,  적 : +0.3  고정!!!
 
 	//배틀 매니저에 들어갈 스탯 계산할 함수
 	virtual void SelectPatten() = 0;   //각 객체가 사용할 패턴을 고름
-	virtual std::vector<int> GetNowPatten() = 0;   //각 객체가 현재 패턴을 반환함
-	virtual void DeciedState(const std::queue<int> tmpqueue) = 0;  //큐와 현재 패턴을 비교
+	virtual std::vector<int> SetNowPatten() = 0;   //각 객체가 현재 패턴을 반환함
 	virtual void CalStat() = 0;   //여기서 계산
-	virtual void ChangePatten() = 0;  // 패턴이 변했는지 체크
-
+	virtual void AddPattenLoop() = 0;  // 각 플래그를 관리하여 패턴을 추가하는 코드
+	
 
 	//state에 관련된 함수
 	virtual void SetState(std::string setStateName) = 0;
@@ -105,11 +99,14 @@ protected:
 	float Object_PlayingAttackTime; //패턴의 입력 대기 시간
 	float Object_nowPlayingAttackTime; //현재 패턴의 입력 대기 시간
 
+
+	AttackPatternManager m_PattenManager; // 패턴 매니저를  참조로 받아  사용할 변수
 	
 
 	float SceneDeltaTime;	      // 씬의 델타타임
 
 	float NodeTime;				  // 가이드라인의 판정 시간
+	
 
 
 
@@ -117,9 +114,7 @@ protected:
 	
 public:
 	//배틀 매니저에서 사용할 flag
-	bool isPattenChange = false;   //공격 패턴이 변했는지
 	bool isPattenCooldown = false; //공격 패턴의 쿨타임이 줄어드는지
-	bool isPlayingPatten = false;  //공격 패턴이 실행되고 있는지
-	
+	bool isAddPath = false;        // 패턴 추가 했는지
 };
 

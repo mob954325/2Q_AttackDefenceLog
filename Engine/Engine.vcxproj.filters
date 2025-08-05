@@ -292,6 +292,7 @@
     <ClInclude Include="Components\Rendering\PatternDrawerComponent.h">
       <Filter>Components\Rendering</Filter>
     </ClInclude>
+    <ClInclude Include="..\WorkSpace\ASB\LiveObject\Player.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\Application.cpp">

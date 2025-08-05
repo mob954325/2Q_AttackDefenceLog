@@ -1,4 +1,5 @@
 #pragma once
+#include <unordered_map>
 #include <string>
 #include "Components/Base/MonoBehavior.h"
 class State {
@@ -28,6 +29,7 @@ public:
 
 
 	State* nextState = nullptr;
+	std::string stateName;
 private:
 	float ToNextTimer = 0.0f;
 	float nowTimer = 0.0f;
@@ -53,15 +55,16 @@ public:
 	void CreateState(std::string stateName) {
 		T* tmpState = new T();
 		StateStorage[stateName] = tmpState;
+		tmpState->stateName = stateName;
 	}
 
 	//외부에서 state 설정할 함수
 	void SetState(std::string stateName) {
-		auto it = StateStorage.find(stateName)
-			if (it != StateStorage.end()) {
-				nowState = it->second;
-				nowState->OnStart();  // 사용하기전, 초기화
-			}
+		auto it = StateStorage.find(stateName);
+		if (it != StateStorage.end()) {
+			nowState = it->second;
+			nowState->OnStart();  // 사용하기전, 초기화
+		}
 	}
 
 	// 다음 State 설정
@@ -95,6 +98,10 @@ public:
 		}
 	}
 
+	// 현재 state의 이름을 return
+	std::string GetNowName() {
+		return nowState->stateName;
+	}
 	
 
 	void Update(float deltaTime) {

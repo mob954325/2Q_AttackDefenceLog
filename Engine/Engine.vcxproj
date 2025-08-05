@@ -333,6 +333,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\WorkSpace\ASB\LiveObject\Player.h" />
     <ClInclude Include="Components\Rendering\PatternDrawerComponent.h" />
     <ClInclude Include="Components\Rendering\AnimationPlayer.h" />
     <ClInclude Include="Components\Rendering\TrailComponent.h" />

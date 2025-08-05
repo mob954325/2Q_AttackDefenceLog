@@ -1,9 +1,9 @@
 ﻿#include "GameLogicTestScene.h"
-#include "LiveObject/LiveObject.h"
-#include "../CsvData/DataClass/AllNodePattenClass.h"
-#include "../CsvData/DataClass/PlayerData.h"
-#include "../CsvData/DataClass/EnemyData.h"
 #include "../CsvData/CsvDataManager.h"
+#include "../LogicTestManager/BettleManager.h"
+#include "../LogicTestManager/AttackPatternManager.h"
+#include "LiveObject/Player.h"
+#include "LiveObject/Enemy.h"
 #include "Utils/GameTime.h"
 #include "Utils/Singleton.h"
 
@@ -20,15 +20,30 @@
 
 void GameLogicTestScene::OnEnterImpl()
 {
-
-	//menuObj = new GameObject(); // GameObject 객체 생성
-	//menuObj->AddComponent<MenuTextObject>(); // MonoBehaivor 등록
-	//AddGameObject(menuObj);	// Scene에 GameObject 추가
+	attackPattenManager = new GameObject();                    // GameObject 객체 생성
+	attackPattenManager->AddComponent<AttackPatternManager>(); // MonoBehaivor 등록
+	AddGameObject(attackPattenManager);	                       // Scene에 GameObject 추가
 	
+	bettleManager = new GameObject();             // GameObject 객체 생성
+	bettleManager->AddComponent<BettleManager>(); // MonoBehaivor 등록
+	AddGameObject(bettleManager);	              // Scene에 GameObject 추가
+
+	player = new GameObject();      // GameObject 객체 생성
+	player->AddComponent<StateController<Enemy>>();
+	player->AddComponent<Player>(); // MonoBehaivor 등록
+	AddGameObject(player);	        // Scene에 GameObject 추가
+
+	enemy = new GameObject();	  // GameObject 객체 생성
+	enemy->AddComponent<StateController<Enemy>>();
+	enemy->AddComponent<Enemy>(); // MonoBehaivor 등록
+	AddGameObject(enemy);		  // Scene에 GameObject 추가
+
+
 	EnemyData* tmp = nullptr;
-	CsvDataManager::GetInstance().SetCSV<EnemyData>("../../Resource/DataTable/적 데이터 테이블.csv"); // 데이터 파일 읽어오기
-	tmp = CsvDataManager::GetInstance().getDataImpl<EnemyData>(tmp, "EI_006");
-	tmp->PrintMap();
+	//CsvDataManager::GetInstance().SetCSV<EnemyData>("../../Resource/DataTable/적 데이터 테이블.csv"); // 데이터 파일 읽어오기
+
+	//tmp = CsvDataManager::GetInstance().getDataImpl<EnemyData>(tmp, "EI_006");
+	//tmp->PrintMap();
 }
 
 void GameLogicTestScene::OnExitImpl()
