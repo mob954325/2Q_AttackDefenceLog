@@ -47,7 +47,7 @@ private:
 	SliceBitmapInfo slice2Info{};
 
 	// 그릴 기하학범위
-	ComPtr<ID2D1PathGeometry> pathGeometry1;
-	ComPtr<ID2D1PathGeometry> pathGeometry2;
+	Microsoft::WRL::ComPtr<ID2D1PathGeometry> pathGeometry1;
+	Microsoft::WRL::ComPtr<ID2D1PathGeometry> pathGeometry2;
 	ID2D1GeometrySink* pSink = NULL; // 기하학 범위를 그릴 sink
 };
