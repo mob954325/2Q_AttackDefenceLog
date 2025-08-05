@@ -2,7 +2,7 @@
 #include "Components/Base/MonoBehavior.h"
 #include "Datas/SoundDatas.h"
 #include "Components/Logic/InputSystem.h"
-#include "Components/Camera/Camera.h"
+//#include "Components/Camera/Camera.h"
 #include "Components/Rendering/BitmapRenderer.h"
 
 namespace MusicScript 
@@ -23,7 +23,7 @@ namespace MusicScript
 		BitmapRenderer* TestImage3{};
 
 		InputSystem* input{};
-		Camera* Came{};
+		/*Camera* Came{};*/
 		float A = 0.0f;
 		std::vector<SoundInfo> componentList = {
 			{L"Attack01" ,L"P_Attack01"},

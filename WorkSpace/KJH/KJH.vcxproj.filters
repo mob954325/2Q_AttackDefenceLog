@@ -13,6 +13,7 @@
     <ClCompile Include="DataStorage\DataClass\PlayerData.cpp" />
     <ClCompile Include="Script\TestObject.cpp" />
     <ClCompile Include="Script\TestObject2.cpp" />
+    <ClCompile Include="Script\MainCam.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Script\MusicScript.h" />
@@ -26,5 +27,6 @@
     <ClInclude Include="DataStorage\DataClass\PlayerData.h" />
     <ClInclude Include="Script\TestObject.h" />
     <ClInclude Include="Script\TestObject2.h" />
+    <ClInclude Include="Script\MainCam.h" />
   </ItemGroup>
 </Project>

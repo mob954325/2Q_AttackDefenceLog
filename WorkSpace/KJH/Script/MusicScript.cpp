@@ -4,7 +4,7 @@
 #include <iostream>
 #include "Systems/AudioSystem.h"
 #include "Components/UI/Slider.h"
-#include "Components/Camera/CameraManager.h"
+//#include "Components/Camera/CameraManager.h"
 #include "Math/Vector2.h" 
 
 
@@ -20,9 +20,9 @@ void MusicScript::MusicScript::OnCreate()
 
 	owner->AddComponent<Slider>();
 
-	Came = owner->AddComponent<Camera>();
+	/*Came = owner->AddComponent<Camera>();
 
-	Singleton<CameraManager>::GetInstance().Register(new CameraInfo(Came->GetPriority(), Came));
+	Singleton<CameraManager>::GetInstance().Register(new CameraInfo(Came->GetPriority(), Came));*/
 	
 	
 	/*owner->GetTransform().SetPosition(-100.0f, -100.0f);*/
@@ -64,6 +64,20 @@ void MusicScript::MusicScript::CheckInput()
 		owner->GetComponent<Slider>()->ChangeButtonPosition(1);
 		std::cout << "s 입력됨" << std::endl;
 	}
+
+	//if (input->IsKeyPressed('P') &&Input::leftButtonDown)
+	//{
+	//	D2D1_POINT_2F mouseVec = { Input::MouseX, Input::MouseY };
+	//	Camera* cam = owner->GetComponent<Camera>();
+	//	cam->ZoomCameraToPoint(mouseVec, 2);
+	//}
+
+	//if (input->IsKeyPressed('O') && Input::leftButtonDown)
+	//{
+	//	D2D1_POINT_2F mouseVec = { Input::MouseX, Input::MouseY };
+	//	Camera* cam = owner->GetComponent<Camera>();
+	//	cam->ZoomCameraToPoint(mouseVec, 0.5);
+	//}
 
 	Vector2 Vector1{};
 	/*A = 0.0f;*/

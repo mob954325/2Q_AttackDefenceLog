@@ -17,6 +17,7 @@ void TestObject::OnCreate()
 
 void TestObject::OnStart()
 {
+	/*owner->GetComponent<Transform>()->SetPosition(50.0f, 50.0f);*/
 }
 
 void TestObject::OnDestroy()

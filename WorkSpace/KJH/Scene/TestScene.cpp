@@ -2,6 +2,7 @@
 #include "Script/MusicScript.h"
 #include "Script/TestObject.h"
 #include "Script/TestObject2.h"
+#include "Script/MainCam.h"
 
 
 void TestScene::TestScene::OnEnterImpl()
@@ -20,6 +21,11 @@ void TestScene::TestScene::OnEnterImpl()
 	CameTest2->SetName("Test Came2");
 	CameTest2->AddComponent<TestObject2>();
 	AddGameObject(CameTest2);
+
+	MainCamera = new GameObject();
+	MainCamera->SetName("MainCam");
+	MainCamera->AddComponent<MainCam>();
+	AddGameObject(MainCamera);
 
 }
 

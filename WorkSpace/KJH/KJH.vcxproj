@@ -343,6 +343,7 @@
     <ClCompile Include="game.cpp" />
     <ClCompile Include="DataStorage\NodeData.cpp" />
     <ClCompile Include="DataStorage\DataClass\PlayerData.cpp" />
+    <ClCompile Include="Script\MainCam.cpp" />
     <ClCompile Include="Scene\TestScene.cpp" />
     <ClCompile Include="Script\MusicScript.cpp" />
     <ClCompile Include="Script\TestObject.cpp" />
@@ -356,6 +357,7 @@
     <ClInclude Include="DataStorage\DataClass\EnemyAtkPattenData.h" />
     <ClInclude Include="DataStorage\NodeData.h" />
     <ClInclude Include="DataStorage\DataClass\PlayerData.h" />
+    <ClInclude Include="Script\MainCam.h" />
     <ClInclude Include="Scene\TestScene.h" />
     <ClInclude Include="Script\MusicScript.h" />
     <ClInclude Include="Script\TestObject.h" />

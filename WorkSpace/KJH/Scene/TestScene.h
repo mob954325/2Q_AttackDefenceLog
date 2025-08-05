@@ -15,5 +15,6 @@ namespace TestScene
 		GameObject* MusicBox{};
 		GameObject* CameTest{};
 		GameObject* CameTest2{};
+		GameObject* MainCamera{};
 	};
 }

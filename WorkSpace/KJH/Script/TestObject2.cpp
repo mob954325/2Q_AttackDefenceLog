@@ -16,7 +16,7 @@ void TestObject2::OnCreate()
 	TestImage = owner->AddComponent<BitmapRenderer>();
 	TestImage->CreateBitmapResource(L"../../Resource/UI/TestImage/test2.png");
 	owner->GetTransform().SetOffset(-TestImage->GetResource()->GetBitmap()->GetSize().width / 2, TestImage->GetResource()->GetBitmap()->GetSize().height / 2);
-	owner->AddComponent<Slider>();
+	/*owner->AddComponent<Slider>();*/
 }
 
 void TestObject2::OnStart()
