@@ -74,11 +74,6 @@ void D2DRenderManager::SetD2D8Factory(ID2D1Factory8* pD2D1Factory)
 	m_d2d1Factory8 = pD2D1Factory;
 }
 
-ComPtr<ID2D1Factory8> D2DRenderManager::GetFactory()
-{
-	return m_d2d1Factory8;
-}
-
 void D2DRenderManager::SetRenderTransform(D2D1_MATRIX_3X2_F& finalMatrix)
 {
 	m_d2dDeviceContext->SetTransform(finalMatrix); // NOTE: Direct2D가 이후에 그릴 모든 도형/텍스트/이미지 등에 적용활 좌표 변환 행렬 설정 함수
@@ -178,6 +173,35 @@ void D2DRenderManager::CreateEffect(ID2D1Effect** skew, ID2D1Effect** shadow, Mi
 	};
 	(*shadow)->SetInputEffect(0, *skew);
 	(*shadow)->SetValue(D2D1_COLORMATRIX_PROP_COLOR_MATRIX, shadowMatrix);
+}
+
+void D2DRenderManager::CreatePathGeometry(ID2D1PathGeometry** pPath)
+{
+	HRESULT hr;
+	hr = m_d2d1Factory8->CreatePathGeometry(pPath);
+
+	assert(SUCCEEDED(hr) && " fail create pathGeometry");
+}
+
+void D2DRenderManager::CreateLayer(ID2D1Layer** pLayer, D2D1_SIZE_F* size)
+{
+	HRESULT hr;
+	hr = m_d2dDeviceContext->CreateLayer(size, pLayer);
+
+	assert(SUCCEEDED(hr) && " fail create layer");
+}
+
+void D2DRenderManager::PushLayer(const D2D1_RECT_F& contentSize, ID2D1Geometry* geomatry, ID2D1Layer* pLayer)
+{
+	m_d2dDeviceContext->PushLayer(
+		D2D1::LayerParameters(D2D1::InfiniteRect(), geomatry),
+		pLayer
+	);
+}
+
+void D2DRenderManager::PopLayer()
+{
+	m_d2dDeviceContext->PopLayer();
 }
 
 HRESULT D2DRenderManager::CreateBitmapFromFile(const wchar_t* path, ID2D1Bitmap1** outBitmap)
