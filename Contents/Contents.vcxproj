@@ -338,6 +338,38 @@
       <Project>{9f8b7d36-e4aa-4c3f-aade-81fb4ba00603}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Application\Game.cpp" />
+    <ClCompile Include="Application\GameApp.cpp" />
+    <ClCompile Include="Objects\InputObject.cpp" />
+    <ClCompile Include="Objects\Manager\PatternManager.cpp" />
+    <ClCompile Include="Objects\MouseTrailObject.cpp" />
+    <ClCompile Include="Objects\Stage\NodeObject.cpp" />
+    <ClCompile Include="Objects\TestObject.cpp" />
+    <ClCompile Include="Scenes\EndScene.cpp" />
+    <ClCompile Include="Scenes\MenuScene.cpp" />
+    <ClCompile Include="Scenes\SelectScene.cpp" />
+    <ClCompile Include="Scenes\Stage1.cpp" />
+    <ClCompile Include="Scenes\Stage2.cpp" />
+    <ClCompile Include="Scenes\Stage3.cpp" />
+    <ClCompile Include="Scenes\TitleScene.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Application\GameApp.h" />
+    <ClInclude Include="Objects\InputObject.h" />
+    <ClInclude Include="Objects\Manager\PatternManager.h" />
+    <ClInclude Include="Objects\MouseTrailObject.h" />
+    <ClInclude Include="Objects\Stage\NodeObject.h" />
+    <ClInclude Include="Objects\TestObject.h" />
+    <ClInclude Include="Scenes\EndScene.h" />
+    <ClInclude Include="Scenes\MenuScene.h" />
+    <ClInclude Include="Scenes\SelectScene.h" />
+    <ClInclude Include="Scenes\Stage1.h" />
+    <ClInclude Include="Scenes\Stage2.h" />
+    <ClInclude Include="Scenes\Stage3.h" />
+    <ClInclude Include="Scenes\TitleScene.h" />
+    <ClInclude Include="Scripts\SceneCore.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

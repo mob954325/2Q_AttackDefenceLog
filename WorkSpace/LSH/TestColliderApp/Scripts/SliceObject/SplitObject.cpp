@@ -1,9 +1,9 @@
-﻿#include "SliceObject.h"
+﻿#include "SplitObject.h"
 #include "Components/Base/GameObject.h"
 #include "Platform/Input.h"
 #include "Math/Vector2.h"
 
-void SliceObject::OnCreate()
+void SplitObject::OnCreate()
 {
 	origin = owner->AddComponent<BitmapRenderer>();
 
@@ -15,7 +15,7 @@ void SliceObject::OnCreate()
 	input = owner->AddComponent<InputSystem>();
 }
 
-void SliceObject::OnUpdate()
+void SplitObject::OnUpdate()
 {
 	HandleOverlap();
 
@@ -26,7 +26,7 @@ void SliceObject::OnUpdate()
 	}
 }
 
-void SliceObject::HandleOverlap()
+void SplitObject::HandleOverlap()
 {
 	int detectedIndex = -1;
 	if (IsOverlap(Input::MouseX, Input::MouseY, detectedIndex))
@@ -85,7 +85,7 @@ void SliceObject::HandleOverlap()
 
 }
 
-bool SliceObject::IsOverlap(float x, float y, int& outIndex)
+bool SplitObject::IsOverlap(float x, float y, int& outIndex)
 {
 	for (int i = 0; i < 9; i++)
 	{
@@ -104,13 +104,13 @@ bool SliceObject::IsOverlap(float x, float y, int& outIndex)
 	return false; // 못찾음
 }
 
-void SliceObject::SetOriginImage(std::wstring path)
+void SplitObject::SetOriginImage(std::wstring path)
 {
 	origin->CreateBitmapResource(path);
 	origin->SetActive(false);
 }
 
-void SliceObject::SetImages(std::vector<PieceObject*> objs)
+void SplitObject::SetImages(std::vector<PieceObject*> objs)
 {
 	pieces = objs;
 
@@ -120,7 +120,7 @@ void SliceObject::SetImages(std::vector<PieceObject*> objs)
 	}
 }
 
-void SliceObject::Spread()
+void SplitObject::Spread()
 {
 	for (PieceObject* obj : pieces)
 	{
@@ -128,7 +128,7 @@ void SliceObject::Spread()
 	}
 }
 
-void SliceObject::Reset()
+void SplitObject::Reset()
 {
 	for (PieceObject* obj : pieces)
 	{
@@ -136,7 +136,7 @@ void SliceObject::Reset()
 	}
 }
 
-void SliceObject::SetGrid(int gridSize)
+void SplitObject::SetGrid(int gridSize)
 {
 	if (!origin->GetResource()->GetBitmap()) return; // 원본이미지가 비어 있으면 무시
 
@@ -173,7 +173,7 @@ void SliceObject::SetGrid(int gridSize)
 	}
 }
 
-void SliceObject::SliceVertical()
+void SplitObject::SliceVertical()
 {
 	for (int i = 0; i < pieces.size(); i++)
 	{
@@ -188,7 +188,7 @@ void SliceObject::SliceVertical()
 	}
 }
 
-void SliceObject::SliceHorizon()
+void SplitObject::SliceHorizon()
 {
 	int size = pieces.size();
 	int quarter = size / 4;
@@ -207,7 +207,7 @@ void SliceObject::SliceHorizon()
 	}
 }
 
-void SliceObject::SliceDiagonalLeft()
+void SplitObject::SliceDiagonalLeft()
 {
 	int size = pieces.size();
 	int quarter = size / 4;
@@ -227,7 +227,7 @@ void SliceObject::SliceDiagonalLeft()
 	}
 }
 
-void SliceObject::SliceDiagonalRight()
+void SplitObject::SliceDiagonalRight()
 {
 	int size = pieces.size();
 	int quarter = size / 4;

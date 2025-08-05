@@ -95,4 +95,3 @@ protected:
 
 	SceneState state = SceneState::Exit;
 };
-

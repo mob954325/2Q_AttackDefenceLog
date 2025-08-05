@@ -12,15 +12,16 @@ void HSKScene::OnEnterImpl()
 {
 	obj = new GameObject();
 	obj->SetRenderLayer(EngineData::RenderLayer::UI);
+
 	auto t = obj->AddComponent<TrailComponent>();
 	t->SetOrderInLayer(100);
-	
 
 	auto d = obj->AddComponent<PatternDrawerComponent>();
 	d->SetOrderInLayer(80);
 
 	t->SetBitmap(L"../HSK/Test/test5.png");
-	//t->SetTailBitmap(L"../HSK/Test/test_t.png");
+	t->SetTailBitmap(L"../HSK/Test/test1.png");
+	t->SetHeadBitmap(L"../HSK/Test/white_brush_test3.png");
 	d->SetBitmap(L"../HSK/Test/test5.png");
 
 	AddGameObject(obj, "trail");
@@ -37,8 +38,8 @@ void HSKScene::OnEnterImpl()
 		int col = i % 3; // 0 1 2
 		int row = i / 3; // 0 1 2
 
-		float x = 720.0f + col * n; 
-		float y = 405.0f + row * n; 
+		float x = 720.0f + col * n;
+		float y = 405.0f + row * n;
 
 		m_nodes[i]->GetTransform().SetPosition(x, y);
 	}
@@ -67,18 +68,16 @@ void HSKScene::UpdateImpl()
 
 	obj->GetTransform().SetPosition(Input::MouseX, Input::MouseY);
 	t->isOutFromBox = PM.CheckOutOfBox({ Input::MouseX, Input::MouseY });
+
 	if (t->isNewCached) {
-		PM.CheckTrails(t->cachedTrails);
+		PM.CheckTrails(t->CheckingCachedTrails());
 		const auto& vec = PM.GetPatternPathPositions();
 		d->SetLine(PM.GetPatternPathPositions());
-		if (!vec.empty())
-			t->Clear();		
-		t->isNewCached = false; // 사용했다고 알림				
 
-		for (int value : PM.GetPattern()) {
-			std::cout << value << "-";
-		}
+		if (!vec.empty()) // 노드가 그어졌다면, 바로 삭제해서 가시성 up
+			t->Clear();
+
+		for (int value : PM.GetPattern()) { std::cout << value << "-"; }
 		std::cout << std::endl << std::endl;
 	}
-
 }

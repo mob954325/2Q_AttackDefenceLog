@@ -1,6 +1,7 @@
 ﻿#include "DummyEffectAnimation.h"
 #include "Components/Base/GameObject.h"
 #include "Utils/GameTime.h"
+#include "Utils/DebugUtility.h"
 
 void DummyEffectAnimation::OnCreate()
 {
@@ -20,6 +21,8 @@ void DummyEffectAnimation::OnDestroy()
 
 void DummyEffectAnimation::OnUpdate()
 {
+	// DebugUtility::DebugLog("Dummy Effect Animation Update");
+
 	if (timer > maxTimer)
 	{
 		owner->GetTransform().SetScale(0.0f, 0.0f);
