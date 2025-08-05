@@ -45,6 +45,7 @@ public:
 	float GetPlayingAttackTime() const {return Object_PlayingAttackTime;}  //가이드라인이 떠있는 시간
 	float GetNowPlayingAttackTime() const {return Object_nowPlayingAttackTime;} //현채 가이드라인이 뜬 기간
 	float GetSpiritAmount() { return Object_SpiritAmount; }
+	float GetNowSpiritAmount() { return Object_NowSpiritAmount; }    
 	
 	// 설정 함수들
 	void SetID(const std::string& id) { Object_ID = id; }							 // ID 설정

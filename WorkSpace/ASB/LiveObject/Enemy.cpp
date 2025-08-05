@@ -66,6 +66,10 @@ void Enemy::OnCreateState() {
 	m_State->SetNextState("Enemy_Defence", "Enemy_Idle");
 	m_State->SetTransitionTime("Enemy_Defence", 1.0f);
 
+	m_State->CreateState("Enemy_Groggy"); //패턴 파회 X, 막음
+	m_State->SetNextState("Enemy_Groggy", "Enemy_Idle");
+	m_State->SetTransitionTime("Enemy_Groggy", 1.0f);
+
 
 	m_State->CreateState("Enemy_Dead");   // 죽음
 }

@@ -73,6 +73,10 @@ void Player::OnCreateState() {
 	m_State->SetNextState("Player_Perry", "Player_Idle");
 	m_State->SetTransitionTime("Player_Perry", 1.0f);
 
+	m_State->CreateState("Player_Groggy");   // 패턴 파회 O + 특정 시간 안에
+	m_State->SetNextState("Player_Groggy", "Player_Idle");
+	m_State->SetTransitionTime("Player_Groggy", 1.0f);
+
 	m_State->CreateState("Player_Dead");   // 죽음
 }
 

@@ -25,9 +25,6 @@ void BettleManager::OnUpdate() {
 
 }
 
-
-
-
 // -> 생성자로 넣어야 할듯?
 void BettleManager::SetForStart(AttackPatternManager& pattenManager) {
 	m_PattenManager = pattenManager;
@@ -54,8 +51,10 @@ void BettleManager::ComparePatten( std::vector<int> InputNode){		  //현재 마�
 			}
 			else {
 				m_Player->SetState("Player_Hit");   	// 피격됨
+				m_Player->GetDamage(m_Enemy->GetAttack());
 			}
-			m_Player->GetDamage(m_Enemy->GetAttack());
+			m_Enemy->RestoreSpiritDamage(m_Enemy->GetSpiritAttack());
+			m_Player->GetSpiritdamage(m_Enemy->GetSpiritAttack());
 		}
 		else {
 			m_Player->SetState("Player_AttackFail");
@@ -67,9 +66,14 @@ void BettleManager::ComparePatten( std::vector<int> InputNode){		  //현재 마�
 	if (tmpPatten == nullptr)
 		return;
 	if (tmpPatten->PattenID.substr(0, 2) == "EP") {
-		m_Player->SetState("Player_Guard");			// 가드
-		if (m_Enemy->GetAttackTimePercent() >= 75) {
-			m_Enemy->SetState("Player_Perry");		//패링
+		
+		if (m_Enemy->GetAttackTimePercent() <= 0.5) {
+			m_Player->SetState("Player_Perry");		//패링
+		}
+		else {
+			m_Player->SetState("Player_Guard");		// 가드
+			m_Enemy->RestoreSpiritDamage(m_Enemy->GetSpiritAttack());
+			m_Player->GetSpiritdamage(m_Enemy->GetSpiritAttack());
 		}
 	}
 	else {
@@ -81,7 +85,21 @@ void BettleManager::ComparePatten( std::vector<int> InputNode){		  //현재 마�
 			m_Enemy->SetState("Enemy_Hit"); // 피격됨
 			m_Enemy->GetDamage(m_Player->GetAttack());
 		}
+		m_Player->RestoreSpiritDamage(m_Player->GetSpiritAttack());
 		m_Enemy->GetSpiritdamage(m_Player->GetSpiritAttack());
+	}
+
+	if (m_Player->GetHp() <= 0.0f) {
+		m_Player->SetState("Player_Dead");
+	}
+	if (m_Enemy->GetHp() <= 0.0f) {
+		m_Enemy->SetState("Enemy_Dead");
+	}
+	if (m_Player->GetNowSpiritAmount() <= 0.0f) {
+		m_Player->SetState("Player_Groggy");
+	}
+	if (m_Enemy->GetNowSpiritAmount() <= 0.0f) {
+		m_Enemy->SetState("Enemy_Groggy");
 	}
 }
 
