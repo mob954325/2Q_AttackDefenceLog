@@ -52,8 +52,7 @@ public:
 	bool isDraw = false; // OnOff용
 	bool wasDraw = false; // isDraw를 한번 저장해뒀다가 비교함, 즉 변경지점을 찾는 비교용 버퍼
 	
-	bool isOutFromBox = true; // 영역밖으로 나가면 true, 뒤에 크기를 자름
-	bool isNewCached = false; // 외부에서 사용하는 플레그, 받은다음 false 해줘야함
+	bool isOutFromBox = true; // 영역밖으로 나가면 true, 뒤에 크기를 자름	
 
 	bool allowHold = true; // 가만히 있으면, hold스탬프 추가할껀지	
 	
@@ -76,6 +75,7 @@ public:
 
 	std::deque<TrailStamp> cachedTrails; // 이건 저장용임(공개됨) - 신규 갱신은 랜더용으로 사용되는 큐(trails)가 삭제되기전에
 	
+	bool isNewCached = false; // 외부에서 사용하는 플레그, 받은다음 false 해줘야함
 	inline const std::deque<TrailStamp>& CheckingCachedTrails() {
 		isNewCached = false;
 		return cachedTrails;
