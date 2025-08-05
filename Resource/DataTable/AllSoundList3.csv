@@ -1,0 +1,2 @@
+﻿SoundID,Path,Mode
+P_Attack02,../../Resource/sounds/attack/attack_4.mp3,FMOD_DEFAULT | FMOD_LOOP_OFF

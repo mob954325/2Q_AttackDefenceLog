@@ -292,6 +292,7 @@
     <ClInclude Include="Components\Rendering\PatternDrawerComponent.h">
       <Filter>Components\Rendering</Filter>
     </ClInclude>
+    <ClInclude Include="Resources\Loaders\CsvLoader.h" />
     <ClInclude Include="Components\Rendering\SliceRenderer.h">
       <Filter>Components\Rendering</Filter>
     </ClInclude>
@@ -456,6 +457,8 @@
     <ClCompile Include="Components\Rendering\PatternDrawerComponent.cpp">
       <Filter>Components\Rendering</Filter>
     </ClCompile>
+    <ClCompile Include="Resources\Loaders\CsvLoader.cpp" />
+    <ClCompile Include="Datas\SoundDatas.cpp" />
     <ClCompile Include="Components\Rendering\SliceRenderer.cpp">
       <Filter>Components\Rendering</Filter>
     </ClCompile>

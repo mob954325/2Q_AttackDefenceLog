@@ -1,0 +1,9 @@
+﻿SoundID,Path,Mode
+P_Attack01,../../Resource/sounds/attack/attack_3.mp3,FMOD_DEFAULT | FMOD_LOOP_OFF
+P_Attack02,../../Resource/sounds/attack/attack_4.mp4,FMOD_DEFAULT | FMOD_LOOP_OFF
+P_Attack03,../../Resource/sounds/attack/attack_5.mp5,FMOD_DEFAULT | FMOD_LOOP_OFF
+P_Break01,../../Resource/sounds/gisae/gisaebreak.mp3,FMOD_DEFAULT | FMOD_LOOP_OFF
+P_Guard01,../../Resource/sounds/defence/defence_5.mp3,FMOD_DEFAULT | FMOD_LOOP_OFF
+P_Guard02,../../Resource/sounds/defence/defence_6.mp3,FMOD_DEFAULT | FMOD_LOOP_OFF
+M_Bgm01,../../Resource/sounds/bgmtest1.mp3,FMOD_CREATESTREAM | FMOD_LOOP_NORMAL
+M_Bgm02,../../Resource/sounds/bgmtest2.mp3,FMOD_CREATESTREAM | FMOD_LOOP_NORMAL

@@ -116,11 +116,11 @@ void MusicScript::MusicScript::CheckInput()
 
 	owner->GetTransform().SetRotation(A);
 	owner->GetTransform().Translate(Vector1);
-	//if (input->IsKeyPressed('A'))
-	//{
-	//	owner->GetComponent<FModComponent>()->PlaySound(L"Attack02");
-	//	std::cout << "a 입력됨" << std::endl;
-	//}
+	if (input->IsKeyPressed('A'))
+	{
+		owner->GetComponent<FModComponent>()->PlaySound(L"Attack02");
+		std::cout << "a 입력됨" << std::endl;
+	}
 	//if (input->IsKeyPressed('S'))
 	//{
 	//	owner->GetComponent<FModComponent>()->PlaySound(L"Attack03");

@@ -8,7 +8,6 @@
     <ClCompile Include="DataStorage\DataClass\AllNodePattenClass.cpp" />
     <ClCompile Include="DataStorage\DataClass\EnemyAtkPattenData.cpp" />
     <ClCompile Include="DataStorage\BaseData.cpp" />
-    <ClCompile Include="DataStorage\CsvDataStorage.cpp" />
     <ClCompile Include="DataStorage\NodeData.cpp" />
     <ClCompile Include="DataStorage\DataClass\PlayerData.cpp" />
     <ClCompile Include="Script\TestObject.cpp" />
@@ -22,7 +21,6 @@
     <ClInclude Include="DataStorage\DataClass\AllNodePattenClass.h" />
     <ClInclude Include="DataStorage\DataClass\EnemyAtkPattenData.h" />
     <ClInclude Include="DataStorage\BaseData.h" />
-    <ClInclude Include="DataStorage\CsvDataStorage.h" />
     <ClInclude Include="DataStorage\NodeData.h" />
     <ClInclude Include="DataStorage\DataClass\PlayerData.h" />
     <ClInclude Include="Script\TestObject.h" />

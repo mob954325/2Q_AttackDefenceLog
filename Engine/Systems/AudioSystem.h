@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "Utils/Singleton.h"
 #include <unordered_map>
 #include "External/FMod/fmod.hpp"
@@ -13,28 +13,28 @@
 // "../../Engine/External/FMOD/api/core/lib/x64/fmod_vc.lib"
 #pragma comment(lib, "../../Engine/External/Fmod/fmod_vc.lib")
 
-/* 25.07.28 | ÀÛ¼ºÀÚ : ±èÁ¤Çö
+/* 25.07.28 | ì‘ì„±ì : ê¹€ì •í˜„
 FMOD_RESULT playSound(
-	FMOD::Sound *sound,         // [1] Àç»ıÇÒ »ç¿îµå °´Ã¼
-	FMOD::ChannelGroup *group,  // [2] ¼ÓÇÒ Ã¤³Î ±×·ì (nullptrÀÌ¸é ±âº» ±×·ì), ¸ğµÎÀ½¼Ò°Å °°Àº ±â´ÉÀ» ³ÖÀ»¶§ ÇÑ°³ÀÇ ±×·ì¿¡ ¹­À¸¸éµÊ
-	bool paused,                // [3] ÀÏ½ÃÁ¤Áö »óÅÂ·Î ½ÃÀÛÇÒÁö ¿©ºÎ
-	FMOD::Channel **channel     // [4] »ç¿îµå¸¦ Á¦¾îÇÒ ¼ö ÀÖ´Â Ã¤³Î Æ÷ÀÎÅÍ (Ãâ·Â¿ë)
+	FMOD::Sound *sound,         // [1] ì¬ìƒí•  ì‚¬ìš´ë“œ ê°ì²´
+	FMOD::ChannelGroup *group,  // [2] ì†í•  ì±„ë„ ê·¸ë£¹ (nullptrì´ë©´ ê¸°ë³¸ ê·¸ë£¹), ëª¨ë‘ìŒì†Œê±° ê°™ì€ ê¸°ëŠ¥ì„ ë„£ì„ë•Œ í•œê°œì˜ ê·¸ë£¹ì— ë¬¶ìœ¼ë©´ë¨
+	bool paused,                // [3] ì¼ì‹œì •ì§€ ìƒíƒœë¡œ ì‹œì‘í• ì§€ ì—¬ë¶€
+	FMOD::Channel **channel     // [4] ì‚¬ìš´ë“œë¥¼ ì œì–´í•  ìˆ˜ ìˆëŠ” ì±„ë„ í¬ì¸í„° (ì¶œë ¥ìš©)
 );
 
-AudioSystem¿¡ ¸ğµç bgmÀ» ÇÑ¹ø¿¡ µî·Ï°¡´É
-µî·ÏÇÒ¶§´Â struct °´Ã¼¸¦ ¸¸µé¾î¼­ ±× °´Ã¼¸¦ µî·Ï ( Datas¿¡¼­ SoundDatas»ç¿ë)
-¸ğµç »ç¿îµå´Â muteGroupÀ¸·Î µî·ÏÇÏ±â¶§¹®¿¡ Setvolume ÇÔ¼ö¸¦ ÅëÇØ ÀüÃ¼ »ç¿îµå Å©±â Á¶Àı °¡´É
+AudioSystemì— ëª¨ë“  bgmì„ í•œë²ˆì— ë“±ë¡ê°€ëŠ¥
+ë“±ë¡í• ë•ŒëŠ” struct ê°ì²´ë¥¼ ë§Œë“¤ì–´ì„œ ê·¸ ê°ì²´ë¥¼ ë“±ë¡ ( Datasì—ì„œ SoundDatasì‚¬ìš©)
+ëª¨ë“  ì‚¬ìš´ë“œëŠ” muteGroupìœ¼ë¡œ ë“±ë¡í•˜ê¸°ë•Œë¬¸ì— Setvolume í•¨ìˆ˜ë¥¼ í†µí•´ ì „ì²´ ì‚¬ìš´ë“œ í¬ê¸° ì¡°ì ˆ ê°€ëŠ¥
 
 
-Ã¤³Î °ü¸®°¡ ÇÊ¿äÇÒ¶§
-µ¿ÀÏ »ç¿îµå Áßº¹ Àç»ıÀ» ¾ÈÇÒ¶§ -> (isPlaying È®ÀÎ ÈÄ Àç»ıÁßÀÌ¸é stop ½ÇÇà)
-µ¿ÀÏ »ç¿îµå ¿©·¯ ¹ø Àç»ı Çã¿ëÇÒ¶§ -> (unique key , static int º¯¼ö¸¦ ÀÌ¿ëÇØ Æ¯º°ÇÑ key ¼³Á¤)
-»ç¿îµå¸¦ ±×·ìº°·Î °ü¸®ÇÒ¶§ -> º¤ÅÍ¾È¿¡ º¤ÅÍ, channelGroup »ç¿ë , std::unordered_map<std::wstring, std::vector<FMOD::Channel*>> channels; »ç¿ë
+ì±„ë„ ê´€ë¦¬ê°€ í•„ìš”í• ë•Œ
+ë™ì¼ ì‚¬ìš´ë“œ ì¤‘ë³µ ì¬ìƒì„ ì•ˆí• ë•Œ -> (isPlaying í™•ì¸ í›„ ì¬ìƒì¤‘ì´ë©´ stop ì‹¤í–‰)
+ë™ì¼ ì‚¬ìš´ë“œ ì—¬ëŸ¬ ë²ˆ ì¬ìƒ í—ˆìš©í• ë•Œ -> (unique key , static int ë³€ìˆ˜ë¥¼ ì´ìš©í•´ íŠ¹ë³„í•œ key ì„¤ì •)
+ì‚¬ìš´ë“œë¥¼ ê·¸ë£¹ë³„ë¡œ ê´€ë¦¬í• ë•Œ -> ë²¡í„°ì•ˆì— ë²¡í„°, channelGroup ì‚¬ìš© , std::unordered_map<std::wstring, std::vector<FMOD::Channel*>> channels; ì‚¬ìš©
 
-¸ğµç »ç¿îµå ¸ØÃâ¶§´Â PauseSound() ,  Àç½ÃÀÛÇÒ¶§´Â AgainstSound() È£Ãâ
-Scene³Ñ¾î°¥¶§ chanel ´Ù ¸®¼Â¿ëµµ·Î ReSetChannel() È£Ãâ
+ëª¨ë“  ì‚¬ìš´ë“œ ë©ˆì¶œë•ŒëŠ” PauseSound() ,  ì¬ì‹œì‘í• ë•ŒëŠ” AgainstSound() í˜¸ì¶œ
+Sceneë„˜ì–´ê°ˆë•Œ chanel ë‹¤ ë¦¬ì…‹ìš©ë„ë¡œ ReSetChannel() í˜¸ì¶œ
 
-Fmod ÃÊ±âÈ­½Ã Ã¤³Î °¹¼ö¸¦ Init¿¡ Àü´ŞÇÏ¿© Ã¤³Î ¼ö¸¦ Á¤ÇÒ ¼ö ÀÖÀ½
+Fmod ì´ˆê¸°í™”ì‹œ ì±„ë„ ê°¯ìˆ˜ë¥¼ Initì— ì „ë‹¬í•˜ì—¬ ì±„ë„ ìˆ˜ë¥¼ ì •í•  ìˆ˜ ìˆìŒ
 */
 
 
@@ -55,14 +55,14 @@ public:
 
 	void ReSetChannel();
 
-	//Ã¤³Î °³º° »ç¿îµå Á¶ÀıÀº ÇÔ¼ö Ãß°¡ÇÏ¸éµÊ
+	//ì±„ë„ ê°œë³„ ì‚¬ìš´ë“œ ì¡°ì ˆì€ í•¨ìˆ˜ ì¶”ê°€í•˜ë©´ë¨
 
 	void Setvolume(float state);
 
 	static void CheckError(FMOD_RESULT result) {
 		if (result != FMOD_OK) {
 			std::cerr << "FMOD Error: " << FMOD_ErrorString(result) << std::endl;
-			exit(-1);
+				exit(-1);
 		}
 	}
 
