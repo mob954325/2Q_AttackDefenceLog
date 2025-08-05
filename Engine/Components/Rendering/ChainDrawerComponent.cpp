@@ -4,57 +4,89 @@
 
 constexpr float PI = 3.141592654f; // 이건 진짜진짜 ㄹㅇ 유명한 파이임
 
-void ChainDrawerComponent::OnStart() 
+void ChainDrawerComponent::SliceRect(std::vector<int> pattern) // 1 3 2 4 5 이런거 넣어주면
 {
+	pieces.clear();
+	if (pattern.size() < 2) return; // 2개이상 있어야 자르기 시작함, 사실상 들어오진 않을듯? 방어로직
 
+	float sliceH = bmpSize.height; // 세로 크기는 원본 그대로 사용함
+	float currentX = 0.0f;
 
+	for (int i = 0; i < pattern.size() - 1; ++i) { // -1까지, +1할꺼라 한칸 내림
 
+		Vector2 from = positions[pattern[i] - 1]; // 1~9 > 0~8 (현재)
+		Vector2 to = positions[pattern[i + 1] - 1]; // 다음 좌표
+
+		float dist = (to - from).Megnituede(); // sqrt(x * x + y * y);
+
+		D2D1_RECT_F srcRect = {
+			currentX,
+			0.0f,
+			currentX + dist, // dist = 거리, currentX = 이전 마지막 지점
+			sliceH
+		};
+
+		float angle = atan2f(to.y - from.y, to.x - from.x); // 아크 탄젠트 값을 라디안으로 변환, 기울기 -> 라디안
+
+		Vector2 midPos = (from + to) * 0.5f;
+
+		pieces.push_back({ srcRect ,angle, midPos });
+		currentX += dist;
+	}
+
+	isPlay = true; // 고고혓
+}
+
+void ChainDrawerComponent::OnStart()
+{
+	bmpSize = baseBitmap->GetBitmap()->GetSize();
 }
 
 void ChainDrawerComponent::Render(D2DRenderManager* manager) // 사실상, trailComponent 내부에 보간식을 떼온거임
 {
-
-
 	Draw(manager);
-
-
 }
 
 void ChainDrawerComponent::Draw(D2DRenderManager* manager)
 {
 	if (!IsActiveSelf()) return; // 비활성화 얼리리턴
 
-	D2D1_SIZE_F bmpSize = baseBitmap->GetBitmap()->GetSize(); // 사이즈 대충 구해서 중앙기준으로
-	D2D1_RECT_F srcRect = { 0.0f, 0.0f,	bmpSize.width, bmpSize.height };
-	
-// 	D2D1::Matrix3x2F transform = D2D1::Matrix3x2F::Rotation( // 회전 행렬 생성하는거임
-// 		180.0f / PI,
-// 		{ 0,0 }
-// 	);
+	for (auto& pi : pieces) {
+		float width = pi.rect.right - pi.rect.left;
+		float height = pi.rect.bottom - pi.rect.top;
 
-	D2D1_RECT_F destRect = { // 대충 이미지 정 가운데 기준
-		bmpSize.width * 0.5f,
-		bmpSize.height * 0.5f,
-		bmpSize.width * 0.5f,
-		bmpSize.height * 0.5f,
-	};
+		D2D1_RECT_F destRect = {
+			pi.pos.x - width * 0.5f,
+			pi.pos.y - height * 0.5f,
+			pi.pos.x + width * 0.5f,
+			pi.pos.y + height * 0.5f
+		};
 
-	//manager->SetRenderTransform(transform);
+		D2D1_POINT_2F center = { pi.pos.x, pi.pos.y};
 
-	manager->DrawBitmap(baseBitmap->GetBitmap(), destRect, srcRect, 1.0f);
+		D2D1::Matrix3x2F transform = D2D1::Matrix3x2F::Rotation(pi.angle * 180.0f / PI, center);
+		manager->SetRenderTransform(transform);
+
+		manager->DrawBitmap(baseBitmap->GetBitmap(), destRect, pi.rect, 1.0f);
+	}
+}
+
+void ChainDrawerComponent::CalcNormalizedRect(float value){
 
 }
 
-void ChainDrawerComponent::CalcNormalizedRect(float value)
+void ChainDrawerComponent::SetBitmap(std::wstring path)
 {
-
-
-
-
-
-
-
+	baseBitmap = resourceManager->CreateBitmapResource(path);
 }
 
+void ChainDrawerComponent::SetupNodes(Vector2 node, float interval)
+{
+	for (int i = 0; i < 9; ++i) {
+		int col = i % 3 - 1; // -1 0 1
+		int row = i / 3 - 1;
 
+		positions[i] = { node.x + interval * col, node.y + interval * row };
+	}
+}
 
