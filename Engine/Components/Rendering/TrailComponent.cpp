@@ -1,8 +1,6 @@
 ﻿#include "TrailComponent.h"
 #include "Scene/SceneManager.h"
 #include "Utils/GameTime.h"
-//#include "Datas/SpriteDatas.h"
-//#include "Utils/DebugUtility.h"
 #include "Resources/ResourceManager.h"
 
 constexpr float PI = 3.141592654f; // 이건 유명한 파이임
@@ -10,7 +8,7 @@ constexpr float PI = 3.141592654f; // 이건 유명한 파이임
 void TrailComponent::Update() { // 여기서 삭제(정리)처리해주면 됨
 	float delta = GameTime::GetInstance().GetDeltaTime();
 
-	if (wasDraw && !isDraw) { // 이후상태 true + 현재상태 false, 즉 꺼질때 한번 // 삭제되는 조건 1##
+	if (WasJustReleased()) { // 꺼질때 한번
 		cachedTrails = trails; // 캐싱하고
 		isNewCached = true;		// 갱신 되었다고 외부에 알려주는 플래그
 
@@ -30,58 +28,52 @@ void TrailComponent::Update() { // 여기서 삭제(정리)처리해주면 됨
 				break; // 연속되는 값이라, 하나 아니면 뒤에는 전부 아님
 		}
 
-		//==========================================================================
-		// 커스텀
-		int toFade = inactiveCount / 10; // 10% 지움
+		int toFade = inactiveCount / deleteStepDivider; // 1/N씩 지움
 		if (toFade < 3 && inactiveCount > 0) toFade = 3; // 최소 3개씩은 지우자
 		else if (toFade > inactiveCount) toFade = inactiveCount;
 
 		//==========================================================================			
-// 		for (int i = 0; i < trails.size(); i++) {
-// 			auto& stamp = trails[i];
-// 
-// 			if (!stamp.isActive) {
-// 				if (stamp.alpha >= 0.9999f) {
-// 					if (toFade-- <= 0)
-// 						continue;
-// 				}
-// 				stamp.alpha -= fadeSpeed * delta;
-// 				if (stamp.alpha < 0.0f)
-// 					stamp.alpha = 0.0f;
-// 			}
-// 			else { //active true
-// 				if (i < 50 )
-// 					stamp.alpha = (i+1) * 0.02f;
-// 			}
-// 		}
-
-		//지렁이 같음
 		int activeIndex = 0;
+
 		for (int i = 0; i < trails.size(); i++) {
 			auto& stamp = trails[i];
 
 			if (!stamp.isActive) {
-				// 삭제 중 처리
 				if (stamp.alpha >= 0.9999f) {
-					if (toFade-- <= 0)
-						continue;
+					if (toFade-- <= 0) continue;
 				}
+
 				stamp.alpha -= fadeSpeed * delta;
 				if (stamp.alpha < 0.0f)
 					stamp.alpha = 0.0f;
 			}
-			else {
-				// active 순서에 따라 alpha 설정
-				if (activeIndex < 100)
-					stamp.alpha = (activeIndex + 1) * 0.01f;
+			else { //active = true								
+				if (activeIndex < maxIndex) { // 전체 길이의 절반에 투명도를 적용함
+					float t = static_cast<float>(activeIndex) / maxIndex; // 0.0 ~ 1.0
+					float targetAlpha = std::sin(t * (PI * 0.5f)); // 0.0 ~ 1.0 자연 곡선 // sin(t * π/2)
 
-				++activeIndex; // 오직 isActive == true인 경우에만 증가
+					constexpr float minAlpha = 0.01f; // 0.0 되버리면 삭제대상이 되버림
+
+					if (targetAlpha < minAlpha)
+						targetAlpha = minAlpha;
+
+					if (stamp.alpha > targetAlpha) {
+						stamp.alpha -= fadeSpeed * delta;
+						if (stamp.alpha < targetAlpha)
+							stamp.alpha = targetAlpha;
+					}
+					else {
+						stamp.alpha = targetAlpha;
+					}
+				}
+				++activeIndex;
 			}
 		}
+
 	}
 
 	//==========================================================================
-	// 알파 0인것들 처리해주는 부분
+	// 알파 0인것들 삭제하는 부분
 	while (!trails.empty()) {
 		const auto& stamp = trails.front();
 		if (stamp.alpha <= 0.0f) { // 알파값 0인 경우에
@@ -95,20 +87,15 @@ void TrailComponent::Update() { // 여기서 삭제(정리)처리해주면 됨
 	wasDraw = isDraw; // 버퍼 갱신
 }
 
-void TrailComponent::Clear()
-{
-	trails.clear();
-}
+//==========================================================================
 
 void TrailComponent::AddStamp(D2D1_POINT_2F pos) { //스탬프를 찍는건데, 거리거 너무 멀어지면 보간으로 채워넣음
 	if (!isDraw) return;
-
 
 	if (trails.empty()) { // 비었다면, 즉 첫번째 스탬프는 각도계산 필요 x
 		trails.push_back({ pos, 0.0f }); // 각도 0으로 처리하고 끝냄
 		return;
 	}
-
 	const TrailStamp& last = trails.back(); // 꼬리에 있는거 빌려옴
 
 	if (!last.isActive) {
@@ -118,10 +105,13 @@ void TrailComponent::AddStamp(D2D1_POINT_2F pos) { //스탬프를 찍는건데, 
 
 	float dx = pos.x - last.position.x; // X 변화량
 	float dy = pos.y - last.position.y; // y 변화량
-	float dist = sqrtf(dx * dx + dy * dy); // 피타고라고라
+	float dist = sqrtf(dx * dx + dy * dy); // 피타고라그래고리오고라파덕
 
 	if (dist < minDistance) // 가장 마지막에 찍힌 스탬프에서 일정거리 이상으로 좌표변동이 일어나야함
+	{
+		AddHoldStamp();
 		return;
+	}
 
 	int steps = static_cast<int>(dist / minDistance); //최소거리가 현재 간격에 몇번들어가는지 확인하는거임
 	//(최소거리보다 커야 생성되니까 기본적으로 1 이상임 + int라 정수임)
@@ -133,25 +123,29 @@ void TrailComponent::AddStamp(D2D1_POINT_2F pos) { //스탬프를 찍는건데, 
 			last.position.y + dy * t
 		};
 
-		float angle = GetAngle(last.position, interpPos, trails.back().angle);
+		float angle = GetAngle(last.position, interpPos);
 
 		trails.push_back({ interpPos, angle }); // 1 ~ ? 갯수만큼 넣어줌
 
-		if (trails.size() == 2) {
-			trails[0].angle = angle;
-		}
+		if (trails.size() == 2)
+			trails[0].angle = angle; // 첫 지점이 0.0f인데, 자연스럽게 방향성을 덮어씌우는 거임
 	}
 
+	//==========================================================================
+	// 삭제하는곳 
 	if (isOutFromBox) {
 		int over = trails.size() - maxTrailCount;
 		if (over <= 0) return;
 
 		for (auto& stamp : trails) {
 			stamp.isActive = false;
+			//stamp.fadeTimer = 0.0f;
 			if (--over <= 0) break;
 		}
 	}
 }
+
+//==========================================================================
 
 void TrailComponent::Draw(D2DRenderManager* manager) {
 
@@ -165,7 +159,10 @@ void TrailComponent::Draw(D2DRenderManager* manager) {
 	D2D1_SIZE_F bmpSize = stampBitmap->GetBitmap()->GetSize(); // 사이즈 대충 구해서 중앙기준으로
 	D2D1_RECT_F srcRect = { 0.0f, 0.0f,	bmpSize.width, bmpSize.height };
 
-	const int fadeCount = 1;
+	D2D1_SIZE_F headSize = headBitmap->GetBitmap()->GetSize();
+	D2D1_RECT_F headSrcRect = { 0.0f, 0.0f, headSize.width, headSize.height };
+
+	//==========================================================================
 
 	for (int i = 0; i < trails.size(); ++i) { // 큐 전체를 순회하면서
 		const TrailStamp& stamp = trails[i];
@@ -174,31 +171,29 @@ void TrailComponent::Draw(D2DRenderManager* manager) {
 			stamp.angle * 180.0f / PI,
 			stamp.position
 		);
-
-		// 		if (i < 3 && trails.size() >= 3) {
-		// 			D2D1_RECT_F tailDestRect = {
-		// 			stamp.position.x - tailSize.width * 0.5f,
-		// 			stamp.position.y - tailSize.height * 0.5f,
-		// 			stamp.position.x + tailSize.width * 0.5f,
-		// 			stamp.position.y + tailSize.height * 0.5f
-		// 			};
-		// 
-		// 			manager->SetRenderTransform(transform);
-		// 			manager->DrawBitmap(tailBitmap->GetBitmap(), tailDestRect, tailSrcRect, stamp.alpha); // 그려잇
-		// 		}
-		// 		else {
 		D2D1_RECT_F destRect = { // 대충 이미지 정 가운데 기준
-		stamp.position.x - bmpSize.width * 0.5f,
-		stamp.position.y - bmpSize.height * 0.5f,
-		stamp.position.x + bmpSize.width * 0.5f,
-		stamp.position.y + bmpSize.height * 0.5f,
+			stamp.position.x - bmpSize.width * 0.5f,
+			stamp.position.y - bmpSize.height * 0.5f,
+			stamp.position.x + bmpSize.width * 0.5f,
+			stamp.position.y + bmpSize.height * 0.5f,
 		};
 
 		manager->SetRenderTransform(transform);
-		manager->DrawBitmap(stampBitmap->GetBitmap(), destRect, srcRect, stamp.alpha); // 그려잇
 
+		//==========================================================================
+
+		int head = (static_cast<int>(trails.size()) - headIndex);
+
+		if (i < tailIndex && head > i) // 꼬리
+			manager->DrawBitmap(tailBitmap->GetBitmap(), destRect, tailSrcRect, stamp.alpha); // 그려잇
+		else if (i >= head && stamp.isActive) // 머리(-했을때, 오버플로우 가능성 있음, 그래서 int로 캐스팅함)
+			manager->DrawBitmap(headBitmap->GetBitmap(), destRect, headSrcRect, stamp.alpha); // 그려잇		
+		else // 몸통
+			manager->DrawBitmap(stampBitmap->GetBitmap(), destRect, srcRect, stamp.alpha); // 그려잇
 	}
 }
+
+//==========================================================================
 
 void TrailComponent::Render(D2DRenderManager* manager)
 {
@@ -208,10 +203,14 @@ void TrailComponent::Render(D2DRenderManager* manager)
 	Draw(manager);
 }
 
+//==========================================================================
+
 void TrailComponent::SetBitmap(std::wstring path) // 랩핑한거임, 별거없음
 {
 	stampBitmap = resourceManager->CreateBitmapResource(path);
 	tailBitmap = stampBitmap; // 일단 몸통으로 초기화
+	headBitmap = stampBitmap; // 머리도 초기화
+	holdBitmap = stampBitmap; // 몰라 이것도 초기화
 }
 
 void TrailComponent::SetTailBitmap(std::wstring path) //꼬리는 나중에 추가하는걸 추천
@@ -219,7 +218,27 @@ void TrailComponent::SetTailBitmap(std::wstring path) //꼬리는 나중에 추�
 	tailBitmap = resourceManager->CreateBitmapResource(path);
 }
 
+void TrailComponent::SetHeadBitmap(std::wstring path)
+{
+	headBitmap = resourceManager->CreateBitmapResource(path);
+}
+
+void TrailComponent::SetHoldBitmap(std::wstring path)
+{
+	holdBitmap = resourceManager->CreateBitmapResource(path);
+}
+
+void TrailComponent::AddHoldStamp() // 마우스 - 위치가 오랫동안 변하지 않으면 작동함
+{	
+	if (!allowHold) return;		
+}
+
 void TrailComponent::OnDestroy() // 이거 안하면 터짐
 {
 	stampBitmap.reset();
 };
+
+void TrailComponent::Clear()
+{
+	trails.clear();
+}

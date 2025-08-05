@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "Scripts/SceneCore.h"
 
-class MenuScene : public Scene
+class TitleScene : public Scene
 {
 protected:
 	void OnEnterImpl() override;
@@ -9,7 +9,5 @@ protected:
 	void UpdateImpl() override;
 
 private:
-	GameObject* testObj;
 	GameObject* inputObj;
-
 };
