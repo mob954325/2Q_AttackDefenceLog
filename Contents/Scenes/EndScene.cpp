@@ -3,6 +3,7 @@
 
 #include "../Objects/InputObject.h"
 #include "../Objects/MouseTrailObject.h"
+#include "../Objects/TestObject.h"
 
 void EndScene::OnEnterImpl()
 {
@@ -15,6 +16,10 @@ void EndScene::OnEnterImpl()
 	trail = new GameObject();
 	trail->AddComponent<MouseTrailObject>();
 	AddGameObject(trail, "MouseTrail");
+
+	testObj = new GameObject();
+	testObj->AddComponent<TestObject>();
+	AddGameObject(testObj);
 }
 
 void EndScene::OnExitImpl()

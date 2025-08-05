@@ -2,6 +2,7 @@
 #include "../Engine/Components/Logic/InputSystem.h"
 #include "Objects/InputObject.h"
 #include "Objects/MouseTrailObject.h"
+#include "Objects/TitleScene/TitleSceneBGI.h"
 
 void TitleScene::OnEnterImpl()
 {
@@ -10,6 +11,10 @@ void TitleScene::OnEnterImpl()
 	inputObj->AddComponent<InputObject>();
 	AddGameObject(inputObj);
 
+	backGroundImg = new GameObject();
+	backGroundImg->AddComponent<TitleSceneBGI>();
+	AddGameObject(backGroundImg, "TitleBGI");
+	
 	trail = new GameObject();
 	trail->AddComponent<MouseTrailObject>();
 	AddGameObject(trail, "MouseTrail");

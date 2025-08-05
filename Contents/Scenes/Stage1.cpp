@@ -7,6 +7,8 @@
 #include "../Objects/InputObject.h"
 #include "../Objects/Stage/NodeObject.h"
 #include "../Objects/MouseTrailObject.h"
+#include "../Objects/Stage/StageBGI.h"
+
 
 void Stage1::OnEnterImpl()
 {
@@ -31,21 +33,26 @@ void Stage1::OnEnterImpl()
 
 	//===================================================================
 
-	float n = 150.0f; // 노드간의 간격
+	float n = 200.0f; // 노드간의 간격
 
 	for (int i = 0; i < 9; ++i) {
-		int col = i % 3; // 0 1 2
-		int row = i / 3; // 0 1 2
+		int col = i % 3 - 1; // -1 0 1
+		int row = i / 3 - 1; // -1 0 1
 
-		float x = 720.0f + col * n;
-		float y = 405.0f + row * n;
+		float x = 960.0f + col * n;
+		float y = 540.0f + row * n;
 
 		m_nodes[i]->GetTransform().SetPosition(x, y);
 	}
+
+	stageBGI = new GameObject();
+	stageBGI->AddComponent<StageBGI>();
+	AddGameObject(stageBGI);
 }
 
 void Stage1::OnExitImpl()
 {
+
 	std::cout << "스테이지1 이탈" << std::endl;
 }
 

@@ -3,7 +3,7 @@
 #include "Components/Rendering/BitmapRenderer.h"
 
 
-class NodeObject : public MonoBehavior
+class TitleSceneBGI : public MonoBehavior
 {
 public:
 	void OnStart() override;
@@ -13,6 +13,6 @@ public:
 
 protected:
 	D2D1_SIZE_F size;
-	BitmapRenderer* bitmapRenderer{};	
+	BitmapRenderer* bitmapRenderer;	
 };
 

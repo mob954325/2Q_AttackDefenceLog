@@ -3,7 +3,7 @@
 #include "Components/Rendering/BitmapRenderer.h"
 
 
-class NodeObject : public MonoBehavior
+class MenuSceneBGI : public MonoBehavior
 {
 public:
 	void OnStart() override;
