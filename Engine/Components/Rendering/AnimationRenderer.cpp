@@ -43,3 +43,8 @@ void AnimationRenderer::SetAnimationClip(std::wstring filePath)
 {
 	player.SetAnimationClip(filePath);
 }
+
+AnimationPlayer AnimationRenderer::GetAnimationPlayer()
+{
+	return player;
+}

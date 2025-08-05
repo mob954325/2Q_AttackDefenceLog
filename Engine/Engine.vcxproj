@@ -343,6 +343,7 @@
     <ClInclude Include="Math\EasingFunction.h" />
     <ClInclude Include="Math\GameRandom.h" />
     <ClInclude Include="Components\UI\Slider.h" />
+    <ClInclude Include="Components\Rendering\SliceRenderer.h" />
     <ClInclude Include="Systems\AudioSystem.h" />
     <ClInclude Include="Components\Fmod\FModComponent.h" />
     <ClInclude Include="Components\Rendering\CircleRenderer.h" />
@@ -426,6 +427,7 @@
     <ClCompile Include="Math\EasingFunction.cpp" />
     <ClCompile Include="Math\GameRandom.cpp" />
     <ClCompile Include="Components\UI\Slider.cpp" />
+    <ClCompile Include="Components\Rendering\SliceRenderer.cpp" />
     <ClCompile Include="Systems\AudioSystem.cpp" />
     <ClCompile Include="Components\Fmod\FModComponent.cpp" />
     <ClCompile Include="Components\Rendering\CircleRenderer.cpp" />

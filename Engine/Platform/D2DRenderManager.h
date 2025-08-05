@@ -15,6 +15,8 @@ public:
 	void Render();
 
 	void SetD2D1DeviceContext7(ID2D1DeviceContext7* pD2D1DeviceContext7);
+	void SetD2D8Factory(ID2D1Factory8* pD2D1Factory);
+	ComPtr<ID2D1Factory8> GetFactory();
 
 	void SetRenderTransform(D2D1_MATRIX_3X2_F& finalMatrix);
 	void DrawBitmap(ComPtr<ID2D1Bitmap1> bitmap);
@@ -42,6 +44,7 @@ public:
 protected:
 	ComPtr<IWICImagingFactory> m_wicImagingFactory;
 	ComPtr<ID2D1DeviceContext7> m_d2dDeviceContext;
+	ComPtr<ID2D1Factory8> m_d2d1Factory8;
 
 	// DWrite
 	ComPtr<IDWriteFactory> m_pDWriteFactory;

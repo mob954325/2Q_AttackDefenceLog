@@ -34,6 +34,7 @@ protected:
 	ComPtr<IDXGISwapChain1>			m_dxgiSwapChain;
 	ComPtr<ID2D1DeviceContext7>		m_d2dDeviceContext;
 	ComPtr<ID2D1Bitmap1>			m_d2dBitmapTarget;
+	ComPtr<ID2D1Factory8>			m_d2d1Factory;
 
 private:
 	HINSTANCE		m_hInstance{};
