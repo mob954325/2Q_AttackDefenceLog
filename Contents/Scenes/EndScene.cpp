@@ -2,6 +2,7 @@
 #include "../Engine/Components/Logic/InputSystem.h"
 
 #include "../Objects/InputObject.h"
+#include "../Objects/MouseTrailObject.h"
 
 void EndScene::OnEnterImpl()
 {
@@ -10,6 +11,10 @@ void EndScene::OnEnterImpl()
 	inputObj = new GameObject();
 	inputObj->AddComponent<InputObject>();
 	AddGameObject(inputObj);
+	
+	trail = new GameObject();
+	trail->AddComponent<MouseTrailObject>();
+	AddGameObject(trail, "MouseTrail");
 }
 
 void EndScene::OnExitImpl()
@@ -19,13 +24,9 @@ void EndScene::OnExitImpl()
 
 void EndScene::UpdateImpl()
 {
-	if (Input::leftButtonDown) {
-		Singleton<SceneManager>::GetInstance().LoadScene(MENU);
-	}
-
-
 	auto input = inputObj->GetComponent<InputSystem>();
-	if (input->IsKeyPressed('1')) {
+	if (input->IsKeyPressed('2')) {
 		Singleton<SceneManager>::GetInstance().LoadScene(MENU);
 	}
 }
+

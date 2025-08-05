@@ -2,6 +2,7 @@
 #include "../Engine/Components/Logic/InputSystem.h"
 #include "../Objects/InputObject.h"
 #include "../Objects/TestObject.h"
+#include "../Objects/MouseTrailObject.h"
 
 void SelectScene::OnEnterImpl()
 {
@@ -18,6 +19,10 @@ void SelectScene::OnEnterImpl()
 	inputObj = new GameObject();
 	inputObj->AddComponent<InputObject>();
 	AddGameObject(inputObj);
+
+	trail = new GameObject();
+	trail->AddComponent<MouseTrailObject>();
+	AddGameObject(trail, "MouseTrail");
 	
 }
 
@@ -34,17 +39,17 @@ void SelectScene::UpdateImpl()
 
 	auto input = inputObj->GetComponent<InputSystem>();
 
-	if (input->IsKeyPressed('2')) {		
+	if (input->IsKeyPressed('3')) {		
 		testObj->GetComponent<BitmapRenderer>()->CreateBitmapResource(L"../WorkSpace/HSK/Test/test2.png");
 	}
 
 	if (input->IsKeyPressed('1')) {
 		Singleton<SceneManager>::GetInstance().LoadScene(STAGE1);
 	}
-	if (input->IsKeyPressed('4')) {
-		Singleton<SceneManager>::GetInstance().LoadScene(STAGE2);
-	}
-	if (input->IsKeyPressed('5')) {
-		Singleton<SceneManager>::GetInstance().LoadScene(STAGE3);
-	}
+// 	if (input->IsKeyPressed('3')) {
+// 		Singleton<SceneManager>::GetInstance().LoadScene(STAGE2);
+// 	}
+// 	if (input->IsKeyPressed('4')) {
+// 		Singleton<SceneManager>::GetInstance().LoadScene(STAGE3);
+// 	}
 }

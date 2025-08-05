@@ -15,7 +15,7 @@ void Stage1::OnEnterImpl()
 	inputObj = new GameObject();
 	inputObj->AddComponent<InputObject>();
 	AddGameObject(inputObj, "InputStage1");
-
+	
 	trail = new GameObject();
 	trail->AddComponent<MouseTrailObject>();
 	AddGameObject(trail, "MouseTrail");
@@ -60,6 +60,7 @@ void Stage1::UpdateImpl()
 	t->isOutFromBox = PM.CheckOutOfBox({ Input::MouseX, Input::MouseY }); // 마우스 좌표 기반으로, 박스 밖으로 나갔는지 확인
 		
 	if (t->isNewCached) { // 새로운 노드 발생하면		
+
 		PM.CheckTrails(t->CheckingCachedTrails());
 		const auto& vec = PM.GetPatternPathPositions(); // 여기에 담김!!! 1 3 2 4 이런거 <<<<< (연결지점)
 
@@ -70,6 +71,7 @@ void Stage1::UpdateImpl()
 
 		for (int value : PM.GetPattern()) { std::cout << value << "-"; }
 		std::cout << std::endl << std::endl;
+
 	}		
 
 	//===================================================================

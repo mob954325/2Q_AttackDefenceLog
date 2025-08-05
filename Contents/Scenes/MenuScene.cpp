@@ -3,6 +3,7 @@
 #include "../Objects/InputObject.h"
 
 #include "../Objects/TestObject.h"
+#include "../Objects/MouseTrailObject.h"
 
 void MenuScene::OnEnterImpl()
 {
@@ -15,6 +16,11 @@ void MenuScene::OnEnterImpl()
 	inputObj = new GameObject();
 	inputObj -> AddComponent<InputObject>();
 	AddGameObject(inputObj);
+
+	trail = new GameObject();
+	trail->AddComponent<MouseTrailObject>();
+	AddGameObject(trail);
+
 }
 
 void MenuScene::OnExitImpl()
@@ -24,10 +30,6 @@ void MenuScene::OnExitImpl()
 
 void MenuScene::UpdateImpl()
 {
-	if (Input::leftButtonDown) {
-		Singleton<SceneManager>::GetInstance().LoadScene(SELECT);
-	}
-
 	auto input = inputObj->GetComponent<InputSystem>();
 	if (input->IsKeyPressed('2')) {
 		Singleton<SceneManager>::GetInstance().LoadScene(SELECT);
