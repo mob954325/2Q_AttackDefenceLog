@@ -118,19 +118,22 @@ float Camera::GetOffset(float externalAmplitude)
 	
 	if (!Shakeactive) return 0.0f;
 
-	return std::sin(externalAmplitude* Period * 3.14159265f) * Amplitude;
+	//카메라 줌인, 줌아웃일때 흔들림보정추가 (GetScale().x 수치를 곱해줌)
+	return (std::sin(externalAmplitude * Period * 3.14159265f) * Amplitude) * localTransform->GetScale().x;
+
 }
 
 
-
-void Camera::ShakeCamera(float externalAmplitude)
+//x, y 양쪽으로 흔들리게 가능
+void Camera::ShakeCamera(float externalAmplitudeX, float externalAmplitudeY)
 {
 	if(SetCamPosition) { basePos = { localTransform->GetPosition().x , localTransform->GetPosition().y};} // 처음 시작할 때 저장한 위치
 	
 	if (Shakeactive) {
-		float offsetX = GetOffset(externalAmplitude);
+		float offsetX = GetOffset(externalAmplitudeX);
+		float offsetY = GetOffset(externalAmplitudeY);
 
-		localTransform->SetPosition(basePos.x - offsetX, basePos.y);
+		localTransform->SetPosition(basePos.x - offsetX, basePos.y - offsetY);
 		SetCamPosition = false;
 	}
 

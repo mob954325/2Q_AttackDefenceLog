@@ -11,12 +11,12 @@ void MainCam::OnUpdate()
 
 	if (ShakeValue && counttime < maxtimer)
 	{
-		Came->ShakeCamera(counttime += Singleton<GameTime>::GetInstance().GetDeltaTime());
+		Came->ShakeCamera(counttime += Singleton<GameTime>::GetInstance().GetDeltaTime(), counttime += Singleton<GameTime>::GetInstance().GetDeltaTime());
 	}
 	else if(counttime >= maxtimer)
 	{
 		Came->SetShakeActive(false);
-		Came->ShakeCamera(0);
+		Came->ShakeCamera(0, 0);
 		ShakeValue = false;
 	}
 }
@@ -45,15 +45,13 @@ void MainCam::CheckInput()
 	//if (Input::wheelDelta > 0)
 	//{
 	//	D2D1_POINT_2F mouseVec = { Input::MouseX, Input::MouseY };
-	//	Camera* cam = owner->GetComponent<Camera>();
-	//	cam->ZoomCameraToPoint(mouseVec, 1.1f);
+	//	Came->ZoomCameraToPoint(mouseVec, 1.1f);
 	//}
 
 	//if (Input::wheelDelta < 0)
 	//{
 	//	D2D1_POINT_2F mouseVec = { Input::MouseX, Input::MouseY };
-	//	Camera* cam = owner->GetComponent<Camera>();
-	//	cam->ZoomCameraToPoint(mouseVec, 0.5f);
+	//	Came->ZoomCameraToPoint(mouseVec, 0.5f);
 	//}
 
 	if (Input::leftButtonDown)
@@ -71,21 +69,18 @@ void MainCam::CheckInput()
 	if (input->IsKeyPressed('P') && Input::leftButtonDown)
 	{
 		D2D1_POINT_2F mouseVec = { Input::MouseX, Input::MouseY };
-		Camera* cam = owner->GetComponent<Camera>();
-		cam->ZoomCameraToPoint(mouseVec, 1.1f);
+		Came->ZoomCameraToPoint(mouseVec, 1.1f);
 	}
 
 	if (input->IsKeyPressed('O') && Input::leftButtonDown)
 	{
 		D2D1_POINT_2F mouseVec = { Input::MouseX, Input::MouseY };
-		Camera* cam = owner->GetComponent<Camera>();
-		cam->ZoomCameraToPoint(mouseVec, 0.5f);
+		Came->ZoomCameraToPoint(mouseVec, 0.5f);
 	}
 
 	if (input->IsKeyPressed('I'))
 	{
-		Camera* cam = owner->GetComponent<Camera>();
-		cam->ResetLocalTrans();
+		Came->ResetLocalTrans();
 	}
 
 	// Input
