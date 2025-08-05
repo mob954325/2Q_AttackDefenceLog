@@ -6,6 +6,9 @@
 #include "../LiveObject/LiveObject.h"
 #include "AttackPatternManager.h"
 #include "Components/Base/GameObject.h"
+#include "Components/Base/MonoBehavior.h"
+
+
 
 
 

@@ -50,10 +50,6 @@ void GameLogicTestScene::OnEnterImpl()
 	attackPattenManager->SetName("AttackPattenManager");
 	AddGameObject(attackPattenManager);	                       // Scene에 GameObject 추가
 	
-	bettleManager = new GameObject();             // GameObject 객체 생성
-	bettleManager->AddComponent<BettleManager>(); // MonoBehaivor 등록
-	bettleManager->SetName("BettleManager");
-	AddGameObject(bettleManager);	              // Scene에 GameObject 추가
 
 
 	enemy = new GameObject();	  // GameObject 객체 생성
@@ -69,10 +65,13 @@ void GameLogicTestScene::OnEnterImpl()
 	player->SetName("Playertmp");
 	AddGameObject(player);	        // Scene에 GameObject 추가
 
-	
+
+	bettleManager = new GameObject();             // GameObject 객체 생성
+	bettleManager->AddComponent<BettleManager>(); // MonoBehaivor 등록
+	bettleManager->SetName("BettleManager");
+	AddGameObject(bettleManager);	              // Scene에 GameObject 추가
 
 
-	
 }
 
 void GameLogicTestScene::OnExitImpl()
