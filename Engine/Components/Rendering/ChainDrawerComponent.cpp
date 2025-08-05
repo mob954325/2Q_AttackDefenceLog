@@ -30,10 +30,11 @@ void ChainDrawerComponent::SliceRect(std::vector<int> pattern) // 1 3 2 4 5 이�
 
 		Vector2 midPos = (from + to) * 0.5f;
 
-		pieces.push_back({ srcRect ,angle, midPos });
+		pieces.push_back({ srcRect ,angle, midPos, dist, 1.0f, 1.0f });
 		currentX += dist;
 	}
 
+	totalLength = currentX;
 	isPlay = true; // 고고혓
 }
 
@@ -62,22 +63,60 @@ void ChainDrawerComponent::Draw(D2DRenderManager* manager)
 			pi.pos.y + height * 0.5f
 		};
 
-		D2D1_POINT_2F center = { pi.pos.x, pi.pos.y};
+		D2D1_POINT_2F center = { pi.pos.x, pi.pos.y };
 
 		D2D1::Matrix3x2F transform = D2D1::Matrix3x2F::Rotation(pi.angle * 180.0f / PI, center);
 		manager->SetRenderTransform(transform);
 
 		manager->DrawBitmap(baseBitmap->GetBitmap(), destRect, pi.rect, 1.0f);
+		if (pi.fillAmount > 0.0f) {			
+			D2D1_RECT_F fillSrcRect = pi.rect;
+			fillSrcRect.right = fillSrcRect.left + width * pi.fillAmount;
+
+			float displayWidth = width * pi.fillAmount;
+			D2D1_RECT_F partialDestRect = {
+			pi.pos.x - width * 0.5f,                // 왼쪽은 고정
+			pi.pos.y - height * 0.5f,
+			(pi.pos.x - width * 0.5f) + displayWidth, // 오른쪽만 늘어남
+			pi.pos.y + height * 0.5f
+			};
+
+			manager->DrawBitmap(fillBitmap->GetBitmap(), partialDestRect, fillSrcRect, 1.0f);
+		}
 	}
 }
 
-void ChainDrawerComponent::CalcNormalizedRect(float value){
+void ChainDrawerComponent::Progress(float value)
+{
+	if (totalLength <= 0.0f) return;
 
+	float targetLength = totalLength * value; // value는 0~1이 보장되야함 clamp안함
+	float remaining = targetLength; // 남은 값이라는 뜻
+
+	for (auto& p : pieces) { // 양동이에 물 채우는거랑 방식임
+		if (remaining >= p.length) {
+			p.fillAmount = 1.0f; // 꽉참
+			remaining -= p.length; // 채운만큼 빼줌
+		}
+		else if (remaining > 0.0f) { // 애매하게 남은경우에 해당함
+			p.fillAmount = remaining / p.length;
+			remaining = 0.0f;
+		}
+		else { // 전혀 안남은 경우
+			p.fillAmount = 0.0f;
+		}
+	}
 }
 
 void ChainDrawerComponent::SetBitmap(std::wstring path)
 {
 	baseBitmap = resourceManager->CreateBitmapResource(path);
+	fillBitmap = baseBitmap; // 일단 넣어
+}
+
+void ChainDrawerComponent::SetFillBitmap(std::wstring path)
+{
+	fillBitmap = resourceManager->CreateBitmapResource(path);
 }
 
 void ChainDrawerComponent::SetupNodes(Vector2 node, float interval)
