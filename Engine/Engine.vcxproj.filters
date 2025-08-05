@@ -293,6 +293,9 @@
       <Filter>Components\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="Resources\Loaders\CsvLoader.h" />
+    <ClInclude Include="Components\Rendering\SliceRenderer.h">
+      <Filter>Components\Rendering</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\Application.cpp">
@@ -456,6 +459,9 @@
     </ClCompile>
     <ClCompile Include="Resources\Loaders\CsvLoader.cpp" />
     <ClCompile Include="Datas\SoundDatas.cpp" />
+    <ClCompile Include="Components\Rendering\SliceRenderer.cpp">
+      <Filter>Components\Rendering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />

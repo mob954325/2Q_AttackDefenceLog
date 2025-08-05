@@ -269,3 +269,8 @@ void ParticleRenderer::SetDecreasing(bool value)
 {
 	isDecreasing = value;
 }
+
+AnimationPlayer ParticleRenderer::GetAnimationPlayer()
+{
+	return player;
+}
