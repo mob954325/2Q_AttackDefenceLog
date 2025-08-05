@@ -35,7 +35,7 @@ public:
 
 	std::vector<Line> GetPatternPathPositions();
 
-	const std::deque<int>& GetPattern() const {
+	const std::vector<int>& GetPattern() const {
 		return pattern;
 	}
 
@@ -43,6 +43,6 @@ public:
 
 private:
 	std::array<Node, 9> nodes;	
-	std::deque<int> pattern;
+	std::vector<int> pattern;
 	D2D1_RECT_F patternBox = { 0,0,0,0 };		
 };

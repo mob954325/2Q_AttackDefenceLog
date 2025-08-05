@@ -1,10 +1,12 @@
 ﻿#include "HSKScene.h"
 #include "Components/Logic/InputSystem.h"
 #include "Components/Rendering/TrailComponent.h"
+#include "../Engine/Utils/GameTime.h"
 #include "NodeObj.h"
 #include "Datas/EngineData.h"
 #include "../Engine/Resources/ResourceManager.h"
 #include "Components/Rendering/PatternDrawerComponent.h"
+#include "../Engine/Components/Rendering/ChainDrawerComponent.h"
 
 using namespace HSK;
 
@@ -12,6 +14,10 @@ void HSKScene::OnEnterImpl()
 {
 	obj = new GameObject();
 	obj->SetRenderLayer(EngineData::RenderLayer::UI);
+
+	auto c = obj->AddComponent<ChainDrawerComponent>();
+	c->SetBitmap(L"../HSK/Test/TestArrow_2.png");
+	c->SetFillBitmap(L"../HSK/Test/TestArrow_1.png");
 
 	auto t = obj->AddComponent<TrailComponent>();
 	t->SetOrderInLayer(100);
@@ -43,6 +49,8 @@ void HSKScene::OnEnterImpl()
 
 		m_nodes[i]->GetTransform().SetPosition(x, y);
 	}
+
+	c->SetupNodes({ 720.0f, 405.0f }, 150.0f);
 }
 
 void HSKScene::OnExitImpl()
@@ -54,6 +62,7 @@ void HSKScene::OnExitImpl()
 
 bool isNodeInitialized = false; // 상남자 코딩
 
+float n = 0.5f;
 void HSKScene::UpdateImpl()
 {
 	if (!isNodeInitialized) { // 어쨌든 한번 초기화했죠?
@@ -69,10 +78,17 @@ void HSKScene::UpdateImpl()
 	obj->GetTransform().SetPosition(Input::MouseX, Input::MouseY);
 	t->isOutFromBox = PM.CheckOutOfBox({ Input::MouseX, Input::MouseY });
 
-	if (t->isNewCached) {
+	auto c = obj->GetComponent<ChainDrawerComponent>();
+
+
+	if (t->isNewCached) {		
+		
 		PM.CheckTrails(t->CheckingCachedTrails());
 		const auto& vec = PM.GetPatternPathPositions();
-		d->SetLine(PM.GetPatternPathPositions());
+		d->SetLine(vec);
+
+		c->SliceRect(PM.GetPattern());
+		c->Progress(n);
 
 		if (!vec.empty()) // 노드가 그어졌다면, 바로 삭제해서 가시성 up
 			t->Clear();
@@ -80,4 +96,12 @@ void HSKScene::UpdateImpl()
 		for (int value : PM.GetPattern()) { std::cout << value << "-"; }
 		std::cout << std::endl << std::endl;
 	}
+	c->Progress(n);
+	
+	n += 0.1f * Singleton<GameTime>::GetInstance().GetDeltaTime();
+
+	if (n >= 1.0f) {
+		n = 0.0f;
+	}
+
 }
