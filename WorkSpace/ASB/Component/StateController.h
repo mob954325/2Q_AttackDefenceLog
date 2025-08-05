@@ -43,7 +43,7 @@ private:
 
 
 // 역할 state 결정 담당
-class StateController : public MonoBehavior {
+class StateController : public Component {
 public:
 	StateController() {};
 	~StateController() {};

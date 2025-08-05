@@ -52,6 +52,7 @@ public:
 		if (it != DataMap.end()) {
 			return it->second;
 		}
+		return nullptr; //명시적으로 null 반환
 	}
 
 	//데이터의 Id 벡터를 반환하는 함수

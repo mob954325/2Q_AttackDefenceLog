@@ -47,13 +47,13 @@ public:
 
 	//플래그를 체크할 함수
 	void AddPattenLoop() override;
-	
+	StateController* m_State;  //오브젝트 들은 State 내부에서 받을 수 있도록 포인터 생성
 private:
 	std::vector<std::string> PattenID;    
 	PlayerData* nowPlayerData = nullptr; // 받아올 데이터를 가리키는 포인터
 	PlayerAtkPetternData* nowPlayerPattenData = nullptr; //사용할 패턴 데이터를 가리키는 포인터
 	PlayerAtkPetternData* prePlayerPattenData = nullptr;
-	StateController* m_State;  //오브젝트 들은 State 내부에서 받을 수 있도록 포인터 생성
+	
 	std::string PrePattenID;		  // 이전 패턴의 ID
 };
 

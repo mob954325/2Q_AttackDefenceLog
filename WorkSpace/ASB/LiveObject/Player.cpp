@@ -36,13 +36,14 @@ void Player::OnUpdate() {
 		CalSpiritTime();		// 1초마다 기세게이지 감소
 		AddPattenLoop();		// 패턴을 추가하는 루프
 	}
-	
+	std::cout << "Player 루프 확인" << std::endl;
 	
 }
 
 //이후 StateManager에 추가하는거 만들기
 void Player::SetState(std::string setStateName) { 
 	m_State->SetState(setStateName);
+	std::cout << "Player_State : " << setStateName << std::endl;
 }
 
 void Player::OnCreateState() {
@@ -109,24 +110,30 @@ void Player::SetAttackPattenData(std::string PattID) {
 // 플레이어의 가이드 패턴2개를 패턴매니저에 등록
 void Player::SetNowPatten() {
 	AllNodePattenClass* tmpNode = nullptr;
-	std::vector<int> tmp; // 저장한 벡터 선언
+	AllNodePattenClass* tmpNode2 = nullptr;
+	std::vector<int> tmp;
 	std::vector<int> tmp2;
-	std::string tmpID1 = nowPlayerPattenData->Node_pattern01;
-	std::string tmpID2 = nowPlayerPattenData->Node_pattern02;
-	tmpID1.push_back('1');
-	tmpID2.push_back('2');
-	tmpNode = CsvDataManager::GetInstance().getDataImpl(tmpNode, nowPlayerPattenData->Node_pattern01); //포인터에  패턴 1 주소 저장			
-	for (int i = 0; i < 10; i++) {
-		tmp.push_back(tmpNode->Node_Number[i]);  // 벡터에 값 저장
+	tmp.clear();
+	tmp2.clear();
+	std::string modifiedID1 = nowPlayerPattenData->Node_pattern01;
+	std::string modifiedID2 = nowPlayerPattenData->Node_pattern02;
+	modifiedID1.push_back('1');
+	modifiedID2.push_back('2');
+
+	// 첫 번째 패턴 데이터 가져오기
+	tmpNode = CsvDataManager::GetInstance().getDataImpl(tmpNode, nowPlayerPattenData->Node_pattern01);
+	if (tmpNode != nullptr) { // 널 포인터 검사 추가
+		tmp = tmpNode->Node_Number;
 	}
 
-	tmpNode = CsvDataManager::GetInstance().getDataImpl(tmpNode, nowPlayerPattenData->Node_pattern02); //포인터에  패턴 2 주소 저장			
-	for (int i = 0; i < 10; i++) {
-		tmp2.push_back(tmpNode->Node_Number[i]);  // 벡터에 값 저장
+	// 두 번째 패턴 데이터 가져오기
+	tmpNode2 = CsvDataManager::GetInstance().getDataImpl(tmpNode2, nowPlayerPattenData->Node_pattern02);
+	if (tmpNode2 != nullptr) { // 널 포인터 검사 추가
+		tmp2 = tmpNode2->Node_Number;
 	}
 
-	m_PattenManager.AddPattern(tmpID1, Object_nowCoolTime, tmp); // 패턴이 끝나는 시간이 따로 정해져있지 않음으로 플레이어의 공격 주기와 일치!
-	m_PattenManager.AddPattern(tmpID2, Object_nowCoolTime, tmp2);
+	m_PattenManager.AddPattern(modifiedID1, Object_nowCoolTime, tmp);
+	m_PattenManager.AddPattern(modifiedID2, Object_nowCoolTime, tmp2);
 }
 
 
@@ -189,6 +196,7 @@ void Player::AddPattenLoop() {
 	// isPattenCooldown : F  -> 계산 X
 	if(isPattenCooldown){
 		// 패턴의 입력대기시간 카운트
+		
 		Object_nowPlayingAttackTime += GameTime::GetInstance().GetDeltaTime();
 		// 현재 시간이  정해진 대기시간보다 크거나 같을 경우 
 		if (Object_nowPlayingAttackTime >= Object_PlayingAttackTime) {
@@ -201,6 +209,7 @@ void Player::AddPattenLoop() {
 		SetCoolTime();   // 적일때는 수정하기!!
 		SetNowPatten();
 	}
+	std::cout << "Player_Loop : " << isPattenCooldown << std::endl;
 }
 
 

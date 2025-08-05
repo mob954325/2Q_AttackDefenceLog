@@ -24,7 +24,7 @@
 
 void GameLogicTestScene::OnEnterImpl()
 {
-	EnemyData* tmp1 = nullptr;
+	PlayerAtkPetternData* tmp1 = nullptr;
 	CsvDataManager::GetInstance().SetCSV<EnemyData>("../../Resource/DataTable/적 데이터 테이블.csv"); // 데이터 파일 읽어오기
 
 
@@ -40,8 +40,8 @@ void GameLogicTestScene::OnEnterImpl()
 	PlayerData* tmp5 = nullptr;
 	CsvDataManager::GetInstance().SetCSV<PlayerData>("../../Resource/DataTable/플레이어 데이터 테이블.csv"); // 데이터 파일 읽어오기
 
-	//tmp1 = CsvDataManager::GetInstance().getDataImpl<EnemyData>(tmp1, "EI_006");
-	//tmp->PrintMap();
+	tmp1 = CsvDataManager::GetInstance().getDataImpl<PlayerAtkPetternData>(tmp1, "PI_006");
+	tmp1->PrintMap();
 
 
 
@@ -53,21 +53,24 @@ void GameLogicTestScene::OnEnterImpl()
 
 
 	enemy = new GameObject();	  // GameObject 객체 생성
-	enemy->AddComponent<StateController>();
-	enemy->AddComponent<Enemy>(); // MonoBehaivor 등록
+	auto enemytmp = enemy->AddComponent<Enemy>(); // MonoBehaivor 등록
+	enemytmp->m_State = enemy->AddComponent<StateController>();
 	enemy->SetName("Enemytmp");
 	AddGameObject(enemy);		  // Scene에 GameObject 추가
 
 
 	player = new GameObject();      // GameObject 객체 생성
-	player->AddComponent<StateController>();
-	player->AddComponent<Player>(); // MonoBehaivor 등록
+	
+	auto playertmp = player->AddComponent<Player>(); // MonoBehaivor 등록
+	playertmp->m_State = player->AddComponent<StateController>();
 	player->SetName("Playertmp");
 	AddGameObject(player);	        // Scene에 GameObject 추가
 
 
 	bettleManager = new GameObject();             // GameObject 객체 생성
-	bettleManager->AddComponent<BettleManager>(); // MonoBehaivor 등록
+	auto bettletmp = bettleManager->AddComponent<BettleManager>(); // MonoBehaivor 등록
+	bettletmp->m_Enemy = enemytmp;
+	bettletmp->m_Player = playertmp;
 	bettleManager->SetName("BettleManager");
 	AddGameObject(bettleManager);	              // Scene에 GameObject 추가
 
@@ -81,8 +84,5 @@ void GameLogicTestScene::OnExitImpl()
 
 void GameLogicTestScene::UpdateImpl()
 {
-	while (1) {
-		int a = 1;
-		a + 1;
-	}
+	
 }

@@ -47,12 +47,13 @@ public:
 
 	//반환하는 함수
 	float GetAttackTimePercent() { return enermyTimePercent; }
-	
+
+	StateController* m_State = nullptr;  //오브젝트 들은 State 내부에서 받을 수 있도록 포인터 생성
 private:
 	std::vector<std::string> PattenID;
 	EnemyAtkPattenData* nowEnemyPattenData = nullptr; //사용할 패턴 데이터를 가리키는 포인터
 	EnemyAtkPattenData* preEnemyPattenData = nullptr;
-	StateController* m_State = nullptr;  //오브젝트 들은 State 내부에서 받을 수 있도록 포인터 생성
+	
 	std::string PrePattenID;  // 이전 패턴의 ID
 	float enermyTimePercent; // 패링 퍼센트 계산
 private:

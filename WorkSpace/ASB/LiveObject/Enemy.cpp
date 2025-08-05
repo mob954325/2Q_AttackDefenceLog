@@ -34,7 +34,7 @@ void Enemy::OnStart() {
 void Enemy::OnUpdate() {
 	CalSpiritTime();		// 1초마다 기세게이지 증가
 	AddPattenLoop();		// 
-	
+	std::cout << "Enemy 루프 확인" << std::endl;
 	//CalAttackTimePercent();
 }
 
@@ -140,14 +140,18 @@ void Enemy::SetAttackPattenData(std::string PattID) {
 
 
 //적의 가이드 패턴을 패턴매니저에 등록
-void  Enemy::SetNowPatten() {
+void Enemy::SetNowPatten() {
 	AllNodePattenClass* tmpNode = nullptr;
-	std::vector<int> tmp; // 저장한 벡터 선언
-	tmpNode = CsvDataManager::GetInstance().getDataImpl(tmpNode, nowEnemyPattenData->eNodepattern); //포인터에  패턴 1 주소 저장			
-	for (int i = 0; i < 10; i++) {
-		tmp.push_back(tmpNode->Node_Number[i]);  // 벡터에 값 저장
-	}
+	std::vector<int> tmp; // 저장할 벡터 선언
 
+	tmpNode = CsvDataManager::GetInstance().getDataImpl(tmpNode, nowEnemyPattenData->eNodepattern);
+
+	// 널 포인터 체크: tmpNode가 유효한지 확인
+	if (tmpNode != nullptr) {
+		// tmpNode가 유효할 때만 벡터에 값을 추가
+		tmp = tmpNode->Node_Number;
+	}
+	// AddPattern 함수 호출
 	m_PattenManager.AddPattern(nowEnemyPattenData->ePatternID, Object_PlayingAttackTime, tmp);
 }
 

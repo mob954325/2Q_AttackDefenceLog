@@ -20,10 +20,10 @@ public:
 	void OnDestroy() {};
 	void OnUpdate() ;
 	void OnFixedUpdate() {};
-
-private:
 	Player* m_Player = nullptr;
 	Enemy* m_Enemy = nullptr;
+private:
+	
 	AttackPatternManager m_PattenManager;
 	float m_DeltaTime = 0.0f;
 

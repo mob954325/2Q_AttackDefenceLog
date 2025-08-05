@@ -16,8 +16,8 @@
 
 
 void BettleManager::OnStart() {
-	m_Enemy = owner->GetQuery()->FindByName("Enemytmp")->GetComponent<Enemy>();
-	m_Player = owner->GetQuery()->FindByName("Playertmp")->GetComponent<Player>();
+	//m_Enemy = owner->GetQuery()->FindByName("Enemytmp")->GetComponent<Enemy>();
+	//m_Player = owner->GetQuery()->FindByName("Playertmp")->GetComponent<Player>();
 	m_Player->SetSpiritData(m_Enemy->GetSpiritAmount());
 }
 
