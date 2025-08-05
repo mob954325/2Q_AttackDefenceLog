@@ -20,7 +20,7 @@ struct SlicePiece {
 
 class ChainDrawerComponent : public RenderComponent
 {
-public:
+public:	
 	void Render(D2DRenderManager* manager) override;
 	void OnStart() override;
 
@@ -39,11 +39,11 @@ public:
 	Vector2 firstNode = { 100, 100 };
 	float interval = 1000;
 
-private:
+private:	
 	float timer = 0.0f;
 	float totalLength = 0.0f;
 
-	std::shared_ptr<BitmapResource> baseBitmap;
+	std::shared_ptr<BitmapResource> baseBitmap;	
 	std::shared_ptr<BitmapResource> fillBitmap;
 	std::vector<SlicePiece> pieces;
 	std::array<Vector2, 9> positions; // 좌표값들

@@ -32,7 +32,7 @@ void ChainDrawerComponent::SliceRect(std::vector<int> pattern) // 1 3 2 4 5 이�
 
 		pieces.push_back({ srcRect ,angle, midPos, dist, 1.0f, 1.0f });
 		currentX += dist;
-	}
+}
 
 	totalLength = currentX;
 	isPlay = true; // 고고혓
@@ -55,7 +55,7 @@ void ChainDrawerComponent::Draw(D2DRenderManager* manager)
 	for (auto& pi : pieces) {
 		float width = pi.rect.right - pi.rect.left;
 		float height = pi.rect.bottom - pi.rect.top;
-
+	
 		D2D1_RECT_F destRect = {
 			pi.pos.x - width * 0.5f,
 			pi.pos.y - height * 0.5f,
