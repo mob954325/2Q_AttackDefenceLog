@@ -13,6 +13,7 @@
     <ClCompile Include="Script\TestObject.cpp" />
     <ClCompile Include="Script\TestObject2.cpp" />
     <ClCompile Include="Script\MainCam.cpp" />
+    <ClCompile Include="Component\EffectComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Script\MusicScript.h" />
@@ -26,5 +27,6 @@
     <ClInclude Include="Script\TestObject.h" />
     <ClInclude Include="Script\TestObject2.h" />
     <ClInclude Include="Script\MainCam.h" />
+    <ClInclude Include="Component\EffectComponent.h" />
   </ItemGroup>
 </Project>
