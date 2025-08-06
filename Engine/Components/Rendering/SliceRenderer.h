@@ -38,6 +38,8 @@ struct ClipEdge
 class SliceRenderer : public RenderComponent
 {
 public:
+	void OnDestroy() override;
+
 	void Render(D2DRenderManager* manager) override;
 
 	/// <summary>
@@ -100,9 +102,9 @@ public:
 	void SetDirection(const Vector2& dir);
 	void SetSpeed(float value);
 
-	void SetGravity(bool value);
-
 	SliceBitmapInfo GetInfo() const;
+
+	D2D1_SIZE_F GetSize() const;
 
 private:
 	/// <summary>
@@ -126,7 +128,4 @@ private:
 	ID2D1GeometrySink* pSink = NULL; // 기하학 범위를 그릴 sink
 
 	std::vector<LineRenderer*> lrs;	 // debug용 lineRenderer
-
-	bool useGravity = false;
-	float speed = 5.0f;
 };

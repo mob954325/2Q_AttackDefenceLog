@@ -1,21 +1,31 @@
 ﻿#include "SliceObject.h"
 #include "Components/Base/GameObject.h"
 #include "Scene/SceneManager.h"
+#include "Math/GameRandom.h"
 
 void SliceObject::OnCreate()
 {
-	sliceComp = owner->AddComponent<SliceRenderer>();
-	input = owner->AddComponent<InputSystem>();
+	rigid = owner->AddComponent<Rigidbody2D>();
+	if (!owner->GetComponent<SliceRenderer>()) // 처음만들어진 오브젝트
+	{
+		sliceComp = owner->AddComponent<SliceRenderer>();
+		// 379, 726
+		sliceComp->SetOriginalByPath(L"../../Resource/Sprite/Test_Slice/teemo.png");
+		rigid->SetGravity(false);
+	}
+	else // 추가된 오브젝트
+	{
+		sliceComp = owner->GetComponent<SliceRenderer>();
+		rigid->SetGravity(true);
+	}
+
 }
 
 void SliceObject::OnStart()
 {
 	// 91 102
 	// sliceComp->SetOriginalByPath(L"../../Resource/Sprite/Test_Slice/Original.png");
-
-	// 379, 726
-	sliceComp->SetOriginalByPath(L"../../Resource/Sprite/Test_Slice/teemo.png");
-
+	
 	// 가로 자르기
 	//auto obj = sliceComp->Slice({0,45}, {91, 45});
 	//Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(obj);
@@ -31,7 +41,8 @@ void SliceObject::OnStart()
 	// Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(obj2);
 	// obj2->GetTransform().SetPosition(12, 12);
 
-	sliceComp->SetGravity(true);
+	// sliceComp->SetGravity(true);
+	// sliceComp->SetSpeed(GameRandom::RandomRange(3.0f, 5.0f));
 }
 
 void SliceObject::OnDestroy()
@@ -40,13 +51,6 @@ void SliceObject::OnDestroy()
 
 void SliceObject::OnUpdate()
 {
-	// handle input
-	if (input->IsKeyDown('W')) owner->GetTransform().Translate({ 0,1 });
-	if (input->IsKeyDown('A')) owner->GetTransform().Translate({ -1,0 });
-	if (input->IsKeyDown('S')) owner->GetTransform().Translate({ 0,-1 });
-	if (input->IsKeyDown('D')) owner->GetTransform().Translate({ 1,0 });
-	if (input->IsKeyDown('R')) state = OverlapState::Notyet;
-
 	if (sliceComp->GetOriginal()->GetBitmap())
 	{
 		HandleOverlap(); // 겹침 확인 함수
@@ -59,7 +63,7 @@ void SliceObject::OnFixedUpdate()
 
 bool SliceObject::IsOverlap(float x, float y)
 {
-	D2D1_SIZE_F bound = sliceComp->GetOriginal()->GetBitmap()->GetSize();
+	D2D1_SIZE_F bound = sliceComp->GetSize();
 
 	if (x >= owner->GetTransform().GetFinalMatrix().dx &&
 		x <= owner->GetTransform().GetFinalMatrix().dx + bound.width &&
@@ -110,6 +114,12 @@ void SliceObject::HandleOverlap()
 			if (obj != nullptr)
 			{
 				Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(obj); // 해당 오브젝트를 씬에 추가해서 실행
+				auto rigid = obj->AddComponent<Rigidbody2D>();
+
+				// comp->SetGravity(true);
+				 
+				obj->AddComponent<SliceObject>();
+				auto mono = obj->GetComponent<SliceObject>();
 				state = OverlapState::Notyet;	// 다시 자를 수 있게 상태 변경 -> 충돌 전
 			}
 		}

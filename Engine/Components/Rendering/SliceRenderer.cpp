@@ -3,6 +3,12 @@
 #include "Platform/D2DRenderManager.h"
 #include "Resources/ResourceManager.h"
 #include "Utils/GameTime.h"
+#include <algorithm>
+
+void SliceRenderer::OnDestroy()
+{
+	originBitmap.reset();
+}
 
 void SliceRenderer::Render(D2DRenderManager* manager)
 {
@@ -18,7 +24,6 @@ void SliceRenderer::Render(D2DRenderManager* manager)
 	infos.position.x += infos.dirVec.x * infos.speed * delta;
 	infos.position.y += infos.dirVec.y * infos.speed * delta;
 
-	// infos.dirVec.y += delta;
 	mat.dx += infos.position.x;
 	mat.dy += infos.position.y;
 
@@ -110,7 +115,7 @@ GameObject* SliceRenderer::Slice(const Vector2& left, const Vector2& right)
 	if (points.empty()) return nullptr;
 
 	ClipEdge cutLine = { right, left };
-	GameObject* obj = nullptr;
+	GameObject* obj = new GameObject;
 
 	if (left.x < right.x) // 왼쪽에서 오른쪽 
 	{
@@ -120,7 +125,6 @@ GameObject* SliceRenderer::Slice(const Vector2& left, const Vector2& right)
 		SetPoint(upper);
 
 		// 아래족 polygon 잘라서 새 GameObject 생성
-		obj = new GameObject;
 		auto comp = obj->AddComponent<SliceRenderer>();
 		comp->SetOriginalByBitmap(originBitmap);
 
@@ -130,13 +134,6 @@ GameObject* SliceRenderer::Slice(const Vector2& left, const Vector2& right)
 		std::vector<Vector2> lower = ClipPolygon(polygon, { left, right });
 		comp->CreateGeomatryByPolygon(lower);
 		comp->SetPoint(lower);
-
-		// test code
-		if (useGravity)
-		{
-			comp->SetDirection({ 0, 1 });
-			comp->SetSpeed(speed);
-		}
 	}
 	else // 오른쪽에서 왼쪽
 	{
@@ -144,7 +141,6 @@ GameObject* SliceRenderer::Slice(const Vector2& left, const Vector2& right)
 		CreateGeomatryByPolygon(lower);
 		SetPoint(lower);
 
-		obj = new GameObject;
 		auto comp = obj->AddComponent<SliceRenderer>();
 		comp->SetOriginalByBitmap(originBitmap);
 
@@ -154,12 +150,6 @@ GameObject* SliceRenderer::Slice(const Vector2& left, const Vector2& right)
 		std::vector<Vector2> upper = ClipPolygon(polygon, cutLine);
 		comp->CreateGeomatryByPolygon(upper);
 		comp->SetPoint(upper);
-
-		if (useGravity)
-		{
-			comp->SetDirection({ 0, 1 }); // d2d기준 y값 증가 -> 밑으로 떨어짐
-			comp->SetSpeed(speed);
-		}
 	}
 
 
@@ -264,14 +254,29 @@ void SliceRenderer::SetSpeed(float value)
 	infos.speed = value;
 }
 
-void SliceRenderer::SetGravity(bool value)
-{
-	useGravity = value;
-}
-
 SliceBitmapInfo SliceRenderer::GetInfo() const
 {
 	return infos;
+}
+
+D2D1_SIZE_F SliceRenderer::GetSize() const
+{
+	float maxX = INT_MIN;
+	float minX = INT_MAX;
+	float maxY = INT_MIN;
+	float minY = INT_MAX;
+
+	for (int i = 0; i < points.size(); i++)
+	{
+		Vector2 point = points[i];
+
+		maxX = (((point.x) > (maxX)) ? (point.x) : (maxX));
+		minX = (((point.x) < (minX)) ? (point.x) : (minX));
+		maxY = (((point.y) > (maxY)) ? (point.y) : (maxY));
+		minY = (((point.y) < (minY)) ? (point.y) : (minY));
+	}
+
+	return { maxX - minX, maxY - minY };
 }
 
 bool SliceRenderer::IsInside(const Vector2& p, const ClipEdge& edge)

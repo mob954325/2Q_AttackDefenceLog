@@ -2,6 +2,7 @@
 #include "Components/Base/MonoBehavior.h"
 #include "Components/Rendering/SliceRenderer.h"
 #include "Components/Logic/InputSystem.h"
+#include "Components/Physics/Rigidbody2D.h"
 
 /* 25.08.06 | 작성자 : 이성호
 *	기능 : 마우스의 좌표값을 받아서 slice renderer로 이미지를 자르는 monobehaivor 코드
@@ -45,6 +46,7 @@ private:
 	/// <returns>보정된 vector2 값</returns>
 	Vector2 ClampPoisiton(const Vector2& vec);
 
+	Rigidbody2D* rigid;
 	SliceRenderer* sliceComp;
 	InputSystem* input;
 
