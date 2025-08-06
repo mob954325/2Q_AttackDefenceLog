@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "Components/Base/MonoBehavior.h"
 #include "Components/Logic/InputSystem.h"
-#include "SliceObject.h" // 조각 실행 함수를 가지고 있는 monobehaivor
+#include "SplitObject.h" // 조각 실행 함수를 가지고 있는 monobehaivor
 
 class TestSliceCursor : public MonoBehavior
 {
@@ -16,4 +16,3 @@ private:
 	InputSystem* input{};
 	std::vector<SplitObject*> targets{};
 };
-

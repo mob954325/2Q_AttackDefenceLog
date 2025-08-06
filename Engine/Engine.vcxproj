@@ -334,6 +334,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\WorkSpace\ASB\LiveObject\Player.h" />
+    <ClInclude Include="Components\Rendering\ChainDrawerComponent.h" />
     <ClInclude Include="Components\Rendering\PatternDrawerComponent.h" />
     <ClInclude Include="Components\Rendering\AnimationPlayer.h" />
     <ClInclude Include="Components\Rendering\TrailComponent.h" />
@@ -344,6 +345,8 @@
     <ClInclude Include="Math\EasingFunction.h" />
     <ClInclude Include="Math\GameRandom.h" />
     <ClInclude Include="Components\UI\Slider.h" />
+    <ClInclude Include="Resources\Loaders\CsvLoader.h" />
+    <ClInclude Include="Components\Rendering\SliceRenderer.h" />
     <ClInclude Include="Systems\AudioSystem.h" />
     <ClInclude Include="Components\Fmod\FModComponent.h" />
     <ClInclude Include="Components\Rendering\CircleRenderer.h" />
@@ -417,6 +420,7 @@
     <ClInclude Include="Math\Vector2.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Components\Rendering\ChainDrawerComponent.cpp" />
     <ClCompile Include="Components\Rendering\PatternDrawerComponent.cpp" />
     <ClCompile Include="Components\Rendering\AnimationPlayer.cpp" />
     <ClCompile Include="Components\Rendering\TrailComponent.cpp" />
@@ -424,9 +428,12 @@
     <ClCompile Include="Components\Collision\CircleCollider.cpp" />
     <ClCompile Include="Components\Rendering\ParticleRenderer.cpp" />
     <ClCompile Include="Components\Rendering\LineRenderer.cpp" />
+    <ClCompile Include="Datas\SoundDatas.cpp" />
     <ClCompile Include="Math\EasingFunction.cpp" />
     <ClCompile Include="Math\GameRandom.cpp" />
     <ClCompile Include="Components\UI\Slider.cpp" />
+    <ClCompile Include="Resources\Loaders\CsvLoader.cpp" />
+    <ClCompile Include="Components\Rendering\SliceRenderer.cpp" />
     <ClCompile Include="Systems\AudioSystem.cpp" />
     <ClCompile Include="Components\Fmod\FModComponent.cpp" />
     <ClCompile Include="Components\Rendering\CircleRenderer.cpp" />

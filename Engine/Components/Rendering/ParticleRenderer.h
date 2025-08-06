@@ -79,6 +79,8 @@ public:
 	void SetSeeDirection(bool value);
 	void SetDecreasing(bool value);
 
+	AnimationPlayer GetAnimationPlayer();
+
 private:
 	std::shared_ptr<BitmapResource> particleBitmapResource{};
 	std::vector<ParticleInfo> infos;

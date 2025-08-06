@@ -1,0 +1,9 @@
+﻿SoundID,Path,Mode
+P_Attack01,"""../../Resource/sounds/공격/공격_3.mp3""",FMOD_DEFAULT | FMOD_LOOP_OFF
+P_Attack02,"""../../Resource/sounds/공격/공격_4.mp3""",FMOD_DEFAULT | FMOD_LOOP_OFF
+P_Attack03,"""../../Resource/sounds/공격/공격_5.mp3""",FMOD_DEFAULT | FMOD_LOOP_OFF
+P_Break01,"""../../Resource/sounds/기세/기세파괴.mp3""",FMOD_DEFAULT | FMOD_LOOP_OFF
+P_Guard01,"""../../Resource/sounds/방어_음/방어_5.mp3""",FMOD_DEFAULT | FMOD_LOOP_OFF
+P_Guard02,"""../../Resource/sounds/방어_음/방어_6.mp3""",FMOD_DEFAULT | FMOD_LOOP_OFF
+M_Bgm01,"""../../Resource/sounds/bgmtest1.mp3""",FMOD_CREATESTREAM | FMOD_LOOP_NORMAL
+M_Bgm02,"""../../Resource/sounds/bgmtest2.mp3""",FMOD_CREATESTREAM | FMOD_LOOP_NORMAL

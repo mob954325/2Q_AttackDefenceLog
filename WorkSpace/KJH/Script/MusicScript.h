@@ -1,7 +1,9 @@
-#pragma once
+﻿#pragma once
 #include "Components/Base/MonoBehavior.h"
 #include "Datas/SoundDatas.h"
 #include "Components/Logic/InputSystem.h"
+//#include "Components/Camera/Camera.h"
+#include "Components/Rendering/BitmapRenderer.h"
 
 namespace MusicScript 
 {
@@ -17,8 +19,12 @@ namespace MusicScript
 		void CheckInput();
 
 	private:
-		InputSystem* input{};
 
+		BitmapRenderer* TestImage3{};
+
+		InputSystem* input{};
+		/*Camera* Came{};*/
+		float A = 0.0f;
 		std::vector<SoundInfo> componentList = {
 			{L"Attack01" ,L"P_Attack01"},
 			{L"Attack02" ,L"P_Attack02"},

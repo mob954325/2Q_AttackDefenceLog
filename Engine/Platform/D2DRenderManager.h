@@ -15,6 +15,7 @@ public:
 	void Render();
 
 	void SetD2D1DeviceContext7(ID2D1DeviceContext7* pD2D1DeviceContext7);
+	void SetD2D8Factory(ID2D1Factory8* pD2D1Factory);
 
 	void SetRenderTransform(D2D1_MATRIX_3X2_F& finalMatrix);
 	void DrawBitmap(ComPtr<ID2D1Bitmap1> bitmap);
@@ -39,9 +40,15 @@ public:
 	void PrintText(const wchar_t* str, float left, float top, D2D1::ColorF color, bool isWorld = false);
 	void CreateEffect(ID2D1Effect** skew, ID2D1Effect** shadow, Microsoft::WRL::ComPtr<ID2D1Bitmap> bitmap);
 
+	void CreatePathGeometry(ID2D1PathGeometry** pPath);
+	void CreateLayer(ID2D1Layer** pLayer, D2D1_SIZE_F* size = NULL);
+	void PushLayer(const D2D1_RECT_F& contentSize, ID2D1Geometry* geomatry, ID2D1Layer* pLayer);
+	void PopLayer();
+
 protected:
 	ComPtr<IWICImagingFactory> m_wicImagingFactory;
 	ComPtr<ID2D1DeviceContext7> m_d2dDeviceContext;
+	ComPtr<ID2D1Factory8> m_d2d1Factory8;
 
 	// DWrite
 	ComPtr<IDWriteFactory> m_pDWriteFactory;

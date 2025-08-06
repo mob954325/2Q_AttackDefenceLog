@@ -1,4 +1,4 @@
-#include "AudioSystem.h"
+ï»¿#include "AudioSystem.h"
 
 #include "Utils/StringConvert.h"
 
@@ -18,36 +18,19 @@ void AudioSystem::Initialize(int num)
 
 void AudioSystem::Register(const std::vector<SoundResource>& soundlist)
 {
-	//for (const auto& it : soundlist)
-	//{
-	//	const std::wstring& id = std::get<0>(it);
-	//	const std::wstring& path = std::get<1>(it);
-	//	FMOD_MODE mode = std::get<2>(it);
-
-	//	//Áßº¹¹æÁö
-	//	if(sounds.count(id)) continue;
-
-	//	FMOD::Sound* sound = nullptr;
-	//	fmodSystem->createSound(StringConvert::WstringToString(path).c_str(), mode, nullptr, &sound);
-	//	sounds[id] = sound;
-	// struct °´Ã¼ »ç¿ëÀü ÄÚµå
+	//ë””ë²„ê¹…ìš© ì½”ë“œ
+	//if (!FileExists(L"../../Resource/sounds/ê³µê²©/ê³µê²©_3.mp3")) {
+	//	std::cout << "[ì˜¤ë¥˜] íŒŒì¼ì´ ì¡´ì¬í•˜ì§€ ì•ŠìŒ!" << std::endl;
 	//}
-
-	if (!FileExists(L"../../Resource/sounds/°ø°İ/°ø°İ_3.mp3")) {
-		std::cout << "[¿À·ù] ÆÄÀÏÀÌ Á¸ÀçÇÏÁö ¾ÊÀ½!" << std::endl;
-	}
-	else { std::cout << "Á¤»óÀûÀ¸·Î ·Îµù!" << std::endl;}
-	std::cout << "FileExists °Ë»ç ³¡\n";
-
+	//else { std::cout << "ì •ìƒì ìœ¼ë¡œ ë¡œë”©!" << std::endl; }
+	//std::cout << "FileExists ê²€ì‚¬ ë\n";
 	for (const auto& it : soundlist)
 	{
 		if (sounds.count(it.id)) continue;
 
 		FMOD::Sound* sound = nullptr;
-		fmodSystem->createSound(StringConvert::WstringToString(it.path).c_str(), it.mode, nullptr, &sound);
+		fmodSystem->createSound(StringConvert::WStringToUTF8(it.path).c_str(), it.mode, nullptr, &sound);
 		sounds[it.id] = sound;
-		
-
 	}
 }
 
@@ -64,25 +47,25 @@ void AudioSystem::UnRegister()
 		it.second->release();
 		it.second = nullptr;
 	}
-	//Fmod´Â release·Î ÇØÁ¦ÇØ¾ßÇÔ , delete »ç¿ë½Ã Fmod ³»ºÎ ¸®¼Ò½º ¼Õ»ó À§ÇèÁ¸Àç
+	//FmodëŠ” releaseë¡œ í•´ì œí•´ì•¼í•¨ , delete ì‚¬ìš©ì‹œ Fmod ë‚´ë¶€ ë¦¬ì†ŒìŠ¤ ì†ìƒ ìœ„í—˜ì¡´ì¬
 	sounds.clear();
 }
 
 void AudioSystem::PauseSound()
 {
-	std::cout << "¸ØÃã È£Ãâ" << std::endl;
+	std::cout << "ë©ˆì¶¤ í˜¸ì¶œ" << std::endl;
 	muteGroup->setPaused(true);
 }
 
 void AudioSystem::AgainstSound()
 {
-	std::cout << "Àç½ÃÀÛ È£Ãâ" << std::endl;
+	std::cout << "ì¬ì‹œì‘ í˜¸ì¶œ" << std::endl;
 	muteGroup->setPaused(false);
 }
 
 void AudioSystem::ReSetChannel()
 {
-	std::cout << "Ã¤³Î»èÁ¦ È£Ãâ" << std::endl;
+	std::cout << "ì±„ë„ì‚­ì œ í˜¸ì¶œ" << std::endl;
 	muteGroup->stop();
 }
 

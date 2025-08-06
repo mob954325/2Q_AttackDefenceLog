@@ -10,10 +10,12 @@ void Transform::SetOffset(float x, float y)
 {
 	offsetX = x; offsetY = y;
 
-	normalRenderMatrix = D2D1::Matrix3x2F::Scale(1.0f, 1.0) * D2D1::Matrix3x2F::Translation(offsetX, -offsetY);
+	normalRenderMatrix = D2D1::Matrix3x2F::Scale(1.0f, 1.0f) * D2D1::Matrix3x2F::Translation(offsetX, -offsetY);
 	unityRenderMatrix = D2D1::Matrix3x2F::Scale(1.0f, -1.0f) * D2D1::Matrix3x2F::Translation(offsetX, offsetY);
 }
 
+// D2D좌표계는 카메라의 영향을 안받도록, 유니티 좌표계만 영향을 받도록 파이널메트릭스 설정
+// UI는 카메라 영향을 안받아야해서 밑의 d2d 조건에서 카메라 영향을 안받도록함
 void Transform::CalculateFinalMatrix()
 {
 	Camera* pCam = Singleton<CameraManager>::GetInstance().GetActiveCamera();
@@ -22,6 +24,7 @@ void Transform::CalculateFinalMatrix()
 	if (IsDirty())
 	{		
 		// 최종 변환 값 계산
+		// 유니티 좌표계
 		if (owner->GetTransform().IsUnityCoords())
 		{
 			finalMatrix =
@@ -30,12 +33,12 @@ void Transform::CalculateFinalMatrix()
 				mainCamInvertMatrix *					// MainCamera invert matrix
 				unityCoordMatrix;						// unity coord Matrix
 		}
+		// D2D 좌표계 , 현재는 UI는 이걸로 셋팅예정 추후 변경
 		else
 		{
 			finalMatrix =
 				normalRenderMatrix *					// Render Matrix
-				owner->GetTransform().ToWorldMatrix() *	// m_transform world matrix 
-				mainCamInvertMatrix;					// MainCamera invert matrix	
+				owner->GetTransform().ToWorldMatrix(); 	// m_transform world matrix
 		}
 	}
 }

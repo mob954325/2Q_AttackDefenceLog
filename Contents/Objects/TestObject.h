@@ -1,11 +1,12 @@
 #pragma once
 #include "Components/Base/MonoBehavior.h"
 #include "Components/Rendering/BitmapRenderer.h"
-
+#include "Components/Rendering/AnimationRenderer.h"
 
 class TestObject : public MonoBehavior
 {
 public:
+	void OnCreate() override;
 	void OnStart() override;
 	void OnUpdate() override;
 	void OnDestroy() override;
@@ -16,9 +17,11 @@ public:
 	}
 
 
-protected:
+protected: 
 	D2D1_SIZE_F size;
 	BitmapRenderer* bitmapRenderer{};
 	std::shared_ptr<BitmapResource> testImg = nullptr;
+
+	AnimationRenderer* anim{};
 };
 

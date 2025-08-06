@@ -2,6 +2,7 @@
 #include "../Engine/Components/Logic/InputSystem.h"
 #include "../Objects/InputObject.h"
 #include "../Objects/TestObject.h"
+#include "../Objects/MouseTrailObject.h"
 
 void SelectScene::OnEnterImpl()
 {
@@ -12,39 +13,47 @@ void SelectScene::OnEnterImpl()
 
 	// 	auto r = testObj->AddComponent<BitmapRenderer>();
 	// 	r->CreateBitmapResource(L"../WorkSpace/HSK/Test/test2.png");
-		
+
 	AddGameObject(testObj);
 
 	inputObj = new GameObject();
 	inputObj->AddComponent<InputObject>();
 	AddGameObject(inputObj);
+
+	trail = new GameObject();
+	trail->AddComponent<MouseTrailObject>();
+	AddGameObject(trail, "MouseTrail");
 	
+	testObj->GetComponent<BitmapRenderer>()->CreateBitmapResource(L"../WorkSpace/HSK/Test/test2.png");
+
 }
+
+bool start = true;
 
 void SelectScene::OnExitImpl()
 {
 	std::cout << "선택씬 이탈" << std::endl;
+	start = true;
 }
-
-int num = 0;
 
 void SelectScene::UpdateImpl()
 {
-	auto t = testObj->GetComponent<TestObject>();	
-
-	auto input = inputObj->GetComponent<InputSystem>();
-
-	if (input->IsKeyPressed('2')) {		
-		testObj->GetComponent<BitmapRenderer>()->CreateBitmapResource(L"../WorkSpace/HSK/Test/test2.png");
+	if (start) {
+		//testObj->GetComponent<BitmapRenderer>()->CreateBitmapResource(L"../WorkSpace/HSK/Test/test2.png");
+		start = false;
 	}
+
+	auto t = testObj->GetComponent<TestObject>();
+
+	auto input = inputObj->GetComponent<InputSystem>();	
 
 	if (input->IsKeyPressed('1')) {
 		Singleton<SceneManager>::GetInstance().LoadScene(STAGE1);
 	}
-	if (input->IsKeyPressed('4')) {
-		Singleton<SceneManager>::GetInstance().LoadScene(STAGE2);
-	}
-	if (input->IsKeyPressed('5')) {
-		Singleton<SceneManager>::GetInstance().LoadScene(STAGE3);
-	}
+	// 	if (input->IsKeyPressed('3')) {
+	// 		Singleton<SceneManager>::GetInstance().LoadScene(STAGE2);
+	// 	}
+	// 	if (input->IsKeyPressed('4')) {
+	// 		Singleton<SceneManager>::GetInstance().LoadScene(STAGE3);
+	// 	}
 }

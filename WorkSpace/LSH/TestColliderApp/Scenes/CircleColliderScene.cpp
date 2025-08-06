@@ -32,7 +32,7 @@ void TestCollider::CircleColliderScene::OnEnterImpl()
 	dummyEffectAnimation->SetName("Dummy Effect Animation");
 	dummyEffectAnimation->AddComponent<DummyEffectAnimation>();
 	AddGameObject(dummyEffectAnimation);
-	dummyEffectAnimation->GetTransform().SetPosition(-200, 200);
+	// dummyEffectAnimation->GetTransform().SetPosition(-200, 200);
 }
 
 void TestCollider::CircleColliderScene::OnExitImpl()
