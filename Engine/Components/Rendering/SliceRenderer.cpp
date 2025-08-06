@@ -15,8 +15,8 @@ void SliceRenderer::Render(D2DRenderManager* manager)
 	
 	// 위치 갱신
 	float delta = Singleton<GameTime>::GetInstance().GetDeltaTime();
-	infos.position.x += infos.dirVec.x * infos.speed + delta;
-	infos.position.y += infos.dirVec.y * infos.speed + delta;
+	infos.position.x += infos.dirVec.x * infos.speed * delta;
+	infos.position.y += infos.dirVec.y * infos.speed * delta;
 
 	// infos.dirVec.y += delta;
 	mat.dx += infos.position.x;
@@ -29,7 +29,7 @@ void SliceRenderer::Render(D2DRenderManager* manager)
 	// draw rect 설정
 	Vector2 ownerPosition = owner->GetTransform().GetPosition(); // owner 위치
 	D2D1_SIZE_F size = originBitmap->GetBitmap()->GetSize();
-	D2D1_RECT_F destRect = { ownerPosition.x, ownerPosition.y, ownerPosition.x + size.width, ownerPosition.y + size.height }; // 오브젝트 움직이면 마스크위치가 안움직임
+	D2D1_RECT_F destRect = { 0, 0, size.width, size.height }; // 오브젝트 움직이면 마스크위치가 안움직임
 	D2D1_RECT_F srcRect = { 0, 0, size.width, size.height };
 
 	// 이미지 그리기
@@ -77,9 +77,23 @@ std::shared_ptr<BitmapResource> SliceRenderer::GetOriginal() const
 	return originBitmap;
 }
 
-void SliceRenderer::SetPoint(const std::vector<Vector2> points)
+void SliceRenderer::SetPoint(const std::vector<Vector2>& points)
 {
 	this->points = points;
+
+	// debug
+	//if (points.size() > lrs.size())
+	//{
+	//	int size = points.size() - lrs.size();
+	//	for (int i = 0; i < size; i++) lrs.push_back(owner->AddComponent<LineRenderer>());
+
+	//	for (int i = 0; i < lrs.size(); i++)
+	//	{
+	//		lrs[i]->SetPosition1(points[i % points.size()]);
+	//		lrs[i]->SetPosition2(points[(i + 1) % points.size()]);
+	//		lrs[i]->SetWidth(3);
+	//	}
+	//}
 }
 
 GameObject* SliceRenderer::Slice(const Vector2& left, const Vector2& right)
@@ -110,6 +124,9 @@ GameObject* SliceRenderer::Slice(const Vector2& left, const Vector2& right)
 		auto comp = obj->AddComponent<SliceRenderer>();
 		comp->SetOriginalByBitmap(originBitmap);
 
+		Vector2 ownerVec = owner->GetTransform().GetPosition();
+		obj->GetTransform().SetPosition(ownerVec.x, ownerVec.y); // 생성된 오브젝트 위치값 설정
+
 		std::vector<Vector2> lower = ClipPolygon(polygon, { left, right });
 		comp->CreateGeomatryByPolygon(lower);
 		comp->SetPoint(lower);
@@ -130,6 +147,9 @@ GameObject* SliceRenderer::Slice(const Vector2& left, const Vector2& right)
 		obj = new GameObject;
 		auto comp = obj->AddComponent<SliceRenderer>();
 		comp->SetOriginalByBitmap(originBitmap);
+
+		Vector2 ownerVec = owner->GetTransform().GetPosition();
+		obj->GetTransform().SetPosition(ownerVec.x, ownerVec.y); // 생성된 오브젝트 위치값 설정
 
 		std::vector<Vector2> upper = ClipPolygon(polygon, cutLine);
 		comp->CreateGeomatryByPolygon(upper);

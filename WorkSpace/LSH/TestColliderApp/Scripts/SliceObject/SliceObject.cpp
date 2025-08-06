@@ -11,15 +11,17 @@ void SliceObject::OnCreate()
 void SliceObject::OnStart()
 {
 	// 91 102
-	sliceComp->SetOriginalByPath(L"../../Resource/Sprite/Test_Slice/Original.png");
+	// sliceComp->SetOriginalByPath(L"../../Resource/Sprite/Test_Slice/Original.png");
+
+	// 379, 726
+	sliceComp->SetOriginalByPath(L"../../Resource/Sprite/Test_Slice/teemo.png");
 
 	// 가로 자르기
-	// auto obj = sliceComp->Slice({0,45}, {91, 45});
-	// auto obj = sliceComp->Slice({ 91, 45 }, {0,45});
-	// Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(obj);
-	//  
-	// auto obj2 = sliceComp->Slice({ 0,35 }, { 91, 20 });
-	// Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(obj2);
+	//auto obj = sliceComp->Slice({0,45}, {91, 45});
+	//Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(obj);
+	// 
+	//auto obj2 = sliceComp->Slice({ 0,35 }, { 91, 20 });
+	//Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(obj2);
 
 	// 세로 자르기
 	// auto obj = sliceComp->Slice({ 50, 30 }, { 50, 102 });
@@ -57,16 +59,14 @@ void SliceObject::OnFixedUpdate()
 
 bool SliceObject::IsOverlap(float x, float y)
 {
-	for (int i = 0; i < 9; i++)
+	D2D1_SIZE_F bound = sliceComp->GetOriginal()->GetBitmap()->GetSize();
+
+	if (x >= owner->GetTransform().GetFinalMatrix().dx &&
+		x <= owner->GetTransform().GetFinalMatrix().dx + bound.width &&
+		y >= owner->GetTransform().GetFinalMatrix().dy &&
+		y <= owner->GetTransform().GetFinalMatrix().dy + bound.height)
 	{
-		D2D1_SIZE_F bound = sliceComp->GetOriginal()->GetBitmap()->GetSize();
-		if (x >= owner->GetTransform().GetFinalMatrix().dx &&
-			x <= owner->GetTransform().GetFinalMatrix().dx + bound.width &&
-			y >= owner->GetTransform().GetFinalMatrix().dy&&
-			y <= owner->GetTransform().GetFinalMatrix().dy + bound.height)
-		{
-			return true; // 찾음알림
-		}
+		return true; // 찾음알림
 	}
 
 	return false; // 못찾음
@@ -75,20 +75,20 @@ bool SliceObject::IsOverlap(float x, float y)
 void SliceObject::HandleOverlap()
 {
 	D2D1_MATRIX_3X2_F mat = owner->GetTransform().GetFinalMatrix();	// Unity 좌표계를 고려해 매트릭스 값 가져오기
-	Vector2 absoluteVec = { mat.dx , mat.dy };	// 위치 값을 Vector2로 변경
-	Vector2 resultVec = Vector2::Zero();		// 저장할 위치값
+	Vector2 currentPosition = { mat.dx , mat.dy }; // 위치 값을 Vector2로 변경
 
+	//std::cout << mat.dx << ", " << mat.dy << std::endl;
 	if (IsOverlap(Input::MouseX, Input::MouseY))
 	{
 		if (state == OverlapState::Notyet) // 충돌 전
 		{
 			state = OverlapState::Processing;	// 상태 변경 -> 충돌 중
 			startVec = { Input::MouseX, Input::MouseY };			
-			resultVec = startVec - absoluteVec;	// 위치 갱신
+			startVec.x -= mat.dx;
+			startVec.y -= mat.dy;
 
-			ClampPoisiton(resultVec); // 위치 보정
+			startVec = ClampPoisiton(startVec); // 위치 보정
 
-			startVec = resultVec; // 계산된 위치를 startVec에 저장 - 시작 위치 값 저장
 			std::cout << " start " << startVec << std::endl;
 		}
 	}
@@ -98,11 +98,10 @@ void SliceObject::HandleOverlap()
 		{
 			state = OverlapState::End;	// 상태 변경 -> 충돌 종료
 			endVec = { Input::MouseX, Input::MouseY };
-			resultVec = endVec - absoluteVec;
+			endVec.x -= mat.dx;
+			endVec.y -= mat.dy;
 
-			ClampPoisiton(resultVec); // 위치 보정
-
-			endVec = resultVec;	// 위치 갱신
+			endVec = ClampPoisiton(endVec); // 위치 보정
 			std::cout << " end " << endVec << std::endl;
 
 			GameObject* obj = sliceComp->Slice(startVec, endVec); // 갱신된 위치를 가지고 slice함수 실행

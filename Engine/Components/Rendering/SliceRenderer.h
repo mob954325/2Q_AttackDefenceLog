@@ -62,7 +62,7 @@ public:
 	/// 꼭짓점 위치 값 설정함수 ( 사용 시 현재 vector 컨테이너 내용을 덮어씀 )
 	/// </summary>
 	/// <param name="points"></param>
-	void SetPoint(const std::vector<Vector2> points);
+	void SetPoint(const std::vector<Vector2>& points);
 
 	/// <summary>
 	/// 해당 컴포넌트의 이미지를 자르는 함수 ( upper과 lower로 나뉨 )
