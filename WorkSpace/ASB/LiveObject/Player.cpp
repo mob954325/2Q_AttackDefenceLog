@@ -22,10 +22,9 @@ void Player::OnStart() {
 	m_State = owner->GetComponent<StateController>();
 	SetStatData("CI_001");
 	SelectPatten(); // 공격을 했으면 다른 패턴 세팅
-	SetCoolTime();  // 쿨타임 다시 설정
 	OnCreateState();
 	SetState("Player_Idle");
-	isPattenCooldown = false;
+	isPattenCooldown = true;
 }
 
 
@@ -121,8 +120,9 @@ void Player::SetNowPatten() {
 	tmp2.clear();
 	std::string modifiedID1 = nowPlayerPattenData->Node_pattern01;
 	std::string modifiedID2 = nowPlayerPattenData->Node_pattern02;
-	modifiedID1.push_back('1');
-	modifiedID2.push_back('2');
+
+	modifiedID1.push_back('A');
+	modifiedID2.push_back('B');
 
 	// 첫 번째 패턴 데이터 가져오기
 	tmpNode = CsvDataManager::GetInstance().getDataImpl(tmpNode, nowPlayerPattenData->Node_pattern01);
@@ -151,13 +151,11 @@ void Player::SelectPatten() {   //각 객체가 사용할 패턴을 고름
 		std::uniform_int_distribution<> dist(1, PattenID.size()); // 1 ~ 10 사이의 정수
 		int randomValue = dist(gen);
 		SetAttackPattenData(PattenID[randomValue - 1]);
+		std::cout << "Player  PattenID  :  " << PattenID[randomValue - 1] << std::endl;
 		if (prePlayerPattenData != nowPlayerPattenData)
 			break;
 	}
 }
-
-
-
 
 
 //처음에 받은 기세 게이지로 복구
@@ -168,20 +166,22 @@ void Player::ResetSpiritAmount() {
 
 
 void Player::SetCoolTime() {
-	//  ( 1 + (현재기세 - 전체기세/2) / 전체기세 /2) * 해당 패턴의 전체 쿨타임
-	Object_nowCoolTime = (Object_NowSpiritAmount - Object_SpiritAmount/0.5f ) / Object_SpiritAmount / 2 * Object_CoolTime;
+	//  ( 1 + (현재기세 - 전체기세) / 전체기세 /2) * 해당 패턴의 전체 쿨타임
+	Object_nowCoolTime = (1 + ((Object_NowSpiritAmount - Object_SpiritAmount / 2.0f) / Object_SpiritAmount / 2.0f)) * Object_CoolTime;
 
 		if (prePlayerPattenData == nullptr) {  //이전 루프가 없을시
 			// ( 1 + (현재기세 - 전체기세/2) / 전체기세 /2) * 해당 패턴의 전체 쿨타임
-			Object_nowCoolTime = (Object_NowSpiritAmount - Object_SpiritAmount / 0.5f) / Object_SpiritAmount / 2 * Object_CoolTime;
+			Object_nowCoolTime = (1 + ((Object_NowSpiritAmount - Object_SpiritAmount / 2.0f) / Object_SpiritAmount / 2.0f)) * Object_CoolTime;
 		}
 		else {  // 이전 루프가 있을 시
 				//  ( 1 + (현재기세 - 전체기세/2) / 전체기세 /2) * 해당 패턴의 전체 쿨타임 + 이전 루프의 공격시간
-			Object_nowCoolTime = (Object_NowSpiritAmount - Object_SpiritAmount / 0.5f) / Object_SpiritAmount / 2 * Object_CoolTime + 1.0f;
+			Object_nowCoolTime = (1 + ((Object_NowSpiritAmount - Object_SpiritAmount / 2.0f) / Object_SpiritAmount / 2.0f)) * Object_CoolTime + 1.0f;
 		}
 		// 현재 공격중인 시간
 		Object_PlayingAttackTime = 1.0f;
 }
+
+
 void Player::CalSpiritTime() {
 	if(Object_OverTimeSpirit >= 1){
 		Object_NowSpiritAmount -= 0.3f;									 //초당 0.3씩 감소

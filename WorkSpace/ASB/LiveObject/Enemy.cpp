@@ -1,12 +1,13 @@
-﻿#include "Enemy.h"
+﻿
 #include <random>
 #include <cmath>
-
+#include "Enemy.h"
 #include "Components/Base/GameObject.h"
 #include "../CsvData/DataClass/EnemyData.h"
 #include "../CsvData/CsvDataManager.h"
 #include "../Component/StateController.h"
 #include "Utils/GameTime.h"
+#include "LiveObject.h"
 
 
 
@@ -15,9 +16,7 @@
 // 각 값은 해당 함수가 출력 중일때, 각 플레그 변화
 //														     
 //                    IonStartI 다음 루프ㅣ 공격 노드추가ㅣ			    I
-//  isPattenCooldoown I   F   I    T      I     F		  I      F      I  
-//
-
+//  isPattenCooldoown I   F   I    T      I     F		  I      F      I 
 
 
 void Enemy::OnStart() {
@@ -25,7 +24,7 @@ void Enemy::OnStart() {
 	SetStatData("EI_001");
 	SelectPatten(); //  패턴 세팅
 	SetCoolTime();  // 쿨타임 설정
-	isPattenCooldown = false;
+	isPattenCooldown = true;
 }
 
 
@@ -34,7 +33,7 @@ void Enemy::OnStart() {
 void Enemy::OnUpdate() {
 	CalSpiritTime();		// 1초마다 기세게이지 증가
 	AddPattenLoop();		// 
-	std::cout << "Enemy 루프 확인" << std::endl;
+	std::cout << "Enemy 쿨타임 : " << Object_nowCoolTime << std::endl;
 	//CalAttackTimePercent();
 }
 
@@ -130,6 +129,7 @@ void Enemy::SelectPatten() {   //각 객체가 사용할 패턴을 고름
 		std::uniform_int_distribution<> dist(1, PattenID.size());
 		int randomValue = dist(gen);
 		SetAttackPattenData(PattenID[randomValue - 1]);
+		std::cout << "Enemy  PattenID  :  " << PattenID[randomValue - 1] << std::endl;
 		if (preEnemyPattenData != nowEnemyPattenData)
 			break;
 	}
@@ -171,13 +171,13 @@ void Enemy::ResetSpiritAmount() {
 // 연격의 여부에 따라서 객체의 쿨타임이 변경됨
 void Enemy::SetCoolTime() {
 	if (preEnemyPattenData == nullptr) {  //이전 루프가 없을시
-			// ( 1 + (현재기세 - 전체기세/2) / 전체기세 /2) * 해당 패턴의 전체 쿨타임
-		Object_nowCoolTime = (Object_NowSpiritAmount - Object_SpiritAmount / 0.5f) / Object_SpiritAmount / 2 * Object_CoolTime; 
+		// ( 1 + (현재기세 - 전체기세/2) / 전체기세 /2) * 해당 패턴의 전체 쿨타임
+		Object_nowCoolTime = (1 + ((Object_NowSpiritAmount - Object_SpiritAmount / 2.0f) / Object_SpiritAmount / 2.0f)) * Object_CoolTime;
 	}
 	else {  // 이전 루프가 있을 시
 		if (preEnemyPattenData->eComboCoolDown == 0) {  // 연격이 아닌때
 			//  ( 1 + (현재기세 - 전체기세/2) / 전체기세 /2) * 해당 패턴의 전체 쿨타임 + 이전 루프의 공격시간
-			Object_nowCoolTime = (Object_NowSpiritAmount - Object_SpiritAmount / 0.5f) / Object_SpiritAmount / 2 * Object_CoolTime + preEnemyPattenData->eAtkCoolDown;
+			Object_nowCoolTime = (1 + ((Object_NowSpiritAmount - Object_SpiritAmount / 2.0f) / Object_SpiritAmount / 2.0f)) * Object_CoolTime + preEnemyPattenData->eAtkCoolDown;
 		}
 		else {  // 연격일때
 			Object_nowCoolTime = nowEnemyPattenData->eComboCoolDown;
@@ -187,7 +187,7 @@ void Enemy::SetCoolTime() {
 	Object_PlayingAttackTime = nowEnemyPattenData->eAtkCoolDown;
 }
 
-float Object_nowPlayingAttackTime; //현재 패턴의 입력 대기 시간
+
 void Enemy::CalSpiritTime() {
 	if (Object_OverTimeSpirit >= 1) {
 		Object_NowSpiritAmount += 0.3f;									 //초당 0.3씩 감소
@@ -195,7 +195,6 @@ void Enemy::CalSpiritTime() {
 	}
 	Object_OverTimeSpirit += GameTime::GetInstance().GetDeltaTime();
 }
-
 
 
 

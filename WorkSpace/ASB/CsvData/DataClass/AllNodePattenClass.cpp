@@ -12,7 +12,7 @@ void AllNodePattenClass::SetData(std::vector<std::wstring> tmp) {
 		// tmp[i]가 null인 경우는 0으로 저장
 		if (tmp[i] == L"null") {
 			Node_Number.push_back(0);
-		}
+		}		
 
 		//null이 아니면 wstring을 int 값으로 저장
 		else {
