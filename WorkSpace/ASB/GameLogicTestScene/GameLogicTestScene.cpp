@@ -40,8 +40,8 @@ void GameLogicTestScene::OnEnterImpl()
 	PlayerData* tmp5 = nullptr;
 	CsvDataManager::GetInstance().SetCSV<PlayerData>("../../Resource/DataTable/플레이어 데이터 테이블.csv"); // 데이터 파일 읽어오기
 
-	tmp1 = CsvDataManager::GetInstance().getDataImpl<PlayerAtkPetternData>(tmp1, "PI_006");
-	tmp1->PrintMap();
+	/*tmp1 = CsvDataManager::GetInstance().getDataImpl<PlayerAtkPetternData>(tmp1, "PI_006");
+	tmp1->PrintMap();*/
 
 
 

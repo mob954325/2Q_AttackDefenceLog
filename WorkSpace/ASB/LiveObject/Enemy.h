@@ -56,6 +56,9 @@ private:
 	
 	std::string PrePattenID;  // 이전 패턴의 ID
 	float enermyTimePercent; // 패링 퍼센트 계산
+	void PrintConsole();
+	void SetCursorPosition(int x, int y);
+	AttackPatternManager* m_PattenManager = nullptr; // 패턴 매니저를  참조로 받아  사용할 변수
 private:
 	std::string Difficulty;			   // 적의 난이도 
 	EnemyData* nowEnemyData = nullptr; // 현재 적의 데이터 클래스를 담을 변수

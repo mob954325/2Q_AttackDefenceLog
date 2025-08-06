@@ -22,7 +22,7 @@ void BettleManager::OnStart() {
 }
 
 void BettleManager::OnUpdate() {
-
+	ComparePatten();
 }
 
 // -> 생성자로 넣어야 할듯?
@@ -30,20 +30,31 @@ void BettleManager::SetForStart(AttackPatternManager& pattenManager) {
 	m_PattenManager = pattenManager;
 }
 
-
-//Scene에서 deltaTime 설정 -> 임시 -> 없어도 됨!!
-void BettleManager::SetDeltaTime(float deltaTime) { 
-	m_DeltaTime = deltaTime; 
-
+void BettleManager::PrecticeNode() {
+	nowNode.push_back(5);
+	nowNode.push_back(1);
+	nowNode.push_back(7);
+	nowNode.push_back(0);
+	nowNode.push_back(0);
+	nowNode.push_back(0);
+	nowNode.push_back(0);
+	nowNode.push_back(0);
+	nowNode.push_back(0);
 }
 
 
+// 나중에 연결하여 사용하기 밑의 if문 포함
+//void BettleManager::SetInputNode(std::vector<int> InputNode) {
+//	nowNode = InputNode;
+//}
 
-void BettleManager::ComparePatten( std::vector<int> InputNode){		  //현재 마우스의 입력 받기  -> 승규님 데이터 받기
+void BettleManager::ComparePatten(){		  //현재 마우스의 입력 받기  -> 승규님 데이터 받기
+	//if (nowNode.size() == 0) return;
 	while(1) {
 		pattern* tmpPatten = m_PattenManager.TimeOutPatten();
 		if (tmpPatten == nullptr)
 			break;
+
 		if (tmpPatten->PattenID.substr(0, 2) == "EP") {
 			m_Enemy->SetState("Enemy_AttackSuccess");   // 적 공격 성공
 			if (m_Player->GetDefenseRate() >= RandomReturn(100)) {
@@ -61,7 +72,7 @@ void BettleManager::ComparePatten( std::vector<int> InputNode){		  //현재 마�
 		}
 	}
 
-	pattern* tmpPatten = m_PattenManager.CorrectPattern(InputNode);
+	pattern* tmpPatten = m_PattenManager.CorrectPattern(nowNode);
 		// 플레이어 , 적 상태 변경 + 공방계산
 	if (tmpPatten == nullptr)
 		return;
@@ -101,6 +112,8 @@ void BettleManager::ComparePatten( std::vector<int> InputNode){		  //현재 마�
 	if (m_Enemy->GetNowSpiritAmount() <= 0.0f) {
 		m_Enemy->SetState("Enemy_Groggy");
 	}
+
+	nowNode.clear();
 }
 
 //범위 안의 값을 랜덤하게 return

@@ -30,14 +30,18 @@ private:
 
 	/// 업데이트에 들어갈 함수들
 	std::vector<int> SetGuideLine(LiveObject* unknown);     //쿨타임 확인 후, 가이드라인, 적 공격 라인 생성
-	void ComparePatten(std::vector<int> InputNode);	  //현재 마우스의 입력 받기  -> 승규님 데이터 받기
+	
+	void ComparePatten();	  //현재 마우스의 입력 받기  -> 승규님 데이터 받기
 	void DeciedBettelState(); //마우스 데이터를 비교해서 현재 상태 결정하기
-
+	void PrecticeNode();
 public:
+	void SetInputNode(std::vector<int> InputNode);  // 현재 노드의 입력 넣기
 	//Scene의 Start에 들어갈 것들
 	void SetForStart(AttackPatternManager& pattenManager); //-> 이거는 생성자에 넣을수도?
 	void SetDeltaTime(float deltaTime);			        //Scene에서 deltaTime 설정
+	std::vector<int> nowNode;
 	int RandomReturn(int MaxInt);
+
 };
 
 
