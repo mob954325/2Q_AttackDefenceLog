@@ -77,6 +77,11 @@ public:
 	template<typename T>
 	T* getDataImpl(T* tag, std::string ID);
 
+
+	// GetIDData 헬퍼 함수 선언 // ID Vector을 반환함
+	template<typename T>
+	std::vector<std::string> GetIDData(T* tag);
+
 	
 private:
 	// CSV 데이터 저장 클래스 인스턴스
@@ -94,7 +99,6 @@ private:
 	// DispatchSaveData 헬퍼 함수 선언 (클래스 내에는 선언만)
 	template<typename T>
 	void DispatchSaveData(const std::string& key, T* ptr);
-
 
 
 	// 스킵라인을 저장하는 데이터
