@@ -43,9 +43,6 @@ void Slider::OnStart()
 	BarButSrctonRect.bottom = sizeButton.height;
 	BarButSrctonRect.right = sizeButton.width;
 
-	BarButSrctonRect.bottom = sizeButton.height;
-	BarButSrctonRect.right = sizeButton.width;
-
 	ButtonDestRect.bottom = sizeButton.height;
 	ButtonDestRect.left = size.width - sizeButton.width/2;
 	ButtonDestRect.right = size.width + sizeButton.width/2;
