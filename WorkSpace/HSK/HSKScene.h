@@ -13,6 +13,7 @@ namespace HSK
 
 	private:
 		GameObject* obj{};
+		GameObject* drawObj;
 
 		std::array<GameObject*, 9> m_nodes;
 

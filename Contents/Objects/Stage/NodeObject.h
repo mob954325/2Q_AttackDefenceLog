@@ -7,6 +7,7 @@ class NodeObject : public MonoBehavior
 {
 public:
 	void OnStart() override;
+	void OnCreate() override;
 	void OnUpdate() override;
 	void OnDestroy() override;
 	D2D1_SIZE_F GetSize() { return size; };
