@@ -16,6 +16,7 @@ void AttackPatternManager::AddPattern(std::string ID, float PlayingAttackTime, s
 	pattern* tmpPattern = new pattern();
 	tmpPattern->PattenID = ID;
 	tmpPattern->PlayingAttackTime = PlayingAttackTime;
+	tmpPattern->TotalPlayingAttackTime = PlayingAttackTime;
 	tmpPattern->NodePatten = PatternID;
 
 	NowPatternStorage[ID] = tmpPattern;

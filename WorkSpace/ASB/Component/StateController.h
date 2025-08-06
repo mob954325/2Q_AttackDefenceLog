@@ -2,6 +2,7 @@
 #include <unordered_map>
 #include <string>
 #include "Components/Base/MonoBehavior.h"
+#include "Utils/GameTime.h"
 class State {
 public:
 	State() {};
@@ -17,10 +18,10 @@ public:
 	};
 
 	void Update(float deltaTime) {
-		if (existTransition || nowTimer < ToNextTimer)
+		if (existTransition && nowTimer < ToNextTimer)
 			nowTimer += deltaTime;
 
-		else if ( existTransition || nowTimer >= ToNextTimer )
+		else if ( existTransition && nowTimer >= ToNextTimer )
 			isNextState = true;
 	};
 
@@ -43,7 +44,7 @@ private:
 
 
 // 역할 state 결정 담당
-class StateController : public Component {
+class StateController : public ScriptComponent {
 public:
 	StateController() {};
 	~StateController() {};
@@ -68,6 +69,7 @@ public:
 			nowState->OnStart();  // 사용하기전, 초기화
 		}
 	}
+
 
 	// 다음 State 설정
 	void SetNextState(std::string stateName, std::string NextstateName) {
@@ -94,7 +96,7 @@ public:
 
 	// 내부에서 transition에 따라서 State 를 결정 할 함수
 	void GoNextState() {
-		if (nowState->nextState != nullptr || nowState->isNextState)
+		if (nowState->nextState != nullptr && nowState->isNextState)
 		{
 			nowState = nowState->nextState;
 		}
@@ -106,8 +108,8 @@ public:
 	}
 	
 
-	void Update(float deltaTime) {
-		nowState->Update(deltaTime);
+	void Update()override{
+		nowState->Update(GameTime::GetInstance().GetDeltaTime());
 		GoNextState();
 	}
 

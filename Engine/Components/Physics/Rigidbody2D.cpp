@@ -27,7 +27,6 @@ void Rigidbody2D::FixedUpdate(std::vector<CollisionInfo>& collisions)
 
 	for (int i = 0; i < steps; i++)
 	{
-		std::cout << subDeltaTime << std::endl;
 		Intergrate(collapsed, subDeltaTime);
 	}
 }
