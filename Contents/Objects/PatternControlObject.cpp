@@ -7,10 +7,17 @@
 #include "../Engine/Components/Rendering/ChainDrawerComponent.h"
 #include "../Engine/Utils/GameTime.h"
 
+//성빈씨꺼
+#include "Scripts/LogicManager/BettleManager.h"
+#include "Scripts/LogicManager/AttackPatternManager.h" 
+#include "Scripts/LiveObject/Enemy.h"
+#include "Scripts/LiveObject/Player.h"
+#include "Scripts/CsvData/CsvDataManager.h" // 싱글벙글
+
 void PatternControlObject::OnCreate()
 {
 	trail = new GameObject();
-	trail->AddComponent<MouseTrailObject>(); 
+	trail->AddComponent<MouseTrailObject>();
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(trail, "MouseTrail");
 
 	for (int i = 0; i < 9; ++i) {
@@ -28,9 +35,54 @@ void PatternControlObject::OnCreate()
 	c->SetOrderInLayer(0);
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(guideline);
 	//auto asd = m_nodes[4]->GetComponent<NodeObject>()->GetSize();
+
+	//===================================================================================================
+
+	PlayerAtkPetternData* tmp1 = nullptr;
+	CsvDataManager::GetInstance().SetCSV<EnemyData>("../Resource/DataTable/적 데이터 테이블.csv"); // 데이터 파일 읽어오기
+
+	EnemyAtkPattenData* tmp2 = nullptr;
+	CsvDataManager::GetInstance().SetCSV<EnemyAtkPattenData>("../Resource/DataTable/적 공격 패턴 테이블.csv"); // 데이터 파일 읽어오기
+
+	AllNodePattenClass* tmp3 = nullptr;
+	CsvDataManager::GetInstance().SetCSV<AllNodePattenClass>("../Resource/DataTable/노드 전체 패턴 테이블.csv"); // 데이터 파일 읽어오기
+
+	PlayerAtkPetternData* tmp4 = nullptr;
+	CsvDataManager::GetInstance().SetCSV<PlayerAtkPetternData>("../Resource/DataTable/플레이어 공격 패턴 테이블.csv"); // 데이터 파일 읽어오기
+
+	PlayerData* tmp5 = nullptr;
+	CsvDataManager::GetInstance().SetCSV<PlayerData>("../Resource/DataTable/플레이어 데이터 테이블.csv"); // 데이터 파일 읽어오기
+
+	//===================================================================================================
+	/////////////////////////////////////////////////////////////////////////////////////////////////////
+	//===================================================================================================
+
+	attackPattenManager = new GameObject();                    // GameObject 객체 생성
+	attackPattenManager->AddComponent<AttackPatternManager>(); // MonoBehaivor 등록
+	attackPattenManager->SetName("AttackPattenManager");
+	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(attackPattenManager);                           // Scene에 GameObject 추가
+
+	enemy = new GameObject();      // GameObject 객체 생성
+	auto enemytmp = enemy->AddComponent<Enemy>(); // MonoBehaivor 등록
+	enemytmp->m_State = enemy->AddComponent<StateController>();
+	enemy->SetName("Enemytmp");
+	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(enemy);          // Scene에 GameObject 추가
+
+	player = new GameObject();      // GameObject 객체 생성
+	auto playertmp = player->AddComponent<Player>(); // MonoBehaivor 등록
+	playertmp->m_State = player->AddComponent<StateController>();
+	player->SetName("Playertmp");
+	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(player);            // Scene에 GameObject 추가
+
+	bettleManager = new GameObject();             // GameObject 객체 생성
+	auto bettletmp = bettleManager->AddComponent<BettleManager>(); // MonoBehaivor 등록
+	bettletmp->m_Enemy = enemytmp;
+	bettletmp->m_Player = playertmp;
+	bettleManager->SetName("BettleManager");
+	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(bettleManager);                  // Scene에 GameObject 추가
 }
 
-void PatternControlObject::OnStart()
+void PatternControlObject::OnStart() // 처음
 {
 	owner->SetRenderLayer(EngineData::RenderLayer::UI);
 	auto d = owner->AddComponent<PatternDrawerComponent>();
@@ -52,11 +104,13 @@ void PatternControlObject::OnStart()
 	auto c = guideline->GetComponent<ChainDrawerComponent>();
 
 	c->SetupNodes(m_nodes[4]->GetTransform().GetPosition(), n); // 스타트에서 하기
+
+	
 }
 
 float n = 0.0f;
 
-void PatternControlObject::OnUpdate()
+void PatternControlObject::OnUpdate() // 업데이트
 {
 	auto t = trail->GetComponent<TrailComponent>();
 	t->isOutFromBox = PM.CheckOutOfBox({ Input::MouseX, Input::MouseY }); // 마우스 좌표 기반으로, 박스 밖으로 나갔는지 확인
@@ -66,13 +120,13 @@ void PatternControlObject::OnUpdate()
 		PM.CheckTrails(t->CheckingCachedTrails());
 		const auto& vec = PM.GetPatternPathPositions(); // 여기에 담김!!! 1 3 2 4 이런거 <<<<< (연결지점)
 
-		
+
 		auto d = owner->GetComponent<PatternDrawerComponent>();
 		d->SetLine(vec);
 		if (!vec.empty()) // 노드가 그어졌다면, 바로 삭제해서 가시성 up
 			t->Clear();
-		
-		c->SliceRect(PM.GetPattern());		
+
+		c->SliceRect(PM.GetPattern());
 
 		for (int value : PM.GetPattern()) { std::cout << value << "-"; }
 		std::cout << std::endl << std::endl;

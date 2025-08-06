@@ -14,9 +14,17 @@ public:
 	void OnDestroy() override;
 
 	PatternManager PM;
+	
 protected: 	
 	std::array<GameObject*, 9> m_nodes;
 	GameObject* trail;
-	GameObject* guideline;
+	GameObject* guideline;	
+
+
+	GameObject* attackPattenManager;
+	GameObject* enemy;
+	GameObject* AddGameObject;
+	GameObject* bettleManager;
+	GameObject* player;
 };
 
