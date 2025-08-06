@@ -22,10 +22,12 @@
 
 void Enemy::OnStart() {
 	m_State = owner->GetComponent<StateController>();
+	m_PattenManager = owner->GetQuery()->FindByName("AttackPattenManager")->GetComponent<AttackPatternManager>();
 	SetStatData("EI_001");
+	OnCreateState();
+	m_State->SetState("Enemy_Idle");
 	SelectPatten(); //  패턴 세팅
-	SetCoolTime();  // 쿨타임 설정
-	isPattenCooldown = false;
+	isPattenCooldown = true;
 }
 
 
@@ -34,6 +36,7 @@ void Enemy::OnStart() {
 void Enemy::OnUpdate() {
 	CalSpiritTime();		// 1초마다 기세게이지 증가
 	AddPattenLoop();		// 
+	PrintConsole();
 	std::cout << "Enemy 루프 확인" << std::endl;
 	//CalAttackTimePercent();
 }
@@ -94,7 +97,7 @@ void Enemy::SetStatData(std::string tmp) {
 	PattenID = nowEnemyData->enemyPattern;                 // 적의 패턴 가져오기
 
 	Object_CoolTime = nowEnemyData->enemyCooldown;         // 적의 쿨타임 가져오기;
-	Object_nowCoolTime = 0.0f;							   // 현재 적의 쿨타임
+	Object_nowCoolTime = nowEnemyData->enemyCooldown;	   // 현재 적의 쿨타임
 	Object_PlayingAttackTime = 0.0f;					   // 패턴의 입력 대기 시간
 	Object_nowPlayingAttackTime = 0.0f;					   // 현재 패턴의 입력 대기 시간
 }
@@ -106,17 +109,17 @@ void Enemy::AddPattenLoop() {
 	// isPattenCooldown : F  -> 계산 X
 	if (isPattenCooldown) {
 		// 패턴의 입력대기시간 카운트
-		Object_nowPlayingAttackTime += GameTime::GetInstance().GetDeltaTime();
+		Object_nowCoolTime -= GameTime::GetInstance().GetDeltaTime();
 		// 현재 시간이  정해진 대기시간보다 크거나 같을 경우 
-		if (Object_nowPlayingAttackTime >= Object_PlayingAttackTime) {
+		if (Object_nowCoolTime <= 0.0f) {
 			isPattenCooldown = false;
 		}
 	}
 	else {
-		Object_nowPlayingAttackTime = 0.0f;
 		SelectPatten(); // 패턴 정하기!!
 		SetCoolTime();	// 적일때는 수정하기!!
 		SetNowPatten(); // 공격대기시간 + 데이터 주기!!
+		isPattenCooldown = true;
 	}
 }
 
@@ -138,6 +141,7 @@ void Enemy::SelectPatten() {   //각 객체가 사용할 패턴을 고름
 //패턴 ID에 맞는 데이터를 포인터로 가리킴
 void Enemy::SetAttackPattenData(std::string PattID) {
 	nowEnemyPattenData = CsvDataManager::GetInstance().getDataImpl(nowEnemyPattenData, PattID);
+	Object_PlayingAttackTime = nowEnemyPattenData->eAtkCoolDown;
 
 }
 
@@ -156,7 +160,7 @@ void Enemy::SetNowPatten() {
 		tmp = tmpNode->Node_Number;
 	}
 	// AddPattern 함수 호출
-	m_PattenManager.AddPattern(nowEnemyPattenData->ePatternID, Object_PlayingAttackTime, tmp);
+	m_PattenManager->AddPattern(nowEnemyPattenData->ePatternID, Object_PlayingAttackTime, tmp);
 }
 
 
@@ -172,12 +176,12 @@ void Enemy::ResetSpiritAmount() {
 void Enemy::SetCoolTime() {
 	if (preEnemyPattenData == nullptr) {  //이전 루프가 없을시
 			// ( 1 + (현재기세 - 전체기세/2) / 전체기세 /2) * 해당 패턴의 전체 쿨타임
-		Object_nowCoolTime = (Object_NowSpiritAmount - Object_SpiritAmount / 0.5f) / Object_SpiritAmount / 2 * Object_CoolTime; 
+		Object_nowCoolTime = (1 + ((Object_NowSpiritAmount - Object_SpiritAmount / 2.0f) / Object_SpiritAmount)/ 2.0f  ) * Object_CoolTime; 
 	}
 	else {  // 이전 루프가 있을 시
 		if (preEnemyPattenData->eComboCoolDown == 0) {  // 연격이 아닌때
 			//  ( 1 + (현재기세 - 전체기세/2) / 전체기세 /2) * 해당 패턴의 전체 쿨타임 + 이전 루프의 공격시간
-			Object_nowCoolTime = (Object_NowSpiritAmount - Object_SpiritAmount / 0.5f) / Object_SpiritAmount / 2 * Object_CoolTime + preEnemyPattenData->eAtkCoolDown;
+			Object_nowCoolTime = (1 + ((Object_NowSpiritAmount - Object_SpiritAmount / 2.0f) / Object_SpiritAmount) / 2.0f) * Object_CoolTime + preEnemyPattenData->eAtkCoolDown;
 		}
 		else {  // 연격일때
 			Object_nowCoolTime = nowEnemyPattenData->eComboCoolDown;
@@ -185,9 +189,9 @@ void Enemy::SetCoolTime() {
 	}
 	// 현재 공격중인 시간
 	Object_PlayingAttackTime = nowEnemyPattenData->eAtkCoolDown;
+	Object_nowTotalCoolTime = Object_nowCoolTime;
 }
 
-float Object_nowPlayingAttackTime; //현재 패턴의 입력 대기 시간
 void Enemy::CalSpiritTime() {
 	if (Object_OverTimeSpirit >= 1) {
 		Object_NowSpiritAmount += 0.3f;									 //초당 0.3씩 감소
@@ -197,6 +201,23 @@ void Enemy::CalSpiritTime() {
 }
 
 
+void Enemy::SetCursorPosition(int x, int y)
+{
+	COORD coord = { static_cast<SHORT>(x), static_cast<SHORT>(y) };
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
+}
 
+void Enemy::PrintConsole() {
+	SetCursorPosition(0, 0);
+	std::cout << "Enemy HP		    : " << Object_Hp << std::endl;
+	std::cout << "Enemy Attack		    : " << Object_Attack << std::endl;
+	std::cout << "Enemy SpiritAttack          : " << Object_SpiritAttack << std::endl;
+	std::cout << "Enemy NowSpiritAmount       : " << Object_NowSpiritAmount << std::endl;
+	std::cout << "Enemy Object_CoolTime	    : " << Object_CoolTime << std::endl;
+	std::cout << "Enemy nowCoolTime	    : " << Object_nowCoolTime << std::endl;
+	std::cout << "Enemy nowTotalCoolTime	    : " << Object_nowTotalCoolTime << std::endl;
+	std::cout << "Enemy PlayingAttackTime	    : " << Object_PlayingAttackTime << std::endl;
+	std::cout << "Enemy State       : " << m_State->GetNowName() << std::endl;
+}
 
 
