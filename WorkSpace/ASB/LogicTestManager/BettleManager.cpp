@@ -9,12 +9,6 @@
 #include "Components/Base/MonoBehavior.h"
 
 
-
-
-
-
-
-
 void BettleManager::OnStart() {
 	//m_Enemy = owner->GetQuery()->FindByName("Enemytmp")->GetComponent<Enemy>();
 	//m_Player = owner->GetQuery()->FindByName("Playertmp")->GetComponent<Player>();
@@ -36,19 +30,19 @@ void BettleManager::SetForStart(AttackPatternManager* pattenManager) {
 
 // 하드코딩용 : 입력 패턴 고정
 void BettleManager::PrecticeNode() {
-	/*nowNode.push_back(5);
+	nowNode.push_back(5);
 	nowNode.push_back(1);
-	nowNode.push_back(7);*/
+	nowNode.push_back(7);
 }
 
 
 // 노드 인풋 
 void BettleManager::SetInputNode(std::vector<int> InputNode) {
-	nowNode = InputNode;
+	/*nowNode = InputNode;*/
 }
 
 void BettleManager::ComparePatten(){		  //현재 마우스의 입력 받기  -> 승규님 데이터 받기
-	if (nowNode.size() == 0) return;
+	//if (nowNode.size() == 0) return;
 	while(1) {
 		pattern* tmpPatten = m_PattenManager->TimeOutPatten();  // 패턴이 공격 시간이 지났다면 
 		if (tmpPatten == nullptr)
@@ -79,12 +73,12 @@ void BettleManager::ComparePatten(){		  //현재 마우스의 입력 받기  -> 
 		return;
 	if (tmpPatten->PattenID.substr(0, 2) == "EP") {
 		
-		if (m_Enemy->GetAttackTimePercent() <= 0.5) {
-			m_Player->SetState("Player_Perry");		//패링
+		if (m_Enemy->GetAttackTimePercent() <= 0.5) {  // 플레이어가 0.5초 이내에 가드시 -> 패링
+			m_Player->SetState("Player_Perry");		
 		}
 		else {
 			m_Player->SetState("Player_Guard");		// 가드
-			m_Enemy->RestoreSpiritDamage(m_Enemy->GetSpiritAttack());
+			m_Enemy->RestoreSpiritDamage(m_Enemy->GetSpiritAttack());  // 기세 변경
 			m_Player->GetSpiritdamage(m_Enemy->GetSpiritAttack());
 		}
 	}

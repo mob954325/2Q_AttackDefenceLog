@@ -43,27 +43,27 @@ pattern* AttackPatternManager::CorrectPattern(std::vector<int> PatternID){
 		if (pair.first.substr(0, 2) == "EP") {   // 패턴이 적이면 
 			for (int i = 0; i < PatternID.size(); i++) {
 				if (PatternID[i] != pair.second->NodePatten[PatternID.size() - 1 - i]) { // 역순으로 검사
-					isCorrect = false;
+					isCorrect = false;   //하나라도 맞지 않으면 for문 탈출
 					break;
 				}
-				isCorrect = true;
+				isCorrect = true;        // 끝까지 루프를 돌면 성공
 			}
 			
 		}    
-		else {      // 아니면 정방향으로 검사
-			for (int i = 0; i < PatternID.size(); i++) {
-				if (PatternID[i] != pair.second->NodePatten[i]) {
-					isCorrect = false;
+		else {      // 패턴이 플레이어의 패턴이면 정방향 검사
+			for (int i = 0; i < PatternID.size(); i++) {  
+				if (PatternID[i] != pair.second->NodePatten[i]) {  
+					isCorrect = false;  // 하나라도 맞지 않으면 for문 탈출
 					break;
 				}
-				isCorrect = true;
+				isCorrect = true;       // 끝까지 루프를 돌면 성공
 			}
 			
 		}
-		if (isCorrect)
+		if (isCorrect)  // 성공이면 patten* return
 			return pair.second;
 	}
-	return nullptr;
+	return nullptr;     // 실패면, null return
 }
 
 pattern* AttackPatternManager::TimeOutPatten() {
