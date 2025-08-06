@@ -16,4 +16,4 @@
 		BitmapRenderer* bitmapRenderer{};
 		std::shared_ptr<BitmapResource> stampBitmap = nullptr;
 	};
-
+	
