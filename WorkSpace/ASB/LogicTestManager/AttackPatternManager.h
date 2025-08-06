@@ -1,14 +1,14 @@
-#pragma once
+ï»¿#pragma once
 #include <vector>
 #include <unordered_map>
 #include "Components/Base/MonoBehavior.h"
 
 struct pattern
 {
-	std::string PattenID;          // ÇÃ·¹¸®¾îÀÇ ÆĞÅÏÀ» ÀúÀå
-	float PlayingAttackTime;	   // °ø°İ ´ë±â ½Ã°£
-	float TotalPlayingAttackTime;  // ÆĞ¸µ Ã³¸®¸¦ À§ÇÑ ÀüÃ¼ ½Ã°£
-	std::vector<int> NodePatten;   // ÆĞÅÏÀÇ ¾ÆÀÌµğ¸¦ ÀúÀå
+	std::string PattenID;          // í”Œë ˆë¦¬ì–´ì˜ íŒ¨í„´ì„ ì €ì¥
+	float PlayingAttackTime;	   // ê³µê²© ëŒ€ê¸° ì‹œê°„
+	float TotalPlayingAttackTime;  // íŒ¨ë§ ì²˜ë¦¬ë¥¼ ìœ„í•œ ì „ì²´ ì‹œê°„
+	std::vector<int> NodePatten;   // íŒ¨í„´ì˜ ì•„ì´ë””ë¥¼ ì €ì¥
 };
 
 class AttackPatternManager : public MonoBehavior
