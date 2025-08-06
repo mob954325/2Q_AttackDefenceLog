@@ -42,7 +42,7 @@ public:
 
 		for (Component* mono : monoBehaviors)
 		{
-			if (typeid(MonoBehavior) == typeid(T))
+			if (typeid(*mono) == typeid(T))
 			{
 				return static_cast<T*>(static_cast<Component*>(mono));
 			}
