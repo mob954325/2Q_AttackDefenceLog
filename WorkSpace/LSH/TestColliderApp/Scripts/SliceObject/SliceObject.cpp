@@ -15,11 +15,11 @@ void SliceObject::OnStart()
 
 	// 가로 자르기
 	// auto obj = sliceComp->Slice({0,45}, {91, 45});
+	// auto obj = sliceComp->Slice({ 91, 45 }, {0,45});
 	// Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(obj);
 	//  
 	// auto obj2 = sliceComp->Slice({ 0,35 }, { 91, 20 });
 	// Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(obj2);
-	// obj2->GetTransform().SetPosition(12, 12);
 
 	// 세로 자르기
 	// auto obj = sliceComp->Slice({ 50, 30 }, { 50, 102 });
@@ -28,6 +28,8 @@ void SliceObject::OnStart()
 	// auto obj2 = sliceComp->Slice({ 0, 40 }, { 40, 40 });
 	// Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(obj2);
 	// obj2->GetTransform().SetPosition(12, 12);
+
+	sliceComp->SetGravity(true);
 }
 
 void SliceObject::OnDestroy()
@@ -45,7 +47,7 @@ void SliceObject::OnUpdate()
 
 	if (sliceComp->GetOriginal()->GetBitmap())
 	{
-		HandleOverlap();
+		HandleOverlap(); // 겹침 확인 함수
 	}
 }
 
@@ -72,51 +74,58 @@ bool SliceObject::IsOverlap(float x, float y)
 
 void SliceObject::HandleOverlap()
 {
-	D2D1_MATRIX_3X2_F mat = owner->GetTransform().GetFinalMatrix();
-	Vector2 absoluteVec = { mat.dx , mat.dy };
-	Vector2 resultVec = Vector2::Zero();
+	D2D1_MATRIX_3X2_F mat = owner->GetTransform().GetFinalMatrix();	// Unity 좌표계를 고려해 매트릭스 값 가져오기
+	Vector2 absoluteVec = { mat.dx , mat.dy };	// 위치 값을 Vector2로 변경
+	Vector2 resultVec = Vector2::Zero();		// 저장할 위치값
+
 	if (IsOverlap(Input::MouseX, Input::MouseY))
 	{
-		if (state == OverlapState::Notyet)
+		if (state == OverlapState::Notyet) // 충돌 전
 		{
-			state = OverlapState::Processing;
+			state = OverlapState::Processing;	// 상태 변경 -> 충돌 중
 			startVec = { Input::MouseX, Input::MouseY };			
-			resultVec = startVec - absoluteVec;
+			resultVec = startVec - absoluteVec;	// 위치 갱신
 
-			// 위치 보정 - 속도가 너무 빠르면 감지값이 초과되거나 음수에 도달해서 처리함
-			if (resultVec.x < 0) resultVec.x = 0;
-			if (resultVec.x > sliceComp->GetOriginal()->GetBitmap()->GetSize().width) resultVec.x = sliceComp->GetOriginal()->GetBitmap()->GetSize().width;
-			if (resultVec.y < 0) resultVec.y = 0;
-			if (resultVec.y > sliceComp->GetOriginal()->GetBitmap()->GetSize().height) resultVec.y = sliceComp->GetOriginal()->GetBitmap()->GetSize().height;
+			ClampPoisiton(resultVec); // 위치 보정
 
-			startVec = resultVec;
+			startVec = resultVec; // 계산된 위치를 startVec에 저장 - 시작 위치 값 저장
 			std::cout << " start " << startVec << std::endl;
 		}
 	}
 	else
 	{
-		if (state == OverlapState::Processing)
+		if (state == OverlapState::Processing) // 충돌 중일 때 충돌이 종료됨
 		{
-			state = OverlapState::End;
+			state = OverlapState::End;	// 상태 변경 -> 충돌 종료
 			endVec = { Input::MouseX, Input::MouseY };
 			resultVec = endVec - absoluteVec;
 
-			// 위치 보정
-			if (resultVec.x < 0) resultVec.x = 0;
-			if (resultVec.x > sliceComp->GetOriginal()->GetBitmap()->GetSize().width) resultVec.x = sliceComp->GetOriginal()->GetBitmap()->GetSize().width;
-			if (resultVec.y < 0) resultVec.y = 0;
-			if (resultVec.y > sliceComp->GetOriginal()->GetBitmap()->GetSize().height) resultVec.y = sliceComp->GetOriginal()->GetBitmap()->GetSize().height;
+			ClampPoisiton(resultVec); // 위치 보정
 
-			endVec = resultVec;
+			endVec = resultVec;	// 위치 갱신
 			std::cout << " end " << endVec << std::endl;
 
-			GameObject* obj = sliceComp->Slice(startVec, endVec);
+			GameObject* obj = sliceComp->Slice(startVec, endVec); // 갱신된 위치를 가지고 slice함수 실행
 
+			// 짤린 오브젝트가 생성되었음
 			if (obj != nullptr)
 			{
-				Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(obj);		
-				state = OverlapState::Notyet;
+				Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(obj); // 해당 오브젝트를 씬에 추가해서 실행
+				state = OverlapState::Notyet;	// 다시 자를 수 있게 상태 변경 -> 충돌 전
 			}
 		}
 	}
+}
+
+ Vector2 SliceObject::ClampPoisiton(const Vector2& vec)
+{
+	if (*(sliceComp) == 0 || !sliceComp->GetOriginal()->GetBitmap()) return Vector2::Zero(); // slice Renderer를 사용할 수 없으면 0,0 반환
+
+	Vector2 resultVec = vec;
+	if (vec.x < 0) resultVec.x = 0;
+	if (vec.x > sliceComp->GetOriginal()->GetBitmap()->GetSize().width) resultVec.x = sliceComp->GetOriginal()->GetBitmap()->GetSize().width;
+	if (vec.y < 0) resultVec.y = 0;
+	if (vec.y > sliceComp->GetOriginal()->GetBitmap()->GetSize().height) resultVec.y = sliceComp->GetOriginal()->GetBitmap()->GetSize().height;
+
+	return resultVec;
 }

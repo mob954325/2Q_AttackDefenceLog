@@ -4,20 +4,6 @@
 #include "Resources/ResourceManager.h"
 #include "Utils/GameTime.h"
 
-void SliceRenderer::OnCreate()
-{
-
-}
-
-void SliceRenderer::OnStart()
-{
-}
-
-void SliceRenderer::OnDestroy()
-{
-
-}
-
 void SliceRenderer::Render(D2DRenderManager* manager)
 {
 	if (!IsActiveSelf()) return;
@@ -43,7 +29,7 @@ void SliceRenderer::Render(D2DRenderManager* manager)
 	// draw rect 설정
 	Vector2 ownerPosition = owner->GetTransform().GetPosition(); // owner 위치
 	D2D1_SIZE_F size = originBitmap->GetBitmap()->GetSize();
-	D2D1_RECT_F destRect = { ownerPosition.x, ownerPosition.y, ownerPosition.x + size.width, ownerPosition.y + size.height };
+	D2D1_RECT_F destRect = { ownerPosition.x, ownerPosition.y, ownerPosition.x + size.width, ownerPosition.y + size.height }; // 오브젝트 움직이면 마스크위치가 안움직임
 	D2D1_RECT_F srcRect = { 0, 0, size.width, size.height };
 
 	// 이미지 그리기
@@ -75,7 +61,7 @@ void SliceRenderer::SetOriginalByPath(std::wstring path)
 
 void SliceRenderer::SetOriginalByBitmap(std::shared_ptr<BitmapResource> bitmap)
 {
-	originBitmap = bitmap; // bitmapresource 추가하기 ->
+	originBitmap = bitmap; // bitmapresource 추가하기
 
 	D2D1_SIZE_F size = originBitmap->GetBitmap()->GetSize();
 	SetPoint({
@@ -129,8 +115,11 @@ GameObject* SliceRenderer::Slice(const Vector2& left, const Vector2& right)
 		comp->SetPoint(lower);
 
 		// test code
-		comp->SetDirection({ 0, 1 });
-		comp->SetSpeed(0.2);
+		if (useGravity)
+		{
+			comp->SetDirection({ 0, 1 });
+			comp->SetSpeed(speed);
+		}
 	}
 	else // 오른쪽에서 왼쪽
 	{
@@ -146,17 +135,15 @@ GameObject* SliceRenderer::Slice(const Vector2& left, const Vector2& right)
 		comp->CreateGeomatryByPolygon(upper);
 		comp->SetPoint(upper);
 
-		// test code
-		comp->SetDirection({ 0, 1 });
-		comp->SetSpeed(0.2);
+		if (useGravity)
+		{
+			comp->SetDirection({ 0, 1 }); // d2d기준 y값 증가 -> 밑으로 떨어짐
+			comp->SetSpeed(speed);
+		}
 	}
 
 
 	return obj;
-}
-
-void SliceRenderer::Reset()
-{
 }
 
 void SliceRenderer::CreateGeomatryByPolygon(const std::vector<Vector2>& polygon)
@@ -192,28 +179,31 @@ void SliceRenderer::CreateGeomatryByPolygon(const std::vector<Vector2>& polygon)
 std::vector<Vector2> SliceRenderer::ClipPolygon(const std::vector<Vector2>& subjectPolygon, const ClipEdge& edge)
 {
 	std::vector<Vector2> output;
-	int count = subjectPolygon.size();
-	Vector2 S = subjectPolygon.back(); // 마지막 점
+	int count = subjectPolygon.size();	// 크기
+	Vector2 startVec = subjectPolygon.back();	// 검사 중인 변의 시작점 -> 항상 이전 위치를 유지, 첫 반복에서는 마지막점
 
 	for (int i = 0; i < count; ++i)
 	{
-		Vector2 E = subjectPolygon[i];
+		Vector2 endVec = subjectPolygon[i];	// 현재 검사중인 변의 끝점 -> 반복문에서는 현재 위치
 
-		bool insideE = IsInside(E, edge);
-		bool insideS = IsInside(S, edge);
+		bool isEndInside = IsInside(endVec, edge);
+		bool isStartInside = IsInside(startVec, edge);
 
-		if (insideE)
+		if (isEndInside)
 		{
-			if (!insideS)
-				output.push_back(GetIntersection(S, E, edge));
-			output.push_back(E);
+			if (!isStartInside)
+			{
+				output.push_back(GetIntersection(startVec, endVec, edge));
+			}
+
+			output.push_back(endVec);
 		}
-		else if (insideS)
+		else if (isStartInside)
 		{
-			output.push_back(GetIntersection(S, E, edge));
+			output.push_back(GetIntersection(startVec, endVec, edge));
 		}
 
-		S = E;
+		startVec = endVec;
 	}
 
 	return output;
@@ -221,17 +211,22 @@ std::vector<Vector2> SliceRenderer::ClipPolygon(const std::vector<Vector2>& subj
 
 Vector2 SliceRenderer::GetIntersection(const Vector2& s, const Vector2& e, const ClipEdge& edge)
 {
-	Vector2 dir1 = e - s;                 // 자르는 선분 (subject polygon)
+	Vector2 dir1 = e - s;                 // 잘리는 선분 (subject polygon)
 	Vector2 dir2 = edge.p2 - edge.p1;     // 클리핑 선분
 
-	Vector2 diff = edge.p1 -  s;
+	Vector2 diff = edge.p1 -  s;		  // 교차크기
 
 	float denom = Vector2::Cross(dir2, dir1);
-	if (fabs(denom) < 1e-6f)
-		return s; // 또는 예외 처리
+	if (fabs(denom) < 1e-6f) // 0에 가깝다 -> 두 직선은 유사하다
+		return s; // 또는 예외 처리 -> 시작점 반환
 
+	// 선분 교차의 기본 수식 - 두 선분이 같은 점을 가르킬때의 t와 u를 구하는 식
+	// s + t * dir1 = edge.p1 + u * dir2
+	// 여기서 t와 u는 각 선분 위에서의 비율 ( 0 ~ 1이면 선분 안, 그 이상이면 연장선 )
+	// t = (dir2 x (edge.p1 - s)) / (dir2 x dir1)
 	float t = Vector2::Cross(dir2, diff) / Vector2::Cross(dir2, dir1); // 두 벡터의 교차비율
-	return Vector2(s.x + dir1.x * t, s.y + dir1.y * t);
+
+	return Vector2(s.x + dir1.x * t, s.y + dir1.y * t); // 반환 값 : dir1에 대한 교차비율 만큼 s의 위치값을 이동 시킨 결과
 }
 
 void SliceRenderer::SetPosition(const Vector2& position)
@@ -249,6 +244,11 @@ void SliceRenderer::SetSpeed(float value)
 	infos.speed = value;
 }
 
+void SliceRenderer::SetGravity(bool value)
+{
+	useGravity = value;
+}
+
 SliceBitmapInfo SliceRenderer::GetInfo() const
 {
 	return infos;
@@ -259,7 +259,7 @@ bool SliceRenderer::IsInside(const Vector2& p, const ClipEdge& edge)
 	Vector2 edgeDir = edge.p2 - edge.p1;
 	Vector2 pointDir = p - edge.p1;
 
-	return Vector2::Cross(edgeDir, pointDir) >= 0;
+	return Vector2::Cross(edgeDir, pointDir) >= 0; // cross 결과값이 양수면 clipEdge보다 위에 있음
 }
 
 bool SliceRenderer::NearlyEqual(float a, float b, float epsilon)
