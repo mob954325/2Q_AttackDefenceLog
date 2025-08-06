@@ -5,8 +5,6 @@
 
 void LogicTestApplication::LogicTestApplication::Initialize()
 {
-	__super::Initialize();
-
 	// 1. SceneManager에 Scene 추가하기
 	gameLogicTestScene = new GameLogicTestScene();	// MainMenu 씬 객체 생성
 	Singleton<SceneManager>::GetInstance().AddScene(gameLogicTestScene); // 씬 추가

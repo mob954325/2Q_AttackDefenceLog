@@ -11,6 +11,10 @@
 
 
 
+
+
+
+
 void BettleManager::OnStart() {
 	//m_Enemy = owner->GetQuery()->FindByName("Enemytmp")->GetComponent<Enemy>();
 	//m_Player = owner->GetQuery()->FindByName("Playertmp")->GetComponent<Player>();
@@ -42,7 +46,6 @@ void BettleManager::ComparePatten( std::vector<int> InputNode){		  //현재 마�
 			break;
 		if (tmpPatten->PattenID.substr(0, 2) == "EP") {
 			m_Enemy->SetState("Enemy_AttackSuccess");   // 적 공격 성공
-
 			if (m_Player->GetDefenseRate() >= RandomReturn(100)) {
 				m_Player->SetState("Player_Defence"); // 방어
 			}

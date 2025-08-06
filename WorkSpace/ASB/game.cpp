@@ -39,7 +39,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     // app.Uninitialize();
     LogicTestApplication TestApplication;
     TestApplication.Initialize();
-    TestApplication.Run();
+    TestApplication.Update();
+    TestApplication.Render();
     TestApplication.Uninitialize();
 
     FreeConsole(); // 필요 없으면 종료 시 콘솔 제거
