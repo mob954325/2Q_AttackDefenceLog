@@ -207,8 +207,9 @@ void Enemy::SetCursorPosition(int x, int y)
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
-void Enemy::PrintConsole() {
-	SetCursorPosition(0, 0);
+void Enemy::PrintConsole() 
+{
+	 SetCursorPosition(0, 0);
 	std::cout << "Enemy HP		    : " << Object_Hp << std::endl;
 	std::cout << "Enemy Attack		    : " << Object_Attack << std::endl;
 	std::cout << "Enemy SpiritAttack          : " << Object_SpiritAttack << std::endl;
@@ -218,6 +219,7 @@ void Enemy::PrintConsole() {
 	std::cout << "Enemy nowTotalCoolTime	    : " << Object_nowTotalCoolTime << std::endl;
 	std::cout << "Enemy PlayingAttackTime	    : " << Object_PlayingAttackTime << std::endl;
 	std::cout << "Enemy State       : " << m_State->GetNowName() << std::endl;
+	//std::cout << "Enemy PattenID    : " << 
 }
 
 

@@ -1,4 +1,4 @@
-#include "AttackPatternManager.h"
+﻿#include "AttackPatternManager.h"
 #include "Utils/GameTime.h"
 
 struct pattern;
@@ -39,18 +39,18 @@ void AttackPatternManager::SubPattern(std::string ID) {
 
 pattern* AttackPatternManager::CorrectPattern(std::vector<int> PatternID){
 	bool isCorrect = false;
-	for (const auto& pair : NowPatternStorage) {
-		if (pair.first.substr(0, 2) == "EP") {
+	for (const auto& pair : NowPatternStorage) { 
+		if (pair.first.substr(0, 2) == "EP") {   // 패턴이 적이면 
 			for (int i = 0; i < PatternID.size(); i++) {
-				if (PatternID[i] != pair.second->NodePatten[PatternID.size() - 1 - i]) {
+				if (PatternID[i] != pair.second->NodePatten[PatternID.size() - 1 - i]) { // 역순으로 검사
 					isCorrect = false;
 					break;
 				}
 				isCorrect = true;
 			}
-			return pair.second;
-		}
-		else {
+			
+		}    
+		else {      // 아니면 정방향으로 검사
 			for (int i = 0; i < PatternID.size(); i++) {
 				if (PatternID[i] != pair.second->NodePatten[i]) {
 					isCorrect = false;
@@ -58,8 +58,10 @@ pattern* AttackPatternManager::CorrectPattern(std::vector<int> PatternID){
 				}
 				isCorrect = true;
 			}
-			return pair.second;
+			
 		}
+		if (isCorrect)
+			return pair.second;
 	}
 	return nullptr;
 }

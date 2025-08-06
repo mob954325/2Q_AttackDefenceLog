@@ -24,7 +24,7 @@ public:
 	Enemy* m_Enemy = nullptr;
 private:
 	
-	AttackPatternManager m_PattenManager;
+	AttackPatternManager* m_PattenManager;
 	float m_DeltaTime = 0.0f;
 
 
@@ -37,7 +37,8 @@ private:
 public:
 	void SetInputNode(std::vector<int> InputNode);  // 현재 노드의 입력 넣기
 	//Scene의 Start에 들어갈 것들
-	void SetForStart(AttackPatternManager& pattenManager); //-> 이거는 생성자에 넣을수도?
+	void SetForStart(AttackPatternManager* pattenManager); //-> 이거는 생성자에 넣을수도?
+	void ChangeFinalState();
 	void SetDeltaTime(float deltaTime);			        //Scene에서 deltaTime 설정
 	std::vector<int> nowNode;
 	int RandomReturn(int MaxInt);
