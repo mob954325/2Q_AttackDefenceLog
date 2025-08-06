@@ -21,11 +21,14 @@ void BitmapRenderer::Render(D2DRenderManager* manager)
 
 		if (!useCustomRect)
 		{
-			manager->DrawBitmap(m_bitmapResource->GetBitmap());
+			D2D1_SIZE_F size = m_bitmapResource->GetBitmap()->GetSize();
+			D2D1_RECT_F dest = { 0,0,size.width,size.height };
+			D2D1_RECT_F src = { 0,0,size.width,size.height };
+			manager->DrawBitmap(m_bitmapResource->GetBitmap(), dest, src, capacity);
 		}
 		else
 		{
-			manager->DrawBitmap(m_bitmapResource->GetBitmap(), destRect, srcRect); // 0730 : 작성자 : 이성호, rect로 직접 수정할 수 있게 코드 추가
+			manager->DrawBitmap(m_bitmapResource->GetBitmap(), destRect, srcRect, capacity); // 0730 : 작성자 : 이성호, rect로 직접 수정할 수 있게 코드 추가
 		}
 	}
 	else
@@ -93,4 +96,16 @@ void BitmapRenderer::SetSrcRect(const D2D1_RECT_F& rect)
 D2D1_RECT_F BitmapRenderer::GetSrcRect() const
 {
 	return srcRect;
+}
+
+void BitmapRenderer::SetCapacity(float value)
+{
+	if (value > 1) capacity = 1;
+	else if (value < 0) capacity = 0;
+	else capacity = value;
+}
+
+float BitmapRenderer::GetCapacity()
+{
+	return capacity;
 }

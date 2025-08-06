@@ -1,4 +1,5 @@
-﻿// <example>
+﻿
+// <example>
 // 등록 방식
 // 1. Add() 사용
 // ListenerID id1 = player->OnHpChange.Add(std::bind(&HpComponent::ChangeValue, this, std::placeholders::_1));

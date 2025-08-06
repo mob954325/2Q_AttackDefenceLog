@@ -292,6 +292,7 @@
     <ClInclude Include="Components\Rendering\PatternDrawerComponent.h">
       <Filter>Components\Rendering</Filter>
     </ClInclude>
+    <ClInclude Include="..\WorkSpace\ASB\LiveObject\Player.h" />
     <ClInclude Include="Resources\Loaders\CsvLoader.h" />
     <ClInclude Include="Components\Rendering\SliceRenderer.h">
       <Filter>Components\Rendering</Filter>

@@ -22,7 +22,9 @@ protected:
 	void UpdateImpl() override;
 
 private:
-	GameObject* menuObj;
-
+	GameObject* attackPattenManager = nullptr;
+	GameObject* bettleManager = nullptr;
+	GameObject * player = nullptr;
+	GameObject* enemy = nullptr;
 };
 

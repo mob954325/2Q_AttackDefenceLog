@@ -28,6 +28,9 @@ public:
 	void SetSrcRect(const D2D1_RECT_F& rect);
 	D2D1_RECT_F GetSrcRect() const;
 
+	void SetCapacity(float value);
+	float GetCapacity();
+
 protected:
 	std::shared_ptr<BitmapResource> m_bitmapResource;
 	D2D1_RECT_F destRect = {};
@@ -41,5 +44,7 @@ protected:
 
 	bool isFlip = false;
 	bool useCustomRect = false; // 위 destRect, srcRect 사용여부 변수
+
+	float capacity = 1.0f;
 };
 

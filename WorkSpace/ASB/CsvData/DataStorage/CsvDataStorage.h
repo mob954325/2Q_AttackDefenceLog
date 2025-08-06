@@ -30,7 +30,7 @@ public:
 
 private:
 	std::unordered_map<std::string, T* > DataMap;
-
+	std::vector<std::string> IDStorage;
 public:
 
 	// 데이터 클래스의 객체 생성
@@ -40,9 +40,10 @@ public:
 	}
 
 
-	// 키와 값(데이터의 포인터)의 쌍을 맵에 저장
+	// 키와 값(데이터의 포인터)의 쌍을 맵에 저장, 키는 따로 벡터에 저장
 	void SetData(const std::string DataID, T* tmpData) {
 		DataMap[DataID] = tmpData;
+		IDStorage.push_back(DataID);
 	}
 
 	// 데이터를 가지는 함수
@@ -51,11 +52,21 @@ public:
 		if (it != DataMap.end()) {
 			return it->second;
 		}
+		return nullptr; //명시적으로 null 반환
 	}
+
+	//데이터의 Id 벡터를 반환하는 함수
+	std::vector<std::string> GetIDVect(){
+		return IDStorage;
+	}
+
+
 
 	void PrintData() {
 		for (const auto& pair : DataMap) {
 			pair.second->PrintMap(); // BaseData 클래스의 PrintMap 함수 호출
 		}
 	}
+
+	
 };

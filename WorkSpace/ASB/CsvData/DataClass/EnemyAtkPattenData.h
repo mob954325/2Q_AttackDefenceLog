@@ -19,6 +19,7 @@ public:
 	int atkPetternGroup;       // 적의 공격 그룹을 저장
 	std::string eNodepattern;  // 적의 노드 패턴을 저장
 	float eAtkCoolDown;        // 적의 공격 쿨타임을 저장
+	float eComboCoolDown;	   // 적의 연격 딜레이를 저장
 
 
 
