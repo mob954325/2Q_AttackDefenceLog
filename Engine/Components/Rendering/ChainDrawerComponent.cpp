@@ -32,15 +32,19 @@ void ChainDrawerComponent::SliceRect(std::vector<int> pattern) // 1 3 2 4 5 이�
 
 		pieces.push_back({ srcRect ,angle, midPos, dist, 1.0f, 1.0f });
 		currentX += dist;
-}
+	}
 
 	totalLength = currentX;
-	isPlay = true; // 고고혓
+	isPlay = true; // 고고혓 
 }
 
 void ChainDrawerComponent::OnStart()
 {
 	bmpSize = baseBitmap->GetBitmap()->GetSize();
+}
+
+void ChainDrawerComponent::OnCreate() {
+	
 }
 
 void ChainDrawerComponent::Render(D2DRenderManager* manager) // 사실상, trailComponent 내부에 보간식을 떼온거임
@@ -55,7 +59,7 @@ void ChainDrawerComponent::Draw(D2DRenderManager* manager)
 	for (auto& pi : pieces) {
 		float width = pi.rect.right - pi.rect.left;
 		float height = pi.rect.bottom - pi.rect.top;
-	
+
 		D2D1_RECT_F destRect = {
 			pi.pos.x - width * 0.5f,
 			pi.pos.y - height * 0.5f,
@@ -69,7 +73,7 @@ void ChainDrawerComponent::Draw(D2DRenderManager* manager)
 		manager->SetRenderTransform(transform);
 
 		manager->DrawBitmap(baseBitmap->GetBitmap(), destRect, pi.rect, 1.0f);
-		if (pi.fillAmount > 0.0f) {			
+		if (pi.fillAmount > 0.0f) {
 			D2D1_RECT_F fillSrcRect = pi.rect;
 			fillSrcRect.right = fillSrcRect.left + width * pi.fillAmount;
 
@@ -110,7 +114,7 @@ void ChainDrawerComponent::Progress(float value)
 
 void ChainDrawerComponent::SetBitmap(std::wstring path)
 {
-	baseBitmap = resourceManager->CreateBitmapResource(path);
+	baseBitmap = resourceManager->CreateBitmapResource(path);	
 	fillBitmap = baseBitmap; // 일단 넣어
 }
 
@@ -119,13 +123,18 @@ void ChainDrawerComponent::SetFillBitmap(std::wstring path)
 	fillBitmap = resourceManager->CreateBitmapResource(path);
 }
 
-void ChainDrawerComponent::SetupNodes(Vector2 node, float interval)
+void ChainDrawerComponent::SetupNodes(Vector2 node, float interval, D2D1_SIZE_F size)
 {
+	Vector2 half = { size.width * 0.5f, size.height * 0.5f };
+
 	for (int i = 0; i < 9; ++i) {
 		int col = i % 3 - 1; // -1 0 1
 		int row = i / 3 - 1;
 
-		positions[i] = { node.x + interval * col, node.y + interval * row };
+		positions[i] = {
+			node.x + interval * col + half.x,
+			node.y + interval * row + half.y
+		};
 	}
 }
 

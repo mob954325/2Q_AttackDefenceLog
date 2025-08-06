@@ -99,6 +99,9 @@
     <ClCompile Include="Objects\Stage\StageBGI.cpp">
       <Filter>Objects\Stage</Filter>
     </ClCompile>
+    <ClCompile Include="Objects\PatternControlObject.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameApp.h">
@@ -157,6 +160,9 @@
     </ClInclude>
     <ClInclude Include="Objects\Stage\StageBGI.h">
       <Filter>Objects\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\PatternControlObject.h">
+      <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -12,12 +12,16 @@ using namespace HSK;
 
 void HSKScene::OnEnterImpl()
 {
-	obj = new GameObject();
-	obj->SetRenderLayer(EngineData::RenderLayer::UI);
-
-	auto c = obj->AddComponent<ChainDrawerComponent>();
+	drawObj = new GameObject();
+	drawObj->SetRenderLayer(EngineData::RenderLayer::None);
+	auto c = drawObj->AddComponent<ChainDrawerComponent>();
 	c->SetBitmap(L"../HSK/Test/TestArrow_2.png");
 	c->SetFillBitmap(L"../HSK/Test/TestArrow_1.png");
+	c->SetOrderInLayer(-10);
+	AddGameObject(drawObj);
+
+	obj = new GameObject();
+	obj->SetRenderLayer(EngineData::RenderLayer::UI);
 
 	auto t = obj->AddComponent<TrailComponent>();
 	t->SetOrderInLayer(100);
@@ -25,9 +29,9 @@ void HSKScene::OnEnterImpl()
 	auto d = obj->AddComponent<PatternDrawerComponent>();
 	d->SetOrderInLayer(80);
 
-	t->SetBitmap(L"../HSK/Test/test5.png");
-	t->SetTailBitmap(L"../HSK/Test/test1.png");
-	t->SetHeadBitmap(L"../HSK/Test/white_brush_test3.png");
+	t->SetBitmap(L"../HSK/Test/white_brush_test3.png");
+	t->SetTailBitmap(L"../HSK/Test/white_brush_test3_tail.png");
+	t->SetHeadBitmap(L"../HSK/Test/white_brush_test3_head.png");
 	d->SetBitmap(L"../HSK/Test/test5.png");
 
 	AddGameObject(obj, "trail");
@@ -50,7 +54,7 @@ void HSKScene::OnEnterImpl()
 		m_nodes[i]->GetTransform().SetPosition(x, y);
 	}
 
-	c->SetupNodes({ 720.0f, 405.0f }, 150.0f);
+	c->SetupNodes(m_nodes[4]->GetTransform().GetPosition(), 150.0f, { 91.0f,102.0f }); // 스타트에서 하기
 }
 
 void HSKScene::OnExitImpl()
@@ -78,11 +82,11 @@ void HSKScene::UpdateImpl()
 	obj->GetTransform().SetPosition(Input::MouseX, Input::MouseY);
 	t->isOutFromBox = PM.CheckOutOfBox({ Input::MouseX, Input::MouseY });
 
-	auto c = obj->GetComponent<ChainDrawerComponent>();
+	auto c = drawObj->GetComponent<ChainDrawerComponent>();
 
 
-	if (t->isNewCached) {		
-		
+	if (t->isNewCached) {
+
 		PM.CheckTrails(t->CheckingCachedTrails());
 		const auto& vec = PM.GetPatternPathPositions();
 		d->SetLine(vec);
@@ -97,7 +101,7 @@ void HSKScene::UpdateImpl()
 		std::cout << std::endl << std::endl;
 	}
 	c->Progress(n);
-	
+
 	n += 0.1f * Singleton<GameTime>::GetInstance().GetDeltaTime();
 
 	if (n >= 1.0f) {
