@@ -9,6 +9,7 @@ protected:
 	void UpdateImpl() override;
 
 private:
+	GameObject* test;
 	GameObject* inputObj;
 	GameObject* trail;
 	GameObject* backGroundImg;

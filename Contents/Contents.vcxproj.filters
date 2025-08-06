@@ -102,6 +102,9 @@
     <ClCompile Include="Objects\PatternControlObject.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="Objects\SliceObject.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameApp.h">
@@ -162,6 +165,9 @@
       <Filter>Objects\Stage</Filter>
     </ClInclude>
     <ClInclude Include="Objects\PatternControlObject.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\SliceObject.h">
       <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>

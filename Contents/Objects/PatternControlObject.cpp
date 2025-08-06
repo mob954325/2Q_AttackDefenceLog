@@ -10,7 +10,7 @@
 void PatternControlObject::OnCreate()
 {
 	trail = new GameObject();
-	trail->AddComponent<MouseTrailObject>();
+	trail->AddComponent<MouseTrailObject>(); 
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(trail, "MouseTrail");
 
 	for (int i = 0; i < 9; ++i) {
