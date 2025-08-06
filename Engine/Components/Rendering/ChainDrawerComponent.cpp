@@ -16,8 +16,20 @@ void ChainDrawerComponent::SliceRect(std::vector<int> pattern) // 1 3 2 4 5 이�
 
 		Vector2 from = positions[pattern[i] - 1]; // 1~9 > 0~8 (현재)
 		Vector2 to = positions[pattern[i + 1] - 1]; // 다음 좌표
+		
 
-		float dist = (to - from).Megnituede(); // sqrt(x * x + y * y);
+		float dist = (to - from).Megnituede(); // sqrt(x * x + y * y);		
+		float remainingWidth = bmpSize.width - currentX;
+		
+		if (dist > remainingWidth) {
+			float shortage = dist - remainingWidth; // 초과분
+			Vector2 dir = (to - from).Normalize();
+			to -= dir * shortage; // 부족한 만큼 뒤로 당기기
+			dist = remainingWidth; // dist 재계산 안 해도 됨, 위에서 보정됨
+		}
+
+
+		Vector2 midPos = (from + to) * 0.5f;
 
 		D2D1_RECT_F srcRect = {
 			currentX,
@@ -28,7 +40,7 @@ void ChainDrawerComponent::SliceRect(std::vector<int> pattern) // 1 3 2 4 5 이�
 
 		float angle = atan2f(to.y - from.y, to.x - from.x); // 아크 탄젠트 값을 라디안으로 변환, 기울기 -> 라디안
 
-		Vector2 midPos = (from + to) * 0.5f;
+		
 
 		pieces.push_back({ srcRect ,angle, midPos, dist, 1.0f, 1.0f });
 		currentX += dist;
