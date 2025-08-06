@@ -8,9 +8,7 @@
 * 전부 바꿔야해서
 * 귀찮앙 UI니까 어떻게든 되지 않을까
 */
-
-void NodeObject::OnStart()
-{
+void NodeObject::OnCreate() {
 	owner->SetRenderLayer(EngineData::RenderLayer::GameObject);
 	owner->GetTransform().SetUnityCoords(false); // 이건 유니티좌표계 하면 안댐
 
@@ -18,9 +16,15 @@ void NodeObject::OnStart()
 	bitmapRenderer->CreateBitmapResource(L"../WorkSpace/HSK/Test/ui03.png");
 	bitmapRenderer->SetOrderInLayer(-1);
 
-	size = bitmapRenderer->GetResource()->GetBitmap()->GetSize();			
+	size = bitmapRenderer->GetResource()->GetBitmap()->GetSize();
 	owner->GetTransform().SetOffset(-size.width / 2, size.height / 2);
 	auto c = owner->AddComponent<CircleCollider>();
+
+}
+
+void NodeObject::OnStart()
+{
+	
 		
 }
 
