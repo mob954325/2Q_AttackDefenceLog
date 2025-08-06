@@ -19,15 +19,14 @@ void ChainDrawerComponent::SliceRect(std::vector<int> pattern) // 1 3 2 4 5 이�
 		
 
 		float dist = (to - from).Megnituede(); // sqrt(x * x + y * y);		
-		float remainingWidth = bmpSize.width - currentX;
+		float remainingWidth = bmpSize.width - currentX; // 이번 dist 요구값
 		
-		if (dist > remainingWidth) {
+		if (dist > remainingWidth) { // 요구값보다 많으면 -> 초과됨
 			float shortage = dist - remainingWidth; // 초과분
 			Vector2 dir = (to - from).Normalize();
 			to -= dir * shortage; // 부족한 만큼 뒤로 당기기
 			dist = remainingWidth; // dist 재계산 안 해도 됨, 위에서 보정됨
 		}
-
 
 		Vector2 midPos = (from + to) * 0.5f;
 
