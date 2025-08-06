@@ -23,7 +23,7 @@ void AnimationRenderer::Render(D2DRenderManager* manager)
 	destRect = player.GetDestRect();
 	srcRect = player.GetSrcRect();
 
-	manager->DrawBitmap(m_bitmapResource.get()->GetBitmap(), destRect, srcRect);
+	manager->DrawBitmap(m_bitmapResource.get()->GetBitmap(), destRect, srcRect, capacity);
 
 	player.Update(Singleton<GameTime>::GetInstance().GetDeltaTime());
 }

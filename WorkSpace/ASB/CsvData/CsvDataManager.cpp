@@ -94,11 +94,30 @@ void CsvDataManager::DispatchSaveData<PlayerData>(const std::string& key, Player
 }
 
 
+//IDData를 반환하는 헬퍼 함수 정의 (기본 템플릿)
+template<typename T>
+std::vector<std::string> CsvDataManager::GetIDData(T* tag) {}
 
-
-
-
-
+template<>
+std::vector<std::string> CsvDataManager::GetIDData(AllNodePattenClass* tag) {
+	return allNodePattenStorage.GetIDVect();
+}
+template<>
+std::vector<std::string> CsvDataManager::GetIDData(EnemyAtkPattenData* tag) {
+	return enemyAtkPattenStorage.GetIDVect();
+}
+template<>
+std::vector<std::string> CsvDataManager::GetIDData(EnemyData* tag) {
+	return enemyDataStorage.GetIDVect();
+}
+template<>
+std::vector<std::string> CsvDataManager::GetIDData(PlayerAtkPetternData* tag) {
+	return playerAtkPetternStorage.GetIDVect();
+}
+template<>
+std::vector<std::string> CsvDataManager::GetIDData(PlayerData* tag) {
+	return playerDataStorage.GetIDVect();
+}
 
 
 
@@ -129,6 +148,7 @@ template<>
 PlayerData* CsvDataManager::getDataImpl<PlayerData>(PlayerData* tag, std::string ID) {
 	return playerDataStorage.GetData(ID);
 }
+
 
 
 template<typename T>
