@@ -31,7 +31,7 @@ public:
 
 	void SetBitmap(std::wstring path);
 	void SetFillBitmap(std::wstring path);
-	void SetupNodes(Vector2 node, float interval, D2D1_SIZE_F size); // 중앙의 노드 좌표와 간격을 넣어주세오
+	void SetupNodes(Vector2 node, float interval); // 중앙의 노드 좌표와 간격을 넣어주세오
 
 	float duration = 1.0f;
 	float piece = 3.0f; // 조각

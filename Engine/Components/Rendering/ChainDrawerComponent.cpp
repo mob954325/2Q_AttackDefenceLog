@@ -123,18 +123,16 @@ void ChainDrawerComponent::SetFillBitmap(std::wstring path)
 	fillBitmap = resourceManager->CreateBitmapResource(path);
 }
 
-void ChainDrawerComponent::SetupNodes(Vector2 node, float interval, D2D1_SIZE_F size)
-{
-	Vector2 half = { size.width * 0.5f, size.height * 0.5f };
-
+void ChainDrawerComponent::SetupNodes(Vector2 node, float interval)
+{	
 	for (int i = 0; i < 9; ++i) {
 		int col = i % 3 - 1; // -1 0 1
 		int row = i / 3 - 1;
 
 		positions[i] = {
-			node.x + interval * col + half.x,
-			node.y + interval * row + half.y
-		};
+			node.x + interval * col,
+			node.y + interval * row
+		};		
 	}
 }
 

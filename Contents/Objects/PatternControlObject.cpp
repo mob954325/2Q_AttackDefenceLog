@@ -1,10 +1,11 @@
-#include "PatternControlObject.h"
+Ôªø#include "PatternControlObject.h"
 #include "Components/Base/GameObject.h"
 #include "Scene/SceneManager.h"
 #include "../Objects/Stage/NodeObject.h"
 #include "../Engine/Components/Rendering/PatternDrawerComponent.h"
 #include "../Objects/MouseTrailObject.h"
 #include "../Engine/Components/Rendering/ChainDrawerComponent.h"
+#include "../Engine/Utils/GameTime.h"
 
 void PatternControlObject::OnCreate()
 {
@@ -36,7 +37,7 @@ void PatternControlObject::OnStart()
 	d->SetOrderInLayer(80);
 	d->SetBitmap(L"../WorkSpace/HSK/Test/test5.png");
 
-	float n = 200.0f; // ≥ÎµÂ∞£¿« ∞£∞›
+	float n = 200.0f; // ÎÖ∏ÎìúÍ∞ÑÏùò Í∞ÑÍ≤©
 	for (int i = 0; i < 9; ++i) {
 		int col = i % 3 - 1; // -1 0 1
 		int row = i / 3 - 1; // -1 0 1
@@ -50,32 +51,36 @@ void PatternControlObject::OnStart()
 	PM.SetNodes(m_nodes, 45.0f);
 	auto c = guideline->GetComponent<ChainDrawerComponent>();
 
-	c->SetupNodes(m_nodes[4]->GetTransform().GetPosition(), n, { 91.0f , 101.0f }); // Ω∫≈∏∆Æø°º≠ «œ±‚
+	c->SetupNodes(m_nodes[4]->GetTransform().GetPosition(), n); // Ïä§ÌÉÄÌä∏ÏóêÏÑú ÌïòÍ∏∞
 }
+
+float n = 0.0f;
 
 void PatternControlObject::OnUpdate()
 {
 	auto t = trail->GetComponent<TrailComponent>();
-	t->isOutFromBox = PM.CheckOutOfBox({ Input::MouseX, Input::MouseY }); // ∏∂øÏΩ∫ ¡¬«• ±‚π›¿∏∑Œ, π⁄Ω∫ π€¿∏∑Œ ≥™∞¨¥¬¡ˆ »Æ¿Œ
+	t->isOutFromBox = PM.CheckOutOfBox({ Input::MouseX, Input::MouseY }); // ÎßàÏö∞Ïä§ Ï¢åÌëú Í∏∞Î∞òÏúºÎ°ú, Î∞ïÏä§ Î∞ñÏúºÎ°ú ÎÇòÍ∞îÎäîÏßÄ ÌôïÏù∏
 
-	if (t->isNewCached) { // ªı∑ŒøÓ ≥ÎµÂ πﬂª˝«œ∏È		
-
+	auto c = guideline->GetComponent<ChainDrawerComponent>();
+	if (t->isNewCached) { // ÏÉàÎ°úÏö¥ ÎÖ∏Îìú Î∞úÏÉùÌïòÎ©¥				
 		PM.CheckTrails(t->CheckingCachedTrails());
-		const auto& vec = PM.GetPatternPathPositions(); // ø©±‚ø° ¥„±Ë!!! 1 3 2 4 ¿Ã∑±∞≈ <<<<< (ø¨∞·¡ˆ¡°)
+		const auto& vec = PM.GetPatternPathPositions(); // Ïó¨Í∏∞Ïóê Îã¥ÍπÄ!!! 1 3 2 4 Ïù¥Îü∞Í±∞ <<<<< (Ïó∞Í≤∞ÏßÄÏ†ê)
 
-		auto c = guideline->GetComponent<ChainDrawerComponent>();
+		
 		auto d = owner->GetComponent<PatternDrawerComponent>();
 		d->SetLine(vec);
-		if (!vec.empty()) // ≥ÎµÂ∞° ±◊æÓ¡≥¥Ÿ∏È, πŸ∑Œ ªË¡¶«ÿº≠ ∞°Ω√º∫ up
+		if (!vec.empty()) // ÎÖ∏ÎìúÍ∞Ä Í∑∏Ïñ¥Ï°åÎã§Î©¥, Î∞îÎ°ú ÏÇ≠Ï†úÌï¥ÏÑú Í∞ÄÏãúÏÑ± up
 			t->Clear();
-
-
-		c->SliceRect(PM.GetPattern());
-		c->Progress(0.5f);
+		
+		c->SliceRect(PM.GetPattern());		
 
 		for (int value : PM.GetPattern()) { std::cout << value << "-"; }
 		std::cout << std::endl << std::endl;
 	}
+
+	c->Progress(n);
+	n += 0.1f * Singleton<GameTime>::GetInstance().GetDeltaTime();
+	if (n > 1.0f) n = 0.0f;
 }
 
 void PatternControlObject::OnDestroy()
