@@ -41,13 +41,13 @@ void Player::OnStart() {
 
 // 업데이트에서 시간 받기???? -> 필요없음, 수정하기!!!
 void Player::OnUpdate() {
-	if (m_State->GetNowName() != "Player_Dead"){
+	//if (m_State->GetNowName() != "Player_Dead"){
 		CalSpiritTime();		// 1초마다 기세게이지 감소
 		AddPattenLoop();		// 패턴을 추가하는 루프
 		PrintConsole();
 		m_State->Update();
 		DiffStatePrint();
-	}
+	//}
 	
 }
 
@@ -85,7 +85,7 @@ void Player::OnCreateState() {
 
 	m_State->CreateState("Player_Groggy");   // 패턴 파회 O + 특정 시간 안에
 	m_State->SetNextState("Player_Groggy", "Player_Idle");
-	m_State->SetTransitionTime("Player_Groggy", 1.0f);
+	m_State->SetTransitionTime("Player_Groggy", 2.0f);
 
 	m_State->CreateState("Player_Dead");   // 죽음
 }
@@ -194,13 +194,19 @@ void Player::DiffStatePrint() {
 		preStateName = nowStateName;
 		nowStateName = m_State->GetNowName();
 	}
+	if ( isGroggy && preStateName == "Player_Groggy") {
+		Object_NowSpiritAmount = Object_SpiritAmount / 2.0f;
+		isGroggy = false;
+	}
 }
+
 
 
 
 // 공격이 끝나면 -> isAttackingPattern  :  T
 // isPattenCooldown   : T  -> 쿨타임을 계산
 // isPattenCooldown   : F  -> 계산 X
+
 
 // 플래그를 정하는 함수
 void Player::AddPattenLoop() {
