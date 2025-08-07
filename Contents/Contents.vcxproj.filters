@@ -40,6 +40,24 @@
     <Filter Include="Objects\SceneObject\SelectScene">
       <UniqueIdentifier>{2c2bdabf-7125-4214-8ae9-e42aa67304ac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scripts\Components">
+      <UniqueIdentifier>{b56138e7-58b5-4b2f-aaf2-2b2fdf295c63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\CsvData">
+      <UniqueIdentifier>{0fc48a22-df20-4987-8312-bac3f4d1ef2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\LiveObject">
+      <UniqueIdentifier>{f79cf8c3-3a63-4cfb-870e-321b4b7b5280}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\LogicManager">
+      <UniqueIdentifier>{83111980-701f-4a14-8086-2aefa37fb632}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\CsvData\DataClass">
+      <UniqueIdentifier>{74300a39-f407-4fc7-9f61-7aec94ac16a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\CsvData\DataStorage">
+      <UniqueIdentifier>{1cb7858a-2478-40bb-b08b-017134003a1b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\Game.cpp">
@@ -105,20 +123,45 @@
     <ClCompile Include="Objects\SliceObject.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
-    <ClCompile Include="ASB\game.cpp" />
-    <ClCompile Include="Scripts\Component\StateController.cpp" />
-    <ClCompile Include="Scripts\CsvData\DataClass\AllNodePattenClass.cpp" />
-    <ClCompile Include="Scripts\CsvData\DataClass\BaseData.cpp" />
-    <ClCompile Include="Scripts\CsvData\DataClass\EnemyAtkPattenData.cpp" />
-    <ClCompile Include="Scripts\CsvData\DataClass\EnemyData.cpp" />
-    <ClCompile Include="Scripts\CsvData\DataClass\PlayerData.cpp" />
-    <ClCompile Include="Scripts\CsvData\DataStorage\CsvDataStorage.cpp" />
-    <ClCompile Include="Scripts\CsvData\CsvDataManager.cpp" />
-    <ClCompile Include="Scripts\LiveObject\Enemy.cpp" />
-    <ClCompile Include="Scripts\LiveObject\LiveObject.cpp" />
-    <ClCompile Include="Scripts\LiveObject\Player.cpp" />
-    <ClCompile Include="Scripts\LogicManager\AttackPatternManager.cpp" />
-    <ClCompile Include="Scripts\LogicManager\BettleManager.cpp" />
+    <ClCompile Include="Scripts\Component\StateController.cpp">
+      <Filter>Scripts\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\CsvData\CsvDataManager.cpp">
+      <Filter>Scripts\CsvData</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\CsvData\DataStorage\CsvDataStorage.cpp">
+      <Filter>Scripts\CsvData\DataStorage</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\LiveObject\Enemy.cpp">
+      <Filter>Scripts\LiveObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\LiveObject\Player.cpp">
+      <Filter>Scripts\LiveObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\LiveObject\LiveObject.cpp">
+      <Filter>Scripts\LiveObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\LogicManager\AttackPatternManager.cpp">
+      <Filter>Scripts\LogicManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\LogicManager\BettleManager.cpp">
+      <Filter>Scripts\LogicManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\CsvData\DataClass\AllNodePattenClass.cpp">
+      <Filter>Scripts\CsvData\DataClass</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\CsvData\DataClass\BaseData.cpp">
+      <Filter>Scripts\CsvData\DataClass</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\CsvData\DataClass\EnemyAtkPattenData.cpp">
+      <Filter>Scripts\CsvData\DataClass</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\CsvData\DataClass\EnemyData.cpp">
+      <Filter>Scripts\CsvData\DataClass</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\CsvData\DataClass\PlayerData.cpp">
+      <Filter>Scripts\CsvData\DataClass</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameApp.h">
@@ -184,23 +227,44 @@
     <ClInclude Include="Objects\SliceObject.h">
       <Filter>Objects</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Component\StateController.h" />
-    <ClInclude Include="Scripts\CsvData\DataClass\AllNodePattenClass.h" />
-    <ClInclude Include="Scripts\CsvData\DataClass\BaseData.h" />
-    <ClInclude Include="Scripts\CsvData\DataClass\EnemyData.h" />
-    <ClInclude Include="Scripts\CsvData\DataClass\EnemyAtkPattenData.h" />
-    <ClInclude Include="Scripts\CsvData\DataClass\PlayerData.h" />
-    <ClInclude Include="Scripts\CsvData\DataStorage\CsvDataStorage.h" />
-    <ClInclude Include="Scripts\CsvData\CsvDataManager.h" />
-    <ClInclude Include="Scripts\LiveObject\Enemy.h" />
-    <ClInclude Include="Scripts\LiveObject\LiveObject.h" />
-    <ClInclude Include="Scripts\LiveObject\Player.h" />
-    <ClInclude Include="Scripts\LogicManager\AttackPatternManager.h" />
-    <ClInclude Include="Scripts\LogicManager\BettleManager.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ASB\ASB.vcxproj" />
-    <None Include="ASB\ASB.vcxproj.filters" />
-    <None Include="ASB\ASB.vcxproj.user" />
+    <ClInclude Include="Scripts\Component\StateController.h">
+      <Filter>Scripts\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\CsvData\CsvDataManager.h">
+      <Filter>Scripts\CsvData</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\CsvData\DataStorage\CsvDataStorage.h">
+      <Filter>Scripts\CsvData\DataStorage</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\LiveObject\Enemy.h">
+      <Filter>Scripts\LiveObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\LiveObject\Player.h">
+      <Filter>Scripts\LiveObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\LiveObject\LiveObject.h">
+      <Filter>Scripts\LiveObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\LogicManager\AttackPatternManager.h">
+      <Filter>Scripts\LogicManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\LogicManager\BettleManager.h">
+      <Filter>Scripts\LogicManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\CsvData\DataClass\AllNodePattenClass.h">
+      <Filter>Scripts\CsvData\DataClass</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\CsvData\DataClass\BaseData.h">
+      <Filter>Scripts\CsvData\DataClass</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\CsvData\DataClass\EnemyAtkPattenData.h">
+      <Filter>Scripts\CsvData\DataClass</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\CsvData\DataClass\EnemyData.h">
+      <Filter>Scripts\CsvData\DataClass</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\CsvData\DataClass\PlayerData.h">
+      <Filter>Scripts\CsvData\DataClass</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

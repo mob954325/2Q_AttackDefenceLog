@@ -54,10 +54,21 @@ public:
 	void Pause();
 
 	// 설정 함수
+	
+	/// <summary>
+	/// 루프할지 설정하는 함수
+	/// </summary>
 	void SetLoop(bool value);
 
+	/// <summary>
+	/// 생성할 파티클양을 설정하는 함수
+	/// </summary>
 	void SetAmount(int value);
 
+	/// <summary>
+	/// 출력할 비트맵을 경로로 설정하는 함수 - ParticleShowType::Single에서만 해당 비트맵을 사용함
+	/// </summary>
+	/// <param name="path"></param>
 	void SetBitmap(std::wstring path);
 	ID2D1Bitmap1* GetBitmap();
 
@@ -70,7 +81,18 @@ public:
 	void SetDuration(float value);
 	float GetDuration() const;
 
+	/// <summary>
+	/// 출력할 애니메이션 비트맵을 설정하는 함수 - ParticleShowType::Animation, ParticleShowType::RandomSingle에서 사용하는 데이터
+	/// </summary>
+	/// <param name="sheetPath">스프라이트 시트 경로</param>
+	/// <param name="sheetDataPath">스프라이트 시트 json 경로</param>
+	/// <param name="clipPath">애니메이션 json 경로</param>
 	void SetAnimPlayer(std::wstring sheetPath, std::wstring sheetDataPath, std::wstring clipPath);
+
+	/// <summary>
+	/// 파티클 타입 설정 함수
+	/// </summary>
+	/// <param name="type">Single : 단일 비트맵, Animation : 애니메이션, RandomSingle : 시트의 스프라이트 중 랜덤 한 개 </param>
 	void SetShowType(ParticleShowType type);
 
 	void SetFadeOutTime(float value);
