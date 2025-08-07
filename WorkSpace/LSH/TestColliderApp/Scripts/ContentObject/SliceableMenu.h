@@ -48,5 +48,6 @@ private:
 	Vector2 endVec{};
 
 	EventDelegate<> OnSlice;
+	bool isSliced = false;
 };
 

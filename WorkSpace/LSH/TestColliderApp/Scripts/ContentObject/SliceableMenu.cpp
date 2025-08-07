@@ -65,9 +65,13 @@ void SliceableMenu::HandleOverlap()
 				obj->AddComponent<SliceObject>();
 				auto mono = obj->GetComponent<SliceObject>();
 
-				OnSlice.Invoke();
+				if (!isSliced)
+				{
+					OnSlice.Invoke();
+					isSliced = true;
+				}
 
-				// state = OverlapState::Notyet;	// 다시 자를 수 있게 상태 변경 -> 충돌 전
+				state = OverlapState::Notyet;	// 다시 자를 수 있게 상태 변경 -> 충돌 전
 			}
 		}
 	}
