@@ -78,7 +78,7 @@ void BettleManager::SetStateFormPattern() {		  //현재 마우스의 입력 받�
 		pattern* tmpPatten = m_PattenManager->CorrectPattern(nowNode);
 		if (tmpPatten == nullptr) break;
 		if (tmpPatten->PattenID.substr(0, 2) == "EP") {
-			if ((tmpPatten->TotalPlayingAttackTime - tmpPatten->PlayingAttackTime) <= 0.5) {  // 플레이어가 0.5초 이내에 가드시 -> 패링
+			if ((tmpPatten->PlayingAttackTime) <= 0.5f) {  // 플레이어가 0.5초 이내에 가드시 -> 패링
 				m_Player->SetState("Player_Perry");
 			}
 			else {
