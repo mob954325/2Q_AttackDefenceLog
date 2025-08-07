@@ -20,23 +20,9 @@ void EffectManager::OnStart()
 
 void EffectManager::OnDestroy()
 {
-	delete particleObj;
-	for (auto it : effectList)
-	{
-		delete it;
-	}
-	effectList.clear();
+
 }
 
-void EffectManager::ClearAll()
-{
-	delete particleObj;
-	for (auto it : effectList)
-	{
-		delete it;
-	}
-	effectList.clear();
-}
 
 void EffectManager::SetEffectPosition(float x, float y)
 {
@@ -80,7 +66,7 @@ void EffectManager::CreateParticleObject()
 	obj->AddComponent<ParticleRenderer>();
 	obj->SetName("ParticleObject");
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(obj);
-	obj = particleObj;
+	particleObj = obj;
 }
 
 void EffectManager::SetOffEffect()

@@ -23,6 +23,8 @@ private:
 
 	EffectManager* Emanager{};
 
+	ParticleRenderer* TestParticle{};
+
 	bool eventvalue = false;
 	float counttime = 0.0f;
 	float maxtime = 2.0f;

@@ -13,8 +13,6 @@ public:
 	void OnStart() override;
 	void OnDestroy() override;
 
-	void ClearAll();
-
 	void SetEffectPosition(float x, float y);
 
 	void SetEffectImage(size_t value, std::wstring path);
