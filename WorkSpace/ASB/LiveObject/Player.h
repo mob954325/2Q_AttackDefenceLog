@@ -44,6 +44,7 @@ public:
 	//스테이트 설정하는 함수
 	void SetState(std::string setStateName) override;
 	void OnCreateState() override;
+	void SetEndAttack() { isAttackingPattern = true; }
 
 	//플래그를 체크할 함수
 	void AddPattenLoop() override;
@@ -58,5 +59,7 @@ private:
 	void SetCursorPosition(int x, int y);         // 플레이어 출력함수
 	void PrintConsole();
 	std::string PrePattenID;		  // 이전 패턴의 ID
+
+	bool isAttackingPattern = false;
 };
 
