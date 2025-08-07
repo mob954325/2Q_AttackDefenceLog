@@ -23,12 +23,11 @@ void DummyCircleCollider::OnStart()
 	circle->SetRadius(20.0f);
 
 	particle->SetBitmap(L"../../Resource/Particles/Test/Arrow.png");
-	particle->SetLoop(true);
 	particle->SetMinSpeed(0.3f);
 	particle->SetMaxSpeed(5.0f);
 	particle->SetDuration(0.8f);
 	particle->SetFadeOutTime(0.7f);
-	particle->SetAmount(33330);
+	particle->SetAmount(10);
 	particle->SetAnimPlayer(L"../../Resource/Particles/SparkSheet.png",
 		L"../../Resource/Json/SparkSheet/SparkSheet_sprites.json",
 		L"../../Resource/Json/SparkSheet/Red_Spark_anim.json");
@@ -36,6 +35,8 @@ void DummyCircleCollider::OnStart()
 	particle->SetGravity(true);
 	particle->SetSeeDirection(true);
 	particle->SetDecreasing(true);
+	particle->Reset();
+	particle->Play();
 }
 
 void DummyCircleCollider::OnFixedUpdate()

@@ -22,8 +22,8 @@ void ParticleRenderer::OnStart()
 	}	
 
 	// 파티클의 스케일 초기화
-	baseScaleX = owner->GetTransform().GetFinalMatrix().m11;
-	baseScaleY = owner->GetTransform().GetFinalMatrix().m22;
+	baseScaleX = 1.0f;
+	baseScaleY = 1.0f;
 }
 
 void ParticleRenderer::Render(D2DRenderManager* manager)
@@ -38,26 +38,23 @@ void ParticleRenderer::Render(D2DRenderManager* manager)
 	if (isPlay)
 	{
 		float delta = Singleton<GameTime>::GetInstance().GetDeltaTime();
-		for (int i = 0; i < particleAmount; i++)
+		D2D1_MATRIX_3X2_F mat = owner->GetTransform().GetFinalMatrix();
+
+		if (isDecreasing)
 		{
-			D2D1_MATRIX_3X2_F mat = owner->GetTransform().GetFinalMatrix();
-			
-			if (isPlay) // 플레이 중일 때만 위치 갱신
-			{
-				Vector2 dir = infos[i].dirVec;
-				float speed = infos[i].speed;
+			// Easing을 이용해 크기 설정
+			float scale = EasingList[EasingEffect::OutSine](decreasingTimer / duration);
+			mat.m11 = baseScaleX * scale;
+			mat.m22 = baseScaleY * scale;
+		}
 
-				infos[i].position.x += dir.x * speed + delta;
-				infos[i].position.y += dir.y * speed + delta;
-			}
+		for (int i = 0; i < particleAmount; i++)
+		{			
+			Vector2 dir = infos[i].dirVec;
+			float speed = infos[i].speed;
 
-			if (isDecreasing)
-			{
-				// Easing을 이용해 크기 설정
-				float scale = EasingList[EasingEffect::OutSine](decreasingTimer / duration); 
-				mat.m11 = baseScaleX * scale;
-				mat.m22 = baseScaleY * scale;
-			}
+			infos[i].position.x += dir.x * speed + delta;
+			infos[i].position.y += dir.y * speed + delta;
 
 			// 회전 각도 계산
 			if (seeDirection)
@@ -163,8 +160,8 @@ void ParticleRenderer::Reset()
 	decreasingTimer = duration;
 
 	// 크기 확인
-	baseScaleX = owner->GetTransform().GetFinalMatrix().m11;
-	baseScaleY = owner->GetTransform().GetFinalMatrix().m22;
+	baseScaleX = 1.0f;
+	baseScaleY = 1.0f;
 }
 
 void ParticleRenderer::Pause()
