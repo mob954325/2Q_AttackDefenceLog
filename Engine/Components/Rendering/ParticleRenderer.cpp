@@ -21,6 +21,7 @@ void ParticleRenderer::OnStart()
 		infos.push_back({ { 0, 0 }, { vec.x, vec.y}, randSpeed });
 	}	
 
+	// 파티클의 스케일 초기화
 	baseScaleX = owner->GetTransform().GetFinalMatrix().m11;
 	baseScaleY = owner->GetTransform().GetFinalMatrix().m22;
 }
@@ -30,7 +31,7 @@ void ParticleRenderer::Render(D2DRenderManager* manager)
 	if (!IsActiveSelf()) return;
 	if (timer > duration)
 	{
-		if (isLoop) Reset();
+		if (isLoop) Reset(); // 루프면 자동으로 Reset() 호출
 		return;
 	}
 
@@ -52,7 +53,8 @@ void ParticleRenderer::Render(D2DRenderManager* manager)
 
 			if (isDecreasing)
 			{
-				float scale = EasingList[EasingEffect::OutSine](decreasingTimer / duration);
+				// Easing을 이용해 크기 설정
+				float scale = EasingList[EasingEffect::OutSine](decreasingTimer / duration); 
 				mat.m11 = baseScaleX * scale;
 				mat.m22 = baseScaleY * scale;
 			}
@@ -73,6 +75,7 @@ void ParticleRenderer::Render(D2DRenderManager* manager)
 					0.0f,      0.0f
 				};
 
+				// mat * rotation 행렬 연산
 				D2D1_MATRIX_3X2_F result;
 				result.m11 = mat.m11 * rotation.m11 + mat.m12 * rotation.m21;
 				result.m12 = mat.m11 * rotation.m12 + mat.m12 * rotation.m22;
@@ -87,7 +90,7 @@ void ParticleRenderer::Render(D2DRenderManager* manager)
 			mat.dx += infos[i].position.x;
 			mat.dy += infos[i].position.y;
 
-			// 중력 적용
+			// 중력 적용 - 방향이 밑을 향할 때까지 방향벡터의 y값 감소
 			if (useGravity && infos[i].dirVec.y > -1.0f)
 			{
 				infos[i].dirVec.y += delta;
@@ -114,13 +117,12 @@ void ParticleRenderer::Render(D2DRenderManager* manager)
 			}
 			else if (showType == ParticleShowType::RandomSingle)
 			{
-				player.SetCurrentFrame(infos[i].frameIndex);
+				player.SetCurrentFrame(infos[i].frameIndex); // infos에 저장된 frameIndex로 스프라이트 설정
 				D2D1_RECT_F dest = player.GetDestRect();
 				D2D1_RECT_F src = player.GetSrcRect();
 				manager->DrawBitmap(player.GetBitmapResource().GetBitmap(), dest, src, remainFadeOut / fadeOutTime);
 			}
 		}
-
 
 		timer += delta;
 		if (remainFadeOut > 0.0f) remainFadeOut -= delta;
