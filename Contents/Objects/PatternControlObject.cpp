@@ -24,7 +24,7 @@ void PatternControlObject::OnCreate()
 		m_nodes[i] = new GameObject();
 		auto nodeComponent = m_nodes[i]->AddComponent<NodeObject>();
 		std::string name = "Node." + std::to_string(i + 1);
-		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(m_nodes[i], name);
+		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(m_nodes[i], name);		
 	}
 	//===================================================================================================
 
@@ -69,6 +69,12 @@ void PatternControlObject::OnCreate()
 
 	PlayerData* tmp5 = nullptr;
 	CsvDataManager::GetInstance().SetCSV<PlayerData>("../Resource/DataTable/플레이어 데이터 테이블.csv"); // 데이터 파일 읽어오기
+
+	//===================================================================================================
+	/////////////////////////////////////////////////////////////////////////////////////////////////////
+	//===================================================================================================
+
+
 
 	//===================================================================================================
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -122,7 +128,16 @@ void PatternControlObject::OnStart() // 처음
 
 	c->SetupNodes(m_nodes[4]->GetTransform().GetPosition(), n); // 스타트에서 하기
 
-	
+	for (int i = 0; i < 10; ++i) {
+		readyQueue.push(new GameObject());
+		auto queueBack = readyQueue.back()->AddComponent<ChainDrawerComponent>();
+		queueBack->SetBitmap(L"../Workspace/HSK/Test/TestArrow_2.png");
+		queueBack->SetFillBitmap(L"../Workspace/HSK/Test/TestArrow_1.png");
+		queueBack->SetOrderInLayer(0);
+		readyQueue.back()->SetName("EnemyGuideline." + i);
+		queueBack->SetupNodes(m_nodes[4]->GetTransform().GetPosition(), n); // 스타트에서 하기
+		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(readyQueue.back());		
+	}
 }
 
 float n = 0.0f;
@@ -132,7 +147,7 @@ void PatternControlObject::OnUpdate() // 업데이트
 	auto t = trail->GetComponent<TrailComponent>();
 	t->isOutFromBox = PM.CheckOutOfBox({ Input::MouseX, Input::MouseY }); // 마우스 좌표 기반으로, 박스 밖으로 나갔는지 확인
 
-	auto en = enemyGuideline->GetComponent<ChainDrawerComponent>();
+	//auto en = enemyGuideline->GetComponent<ChainDrawerComponent>();
 
 	if (t->isNewCached) { // 새로운 노드 발생하면				
 		PM.CheckTrails(t->CheckingCachedTrails());
@@ -147,15 +162,37 @@ void PatternControlObject::OnUpdate() // 업데이트
 
 		bt->SetInputNode(PM.GetPattern());
 
-		//c->SliceRect(PM.GetPattern()); // 테스트용 // 가이드라인 패턴 입력해주면 그 시각적으로 그려지고 // 패턴
+		//		en->SliceRect(PM.GetPattern()); // 테스트용 // 가이드라인 패턴 입력해주면 그 시각적으로 그려지고 // 패턴
 
 		for (int value : PM.GetPattern()) { std::cout << value << "-"; }
 		std::cout << std::endl << std::endl;
+
+		//테스트 코드
+		if (!readyQueue.empty()) {
+			enemyGuidelines.push_back(readyQueue.front());
+			readyQueue.pop();
+			auto ec = enemyGuidelines.back()->GetComponent<ChainDrawerComponent>();
+			std::vector<int> v = { 1,4,2,5 };
+			ec->Start(v, 10.0f);
+		}
 	}
 
-	//c->Progress(n); // 이게 시간이야 << n 에다가 0.0f ~ 1.0f // 시간
-	n += 0.1f * Singleton<GameTime>::GetInstance().GetDeltaTime();
-	if (n > 1.0f) n = 0.0f;
+	// enemyGuidelines(벡터임) 내부 진행도가 1.0(종료) 된 것들을 다시 큐로 반환해줌
+	for (auto it = enemyGuidelines.begin(); it != enemyGuidelines.end(); ) {
+		GameObject* obj = *it;
+		auto cdc = obj->GetComponent<ChainDrawerComponent>();
+
+		if (!cdc) { ++it; continue; }
+
+		if (cdc->progress > 1.0f) { // 진행 완료시
+			cdc->progress = 0.0f;
+			cdc->isPlay = false;
+			readyQueue.push(obj);
+			it = enemyGuidelines.erase(it);
+		}
+		else
+			++it;
+	}
 }
 
 void PatternControlObject::OnDestroy()

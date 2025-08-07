@@ -32,24 +32,29 @@ public:
 	void Progress(float value);
 	void SliceRect(std::vector<int> pattern);
 
+	void Start(std::vector<int> pattern, float durationTime);
+
 	void SetBitmap(std::wstring path);
 	void SetFillBitmap(std::wstring path);
 	void SetupNodes(Vector2 node, float interval); // 중앙의 노드 좌표와 간격을 넣어주세오
-
-	float duration = 1.0f;
+	
 	float piece = 3.0f; // 조각
 	bool isPlay = false;
 
-	Vector2 firstNode = { 100, 100 };
-	float interval = 1000;
+	float progress = 1.0f; // 0 ~1 정규화된 값이 들어가야함
+		
+// 	Vector2 firstNode = { 100, 100 };
+// 	float interval = 1000;
 
 private:	
 	float timer = 0.0f;
+	float duration = 1.0f; // 외부에서 등록해주는 시간
+
 	float totalLength = 0.0f;
 
 	std::shared_ptr<BitmapResource> baseBitmap;	
 	std::shared_ptr<BitmapResource> fillBitmap;
-	std::vector<SlicePiece> pieces;
+	std::vector<SlicePiece> pieces; 
 	std::array<Vector2, 9> positions; // 좌표값들
 	D2D1_SIZE_F bmpSize;
 };
