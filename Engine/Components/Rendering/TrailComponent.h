@@ -67,7 +67,7 @@ public:
 
 	int deleteStepDivider = 10; // 역수임, 1/N 으로 들어가고 삭제 발생시 얼마나 지울지임
 
-	int headIndex = 5; // 큐의 뒤에서 - 시각적으로는 앞에서부터 (범위값임)
+	int headIndex = 3; // 큐의 뒤에서 - 시각적으로는 앞에서부터 (범위값임)
 	int tailIndex = 5; // 큐의 앞에서 - 시각적으로는 뒤에서부터 (범위값임)
 	
 

@@ -233,7 +233,6 @@
     <ClInclude Include="Components\Rendering\CircleRenderer.h">
       <Filter>Components\Rendering</Filter>
     </ClInclude>
-    <ClInclude Include="Datas\SoundDatas.h" />
     <ClInclude Include="Components\Fmod\FModComponent.h">
       <Filter>Components\Fmod</Filter>
     </ClInclude>
@@ -282,23 +281,35 @@
     <ClInclude Include="Math\GameRandom.h">
       <Filter>Math</Filter>
     </ClInclude>
-    <ClInclude Include="Components\UI\Slider.h" />
-    <ClInclude Include="Components\Rendering\AnimationPlayer.h" />
-    <ClInclude Include="Math\EasingFunction.h" />
     <ClInclude Include="Components\Rendering\LineRenderer.h">
       <Filter>Components\Rendering</Filter>
     </ClInclude>
-    <ClInclude Include="Utils\HCURSORChange.h" />
     <ClInclude Include="Components\Rendering\PatternDrawerComponent.h">
       <Filter>Components\Rendering</Filter>
     </ClInclude>
-    <ClInclude Include="..\WorkSpace\ASB\LiveObject\Player.h" />
-    <ClInclude Include="Resources\Loaders\CsvLoader.h" />
     <ClInclude Include="Components\Rendering\SliceRenderer.h">
       <Filter>Components\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="Components\Rendering\ChainDrawerComponent.h">
       <Filter>Components\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Rendering\AnimationPlayer.h">
+      <Filter>Components\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources\Loaders\CsvLoader.h">
+      <Filter>Resources\Loader</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\EasingFunction.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\HCURSORChange.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\UI\Slider.h">
+      <Filter>Components\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Datas\SoundDatas.h">
+      <Filter>Datas</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -451,23 +462,35 @@
     <ClCompile Include="Math\GameRandom.cpp">
       <Filter>Math</Filter>
     </ClCompile>
-    <ClCompile Include="Components\UI\Slider.cpp" />
-    <ClCompile Include="Components\Rendering\AnimationPlayer.cpp" />
-    <ClCompile Include="Math\EasingFunction.cpp" />
     <ClCompile Include="Components\Rendering\LineRenderer.cpp">
       <Filter>Components\Rendering</Filter>
     </ClCompile>
-    <ClCompile Include="Utils\HCURSORChange.cpp" />
     <ClCompile Include="Components\Rendering\PatternDrawerComponent.cpp">
       <Filter>Components\Rendering</Filter>
     </ClCompile>
-    <ClCompile Include="Resources\Loaders\CsvLoader.cpp" />
-    <ClCompile Include="Datas\SoundDatas.cpp" />
     <ClCompile Include="Components\Rendering\SliceRenderer.cpp">
       <Filter>Components\Rendering</Filter>
     </ClCompile>
     <ClCompile Include="Components\Rendering\ChainDrawerComponent.cpp">
       <Filter>Components\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\Rendering\AnimationPlayer.cpp">
+      <Filter>Components\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Resources\Loaders\CsvLoader.cpp">
+      <Filter>Resources\Loader</Filter>
+    </ClCompile>
+    <ClCompile Include="Math\EasingFunction.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\HCURSORChange.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\UI\Slider.cpp">
+      <Filter>Components\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Datas\SoundDatas.cpp">
+      <Filter>Datas</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

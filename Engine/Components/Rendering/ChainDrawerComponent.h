@@ -6,7 +6,10 @@
 
 /* 8.05. 한승규
 * 적의 공격 + 플레이어의 공격 가이드라인을 표시해주는 컴포넌트
-*  + 주석추가 예정
+* 하나의 긴 이미지를, 여러 Rect로 나눠서 연동시켜서 그려주는
+* 사실상, 꺾이는 슬라이드 바를 구현함
+* vector<int> 넣으면, SetupNodes에서 지정한 좌표를 기반으로 그려줌
+* 이미지 길이만큼 나오기 때문에, 이미지를 충분히 길게해주면 좋음
 */
 
 struct SlicePiece {
@@ -23,6 +26,7 @@ class ChainDrawerComponent : public RenderComponent
 public:	
 	void Render(D2DRenderManager* manager) override;
 	void OnStart() override;
+	void OnCreate() override;
 
 	void Draw(D2DRenderManager* manager);
 	void Progress(float value);

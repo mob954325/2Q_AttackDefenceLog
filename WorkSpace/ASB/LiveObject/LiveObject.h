@@ -59,7 +59,7 @@ public:
 
 
 	//값 변경 함수
-	void GetDamage(float damageAmount) {Object_Hp -= damageAmount;}
+	void GetDamage(float damageAmount) { Object_Hp -= damageAmount; }
 	void GetSpiritdamage(float SpiritdamageAmount) { Object_SpiritAmount -= SpiritdamageAmount; }
 	void RestoreSpiritDamage(float SpiritRestoreAmount) { Object_SpiritAmount += SpiritRestoreAmount; }
 	
@@ -95,12 +95,13 @@ protected:
 
 	float Object_CoolTime;		  // 공격 대기시간
 	float Object_nowCoolTime;	  // 현재 대기시간
+	float Object_nowTotalCoolTime; // 현재 총 대기시간
 
 	float Object_PlayingAttackTime; //패턴의 입력 대기 시간
 	float Object_nowPlayingAttackTime; //현재 패턴의 입력 대기 시간
 
 
-	AttackPatternManager m_PattenManager; // 패턴 매니저를  참조로 받아  사용할 변수
+	
 	
 
 	float NodeTime;				  // 가이드라인의 판정 시간
