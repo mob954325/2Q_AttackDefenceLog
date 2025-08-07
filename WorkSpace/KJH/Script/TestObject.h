@@ -38,8 +38,10 @@ private:
 
 	bool eventvalue = false;
 	float counttime = 0.0f;
-	float maxtime = 2.0f;
+	float maxtime = 1.0f;
 	float mydeltatime;
+
+	float PI = 3.141592;
 
 	GameObject* handleObject{};
 

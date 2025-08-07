@@ -4,6 +4,7 @@
 #include "Systems/AudioSystem.h"
 #include "Components/Camera/CameraManager.h"
 #include "Scene/SceneManager.h"
+#include "Math/EasingFunction.h"
 
 
 void TestObject::OnUpdate()
@@ -12,16 +13,19 @@ void TestObject::OnUpdate()
 
 	if (eventvalue && counttime < maxtime)
 	{
-		counttime += mydeltatime;
-		Emanager->SetEffectValue(0, 189, 189, 1, true);
-		Emanager->SetEffectValue(1, 302, 307, 1, true);
-		Emanager->SetEffectValue(2, 343, 22, 1, true);
+		
+		counttime += Singleton<GameTime>::GetInstance().GetDeltaTime();
+		Emanager->SetEffectValue(0, GetValue(0), GetValue(0), 1, true);
+		Emanager->SetEffectValue(1, GetValue(1), GetValue(1), 1 - GetValue(2), true);
+		Emanager->SetEffectValue(2, 343 , 22, 1 -  GetValue(3), true);
+		std::cout << counttime << std::endl;
 	
 	}
 	else if (eventvalue && counttime >= maxtime)
 	{
 		/*TestParticle->SetLoop(false);*/
 		Emanager->SetOffEffect();
+		eventvalue = false;
 	}
 
 	handleObject->GetTransform().SetPosition(owner->GetComponent<Slider>()->GetGaugeRectValue().right, owner->GetComponent<Slider>()->GetGaugeRectValue().bottom/2);
@@ -53,20 +57,25 @@ void TestObject::OnCreate()
 
 void TestObject::OnStart()
 {
-	mydeltatime = Singleton<GameTime>::GetInstance().GetDeltaTime();
 	Emanager->CreateEffectObject(3);
 	Emanager->CreateParticleObject();
 	Emanager->SetEffectImage(0, L"../../Resource/Particles/circle_outer.png");
 	Emanager->SetEffectImage(1, L"../../Resource/Particles/circle_inner.png");
 	Emanager->SetEffectImage(2, L"../../Resource/Particles/line_horizon.png");
+	Emanager->SetLayer(0, 30);
+	Emanager->SetLayer(1, 31);
+	Emanager->SetLayer(2, 32);
+
+
 	TestParticle = Emanager->GetParticleComponent();
 	TestParticle->SetBitmap(L"../../Resource/Particles/Test/Arrow.png");
+	TestParticle->SetOrderInLayer(35);
 	TestParticle->SetLoop(false);
 	TestParticle->SetMinSpeed(0.3f);
-	TestParticle->SetMaxSpeed(5.0f);
-	TestParticle->SetDuration(0.5f);
+	TestParticle->SetMaxSpeed(0.7f);
+	TestParticle->SetDuration(0.8f);
 	TestParticle->SetFadeOutTime(0.7f);
-	TestParticle->SetAmount(50);
+	TestParticle->SetAmount(25);
 	TestParticle->SetAnimPlayer(L"../../Resource/Particles/SparkSheet.png",
 		L"../../Resource/Json/SparkSheet/SparkSheet_sprites.json",
 		L"../../Resource/Json/SparkSheet/Red_Spark_anim.json");
@@ -119,23 +128,39 @@ void TestObject::CheckInput()
 
 }
 
+
+
 float TestObject::GetValue(size_t type)
 {
 	switch (type)
 	{
+		
 	case 0:
-
-		return 0;
+	{
+		float circle_outer = EasingList[EasingEffect::OutExpo](counttime);
+		return circle_outer * 189;
 		break;
-
+	}
 	case 1:
-
-		return 0;
+	{
+		float circle_inner = EasingList[EasingEffect::OutExpo](counttime);
+		return circle_inner * 302;
 		break;
+	}
 
 	case 2:
-
-		return 0;
+	{
+		float Capacity = EasingList[EasingEffect::InExpo](counttime);
+		return Capacity;
 		break;
+	}
+	case 3:
+	{
+		float line_horizon = EasingList[EasingEffect::OutExpo](counttime);
+		/*return sin(line_horizon * PI)* 343.0f;*/
+		/*return line_horizon * 343.0f;*/
+		return line_horizon;
+		break;
+	}
 	}
 }

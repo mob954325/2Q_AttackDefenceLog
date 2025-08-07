@@ -17,6 +17,8 @@ public:
 
 	void SetImage(std::wstring path);
 
+	void SetLayer(int value);
+
 private:
 	BitmapRenderer* Effect{};
 

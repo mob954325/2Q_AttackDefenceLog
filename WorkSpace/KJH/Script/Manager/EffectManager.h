@@ -24,6 +24,8 @@ public:
 
 	void SetOffEffect();
 
+	void SetLayer(int index, int value);
+
 	ParticleRenderer* GetParticleComponent();
 
 

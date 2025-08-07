@@ -77,6 +77,11 @@ void EffectManager::SetOffEffect()
 	}
 }
 
+void EffectManager::SetLayer(int index , int value)
+{
+	effectList[index]->GetComponent<EffectObject>()->SetLayer(value);
+}
+
 ParticleRenderer* EffectManager::GetParticleComponent()
 {
 	return particleObj->GetComponent<ParticleRenderer>();

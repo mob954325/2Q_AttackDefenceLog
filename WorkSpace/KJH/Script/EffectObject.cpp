@@ -65,3 +65,8 @@ void EffectObject::SetImage(std::wstring path)
 	Effect->CreateBitmapResource(path);
 	Effectsize = Effect->GetResource()->GetBitmap()->GetSize();
 }
+
+void EffectObject::SetLayer(int value)
+{
+	Effect->SetOrderInLayer(value);
+}
