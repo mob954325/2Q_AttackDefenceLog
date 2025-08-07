@@ -34,7 +34,7 @@ void Player::OnStart() {
 	OnCreateState();
 	m_State->SetState("Player_Idle");
 	SetState("Player_Idle");
-	isPattenCooldown = false;
+	isAttackingPattern = true;
 }
 
 

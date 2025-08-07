@@ -20,7 +20,6 @@ protected:
 	GameObject* trail;	
 	GameObject* playerGuidelineA;
 	GameObject* playerGuidelineB;
-	GameObject* enemyGuideline;
 
 	std::queue<GameObject*> readyQueue;
 	std::vector<GameObject*> enemyGuidelines;

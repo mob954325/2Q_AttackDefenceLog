@@ -27,7 +27,7 @@ void AttackPatternManager::OnUpdate() {
 	bool isSecond = false;
 	int countNum = 0;	// 숫자 2개 일치하는지 검사하는 수
 	for (const auto& pair : NowPatternStorage) {
-		if (pair.first.substr(0, 2) == "Pl") {
+		if (pair.first.substr(0, 2) == "PI") {
 			if (isFirst) { // 시간이 남고, 플레이어의 첫번쩨 패턴 이면 저장
 				playerPatternA = pair.second->NodePatten;
 				isSecond = true;
@@ -101,7 +101,7 @@ pattern* AttackPatternManager::CorrectPattern(std::vector<int> PatternID) {  //�
 
 		if (countNum >= 2 || pair.first.substr(0, 2) == "EP") {   // 패턴이 적이면 
 			for (int i = 0; i < PatternID.size(); i++) {
-				if (PatternID[i] != pair.second->NodePatten[PatternID.size() - 1 - i]) { // 역순으로 검사
+				if (PatternID[i] != pair.second->NodePatten[i]) { // 역순으로 검사
 					pair.second->isFail = true;
 					break;
 				}

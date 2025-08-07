@@ -61,18 +61,14 @@ void ChainDrawerComponent::Render(D2DRenderManager* manager) // 사실상, trail
 	if (isPlay) {
 		timer += Singleton<GameTime>::GetInstance().GetDeltaTime();
 
-		if (duration <= 0.0f)
-			duration = 1.0f;
-		else
+		if (duration > 0.0f) {
 			progress = timer / duration;
-
-		Progress(progress);
-		std::cout << std::endl << "가이드라인 진행도" << progress << std::endl;
+			Progress(progress);
+			std::cout << std::endl << "가이드라인 진행도" << progress << std::endl;
+		}
 
 		Draw(manager);
 	}
-
-	
 }
 
 void ChainDrawerComponent::Draw(D2DRenderManager* manager)
@@ -96,7 +92,7 @@ void ChainDrawerComponent::Draw(D2DRenderManager* manager)
 		manager->SetRenderTransform(transform);
 
 		manager->DrawBitmap(baseBitmap->GetBitmap(), destRect, pi.rect, 1.0f);
-		if (pi.fillAmount > 0.0f) {
+		if (pi.fillAmount > 0.0f && useSlide) {
 			D2D1_RECT_F fillSrcRect = pi.rect;
 			fillSrcRect.right = fillSrcRect.left + width * pi.fillAmount;
 
@@ -132,7 +128,7 @@ void ChainDrawerComponent::Progress(float value)
 			remaining = 0.0f;
 		}
 		else { // 전혀 안남은 경우
-			p.fillAmount = 0.0f;			
+			p.fillAmount = 0.0f;
 		}
 	}
 }
@@ -141,14 +137,16 @@ void ChainDrawerComponent::SetBitmap(std::wstring path)
 {
 	baseBitmap = resourceManager->CreateBitmapResource(path);
 	fillBitmap = baseBitmap; // 일단 넣어
+	//Progress(0.0f);	
 }
 
 void ChainDrawerComponent::SetFillBitmap(std::wstring path)
 {
 	fillBitmap = resourceManager->CreateBitmapResource(path);
+	useSlide = true;
 }
 
-void ChainDrawerComponent::Start(std::vector<int> pattern, float durationTime) {	
+void ChainDrawerComponent::Start(std::vector<int> pattern, float durationTime) { // durationTime = 0.0이면, 슬라이드바 사용안함
 	duration = durationTime;
 	timer = 0.0f;
 	isPlay = true; // 고고혓 

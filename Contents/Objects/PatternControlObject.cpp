@@ -28,27 +28,21 @@ void PatternControlObject::OnCreate()
 	}
 	//===================================================================================================
 
-	enemyGuideline = new GameObject();
-	enemyGuideline->SetRenderLayer(EngineData::RenderLayer::None);
-	auto ca = enemyGuideline->AddComponent<ChainDrawerComponent>();
-	ca->SetBitmap(L"../Workspace/HSK/Test/TestArrow_2.png");
-	ca->SetFillBitmap(L"../Workspace/HSK/Test/TestArrow_1.png");
-	ca->SetOrderInLayer(0);
-	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(enemyGuideline);
+	//"C:\Users\User\Documents\GitHub\Kyu1\Resource\ContentsResource\player_guide_line 3.png"
 
 	playerGuidelineA = new GameObject();
 	playerGuidelineA->SetRenderLayer(EngineData::RenderLayer::None);
 	auto cb = playerGuidelineA->AddComponent<ChainDrawerComponent>();
-	cb->SetBitmap(L"../Workspace/HSK/Test/TestArrow_2.png");
-	cb->SetFillBitmap(L"../Workspace/HSK/Test/TestArrow_1.png");
+	cb->SetBitmap(L"../Resource/ContentsResource/player_guide_line 1.png");
+	//cb->SetFillBitmap(L"../Resource/ContentsResource/player_guide_line 1.png");
 	cb->SetOrderInLayer(0);
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(playerGuidelineA);
 
 	playerGuidelineB = new GameObject();
 	playerGuidelineB->SetRenderLayer(EngineData::RenderLayer::None);
 	auto cc = playerGuidelineB->AddComponent<ChainDrawerComponent>();
-	cc->SetBitmap(L"../Workspace/HSK/Test/TestArrow_2.png");
-	cc->SetFillBitmap(L"../Workspace/HSK/Test/TestArrow_1.png");
+	cc->SetBitmap(L"../Resource/ContentsResource/player_guide_line 2.png");
+	//cc->SetFillBitmap(L"../Resource/ContentsResource/player_guide_line 1.png");
 	cc->SetOrderInLayer(0);
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(playerGuidelineB);
 	//auto asd = m_nodes[4]->GetComponent<NodeObject>()->GetSize();
@@ -124,9 +118,6 @@ void PatternControlObject::OnStart() // 처음
 	}
 
 	PM.SetNodes(m_nodes, 45.0f);
-	auto c = enemyGuideline->GetComponent<ChainDrawerComponent>();
-
-	c->SetupNodes(m_nodes[4]->GetTransform().GetPosition(), n); // 스타트에서 하기
 
 	for (int i = 0; i < 10; ++i) {
 		readyQueue.push(new GameObject());
@@ -138,9 +129,14 @@ void PatternControlObject::OnStart() // 처음
 		queueBack->SetupNodes(m_nodes[4]->GetTransform().GetPosition(), n); // 스타트에서 하기
 		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(readyQueue.back());
 	}
+
+	auto PCA = playerGuidelineA->GetComponent<ChainDrawerComponent>();
+	PCA->SetupNodes(m_nodes[4]->GetTransform().GetPosition(), n);
+	auto PCB = playerGuidelineB->GetComponent<ChainDrawerComponent>();
+	PCB->SetupNodes(m_nodes[4]->GetTransform().GetPosition(), n);
+
 }
 
-float n = 0.0f;
 
 void PatternControlObject::OnUpdate() // 업데이트
 {
@@ -167,7 +163,22 @@ void PatternControlObject::OnUpdate() // 업데이트
 		std::cout << std::endl << std::endl;
 	}
 
+	auto PCA = playerGuidelineA->GetComponent<ChainDrawerComponent>();
+	auto PCB = playerGuidelineB->GetComponent<ChainDrawerComponent>();
 	auto apm = attackPattenManager->GetComponent<AttackPatternManager>();
+
+	std::vector<int> pca;
+	std::vector<int> pcb;
+
+	apm->GetPlayerPatten(pca, pcb);
+
+	pca.erase(std::remove(pca.begin(), pca.end(), 0), pca.end());
+	pcb.erase(std::remove(pcb.begin(), pcb.end(), 0), pcb.end());
+
+	PCA->Start(pca);
+	PCB->Start(pcb);
+
+	
 	if (apm->isNewPattern) {
 
 		if (!readyQueue.empty()) {
@@ -175,7 +186,7 @@ void PatternControlObject::OnUpdate() // 업데이트
 			readyQueue.pop();
 			auto ec = enemyGuidelines.back()->GetComponent<ChainDrawerComponent>();
 
-			std::vector<int> v; 			
+			std::vector<int> v;
 			float t;
 			apm->GetEnemyPattern(v, t);
 
@@ -208,5 +219,3 @@ void PatternControlObject::OnDestroy()
 
 
 }
-
-

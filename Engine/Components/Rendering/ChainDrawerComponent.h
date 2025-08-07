@@ -32,7 +32,7 @@ public:
 	void Progress(float value);
 	void SliceRect(std::vector<int> pattern);
 
-	void Start(std::vector<int> pattern, float durationTime);
+	void Start(std::vector<int> pattern, float durationTime = 0.0f);
 
 	void SetBitmap(std::wstring path);
 	void SetFillBitmap(std::wstring path);
@@ -41,7 +41,9 @@ public:
 	float piece = 3.0f; // 조각
 	bool isPlay = false;
 
-	float progress = 1.0f; // 0 ~1 정규화된 값이 들어가야함
+	float progress = 0.0f; // 0 ~1 정규화된 값이 들어가야함
+
+	bool useSlide = false;
 		
 // 	Vector2 firstNode = { 100, 100 };
 // 	float interval = 1000;
@@ -51,6 +53,8 @@ private:
 	float duration = 1.0f; // 외부에서 등록해주는 시간
 
 	float totalLength = 0.0f;
+
+	
 
 	std::shared_ptr<BitmapResource> baseBitmap;	
 	std::shared_ptr<BitmapResource> fillBitmap;
