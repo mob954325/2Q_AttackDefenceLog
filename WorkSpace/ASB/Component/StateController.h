@@ -79,7 +79,7 @@ public:
 			tmpState = it1->second;
 		}
 
-		auto it2 = StateStorage.find(stateName);
+		auto it2 = StateStorage.find(NextstateName);
 		if (it2 != StateStorage.end()) {
 			tmpState->nextState = it2->second;
 		}

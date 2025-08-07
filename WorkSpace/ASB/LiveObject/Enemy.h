@@ -3,6 +3,7 @@
 #include "../CsvData/DataClass/EnemyData.h"
 #include "../CsvData/DataClass/EnemyAtkPattenData.h"
 #include "../Component/StateController.h"
+#include "../CsvData/DataClass/AllNodePattenClass.h"
 
 
 
@@ -62,5 +63,9 @@ private:
 private:
 	std::string Difficulty;			   // 적의 난이도 
 	EnemyData* nowEnemyData = nullptr; // 현재 적의 데이터 클래스를 담을 변수
+	AllNodePattenClass* tmpNode = nullptr;
+	void DiffStatePrint();
+	std::string nowStateName;
+	std::string preStateName;
 };
 
