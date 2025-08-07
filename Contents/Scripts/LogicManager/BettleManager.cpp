@@ -10,11 +10,6 @@
 
 
 
-
-
-
-
-
 void BettleManager::OnStart() {
 	//m_Enemy = owner->GetQuery()->FindByName("Enemytmp")->GetComponent<Enemy>();
 	//m_Player = owner->GetQuery()->FindByName("Playertmp")->GetComponent<Player>();
@@ -44,7 +39,7 @@ void BettleManager::PrecticeNode() {
 
 // 노드 인풋 
 void BettleManager::SetInputNode(std::vector<int> InputNode) {
-	/*nowNode = InputNode;*/
+	nowNode = InputNode;
 }
 
 void BettleManager::SetStateFormPattern() {		  //현재 마우스의 입력 받기  -> 승규님 데이터 받기
@@ -78,7 +73,7 @@ void BettleManager::SetStateFormPattern() {		  //현재 마우스의 입력 받�
 		pattern* tmpPatten = m_PattenManager->CorrectPattern(nowNode);
 		if (tmpPatten == nullptr) break;
 		if (tmpPatten->PattenID.substr(0, 2) == "EP") {
-			if ((tmpPatten->TotalPlayingAttackTime - tmpPatten->PlayingAttackTime) <= 0.5) {  // 플레이어가 0.5초 이내에 가드시 -> 패링
+			if ((tmpPatten->PlayingAttackTime) <= 0.5f) {  // 플레이어가 0.5초 이내에 가드시 -> 패링
 				m_Player->SetState("Player_Perry");
 			}
 			else {
@@ -99,9 +94,12 @@ void BettleManager::SetStateFormPattern() {		  //현재 마우스의 입력 받�
 			}
 			m_Player->RestoreSpiritDamage(m_Player->GetSpiritAttack());
 			m_Enemy->GetSpiritdamage(m_Player->GetSpiritAttack());
+			m_PattenManager->SearchAndDestroyCouple(tmpPatten->PattenID);
 		}
 		m_PattenManager->SubPattern(tmpPatten->PattenID, false);
 	}
+
+
 
 	// 플레이어가 공격이나 방어에 실패한 경우
 	while (1) {
@@ -123,9 +121,11 @@ void BettleManager::SetStateFormPattern() {		  //현재 마우스의 입력 받�
 		else {
 			m_Player->SetState("Player_AttackFail");
 			m_Player->SetEndAttack();
+			m_PattenManager->SearchAndDestroyCouple(tmpPatten->PattenID);
 		}
 
 		m_PattenManager->SubPattern(tmpPatten->PattenID, false);
+
 	}
 
 	nowNode.clear();

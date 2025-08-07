@@ -17,11 +17,12 @@ public:
 
 protected:
 	std::array<GameObject*, 9> m_nodes;
-	GameObject* trail;
-	GameObject* enemyGuideline;
+	GameObject* trail;	
 	GameObject* playerGuidelineA;
 	GameObject* playerGuidelineB;
 
+	std::queue<GameObject*> readyQueue;
+	std::vector<GameObject*> enemyGuidelines;
 
 	GameObject* attackPattenManager;
 	GameObject* enemy;
