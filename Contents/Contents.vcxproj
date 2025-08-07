@@ -410,11 +410,6 @@
     <ClInclude Include="Scripts\LogicManager\BettleManager.h" />
     <ClInclude Include="Scripts\SceneCore.h" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="ASB\ASB.vcxproj" />
-    <None Include="ASB\ASB.vcxproj.filters" />
-    <None Include="ASB\ASB.vcxproj.user" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

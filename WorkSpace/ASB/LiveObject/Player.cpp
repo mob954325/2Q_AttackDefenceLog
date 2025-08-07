@@ -34,7 +34,7 @@ void Player::OnStart() {
 	OnCreateState();
 	m_State->SetState("Player_Idle");
 	SetState("Player_Idle");
-	isPattenCooldown = false;
+	isAttackingPattern = true;
 }
 
 
@@ -150,25 +150,20 @@ void Player::SetNowPatten() {
 	else {
 
 	}
-
-	m_PattenManager->AddPattern(nowPlayerPattenData->Player_pattern_ID, Object_nowCoolTime, tmp);
-	m_PattenManager->AddPattern(nowPlayerPattenData->Player_pattern_ID, Object_nowCoolTime, tmp2);
+	// 원래 100 자리에 공격 패턴이 떠있는 시간이 들어가나 플레이어는 없음으로 임의의 큰 숫자 100 을 넣음
+	m_PattenManager->AddPattern(modifiedID1, 100.0f, tmp);
+	m_PattenManager->AddPattern(modifiedID2, 100.0f, tmp2);
 }
 
 
 
 // 배틀 매니저에서 사용될 함수
 void Player::SelectPatten() {   //각 객체가 사용할 패턴을 고름
-	prePlayerPattenData = nowPlayerPattenData;
-	while(1) {
-		std::random_device rd;
-		std::mt19937 gen(rd());
-		std::uniform_int_distribution<> dist(1, PattenID.size()); // 1 ~ 10 사이의 정수
-		int randomValue = dist(gen);
-		SetAttackPattenData(PattenID[randomValue - 1]);
-		if (prePlayerPattenData != nowPlayerPattenData)
-			break;
-	}
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_int_distribution<> dist(1, PattenID.size()); // 1 ~ 10 사이의 정수
+	int randomValue = dist(gen);
+	SetAttackPattenData(PattenID[randomValue - 1]);
 }
 
 
@@ -187,14 +182,9 @@ void Player::SetCoolTime() {
 		// ( 1 - (현재기세 - 전체기세/2) / 전체기세 /2) * 해당 패턴의 전체 쿨타임
 		Object_nowCoolTime = (1 - ((Object_NowSpiritAmount - Object_SpiritAmount / 2.0f) / Object_SpiritAmount) / 2.0f) * Object_CoolTime;
 	}
-	else {  // 이전 루프가 있을 시
-			//  ( 1 - (현재기세 - 전체기세/2) / 전체기세 /2) * 해당 패턴의 전체 쿨타임 + 이전 루프의 공격시간
-		Object_nowCoolTime = (1 - ((Object_NowSpiritAmount - Object_SpiritAmount / 2.0f) / Object_SpiritAmount) / 2.0f) * Object_CoolTime + 1.0f;
-	}
-	// 현재 공격중인 시간
-	Object_PlayingAttackTime = 1.0f;
-	Object_nowTotalCoolTime = Object_nowCoolTime;
+	
 }
+
 void Player::CalSpiritTime() {
 	if(Object_OverTimeSpirit >= 1){
 		Object_NowSpiritAmount -= 0.3f;									 //초당 0.3씩 감소
@@ -207,29 +197,31 @@ void Player::CalSpiritTime() {
 
 
 
-
+// 공격이 끝나면 -> isAttackingPattern  :  T
+// isPattenCooldown   : T  -> 쿨타임을 계산
+// isPattenCooldown   : F  -> 계산 X
 
 // 플래그를 정하는 함수
 void Player::AddPattenLoop() {
-	// isPattenCooldown : T  -> 쿨타임을 계산
-	// isPattenCooldown : F  -> 계산 X
+	
+	if (isAttackingPattern) {
+		SetCoolTime();
+		isPattenCooldown = true;
+		isAttackingPattern = false;
+	}
+
+
 	if(isPattenCooldown){
 		// 패턴의 입력대기시간 카운트
-		
 		Object_nowCoolTime -= GameTime::GetInstance().GetDeltaTime();
-		// 현재 시간이  정해진 대기시간보다 크거나 같을 경우 
+		// 현재 패턴의 시간이 0이거나 이하가 되면 쿨타임계산 X
 		if (Object_nowCoolTime <= 0) {
+			Object_nowPlayingAttackTime = 1.0f;
+			SelectPatten();
+			SetNowPatten();
 			isPattenCooldown = false;
 		}
 	}
-	else{
-		Object_nowPlayingAttackTime  = 1.0f;
-		SelectPatten();  // 
-		SetCoolTime();   // 적일때는 수정하기!!
-		SetNowPatten();
-		isPattenCooldown = true;
-	}
-	std::cout << "Player_Loop : " << isPattenCooldown << std::endl;
 }
 
 void Player::SetCursorPosition(int x, int y)
