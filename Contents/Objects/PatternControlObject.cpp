@@ -172,8 +172,8 @@ void PatternControlObject::OnUpdate() // 업데이트
 			enemyGuidelines.push_back(readyQueue.front());
 			readyQueue.pop();
 			auto ec = enemyGuidelines.back()->GetComponent<ChainDrawerComponent>();
-			std::vector<int> v = { 1,4,2,5 };
-			ec->Start(v, 10.0f);
+			std::vector<int> v = {1,2,3,4,5,6,7,8,9};
+			ec->Start(v, 5.0f);
 		}
 	}
 

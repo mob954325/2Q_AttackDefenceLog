@@ -16,9 +16,9 @@ void Stage1::OnEnterImpl()
 	PCO->AddComponent<PatternControlObject>();
 	AddGameObject(PCO , "PatternControlObject");
 
-// 	stageBGI = new GameObject();
-// 	stageBGI->AddComponent<StageBGI>();
-// 	AddGameObject(stageBGI);
+	stageBGI = new GameObject();
+	stageBGI->AddComponent<StageBGI>();
+	AddGameObject(stageBGI);
 }
 
 void Stage1::OnExitImpl()
