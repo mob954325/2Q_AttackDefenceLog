@@ -1,5 +1,6 @@
 ﻿#include "EscMenuBar.h"
 #include "Scene/SceneManager.h"
+#include "Utils/GameTime.h"
 
 void EscMenuBar::OnCreate()
 {
@@ -17,9 +18,9 @@ void EscMenuBar::OnStart()
 	for (int i = 0; i < objs.size(); i++)
 	{
 		objs[i]->owner->GetTransform().SetPosition(width / 3 * i, 0);
+		objs[i]->AddEvent([&]() { std::cout << "외부등록 " << std::endl; });
 	}
 
-	//objs[i]->AddEvent([]() {std::cout << "외부등록 " << std::endl; });
 }
 
 void EscMenuBar::CreateMenuObjects()
