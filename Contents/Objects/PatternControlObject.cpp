@@ -68,12 +68,6 @@ void PatternControlObject::OnCreate()
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
 	//===================================================================================================
 
-
-
-	//===================================================================================================
-	/////////////////////////////////////////////////////////////////////////////////////////////////////
-	//===================================================================================================
-
 	attackPattenManager = new GameObject();                    // GameObject 객체 생성
 	attackPattenManager->AddComponent<AttackPatternManager>(); // MonoBehaivor 등록
 	attackPattenManager->SetName("AttackPattenManager");
@@ -107,6 +101,7 @@ void PatternControlObject::OnStart() // 처음
 	d->SetBitmap(L"../WorkSpace/HSK/Test/test5.png");
 
 	float n = 200.0f; // 노드간의 간격
+	float r = 45.0f; // 반경
 	for (int i = 0; i < 9; ++i) {
 		int col = i % 3 - 1; // -1 0 1
 		int row = i / 3 - 1; // -1 0 1
@@ -115,9 +110,10 @@ void PatternControlObject::OnStart() // 처음
 		float y = 540.0f + row * n;
 
 		m_nodes[i]->GetTransform().SetPosition(x, y);
+		m_nodes[i]->GetComponent<NodeObject>()->SetRadius(r);
 	}
 
-	PM.SetNodes(m_nodes, 45.0f);
+	PM.SetNodes(m_nodes, r);
 
 	for (int i = 0; i < 10; ++i) {
 		readyQueue.push(new GameObject());
@@ -174,11 +170,12 @@ void PatternControlObject::OnUpdate() // 업데이트
 
 	pca.erase(std::remove(pca.begin(), pca.end(), 0), pca.end());
 	pcb.erase(std::remove(pcb.begin(), pcb.end(), 0), pcb.end());
+	std::reverse(pca.begin(), pca.end());
+	std::reverse(pcb.begin(), pcb.end());
 
 	PCA->Start(pca);
 	PCB->Start(pcb);
 
-	
 	if (apm->isNewPattern) {
 
 		if (!readyQueue.empty()) {
