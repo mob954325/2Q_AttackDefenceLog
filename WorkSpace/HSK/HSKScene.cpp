@@ -54,7 +54,7 @@ void HSKScene::OnEnterImpl()
 		m_nodes[i]->GetTransform().SetPosition(x, y);
 	}
 
-	c->SetupNodes(m_nodes[4]->GetTransform().GetPosition(), 150.0f, { 91.0f,102.0f }); // 스타트에서 하기
+	//c->SetupNodes(m_nodes[4]->GetTransform().GetPosition(), 150.0f, { 91.0f,102.0f }); // 스타트에서 하기
 }
 
 void HSKScene::OnExitImpl()

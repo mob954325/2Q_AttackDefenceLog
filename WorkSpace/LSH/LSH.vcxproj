@@ -335,6 +335,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application\Game.cpp" />
+    <ClCompile Include="TestColliderApp\Scripts\ContentObject\EscMenuBar.cpp" />
+    <ClCompile Include="TestColliderApp\Scripts\ContentObject\SliceableMenu.cpp" />
     <ClCompile Include="TestColliderApp\Scripts\SliceObject\SliceObject.cpp" />
     <ClCompile Include="TestColliderApp\Scenes\SliceObjectScene.cpp" />
     <ClCompile Include="TestColliderApp\Scripts\SliceObject\PieceObject.cpp" />
@@ -348,6 +350,8 @@
     <ClCompile Include="TestColliderApp\Scripts\SliceObject\TestSliceCursor.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="TestColliderApp\Scripts\ContentObject\EscMenuBar.h" />
+    <ClInclude Include="TestColliderApp\Scripts\ContentObject\SliceableMenu.h" />
     <ClInclude Include="TestColliderApp\Scripts\SliceObject\SliceObject.h" />
     <ClInclude Include="TestColliderApp\Scenes\SliceObjectScene.h" />
     <ClInclude Include="TestColliderApp\Scripts\SliceObject\PieceObject.h" />

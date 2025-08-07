@@ -2,33 +2,14 @@
 #include "TestColliderApp/Scripts/SliceObject/TestSliceCursor.h"
 #include "Utils/StringConvert.h"
 #include "TestColliderApp/Scripts/SliceObject/SliceObject.h"
+#include "TestColliderApp/Scripts/ContentObject/EscMenubar.h"
 
 void SliceObjectScene::OnEnterImpl()
 {	
-	// create nodes
-	// for (int i = 0; i < 9; i++)
-	// {
-	// 	int x = i % 3;
-	// 	int y = i / 3;
-	// 	sliceTargets.push_back(CreateGridNode());
-	// 
-	// 	sliceTargets[i]->owner->GetTransform().SetPosition(-250 + x * 150, y * 150);
-	// }
-	// 
-	// // create cursor GameObject
-	// cursor = new GameObject();
-	// cursor->SetName("cursor");
-	// AddGameObject(cursor);
-	// 
-	// TestSliceCursor* comp2 = cursor->AddComponent<TestSliceCursor>();
-	// comp2->SetSliceTarget(sliceTargets);
-	// 
-	// create sliceObject
-	slice = new GameObject();
-	slice->SetName("slice");
-	AddGameObject(slice);
-
-	SliceObject* comp3 = slice->AddComponent<SliceObject>();
+	GameObject* menu = new GameObject();
+	menu->AddComponent<EscMenuBar>();
+	menu->SetName("MenuBar");
+	AddGameObject(menu);
 }
 
 void SliceObjectScene::OnExitImpl()
