@@ -23,7 +23,7 @@
 
 
 void Player::OnCreate() {
-	
+
 }
 
 void Player::OnStart() {
@@ -41,7 +41,7 @@ void Player::OnStart() {
 
 // 업데이트에서 시간 받기???? -> 필요없음, 수정하기!!!
 void Player::OnUpdate() {
-	if (m_State->GetNowName() != "Player_Dead"){
+	if (m_State->GetNowName() != "Player_Dead") {
 		CalSpiritTime();		// 1초마다 기세게이지 감소
 		AddPattenLoop();		// 패턴을 추가하는 루프
 		PrintConsole();
@@ -49,11 +49,11 @@ void Player::OnUpdate() {
 		m_State->Update();
 	}
 	std::cout << "Player 루프 확인" << std::endl;
-	
+
 }
 
 //이후 StateManager에 추가하는거 만들기
-void Player::SetState(std::string setStateName) { 
+void Player::SetState(std::string setStateName) {
 	m_State->SetState(setStateName);
 	std::cout << "Player_State : " << setStateName << std::endl;
 }
@@ -103,10 +103,10 @@ void Player::SetStatData(std::string tmp) {
 	Object_Attack = nowPlayerData->Character_damage;			 // 공격력
 	Object_SpiritAttack = nowPlayerData->Character_spritdamage;  // 기세 공격력
 	Object_DefenseRate = nowPlayerData->Character_guard_rate;	 // 방어율
-	
+
 	PattenID = CsvDataManager::GetInstance().GetIDData(nowPlayerPattenData); // 패턴 데이터의 ID를 미리 받음
 
-	Object_CoolTime = 1.0f ;                                     //일단 쿨타임 1로 고정! -> 추후 변경가능
+	Object_CoolTime = 1.0f;                                     //일단 쿨타임 1로 고정! -> 추후 변경가능
 	Object_nowCoolTime = 1.0f;									 //
 }
 
@@ -150,25 +150,20 @@ void Player::SetNowPatten() {
 	else {
 
 	}
-
-	m_PattenManager->AddPattern(nowPlayerPattenData->Player_pattern_ID, Object_nowCoolTime, tmp);
-	m_PattenManager->AddPattern(nowPlayerPattenData->Player_pattern_ID, Object_nowCoolTime, tmp2);
+	// 원래 100 자리에 공격 패턴이 떠있는 시간이 들어가나 플레이어는 없음으로 임의의 큰 숫자 100 을 넣음
+	m_PattenManager->AddPattern(nowPlayerPattenData->Player_pattern_ID, 100.0f, tmp);
+	m_PattenManager->AddPattern(nowPlayerPattenData->Player_pattern_ID, 100.0f, tmp2);
 }
 
 
 
 // 배틀 매니저에서 사용될 함수
 void Player::SelectPatten() {   //각 객체가 사용할 패턴을 고름
-	prePlayerPattenData = nowPlayerPattenData;
-	while(1) {
-		std::random_device rd;
-		std::mt19937 gen(rd());
-		std::uniform_int_distribution<> dist(1, PattenID.size()); // 1 ~ 10 사이의 정수
-		int randomValue = dist(gen);
-		SetAttackPattenData(PattenID[randomValue - 1]);
-		if (prePlayerPattenData != nowPlayerPattenData)
-			break;
-	}
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_int_distribution<> dist(1, PattenID.size()); // 1 ~ 10 사이의 정수
+	int randomValue = dist(gen);
+	SetAttackPattenData(PattenID[randomValue - 1]);
 }
 
 
@@ -187,16 +182,11 @@ void Player::SetCoolTime() {
 		// ( 1 - (현재기세 - 전체기세/2) / 전체기세 /2) * 해당 패턴의 전체 쿨타임
 		Object_nowCoolTime = (1 - ((Object_NowSpiritAmount - Object_SpiritAmount / 2.0f) / Object_SpiritAmount) / 2.0f) * Object_CoolTime;
 	}
-	else {  // 이전 루프가 있을 시
-			//  ( 1 - (현재기세 - 전체기세/2) / 전체기세 /2) * 해당 패턴의 전체 쿨타임 + 이전 루프의 공격시간
-		Object_nowCoolTime = (1 - ((Object_NowSpiritAmount - Object_SpiritAmount / 2.0f) / Object_SpiritAmount) / 2.0f) * Object_CoolTime + 1.0f;
-	}
-	// 현재 공격중인 시간
-	Object_PlayingAttackTime = 1.0f;
-	Object_nowTotalCoolTime = Object_nowCoolTime;
+
 }
+
 void Player::CalSpiritTime() {
-	if(Object_OverTimeSpirit >= 1){
+	if (Object_OverTimeSpirit >= 1) {
 		Object_NowSpiritAmount -= 0.3f;									 //초당 0.3씩 감소
 		Object_OverTimeSpirit = std::fmod(Object_OverTimeSpirit, 1.0f);  //실수형 나머지 연산자
 	}
@@ -207,29 +197,31 @@ void Player::CalSpiritTime() {
 
 
 
-
+// 공격이 끝나면 -> isAttackingPattern  :  T
+// isPattenCooldown   : T  -> 쿨타임을 계산
+// isPattenCooldown   : F  -> 계산 X
 
 // 플래그를 정하는 함수
 void Player::AddPattenLoop() {
-	// isPattenCooldown : T  -> 쿨타임을 계산
-	// isPattenCooldown : F  -> 계산 X
-	if(isPattenCooldown){
+
+	if (isAttackingPattern) {
+		SetCoolTime();
+		isPattenCooldown = true;
+		isAttackingPattern = false;
+	}
+
+
+	if (isPattenCooldown) {
 		// 패턴의 입력대기시간 카운트
-		
 		Object_nowCoolTime -= GameTime::GetInstance().GetDeltaTime();
-		// 현재 시간이  정해진 대기시간보다 크거나 같을 경우 
+		// 현재 패턴의 시간이 0이거나 이하가 되면 쿨타임계산 X
 		if (Object_nowCoolTime <= 0) {
+			Object_nowPlayingAttackTime = 1.0f;
+			SelectPatten();
+			SetNowPatten();
 			isPattenCooldown = false;
 		}
 	}
-	else{
-		Object_nowPlayingAttackTime  = 1.0f;
-		SelectPatten();  // 
-		SetCoolTime();   // 적일때는 수정하기!!
-		SetNowPatten();
-		isPattenCooldown = true;
-	}
-	std::cout << "Player_Loop : " << isPattenCooldown << std::endl;
 }
 
 void Player::SetCursorPosition(int x, int y)
@@ -252,6 +244,3 @@ void Player::PrintConsole() {
 	std::cout << "Player PlayingAttackTime      : " << Object_PlayingAttackTime << std::endl;
 	std::cout << "Player PlayingAttackTime  : " << m_State->GetNowName() << std::endl;
 }
-
-
-

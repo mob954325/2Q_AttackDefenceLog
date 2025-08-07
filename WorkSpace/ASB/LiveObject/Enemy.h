@@ -46,7 +46,7 @@ public:
 	void AddPattenLoop() override;
 
 	//반환하는 함수
-	float GetAttackTimePercent() { return  Object_PlayingAttackTime - Object_PlayingAttackTime; }
+	
 
 	StateController* m_State = nullptr;  //오브젝트 들은 State 내부에서 받을 수 있도록 포인터 생성
 private:

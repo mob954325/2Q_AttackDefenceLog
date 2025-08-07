@@ -9,6 +9,7 @@ struct pattern
 	float PlayingAttackTime;	   // 공격 대기 시간
 	float TotalPlayingAttackTime;  // 패링 처리를 위한 전체 시간
 	std::vector<int> NodePatten;   // 패턴의 아이디를 저장
+	bool isFail = false;          // 해당 공격의 성공 여부   적 : 가드, 플레이어 : 실패
 };
 
 class AttackPatternManager : public MonoBehavior
@@ -23,11 +24,21 @@ public:
 	void OnUpdate() override;
 
 	void AddPattern(std::string ID, float PlayingAttackTime, std::vector<int> PatternID);
-	void SubPattern(std::string ID);
+	void SubPattern(std::string ID, bool isTime);
 
-	pattern* CorrectPattern(std::vector<int> PatternID);
+	pattern* CorrectPattern(std::vector<int> PatternID); 
+	pattern* failPattern(std::vector<int> PatternID);
 	pattern* TimeOutPatten();
 
+	void GetPlayerPatten(std::vector<int>& P1, std::vector<int>& P2);
+
+	bool isNewPattern = true; // 외부에서 확인하는 용도
+
 private:
+	std::vector<int> playerPatternA;
+	std::vector<int> playerPatternB;
+	std::unordered_map<std::string, pattern*> tmpTimeOutPattern;
+	std::unordered_map<std::string, pattern*> timeOutPattern;
+
 };
 
