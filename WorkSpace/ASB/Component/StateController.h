@@ -114,5 +114,10 @@ public:
 	}
 
 	//delete 함수 만들기!!!
+	void AllEraseState() {
+		for (const auto& pair : StateStorage) {
+			delete pair.second;
+		}
+	}
 };
 
