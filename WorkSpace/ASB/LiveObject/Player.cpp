@@ -34,7 +34,7 @@ void Player::OnStart() {
 	OnCreateState();
 	m_State->SetState("Player_Idle");
 	SetState("Player_Idle");
-	isPattenCooldown = false;
+	isAttackingPattern = true;
 }
 
 
@@ -151,8 +151,8 @@ void Player::SetNowPatten() {
 
 	}
 	// 원래 100 자리에 공격 패턴이 떠있는 시간이 들어가나 플레이어는 없음으로 임의의 큰 숫자 100 을 넣음
-	m_PattenManager->AddPattern(nowPlayerPattenData->Player_pattern_ID, 100.0f, tmp); 
-	m_PattenManager->AddPattern(nowPlayerPattenData->Player_pattern_ID, 100.0f, tmp2);
+	m_PattenManager->AddPattern(modifiedID1, 100.0f, tmp);
+	m_PattenManager->AddPattern(modifiedID2, 100.0f, tmp2);
 }
 
 

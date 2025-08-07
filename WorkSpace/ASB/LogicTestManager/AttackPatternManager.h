@@ -12,6 +12,12 @@ struct pattern
 	bool isFail = false;          // 해당 공격의 성공 여부   적 : 가드, 플레이어 : 실패
 };
 
+
+struct NewPattern { // 나중에 통합해서 관리해도 됨, 중복이긴 한데 어쩔껀데
+	std::vector<int> pattern;
+	float totalTime;
+};
+
 class AttackPatternManager : public MonoBehavior
 {
 public:
@@ -26,13 +32,16 @@ public:
 	void AddPattern(std::string ID, float PlayingAttackTime, std::vector<int> PatternID);
 	void SubPattern(std::string ID, bool isTime);
 
-	pattern* CorrectPattern(std::vector<int> PatternID); 
+	pattern* CorrectPattern(std::vector<int> PatternID);
 	pattern* failPattern(std::vector<int> PatternID);
 	pattern* TimeOutPatten();
 
 	void GetPlayerPatten(std::vector<int>& P1, std::vector<int>& P2);
+	void GetEnemyPattern(std::vector<int>& pattern, float& time);
+	void SearchAndDestroyCouple(std::string ID);
 
-	bool isNewPattern = true; // 외부에서 확인하는 용도
+	bool isNewPattern = false; // 외부에서 확인하는 용도
+	NewPattern newPattern;
 
 private:
 	std::vector<int> playerPatternA;
@@ -41,4 +50,3 @@ private:
 	std::unordered_map<std::string, pattern*> timeOutPattern;
 
 };
-
