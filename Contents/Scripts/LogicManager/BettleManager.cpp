@@ -44,7 +44,7 @@ void BettleManager::PrecticeNode() {
 
 // 노드 인풋 
 void BettleManager::SetInputNode(std::vector<int> InputNode) {
-	/*nowNode = InputNode;*/
+	nowNode = InputNode;
 }
 
 void BettleManager::SetStateFormPattern() {		  //현재 마우스의 입력 받기  -> 승규님 데이터 받기

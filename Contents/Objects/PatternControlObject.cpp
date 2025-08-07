@@ -24,7 +24,7 @@ void PatternControlObject::OnCreate()
 		m_nodes[i] = new GameObject();
 		auto nodeComponent = m_nodes[i]->AddComponent<NodeObject>();
 		std::string name = "Node." + std::to_string(i + 1);
-		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(m_nodes[i], name);		
+		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(m_nodes[i], name);
 	}
 	//===================================================================================================
 
@@ -136,7 +136,7 @@ void PatternControlObject::OnStart() // 처음
 		queueBack->SetOrderInLayer(0);
 		readyQueue.back()->SetName("EnemyGuideline." + i);
 		queueBack->SetupNodes(m_nodes[4]->GetTransform().GetPosition(), n); // 스타트에서 하기
-		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(readyQueue.back());		
+		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(readyQueue.back());
 	}
 }
 
@@ -159,21 +159,29 @@ void PatternControlObject::OnUpdate() // 업데이트
 			t->Clear();
 
 		auto bt = bettleManager->GetComponent<BettleManager>();
-
 		bt->SetInputNode(PM.GetPattern());
 
 		//		en->SliceRect(PM.GetPattern()); // 테스트용 // 가이드라인 패턴 입력해주면 그 시각적으로 그려지고 // 패턴
 
 		for (int value : PM.GetPattern()) { std::cout << value << "-"; }
 		std::cout << std::endl << std::endl;
+	}
 
-		//테스트 코드
+	auto apm = attackPattenManager->GetComponent<AttackPatternManager>();
+	if (apm->isNewPattern) {
+
 		if (!readyQueue.empty()) {
 			enemyGuidelines.push_back(readyQueue.front());
 			readyQueue.pop();
 			auto ec = enemyGuidelines.back()->GetComponent<ChainDrawerComponent>();
-			std::vector<int> v = {1,2,3,4,5,6,7,8,9};
-			ec->Start(v, 5.0f);
+
+			std::vector<int> v; 			
+			float t;
+			apm->GetEnemyPattern(v, t);
+
+			v.erase(std::remove(v.begin(), v.end(), 0), v.end());
+
+			ec->Start(v, t);
 		}
 	}
 

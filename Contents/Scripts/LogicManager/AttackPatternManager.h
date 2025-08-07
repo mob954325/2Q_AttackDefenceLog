@@ -12,7 +12,6 @@ struct pattern
 	bool isFail = false;          // 해당 공격의 성공 여부   적 : 가드, 플레이어 : 실패
 };
 
-
 struct NewPattern { // 나중에 통합해서 관리해도 됨, 중복이긴 한데 어쩔껀데
 	std::vector<int> pattern;
 	float totalTime;
