@@ -26,14 +26,31 @@ void PatternControlObject::OnCreate()
 		std::string name = "Node." + std::to_string(i + 1);
 		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(m_nodes[i], name);
 	}
+	//===================================================================================================
 
-	guideline = new GameObject();
-	guideline->SetRenderLayer(EngineData::RenderLayer::None);
-	auto c = guideline->AddComponent<ChainDrawerComponent>();
-	c->SetBitmap(L"../Workspace/HSK/Test/TestArrow_2.png");
-	c->SetFillBitmap(L"../Workspace/HSK/Test/TestArrow_1.png");
-	c->SetOrderInLayer(0);
-	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(guideline);
+	enemyGuideline = new GameObject();
+	enemyGuideline->SetRenderLayer(EngineData::RenderLayer::None);
+	auto ca = enemyGuideline->AddComponent<ChainDrawerComponent>();
+	ca->SetBitmap(L"../Workspace/HSK/Test/TestArrow_2.png");
+	ca->SetFillBitmap(L"../Workspace/HSK/Test/TestArrow_1.png");
+	ca->SetOrderInLayer(0);
+	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(enemyGuideline);
+
+	playerGuidelineA = new GameObject();
+	playerGuidelineA->SetRenderLayer(EngineData::RenderLayer::None);
+	auto cb = playerGuidelineA->AddComponent<ChainDrawerComponent>();
+	cb->SetBitmap(L"../Workspace/HSK/Test/TestArrow_2.png");
+	cb->SetFillBitmap(L"../Workspace/HSK/Test/TestArrow_1.png");
+	cb->SetOrderInLayer(0);
+	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(playerGuidelineA);
+
+	playerGuidelineB = new GameObject();
+	playerGuidelineB->SetRenderLayer(EngineData::RenderLayer::None);
+	auto cc = playerGuidelineB->AddComponent<ChainDrawerComponent>();
+	cc->SetBitmap(L"../Workspace/HSK/Test/TestArrow_2.png");
+	cc->SetFillBitmap(L"../Workspace/HSK/Test/TestArrow_1.png");
+	cc->SetOrderInLayer(0);
+	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(playerGuidelineB);
 	//auto asd = m_nodes[4]->GetComponent<NodeObject>()->GetSize();
 
 	//===================================================================================================
@@ -101,7 +118,7 @@ void PatternControlObject::OnStart() // 처음
 	}
 
 	PM.SetNodes(m_nodes, 45.0f);
-	auto c = guideline->GetComponent<ChainDrawerComponent>();
+	auto c = enemyGuideline->GetComponent<ChainDrawerComponent>();
 
 	c->SetupNodes(m_nodes[4]->GetTransform().GetPosition(), n); // 스타트에서 하기
 
@@ -115,24 +132,28 @@ void PatternControlObject::OnUpdate() // 업데이트
 	auto t = trail->GetComponent<TrailComponent>();
 	t->isOutFromBox = PM.CheckOutOfBox({ Input::MouseX, Input::MouseY }); // 마우스 좌표 기반으로, 박스 밖으로 나갔는지 확인
 
-	auto c = guideline->GetComponent<ChainDrawerComponent>();
+	auto en = enemyGuideline->GetComponent<ChainDrawerComponent>();
+
 	if (t->isNewCached) { // 새로운 노드 발생하면				
 		PM.CheckTrails(t->CheckingCachedTrails());
 		const auto& vec = PM.GetPatternPathPositions(); // 여기에 담김!!! 1 3 2 4 이런거 <<<<< (연결지점)
-
 
 		auto d = owner->GetComponent<PatternDrawerComponent>();
 		d->SetLine(vec);
 		if (!vec.empty()) // 노드가 그어졌다면, 바로 삭제해서 가시성 up
 			t->Clear();
 
-		c->SliceRect(PM.GetPattern());
+		auto bt = bettleManager->GetComponent<BettleManager>();
+
+		bt->SetInputNode(PM.GetPattern());
+
+		//c->SliceRect(PM.GetPattern()); // 테스트용 // 가이드라인 패턴 입력해주면 그 시각적으로 그려지고 // 패턴
 
 		for (int value : PM.GetPattern()) { std::cout << value << "-"; }
 		std::cout << std::endl << std::endl;
 	}
 
-	c->Progress(n);
+	//c->Progress(n); // 이게 시간이야 << n 에다가 0.0f ~ 1.0f // 시간
 	n += 0.1f * Singleton<GameTime>::GetInstance().GetDeltaTime();
 	if (n > 1.0f) n = 0.0f;
 }
