@@ -101,7 +101,8 @@ pattern* AttackPatternManager::CorrectPattern(std::vector<int> PatternID) {  //�
 
 		if (countNum >= 2 || pair.first.substr(0, 2) == "EP") {   // 패턴이 적이면 
 			for (int i = 0; i < PatternID.size(); i++) {
-				if (PatternID[i] != pair.second->NodePatten[i]) { // 역순으로 검사
+				if (PatternID[i] != pair.second->NodePatten[i]) {
+
 					pair.second->isFail = true;
 					break;
 				}
@@ -112,7 +113,7 @@ pattern* AttackPatternManager::CorrectPattern(std::vector<int> PatternID) {  //�
 
 		if (pair.first.substr(0, 2) == "Pl") {      // 패턴이 플레이어의 패턴이면 정방향 검사
 			for (int i = 0; i < PatternID.size(); i++) {
-				if (PatternID[i] != pair.second->NodePatten[i]) {
+				if (PatternID[i] != pair.second->NodePatten[PatternID.size() - 1 - i]) { // 역순으로 검사
 					pair.second->isFail = true;
 					break;
 				}
@@ -149,11 +150,29 @@ void AttackPatternManager::GetPlayerPatten(std::vector<int>& P1, std::vector<int
 	P2 = playerPatternB;
 }
 
+
 void AttackPatternManager::GetEnemyPattern(std::vector<int>& pattern, float& time)
 {
 	isNewPattern = false;
 	pattern = newPattern.pattern;
 	time = newPattern.totalTime;
 }
+
+
+//커플 모두 도륙
+void AttackPatternManager::SearchAndDestroyCouple(std::string ID) {
+	char a = ID.back();
+	std::string tmp;
+	if (a == 'A') {
+		tmp = ID.substr(0, ID.length() - 1);
+		tmp.push_back('B');
+	}
+	else if (a == 'B') {
+		tmp = ID.substr(0, ID.length() - 1);
+		tmp.push_back('A');
+	}
+	SubPattern(tmp, false);
+}
+
 
 

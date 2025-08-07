@@ -12,6 +12,7 @@ struct pattern
 	bool isFail = false;          // 해당 공격의 성공 여부   적 : 가드, 플레이어 : 실패
 };
 
+
 struct NewPattern { // 나중에 통합해서 관리해도 됨, 중복이긴 한데 어쩔껀데
 	std::vector<int> pattern;
 	float totalTime;
@@ -37,6 +38,7 @@ public:
 
 	void GetPlayerPatten(std::vector<int>& P1, std::vector<int>& P2);
 	void GetEnemyPattern(std::vector<int>& pattern, float& time);
+	void SearchAndDestroyCouple(std::string ID);
 
 	bool isNewPattern = false; // 외부에서 확인하는 용도
 	NewPattern newPattern;
@@ -48,5 +50,3 @@ private:
 	std::unordered_map<std::string, pattern*> timeOutPattern;
 
 };
-
-

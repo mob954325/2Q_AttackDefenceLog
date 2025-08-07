@@ -10,11 +10,6 @@
 
 
 
-
-
-
-
-
 void BettleManager::OnStart() {
 	//m_Enemy = owner->GetQuery()->FindByName("Enemytmp")->GetComponent<Enemy>();
 	//m_Player = owner->GetQuery()->FindByName("Playertmp")->GetComponent<Player>();
@@ -99,9 +94,12 @@ void BettleManager::SetStateFormPattern() {		  //현재 마우스의 입력 받�
 			}
 			m_Player->RestoreSpiritDamage(m_Player->GetSpiritAttack());
 			m_Enemy->GetSpiritdamage(m_Player->GetSpiritAttack());
+			m_PattenManager->SearchAndDestroyCouple(tmpPatten->PattenID);
 		}
 		m_PattenManager->SubPattern(tmpPatten->PattenID, false);
 	}
+
+
 
 	// 플레이어가 공격이나 방어에 실패한 경우
 	while (1) {
@@ -123,9 +121,11 @@ void BettleManager::SetStateFormPattern() {		  //현재 마우스의 입력 받�
 		else {
 			m_Player->SetState("Player_AttackFail");
 			m_Player->SetEndAttack();
+			m_PattenManager->SearchAndDestroyCouple(tmpPatten->PattenID);
 		}
 
 		m_PattenManager->SubPattern(tmpPatten->PattenID, false);
+
 	}
 
 	nowNode.clear();
