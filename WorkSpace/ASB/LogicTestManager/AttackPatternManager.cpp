@@ -162,11 +162,11 @@ void AttackPatternManager::GetEnemyPattern(std::vector<int>& pattern, float& tim
 void AttackPatternManager::SearchAndDestroyCouple(std::string ID) {
 	char a = ID.back();
 	std::string tmp;
-	if ('A') {
+	if (a == 'A') {
 		tmp = ID.substr(0, ID.length() - 1);
 		tmp.push_back('B');
 	}
-	else if ('B') {
+	else if (a == 'B') {
 		tmp = ID.substr(0, ID.length() - 1);
 		tmp.push_back('A');
 	}
