@@ -128,4 +128,6 @@ private:
 	ParticleShowType showType = Single; // 파티클 출력 타입
 
 	AnimationPlayer player; // 파티클이 애니메이션이면 사용
+
+	ComPtr<ID2D1SpriteBatch> spriteBatch;
 };

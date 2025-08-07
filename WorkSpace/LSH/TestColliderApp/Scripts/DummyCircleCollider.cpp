@@ -24,15 +24,15 @@ void DummyCircleCollider::OnStart()
 
 	particle->SetBitmap(L"../../Resource/Particles/Test/Arrow.png");
 	particle->SetMinSpeed(0.3f);
-	particle->SetMaxSpeed(5.0f);
+	particle->SetMaxSpeed(0.7f);
 	particle->SetDuration(0.8f);
 	particle->SetFadeOutTime(0.7f);
-	particle->SetAmount(10);
+	particle->SetAmount(25);
 	particle->SetAnimPlayer(L"../../Resource/Particles/SparkSheet.png",
 		L"../../Resource/Json/SparkSheet/SparkSheet_sprites.json",
 		L"../../Resource/Json/SparkSheet/Red_Spark_anim.json");
-	particle->SetShowType(ParticleShowType::RandomSingle);
-	particle->SetGravity(true);
+	particle->SetShowType(ParticleShowType::Animation);
+	particle->SetGravity(false);
 	particle->SetSeeDirection(true);
 	particle->SetDecreasing(true);
 	particle->Reset();

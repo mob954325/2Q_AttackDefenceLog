@@ -24,6 +24,8 @@ void ParticleRenderer::OnStart()
 	// 파티클의 스케일 초기화
 	baseScaleX = 1.0f;
 	baseScaleY = 1.0f;
+
+	renderManager->CreateSpriteBatch(&spriteBatch);
 }
 
 void ParticleRenderer::Render(D2DRenderManager* manager)
@@ -39,6 +41,10 @@ void ParticleRenderer::Render(D2DRenderManager* manager)
 	{
 		float delta = Singleton<GameTime>::GetInstance().GetDeltaTime();
 		D2D1_MATRIX_3X2_F mat = owner->GetTransform().GetFinalMatrix();
+		D2D1_COLOR_F color = { 1, 1, 1, remainFadeOut / fadeOutTime };
+
+		spriteBatch->Clear();
+		manager->SetAntialiasMode();
 
 		if (isDecreasing)
 		{
@@ -50,6 +56,10 @@ void ParticleRenderer::Render(D2DRenderManager* manager)
 
 		for (int i = 0; i < particleAmount; i++)
 		{			
+			D2D1_MATRIX_3X2_F particleMat = mat;
+			particleMat.dx = 0;
+			particleMat.dy = 0;
+
 			Vector2 dir = infos[i].dirVec;
 			float speed = infos[i].speed;
 
@@ -74,18 +84,21 @@ void ParticleRenderer::Render(D2DRenderManager* manager)
 
 				// mat * rotation 행렬 연산
 				D2D1_MATRIX_3X2_F result;
-				result.m11 = mat.m11 * rotation.m11 + mat.m12 * rotation.m21;
-				result.m12 = mat.m11 * rotation.m12 + mat.m12 * rotation.m22;
-				result.m21 = mat.m21 * rotation.m11 + mat.m22 * rotation.m21;
-				result.m22 = mat.m21 * rotation.m12 + mat.m22 * rotation.m22;
-				result.dx = mat.dx;
-				result.dy = mat.dy;
-				mat = result;
+				result.m11 = particleMat.m11 * rotation.m11 + particleMat.m12 * rotation.m21;
+				result.m12 = particleMat.m11 * rotation.m12 + particleMat.m12 * rotation.m22;
+				result.m21 = particleMat.m21 * rotation.m11 + particleMat.m22 * rotation.m21;
+				result.m22 = particleMat.m21 * rotation.m12 + particleMat.m22 * rotation.m22;
+				result.dx = particleMat.dx;
+				result.dy = particleMat.dy;
+				particleMat = result;
 			}
 
 			// 위치 적용
-			mat.dx += infos[i].position.x;
-			mat.dy += infos[i].position.y;
+			particleMat.dx += infos[i].position.x;
+			particleMat.dy += infos[i].position.y;
+
+			particleMat.dx += infos[i].position.x;
+			particleMat.dy += infos[i].position.y;
 
 			// 중력 적용 - 방향이 밑을 향할 때까지 방향벡터의 y값 감소
 			if (useGravity && infos[i].dirVec.y > -1.0f)
@@ -93,32 +106,44 @@ void ParticleRenderer::Render(D2DRenderManager* manager)
 				infos[i].dirVec.y += delta;
 			}
 
-			manager->SetRenderTransform(mat); // 갱신한 위치로 이동
-			Vector2 ownerPosition = owner->GetTransform().GetPosition();
-
 			// bitmap 출력
 			if (showType == ParticleShowType::Single)
 			{
 				D2D1_SIZE_F size = particleBitmapResource->GetBitmap()->GetSize();
-				D2D1_RECT_F dest = { ownerPosition.x, ownerPosition.y, ownerPosition.x + size.width, ownerPosition.y + size.height };
-				D2D1_RECT_F src = { 0, 0,	 size.width, size.height };
+				D2D1_RECT_F dest = {0, 0, size.width, size.height };
+				D2D1_RECT_U src = { 0, 0, size.width, size.height };
 
-				manager->DrawBitmap(particleBitmapResource->GetBitmap(), dest, src, remainFadeOut / fadeOutTime); // 출력
+				HRESULT hr = spriteBatch->AddSprites(1, &dest, &src, &color, &particleMat);
+				assert(SUCCEEDED(hr));
 			}
 			else if(showType == ParticleShowType::Animation)
 			{			
 				D2D1_RECT_F dest = player.GetDestRect();
 				D2D1_RECT_F src = player.GetSrcRect();
-				manager->DrawBitmap(player.GetBitmapResource().GetBitmap(), dest, src, remainFadeOut / fadeOutTime);
+				D2D1_RECT_U srcU = { src.left, src.top,src.right, src.bottom };
 
+				HRESULT hr = spriteBatch->AddSprites(1, &dest, &srcU, &color, &particleMat);
+				assert(SUCCEEDED(hr));
 			}
 			else if (showType == ParticleShowType::RandomSingle)
 			{
 				player.SetCurrentFrame(infos[i].frameIndex); // infos에 저장된 frameIndex로 스프라이트 설정
 				D2D1_RECT_F dest = player.GetDestRect();
 				D2D1_RECT_F src = player.GetSrcRect();
-				manager->DrawBitmap(player.GetBitmapResource().GetBitmap(), dest, src, remainFadeOut / fadeOutTime);
+				D2D1_RECT_U srcU = { src.left, src.top,src.right, src.bottom };
+
+				HRESULT hr = spriteBatch->AddSprites(1, &dest, &srcU, &color, &particleMat);
+				assert(SUCCEEDED(hr));
 			}
+		}
+
+		if (showType == ParticleShowType::Single)
+		{
+			manager->DrawSpriteBatch(spriteBatch.Get(), 0, particleAmount, particleBitmapResource->GetBitmap());
+		}
+		else
+		{
+			manager->DrawSpriteBatch(spriteBatch.Get(), 0, particleAmount, player.GetBitmapResource().GetBitmap());
 		}
 
 		timer += delta;

@@ -40,6 +40,12 @@ void AttackPatternManager::OnUpdate() {
 			}
 		}
 		else {  // 적 패턴만 시간계산
+			if (pair.second->PlayingAttackTime == pair.second->TotalPlayingAttackTime) { // 처음 지점(일꺼임)
+				isNewPattern = true;
+				newPattern.pattern = pair.second->NodePatten;
+				newPattern.totalTime = pair.second->TotalPlayingAttackTime;
+			}
+
 			pair.second->PlayingAttackTime -= GameTime::GetInstance().GetDeltaTime();
 
 			if (pair.second->PlayingAttackTime <= 0.0f) { // 시간검사
@@ -47,7 +53,7 @@ void AttackPatternManager::OnUpdate() {
 				continue;
 			}
 		}
-		
+
 	}
 
 
@@ -93,7 +99,7 @@ pattern* AttackPatternManager::CorrectPattern(std::vector<int> PatternID) {  //�
 			}
 		}
 
-		if ( countNum >= 2 || pair.first.substr(0, 2) == "EP") {   // 패턴이 적이면 
+		if (countNum >= 2 || pair.first.substr(0, 2) == "EP") {   // 패턴이 적이면 
 			for (int i = 0; i < PatternID.size(); i++) {
 				if (PatternID[i] != pair.second->NodePatten[PatternID.size() - 1 - i]) { // 역순으로 검사
 					pair.second->isFail = true;
@@ -141,6 +147,30 @@ void AttackPatternManager::GetPlayerPatten(std::vector<int>& P1, std::vector<int
 {
 	P1 = playerPatternA;
 	P2 = playerPatternB;
+}
+
+
+void AttackPatternManager::GetEnemyPattern(std::vector<int>& pattern, float& time)
+{
+	isNewPattern = false;
+	pattern = newPattern.pattern;
+	time = newPattern.totalTime;
+}
+
+
+//커플 모두 도륙
+void AttackPatternManager::SearchAndDestroyCouple(std::string ID) {
+	char a = ID.back();
+	std::string tmp;
+	if ('A') {
+		tmp = ID.substr(0, ID.length() - 1);
+		tmp.push_back('B');
+	}
+	else if ('B') {
+		tmp = ID.substr(0, ID.length() - 1);
+		tmp.push_back('A');
+	}
+	SubPattern(tmp, false);
 }
 
 

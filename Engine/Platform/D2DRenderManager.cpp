@@ -204,6 +204,21 @@ void D2DRenderManager::PopLayer()
 	m_d2dDeviceContext->PopLayer();
 }
 
+void D2DRenderManager::SetAntialiasMode(D2D1_ANTIALIAS_MODE mode)
+{
+	m_d2dDeviceContext->SetAntialiasMode(mode); // 이 설정 이후 모든 랜더가 해당 앤티앨리어싱 모드로 변경되어 적용됨
+}
+
+void D2DRenderManager::CreateSpriteBatch(ID2D1SpriteBatch** batch)
+{
+	m_d2dDeviceContext->CreateSpriteBatch(batch);
+}
+
+void D2DRenderManager::DrawSpriteBatch(ID2D1SpriteBatch* spriteBatch, UINT32 startIndex, UINT32 spriteCount, ComPtr<ID2D1Bitmap1> bitmap, D2D1_BITMAP_INTERPOLATION_MODE interpolation, D2D1_SPRITE_OPTIONS spriteOption)
+{
+	m_d2dDeviceContext->DrawSpriteBatch(spriteBatch, startIndex, spriteCount, bitmap.Get(), interpolation, spriteOption);
+}
+
 HRESULT D2DRenderManager::CreateBitmapFromFile(const wchar_t* path, ID2D1Bitmap1** outBitmap)
 {
 	ComPtr<IWICBitmapDecoder>     decoder;
