@@ -340,6 +340,7 @@
     <ClCompile Include="DataStorage\DataClass\AllNodePattenClass.cpp" />
     <ClCompile Include="DataStorage\DataClass\EnemyAtkPattenData.cpp" />
     <ClCompile Include="Component\EffectComponent.cpp" />
+    <ClCompile Include="Script\Effect\EffectInstance.cpp" />
     <ClCompile Include="Script\Manager\EffectManager.cpp" />
     <ClCompile Include="Script\EffectObject.cpp" />
     <ClCompile Include="game.cpp" />
@@ -359,6 +360,7 @@
     <ClInclude Include="DataStorage\NodeData.h" />
     <ClInclude Include="DataStorage\DataClass\PlayerData.h" />
     <ClInclude Include="Component\EffectComponent.h" />
+    <ClInclude Include="Script\Effect\EffectInstance.h" />
     <ClInclude Include="Script\Manager\EffectManager.h" />
     <ClInclude Include="Script\EffectObject.h" />
     <ClInclude Include="Script\MainCam.h" />

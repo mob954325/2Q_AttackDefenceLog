@@ -30,7 +30,11 @@ void EffectManager::SetEffectPosition(float x, float y)
 	{
 		it->GetTransform().SetPosition(x, y);
 	}
-	particleObj->GetTransform().SetPosition(x, y);
+
+	for (auto it : particleList)
+	{
+		it->GetTransform().SetPosition(x, y);
+	}
 }
 
 void EffectManager::SetEffectImage(size_t value, std::wstring path)
@@ -59,14 +63,16 @@ void EffectManager::CreateEffectObject(size_t value)
 	}
 }
 
-void EffectManager::CreateParticleObject()
+void EffectManager::CreateParticleObject(size_t value)
 {
-	if (particleObj != nullptr) return;
+	for(size_t i = 0; i < value; i++)
+	{
 	GameObject* obj = new GameObject();
 	obj->AddComponent<ParticleRenderer>();
-	obj->SetName("ParticleObject");
+	obj->SetName(std::string("ParticleObject") + std::to_string(i));
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(obj);
-	particleObj = obj;
+	particleList.push_back(obj);
+	}
 }
 
 void EffectManager::SetOffEffect()
@@ -82,9 +88,9 @@ void EffectManager::SetLayer(int index , int value)
 	effectList[index]->GetComponent<EffectObject>()->SetLayer(value);
 }
 
-ParticleRenderer* EffectManager::GetParticleComponent()
+ParticleRenderer* EffectManager::GetParticleComponent(size_t index)
 {
-	return particleObj->GetComponent<ParticleRenderer>();
+	return particleList[index]->GetComponent<ParticleRenderer>();
 }
 
 
