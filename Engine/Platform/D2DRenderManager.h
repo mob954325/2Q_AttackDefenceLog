@@ -45,6 +45,11 @@ public:
 	void PushLayer(const D2D1_RECT_F& contentSize, ID2D1Geometry* geomatry, ID2D1Layer* pLayer);
 	void PopLayer();
 
+	void SetAntialiasMode(D2D1_ANTIALIAS_MODE mode = D2D1_ANTIALIAS_MODE_ALIASED);
+	void CreateSpriteBatch(ID2D1SpriteBatch** batch);
+	void DrawSpriteBatch(ID2D1SpriteBatch* spriteBatch, UINT32 startIndex, UINT32 spriteCount, ComPtr<ID2D1Bitmap1> bitmap, 
+		D2D1_BITMAP_INTERPOLATION_MODE interpolation = D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, D2D1_SPRITE_OPTIONS spriteOption = D2D1_SPRITE_OPTIONS_NONE);
+
 protected:
 	ComPtr<IWICImagingFactory> m_wicImagingFactory;
 	ComPtr<ID2D1DeviceContext7> m_d2dDeviceContext;
