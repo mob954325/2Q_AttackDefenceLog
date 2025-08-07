@@ -12,16 +12,17 @@ void TestObject::OnUpdate()
 	if (eventvalue && counttime < maxtime)
 	{
 		counttime += mydeltatime;
-		TestEffect->Setcircleoutervalue(50 + counttime, 1- counttime);
-		TestEffect->Setcircleinnervalue(50 + counttime , 1- counttime);
-		TestEffect->Setlinehorizonvalue(0, 0);
+		Emanager->SetEffectValue(0, 189, 189, 1, true);
+		Emanager->SetEffectValue(1, 302, 307, 1, true);
+		Emanager->SetEffectValue(2, 343, 22, 1, true);
+		Emanager->GetParticleComponent()->Render();
+
 	}
 	else if (eventvalue && counttime >= maxtime)
 	{
-		TestEffect->Setcircleoutervalue(0.0f, 0.0f);
-		TestEffect->Setcircleinnervalue(0.0f , 0.0f);
-		TestEffect->Setlinehorizonvalue(0.0f, 0.0f);
+
 		eventvalue = false;
+		Emanager->SetOffEffect();
 	}
 }
 
@@ -31,14 +32,19 @@ void TestObject::OnCreate()
 	TestImage->CreateBitmapResource(L"../../Resource/UI/TestImage/test.png");
 	owner->GetTransform().SetOffset(-TestImage->GetResource()->GetBitmap()->GetSize().width / 2, TestImage->GetResource()->GetBitmap()->GetSize().height / 2);*/
 	counttime = 0;
-	TestEffect = owner->AddComponent<EffectComponent>();
 	input = owner->AddComponent<InputSystem>();
+	Emanager = owner->AddComponent<EffectManager>();
 }
 
 void TestObject::OnStart()
 {
 	/*owner->GetComponent<Transform>()->SetPosition(50.0f, 50.0f);*/
 	mydeltatime = Singleton<GameTime>::GetInstance().GetDeltaTime();
+	Emanager->CreateEffectObject(3);
+	Emanager->CreateParticleObject();
+	Emanager->SetEffectImage(0, L"../../Resource/Particles/circle_outer.png");
+	Emanager->SetEffectImage(1, L"../../Resource/Particles/circle_inner.png");
+	Emanager->SetEffectImage(2, L"../../Resource/Particles/line_horizon.png");
 }
 
 void TestObject::OnDestroy()

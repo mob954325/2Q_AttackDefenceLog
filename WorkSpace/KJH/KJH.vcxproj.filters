@@ -14,6 +14,8 @@
     <ClCompile Include="Script\TestObject2.cpp" />
     <ClCompile Include="Script\MainCam.cpp" />
     <ClCompile Include="Component\EffectComponent.cpp" />
+    <ClCompile Include="Script\EffectObject.cpp" />
+    <ClCompile Include="Script\Manager\EffectManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Script\MusicScript.h" />
@@ -28,5 +30,7 @@
     <ClInclude Include="Script\TestObject2.h" />
     <ClInclude Include="Script\MainCam.h" />
     <ClInclude Include="Component\EffectComponent.h" />
+    <ClInclude Include="Script\EffectObject.h" />
+    <ClInclude Include="Script\Manager\EffectManager.h" />
   </ItemGroup>
 </Project>

@@ -6,6 +6,7 @@
 #include "Components/Rendering/BitmapRenderer.h"
 #include "Component/EffectComponent.h"
 #include "Utils/GameTime.h"
+#include "Script/Manager/EffectManager.h"
 
 class TestObject : public MonoBehavior
 {
@@ -18,8 +19,9 @@ public:
 	void CheckInput();
 private:
 	BitmapRenderer* TestImage{};
-	EffectComponent* TestEffect{};
 	InputSystem* input{};
+
+	EffectManager* Emanager{};
 
 	bool eventvalue = false;
 	float counttime = 0.0f;
