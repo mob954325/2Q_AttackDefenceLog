@@ -311,6 +311,9 @@
     <ClInclude Include="Datas\SoundDatas.h">
       <Filter>Datas</Filter>
     </ClInclude>
+    <ClInclude Include="Components\Rendering\AnimatedChainEffect.h">
+      <Filter>Components\Rendering</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\Application.cpp">
@@ -491,6 +494,9 @@
     </ClCompile>
     <ClCompile Include="Datas\SoundDatas.cpp">
       <Filter>Datas</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\Rendering\AnimatedChainEffect.cpp">
+      <Filter>Components\Rendering</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

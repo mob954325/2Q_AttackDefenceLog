@@ -39,10 +39,10 @@ void Scene::Update()
 	Singleton<MonoBehaviorSystem>::GetInstance().Update();		// MonoBehavior 처리
 	Singleton<ScriptSystem>::GetInstance().Update();			// 컴포넌트 기반 스크립트 처리
 	Singleton<TransformSystem>::GetInstance().Update();			// Transform 연산
-	if (state == SceneState::ReadyToChange) return;
+	//if (state == SceneState::ReadyToChange) return;
 
 	UpdateImpl();
-	if (state == SceneState::ReadyToChange) return;
+	// if (state == SceneState::ReadyToChange) return;
 }
 
 void Scene::LateUpdate()
@@ -110,7 +110,7 @@ void Scene::AddGameObject(GameObject* gameObject, const std::string& name)
 {
 	AddGameObject(gameObject);
 	gameObject->SetQuery(this);
-
+	gameObject->SetName(name);
 	// Singleton<TransformSystem>::GetInstance().Register(&gameObject->GetTransform());
 }
 

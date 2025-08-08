@@ -61,6 +61,9 @@ void SceneManager::CheckSceneLoad()
 		currentScene = nextScene;
 		currentSceneIndex = nextSceneIndex;
 
+		std::cout << "currnet Scene : " << currentScene << std::endl;
+		std::cout << "currnet Scene : " << currentSceneIndex << std::endl;
+
 		Singleton<RenderSystem>::GetInstance().InitializeRenderLayers();
 		currentScene->OnEnter();
 

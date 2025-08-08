@@ -45,7 +45,7 @@ public:
 	void CancelByID(const std::string& id);
 
 
-	float piece = 3.0f; // 조각
+	//float piece = 3.0f; // 조각
 	bool isPlay = false;
 
 	float progress = 0.0f; // 0 ~1 정규화된 값이 들어가야함

@@ -11,5 +11,7 @@ protected:
 private:
 	GameObject* PCO;
 	GameObject* inputObj;
-	GameObject* stageBGI;	
+	GameObject* stageBGI;
+
+	
 };

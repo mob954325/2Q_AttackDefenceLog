@@ -3,19 +3,19 @@
 #include "Objects/InputObject.h"
 #include "Objects/MouseTrailObject.h"
 #include "Objects/TitleScene/TitleSceneBGI.h"
-#include "../Objects/SliceObject.h"
+#include "Objects/TitleScene/TitleNodeManager.h"
 
 void TitleScene::OnEnterImpl()
 {
 	std::cout << "타이틀씬 진입" << std::endl;
 
-	test = new GameObject;
-	test->AddComponent<SliceObject>();
-	AddGameObject(test);
+	nodeManager = new GameObject();
+	nodeManager->AddComponent<TitleNodeManager>();
+	AddGameObject(nodeManager, "node");
 
 	inputObj = new GameObject();
 	inputObj->AddComponent<InputObject>();
-	AddGameObject(inputObj);
+	AddGameObject(inputObj, "input");
 
 	backGroundImg = new GameObject();
 	backGroundImg->AddComponent<TitleSceneBGI>();
