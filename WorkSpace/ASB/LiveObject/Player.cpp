@@ -240,33 +240,33 @@ void Player::SetCursorPosition(int x, int y)
 
 
 void Player::PrintConsole() {
-	//SetCursorPosition(0, 600);
-	std::cout << "                                                "  << std::endl;
-	std::cout << "Player HP		      : " << Object_Hp << "                                                "<< std::endl;
-	std::cout << "Player Attack		      : " << Object_Attack << "                                                "<< std::endl;
-	std::cout << "Player SpiritAttack           : " << Object_SpiritAttack << "                                                "<< std::endl;
-	std::cout << "Player NowSpiritAmount        : " << Object_NowSpiritAmount << "                                                "<< std::endl;
-	std::cout << "Player Object_CoolTime	      : " << Object_CoolTime << "                                                " << std::endl;
-	std::cout << "Player nowCoolTime	      : " << Object_nowCoolTime << "                                                "<<  std::endl;
-	std::cout << "Player nowTotalCoolTime	      : " << Object_nowTotalCoolTime << "                                                " << std::endl;
-	std::cout << "Player PlayingAttackTime      : " << Object_PlayingAttackTime << "                                                "<< std::endl;
-	std::cout << "Player nowState               : " << nowStateName << "                                                "<< std::endl;
-	std::cout << "Player preState               : " << preStateName << "                                                "<<std::endl;
-	std::cout << "Player PattenID               : ";
-	if(nowPlayerPattenData != nullptr)
-		std::cout << nowPlayerPattenData->Player_pattern_ID << "                                                " <<  std::endl;
-	std::cout << "Player PattenNode01           :  ";
-	if (tmpNode != nullptr) {
-		for (int i = 0; i < tmpNode->Node_Number.size(); i++)
-			std::cout << tmpNode->Node_Number[i] << ", ";
-		std::cout << "                                 " << std::endl;
-	}
-	std::cout << "Player PattenNode02           :  ";
-	if (tmpNode2 != nullptr) {
-		for (int i = 0; i < tmpNode2->Node_Number.size(); i++)
-			std::cout << tmpNode2->Node_Number[i] << ", ";
-		std::cout << "                                   " << std::endl;
-	}
+	// SetCursorPosition(0, 600);
+	// std::cout << "                                                "  << std::endl;
+	// std::cout << "Player HP		      : " << Object_Hp << "                                                "<< std::endl;
+	// std::cout << "Player Attack		      : " << Object_Attack << "                                                "<< std::endl;
+	// std::cout << "Player SpiritAttack           : " << Object_SpiritAttack << "                                                "<< std::endl;
+	// std::cout << "Player NowSpiritAmount        : " << Object_NowSpiritAmount << "                                                "<< std::endl;
+	// std::cout << "Player Object_CoolTime	      : " << Object_CoolTime << "                                                " << std::endl;
+	// std::cout << "Player nowCoolTime	      : " << Object_nowCoolTime << "                                                "<<  std::endl;
+	// std::cout << "Player nowTotalCoolTime	      : " << Object_nowTotalCoolTime << "                                                " << std::endl;
+	// std::cout << "Player PlayingAttackTime      : " << Object_PlayingAttackTime << "                                                "<< std::endl;
+	// std::cout << "Player nowState               : " << nowStateName << "                                                "<< std::endl;
+	// std::cout << "Player preState               : " << preStateName << "                                                "<<std::endl;
+	// std::cout << "Player PattenID               : ";
+	// if(nowPlayerPattenData != nullptr)
+	// 	std::cout << nowPlayerPattenData->Player_pattern_ID << "                                                " <<  std::endl;
+	// std::cout << "Player PattenNode01           :  ";
+	// if (tmpNode != nullptr) {
+	// 	for (int i = 0; i < tmpNode->Node_Number.size(); i++)
+	// 		std::cout << tmpNode->Node_Number[i] << ", ";
+	// 	std::cout << "                                 " << std::endl;
+	// }
+	// std::cout << "Player PattenNode02           :  ";
+	// if (tmpNode2 != nullptr) {
+	// 	for (int i = 0; i < tmpNode2->Node_Number.size(); i++)
+	// 		std::cout << tmpNode2->Node_Number[i] << ", ";
+	// 	std::cout << "                                   " << std::endl;
+	// }
 }
 
 

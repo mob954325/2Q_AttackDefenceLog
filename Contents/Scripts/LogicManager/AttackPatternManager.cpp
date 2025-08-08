@@ -12,6 +12,7 @@ void AttackPatternManager::OnStart() {
 	NowPatternStorage.clear();
 }
 
+
 void AttackPatternManager::AddPattern(std::string ID, float PlayingAttackTime, std::vector<int> PatternID) {
 	pattern* tmpPattern = new pattern();
 	tmpPattern->PattenID = ID;
@@ -44,6 +45,7 @@ void AttackPatternManager::OnUpdate() {
 				isNewPattern = true;
 				newPattern.pattern = pair.second->NodePatten;
 				newPattern.totalTime = pair.second->TotalPlayingAttackTime;
+				newPattern.PattenID = pair.second->PattenID;
 			}
 
 			pair.second->PlayingAttackTime -= GameTime::GetInstance().GetDeltaTime();
@@ -88,49 +90,85 @@ void AttackPatternManager::SubPattern(std::string ID, bool isTime) {
 
 pattern* AttackPatternManager::CorrectPattern(std::vector<int> PatternID) {  //해당 패턴의 성공여부
 
+	// for (int i = 0; i < PatternID.size(); i++)
+	// {
+	// 	std::string str = std::to_string(PatternID[i]);
+	// 	OutputDebugStringA(str.c_str());
+	// 	OutputDebugStringA("\n");
+	// }
+
 	//순서 검사
-	for (const auto& pair : NowPatternStorage) {
+	bool isVaild = true;
+	for (const auto& pair : NowPatternStorage)
+	{
+		std::cout << pair.second->PattenID << std::endl;
+		OutputDebugStringA(pair.second->PattenID.c_str());
+		OutputDebugStringA("\n");
+	}
+
+	for (const auto& pair : NowPatternStorage) { // 적 패턴 
 		int countNum = 0; // 맞은 개수 검
-		for (int i = 0; i < PatternID.size(); i++) {
-			for (int j = 0; j < pair.second->NodePatten.size(); j++) {
-				if (PatternID[i] == pair.second->NodePatten[j]) {
-					countNum++;
-				}
-			}
-		}
-
-		if (countNum >= 2 || pair.first.substr(0, 2) == "EP") {   // 패턴이 적이면 
+		if (pair.first.substr(0, 2) == "EP") {
+			// 패턴 이중 for문 검사
 			for (int i = 0; i < PatternID.size(); i++) {
-				if (PatternID[i] != pair.second->NodePatten[i]) {
-
-					pair.second->isFail = true;
-					break;
+				for (int j = 0; j < pair.second->NodePatten.size(); j++) {
+					if (PatternID[i] == pair.second->NodePatten[j]) {
+						countNum++; // 체크 // 적 패턴과 인풋이 겹친 갯수
+					}
 				}
-				return pair.second;
 			}
 
-		}
+			// pair가 적 패턴 일 때
+			if (countNum >= 2) // 적 방어를 시도했다 - 공격 무시
+			{
+				isVaild = false;
+				OnPatternCancel.Invoke(pair.second->PattenID); // 패턴 캔슬된거 알림 -> 방어 성공
+				// 방어 시도 countNun 2 ~ 4개, 패턴이 적일 때				
+				
+				//============================================================================(성공 실패)
+				for (int i = 0; i < PatternID.size(); i++) {	// 현재 그은 패턴 검사
+					if (PatternID[i] != pair.second->NodePatten[i]) { // 그은 패턴과 적 패턴이 맞지 않음
 
-		if (pair.first.substr(0, 2) == "Pl") {      // 패턴이 플레이어의 패턴이면 정방향 검사
-			for (int i = 0; i < PatternID.size(); i++) {
-				if (PatternID[i] != pair.second->NodePatten[PatternID.size() - 1 - i]) { // 역순으로 검사
-					pair.second->isFail = true;
-					break;
+						pair.second->isFail = true; // 방어 실패
+						break;
+					}
+
+					return pair.second; // 성공
 				}
-				return pair.second;
+				//============================================================================(
 			}
-
+			// pair가 플레이어 가이드 패턴 일 때
 		}
 	}
 
-	return nullptr;     // 공격, 방어 성공x
+	if (isVaild) {
+		for (const auto& pair : NowPatternStorage) { // 적 패턴 / 가이드 패턴
+			if (pair.first.substr(0, 2) == "PI") {      // 패턴이 플레이어의 패턴이면 정방향 검사
+				for (int i = 0; i < PatternID.size(); i++) {
+					if (PatternID[i] != pair.second->NodePatten[PatternID.size() - 1 - i]) { // 역순으로 검사
+						pair.second->isFail = true;
+						break;
+					}
+
+					return pair.second; // 성공
+				}
+
+			}
+		}
+	}
+
+	return nullptr;     // 공격 실패, 방어 실패 시 nullptr 반환
 }
 
 
 pattern* AttackPatternManager::failPattern(std::vector<int> PatternID) { // 공격 , 방어 실패여부!
 	for (const auto& pair : NowPatternStorage) {
-		if (pair.second->isFail == true)
+		if (pair.second->isFail == true) {
+			if (pair.second->PattenID.substr(0, 2) == "PI") {
+				playerPatternA = playerPatternB = { 0 }; // 벡터 잠시 비워두기					
+			}
 			return pair.second;
+		}
 	}
 	return nullptr;
 }
@@ -144,18 +182,19 @@ pattern* AttackPatternManager::TimeOutPatten() {
 	return nullptr;
 }
 
-void AttackPatternManager::GetPlayerPatten(std::vector<int>& P1, std::vector<int>& P2)
+void AttackPatternManager::GetPlayerPatten(std::vector<int>& P1, std::vector<int>& P2) // 갱신 1초
 {
 	P1 = playerPatternA;
 	P2 = playerPatternB;
 }
 
 
-void AttackPatternManager::GetEnemyPattern(std::vector<int>& pattern, float& time)
+void AttackPatternManager::GetEnemyPattern(std::vector<int>& pattern, float& time, std::string& ID)
 {
 	isNewPattern = false;
 	pattern = newPattern.pattern;
 	time = newPattern.totalTime;
+	ID = newPattern.PattenID;
 }
 
 

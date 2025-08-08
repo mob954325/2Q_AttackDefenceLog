@@ -207,7 +207,6 @@ void Player::AddPattenLoop() {
 		isAttackingPattern = false;
 	}
 
-
 	if (isPattenCooldown) {
 		// 패턴의 입력대기시간 카운트
 		Object_nowCoolTime -= GameTime::GetInstance().GetDeltaTime();
