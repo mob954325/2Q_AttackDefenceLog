@@ -1,4 +1,4 @@
-﻿#include "TestObject.h"
+﻿#include "EffectInstance.h"
 #include "Components/Base/GameObject.h"
 #include <iostream>
 #include "Systems/AudioSystem.h"
@@ -7,27 +7,24 @@
 #include "Math/EasingFunction.h"
 
 
-void TestObject::OnUpdate()
+//Update로 프레임마다 이펙트들 업데이트
+void EffectInstance::OnUpdate()
 {
-	CheckInput();
-
 	if (eventvalue && counttime < maxtime)
 	{
-		
 		counttime += Singleton<GameTime>::GetInstance().GetDeltaTime();
 		Emanager->SetEffectValue(0, GetValue(0), GetValue(0), 1 - GetValue(3), true);
 		Emanager->SetEffectValue(1, GetValue(1), GetValue(1), 1 - GetValue(2), true);
-		Emanager->SetEffectValue(2, 343 , 22, 1 -  GetValue(3), true);
+		Emanager->SetEffectValue(2, 343, 22, 1 - GetValue(3), true);
 		std::cout << counttime << std::endl;
-	
+
 	}
 	else if (eventvalue && counttime >= maxtime)
 	{
-		/*TestParticle->SetLoop(false);*/
 		Emanager->SetOffEffect();
 		eventvalue = false;
 	}
-	
+
 	if (eventvalue2 && counttime < maxtime)
 	{
 
@@ -39,39 +36,20 @@ void TestObject::OnUpdate()
 	}
 	else if (eventvalue2 && counttime >= maxtime)
 	{
-		/*TestParticle->SetLoop(false);*/
 		Emanager->SetOffEffect();
 		eventvalue2 = false;
 	}
-
-	/*handleObject->GetTransform().SetPosition(owner->GetComponent<Slider>()->GetGaugeRectValue().right, owner->GetComponent<Slider>()->GetGaugeRectValue().bottom/2);*/
 }
 
-void TestObject::OnCreate()
+//변수 초기화 및 Emanager 등록
+void EffectInstance::OnCreate()
 {
-	/*owner->AddComponent<Slider>();*/
-	/*TestImage = owner->AddComponent<BitmapRenderer>();
-	TestImage->CreateBitmapResource(L"../../Resource/UI/TestImage/test.png");
-	owner->GetTransform().SetOffset(-TestImage->GetResource()->GetBitmap()->GetSize().width / 2, TestImage->GetResource()->GetBitmap()->GetSize().height / 2);*/
 	counttime = 0;
-	input = owner->AddComponent<InputSystem>();
 	Emanager = owner->AddComponent<EffectManager>();
-	/*AnimObject = owner->AddComponent<AnimationRenderer>();*/
-	
-
-	//GameObject* Test = new GameObject();
-	//Test->AddComponent<AnimationRenderer>();
-	//Test->SetName("AnimeObject");
-	//Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(Test);
-	//handleObject = Test;
-
-	//AnimObject = handleObject->GetComponent<AnimationRenderer>();
-	
-	
-
 }
 
-void TestObject::OnStart()
+//초기 이미시 셋팅 및  파티클 수치 설정
+void EffectInstance::OnStart()
 {
 	Emanager->CreateEffectObject(5);
 	Emanager->CreateParticleObject(2);
@@ -92,7 +70,7 @@ void TestObject::OnStart()
 	Emanager->SetLayer(4, 34);
 
 
-	
+
 	Emanager->GetParticleComponent(0)->SetOrderInLayer(35);
 	Emanager->GetParticleComponent(0)->SetLoop(false);
 	Emanager->GetParticleComponent(0)->SetMinSpeed(0.3f);
@@ -122,67 +100,44 @@ void TestObject::OnStart()
 	Emanager->GetParticleComponent(1)->SetGravity(false);
 	Emanager->GetParticleComponent(1)->SetSeeDirection(true);
 	Emanager->GetParticleComponent(1)->SetDecreasing(true);
-
-	//AnimObject->CreateBitmapResource(L"../../Resource/Dance/Dance.png");
-	//AnimObject->SetSpriteSheet(L"../../Resource/Dance/Dance_sprites.json");
-	//AnimObject->SetAnimationClip(L"../../Resource/Dance/Dance_Dance_anim.json");
-
-	//AnimObject->GetAnimationPlayer().Play();
-	//AnimObject->SetOrderInLayer(15);
-
-	/*owner->GetComponent<Slider>()->ButtonShow(false);*/
-
-
 }
 
-void TestObject::OnDestroy()
+void EffectInstance::OnDestroy()
 {
-	/*AnimPlayer = nullptr;*/
+
 }
 
-
-void TestObject::CheckInput()
+//좌표 넣고 원하는곳에서 재생되도록 설정 예정
+void EffectInstance::CallGuardEffect()
 {
-	if (input->IsKeyPressed('N'))
-	{
-		Emanager->GetParticleComponent(0)->Reset();
-		eventvalue = true;
-		counttime = 0;
-		Emanager->GetParticleComponent(0)->Play();
-	}
+	Emanager->GetParticleComponent(1)->Reset();
+	eventvalue2 = true;
+	counttime = 0;
+	Emanager->GetParticleComponent(1)->Play();
+}
 
-	if (input->IsKeyPressed('B'))
-	{
-		Emanager->GetParticleComponent(1)->Reset();
-		eventvalue2 = true;
-		counttime = 0;
-		Emanager->GetParticleComponent(1)->Play();
-	}
+//좌표 넣고 원하는곳에서 재생되도록 설정 예정
+void EffectInstance::CallParryEffect()
+{
+	Emanager->GetParticleComponent(0)->Reset();
+	eventvalue = true;
+	counttime = 0;
+	Emanager->GetParticleComponent(0)->Play();
+}
 
-
-
-	//if (input->IsKeyDown('J'))
-	//{
-	//	owner->GetComponent<Slider>()->ChangeGauge(-1);
-	//	owner->GetComponent<Slider>()->ChangeButtonPosition(-1);
-	//	std::cout << "w 입력됨" << std::endl;
-	//}
-	//if (input->IsKeyDown('K'))
-	//{
-	//	owner->GetComponent<Slider>()->ChangeGauge(1);
-	//	owner->GetComponent<Slider>()->ChangeButtonPosition(1);
-	//	std::cout << "s 입력됨" << std::endl;
-	//}
+//좌표 넣고 원하는곳에서 재생되도록 설정 예정
+void EffectInstance::CallNomalEffect()
+{
 
 }
 
 
-
-float TestObject::GetValue(size_t type)
+//증가 계산식
+float EffectInstance::GetValue(size_t type)
 {
 	switch (type)
 	{
-		
+
 	case 0:
 	{
 		float circle_outer = EasingList[EasingEffect::OutExpo](counttime);
@@ -212,3 +167,4 @@ float TestObject::GetValue(size_t type)
 	}
 	}
 }
+
