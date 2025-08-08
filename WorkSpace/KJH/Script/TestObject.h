@@ -10,6 +10,7 @@
 #include "Components/Rendering/AnimationRenderer.h"
 #include "Components/Rendering/AnimationPlayer.h"
 #include "Components/UI/Slider.h"
+#include "Script/Effect/EffectInstance.h"
 
 
 class TestObject : public MonoBehavior
@@ -45,6 +46,12 @@ private:
 	float PI = 3.141592;
 
 	GameObject* handleObject{};
+
+	EffectInstance* effectobj;
+
+	Vector2 ObjInfo{};
+
+	GameObject* handleCam{};
 
 };
 

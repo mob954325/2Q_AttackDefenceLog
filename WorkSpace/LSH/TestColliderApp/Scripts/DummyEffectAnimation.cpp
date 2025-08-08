@@ -11,6 +11,7 @@ void DummyEffectAnimation::OnCreate()
 	anim->SetAnimationClip(L"../../Resource/Json/Test_Paticles/attack_line_spreadsheet_anim.json");
 
 	// owner->GetTransform().SetRotation(-90.0f);
+	anim->GetAnimationPlayer()->Pause();
 }
 
 void DummyEffectAnimation::OnStart()

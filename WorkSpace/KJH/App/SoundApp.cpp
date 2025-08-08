@@ -18,7 +18,7 @@ void SoundApp::SoundApp::Initialize()
 
 	__super::Initialize();
 
-	LoadCSV<SoundResource>::SetCSV(L"../../Resource/DataTable/AllSoundList2.csv", soundList);
+	LoadCSV<SoundResource>::SetCSV(L"../../Resource/DataTable/AllSoundList.csv", soundList);
 
 	// 출력 테스트
 	//for (const auto& sound : soundList) {
