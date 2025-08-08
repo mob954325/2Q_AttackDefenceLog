@@ -9,8 +9,8 @@
             "y": 471.0,
             "width": 730.0,
             "height": 471.0,
-            "pivotX": 0.45,
-            "pivotY": 0.45
+            "pivotX": 0.5000000596046448,
+            "pivotY": 0.5000001192092896
         },
         {
             "name": "combo_node_spreadsheet_1",
@@ -18,8 +18,8 @@
             "y": 471.0,
             "width": 730.0,
             "height": 471.0,
-            "pivotX": 0.45,
-            "pivotY": 0.45
+            "pivotX": 0.5,
+            "pivotY": 0.5
         },
         {
             "name": "combo_node_spreadsheet_2",
@@ -27,8 +27,8 @@
             "y": 471.0,
             "width": 730.0,
             "height": 471.0,
-            "pivotX": 0.45,
-            "pivotY": 0.45
+            "pivotX": 0.5,
+            "pivotY": 0.5
         },
         {
             "name": "combo_node_spreadsheet_3",
@@ -36,8 +36,8 @@
             "y": 471.0,
             "width": 730.0,
             "height": 471.0,
-            "pivotX": 0.45,
-            "pivotY": 0.45
+            "pivotX": 0.5,
+            "pivotY": 0.5
         },
         {
             "name": "combo_node_spreadsheet_4",
@@ -45,8 +45,8 @@
             "y": 471.0,
             "width": 730.0,
             "height": 471.0,
-            "pivotX": 0.45,
-            "pivotY": 0.45
+            "pivotX": 0.5,
+            "pivotY": 0.5
         }
     ]
 }

@@ -1,0 +1,25 @@
+{
+    "clipName": "attack_circle",
+    "loop": true,
+    "texturePath": "Assets/Character/Sprites/attack_line_circle_small_spreadsheet.png",
+    "duration": 0.3333333432674408,
+    "frames": [
+        {
+            "sprite": "attack_circle_0",
+            "time": 0.0
+        },
+        {
+            "sprite": "attack_circle_1",
+            "time": 0.0833333358168602
+        },
+        {
+            "sprite": "attack_circle_2",
+            "time": 0.1666666716337204
+        },
+        {
+            "sprite": "attack_circle_3",
+            "time": 0.25
+        }
+    ],
+    "events": []
+}

@@ -37,6 +37,10 @@ public:
 	BitmapRenderer* GetGaugeButtonImage();
 
 
+	void SetSliderLayer(int gauge , int background, int button);
+
+
+
 	//GaugeRect셋팅함수(첫 시작 게이지 받아옴)
 	void SetGaugeRectValue();
 	D2D1_RECT_F GetGaugeRectValue();

@@ -10,10 +10,20 @@
 #include "Components/Rendering/AnimationRenderer.h"
 #include "Components/Rendering/AnimationPlayer.h"
 #include "Components/UI/Slider.h"
+#include "Math/Vector2.h"
 
 /*
 미리 풀링으로 만들어둔 이펙트, 파티클들
 */
+
+enum class EffectType
+{
+	None,
+	ParryEffect,
+	GuardEffect,
+	ChargeEffect,
+	HoldEffect
+};
 
 class EffectInstance : public MonoBehavior
 {
@@ -23,9 +33,13 @@ public:
 	void OnStart() override;
 	void OnDestroy() override;
 
-	void CallGuardEffect();
-	void CallParryEffect();
-	void CallNomalEffect();
+	void CallEffect(EffectType type , Vector2 info);
+
+	void ParryEffect();
+	void GuardEffect();
+	void ChargeEffect();
+	void HoldEffect();
+	void EndEffects();
 
 	float GetValue(size_t type);
 
@@ -33,18 +47,23 @@ private:
 
 	EffectManager* Emanager{};
 
-	AnimationRenderer* AnimObject{};
-
-	bool eventvalue = false;
-	bool eventvalue2 = false;
-
 	float counttime = 0.0f;
 	float maxtime = 1.0f;
+
+	float maxtime2 = 3.0f;
+
 	float mydeltatime;
 
 	float PI = 3.141592;
 
-	GameObject* handleObject{};
+	float chargeValue = 0.0f;
+	float CountMathTime = 0.0f;
+
+	float capacapacityWave = 0.0f;
+
+	EffectType effecttype = EffectType::None;
+
+	std::vector<GameObject*> AnimeList;
 
 };
 

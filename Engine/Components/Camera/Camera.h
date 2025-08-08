@@ -39,7 +39,24 @@
 //
 //카메라 줌인, 줌아웃일때 흔들림보정추가 //계산식 GetOffset 에 추가됨
 //카메라 상하좌우로 흔들릴수 있도록 넘겨받는 매개변수 추가
+/*
+25.08.08 | 작성자 : 김정현
+카메라 흔들리는 종류 추가
+밑의 enum클래스의 종류대로 카메라를 흔들 수 있음
+사용자는 CameraInstance에서 ShakeCalcu 변수를 가지며
+이값을 넘겨받은 카메라에서 그에 맞는 계산식으로 카메라 흔들림을 구현
+*/
 /// </remarks>
+
+enum class ShakeCalcu
+{
+	None,		  // 기본값
+	FastToSlow,   // 처음에 변화폭 큼 → 점점 완만
+	SlowToFast,   // 처음엔 작고 → 점점 큼
+	SlowFastSlow  // 작게 시작 → 크게 → 작게
+};
+
+
 class Camera : public Component
 {
 public:
@@ -59,7 +76,7 @@ public:
 
 
 	//흔들릴때 어느정도로 흔들릴지
-	float GetOffset(float externalAmplitude);
+	float GetOffset(float externalAmplitude, ShakeCalcu value, float MaxTime);
 
 
 	void ZoomCameraToPoint(const D2D1_POINT_2F& screenpoint,
@@ -88,7 +105,7 @@ public:
 	void ResetLocalTrans();
 
 	//클라이언트에서 누적된 deltatime을 받아 좌우로 이동하는 함수
-	void ShakeCamera(float externalAmplitudeX, float externalAmplitudeY);
+	void ShakeCamera(float externalAmplitudeX, float externalAmplitudeY , ShakeCalcu value , float MaxTime);
 
 	//Period 주기 , Amplitude 진폭 셋팅하는 함수 
 	void SetWave(float _Period, float _Amplitude);
@@ -96,6 +113,9 @@ public:
 	//흔들림 시작, 끝 Set함수
 	void SetShakeActive(bool value);
 
+	void SetMaxWave(float xvalue, float yvalue);
+
+	void SetX_YValue(bool value);
 
 private:
 	int priority = 10;
@@ -120,8 +140,14 @@ private:
 
 	Vector2 basePos{};
 
+	float MaxWaveX = 96.0f;
+	float MaxWaveY = 54.0f;
+
+	float PI = 3.14159265f;
 
 	//줌 타겟 위치
 	D2D1_POINT_2F position = D2D1::Point2F(0.0f, 0.0f);
+
+	bool X_YSet = false;
 };
 

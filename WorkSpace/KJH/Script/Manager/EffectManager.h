@@ -38,6 +38,8 @@ public:
 
 	void SetLayer(int index, int value);
 
+	void SetUnityValue(bool value);
+
 	ParticleRenderer* GetParticleComponent(size_t index);
 
 

@@ -335,7 +335,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Script\App\AppEx.cpp" />
     <ClCompile Include="App\SoundApp.cpp" />
+    <ClCompile Include="Script\Camera\CamInstance.cpp" />
     <ClCompile Include="DataStorage\BaseData.cpp" />
     <ClCompile Include="DataStorage\DataClass\AllNodePattenClass.cpp" />
     <ClCompile Include="DataStorage\DataClass\EnemyAtkPattenData.cpp" />
@@ -351,9 +353,14 @@
     <ClCompile Include="Script\MusicScript.cpp" />
     <ClCompile Include="Script\TestObject.cpp" />
     <ClCompile Include="Script\TestObject2.cpp" />
+    <ClCompile Include="Script\Sound\SoundTittle.cpp" />
+    <ClCompile Include="Script\Sound\SoundPlayScene.cpp" />
+    <ClCompile Include="Script\Sound\SoundEnd.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Script\App\AppEx.h" />
     <ClInclude Include="App\SoundApp.h" />
+    <ClInclude Include="Script\Camera\CamInstance.h" />
     <ClInclude Include="DataStorage\BaseData.h" />
     <ClInclude Include="DataStorage\DataClass\AllNodePattenClass.h" />
     <ClInclude Include="DataStorage\DataClass\EnemyAtkPattenData.h" />
@@ -368,6 +375,9 @@
     <ClInclude Include="Script\MusicScript.h" />
     <ClInclude Include="Script\TestObject.h" />
     <ClInclude Include="Script\TestObject2.h" />
+    <ClInclude Include="Script\Sound\SoundTittle.h" />
+    <ClInclude Include="Script\Sound\SoundPlayScene.h" />
+    <ClInclude Include="Script\Sound\SoundEnd.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
