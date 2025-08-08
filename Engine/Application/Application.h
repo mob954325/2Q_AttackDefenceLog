@@ -29,8 +29,11 @@ protected:
 	void ConsoleInitialize();
 	void ConsoleUnInitialize();
 	void ResizeSwapChainBuffers();
+	void CreateD3DRenderTargetViewFromSwapChain();
 
 	ComPtr<ID3D11Device>			m_d3dDevice;
+	ComPtr<ID3D11DeviceContext>		m_d3dDeviceContext;
+	ComPtr<ID3D11RenderTargetView>	m_d3dTargetView;
 	ComPtr<IDXGISwapChain1>			m_dxgiSwapChain;
 	ComPtr<ID2D1DeviceContext7>		m_d2dDeviceContext;
 	ComPtr<ID2D1Bitmap1>			m_d2dBitmapTarget;

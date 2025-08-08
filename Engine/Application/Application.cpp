@@ -17,6 +17,8 @@
 #include "AppPaths.h"
 #include "Utils/DebugUtility.h"
 
+#include "Platform/ImguiManager.h"
+
 LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	Application* pThis = nullptr;
@@ -69,7 +71,7 @@ void Application::Initialize()
 	D3D_FEATURE_LEVEL levels[] = { D3D_FEATURE_LEVEL_11_0 };
 	D3D11CreateDevice(nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr,
 		D3D11_CREATE_DEVICE_BGRA_SUPPORT, levels, 1,
-		D3D11_SDK_VERSION, m_d3dDevice.GetAddressOf(), &featureLevel, nullptr);
+		D3D11_SDK_VERSION, m_d3dDevice.GetAddressOf(), &featureLevel, m_d3dDeviceContext.GetAddressOf());
 
 	// D2D 팩토리 및 디바이스 생성
 	D2D1_FACTORY_OPTIONS options = {
@@ -110,6 +112,9 @@ void Application::Initialize()
 	m_d2dDeviceContext->CreateBitmapFromDxgiSurface(backBuffer.Get(), &bmpProps, m_d2dBitmapTarget.GetAddressOf());
 	m_d2dDeviceContext->SetTarget(m_d2dBitmapTarget.Get());
 
+	// d3d targetview 만들기
+	CreateD3DRenderTargetViewFromSwapChain();
+
 	// D2DManager 초기화
 	m_D2DRenderManager = new D2DRenderManager;
 	m_D2DRenderManager->Initialize();
@@ -130,6 +135,10 @@ void Application::Initialize()
 	Singleton<DebugUtility>::GetInstance().GetDxgiAdapter(m_d3dDevice, dxgiDevice);
 
 	ConsoleInitialize();
+
+#if _DEBUG
+	Singleton<ImguiManager>::GetInstance().Init(m_hwnd, m_d3dDevice.Get(), m_d3dDeviceContext.Get());
+#endif 
 	// -- Application 상속받은 클래스의 Initialize() 실행
 }
 
@@ -205,7 +214,25 @@ void Application::MessageProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 void Application::Render()
 {
 	m_D2DRenderManager->Render();
+
+	// 반드시 D2D 타겟 해제하고 flush (D2D가 백버퍼 락을 해제하도록)
+	m_d2dDeviceContext->SetTarget(nullptr);
+	m_d2dDeviceContext->Flush();
+
+	// 2) D3D: RTV를 바인드하고(있다면 VS/PS 상태 등도 설정)
+	ID3D11RenderTargetView* rtv = m_d3dTargetView.Get();
+	m_d3dDeviceContext->OMSetRenderTargets(1, &rtv, nullptr);
+
+	// 3) ImGui 렌더 (ImguiManager::Render() 안에 ImGui_ImplDX11_RenderDrawData 호출 필요)
+#if _DEBUG
+	Singleton<ImguiManager>::GetInstance().Render();
+#endif
+
+	// 4) Present
 	m_dxgiSwapChain->Present(1, 0);
+
+	// 5) D2D 타겟 다시 연결 (다음 프레임 D2D 렌더를 위해)
+	m_d2dDeviceContext->SetTarget(m_d2dBitmapTarget.Get());
 }
 
 void Application::Update()
@@ -302,4 +329,12 @@ void Application::ResizeSwapChainBuffers()
 
 	// 렌더 매니저에도 다시 설정
 	m_D2DRenderManager->SetD2D1DeviceContext7(m_d2dDeviceContext.Get());
+}
+
+void Application::CreateD3DRenderTargetViewFromSwapChain()
+{
+	ComPtr<ID3D11Texture2D> backBufferTex;
+	HRESULT hr = m_dxgiSwapChain->GetBuffer(0, IID_PPV_ARGS(&backBufferTex));
+	if (FAILED(hr)) return;
+	m_d3dDevice->CreateRenderTargetView(backBufferTex.Get(), nullptr, m_d3dTargetView.GetAddressOf());
 }

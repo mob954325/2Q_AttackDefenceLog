@@ -5,6 +5,9 @@
 #include "../Objects/TestObject.h"
 #include "../Objects/MouseTrailObject.h"
 
+#include "Platform/ImguiManager.h"
+#include "Scripts/Test/ImguiModuleTest.h"
+
 void MenuScene::OnEnterImpl()
 {
 	std::cout << "메뉴씬 진입" << std::endl;
@@ -21,6 +24,8 @@ void MenuScene::OnEnterImpl()
 	trail->AddComponent<MouseTrailObject>();
 	AddGameObject(trail);
 
+	ImguiModuleTest* test = new ImguiModuleTest();
+	Singleton<ImguiManager>::GetInstance().Add(test);
 }
 
 void MenuScene::OnExitImpl()

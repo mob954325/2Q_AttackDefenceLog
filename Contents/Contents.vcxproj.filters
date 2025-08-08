@@ -58,6 +58,9 @@
     <Filter Include="Scripts\CsvData\DataStorage">
       <UniqueIdentifier>{1cb7858a-2478-40bb-b08b-017134003a1b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scripts\Test">
+      <UniqueIdentifier>{01dbdfb2-6038-4f6b-a02a-62e61a70302f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\Game.cpp">
@@ -162,6 +165,9 @@
     <ClCompile Include="Scripts\CsvData\DataClass\PlayerData.cpp">
       <Filter>Scripts\CsvData\DataClass</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\Test\ImguiModuleTest.cpp">
+      <Filter>Scripts\Test</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameApp.h">
@@ -265,6 +271,9 @@
     </ClInclude>
     <ClInclude Include="Scripts\CsvData\DataClass\PlayerData.h">
       <Filter>Scripts\CsvData\DataClass</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Test\ImguiModuleTest.h">
+      <Filter>Scripts\Test</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
