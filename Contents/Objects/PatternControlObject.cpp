@@ -7,6 +7,8 @@
 #include "../Engine/Components/Rendering/ChainDrawerComponent.h"
 #include "../Engine/Utils/GameTime.h"
 
+#include "../Engine/Components/Rendering/AnimatedChainEffect.h" // 테스트
+
 //성빈씨꺼
 #include "Scripts/LogicManager/BettleManager.h"
 #include "Scripts/LogicManager/AttackPatternManager.h" 
@@ -16,6 +18,15 @@
 
 void PatternControlObject::OnCreate()
 {
+	test = new GameObject(); // 테스트 코드
+	test->SetRenderLayer(EngineData::RenderLayer::UI);	
+	auto tete = test->AddComponent<AnimatedChainEffect>(); // 테스트 코드
+	tete->SetOrderInLayer(100);
+	
+	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(test); // 테스트 코드
+
+
+
 	trail = new GameObject();
 	trail->AddComponent<MouseTrailObject>();
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(trail, "MouseTrail");
@@ -133,7 +144,7 @@ void PatternControlObject::OnStart() // 처음
 		queueBack->SetOrderInLayer(0);
 		readyQueue.back()->SetName("EnemyGuideline." + i);
 		queueBack->SetupNodes(m_nodes[4]->GetTransform().GetPosition(), n); // 스타트에서 하기
-		queueBack->OnInterrupted.Add([this, go = readyQueue.back()](const std::string& id) {			
+		queueBack->OnInterrupted.Add([this, go = readyQueue.back()](const std::string& id) {
 			for (auto it = enemyGuidelines.begin(); it != enemyGuidelines.end(); ++it) {
 				if (*it == go) { enemyGuidelines.erase(it); break; }
 			}
@@ -149,6 +160,9 @@ void PatternControlObject::OnStart() // 처음
 
 		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(readyQueue.back());
 	}
+
+	auto tetetet = test->GetComponent<AnimatedChainEffect>(); // 테스트 코드
+	tetetet->SetupNodes(m_nodes[4]->GetTransform().GetPosition(), n); // 테스트 코드
 
 	auto PCA = playerGuidelineA->GetComponent<ChainDrawerComponent>();
 	PCA->SetupNodes(m_nodes[4]->GetTransform().GetPosition(), n);
@@ -166,6 +180,9 @@ void PatternControlObject::OnUpdate() // 업데이트
 	//auto en = enemyGuideline->GetComponent<ChainDrawerComponent>();
 
 	if (t->isNewCached) { // 새로운 노드 발생하면				
+		auto tetetet = test->GetComponent<AnimatedChainEffect>(); // 테스트 코드
+		tetetet->PlayOnce({2,3,4,5,8});
+
 		PM.CheckTrails(t->CheckingCachedTrails());
 		const auto& vec = PM.GetPatternPathPositions(); // 여기에 담김!!! 1 3 2 4 이런거 <<<<< (연결지점)
 
