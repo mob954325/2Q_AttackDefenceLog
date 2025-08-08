@@ -5,7 +5,19 @@
 
 void SliceableObject::OnCreate()
 {
-	sliceComp = owner->AddComponent<SliceRenderer>();
+	if (owner->GetComponent<SliceRenderer>() == nullptr)
+	{
+		sliceComp = owner->AddComponent<SliceRenderer>();
+	}
+	else
+	{
+		sliceComp = owner->GetComponent<SliceRenderer>();
+	}
+}
+
+void SliceableObject::OnStart()
+{
+
 }
 
 void SliceableObject::OnUpdate()
@@ -24,7 +36,6 @@ void SliceableObject::SetImage(std::wstring path)
 void SliceableObject::AddEvent(std::function<void()> f)
 {
 	OnSlice.Add(f);
-	OnSlice.Add([&]() { std::cout << owner->GetName() << " onclick event " << std::endl; });
 }
 
 void SliceableObject::HandleOverlap()
@@ -63,7 +74,6 @@ void SliceableObject::HandleOverlap()
 				Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(obj); // 해당 오브젝트를 씬에 추가해서 실행
 
 				obj->AddComponent<SlicedObject>();
-				auto mono = obj->GetComponent<SlicedObject>();
 
 				if (!isSliced)
 				{
@@ -99,7 +109,7 @@ bool SliceableObject::IsOverlap(float x, float y)
 
 Vector2 SliceableObject::ClampPoisiton(const Vector2& vec)
 {
-	if (*(sliceComp) == 0 || !sliceComp->GetOriginal()->GetBitmap()) return Vector2::Zero(); // slice Renderer를 사용할 수 없으면 0,0 반환
+	if (!sliceComp || !sliceComp->GetOriginal()->GetBitmap()) return Vector2::Zero(); // slice Renderer를 사용할 수 없으면 0,0 반환
 
 	Vector2 resultVec = vec;
 	if (vec.x < 0) resultVec.x = 0;

@@ -5,8 +5,9 @@
 class StageSelectManager : public MonoBehavior
 {
 public:
-	void OnCreate();
-	void OnStart();
+	void OnCreate() override;
+	void OnStart() override;
+	void OnDestroy() override;
 
 private:
 	void CreateMenuObjects();
