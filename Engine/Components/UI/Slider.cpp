@@ -106,6 +106,13 @@ BitmapRenderer* Slider::GetGaugeButtonImage()
 	return BarButton;
 }
 
+void Slider::SetSliderLayer(int gauge, int background, int button)
+{
+	GaugeBar->SetOrderInLayer(gauge);
+	GaugeBackground->SetOrderInLayer(background);
+	BarButton->SetOrderInLayer(button);
+}
+
 void Slider::SetGaugeRectValue()
 {
 	GaugeBarRect = GaugeBar->GetDestRect();

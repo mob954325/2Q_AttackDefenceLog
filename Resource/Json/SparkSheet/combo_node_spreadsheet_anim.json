@@ -1,8 +1,8 @@
 {
     "clipName": "combo_node_spreadsheet",
-    "loop": false,
+    "loop": true,
     "texturePath": "Assets/Character/Sprites/combo_node_spreadsheet.png",
-    "duration": 0.4166666865348816,
+    "duration": 1.0833333730697632,
     "frames": [
         {
             "sprite": "combo_node_spreadsheet_0",
@@ -10,19 +10,19 @@
         },
         {
             "sprite": "combo_node_spreadsheet_1",
-            "time": 0.0833333358168602
-        },
-        {
-            "sprite": "combo_node_spreadsheet_2",
-            "time": 0.1666666716337204
-        },
-        {
-            "sprite": "combo_node_spreadsheet_3",
             "time": 0.25
         },
         {
+            "sprite": "combo_node_spreadsheet_2",
+            "time": 0.25
+        },
+        {
+            "sprite": "combo_node_spreadsheet_3",
+            "time": 0.75
+        },
+        {
             "sprite": "combo_node_spreadsheet_4",
-            "time": 0.3333333432674408
+            "time": 1.0
         }
     ],
     "events": []

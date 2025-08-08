@@ -1,0 +1,43 @@
+{
+    "texture": "attack_line_circle_small_spreadsheet.png",
+    "textureWidth": 1048,
+    "textureHeight": 254,
+    "sprites": [
+        {
+            "name": "attack_circle_0",
+            "x": 0.0,
+            "y": 254.0,
+            "width": 262.0,
+            "height": 254.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "attack_circle_1",
+            "x": 262.0,
+            "y": 254.0,
+            "width": 262.0,
+            "height": 254.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "attack_circle_2",
+            "x": 524.0,
+            "y": 254.0,
+            "width": 262.0,
+            "height": 254.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "attack_circle_3",
+            "x": 786.0,
+            "y": 254.0,
+            "width": 262.0,
+            "height": 254.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        }
+    ]
+}

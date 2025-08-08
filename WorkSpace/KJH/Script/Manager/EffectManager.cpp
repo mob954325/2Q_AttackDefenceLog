@@ -88,6 +88,19 @@ void EffectManager::SetLayer(int index , int value)
 	effectList[index]->GetComponent<EffectObject>()->SetLayer(value);
 }
 
+void EffectManager::SetUnityValue(bool value)
+{
+	for (auto it : effectList)
+	{
+		it->GetTransform().SetUnityCoords(value);
+	}
+
+	for (auto it : particleList)
+	{
+		it->GetTransform().SetUnityCoords(value);
+	}
+}
+
 ParticleRenderer* EffectManager::GetParticleComponent(size_t index)
 {
 	return particleList[index]->GetComponent<ParticleRenderer>();

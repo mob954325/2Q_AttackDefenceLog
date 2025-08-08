@@ -22,10 +22,10 @@ void TestScene::TestScene::OnEnterImpl()
 	CameTest2->AddComponent<TestObject2>();
 	AddGameObject(CameTest2);
 
-	MainCamera = new GameObject();
-	MainCamera->SetName("MainCam");
-	MainCamera->AddComponent<MainCam>();
-	AddGameObject(MainCamera);
+	/*MainCamera = new GameObject();
+	MainCamera->SetName("MainCam");*/
+	/*MainCamera->AddComponent<MainCam>();*/
+	/*AddGameObject(MainCamera);*/
 
 }
 

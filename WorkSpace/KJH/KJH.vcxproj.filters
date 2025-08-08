@@ -17,6 +17,11 @@
     <ClCompile Include="Script\EffectObject.cpp" />
     <ClCompile Include="Script\Manager\EffectManager.cpp" />
     <ClCompile Include="Script\Effect\EffectInstance.cpp" />
+    <ClCompile Include="Script\Camera\CamInstance.cpp" />
+    <ClCompile Include="Script\App\AppEx.cpp" />
+    <ClCompile Include="Script\Sound\SoundTittle.cpp" />
+    <ClCompile Include="Script\Sound\SoundPlayScene.cpp" />
+    <ClCompile Include="Script\Sound\SoundEnd.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Script\MusicScript.h" />
@@ -34,5 +39,10 @@
     <ClInclude Include="Script\EffectObject.h" />
     <ClInclude Include="Script\Manager\EffectManager.h" />
     <ClInclude Include="Script\Effect\EffectInstance.h" />
+    <ClInclude Include="Script\Camera\CamInstance.h" />
+    <ClInclude Include="Script\App\AppEx.h" />
+    <ClInclude Include="Script\Sound\SoundTittle.h" />
+    <ClInclude Include="Script\Sound\SoundPlayScene.h" />
+    <ClInclude Include="Script\Sound\SoundEnd.h" />
   </ItemGroup>
 </Project>

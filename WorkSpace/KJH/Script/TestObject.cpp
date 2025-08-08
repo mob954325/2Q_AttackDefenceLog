@@ -5,44 +5,45 @@
 #include "Components/Camera/CameraManager.h"
 #include "Scene/SceneManager.h"
 #include "Math/EasingFunction.h"
+#include "Script/Camera/CamInstance.h"
 
 
 void TestObject::OnUpdate()
 {
 	CheckInput();
 
-	if (eventvalue && counttime < maxtime)
-	{
-		
-		counttime += Singleton<GameTime>::GetInstance().GetDeltaTime();
-		Emanager->SetEffectValue(0, GetValue(0), GetValue(0), 1 - GetValue(3), true);
-		Emanager->SetEffectValue(1, GetValue(1), GetValue(1), 1 - GetValue(2), true);
-		Emanager->SetEffectValue(2, 343 , 22, 1 -  GetValue(3), true);
-		std::cout << counttime << std::endl;
-	
-	}
-	else if (eventvalue && counttime >= maxtime)
-	{
-		/*TestParticle->SetLoop(false);*/
-		Emanager->SetOffEffect();
-		eventvalue = false;
-	}
-	
-	if (eventvalue2 && counttime < maxtime)
-	{
+	//if (eventvalue && counttime < maxtime)
+	//{
+	//	
+	//	counttime += Singleton<GameTime>::GetInstance().GetDeltaTime();
+	//	Emanager->SetEffectValue(0, GetValue(0), GetValue(0), 1 - GetValue(3), true);
+	//	Emanager->SetEffectValue(1, GetValue(1), GetValue(1), 1 - GetValue(2), true);
+	//	Emanager->SetEffectValue(2, 343 , 22, 1 -  GetValue(3), true);
+	//	std::cout << counttime << std::endl;
+	//
+	//}
+	//else if (eventvalue && counttime >= maxtime)
+	//{
+	//	/*TestParticle->SetLoop(false);*/
+	//	Emanager->SetOffEffect();
+	//	eventvalue = false;
+	//}
+	//
+	//if (eventvalue2 && counttime < maxtime)
+	//{
 
-		counttime += Singleton<GameTime>::GetInstance().GetDeltaTime();
-		Emanager->SetEffectValue(3, GetValue(1), GetValue(1), 1 - GetValue(2), true);
-		Emanager->SetEffectValue(4, 343, 22, 1 - GetValue(3), true);
-		std::cout << counttime << std::endl;
+	//	counttime += Singleton<GameTime>::GetInstance().GetDeltaTime();
+	//	Emanager->SetEffectValue(3, GetValue(1), GetValue(1), 1 - GetValue(2), true);
+	//	Emanager->SetEffectValue(4, 343, 22, 1 - GetValue(3), true);
+	//	std::cout << counttime << std::endl;
 
-	}
-	else if (eventvalue2 && counttime >= maxtime)
-	{
-		/*TestParticle->SetLoop(false);*/
-		Emanager->SetOffEffect();
-		eventvalue2 = false;
-	}
+	//}
+	//else if (eventvalue2 && counttime >= maxtime)
+	//{
+	//	/*TestParticle->SetLoop(false);*/
+	//	Emanager->SetOffEffect();
+	//	eventvalue2 = false;
+	//}
 
 	/*handleObject->GetTransform().SetPosition(owner->GetComponent<Slider>()->GetGaugeRectValue().right, owner->GetComponent<Slider>()->GetGaugeRectValue().bottom/2);*/
 }
@@ -55,9 +56,11 @@ void TestObject::OnCreate()
 	owner->GetTransform().SetOffset(-TestImage->GetResource()->GetBitmap()->GetSize().width / 2, TestImage->GetResource()->GetBitmap()->GetSize().height / 2);*/
 	counttime = 0;
 	input = owner->AddComponent<InputSystem>();
-	Emanager = owner->AddComponent<EffectManager>();
+	/*Emanager = owner->AddComponent<EffectManager>();*/
 	/*AnimObject = owner->AddComponent<AnimationRenderer>();*/
 	
+	effectobj = owner->AddComponent<EffectInstance>();
+
 
 	//GameObject* Test = new GameObject();
 	//Test->AddComponent<AnimationRenderer>();
@@ -67,61 +70,65 @@ void TestObject::OnCreate()
 
 	//AnimObject = handleObject->GetComponent<AnimationRenderer>();
 	
-	
+	GameObject* TempObj = new GameObject();
+	TempObj->AddComponent<CamInstance>();
+	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(TempObj);
+	handleCam = TempObj;
+	handleCam->GetComponent<CamInstance>()->SetWaveValue(2.0f, 25.0f, 150.0f, 96.0f, 54.0f);
 
 }
 
 void TestObject::OnStart()
 {
-	Emanager->CreateEffectObject(5);
-	Emanager->CreateParticleObject(2);
-	//패리
-	Emanager->SetEffectImage(0, L"../../Resource/Particles/circle_outer.png");
-	Emanager->SetEffectImage(1, L"../../Resource/Particles/circle_inner.png");
-	Emanager->SetEffectImage(2, L"../../Resource/Particles/line_horizon.png");
-	//방어
-	Emanager->SetEffectImage(3, L"../../Resource/Particles/defend/circle_inner.png");
-	Emanager->SetEffectImage(4, L"../../Resource/Particles/defend/horizon_line.png");
+	//Emanager->CreateEffectObject(5);
+	//Emanager->CreateParticleObject(2);
+	////패리
+	//Emanager->SetEffectImage(0, L"../../Resource/Particles/circle_outer.png");
+	//Emanager->SetEffectImage(1, L"../../Resource/Particles/circle_inner.png");
+	//Emanager->SetEffectImage(2, L"../../Resource/Particles/line_horizon.png");
+	////방어
+	//Emanager->SetEffectImage(3, L"../../Resource/Particles/defend/circle_inner.png");
+	//Emanager->SetEffectImage(4, L"../../Resource/Particles/defend/horizon_line.png");
 
 
 
-	Emanager->SetLayer(0, 30);
-	Emanager->SetLayer(1, 31);
-	Emanager->SetLayer(2, 32);
-	Emanager->SetLayer(3, 33);
-	Emanager->SetLayer(4, 34);
+	//Emanager->SetLayer(0, 30);
+	//Emanager->SetLayer(1, 31);
+	//Emanager->SetLayer(2, 32);
+	//Emanager->SetLayer(3, 33);
+	//Emanager->SetLayer(4, 34);
 
 
-	
-	Emanager->GetParticleComponent(0)->SetOrderInLayer(35);
-	Emanager->GetParticleComponent(0)->SetLoop(false);
-	Emanager->GetParticleComponent(0)->SetMinSpeed(0.3f);
-	Emanager->GetParticleComponent(0)->SetMaxSpeed(0.7f);
-	Emanager->GetParticleComponent(0)->SetDuration(0.8f);
-	Emanager->GetParticleComponent(0)->SetFadeOutTime(0.7f);
-	Emanager->GetParticleComponent(0)->SetAmount(25);
-	Emanager->GetParticleComponent(0)->SetAnimPlayer(L"../../Resource/Particles/SparkSheet.png",
-		L"../../Resource/Json/SparkSheet/SparkSheet_sprites.json",
-		L"../../Resource/Json/SparkSheet/Red_Spark_anim.json");
-	Emanager->GetParticleComponent(0)->SetShowType(ParticleShowType::RandomSingle);
-	Emanager->GetParticleComponent(0)->SetGravity(false);
-	Emanager->GetParticleComponent(0)->SetSeeDirection(true);
-	Emanager->GetParticleComponent(0)->SetDecreasing(true);
+	//
+	//Emanager->GetParticleComponent(0)->SetOrderInLayer(35);
+	//Emanager->GetParticleComponent(0)->SetLoop(false);
+	//Emanager->GetParticleComponent(0)->SetMinSpeed(0.3f);
+	//Emanager->GetParticleComponent(0)->SetMaxSpeed(0.7f);
+	//Emanager->GetParticleComponent(0)->SetDuration(0.8f);
+	//Emanager->GetParticleComponent(0)->SetFadeOutTime(0.7f);
+	//Emanager->GetParticleComponent(0)->SetAmount(25);
+	//Emanager->GetParticleComponent(0)->SetAnimPlayer(L"../../Resource/Particles/SparkSheet.png",
+	//	L"../../Resource/Json/SparkSheet/SparkSheet_sprites.json",
+	//	L"../../Resource/Json/SparkSheet/Red_Spark_anim.json");
+	//Emanager->GetParticleComponent(0)->SetShowType(ParticleShowType::RandomSingle);
+	//Emanager->GetParticleComponent(0)->SetGravity(false);
+	//Emanager->GetParticleComponent(0)->SetSeeDirection(true);
+	//Emanager->GetParticleComponent(0)->SetDecreasing(true);
 
-	Emanager->GetParticleComponent(1)->SetOrderInLayer(35);
-	Emanager->GetParticleComponent(1)->SetLoop(false);
-	Emanager->GetParticleComponent(1)->SetMinSpeed(0.3f);
-	Emanager->GetParticleComponent(1)->SetMaxSpeed(0.7f);
-	Emanager->GetParticleComponent(1)->SetDuration(0.8f);
-	Emanager->GetParticleComponent(1)->SetFadeOutTime(0.7f);
-	Emanager->GetParticleComponent(1)->SetAmount(25);
-	Emanager->GetParticleComponent(1)->SetAnimPlayer(L"../../Resource/Particles/defend/ParticleGuard.png",
-		L"../../Resource/Json/SparkSheet/ParticleGuard_sprites.json",
-		L"../../Resource/Json/SparkSheet/ParticleGuard_Guard_anim.json");
-	Emanager->GetParticleComponent(1)->SetShowType(ParticleShowType::RandomSingle);
-	Emanager->GetParticleComponent(1)->SetGravity(false);
-	Emanager->GetParticleComponent(1)->SetSeeDirection(true);
-	Emanager->GetParticleComponent(1)->SetDecreasing(true);
+	//Emanager->GetParticleComponent(1)->SetOrderInLayer(35);
+	//Emanager->GetParticleComponent(1)->SetLoop(false);
+	//Emanager->GetParticleComponent(1)->SetMinSpeed(0.3f);
+	//Emanager->GetParticleComponent(1)->SetMaxSpeed(0.7f);
+	//Emanager->GetParticleComponent(1)->SetDuration(0.8f);
+	//Emanager->GetParticleComponent(1)->SetFadeOutTime(0.7f);
+	//Emanager->GetParticleComponent(1)->SetAmount(25);
+	//Emanager->GetParticleComponent(1)->SetAnimPlayer(L"../../Resource/Particles/defend/ParticleGuard.png",
+	//	L"../../Resource/Json/SparkSheet/ParticleGuard_sprites.json",
+	//	L"../../Resource/Json/SparkSheet/ParticleGuard_Guard_anim.json");
+	//Emanager->GetParticleComponent(1)->SetShowType(ParticleShowType::RandomSingle);
+	//Emanager->GetParticleComponent(1)->SetGravity(false);
+	//Emanager->GetParticleComponent(1)->SetSeeDirection(true);
+	//Emanager->GetParticleComponent(1)->SetDecreasing(true);
 
 	//AnimObject->CreateBitmapResource(L"../../Resource/Dance/Dance.png");
 	//AnimObject->SetSpriteSheet(L"../../Resource/Dance/Dance_sprites.json");
@@ -132,31 +139,85 @@ void TestObject::OnStart()
 
 	/*owner->GetComponent<Slider>()->ButtonShow(false);*/
 
+	ObjInfo.x = 950.0f;
+	ObjInfo.y = 550.0f;
 
 }
 
 void TestObject::OnDestroy()
 {
-	/*AnimPlayer = nullptr;*/
+
 }
 
 
 void TestObject::CheckInput()
 {
+	//if (input->IsKeyPressed('N'))
+	//{
+	//	Emanager->GetParticleComponent(0)->Reset();
+	//	eventvalue = true;
+	//	counttime = 0;
+	//	Emanager->GetParticleComponent(0)->Play();
+	//}
+
+	//if (input->IsKeyPressed('B'))
+	//{
+	//	Emanager->GetParticleComponent(1)->Reset();
+	//	eventvalue2 = true;
+	//	counttime = 0;
+	//	Emanager->GetParticleComponent(1)->Play();
+	//}
+
 	if (input->IsKeyPressed('N'))
 	{
-		Emanager->GetParticleComponent(0)->Reset();
-		eventvalue = true;
-		counttime = 0;
-		Emanager->GetParticleComponent(0)->Play();
+		effectobj->CallEffect(EffectType::ParryEffect ,ObjInfo);
 	}
 
 	if (input->IsKeyPressed('B'))
 	{
-		Emanager->GetParticleComponent(1)->Reset();
-		eventvalue2 = true;
-		counttime = 0;
-		Emanager->GetParticleComponent(1)->Play();
+		effectobj->CallEffect(EffectType::GuardEffect ,ObjInfo);
+	}
+
+	if (input->IsKeyPressed('0'))
+	{
+		effectobj->CallEffect(EffectType::ChargeEffect ,ObjInfo);
+	}
+	if (input->IsKeyPressed('9'))
+	{
+		effectobj->CallEffect(EffectType::HoldEffect, ObjInfo);
+	}
+
+
+	if (input->IsKeyPressed('5'))
+	{
+		handleCam->GetComponent<CamInstance>()->SetSlowToFast();
+	}
+	if (input->IsKeyPressed('6'))
+	{
+		handleCam->GetComponent<CamInstance>()->SetFastToSlow();
+	}
+	if (input->IsKeyPressed('7'))
+	{
+		handleCam->GetComponent<CamInstance>()->SetSlowFastSlow();
+	}
+
+
+
+	if (input->IsKeyPressed('1'))
+	{
+		handleCam->GetComponent<CamInstance>()->CallCamShake(ShakeType::X);
+	}
+	if (input->IsKeyPressed('2'))
+	{
+		handleCam->GetComponent<CamInstance>()->CallCamShake(ShakeType::Y);
+	}
+	if (input->IsKeyPressed('3'))
+	{
+		handleCam->GetComponent<CamInstance>()->CallCamShake(ShakeType::XY);
+	}
+	if (input->IsKeyPressed('4'))
+	{
+		handleCam->GetComponent<CamInstance>()->CallCamShake(ShakeType::X_Y);
 	}
 
 

@@ -25,7 +25,7 @@ public:
 	/// <param name="filePath">파일 경로</param>
 	void SetAnimationClip(std::wstring filePath);
 
-	AnimationPlayer GetAnimationPlayer();
+	AnimationPlayer* GetAnimationPlayer();
 
 private:
 	AnimationPlayer player;
