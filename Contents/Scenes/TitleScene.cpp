@@ -3,7 +3,6 @@
 #include "Objects/InputObject.h"
 #include "Objects/MouseTrailObject.h"
 #include "Objects/TitleScene/TitleSceneBGI.h"
-#include "../Objects/SliceObject.h"
 #include "Objects/TitleScene/TitleNodeManager.h"
 
 void TitleScene::OnEnterImpl()
