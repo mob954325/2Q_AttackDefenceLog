@@ -1,0 +1,21 @@
+{
+    "clipName": "ParticleGuard_Guard",
+    "loop": false,
+    "texturePath": "Assets/Character/Sprites/ParticleGuard.png",
+    "duration": 0.25,
+    "frames": [
+        {
+            "sprite": "ParticleGuard_Guard_0",
+            "time": 0.0
+        },
+        {
+            "sprite": "ParticleGuard_Guard_1",
+            "time": 0.0833333358168602
+        },
+        {
+            "sprite": "ParticleGuard_Guard_2",
+            "time": 0.1666666716337204
+        }
+    ],
+    "events": []
+}

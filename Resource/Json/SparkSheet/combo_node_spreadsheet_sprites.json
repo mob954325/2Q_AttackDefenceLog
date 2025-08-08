@@ -1,0 +1,52 @@
+{
+    "texture": "combo_node_spreadsheet.png",
+    "textureWidth": 2048,
+    "textureHeight": 264,
+    "sprites": [
+        {
+            "name": "combo_node_spreadsheet_0",
+            "x": 0.0,
+            "y": 264.0,
+            "width": 409.6000061035156,
+            "height": 264.0,
+            "pivotX": 0.5000000596046448,
+            "pivotY": 0.5000001192092896
+        },
+        {
+            "name": "combo_node_spreadsheet_1",
+            "x": 409.6000061035156,
+            "y": 264.0,
+            "width": 409.6000061035156,
+            "height": 264.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "combo_node_spreadsheet_2",
+            "x": 819.2000122070313,
+            "y": 264.0,
+            "width": 409.6000061035156,
+            "height": 264.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "combo_node_spreadsheet_3",
+            "x": 1228.800048828125,
+            "y": 264.0,
+            "width": 409.6000061035156,
+            "height": 264.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "combo_node_spreadsheet_4",
+            "x": 1638.4000244140625,
+            "y": 264.0,
+            "width": 409.6000061035156,
+            "height": 264.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        }
+    ]
+}
