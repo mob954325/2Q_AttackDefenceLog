@@ -4,6 +4,8 @@
 
 #include "../Objects/TestObject.h"
 #include "../Objects/MouseTrailObject.h"
+#include "Objects/MenuScene/MenuSceneBGI.h"
+#include "Objects/MenuScene/StageSelectManager.h"
 
 void MenuScene::OnEnterImpl()
 {
@@ -21,6 +23,13 @@ void MenuScene::OnEnterImpl()
 	trail->AddComponent<MouseTrailObject>();
 	AddGameObject(trail);
 
+	backGroundImg = new GameObject();
+	backGroundImg->AddComponent<MenuSceneBGI>();
+	AddGameObject(backGroundImg, "MenuBGI");
+
+	selectManager = new GameObject();
+	selectManager->AddComponent<StageSelectManager>();
+	AddGameObject(selectManager, "selectManager");
 }
 
 void MenuScene::OnExitImpl()
@@ -31,7 +40,7 @@ void MenuScene::OnExitImpl()
 void MenuScene::UpdateImpl()
 {
 	auto input = inputObj->GetComponent<InputSystem>();
-	if (input->IsKeyPressed('2')) {
-		Singleton<SceneManager>::GetInstance().LoadScene(SELECT);
+	if (input->IsKeyPressed('1')) {
+		Singleton<SceneManager>::GetInstance().LoadScene(TITLE);
 	}
 }

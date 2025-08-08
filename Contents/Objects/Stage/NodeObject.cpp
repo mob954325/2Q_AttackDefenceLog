@@ -1,40 +1,69 @@
-#include "NodeObject.h"
+ï»¿#include "NodeObject.h"
 #include "Components/Base/GameObject.h"
 #include "Components/Collision/CircleCollider.h"
+#include "Platform/Input.h"
+// #include "Components/Logic/InputSystem.h"
 
-/* 8.05. ÇÑ½Â±Ô
-* À¯´ÏÆ¼ ÁÂÇ¥°è·Î ¾²°í½ÍÀºµ¥
-* ¾²°ÔµÇ¸é ÆÐÅÏ µå·Î¿ì ÄÄÆ÷³ÍÆ® ³»ºÎ ±âÁØÁ¡À»
-* ÀüºÎ ¹Ù²ã¾ßÇØ¼­
-* ±ÍÂú¾Ó UI´Ï±î ¾î¶»°Ôµç µÇÁö ¾ÊÀ»±î
+/* 8.05. í•œìŠ¹ê·œ
+* ìœ ë‹ˆí‹° ì¢Œí‘œê³„ë¡œ ì“°ê³ ì‹¶ì€ë°
+* ì“°ê²Œë˜ë©´ íŒ¨í„´ ë“œë¡œìš° ì»´í¬ë„ŒíŠ¸ ë‚´ë¶€ ê¸°ì¤€ì ì„
+* ì „ë¶€ ë°”ê¿”ì•¼í•´ì„œ
+* ê·€ì°®ì•™ UIë‹ˆê¹Œ ì–´ë–»ê²Œë“  ë˜ì§€ ì•Šì„ê¹Œ
+* UIë‹ˆê¹Œ ê´œì°®ì„ë“¯?
 */
 void NodeObject::OnCreate() {
 	owner->SetRenderLayer(EngineData::RenderLayer::GameObject);
-	owner->GetTransform().SetUnityCoords(false); // ÀÌ°Ç À¯´ÏÆ¼ÁÂÇ¥°è ÇÏ¸é ¾È´ï
+	owner->GetTransform().SetUnityCoords(false); // ì´ê±´ ìœ ë‹ˆí‹°ì¢Œí‘œê³„ í•˜ë©´ ì•ˆëŒ
 
 	bitmapRenderer = owner->AddComponent<BitmapRenderer>();
 	bitmapRenderer->CreateBitmapResource(L"../WorkSpace/HSK/Test/ui03.png");
 	bitmapRenderer->SetOrderInLayer(-1);
 
 	size = bitmapRenderer->GetResource()->GetBitmap()->GetSize();
-	owner->GetTransform().SetOffset(-size.width / 2, size.height / 2);
-	auto c = owner->AddComponent<CircleCollider>();
+	owner->GetTransform().SetOffset(-size.width / 2, size.height / 2);		
 
 }
 
 void NodeObject::OnStart()
-{
-	
+{	
 		
 }
 
 void NodeObject::OnUpdate()
 {
+	isOverlap = false;
 
+	float mouseX = Input::MouseX;
+	float mouseY = Input::MouseY;
+	if (CheckOverlap(mouseX, mouseY))
+	{
+		isOverlap = true;
+	}
 }
 
 void NodeObject::OnDestroy()
 {
 }
+
+bool NodeObject::IsOverlap()
+{
+	return isOverlap;
+}
+
+bool NodeObject::CheckOverlap(float x, float y)
+{
+	D2D1_SIZE_F bound = bitmapRenderer->GetResource()->GetBitmap()->GetSize();
+
+	if (x >= owner->GetTransform().GetFinalMatrix().dx &&
+		x <= owner->GetTransform().GetFinalMatrix().dx + bound.width &&
+		y >= owner->GetTransform().GetFinalMatrix().dy &&
+		y <= owner->GetTransform().GetFinalMatrix().dy + bound.height)
+	{
+		return true; // ê²¹ì¹¨
+	}
+
+	return false; // ì•ˆê²¹ì¹¨
+}
+
 
 

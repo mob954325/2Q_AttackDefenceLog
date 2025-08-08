@@ -21,6 +21,7 @@ void MonoBehaviorSystem::UnRegister(MonoBehavior* comp)
 void MonoBehaviorSystem::ClearAll()
 {
 	components.clear();
+	pendingComponents.clear();
 }
 
 void MonoBehaviorSystem::Update()
@@ -47,7 +48,11 @@ void MonoBehaviorSystem::FixedUpdate()
 
 void MonoBehaviorSystem::ProcessPendingComponents()
 {
-	components.insert(components.end(), pendingComponents.begin(), pendingComponents.end());
+	for (auto& it : pendingComponents)
+	{
+		components.push_back(it);
+	}
+
 	pendingComponents.clear();
 }
 

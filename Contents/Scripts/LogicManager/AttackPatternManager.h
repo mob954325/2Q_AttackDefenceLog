@@ -2,6 +2,7 @@
 #include <vector>
 #include <unordered_map>
 #include "Components/Base/MonoBehavior.h"
+#include "../Engine/Utils/EventDelegate.h"
 
 struct pattern
 {
@@ -16,11 +17,14 @@ struct pattern
 struct NewPattern { // 나중에 통합해서 관리해도 됨, 중복이긴 한데 어쩔껀데
 	std::vector<int> pattern;
 	float totalTime;
+	std::string PattenID; // 외부 식별용
 };
 
 class AttackPatternManager : public MonoBehavior
 {
 public:
+	EventDelegate<const std::string&> OnPatternCancel; // 내부에서 판정 발생하면, 외부에 알려주는 델리만쥬
+
 	AttackPatternManager() {};
 	~AttackPatternManager() {};
 
@@ -37,11 +41,11 @@ public:
 	pattern* TimeOutPatten();
 
 	void GetPlayerPatten(std::vector<int>& P1, std::vector<int>& P2);
-	void GetEnemyPattern(std::vector<int>& pattern, float& time);
+	void GetEnemyPattern(std::vector<int>& pattern, float& time, std::string& ID);
 	void SearchAndDestroyCouple(std::string ID);
 
 	bool isNewPattern = false; // 외부에서 확인하는 용도
-	NewPattern newPattern;
+	NewPattern newPattern; // 버퍼
 
 private:
 	std::vector<int> playerPatternA;

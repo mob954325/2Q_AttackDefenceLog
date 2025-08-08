@@ -13,9 +13,6 @@
     <Filter Include="Objects">
       <UniqueIdentifier>{1dd4e186-6f63-442e-8e5a-9977f84cb2fe}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Objects\TitleScene">
-      <UniqueIdentifier>{58ad0f72-a0f3-43ae-bd4b-e0f20430317b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Objects\Stage">
       <UniqueIdentifier>{4d699e70-f2ca-4084-91ca-79a5a1eea7f3}</UniqueIdentifier>
     </Filter>
@@ -57,6 +54,9 @@
     </Filter>
     <Filter Include="Scripts\CsvData\DataStorage">
       <UniqueIdentifier>{1cb7858a-2478-40bb-b08b-017134003a1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\SceneObject\TitleScene">
+      <UniqueIdentifier>{58ad0f72-a0f3-43ae-bd4b-e0f20430317b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -112,7 +112,7 @@
       <Filter>Objects\SceneObject\SelectScene</Filter>
     </ClCompile>
     <ClCompile Include="Objects\TitleScene\TitleSceneBGI.cpp">
-      <Filter>Objects\TitleScene</Filter>
+      <Filter>Objects\SceneObject\TitleScene</Filter>
     </ClCompile>
     <ClCompile Include="Objects\Stage\StageBGI.cpp">
       <Filter>Objects\Stage</Filter>
@@ -120,7 +120,7 @@
     <ClCompile Include="Objects\PatternControlObject.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
-    <ClCompile Include="Objects\SliceObject.cpp">
+    <ClCompile Include="Objects\SliceObject\SliceableObject.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\Component\StateController.cpp">
@@ -162,6 +162,13 @@
     <ClCompile Include="Scripts\CsvData\DataClass\PlayerData.cpp">
       <Filter>Scripts\CsvData\DataClass</Filter>
     </ClCompile>
+    <ClCompile Include="Objects\TitleScene\TitleNodeManager.cpp">
+      <Filter>Objects\SceneObject\TitleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\MenuScene\StageSelectManager.cpp">
+      <Filter>Objects\SceneObject\MenuScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\SliceObject\SlicedObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameApp.h">
@@ -216,7 +223,7 @@
       <Filter>Objects\SceneObject\SelectScene</Filter>
     </ClInclude>
     <ClInclude Include="Objects\TitleScene\TitleSceneBGI.h">
-      <Filter>Objects\TitleScene</Filter>
+      <Filter>Objects\SceneObject\TitleScene</Filter>
     </ClInclude>
     <ClInclude Include="Objects\Stage\StageBGI.h">
       <Filter>Objects\Stage</Filter>
@@ -224,7 +231,7 @@
     <ClInclude Include="Objects\PatternControlObject.h">
       <Filter>Objects</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\SliceObject.h">
+    <ClInclude Include="Objects\SliceObject\SliceableObject.h">
       <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Component\StateController.h">
@@ -266,5 +273,12 @@
     <ClInclude Include="Scripts\CsvData\DataClass\PlayerData.h">
       <Filter>Scripts\CsvData\DataClass</Filter>
     </ClInclude>
+    <ClInclude Include="Objects\TitleScene\TitleNodeManager.h">
+      <Filter>Objects\SceneObject\TitleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\MenuScene\StageSelectManager.h">
+      <Filter>Objects\SceneObject\MenuScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\SliceObject\SlicedObject.h" />
   </ItemGroup>
 </Project>

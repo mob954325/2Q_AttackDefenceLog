@@ -4,6 +4,8 @@
 #include "Components/Rendering/AnimationRenderer.h"
 #include "../Objects/Manager/PatternManager.h"
 #include "../Engine/Scene/SceneManager.h"
+#include "../Engine/Utils/EventDelegate.h"
+
 
 class PatternControlObject : public MonoBehavior
 {
@@ -14,10 +16,13 @@ public:
 	void OnDestroy() override;
 
 	PatternManager PM;
-
+	
 protected:
+	ListenerID lid_OnPatternCancel = 0;
+
 	std::array<GameObject*, 9> m_nodes;
-	GameObject* trail;	
+
+	GameObject* trail;
 	GameObject* playerGuidelineA;
 	GameObject* playerGuidelineB;
 
@@ -29,5 +34,7 @@ protected:
 	GameObject* AddGameObject;
 	GameObject* bettleManager;
 	GameObject* player;
+
+	GameObject* test; // Å×½ºÆ®
 };
 

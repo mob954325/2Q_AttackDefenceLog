@@ -6,12 +6,12 @@
 
 /* 25.08.06 | 작성자 : 이성호
 *	기능 : 마우스의 좌표값을 받아서 slice renderer로 이미지를 자르는 monobehaivor 코드
-*	설명 : 
-*		겹침 상태를 Notyet, Processing, End로 구분 지어서 마우스의 시작점과 도착점을 Vector2로 저장한 뒤에 
+*	설명 :
+*		겹침 상태를 Notyet, Processing, End로 구분 지어서 마우스의 시작점과 도착점을 Vector2로 저장한 뒤에
 		두 좌표 값을  SliceRenderer의 Slice 함수로 값을 보낸다.
 */
 
-class SliceObject : public MonoBehavior
+class SlicedObject : public MonoBehavior
 {
 	enum OverlapState
 	{

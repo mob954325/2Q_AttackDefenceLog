@@ -2,16 +2,9 @@
 #include "Components/Base/MonoBehavior.h"
 #include "Components/Rendering/SliceRenderer.h"
 #include "Components/Logic/InputSystem.h"
-#include "Components/Physics/Rigidbody2D.h"
+#include "Utils/EventDelegate.h"
 
-/* 25.08.06 | 작성자 : 이성호
-*	기능 : 마우스의 좌표값을 받아서 slice renderer로 이미지를 자르는 monobehaivor 코드
-*	설명 : 
-*		겹침 상태를 Notyet, Processing, End로 구분 지어서 마우스의 시작점과 도착점을 Vector2로 저장한 뒤에 
-		두 좌표 값을  SliceRenderer의 Slice 함수로 값을 보낸다.
-*/
-
-class SliceObject : public MonoBehavior
+class SliceableObject : public MonoBehavior
 {
 	enum OverlapState
 	{
@@ -23,9 +16,10 @@ class SliceObject : public MonoBehavior
 public:
 	void OnCreate() override;
 	void OnStart() override;
-	void OnDestroy() override;
 	void OnUpdate() override;
-	void OnFixedUpdate() override;
+
+	void SetImage(std::wstring path);
+	void AddEvent(std::function<void()> f);
 
 private:
 	/// <summary>
@@ -46,7 +40,6 @@ private:
 	/// <returns>보정된 vector2 값</returns>
 	Vector2 ClampPoisiton(const Vector2& vec);
 
-	Rigidbody2D* rigid;
 	SliceRenderer* sliceComp;
 	InputSystem* input;
 
@@ -54,4 +47,8 @@ private:
 
 	Vector2 startVec{};
 	Vector2 endVec{};
+
+	EventDelegate<> OnSlice;
+	bool isSliced = false;
 };
+

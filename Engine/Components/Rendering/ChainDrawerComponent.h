@@ -2,6 +2,7 @@
 #include "Components/Rendering/RenderComponent.h"
 #include "Platform/D2DRenderManager.h"
 #include "Resources/BitmapResource.h"
+#include "../Engine/Utils/EventDelegate.h"
 #include <array>
 
 /* 8.05. 한승규
@@ -23,42 +24,49 @@ struct SlicePiece {
 
 class ChainDrawerComponent : public RenderComponent
 {
-public:	
+public:
 	void Render(D2DRenderManager* manager) override;
 	void OnStart() override;
 	void OnCreate() override;
-
+	
 	void Draw(D2DRenderManager* manager);
 	void Progress(float value);
 	void SliceRect(std::vector<int> pattern);
 
-	void Start(std::vector<int> pattern, float durationTime = 0.0f);
+	void Start(std::vector<int> pattern, float durationTime = 0.0f, std::string ID = " ");
 
 	void SetBitmap(std::wstring path);
 	void SetFillBitmap(std::wstring path);
 	void SetupNodes(Vector2 node, float interval); // 중앙의 노드 좌표와 간격을 넣어주세오
 	
-	float piece = 3.0f; // 조각
+	EventDelegate<const std::string&> OnInterrupted;
+	EventDelegate<const std::string&> OnFinished;
+
+	void CancelByID(const std::string& id);
+
+
+	//float piece = 3.0f; // 조각
 	bool isPlay = false;
 
 	float progress = 0.0f; // 0 ~1 정규화된 값이 들어가야함
 
 	bool useSlide = false;
-		
-// 	Vector2 firstNode = { 100, 100 };
-// 	float interval = 1000;
+	std::string patternID = "";
 
-private:	
+	// 	Vector2 firstNode = { 100, 100 };
+	// 	float interval = 1000;
+
+private:
 	float timer = 0.0f;
 	float duration = 1.0f; // 외부에서 등록해주는 시간
 
 	float totalLength = 0.0f;
 
-	
 
-	std::shared_ptr<BitmapResource> baseBitmap;	
+
+	std::shared_ptr<BitmapResource> baseBitmap;
 	std::shared_ptr<BitmapResource> fillBitmap;
-	std::vector<SlicePiece> pieces; 
+	std::vector<SlicePiece> pieces;
 	std::array<Vector2, 9> positions; // 좌표값들
 	D2D1_SIZE_F bmpSize;
 };
