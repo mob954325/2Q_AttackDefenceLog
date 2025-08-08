@@ -46,7 +46,8 @@ public:
 	float GetNowPlayingAttackTime() const {return Object_nowPlayingAttackTime;} //현채 가이드라인이 뜬 기간
 	float GetSpiritAmount() { return Object_SpiritAmount; }
 	float GetNowSpiritAmount() { return Object_NowSpiritAmount; }    
-	
+	bool GetIsGroggy(){ return isGroggy; }
+
 	// 설정 함수들
 	void SetID(const std::string& id) { Object_ID = id; }							 // ID 설정
 	void SetName(const std::wstring& name) { Object_Name = name; }					 // 이름 설정
@@ -55,13 +56,18 @@ public:
 	void SetSpiritAttack(float SpiritAttack) { Object_SpiritAttack = SpiritAttack; } // 기세 공격력 설정
 	void SetDefenseRate(float defenseRate) { Object_DefenseRate = defenseRate; }     // 방어율 설정
 	void SetPlayingAttackTime(float time) {Object_PlayingAttackTime = time;}		 // 가이드라인이 떠있는 시간 설정
+	void SetIsGroggy(bool Setbool) {isGroggy = Setbool;}
 	
 
 
 	//값 변경 함수
 	void GetDamage(float damageAmount) { Object_Hp -= damageAmount; }
-	void GetSpiritdamage(float SpiritdamageAmount) { Object_SpiritAmount -= SpiritdamageAmount; }
-	void RestoreSpiritDamage(float SpiritRestoreAmount) { Object_SpiritAmount += SpiritRestoreAmount; }
+	void GetSpiritdamage(float SpiritdamageAmount) { 
+		Object_NowSpiritAmount -= SpiritdamageAmount;
+	}
+	void RestoreSpiritDamage(float SpiritRestoreAmount) { 
+		Object_NowSpiritAmount += SpiritRestoreAmount;
+	}
 	
 
 	//각 객체의 업데이트에 들어갈 함수
@@ -103,7 +109,7 @@ protected:
 
 	
 	
-
+	bool isGroggy = false;				  // 그로기가 되었는지를 판별하는 변수 
 	float NodeTime;				  // 가이드라인의 판정 시간
 	
 

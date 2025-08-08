@@ -146,11 +146,13 @@ void BettleManager::ChangeFinalState() {
 	if (m_Enemy->GetHp() <= 0.0f) {
 		m_Enemy->SetState("Enemy_Dead");
 	}
-	if (m_Player->GetNowSpiritAmount() <= 0.0f) {
+	if (!m_Player->GetIsGroggy() && m_Player->GetNowSpiritAmount() <= 0.0f) {
 		m_Player->SetState("Player_Groggy");
+		m_Player->SetIsGroggy(true);
 	}
-	if (m_Enemy->GetNowSpiritAmount() <= 0.0f) {
+	if (!m_Enemy->GetIsGroggy() && m_Enemy->GetNowSpiritAmount() <= 0.0f) {
 		m_Enemy->SetState("Enemy_Groggy");
+		m_Enemy->SetIsGroggy(true);
 	}
 }
 
