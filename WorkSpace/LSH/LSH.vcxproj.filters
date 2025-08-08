@@ -35,6 +35,10 @@
     <ClCompile Include="TestColliderApp\Scripts\SliceObject\SliceObject.cpp">
       <Filter>Scripts\SliceObject</Filter>
     </ClCompile>
+    <ClCompile Include="TestColliderApp\Scripts\ContentObject\SliceableMenu.cpp">
+      <Filter>Scripts\ContentObject</Filter>
+    </ClCompile>
+    <ClCompile Include="TestColliderApp\Scripts\ContentObject\EscMenuBar.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TestColliderApp\App\TestColliderApp.h">
@@ -70,6 +74,10 @@
     <ClInclude Include="TestColliderApp\Scripts\SliceObject\SliceObject.h">
       <Filter>Scripts\SliceObject</Filter>
     </ClInclude>
+    <ClInclude Include="TestColliderApp\Scripts\ContentObject\SliceableMenu.h">
+      <Filter>Scripts\ContentObject</Filter>
+    </ClInclude>
+    <ClInclude Include="TestColliderApp\Scripts\ContentObject\EscMenuBar.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="App">
@@ -83,6 +91,9 @@
     </Filter>
     <Filter Include="Scripts\SliceObject">
       <UniqueIdentifier>{a8d5482c-9273-4cf9-a820-f8f8f4f88eb6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\ContentObject">
+      <UniqueIdentifier>{c6ae037e-f996-458f-a59a-aeccfa234f73}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

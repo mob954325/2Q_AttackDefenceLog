@@ -12,4 +12,6 @@ private:
 	GameObject* testObj;
 	GameObject* inputObj;
 	GameObject* trail;
+	GameObject* backGroundImg;
+	GameObject* selectManager;
 };
