@@ -110,7 +110,7 @@ void Scene::AddGameObject(GameObject* gameObject, const std::string& name)
 {
 	AddGameObject(gameObject);
 	gameObject->SetQuery(this);
-
+	gameObject->SetName(name);
 	// Singleton<TransformSystem>::GetInstance().Register(&gameObject->GetTransform());
 }
 
