@@ -27,7 +27,7 @@ void AnimatedChainEffect::Render(D2DRenderManager* manager)
 
 	timer += Singleton<GameTime>::GetInstance().GetDeltaTime();
 
-	const float frameDur = 1.0f / 15.0f; // 15 FPS
+	const float frameDur = 1.0f / 10.0f; //FPS
 	while (timer >= frameDur) {
 
 		timer -= frameDur;
@@ -46,6 +46,8 @@ void AnimatedChainEffect::Render(D2DRenderManager* manager)
 void AnimatedChainEffect::OnCreate() {
 	//"C:\Users\User\Documents\GitHub\Kyu1\Resource\ContentsResource\attack_line_spreadsheet.png"
 	SetAtlasStrip(L"../Resource/ContentsResource/attack_line_spreadsheet.png", 9); // 경로 + 프레임 수
+	flashBitmap = resourceManager->CreateBitmapResource(L"../Resource/ContentsResource/flash_spreadsheet.png");
+	flashSize = flashBitmap->GetBitmap()->GetSize();
 }
 
 void AnimatedChainEffect::OnStart() {
@@ -70,9 +72,11 @@ void AnimatedChainEffect::SetAtlasStrip(std::wstring path, int maxF)
 void AnimatedChainEffect::PlayOnce(const std::vector<int>& pattern)
 {
 	currentFrame = 0;
-	SliceRect(pattern);
 	isPlaying = true;
 	timer = 0.0f;
+	activeNodes.clear();
+	activeNodes = pattern;
+	SliceRect(pattern);
 }
 
 //=======================================================================================
@@ -148,5 +152,20 @@ void AnimatedChainEffect::Draw(D2DRenderManager* manager)
 		};
 
 		manager->DrawBitmap(atlasBitmap->GetBitmap(), dest, src);
+	}
+
+	float flashAlpha = 1.0f - (float)currentFrame / (float)maxFrame; // 프레임 진행에 따라 알파 감소
+
+	for (int nodeIndex : activeNodes) {
+		Vector2 pos = positions[nodeIndex - 1];
+		D2D1_RECT_F dest = {
+			pos.x - flashSize.width * 0.5f,
+			pos.y - flashSize.height * 0.5f,
+			pos.x + flashSize.width * 0.5f,
+			pos.y + flashSize.height * 0.5f
+		};
+
+		D2D1_RECT_F src = { 0, 0, flashSize.width, flashSize.height };
+		manager->DrawBitmap(flashBitmap->GetBitmap(), dest, src, flashAlpha);
 	}
 }
