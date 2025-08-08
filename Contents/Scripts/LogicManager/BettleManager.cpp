@@ -42,6 +42,7 @@ void BettleManager::SetInputNode(std::vector<int> InputNode) {
 	nowNode = InputNode;
 }
 
+// -> 
 void BettleManager::SetStateFormPattern() {		  //현재 마우스의 입력 받기  -> 승규님 데이터 받기
 	while (1) {
 		pattern* tmpPatten = m_PattenManager->TimeOutPatten();  // 패턴이 공격 시간이 지났다면 
@@ -62,7 +63,7 @@ void BettleManager::SetStateFormPattern() {		  //현재 마우스의 입력 받�
 			m_Player->GetSpiritdamage(m_Enemy->GetSpiritAttack());    // 플레이어는 기세를 잃음
 		}
 
-		m_PattenManager->SubPattern(tmpPatten->PattenID, true);
+		m_PattenManager->SubPattern(tmpPatten->PattenID, true); 
 	}
 
 
@@ -124,7 +125,7 @@ void BettleManager::SetStateFormPattern() {		  //현재 마우스의 입력 받�
 			m_PattenManager->SearchAndDestroyCouple(tmpPatten->PattenID);
 		}
 
-		m_PattenManager->SubPattern(tmpPatten->PattenID, false);
+		m_PattenManager->SubPattern(tmpPatten->PattenID, false); 
 
 	}
 

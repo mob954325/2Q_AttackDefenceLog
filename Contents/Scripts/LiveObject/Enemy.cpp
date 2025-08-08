@@ -219,7 +219,7 @@ void Enemy::PrintConsole()
 	std::cout << "Enemy nowTotalCoolTime	    : " << Object_nowTotalCoolTime << std::endl;
 	std::cout << "Enemy PlayingAttackTime	    : " << Object_PlayingAttackTime << std::endl;
 	std::cout << "Enemy State       : " << m_State->GetNowName() << std::endl;
-	//std::cout << "Enemy PattenID    : " << 
+	// std::cout << "Enemy PattenID    : " << 
 }
 
 
