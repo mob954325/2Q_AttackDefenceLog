@@ -181,7 +181,7 @@ void PatternControlObject::OnUpdate() // 업데이트
 
 	if (t->isNewCached) { // 새로운 노드 발생하면				
 		auto tetetet = test->GetComponent<AnimatedChainEffect>(); // 테스트 코드
-		tetetet->PlayOnce({1,2,7});
+		tetetet->PlayOnce({2,3,4,5,8});
 
 		PM.CheckTrails(t->CheckingCachedTrails());
 		const auto& vec = PM.GetPatternPathPositions(); // 여기에 담김!!! 1 3 2 4 이런거 <<<<< (연결지점)

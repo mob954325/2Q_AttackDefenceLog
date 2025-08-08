@@ -46,7 +46,7 @@ void AnimatedChainEffect::Render(D2DRenderManager* manager)
 void AnimatedChainEffect::OnCreate() {
 	//"C:\Users\User\Documents\GitHub\Kyu1\Resource\ContentsResource\attack_line_spreadsheet.png"
 	SetAtlasStrip(L"../Resource/ContentsResource/attack_line_spreadsheet.png", 9); // 경로 + 프레임 수
-	flashBitmap = resourceManager->CreateBitmapResource(L"../Resource/ContentsResource/circle_inner.png");
+	flashBitmap = resourceManager->CreateBitmapResource(L"../Resource/ContentsResource/attack_line_circle.png");
 	flashSize = flashBitmap->GetBitmap()->GetSize();
 }
 
@@ -94,7 +94,7 @@ void AnimatedChainEffect::SliceRect(const std::vector<int>& pattern)
 
 		Vector2 from = positions[a - 1];
 		Vector2 to = positions[b - 1];
-		
+
 		Vector2 fromTo = to - from;
 
 		float dist = fromTo.Megnituede(); // 거리
@@ -119,7 +119,7 @@ void AnimatedChainEffect::SliceRect(const std::vector<int>& pattern)
 
 		currentX += dist;
 
-		if (currentX >= frameW) break; 
+		if (currentX >= frameW) break;
 		// frameW = 최대크기임 / 아틀라스가 아니라, 해당 프레임의 최대크기, 넘어가면 다음 프레임이 되어버림
 	}
 }
