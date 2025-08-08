@@ -63,8 +63,18 @@ void ChainDrawerComponent::Render(D2DRenderManager* manager) // 사실상, trail
 
 		if (duration > 0.0f) {
 			progress = timer / duration;
-			Progress(progress);
-			std::cout << std::endl << "가이드라인 진행도" << progress << std::endl;
+			if (progress >= 1.0f) {
+				progress = 1.0f;
+				Progress(progress);				
+				if (isPlay) {            
+					isPlay = false;
+					OnFinished.Invoke(patternID);
+				}
+			}
+			else {
+				Progress(progress);
+			}
+//			std::cout << std::endl << "가이드라인 진행도" << progress << std::endl;
 		}
 
 		Draw(manager);
@@ -146,10 +156,12 @@ void ChainDrawerComponent::SetFillBitmap(std::wstring path)
 	useSlide = true;
 }
 
-void ChainDrawerComponent::Start(std::vector<int> pattern, float durationTime) { // durationTime = 0.0이면, 슬라이드바 사용안함
+void ChainDrawerComponent::Start(std::vector<int> pattern,  float durationTime, std::string ID) { // durationTime = 0.0이면, 슬라이드바 사용안함
 	duration = durationTime;
 	timer = 0.0f;
+	progress = 0.0f;
 	isPlay = true; // 고고혓 
+	patternID = ID;
 	SliceRect(pattern);
 }
 
@@ -164,5 +176,13 @@ void ChainDrawerComponent::SetupNodes(Vector2 node, float interval)
 			node.y + interval * row
 		};
 	}
+}
+
+void ChainDrawerComponent::CancelByID(const std::string& id) {
+	if (!isPlay || id != patternID) return;
+	isPlay = false;
+	timer = progress = 0.0f;
+	for (auto& p : pieces) p.fillAmount = 0.0f;
+	OnInterrupted.Invoke(patternID);
 }
 
