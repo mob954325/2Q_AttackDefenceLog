@@ -144,6 +144,12 @@ void Application::Initialize()
 
 void Application::Uninitialize()
 {
+#if _DEBUG
+	Singleton<ImguiManager>::GetInstance().Uninitialize();
+	m_d3dDeviceContext = nullptr;
+	m_d3dTargetView = nullptr;
+#endif
+
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->OnExit();
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->CleanUpDestroyedObjects();
 
@@ -163,6 +169,10 @@ void Application::Uninitialize()
 
 void Application::MessageProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
+#if _DEBUG
+	Singleton<ImguiManager>::GetInstance().WndProcHandler(hWnd, msg, wParam, lParam);
+#endif
+
 	switch (msg)
 	{
 	case WM_DESTROY:
