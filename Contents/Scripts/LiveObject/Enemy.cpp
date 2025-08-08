@@ -37,8 +37,7 @@ void Enemy::OnUpdate() {
 	CalSpiritTime();		// 1초마다 기세게이지 증가
 	AddPattenLoop();		// 
 	PrintConsole();
-	std::cout << "Enemy 루프 확인" << std::endl;
-	//CalAttackTimePercent();
+	DiffStatePrint();
 }
 
 // onChangePatten에 TransitionTime 변경하기!!!
@@ -149,7 +148,6 @@ void Enemy::SetAttackPattenData(std::string PattID) {
 
 //적의 가이드 패턴을 패턴매니저에 등록
 void Enemy::SetNowPatten() {
-	AllNodePattenClass* tmpNode = nullptr;
 	std::vector<int> tmp; // 저장할 벡터 선언
 
 	tmpNode = CsvDataManager::GetInstance().getDataImpl(tmpNode, nowEnemyPattenData->eNodepattern);
@@ -175,13 +173,13 @@ void Enemy::ResetSpiritAmount() {
 // 연격의 여부에 따라서 객체의 쿨타임이 변경됨
 void Enemy::SetCoolTime() {
 	if (preEnemyPattenData == nullptr) {  //이전 루프가 없을시
-			// ( 1 + (현재기세 - 전체기세/2) / 전체기세 /2) * 해당 패턴의 전체 쿨타임
-		Object_nowCoolTime = (1 + ((Object_NowSpiritAmount - Object_SpiritAmount / 2.0f) / Object_SpiritAmount)/ 2.0f  ) * Object_CoolTime; 
+		// ( 1 + (현재기세 - 전체기세/2) / 전체기세 /2) * 해당 패턴의 전체 쿨타임
+		Object_nowCoolTime = (1 - ((Object_NowSpiritAmount - Object_SpiritAmount / 2.0f) / Object_SpiritAmount) / 2.0f) * Object_CoolTime;
 	}
 	else {  // 이전 루프가 있을 시
 		if (preEnemyPattenData->eComboCoolDown == 0) {  // 연격이 아닌때
 			//  ( 1 + (현재기세 - 전체기세/2) / 전체기세 /2) * 해당 패턴의 전체 쿨타임 + 이전 루프의 공격시간
-			Object_nowCoolTime = (1 + ((Object_NowSpiritAmount - Object_SpiritAmount / 2.0f) / Object_SpiritAmount) / 2.0f) * Object_CoolTime + preEnemyPattenData->eAtkCoolDown;
+			Object_nowCoolTime = (1 - ((Object_NowSpiritAmount - Object_SpiritAmount / 2.0f) / Object_SpiritAmount) / 2.0f) * Object_CoolTime + preEnemyPattenData->eAtkCoolDown;
 		}
 		else {  // 연격일때
 			Object_nowCoolTime = nowEnemyPattenData->eComboCoolDown;
@@ -201,25 +199,51 @@ void Enemy::CalSpiritTime() {
 }
 
 
+void Enemy::DiffStatePrint() {
+	if (m_State->GetNowName() != nowStateName) {
+		preStateName = nowStateName;
+		nowStateName = m_State->GetNowName();
+	}
+	if (isGroggy && preStateName == "Player_Groggy") {
+		Object_NowSpiritAmount = Object_SpiritAmount / 2.0f;
+		isGroggy = false;
+	}
+}
+
+
 void Enemy::SetCursorPosition(int x, int y)
 {
 	COORD coord = { static_cast<SHORT>(x), static_cast<SHORT>(y) };
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
-void Enemy::PrintConsole() 
+void Enemy::PrintConsole()
 {
-	 SetCursorPosition(0, 0);
-	std::cout << "Enemy HP		    : " << Object_Hp << std::endl;
-	std::cout << "Enemy Attack		    : " << Object_Attack << std::endl;
-	std::cout << "Enemy SpiritAttack          : " << Object_SpiritAttack << std::endl;
-	std::cout << "Enemy NowSpiritAmount       : " << Object_NowSpiritAmount << std::endl;
-	std::cout << "Enemy Object_CoolTime	    : " << Object_CoolTime << std::endl;
-	std::cout << "Enemy nowCoolTime	    : " << Object_nowCoolTime << std::endl;
-	std::cout << "Enemy nowTotalCoolTime	    : " << Object_nowTotalCoolTime << std::endl;
-	std::cout << "Enemy PlayingAttackTime	    : " << Object_PlayingAttackTime << std::endl;
-	std::cout << "Enemy State       : " << m_State->GetNowName() << std::endl;
-	// std::cout << "Enemy PattenID    : " << 
+	SetCursorPosition(0, 0);
+	std::cout << "" << std::endl;
+	std::cout << "Enemy HP		    : " << Object_Hp << "                                                " << std::endl;
+	std::cout << "Enemy Attack		    : " << Object_Attack << "                                                " << std::endl;
+	std::cout << "Enemy SpiritAttack          : " << Object_SpiritAttack << "                                                " << std::endl;
+	std::cout << "Enemy NowSpiritAmount       : " << Object_NowSpiritAmount << "                                                " << std::endl;
+	std::cout << "Enemy Object_CoolTime	    : " << Object_CoolTime << "                                                " << std::endl;
+	std::cout << "Enemy nowCoolTime	    : " << Object_nowCoolTime << "                                                " << std::endl;
+	std::cout << "Enemy nowTotalCoolTime	    : " << Object_nowTotalCoolTime << "                                                " << std::endl;
+	std::cout << "Enemy PlayingAttackTime	    : " << Object_PlayingAttackTime << "                                                " << std::endl;
+	std::cout << "Enemy nowState              : " << nowStateName << "                                                " << std::endl;
+	std::cout << "Enemy preState              : " << preStateName << "                                                " << std::endl;
+	std::cout << "Enemy PattenID              : ";
+	if (nowEnemyPattenData != nullptr)
+		std::cout << nowEnemyPattenData->ePatternID << "                                                " << std::endl;
+	std::cout << "Enemy PattenNode            :  ";
+	if (tmpNode != nullptr) {
+		for (int i = 0; i < tmpNode->Node_Number.size(); i++)
+			std::cout << tmpNode->Node_Number[i] << ", ";
+		std::cout << " " << "                                                " << std::endl;
+	}
+
 }
+
+
+
 
 

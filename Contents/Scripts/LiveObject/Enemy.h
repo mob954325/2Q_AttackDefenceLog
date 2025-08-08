@@ -3,6 +3,7 @@
 #include "../CsvData/DataClass/EnemyData.h"
 #include "../CsvData/DataClass/EnemyAtkPattenData.h"
 #include "../Component/StateController.h"
+#include "../CsvData/DataClass/AllNodePattenClass.h"
 
 
 
@@ -25,7 +26,7 @@ public:
 
 	//패턴 ID에 맞는 데이터를 포인터로 가리킴
 	void SetAttackPattenData(std::string PattID); //  패턴ID에 맞는 가이드라인 데이터를 불러옴
-	
+
 	void ResetSpiritAmount();
 
 	// 배틀 매니저에서 사용될 함수
@@ -46,14 +47,14 @@ public:
 	void AddPattenLoop() override;
 
 	//반환하는 함수
-	float GetAttackTimePercent() { return  Object_PlayingAttackTime - Object_PlayingAttackTime; }
+
 
 	StateController* m_State = nullptr;  //오브젝트 들은 State 내부에서 받을 수 있도록 포인터 생성
 private:
 	std::vector<std::string> PattenID;
 	EnemyAtkPattenData* nowEnemyPattenData = nullptr; //사용할 패턴 데이터를 가리키는 포인터
 	EnemyAtkPattenData* preEnemyPattenData = nullptr;
-	
+
 	std::string PrePattenID;  // 이전 패턴의 ID
 	float enermyTimePercent; // 패링 퍼센트 계산
 	void PrintConsole();
@@ -62,5 +63,9 @@ private:
 private:
 	std::string Difficulty;			   // 적의 난이도 
 	EnemyData* nowEnemyData = nullptr; // 현재 적의 데이터 클래스를 담을 변수
+	AllNodePattenClass* tmpNode = nullptr;
+	void DiffStatePrint();
+	std::string nowStateName;
+	std::string preStateName;
 };
 

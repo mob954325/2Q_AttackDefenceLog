@@ -2,7 +2,7 @@
 #include "LiveObject.h"
 #include "../CsvData/DataClass/PlayerData.h"
 #include "../Component/StateController.h"
-
+#include "../CsvData/DataClass/AllNodePattenClass.h"
 
 /* 25.08.01
 	 플레이어의 데이터 불러오기 -> 일관성 없음?
@@ -50,6 +50,9 @@ public:
 	void AddPattenLoop() override;
 	StateController* m_State;  //오브젝트 들은 State 내부에서 받을 수 있도록 포인터 생성
 	AttackPatternManager* m_PattenManager = nullptr; // 패턴 매니저를  참조로 받아  사용할 변수
+	AllNodePattenClass* tmpNode = nullptr;  // 출력용 변수
+	AllNodePattenClass* tmpNode2 = nullptr;  // 출력용 변수
+	void DiffStatePrint();
 private:
 	std::vector<std::string> PattenID;
 	PlayerData* nowPlayerData = nullptr; // 받아올 데이터를 가리키는 포인터
@@ -60,6 +63,11 @@ private:
 	void PrintConsole();
 	std::string PrePattenID;		  // 이전 패턴의 ID
 
+	std::string preStateName;
+	std::string nowStateName;
+
 	bool isAttackingPattern = false;
 };
+
+
 

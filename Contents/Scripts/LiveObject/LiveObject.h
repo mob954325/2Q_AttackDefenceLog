@@ -10,13 +10,15 @@
 #include "../LogicManager/AttackPatternManager.h"
 #include <queue>
 
+
+
 // 주의!!! 씬 단위로 델타타임을 고정시킬 예정이라서 씬의 업데이트 처음에 무조건 시간 받아오기!!!!
 
 /*2025.07.28 - 안성빈
  플레이어나  적들이 상속받을 기본적인 오브젝트
  들어가는 변수 : ID, 이름 , 체력, 공격력, 기세공격력, 회피율, 방어율
- 들어가는 함수 : 위의 변수를 가져오는 함수, 설정하는 함수  
-			     + 부모에 없는 자식의 맴버를 가져오는 함수
+ 들어가는 함수 : 위의 변수를 가져오는 함수, 설정하는 함수
+				 + 부모에 없는 자식의 맴버를 가져오는 함수
 */
 
 /*25.08.01 - 안성빈
@@ -42,11 +44,12 @@ public:
 	float GetAttack() { return Object_Attack; }						// 공격력 반환
 	float GetSpiritAttack() { return Object_SpiritAttack; }		// 기세 공격력 반환
 	float GetDefenseRate() { return Object_DefenseRate; }			// 방어율 반환
-	float GetPlayingAttackTime() const {return Object_PlayingAttackTime;}  //가이드라인이 떠있는 시간
-	float GetNowPlayingAttackTime() const {return Object_nowPlayingAttackTime;} //현채 가이드라인이 뜬 기간
+	float GetPlayingAttackTime() const { return Object_PlayingAttackTime; }  //가이드라인이 떠있는 시간
+	float GetNowPlayingAttackTime() const { return Object_nowPlayingAttackTime; } //현채 가이드라인이 뜬 기간
 	float GetSpiritAmount() { return Object_SpiritAmount; }
-	float GetNowSpiritAmount() { return Object_NowSpiritAmount; }    
-	
+	float GetNowSpiritAmount() { return Object_NowSpiritAmount; }
+	bool GetIsGroggy() { return isGroggy; }
+
 	// 설정 함수들
 	void SetID(const std::string& id) { Object_ID = id; }							 // ID 설정
 	void SetName(const std::wstring& name) { Object_Name = name; }					 // 이름 설정
@@ -54,15 +57,20 @@ public:
 	void SetAttack(float attack) { Object_Attack = attack; }						 // 공격력 설정
 	void SetSpiritAttack(float SpiritAttack) { Object_SpiritAttack = SpiritAttack; } // 기세 공격력 설정
 	void SetDefenseRate(float defenseRate) { Object_DefenseRate = defenseRate; }     // 방어율 설정
-	void SetPlayingAttackTime(float time) {Object_PlayingAttackTime = time;}		 // 가이드라인이 떠있는 시간 설정
-	
+	void SetPlayingAttackTime(float time) { Object_PlayingAttackTime = time; }		 // 가이드라인이 떠있는 시간 설정
+	void SetIsGroggy(bool Setbool) { isGroggy = Setbool; }
+
 
 
 	//값 변경 함수
 	void GetDamage(float damageAmount) { Object_Hp -= damageAmount; }
-	void GetSpiritdamage(float SpiritdamageAmount) { Object_SpiritAmount -= SpiritdamageAmount; }
-	void RestoreSpiritDamage(float SpiritRestoreAmount) { Object_SpiritAmount += SpiritRestoreAmount; }
-	
+	void GetSpiritdamage(float SpiritdamageAmount) {
+		Object_NowSpiritAmount -= SpiritdamageAmount;
+	}
+	void RestoreSpiritDamage(float SpiritRestoreAmount) {
+		Object_NowSpiritAmount += SpiritRestoreAmount;
+	}
+
 
 	//각 객체의 업데이트에 들어갈 함수
 	//virtual void SetDeltaTime(float deltaTime) = 0; //씬 단위로 델타타임을 통일!!!! -> 시간을 받아야함
@@ -73,7 +81,7 @@ public:
 	virtual void SelectPatten() = 0;   //각 객체가 사용할 패턴을 고름
 	virtual void SetNowPatten() = 0;   //각 객체가 현재 패턴을 반환함
 	virtual void AddPattenLoop() = 0;  // 각 플래그를 관리하여 패턴을 추가하는 코드
-	
+
 
 	//state에 관련된 함수
 	virtual void SetState(std::string setStateName) = 0;
@@ -81,7 +89,7 @@ public:
 
 
 
-protected: 
+protected:
 	std::string Object_ID; 	      // ID
 	std::wstring Object_Name;     // 이름
 	float Object_Hp;		      // 체력
@@ -101,16 +109,16 @@ protected:
 	float Object_nowPlayingAttackTime; //현재 패턴의 입력 대기 시간
 
 
-	
-	
 
+
+	bool isGroggy = false;				  // 그로기가 되었는지를 판별하는 변수 
 	float NodeTime;				  // 가이드라인의 판정 시간
-	
 
 
 
 
-	
+
+
 public:
 	//배틀 매니저에서 사용할 flag
 	bool isPattenCooldown = false; //공격 패턴의 쿨타임이 줄어드는지

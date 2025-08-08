@@ -12,6 +12,7 @@
 #include <thread>
 
 
+
 // 각 값은 해당 함수가 출력 중일때, 각 플레그 변화
 //														     
 //                    IonStartI 다음 루프ㅣ 공격 노드추가ㅣ			    I
@@ -41,21 +42,19 @@ void Player::OnStart() {
 
 // 업데이트에서 시간 받기???? -> 필요없음, 수정하기!!!
 void Player::OnUpdate() {
-	if (m_State->GetNowName() != "Player_Dead") {
-		CalSpiritTime();		// 1초마다 기세게이지 감소
-		AddPattenLoop();		// 패턴을 추가하는 루프
-		PrintConsole();
-
-		m_State->Update();
-	}
-	std::cout << "Player 루프 확인" << std::endl;
+	//if (m_State->GetNowName() != "Player_Dead"){
+	CalSpiritTime();		// 1초마다 기세게이지 감소
+	AddPattenLoop();		// 패턴을 추가하는 루프
+	PrintConsole();
+	m_State->Update();
+	DiffStatePrint();
+	//}
 
 }
 
 //이후 StateManager에 추가하는거 만들기
 void Player::SetState(std::string setStateName) {
 	m_State->SetState(setStateName);
-	std::cout << "Player_State : " << setStateName << std::endl;
 }
 
 void Player::OnCreateState() {
@@ -87,7 +86,7 @@ void Player::OnCreateState() {
 
 	m_State->CreateState("Player_Groggy");   // 패턴 파회 O + 특정 시간 안에
 	m_State->SetNextState("Player_Groggy", "Player_Idle");
-	m_State->SetTransitionTime("Player_Groggy", 1.0f);
+	m_State->SetTransitionTime("Player_Groggy", 2.0f);
 
 	m_State->CreateState("Player_Dead");   // 죽음
 }
@@ -118,12 +117,13 @@ void Player::SetSpiritData(float enemy_SpiritAmount) {
 //패턴 ID에 맞는 데이터를 포인터로 가리킴
 void Player::SetAttackPattenData(std::string PattID) {
 	nowPlayerPattenData = CsvDataManager::GetInstance().getDataImpl(nowPlayerPattenData, PattID);
+
 }
+
+
 
 // 플레이어의 가이드 패턴2개를 패턴매니저에 등록
 void Player::SetNowPatten() {
-	AllNodePattenClass* tmpNode = nullptr;
-	AllNodePattenClass* tmpNode2 = nullptr;
 	std::vector<int> tmp;
 	std::vector<int> tmp2;
 	tmp.clear();
@@ -144,9 +144,7 @@ void Player::SetNowPatten() {
 	if (tmpNode2 != nullptr) { // 널 포인터 검사 추가
 		tmp2 = tmpNode2->Node_Number;
 	}
-	else {
 
-	}
 	// 원래 100 자리에 공격 패턴이 떠있는 시간이 들어가나 플레이어는 없음으로 임의의 큰 숫자 100 을 넣음
 	m_PattenManager->AddPattern(modifiedID1, 100.0f, tmp);
 	m_PattenManager->AddPattern(modifiedID2, 100.0f, tmp2);
@@ -190,6 +188,16 @@ void Player::CalSpiritTime() {
 	Object_OverTimeSpirit += GameTime::GetInstance().GetDeltaTime();
 }
 
+void Player::DiffStatePrint() {
+	if (m_State->GetNowName() != nowStateName) {
+		preStateName = nowStateName;
+		nowStateName = m_State->GetNowName();
+	}
+	if (isGroggy && preStateName == "Player_Groggy") {
+		Object_NowSpiritAmount = Object_SpiritAmount / 2.0f;
+		isGroggy = false;
+	}
+}
 
 
 
@@ -197,6 +205,7 @@ void Player::CalSpiritTime() {
 // 공격이 끝나면 -> isAttackingPattern  :  T
 // isPattenCooldown   : T  -> 쿨타임을 계산
 // isPattenCooldown   : F  -> 계산 X
+
 
 // 플래그를 정하는 함수
 void Player::AddPattenLoop() {
@@ -206,6 +215,7 @@ void Player::AddPattenLoop() {
 		isPattenCooldown = true;
 		isAttackingPattern = false;
 	}
+
 
 	if (isPattenCooldown) {
 		// 패턴의 입력대기시간 카운트
@@ -229,14 +239,33 @@ void Player::SetCursorPosition(int x, int y)
 
 
 void Player::PrintConsole() {
-	SetCursorPosition(300, 0);
-	std::cout << "Player HP		      : " << Object_Hp << std::endl;
-	std::cout << "Player Attack		      : " << Object_Attack << std::endl;
-	std::cout << "Player SpiritAttack           : " << Object_SpiritAttack << std::endl;
-	std::cout << "Player NowSpiritAmount        : " << Object_NowSpiritAmount << std::endl;
-	std::cout << "Player Object_CoolTime	      : " << Object_CoolTime << std::endl;
-	std::cout << "Player nowCoolTime	      : " << Object_nowCoolTime << std::endl;
-	std::cout << "Player nowTotalCoolTime	      : " << Object_nowTotalCoolTime << std::endl;
-	std::cout << "Player PlayingAttackTime      : " << Object_PlayingAttackTime << std::endl;
-	std::cout << "Player PlayingAttackTime  : " << m_State->GetNowName() << std::endl;
+	 //SetCursorPosition(0, 600);
+	 std::cout << "                                                "  << std::endl;
+	 std::cout << "Player HP		      : " << Object_Hp << "                                                "<< std::endl;
+	 std::cout << "Player Attack		      : " << Object_Attack << "                                                "<< std::endl;
+	 std::cout << "Player SpiritAttack           : " << Object_SpiritAttack << "                                                "<< std::endl;
+	 std::cout << "Player NowSpiritAmount        : " << Object_NowSpiritAmount << "                                                "<< std::endl;
+	 std::cout << "Player Object_CoolTime	      : " << Object_CoolTime << "                                                " << std::endl;
+	 std::cout << "Player nowCoolTime	      : " << Object_nowCoolTime << "                                                "<<  std::endl;
+	 std::cout << "Player nowTotalCoolTime	      : " << Object_nowTotalCoolTime << "                                                " << std::endl;
+	 std::cout << "Player PlayingAttackTime      : " << Object_PlayingAttackTime << "                                                "<< std::endl;
+	 std::cout << "Player nowState               : " << nowStateName << "                                                "<< std::endl;
+	 std::cout << "Player preState               : " << preStateName << "                                                "<<std::endl;
+	 std::cout << "Player PattenID               : ";
+	 if(nowPlayerPattenData != nullptr)
+	 	std::cout << nowPlayerPattenData->Player_pattern_ID << "                                                " <<  std::endl;
+	 std::cout << "Player PattenNode01           :  ";
+	 if (tmpNode != nullptr) {
+	 	for (int i = 0; i < tmpNode->Node_Number.size(); i++)
+	 		std::cout << tmpNode->Node_Number[i] << ", ";
+	 	std::cout << "                                 " << std::endl;
+	 }
+	 std::cout << "Player PattenNode02           :  ";
+	 if (tmpNode2 != nullptr) {
+	 	for (int i = 0; i < tmpNode2->Node_Number.size(); i++)
+	 		std::cout << tmpNode2->Node_Number[i] << ", ";
+	 	std::cout << "                                   " << std::endl;
+	 }
 }
+
+
