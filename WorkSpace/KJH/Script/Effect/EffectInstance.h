@@ -11,8 +11,11 @@
 #include "Components/Rendering/AnimationPlayer.h"
 #include "Components/UI/Slider.h"
 
+/*
+미리 풀링으로 만들어둔 이펙트, 파티클들
+*/
 
-class TestObject : public MonoBehavior
+class EffectInstance : public MonoBehavior
 {
 public:
 	void OnUpdate() override;
@@ -20,24 +23,21 @@ public:
 	void OnStart() override;
 	void OnDestroy() override;
 
-	void CheckInput();
+	void CallGuardEffect();
+	void CallParryEffect();
+	void CallNomalEffect();
 
 	float GetValue(size_t type);
 
 private:
-	BitmapRenderer* TestImage{};
-	InputSystem* input{};
 
 	EffectManager* Emanager{};
 
-	ParticleRenderer* TestParticle{};
-
 	AnimationRenderer* AnimObject{};
-
-	/*AnimationPlayer* AnimPlayer{};*/
 
 	bool eventvalue = false;
 	bool eventvalue2 = false;
+
 	float counttime = 0.0f;
 	float maxtime = 1.0f;
 	float mydeltatime;
@@ -47,4 +47,5 @@ private:
 	GameObject* handleObject{};
 
 };
+
 
