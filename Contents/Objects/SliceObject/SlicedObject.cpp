@@ -9,8 +9,6 @@ void SlicedObject::OnCreate()
 	if (!owner->GetComponent<SliceRenderer>()) // 처음만들어진 오브젝트
 	{
 		sliceComp = owner->AddComponent<SliceRenderer>();
-		// 379, 726
-		sliceComp->SetOriginalByPath(L"../../Resource/Sprite/Test_Slice/teemo.png");
 		rigid->SetGravity(false);
 	}
 	else // 추가된 오브젝트

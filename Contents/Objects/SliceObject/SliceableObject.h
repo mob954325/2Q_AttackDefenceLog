@@ -15,6 +15,7 @@ class SliceableObject : public MonoBehavior
 
 public:
 	void OnCreate() override;
+	void OnStart() override;
 	void OnUpdate() override;
 
 	void SetImage(std::wstring path);
