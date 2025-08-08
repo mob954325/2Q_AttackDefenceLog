@@ -6,6 +6,7 @@
 #include "../Engine/Scene/SceneManager.h"
 #include "../Engine/Utils/EventDelegate.h"
 
+
 class PatternControlObject : public MonoBehavior
 {
 public:
@@ -33,5 +34,7 @@ protected:
 	GameObject* AddGameObject;
 	GameObject* bettleManager;
 	GameObject* player;
+
+	GameObject* test; // Å×½ºÆ®
 };
 
