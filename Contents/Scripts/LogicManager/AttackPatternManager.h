@@ -38,6 +38,7 @@ public:
 
 	void GetPlayerPatten(std::vector<int>& P1, std::vector<int>& P2);
 	void GetEnemyPattern(std::vector<int>& pattern, float& time);
+	void SearchAndDestroyCouple(std::string ID);
 
 	bool isNewPattern = false; // 외부에서 확인하는 용도
 	NewPattern newPattern;
@@ -49,5 +50,3 @@ private:
 	std::unordered_map<std::string, pattern*> timeOutPattern;
 
 };
-
-

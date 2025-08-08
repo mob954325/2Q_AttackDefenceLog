@@ -1,0 +1,53 @@
+﻿{
+    "clipName": "Dance_Dance",
+    "loop": true,
+    "texturePath": "Assets/Character/Sprites/Dance.png",
+    "duration": 0.9166666865348816,
+    "frames": [
+        {
+            "sprite": "Dance_Dance_0",
+            "time": 0.0
+        },
+        {
+            "sprite": "Dance_Dance_1",
+            "time": 0.0833333358168602
+        },
+        {
+            "sprite": "Dance_Dance_2",
+            "time": 0.1666666716337204
+        },
+        {
+            "sprite": "Dance_Dance_3",
+            "time": 0.25
+        },
+        {
+            "sprite": "Dance_Dance_4",
+            "time": 0.3333333432674408
+        },
+        {
+            "sprite": "Dance_Dance_5",
+            "time": 0.4166666865348816
+        },
+        {
+            "sprite": "Dance_Dance_6",
+            "time": 0.5
+        },
+        {
+            "sprite": "Dance_Dance_7",
+            "time": 0.5833333730697632
+        },
+        {
+            "sprite": "Dance_Dance_8",
+            "time": 0.6666666865348816
+        },
+        {
+            "sprite": "Dance_Dance_9",
+            "time": 0.75
+        },
+        {
+            "sprite": "Dance_Dance_10",
+            "time": 0.8333333730697632
+        }
+    ],
+    "events": []
+}
