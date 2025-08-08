@@ -14,7 +14,8 @@ void EnemyData::SetData(std::vector<std::wstring> tmp) {
 	enemySpiritamount = std::stof(tmp[7].c_str());
 	enemyGuardRate = std::stof(tmp[8].c_str());
 	for (int i = 0; i <= 15; i++) {
-		enemyPattern.push_back(StringConvert::WstringToString(tmp[i+9].c_str()));
+		if(tmp[i + 9] != L"null")
+			enemyPattern.push_back(StringConvert::WstringToString(tmp[i+9].c_str()));
 	}
 } 
 

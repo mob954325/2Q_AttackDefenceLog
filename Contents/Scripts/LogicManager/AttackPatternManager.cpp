@@ -19,16 +19,18 @@ void AttackPatternManager::OnStart() {
 	NowEnemyStorage.clear();
 }
 
-
+//패턴을 추가하는 함수 적과 플레이어의 패턴의 저장소가 다름
 void AttackPatternManager::AddPattern(std::string ID, float PlayingAttackTime, std::vector<int> PatternID) {
 	pattern* tmpPattern = new pattern();
 	tmpPattern->PattenID = ID;
 	tmpPattern->PlayingAttackTime = PlayingAttackTime;
 	tmpPattern->TotalPlayingAttackTime = PlayingAttackTime;
 	tmpPattern->NodePatten = PatternID;
-	for (int i = 0;  i  <  PatternID.size(); i++) {
-		if (i < PatternID.size() - 1 && PatternID[i + 1] == 0) // 벡터의 마지막 칸보다 작고, 다음칸이 0이라면 
-			tmpPattern->lastPosition = ConvertEndNodeToPosition(PatternID[i]);
+	for (int i = 0; i < PatternID.size(); ++i) {
+		if (PatternID[i] == 0 && i > 0) {
+			tmpPattern->lastPosition = ConvertEndNodeToPosition(PatternID[i-1]);
+			break;
+		}
 	}
 
 	if (tmpPattern->PattenID.substr(0, 2) == "PI") {
@@ -39,6 +41,8 @@ void AttackPatternManager::AddPattern(std::string ID, float PlayingAttackTime, s
 	}
 }
 
+
+//
 void AttackPatternManager::OnUpdate() {
 	bool isFirst = true;
 	bool isSecond = false;
@@ -56,15 +60,16 @@ void AttackPatternManager::OnUpdate() {
 		}
 	}
 
+	// 현재 새로 생성되어 있는 적 패턴의 정보를  따로 저장 -> 패턴 UI에 사용할것!
 	for(const auto& pair : NowEnemyStorage){
-		if (pair.second->PlayingAttackTime == pair.second->TotalPlayingAttackTime) { // 처음 지점(일꺼임)
+		if (pair.second->PlayingAttackTime == pair.second->TotalPlayingAttackTime) { //
 			isNewPattern = true;
 			newPattern.pattern = pair.second->NodePatten;
 			newPattern.totalTime = pair.second->TotalPlayingAttackTime;
 			newPattern.PattenID = pair.second->PattenID;
 		}
 
-		pair.second->PlayingAttackTime -= GameTime::GetInstance().GetDeltaTime();
+		pair.second->PlayingAttackTime -= GameTime::GetInstance().GetDeltaTime(); // 패턴의 시간 감소
 
 		if (pair.second->PlayingAttackTime <= 0.0f) { // 시간검사
 			tmpTimeOutPattern[pair.first] = pair.second; // 시간 다 된패턴들 임시 저장소에 저장				
@@ -82,7 +87,7 @@ void AttackPatternManager::OnUpdate() {
 	}
 }
 
-//
+//각 string에 따라 다른 저장소에서 해당 패턴의 ID를 찾아 제거!
 void AttackPatternManager::SubPattern(std::string ID, std::string StorageType) {
 	if (StorageType == "Time") {
 		auto it = timeOutPattern.find(ID);
@@ -260,3 +265,19 @@ void AttackPatternManager::SearchAndDestroyCouple(std::string ID) {
 
 
 
+//마지막 노드를 입력하면 상, 중, 하 enum 상태로 바꿈 
+AttackPosition AttackPatternManager::ConvertEndNodeToPosition(int endNode) {
+	switch (endNode)
+	{
+	case 1:  return UpNode;
+	case 2:  return UpNode;
+	case 3:  return UpNode;
+	case 4:  return MiddleNode;
+	case 5:  return MiddleNode;
+	case 6:  return MiddleNode;
+	case 7:  return LowNode;
+	case 8:  return LowNode;
+	case 9:  return LowNode;
+	default: return NonePos;
+	}
+}

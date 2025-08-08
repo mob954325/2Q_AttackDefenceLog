@@ -37,9 +37,8 @@ void BettleManager::SetInputNode(std::vector<int> InputNode) {
 	nowNode = InputNode;
 }
 
-// -> 
-
-void BettleManager::SetStateFormPattern() {		  //현재 마우스의 입력 받기  -> 승규님 데이터 받기
+//들어온 입력 노드에 따라서 공격, 방어를 처리하는 함수
+void BettleManager::SetStateFormPattern() {	
 	std::unordered_map<std::string, pattern*> tmpTimePatten = m_PattenManager->TimeOutPatten();  // 패턴이 공격 시간이 지났다면 
 	for (const auto& pair : tmpTimePatten) {
 		if (pair.second->PattenID.substr(0, 2) == "EP")            //적 패턴일시
@@ -50,10 +49,14 @@ void BettleManager::SetStateFormPattern() {		  //현재 마우스의 입력 받�
 			}
 			else {
 				m_Player->SetState("Player_Hit");   			// 피격됨
-				m_Player->GetDamage(m_Enemy->GetAttack());
+				m_Player->GetDamage(
+					ConvertHPDamageToPos(pair.second->lastPosition, m_Enemy->GetAttack() )); // 상중하 적용한 데미지
 			}
-			m_Enemy->RestoreSpiritDamage(m_Enemy->GetSpiritAttack()); // 기세를 회복
-			m_Player->GetSpiritdamage(m_Enemy->GetSpiritAttack());    // 플레이어는 기세를 잃음
+			// 기세 계산
+			m_Enemy->RestoreSpiritDamage(  
+				ConvertSpiritDamageToPos(pair.second->lastPosition, m_Enemy->GetSpiritAttack() )); // 적은기세를 회복
+			m_Player->GetSpiritdamage(  
+				ConvertSpiritDamageToPos(pair.second->lastPosition, m_Enemy->GetSpiritAttack() ));  // 플레이어는 기세를 잃음
 		}
 		m_PattenManager->SubPattern(pair.second->PattenID, "Time");
 	}
@@ -66,14 +69,19 @@ void BettleManager::SetStateFormPattern() {		  //현재 마우스의 입력 받�
 	if (tmpCorPatten != nullptr) {
 		if (tmpCorPatten->PattenID.substr(0, 2) == "EP") {
 			if ((tmpCorPatten->PlayingAttackTime) <= 0.5f) {  // 플레이어가 0.5초 이내에 가드시 -> 패링
+
 				m_Player->SetState("Player_Perry");
-				m_Player->RestoreSpiritDamage(m_Enemy->GetSpiritAttack());  // 기세 변경
-				m_Enemy->GetSpiritdamage(m_Enemy->GetSpiritAttack());
+				m_Player->RestoreSpiritDamage(
+					ConvertSpiritDamageToPos(tmpCorPatten->lastPosition, m_Enemy->GetSpiritAttack() ));  // 기세 변경
+				m_Enemy->GetSpiritdamage(
+					ConvertSpiritDamageToPos(tmpCorPatten->lastPosition,m_Enemy->GetSpiritAttack() ));
 			}
 			else {
 				m_Player->SetState("Player_Guard");		// 가드
-				m_Enemy->RestoreSpiritDamage(m_Enemy->GetSpiritAttack());  // 기세 변경
-				m_Player->GetSpiritdamage(m_Enemy->GetSpiritAttack());
+				m_Enemy->RestoreSpiritDamage(
+					ConvertSpiritDamageToPos(tmpCorPatten->lastPosition, m_Enemy->GetSpiritAttack() ));  // 기세 변경
+				m_Player->GetSpiritdamage(
+					ConvertSpiritDamageToPos(tmpCorPatten->lastPosition, m_Enemy->GetSpiritAttack()));
 			}
 			m_PattenManager->SubPattern(tmpCorPatten->PattenID, "Enemy");
 		}
@@ -85,10 +93,15 @@ void BettleManager::SetStateFormPattern() {		  //현재 마우스의 입력 받�
 
 			else {
 				m_Enemy->SetState("Enemy_Hit"); // 피격됨`
-				m_Enemy->GetDamage(m_Player->GetAttack());
+				m_Enemy->GetDamage(
+					ConvertHPDamageToPos(tmpCorPatten->lastPosition, m_Player->GetAttack() ));
 			}
-			m_Player->RestoreSpiritDamage(m_Player->GetSpiritAttack());
-			m_Enemy->GetSpiritdamage(m_Player->GetSpiritAttack());
+			m_Player->RestoreSpiritDamage(
+				ConvertSpiritDamageToPos(tmpCorPatten->lastPosition, m_Player->GetSpiritAttack() ));
+			m_Enemy->GetSpiritdamage(
+				ConvertSpiritDamageToPos(tmpCorPatten->lastPosition, m_Player->GetSpiritAttack() ));
+
+
 			m_PattenManager->SearchAndDestroyCouple(tmpCorPatten->PattenID);
 			m_PattenManager->SubPattern(tmpCorPatten->PattenID, "Player");
 		}
@@ -106,10 +119,14 @@ void BettleManager::SetStateFormPattern() {		  //현재 마우스의 입력 받�
 				}
 				else {
 					m_Player->SetState("Player_Hit");   			// 피격됨
-					m_Player->GetDamage(m_Enemy->GetAttack());
+					m_Player->GetDamage(
+						ConvertHPDamageToPos(tmpPatten->lastPosition, m_Enemy->GetAttack() ));
 				}
-				m_Player->RestoreSpiritDamage(m_Player->GetSpiritAttack()); // 기세 계산
-				m_Enemy->GetSpiritdamage(m_Player->GetSpiritAttack());
+				m_Player->RestoreSpiritDamage(
+					ConvertSpiritDamageToPos(tmpPatten->lastPosition, m_Player->GetSpiritAttack() )); // 기세 계산
+				m_Enemy->GetSpiritdamage(
+					ConvertSpiritDamageToPos(tmpPatten->lastPosition, m_Player->GetSpiritAttack() ));
+
 				m_PattenManager->SubPattern(tmpPatten->PattenID, "Enemy");
 			}
 			else {
@@ -150,9 +167,26 @@ void BettleManager::ChangeFinalState() {
 }
 
 
-void BettleManager::DeciedBettelState() { //마우스 데이터를 비교해서 현재 상태 결정하기
 
+
+//상중하에 따라서 체력 데미지 리턴하는 함수 만들기
+float BettleManager::ConvertHPDamageToPos(AttackPosition lastPos, float HpDamage) {
+	switch (lastPos)
+	{
+	case UpNode:      return  HpDamage * 1.25f;
+	case MiddleNode:  return  HpDamage;
+	case LowNode:     return  HpDamage * 0.75f;
+	default:		  return  0.0f;
+	}
 }
 
-
-
+//상중하에 따라서  기세 데미지 리턴하는 함수 만들기
+float BettleManager::ConvertSpiritDamageToPos(AttackPosition lastPos, float SpiritDamage) {
+	switch (lastPos)
+	{
+	case UpNode:      return SpiritDamage * 0.75f;
+	case MiddleNode:  return SpiritDamage;
+	case LowNode:     return SpiritDamage * 1.25f;
+	default:		  return 0.0f;
+	}
+}
