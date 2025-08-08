@@ -193,6 +193,7 @@ void Player::DiffStatePrint() {
 		preStateName = nowStateName;
 		nowStateName = m_State->GetNowName();
 	}
+
 	if (isGroggy && preStateName == "Player_Groggy") {
 		Object_NowSpiritAmount = Object_SpiritAmount / 2.0f;
 		isGroggy = false;

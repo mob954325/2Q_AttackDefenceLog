@@ -4,6 +4,10 @@
 #include "Components/Base/MonoBehavior.h"
 #include "../Engine/Utils/EventDelegate.h"
 
+
+//상중하 판별 용도, 추가되면 가이드라인 추가에 넣어주기
+enum AttackPosition { UpNode = 0, MiddleNode, LowNode, NonePos };
+
 struct pattern
 {
 	std::string PattenID;          // 플레리어의 패턴을 저장
@@ -50,47 +54,16 @@ public:
 	bool isNewPattern = false; // 외부에서 확인하는 용도
 	NewPattern newPattern; // 버퍼
 	void DoneTimeOutPatten();
+
 private:
 	std::vector<int> playerPatternA;
 	std::vector<int> playerPatternB;
 	std::unordered_map<std::string, pattern*> tmpTimeOutPattern;
 	std::unordered_map<std::string, pattern*> timeOutPattern;
+	AttackPosition ConvertEndNodeToPosition(int endNode); // 끝의 노드를 enum (상, 중, 하) 로 바꿔주는 함수!
 
 };
 
 
-//상중하 판별 용도, 추가되면 가이드라인 추가에 넣어주기
-enum AttackPosition { UpNode, MiddleNode, LowNode, NonePos };
-
-AttackPosition ConvertEndNodeToPosition(int endNode) {
-	int tmpDanamge = 0;
-	switch (endNode)
-	{
-	case 1:  return UpNode;
-	case 2:  return UpNode;
-	case 3:  return UpNode;
-	case 4:  return MiddleNode;
-	case 5:  return MiddleNode;
-	case 6:  return MiddleNode;
-	case 7:  return LowNode;
-	case 8:  return LowNode;
-	case 9:  return LowNode;
-	default: return NonePos;
-	}
-}
 
 
-// 상중하에 따라서 데미지 리턴하는 함수 만들기
-
-float ConvertEndNodeToPosition(AttackPosition lastPos) {
-	int tmpDanamge = 0;
-	switch (lastPos)
-	{
-	case UpNode:  return ;
-	case MiddleNode:  return ;
-	case LowNode:  return ;
-
-	default:
-
-	}
-}
