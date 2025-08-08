@@ -14,8 +14,10 @@ class ImguiManager : Singleton<ImguiManager>
 public:
 	void Init(HWND hwnd, ID3D11Device* device, ID3D11DeviceContext* deviceContext);
 	void Render();
+	void Uninitialize();
 
 	void Add(ImguiModule* m);
+	void WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 private:
 
 	ImGuiIO io{};
