@@ -46,7 +46,7 @@ void AnimatedChainEffect::Render(D2DRenderManager* manager)
 void AnimatedChainEffect::OnCreate() {
 	//"C:\Users\User\Documents\GitHub\Kyu1\Resource\ContentsResource\attack_line_spreadsheet.png"
 	SetAtlasStrip(L"../Resource/ContentsResource/attack_line_spreadsheet.png", 9); // 경로 + 프레임 수
-	flashBitmap = resourceManager->CreateBitmapResource(L"../Resource/ContentsResource/flash_spreadsheet.png");
+	flashBitmap = resourceManager->CreateBitmapResource(L"../Resource/ContentsResource/circle_inner.png");
 	flashSize = flashBitmap->GetBitmap()->GetSize();
 }
 
@@ -154,10 +154,18 @@ void AnimatedChainEffect::Draw(D2DRenderManager* manager)
 		manager->DrawBitmap(atlasBitmap->GetBitmap(), dest, src);
 	}
 
-	float flashAlpha = 1.0f - (float)currentFrame / (float)maxFrame; // 프레임 진행에 따라 알파 감소
+	auto identity = D2D1::Matrix3x2F::Identity();
+	manager->SetRenderTransform(identity);
 
-	for (int nodeIndex : activeNodes) {
+	float t = (float)currentFrame / (float)maxFrame; // 0~1
+	float flashAlpha = 0.3f + (1.0f - 0.3f) * (1.0f - t * t);
+
+	for (int i = 0; i < activeNodes.size(); ++i) {
+		if (i == 0) continue;
+
+		int nodeIndex = activeNodes[i];
 		Vector2 pos = positions[nodeIndex - 1];
+
 		D2D1_RECT_F dest = {
 			pos.x - flashSize.width * 0.5f,
 			pos.y - flashSize.height * 0.5f,
@@ -165,7 +173,7 @@ void AnimatedChainEffect::Draw(D2DRenderManager* manager)
 			pos.y + flashSize.height * 0.5f
 		};
 
-		D2D1_RECT_F src = { 0, 0, flashSize.width, flashSize.height };
+		D2D1_RECT_F src = { 0.0f, 0.0f, flashSize.width, flashSize.height };
 		manager->DrawBitmap(flashBitmap->GetBitmap(), dest, src, flashAlpha);
 	}
 }
