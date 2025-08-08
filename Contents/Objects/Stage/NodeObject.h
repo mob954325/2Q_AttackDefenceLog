@@ -16,6 +16,7 @@ public:
 	bool IsOverlap();
 
 protected:
+	bool CheckOverlap(float x, float y);
 	float radius;
 	D2D1_SIZE_F size;
 	BitmapRenderer* bitmapRenderer{};	

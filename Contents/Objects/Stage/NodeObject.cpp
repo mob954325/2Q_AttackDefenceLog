@@ -35,7 +35,7 @@ void NodeObject::OnUpdate()
 
 	float mouseX = Input::MouseX;
 	float mouseY = Input::MouseY;
-	if (IsOverlap(mouseX, mouseY))
+	if (CheckOverlap(mouseX, mouseY))
 	{
 		isOverlap = true;
 	}
@@ -50,7 +50,7 @@ bool NodeObject::IsOverlap()
 	return isOverlap;
 }
 
-bool NodeObject::IsOverlap(float x, float y)
+bool NodeObject::CheckOverlap(float x, float y)
 {
 	D2D1_SIZE_F bound = bitmapRenderer->GetResource()->GetBitmap()->GetSize();
 
