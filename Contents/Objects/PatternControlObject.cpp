@@ -69,9 +69,19 @@ void PatternControlObject::OnCreate()
 	//===================================================================================================
 
 	attackPattenManager = new GameObject();                    // GameObject 객체 생성
-	attackPattenManager->AddComponent<AttackPatternManager>(); // MonoBehaivor 등록
+	auto apm = attackPattenManager->AddComponent<AttackPatternManager>(); // MonoBehaivor 등록
 	attackPattenManager->SetName("AttackPattenManager");
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(attackPattenManager);                           // Scene에 GameObject 추가
+
+	lid_OnPatternCancel = apm->OnPatternCancel.Add([this](const std::string& id) {
+		ChainDrawerComponent* target = nullptr;
+		for (auto* go : enemyGuidelines) {
+			if (auto* cdc = go->GetComponent<ChainDrawerComponent>()) {
+				if (cdc->patternID == id) { target = cdc; break; }
+			}
+		}
+		if (target) target->CancelByID(id);
+		});
 
 	enemy = new GameObject();      // GameObject 객체 생성
 	auto enemytmp = enemy->AddComponent<Enemy>(); // MonoBehaivor 등록
@@ -123,6 +133,20 @@ void PatternControlObject::OnStart() // 처음
 		queueBack->SetOrderInLayer(0);
 		readyQueue.back()->SetName("EnemyGuideline." + i);
 		queueBack->SetupNodes(m_nodes[4]->GetTransform().GetPosition(), n); // 스타트에서 하기
+		queueBack->OnInterrupted.Add([this, go = readyQueue.back()](const std::string& id) {			
+			for (auto it = enemyGuidelines.begin(); it != enemyGuidelines.end(); ++it) {
+				if (*it == go) { enemyGuidelines.erase(it); break; }
+			}
+			readyQueue.push(go);
+			});
+
+		queueBack->OnFinished.Add([this, go = readyQueue.back()](const std::string&) {
+			for (auto it = enemyGuidelines.begin(); it != enemyGuidelines.end(); ++it) {
+				if (*it == go) { enemyGuidelines.erase(it); break; }
+			}
+			readyQueue.push(go);
+			});
+
 		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(readyQueue.back());
 	}
 
@@ -177,7 +201,6 @@ void PatternControlObject::OnUpdate() // 업데이트
 	PCB->Start(pcb);
 
 	if (apm->isNewPattern) {
-
 		if (!readyQueue.empty()) {
 			enemyGuidelines.push_back(readyQueue.front());
 			readyQueue.pop();
@@ -185,34 +208,40 @@ void PatternControlObject::OnUpdate() // 업데이트
 
 			std::vector<int> v;
 			float t;
-			apm->GetEnemyPattern(v, t);
+			std::string ID;
+			apm->GetEnemyPattern(v, t, ID);
 
 			v.erase(std::remove(v.begin(), v.end(), 0), v.end());
 
-			ec->Start(v, t);
+			ec->Start(v, t, ID);
 		}
 	}
 
 	// enemyGuidelines(벡터임) 내부 진행도가 1.0(종료) 된 것들을 다시 큐로 반환해줌
-	for (auto it = enemyGuidelines.begin(); it != enemyGuidelines.end(); ) {
-		GameObject* obj = *it;
-		auto cdc = obj->GetComponent<ChainDrawerComponent>();
-
-		if (!cdc) { ++it; continue; }
-
-		if (cdc->progress > 1.0f) { // 진행 완료시
-			cdc->progress = 0.0f;
-			cdc->isPlay = false;
-			readyQueue.push(obj);
-			it = enemyGuidelines.erase(it);
-		}
-		else
-			++it;
-	}
+// 	for (auto it = enemyGuidelines.begin(); it != enemyGuidelines.end(); ) {
+// 		GameObject* obj = *it;
+// 		auto cdc = obj->GetComponent<ChainDrawerComponent>();
+// 
+// 		if (!cdc) { ++it; continue; }
+// 
+// 		if (cdc->progress > 1.0f) { // 진행 완료시
+// 			cdc->progress = 0.0f;
+// 			cdc->isPlay = false;
+// 			readyQueue.push(obj);
+// 			it = enemyGuidelines.erase(it);
+// 		}
+// 		else
+// 			++it;
+// 	}
 }
 
 void PatternControlObject::OnDestroy()
 {
-
+	if (auto* apm = attackPattenManager->GetComponent<AttackPatternManager>()) {
+		if (lid_OnPatternCancel) {
+			apm->OnPatternCancel.RemoveByID(lid_OnPatternCancel);
+			lid_OnPatternCancel = 0;
+		}
+	}
 
 }
