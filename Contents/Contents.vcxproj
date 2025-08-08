@@ -373,6 +373,7 @@
     <ClCompile Include="Scripts\LiveObject\Player.cpp" />
     <ClCompile Include="Scripts\LogicManager\AttackPatternManager.cpp" />
     <ClCompile Include="Scripts\LogicManager\BettleManager.cpp" />
+    <ClCompile Include="Objects\TitleScene\TitleNodeManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameApp.h" />
@@ -409,6 +410,7 @@
     <ClInclude Include="Scripts\LogicManager\AttackPatternManager.h" />
     <ClInclude Include="Scripts\LogicManager\BettleManager.h" />
     <ClInclude Include="Scripts\SceneCore.h" />
+    <ClInclude Include="Objects\TitleScene\TitleNodeManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

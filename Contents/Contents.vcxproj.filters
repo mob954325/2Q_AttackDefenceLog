@@ -162,6 +162,9 @@
     <ClCompile Include="Scripts\CsvData\DataClass\PlayerData.cpp">
       <Filter>Scripts\CsvData\DataClass</Filter>
     </ClCompile>
+    <ClCompile Include="Objects\TitleScene\TitleNodeManager.cpp">
+      <Filter>Objects\TitleScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameApp.h">
@@ -265,6 +268,9 @@
     </ClInclude>
     <ClInclude Include="Scripts\CsvData\DataClass\PlayerData.h">
       <Filter>Scripts\CsvData\DataClass</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\TitleScene\TitleNodeManager.h">
+      <Filter>Objects\TitleScene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
