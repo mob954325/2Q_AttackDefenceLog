@@ -64,6 +64,9 @@
     <Filter Include="Objects\SliceObject">
       <UniqueIdentifier>{c6803fa7-d9bd-479c-8c62-f3289d1a56aa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Objects\Stage\EscMenu">
+      <UniqueIdentifier>{18408eb4-7ef4-4c7b-86f6-c544076e2588}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\Game.cpp">
@@ -177,6 +180,18 @@
     <ClCompile Include="Objects\SliceObject\SlicedObject.cpp">
       <Filter>Objects\SliceObject</Filter>
     </ClCompile>
+    <ClCompile Include="Objects\Scenes\Stage\EscMenu\EscContinueButton.cpp">
+      <Filter>Objects\Stage\EscMenu</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Scenes\Stage\EscMenu\EscExitButton.cpp">
+      <Filter>Objects\Stage\EscMenu</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Scenes\Stage\EscMenu\EscMuteButton.cpp">
+      <Filter>Objects\Stage\EscMenu</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Scenes\Stage\EscMenu\StageESCPanel.cpp">
+      <Filter>Objects\Stage\EscMenu</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameApp.h">
@@ -289,6 +304,18 @@
     </ClInclude>
     <ClInclude Include="Objects\SliceObject\SlicedObject.h">
       <Filter>Objects\SliceObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Scenes\Stage\EscMenu\EscContinueButton.h">
+      <Filter>Objects\Stage\EscMenu</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Scenes\Stage\EscMenu\EscExitButton.h">
+      <Filter>Objects\Stage\EscMenu</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Scenes\Stage\EscMenu\EscMuteButton.h">
+      <Filter>Objects\Stage\EscMenu</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Scenes\Stage\EscMenu\StageESCPanel.h">
+      <Filter>Objects\Stage\EscMenu</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
