@@ -23,7 +23,7 @@ void PatternControlObject::OnCreate()
 	trail = new GameObject();
 	trail->AddComponent<MouseTrailObject>();
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(trail, "MouseTrail");
-	
+
 	for (int i = 0; i < 9; ++i) {
 		m_nodes[i] = new GameObject();
 		auto nodeComponent = m_nodes[i]->AddComponent<NodeObject>();
@@ -36,8 +36,8 @@ void PatternControlObject::OnCreate()
 	playerGuidelineA = new GameObject();
 	playerGuidelineA->SetRenderLayer(EngineData::RenderLayer::None);
 	auto cb = playerGuidelineA->AddComponent<ChainDrawerComponent>(); // 빨강(상단) 초록(중단) 하단(파랑)
-	cb->SetBitmap(L"../Resource/ContentsResource/player_guide_line 3.png"); 
-	cb->SetTypeBitmap(L"../Resource/ContentsResource/player_guide_line 1.png", L"../Resource/ContentsResource/player_guide_line 2.png");	
+	cb->SetBitmap(L"../Resource/ContentsResource/player_guide_line 3.png");
+	cb->SetTypeBitmap(L"../Resource/ContentsResource/player_guide_line 1.png", L"../Resource/ContentsResource/player_guide_line 2.png");
 	cb->SetOrderInLayer(0);
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(playerGuidelineA);
 
@@ -45,9 +45,9 @@ void PatternControlObject::OnCreate()
 	playerGuidelineB->SetRenderLayer(EngineData::RenderLayer::None);
 	auto cc = playerGuidelineB->AddComponent<ChainDrawerComponent>();
 	cc->SetBitmap(L"../Resource/ContentsResource/player_guide_line 3.png");
-	cc->SetTypeBitmap(L"../Resource/ContentsResource/player_guide_line 1.png", L"../Resource/ContentsResource/player_guide_line 2.png");	
+	cc->SetTypeBitmap(L"../Resource/ContentsResource/player_guide_line 1.png", L"../Resource/ContentsResource/player_guide_line 2.png");
 	cc->SetOrderInLayer(0);
-	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(playerGuidelineB);	
+	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(playerGuidelineB);
 
 	//===================================================================================================
 	// 데?이터 읽어오는거
@@ -143,7 +143,7 @@ void PatternControlObject::OnStart() // 처음
 		queueBack->SetOrderInLayer(0);
 		readyQueueForEnemyGuide.back()->SetName("EnemyGuideline." + std::to_string(i));
 		queueBack->SetupNodes(m_nodes[4]->GetTransform().GetPosition(), n); // 스타트에서 하기
-		
+
 		queueBack->OnInterrupted.Add([this, go = readyQueueForEnemyGuide.back()](const std::string& id) {
 			for (auto it = enemyGuidelines.begin(); it != enemyGuidelines.end(); ++it) {
 				if (*it == go) { enemyGuidelines.erase(it); break; }
@@ -166,17 +166,21 @@ void PatternControlObject::OnStart() // 처음
 	for (int i = 0; i < 10; ++i) {
 		readyQueueForAttackLine.push(new GameObject());
 		readyQueueForAttackLine.back()->SetRenderLayer(EngineData::RenderLayer::UI);
-		auto queueBack = readyQueueForAttackLine.back()->AddComponent<AnimatedChainEffect>();		
+		auto queueBack = readyQueueForAttackLine.back()->AddComponent<AnimatedChainEffect>();
 		queueBack->SetOrderInLayer(130);
 
 		readyQueueForAttackLine.back()->SetName("AttackEffectLine." + std::to_string(i));
-		queueBack->SetupNodes(m_nodes[4]->GetTransform().GetPosition(), n); 
+		queueBack->SetupNodes(m_nodes[4]->GetTransform().GetPosition(), n);
 
 		queueBack->OnFinished.Add([this, go = readyQueueForAttackLine.back()]() {
 			for (auto it = attackLineEffects.begin(); it != attackLineEffects.end(); ++it) {
 				if (*it == go) { attackLineEffects.erase(it); break; } // 백터에서 삭제함
 			}
 			readyQueueForAttackLine.push(go);
+			});
+
+		queueBack->OnNodeLightUp.Add([this](int index) {
+			std::cout << "반짝!!!!!!!!!!!: " << index << std::endl;			//여기에 이펙트 연결해주면 됨
 			});
 
 		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(readyQueueForAttackLine.back());
@@ -198,7 +202,6 @@ void PatternControlObject::OnUpdate() // 업데이트
 {
 	auto t = trail->GetComponent<TrailComponent>();
 	t->isOutFromBox = PM.CheckOutOfBox({ Input::MouseX, Input::MouseY }); // 마우스 좌표 기반으로, 박스 밖으로 나갔는지 확인
-	
 
 	//===================================================================================================
 	// [1] 입력 발생하면
@@ -214,27 +217,32 @@ void PatternControlObject::OnUpdate() // 업데이트
 
 		auto bt = bettleManager->GetComponent<BettleManager>();
 		bt->SetInputNode(PM.GetPattern());
-		
+
 		for (int value : PM.GetPattern()) { std::cout << value << "-"; }
 		std::cout << std::endl << std::endl;
+
+		if (!readyQueueForAttackLine.empty()) { // 테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도
+			attackLineEffects.push_back(readyQueueForAttackLine.front());
+			readyQueueForAttackLine.pop();
+			auto ac = attackLineEffects.back()->GetComponent<AnimatedChainEffect>();
+			ac->PlayOnce({ 1,2,4 }); // 테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도
+		}
 	}
 
 	//===================================================================================================
 	// [2] 가이드라인 갱신되면
 
-	auto PCA = playerGuidelineA->GetComponent<ChainDrawerComponent>();
-	auto PCB = playerGuidelineB->GetComponent<ChainDrawerComponent>();
-	auto apm = attackPattenManager->GetComponent<AttackPatternManager>();
-
 	std::vector<int> pca;
 	std::vector<int> pcb;
 
-	apm->GetPlayerPatten(pca, pcb);	
+	auto apm = attackPattenManager->GetComponent<AttackPatternManager>();
+	apm->GetPlayerPatten(pca, pcb);
 
 	if (pca != cachedVecA) {
 		cachedVecA = pca;
 		pca.erase(std::remove(pca.begin(), pca.end(), 0), pca.end());
 		std::reverse(pca.begin(), pca.end());
+		auto PCA = playerGuidelineA->GetComponent<ChainDrawerComponent>();
 		PCA->StartByType(pca);
 	}
 
@@ -242,8 +250,9 @@ void PatternControlObject::OnUpdate() // 업데이트
 		cachedVecB = pcb;
 		pcb.erase(std::remove(pcb.begin(), pcb.end(), 0), pcb.end());
 		std::reverse(pcb.begin(), pcb.end());
+		auto PCB = playerGuidelineB->GetComponent<ChainDrawerComponent>();
 		PCB->StartByType(pcb);
-	}	
+	}
 
 	//===================================================================================================
 	// [3] 적패턴 갱신되면
@@ -259,16 +268,8 @@ void PatternControlObject::OnUpdate() // 업데이트
 			enemyGuidelines.push_back(readyQueueForEnemyGuide.front());
 			readyQueueForEnemyGuide.pop();
 			auto ec = enemyGuidelines.back()->GetComponent<ChainDrawerComponent>();
-	
-			ec->Start(v, t, ID);
-		}
 
-		if (!readyQueueForAttackLine.empty()) { // 테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도
-			attackLineEffects.push_back(readyQueueForAttackLine.front());
-			readyQueueForAttackLine.pop();
-			auto ac = attackLineEffects.back()->GetComponent<AnimatedChainEffect>();
-			
-			ac->PlayOnce(v); // 테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도
+			ec->Start(v, t, ID);
 		}
 	}
 }
