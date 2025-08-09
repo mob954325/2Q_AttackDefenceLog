@@ -6,8 +6,7 @@
 #include "Objects/Common/MouseTrailObject.h"
 #include "../Engine/Components/Rendering/ChainDrawerComponent.h"
 #include "../Engine/Utils/GameTime.h"
-
-#include "../Engine/Components/Rendering/AnimatedChainEffect.h" // 테스트
+#include "../Engine/Components/Rendering/AnimatedChainEffect.h" 
 
 //성빈씨꺼
 #include "Scripts/LogicManager/BettleManager.h"
@@ -118,6 +117,8 @@ void PatternControlObject::OnStart() // 처음
 
 	//===================================================================================================
 
+	std::vector<Vector2> tmp;
+
 	float n = 200.0f; // 노드간의 간격
 	float r = 45.0f; // 반경
 	for (int i = 0; i < 9; ++i) {
@@ -129,8 +130,11 @@ void PatternControlObject::OnStart() // 처음
 
 		m_nodes[i]->GetTransform().SetPosition(x, y);
 		m_nodes[i]->GetComponent<NodeObject>()->SetRadius(r);
+		tmp.push_back({ x, y });
 	}
 
+	effInstance = owner->AddComponent<EffectInstance>();
+	effInstance->SetAnimePosition(tmp);
 	PM.SetNodes(m_nodes, r);
 
 	//===================================================================================================
@@ -179,8 +183,10 @@ void PatternControlObject::OnStart() // 처음
 			readyQueueForAttackLine.push(go);
 			});
 
-		queueBack->OnNodeLightUp.Add([this](int index) {
-			std::cout << "반짝!!!!!!!!!!!: " << index << std::endl;			//여기에 이펙트 연결해주면 됨
+		queueBack->OnNodeLightUp.Add([this](int index) { // 1 ~ 9 >> -1 0 ~ 8
+			//std::cout << "반짝!!!!!!!!!!!: " << index << std::endl;			//여기에 이펙트 연결해주면 됨
+
+			effInstance->CallAnime(static_cast<size_t>(index - 1)); // 0~8
 			});
 
 		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(readyQueueForAttackLine.back());
@@ -220,13 +226,6 @@ void PatternControlObject::OnUpdate() // 업데이트
 
 		for (int value : PM.GetPattern()) { std::cout << value << "-"; }
 		std::cout << std::endl << std::endl;
-
-		if (!readyQueueForAttackLine.empty()) { // 테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도
-			attackLineEffects.push_back(readyQueueForAttackLine.front());
-			readyQueueForAttackLine.pop();
-			auto ac = attackLineEffects.back()->GetComponent<AnimatedChainEffect>();
-			ac->PlayOnce({ 1,2,4 }); // 테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도
-		}
 	}
 
 	//===================================================================================================
@@ -270,6 +269,16 @@ void PatternControlObject::OnUpdate() // 업데이트
 			auto ec = enemyGuidelines.back()->GetComponent<ChainDrawerComponent>();
 
 			ec->Start(v, t, ID);
+		}
+	}
+	//===================================================================================================
+	// [4] 공격이 성공한 경우 - 이펙트 출력용
+	if (apm->isAttack) {
+		if (!readyQueueForAttackLine.empty()) {
+			attackLineEffects.push_back(readyQueueForAttackLine.front());
+			readyQueueForAttackLine.pop();
+			auto ac = attackLineEffects.back()->GetComponent<AnimatedChainEffect>();
+			ac->PlayOnce(apm->CheckIsAttck());
 		}
 	}
 }

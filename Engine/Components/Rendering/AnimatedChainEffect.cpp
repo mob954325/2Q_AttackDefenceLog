@@ -185,9 +185,10 @@ void AnimatedChainEffect::Draw(D2DRenderManager* manager)
 		// 기적의 알파값 계산법
 
 		float alpha = 0.0f;
-		if (abs(currentFrame - maxNodeIndex[i].framePointIndex) < 2)
+		int point = currentFrame - maxNodeIndex[i].framePointIndex;
+		if ( point < 5 && point > -1)
 		{
-			alpha = 0.8f;
+			alpha = 0.6f;
 			if (!maxNodeIndex[i].isCalled) {
 				OnNodeLightUp.Invoke(nodeIndex); // 1~ 9값이 외부로 반출됨
 				maxNodeIndex[i].isCalled = true;
