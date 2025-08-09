@@ -1,11 +1,11 @@
 ﻿#include "MenuScene.h"
-#include "../Engine/Components/Logic/InputSystem.h"
-#include "../Objects/InputObject.h"
+#include "Components/Logic/InputSystem.h"
+#include "Objects/Common/InputObject.h"
 
-#include "../Objects/TestObject.h"
-#include "../Objects/MouseTrailObject.h"
-#include "Objects/MenuScene/MenuSceneBGI.h"
-#include "Objects/MenuScene/StageSelectManager.h"
+#include "Objects/Common/TestObject.h"
+#include "Objects/Common/MouseTrailObject.h"
+#include "Objects/Scenes/MenuScene/MenuSceneBGI.h"
+#include "Objects/Scenes/MenuScene/StageSelectManager.h"
 
 void MenuScene::OnEnterImpl()
 {

@@ -1,9 +1,9 @@
 ﻿#include "EndScene.h"
 #include "../Engine/Components/Logic/InputSystem.h"
 
-#include "../Objects/InputObject.h"
-#include "../Objects/MouseTrailObject.h"
-#include "../Objects/TestObject.h"
+#include "Objects/Common/InputObject.h"
+#include "Objects/Common/MouseTrailObject.h"
+#include "Objects/Common/TestObject.h"
 
 void EndScene::OnEnterImpl()
 {

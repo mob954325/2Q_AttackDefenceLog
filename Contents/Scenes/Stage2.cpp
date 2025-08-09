@@ -1,6 +1,6 @@
 ﻿#include "Stage2.h"
-#include "../Engine/Components/Logic/InputSystem.h"
-#include "../Objects/InputObject.h"
+#include "Components/Logic/InputSystem.h"
+#include "Objects/Common/InputObject.h"
 
 void Stage2::OnEnterImpl()
 {

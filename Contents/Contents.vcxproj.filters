@@ -58,6 +58,12 @@
     <Filter Include="Objects\SceneObject\TitleScene">
       <UniqueIdentifier>{58ad0f72-a0f3-43ae-bd4b-e0f20430317b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Objects\Common">
+      <UniqueIdentifier>{f0b601ab-ddb8-4a09-bf2c-ea3bf570681b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\SliceObject">
+      <UniqueIdentifier>{c6803fa7-d9bd-479c-8c62-f3289d1a56aa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\Game.cpp">
@@ -87,41 +93,26 @@
     <ClCompile Include="Scenes\TitleScene.cpp">
       <Filter>Scene\.cpp</Filter>
     </ClCompile>
-    <ClCompile Include="Objects\Stage\NodeObject.cpp">
+    <ClCompile Include="Objects\Scenes\Stage\NodeObject.cpp">
       <Filter>Objects\Stage</Filter>
-    </ClCompile>
-    <ClCompile Include="Objects\TestObject.cpp">
-      <Filter>Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Objects\InputObject.cpp">
-      <Filter>Objects</Filter>
     </ClCompile>
     <ClCompile Include="Objects\Manager\PatternManager.cpp">
       <Filter>Objects\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Objects\MouseTrailObject.cpp">
-      <Filter>Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Objects\EndScene\EndSceneBGI.cpp">
+    <ClCompile Include="Objects\Scenes\EndScene\EndSceneBGI.cpp">
       <Filter>Objects\SceneObject\EndScene</Filter>
     </ClCompile>
-    <ClCompile Include="Objects\MenuScene\MenuSceneBGI.cpp">
+    <ClCompile Include="Objects\Scenes\MenuScene\MenuSceneBGI.cpp">
       <Filter>Objects\SceneObject\MenuScene</Filter>
     </ClCompile>
-    <ClCompile Include="Objects\SelectScene\SelectSceneBGI.cpp">
+    <ClCompile Include="Objects\Scenes\SelectScene\SelectSceneBGI.cpp">
       <Filter>Objects\SceneObject\SelectScene</Filter>
     </ClCompile>
-    <ClCompile Include="Objects\TitleScene\TitleSceneBGI.cpp">
+    <ClCompile Include="Objects\Scenes\TitleScene\TitleSceneBGI.cpp">
       <Filter>Objects\SceneObject\TitleScene</Filter>
     </ClCompile>
-    <ClCompile Include="Objects\Stage\StageBGI.cpp">
+    <ClCompile Include="Objects\Scenes\Stage\StageBGI.cpp">
       <Filter>Objects\Stage</Filter>
-    </ClCompile>
-    <ClCompile Include="Objects\PatternControlObject.cpp">
-      <Filter>Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Objects\SliceObject\SliceableObject.cpp">
-      <Filter>Objects</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\Component\StateController.cpp">
       <Filter>Scripts\Components</Filter>
@@ -162,13 +153,30 @@
     <ClCompile Include="Scripts\CsvData\DataClass\PlayerData.cpp">
       <Filter>Scripts\CsvData\DataClass</Filter>
     </ClCompile>
-    <ClCompile Include="Objects\TitleScene\TitleNodeManager.cpp">
+    <ClCompile Include="Objects\Scenes\TitleScene\TitleNodeManager.cpp">
       <Filter>Objects\SceneObject\TitleScene</Filter>
     </ClCompile>
-    <ClCompile Include="Objects\MenuScene\StageSelectManager.cpp">
+    <ClCompile Include="Objects\Scenes\MenuScene\StageSelectManager.cpp">
       <Filter>Objects\SceneObject\MenuScene</Filter>
     </ClCompile>
-    <ClCompile Include="Objects\SliceObject\SlicedObject.cpp" />
+    <ClCompile Include="Objects\Common\InputObject.cpp">
+      <Filter>Objects\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Common\MouseTrailObject.cpp">
+      <Filter>Objects\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Common\PatternControlObject.cpp">
+      <Filter>Objects\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Common\TestObject.cpp">
+      <Filter>Objects\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\SliceObject\SliceableObject.cpp">
+      <Filter>Objects\SliceObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\SliceObject\SlicedObject.cpp">
+      <Filter>Objects\SliceObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameApp.h">
@@ -198,41 +206,26 @@
     <ClInclude Include="Scenes\TitleScene.h">
       <Filter>Scene\.h</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\Stage\NodeObject.h">
+    <ClInclude Include="Objects\Scenes\Stage\NodeObject.h">
       <Filter>Objects\Stage</Filter>
-    </ClInclude>
-    <ClInclude Include="Objects\TestObject.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Objects\InputObject.h">
-      <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="Objects\Manager\PatternManager.h">
       <Filter>Objects\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\MouseTrailObject.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Objects\EndScene\EndSceneBGI.h">
+    <ClInclude Include="Objects\Scenes\EndScene\EndSceneBGI.h">
       <Filter>Objects\SceneObject\EndScene</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\MenuScene\MenuSceneBGI.h">
+    <ClInclude Include="Objects\Scenes\MenuScene\MenuSceneBGI.h">
       <Filter>Objects\SceneObject\MenuScene</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\SelectScene\SelectSceneBGI.h">
+    <ClInclude Include="Objects\Scenes\SelectScene\SelectSceneBGI.h">
       <Filter>Objects\SceneObject\SelectScene</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\TitleScene\TitleSceneBGI.h">
+    <ClInclude Include="Objects\Scenes\TitleScene\TitleSceneBGI.h">
       <Filter>Objects\SceneObject\TitleScene</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\Stage\StageBGI.h">
+    <ClInclude Include="Objects\Scenes\Stage\StageBGI.h">
       <Filter>Objects\Stage</Filter>
-    </ClInclude>
-    <ClInclude Include="Objects\PatternControlObject.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Objects\SliceObject\SliceableObject.h">
-      <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Component\StateController.h">
       <Filter>Scripts\Components</Filter>
@@ -273,12 +266,29 @@
     <ClInclude Include="Scripts\CsvData\DataClass\PlayerData.h">
       <Filter>Scripts\CsvData\DataClass</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\TitleScene\TitleNodeManager.h">
+    <ClInclude Include="Objects\Scenes\TitleScene\TitleNodeManager.h">
       <Filter>Objects\SceneObject\TitleScene</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\MenuScene\StageSelectManager.h">
+    <ClInclude Include="Objects\Scenes\MenuScene\StageSelectManager.h">
       <Filter>Objects\SceneObject\MenuScene</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\SliceObject\SlicedObject.h" />
+    <ClInclude Include="Objects\Common\InputObject.h">
+      <Filter>Objects\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Common\MouseTrailObject.h">
+      <Filter>Objects\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Common\PatternControlObject.h">
+      <Filter>Objects\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Common\TestObject.h">
+      <Filter>Objects\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\SliceObject\SliceableObject.h">
+      <Filter>Objects\SliceObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\SliceObject\SlicedObject.h">
+      <Filter>Objects\SliceObject</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
