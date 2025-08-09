@@ -133,7 +133,7 @@ void PatternControlObject::OnStart() // 처음
 		tmp.push_back({ x, y });
 	}
 
-	effInstance = owner->AddComponent<EffectInstance>();	
+	effInstance = owner->AddComponent<EffectInstance>();
 	effInstance->SetAnimePosition(tmp);
 	PM.SetNodes(m_nodes, r);
 
@@ -226,13 +226,6 @@ void PatternControlObject::OnUpdate() // 업데이트
 
 		for (int value : PM.GetPattern()) { std::cout << value << "-"; }
 		std::cout << std::endl << std::endl;
-
-		if (!readyQueueForAttackLine.empty()) { // 테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도
-			attackLineEffects.push_back(readyQueueForAttackLine.front());
-			readyQueueForAttackLine.pop();
-			auto ac = attackLineEffects.back()->GetComponent<AnimatedChainEffect>();
-			ac->PlayOnce({ 1,2,4,5,7,9 }); // 테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도테스트용도	
-		}
 	}
 
 	//===================================================================================================
@@ -276,6 +269,16 @@ void PatternControlObject::OnUpdate() // 업데이트
 			auto ec = enemyGuidelines.back()->GetComponent<ChainDrawerComponent>();
 
 			ec->Start(v, t, ID);
+		}
+	}
+	//===================================================================================================
+	// [4] 공격이 성공한 경우 - 이펙트 출력용
+	if (apm->isAttack) {
+		if (!readyQueueForAttackLine.empty()) {
+			attackLineEffects.push_back(readyQueueForAttackLine.front());
+			readyQueueForAttackLine.pop();
+			auto ac = attackLineEffects.back()->GetComponent<AnimatedChainEffect>();
+			ac->PlayOnce(apm->CheckIsAttck());
 		}
 	}
 }

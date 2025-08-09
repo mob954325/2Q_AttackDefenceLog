@@ -146,7 +146,7 @@ pattern* AttackPatternManager::CorrectPattern(std::vector<int> PatternID) {  //�
 		// 적 패턴이 2 이상이면 방어 패턴으로 처리
 		if (countNum >= 2) {
 			isPlayerSearch = false; // 공격 처리 안함!!
-			isAttack = false;
+			//isAttack = false;
 			// 방어 시도 countNun 2 ~ 4개, 패턴이 적일 때				
 			
 			if (PatternID.size() != pair.second->NodePatten.size() - EnemyZero) 
@@ -188,19 +188,20 @@ pattern* AttackPatternManager::CorrectPattern(std::vector<int> PatternID) {  //�
 			}
 			if (PatternID.size() != pair.second->NodePatten.size() - playerCountZero) { //입력 노드와 0을 제외한 적 공격 노드의 개수가 같지 않다면
 				pair.second->isFail = true; // 공격 실패판정
-				isAttack = false;
+				//isAttack = false;
 				break;
 			}
 			for (int i = 0; i < PatternID.size(); i++) {	// 현재 그은 패턴 검사
 				if (PatternID[i] != pair.second->NodePatten[i]) { // 그은 패턴과 적 패턴이 맞지 않음
 					pair.second->isFail = true; // 공격 실패
-					isAttack = false;
+					//isAttack = false;
 					break;
 				}
 				//
 				if( i == PatternID.size() -1){
 					playerPatternA = playerPatternB = { 0 }; // 벡터 잠시 비워두기
-					isAttack = true;
+					isAttack = true; // 공격임(성공임)
+					isAttackVec = PatternID;
 					return pair.second; // 성공
 				}
 					

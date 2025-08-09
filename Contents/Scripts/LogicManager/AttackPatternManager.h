@@ -54,8 +54,17 @@ public:
 	bool isNewPattern = false; // 외부에서 확인하는 용도
 	NewPattern newPattern; // 버퍼
 	void DoneTimeOutPatten();
+	
+	std::vector<int> CheckIsAttck() {
+		isAttack = false;
+		std::vector<int> vec = isAttackVec;
+		isAttackVec.clear();
+		return vec;
+	};
 	bool isAttack = false;
-private:
+
+private:	
+	std::vector<int> isAttackVec;
 	std::vector<int> playerPatternA;
 	std::vector<int> playerPatternB;
 	std::unordered_map<std::string, pattern*> tmpTimeOutPattern;
