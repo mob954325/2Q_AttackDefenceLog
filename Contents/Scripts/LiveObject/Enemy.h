@@ -4,7 +4,7 @@
 #include "../CsvData/DataClass/EnemyAtkPattenData.h"
 #include "../Component/StateController.h"
 #include "../CsvData/DataClass/AllNodePattenClass.h"
-
+#include "Components/Rendering/BitmapRenderer.h"
 
 
 class LiveObject;
@@ -38,6 +38,8 @@ public:
 	//업데이트에 들어갈 시간에 따라 변하는 함수들
 	void CalSpiritTime() override;  //초당 기세 : -0.3
 	void SetCoolTime() override;	//쿨타임이 0이 되었을 때, 플레이어의 쿨타임 설정
+	void StateAct();
+	void DiffState();
 
 	//스테이트 설정하는 함수
 	void SetState(std::string setStateName) override;
@@ -64,8 +66,11 @@ private:
 	std::string Difficulty;			   // 적의 난이도 
 	EnemyData* nowEnemyData = nullptr; // 현재 적의 데이터 클래스를 담을 변수
 	AllNodePattenClass* tmpNode = nullptr;
-	void DiffStatePrint();
+	
 	std::string nowStateName;
 	std::string preStateName;
+	float groggyTime = 0.0f;
+
+	std::shared_ptr<BitmapResource> EnemyBitmap = nullptr;
 };
 
