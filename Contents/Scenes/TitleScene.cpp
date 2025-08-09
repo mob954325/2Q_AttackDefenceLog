@@ -1,9 +1,9 @@
 ﻿#include "TitleScene.h"
-#include "../Engine/Components/Logic/InputSystem.h"
-#include "Objects/InputObject.h"
-#include "Objects/MouseTrailObject.h"
-#include "Objects/TitleScene/TitleSceneBGI.h"
-#include "Objects/TitleScene/TitleNodeManager.h"
+#include "Components/Logic/InputSystem.h"
+#include "Objects/Common/InputObject.h"
+#include "Objects/Common/MouseTrailObject.h"
+#include "Objects/Scenes/TitleScene/TitleSceneBGI.h"
+#include "Objects/Scenes/TitleScene/TitleNodeManager.h"
 
 void TitleScene::OnEnterImpl()
 {

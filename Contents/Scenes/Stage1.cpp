@@ -1,7 +1,7 @@
 ﻿#include "Stage1.h"
-#include "../Objects/InputObject.h"
-#include "../Objects/Stage/StageBGI.h"
-#include "../Objects/PatternControlObject.h"
+#include "Objects/Common/InputObject.h"
+#include "Objects/Scenes/Stage/StageBGI.h"
+#include "Objects/Common/PatternControlObject.h"
 
 void Stage1::OnEnterImpl()
 {

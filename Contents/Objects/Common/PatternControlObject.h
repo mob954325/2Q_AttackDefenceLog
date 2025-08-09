@@ -2,9 +2,9 @@
 #include "Components/Base/MonoBehavior.h"
 #include "Components/Rendering/BitmapRenderer.h"
 #include "Components/Rendering/AnimationRenderer.h"
-#include "../Objects/Manager/PatternManager.h"
-#include "../Engine/Scene/SceneManager.h"
-#include "../Engine/Utils/EventDelegate.h"
+#include "Objects/Manager/PatternManager.h"
+#include "Scene/SceneManager.h"
+#include "Utils/EventDelegate.h"
 
 
 class PatternControlObject : public MonoBehavior

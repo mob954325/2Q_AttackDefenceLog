@@ -341,18 +341,18 @@
   <ItemGroup>
     <ClCompile Include="Application\Game.cpp" />
     <ClCompile Include="Application\GameApp.cpp" />
-    <ClCompile Include="Objects\EndScene\EndSceneBGI.cpp" />
-    <ClCompile Include="Objects\InputObject.cpp" />
+    <ClCompile Include="Objects\Scenes\EndScene\EndSceneBGI.cpp" />
+    <ClCompile Include="Objects\Common\InputObject.cpp" />
     <ClCompile Include="Objects\Manager\PatternManager.cpp" />
-    <ClCompile Include="Objects\MenuScene\MenuSceneBGI.cpp" />
-    <ClCompile Include="Objects\MouseTrailObject.cpp" />
-    <ClCompile Include="Objects\PatternControlObject.cpp" />
-    <ClCompile Include="Objects\SelectScene\SelectSceneBGI.cpp" />
+    <ClCompile Include="Objects\Scenes\MenuScene\MenuSceneBGI.cpp" />
+    <ClCompile Include="Objects\Common\MouseTrailObject.cpp" />
+    <ClCompile Include="Objects\Common\PatternControlObject.cpp" />
+    <ClCompile Include="Objects\Scenes\SelectScene\SelectSceneBGI.cpp" />
     <ClCompile Include="Objects\SliceObject\SliceableObject.cpp" />
-    <ClCompile Include="Objects\Stage\NodeObject.cpp" />
-    <ClCompile Include="Objects\Stage\StageBGI.cpp" />
-    <ClCompile Include="Objects\TestObject.cpp" />
-    <ClCompile Include="Objects\TitleScene\TitleSceneBGI.cpp" />
+    <ClCompile Include="Objects\Scenes\Stage\NodeObject.cpp" />
+    <ClCompile Include="Objects\Scenes\Stage\StageBGI.cpp" />
+    <ClCompile Include="Objects\Common\TestObject.cpp" />
+    <ClCompile Include="Objects\Scenes\TitleScene\TitleSceneBGI.cpp" />
     <ClCompile Include="Scenes\EndScene.cpp" />
     <ClCompile Include="Scenes\MenuScene.cpp" />
     <ClCompile Include="Scenes\SelectScene.cpp" />
@@ -373,24 +373,24 @@
     <ClCompile Include="Scripts\LiveObject\Player.cpp" />
     <ClCompile Include="Scripts\LogicManager\AttackPatternManager.cpp" />
     <ClCompile Include="Scripts\LogicManager\BettleManager.cpp" />
-    <ClCompile Include="Objects\TitleScene\TitleNodeManager.cpp" />
-    <ClCompile Include="Objects\MenuScene\StageSelectManager.cpp" />
+    <ClCompile Include="Objects\Scenes\TitleScene\TitleNodeManager.cpp" />
+    <ClCompile Include="Objects\Scenes\MenuScene\StageSelectManager.cpp" />
     <ClCompile Include="Objects\SliceObject\SlicedObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameApp.h" />
-    <ClInclude Include="Objects\EndScene\EndSceneBGI.h" />
-    <ClInclude Include="Objects\InputObject.h" />
+    <ClInclude Include="Objects\Scenes\EndScene\EndSceneBGI.h" />
+    <ClInclude Include="Objects\Common\InputObject.h" />
     <ClInclude Include="Objects\Manager\PatternManager.h" />
-    <ClInclude Include="Objects\MenuScene\MenuSceneBGI.h" />
-    <ClInclude Include="Objects\MouseTrailObject.h" />
-    <ClInclude Include="Objects\PatternControlObject.h" />
-    <ClInclude Include="Objects\SelectScene\SelectSceneBGI.h" />
+    <ClInclude Include="Objects\Scenes\MenuScene\MenuSceneBGI.h" />
+    <ClInclude Include="Objects\Common\MouseTrailObject.h" />
+    <ClInclude Include="Objects\Common\PatternControlObject.h" />
+    <ClInclude Include="Objects\Scenes\SelectScene\SelectSceneBGI.h" />
     <ClInclude Include="Objects\SliceObject\SliceableObject.h" />
-    <ClInclude Include="Objects\Stage\NodeObject.h" />
-    <ClInclude Include="Objects\Stage\StageBGI.h" />
-    <ClInclude Include="Objects\TestObject.h" />
-    <ClInclude Include="Objects\TitleScene\TitleSceneBGI.h" />
+    <ClInclude Include="Objects\Scenes\Stage\NodeObject.h" />
+    <ClInclude Include="Objects\Scenes\Stage\StageBGI.h" />
+    <ClInclude Include="Objects\Common\TestObject.h" />
+    <ClInclude Include="Objects\Scenes\TitleScene\TitleSceneBGI.h" />
     <ClInclude Include="Scenes\EndScene.h" />
     <ClInclude Include="Scenes\MenuScene.h" />
     <ClInclude Include="Scenes\SelectScene.h" />
@@ -412,8 +412,8 @@
     <ClInclude Include="Scripts\LogicManager\AttackPatternManager.h" />
     <ClInclude Include="Scripts\LogicManager\BettleManager.h" />
     <ClInclude Include="Scripts\SceneCore.h" />
-    <ClInclude Include="Objects\TitleScene\TitleNodeManager.h" />
-    <ClInclude Include="Objects\MenuScene\StageSelectManager.h" />
+    <ClInclude Include="Objects\Scenes\TitleScene\TitleNodeManager.h" />
+    <ClInclude Include="Objects\Scenes\MenuScene\StageSelectManager.h" />
     <ClInclude Include="Objects\SliceObject\SlicedObject.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

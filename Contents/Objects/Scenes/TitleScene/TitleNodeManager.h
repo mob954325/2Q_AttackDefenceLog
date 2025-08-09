@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "Components/Base/MonoBehavior.h"
 #include "Components/Rendering/PatternDrawerComponent.h"
-#include "Objects/Stage/NodeObject.h"
+#include "Objects/Scenes/Stage/NodeObject.h"
 
 /*  25.08.08 | 작성자 : 이성호
 *   기능 : titleScene의 노드관리를 하는 MonoBehavior로 

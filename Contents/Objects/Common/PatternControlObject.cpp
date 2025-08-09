@@ -1,9 +1,9 @@
 ﻿#include "PatternControlObject.h"
 #include "Components/Base/GameObject.h"
 #include "Scene/SceneManager.h"
-#include "../Objects/Stage/NodeObject.h"
+#include "Objects/Scenes/Stage/NodeObject.h"
 #include "../Engine/Components/Rendering/PatternDrawerComponent.h"
-#include "../Objects/MouseTrailObject.h"
+#include "Objects/Common/MouseTrailObject.h"
 #include "../Engine/Components/Rendering/ChainDrawerComponent.h"
 #include "../Engine/Utils/GameTime.h"
 
