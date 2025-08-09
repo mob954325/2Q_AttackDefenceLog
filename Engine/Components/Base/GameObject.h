@@ -42,17 +42,17 @@ public:
 
 		for (Component* mono : monoBehaviors)
 		{
-			if (typeid(*mono) == typeid(T))
+			if (auto casted = dynamic_cast<T*>(mono))
 			{
-				return static_cast<T*>(static_cast<Component*>(mono));
+				return casted;
 			}
 		}
 
 		for (Component* comp : components)
 		{
-			if (typeid(*comp) == typeid(T))
+			if (auto casted = dynamic_cast<T*>(comp))
 			{
-				return static_cast<T*>(static_cast<Component*>(comp));
+				return casted;
 			}
 		}
 
