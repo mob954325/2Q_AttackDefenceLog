@@ -14,8 +14,4 @@ private:
 	GameObject* inputObj;
 	GameObject* trail;
 	GameObject* backGroundImg;
-
-
-	// test
-	GameObject* escPanel;
 };

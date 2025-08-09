@@ -25,7 +25,7 @@ void SelectScene::OnEnterImpl()
 	trail->AddComponent<MouseTrailObject>();
 	AddGameObject(trail, "MouseTrail");
 	
-	testObj->GetComponent<BitmapRenderer>()->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\WorkSpace\\HSK\\Test\\test2.png");
+	testObj->GetComponent<BitmapRenderer>()->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Mouse\\test2.png");
 
 }
 

@@ -43,7 +43,7 @@ void Enemy::OnUpdate() {
 		StateAct();            //   
 	}
 	DiffState();            // 이전 상태와 현재 상태를 비교
-	PrintConsole();
+	// PrintConsole();
 	if (nowStateName == "Enemy_Dead")
 	{
 		Singleton<SceneManager>::GetInstance().LoadScene(0); // 나중에 딜레이 올려줘야함

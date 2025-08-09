@@ -65,7 +65,7 @@ void Player::OnUpdate() {
 	//if (m_State->GetNowName() != "Player_Dead"||m_State->GetNowName() != "Player_Groggy"){
 	CalSpiritTime();		// 1초마다 기세게이지 감소
 	AddPattenLoop();		// 패턴을 추가하는 루프
-	PrintConsole();
+	// PrintConsole();
 
 	m_State->Update();
 	DiffState();  //   이전상태와 현재상태를 결정하는 함수

@@ -10,9 +10,9 @@ void MouseTrailObject::OnStart()
 	owner->SetRenderLayer(EngineData::RenderLayer::UI);
 	auto t = owner->AddComponent<TrailComponent>();
 	t->SetOrderInLayer(100);
-	t->SetBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\WorkSpace\\HSK\\Test\\test5.png");
-	t->SetTailBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\WorkSpace\\HSK\\Test\\test1.png");
-	t->SetHeadBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\WorkSpace\\HSK\\Test\\white_brush_test3.png");
+	t->SetBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Mouse\\test5.png");
+	t->SetTailBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Mouse\\test1.png");
+	t->SetHeadBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Mouse\\white_brush_test3.png");
 }
 
 void MouseTrailObject::OnUpdate()

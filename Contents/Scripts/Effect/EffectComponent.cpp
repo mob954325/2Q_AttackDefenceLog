@@ -7,15 +7,15 @@ void EffectComponent::OnCreate()
 {
 	circleouter = owner->AddComponent<BitmapRenderer>();
 	circleouter->SetUseCustomRect(true);
-	circleouter->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Particles\\circle_outer.png");
+	circleouter->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Particles\\circle_outer.png");
 
 	circleinner = owner->AddComponent<BitmapRenderer>();
 	circleinner->SetUseCustomRect(true);
-	circleinner->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Particles\\circle_inner.png");
+	circleinner->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Particles\\circle_inner.png");
 
 	linehorizon = owner->AddComponent<BitmapRenderer>();
 	linehorizon->SetUseCustomRect(true);
-	linehorizon->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Particles\\line_horizon.png");
+	linehorizon->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Particles\\line_horizon.png");
 
 	circleoutersize = circleouter->GetResource()->GetBitmap()->GetSize();
 	circleinnersize = circleinner->GetResource()->GetBitmap()->GetSize();

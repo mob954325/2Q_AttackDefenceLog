@@ -36,7 +36,7 @@ void Slider::OnStart()
 	BarButton = owner->AddComponent<BitmapRenderer>();
 	BarButton->SetUseCustomRect(true);
 	BarButton->SetOrderInLayer(7);
-	BarButton->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/UI/TestGauge/BarBotton.png");
+	BarButton->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\TestGauge\\BarBotton.png");
 
 	sizeButton = BarButton->GetResource()->GetBitmap()->GetSize();
 

@@ -78,7 +78,12 @@ void Application::Initialize()
 #endif // _DEBUG
 
 	};
-	D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, options, m_d2d1Factory.GetAddressOf());
+	HRESULT hr = D2D1CreateFactory(
+		D2D1_FACTORY_TYPE_SINGLE_THREADED,
+		options,
+		m_d2d1Factory.GetAddressOf()
+	);
+	assert(SUCCEEDED(hr) && "Failed to create D2D1 Factory");
 
 	ComPtr<IDXGIDevice> dxgiDevice;
 	m_d3dDevice.As(&dxgiDevice);

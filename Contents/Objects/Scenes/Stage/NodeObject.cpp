@@ -17,8 +17,8 @@ void NodeObject::OnCreate() {
 	owner->SetRenderLayer(EngineData::RenderLayer::GameObject);
 	owner->GetTransform().SetUnityCoords(false); // 이건 유니티좌표계 하면 안댐
 
-	bitmapRenderer = owner->AddComponent<BitmapRenderer>();
-	bitmapRenderer->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\WorkSpace\\HSK\\Test\\ui03.png");
+	bitmapRenderer = owner->AddComponent<BitmapRenderer>(); // L"\\..\\Resource\\Sprite\\Mushroom.png"
+	bitmapRenderer->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Mouse\\ui03.png");
 	bitmapRenderer->SetOrderInLayer(-1);
 
 	size = bitmapRenderer->GetResource()->GetBitmap()->GetSize();

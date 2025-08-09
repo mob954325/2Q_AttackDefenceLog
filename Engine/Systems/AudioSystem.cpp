@@ -14,6 +14,7 @@ void AudioSystem::Initialize(int num)
 {
 	CheckError(FMOD::System_Create(&fmodSystem));
 	CheckError(fmodSystem->init(num, FMOD_INIT_NORMAL, nullptr));
+
 	fmodSystem->createChannelGroup("MuteGroup", &muteGroup);
 }
 

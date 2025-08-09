@@ -51,22 +51,25 @@ void PatternControlObject::OnCreate()
 
 	//===================================================================================================
 	// 데?이터 읽어오는거
-	std::string path = StringConvert::WstringToString(Singleton<AppPaths>::GetInstance().GetWorkingPath());
+
+	char buffer[MAX_PATH];
+	GetCurrentDirectoryA(MAX_PATH, buffer);
+	std::string path = buffer;
 
 	PlayerAtkPetternData* tmp1 = nullptr;
-	CsvDataManager::GetInstance().SetCSV<EnemyData>(path + "..\\Resource\\DataTable\\적 데이터 테이블.csv"); // 데이터 파일 읽어오기
+	CsvDataManager::GetInstance().SetCSV<EnemyData>(path + "\\..\\Resource\\DataTable\\적 데이터 테이블.csv"); // 데이터 파일 읽어오기
 
 	EnemyAtkPattenData* tmp2 = nullptr;
-	CsvDataManager::GetInstance().SetCSV<EnemyAtkPattenData>(path + "..\\Resource\\DataTable\\적 공격 패턴 테이블.csv"); // 데이터 파일 읽어오기
+	CsvDataManager::GetInstance().SetCSV<EnemyAtkPattenData>(path + "\\..\\Resource\\DataTable\\적 공격 패턴 테이블.csv"); // 데이터 파일 읽어오기
 
 	AllNodePattenClass* tmp3 = nullptr;
-	CsvDataManager::GetInstance().SetCSV<AllNodePattenClass>(path + "..\\Resource\\DataTable\\노드 전체 패턴 테이블.csv"); // 데이터 파일 읽어오기
+	CsvDataManager::GetInstance().SetCSV<AllNodePattenClass>(path + "\\..\\Resource\\DataTable\\노드 전체 패턴 테이블.csv"); // 데이터 파일 읽어오기
 
 	PlayerAtkPetternData* tmp4 = nullptr;
-	CsvDataManager::GetInstance().SetCSV<PlayerAtkPetternData>(path + "..\\Resource\\DataTable\\플레이어 공격 패턴 테이블.csv"); // 데이터 파일 읽어오기
+	CsvDataManager::GetInstance().SetCSV<PlayerAtkPetternData>(path + "\\..\\Resource\\DataTable\\플레이어 공격 패턴 테이블.csv"); // 데이터 파일 읽어오기
 
 	PlayerData* tmp5 = nullptr;
-	CsvDataManager::GetInstance().SetCSV<PlayerData>(path + "..\\Resource\\DataTable\\플레이어 데이터 테이블.csv"); // 데이터 파일 읽어오기
+	CsvDataManager::GetInstance().SetCSV<PlayerData>(path + "\\..\\Resource\\DataTable\\플레이어 데이터 테이블.csv"); // 데이터 파일 읽어오기
 
 	//===================================================================================================
 	// 어택 패턴 매니저 생성
@@ -125,7 +128,7 @@ void PatternControlObject::OnStart() // 처음
 	owner->SetRenderLayer(EngineData::RenderLayer::UI);
 	auto d = owner->AddComponent<PatternDrawerComponent>();
 	d->SetOrderInLayer(80);
-	d->SetBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\WorkSpace\\HSK\\Test\\test5.png");
+	d->SetBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Mouse\\test5.png");
 
 	//===================================================================================================
 
@@ -154,8 +157,8 @@ void PatternControlObject::OnStart() // 처음
 	for (int i = 0; i < 10; ++i) {
 		readyQueueForEnemyGuide.push(new GameObject());
 		auto queueBack = readyQueueForEnemyGuide.back()->AddComponent<ChainDrawerComponent>();
-		queueBack->SetBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Workspace\\HSK\\Test\\TestArrow_2.png");
-		queueBack->SetFillBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Workspace\\HSK\\Test\\TestArrow_1.png");
+		queueBack->SetBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Mouse\\TestArrow_2.png");
+		queueBack->SetFillBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Mouse\\TestArrow_1.png");
 		queueBack->SetOrderInLayer(0);
 		readyQueueForEnemyGuide.back()->SetName("EnemyGuideline." + std::to_string(i));
 		queueBack->SetupNodes(m_nodes[4]->GetTransform().GetPosition(), n); // 스타트에서 하기

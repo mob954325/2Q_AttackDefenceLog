@@ -7,7 +7,7 @@
 #include <iostream>
 #include "Datas/SoundDatas.h"
 #include <Windows.h>
-
+#include <assert.h>
 
 // $(SolutionDir)Engine\External\FMOD\api\core\lib\x64
 // "../../Engine/External/FMOD/api/core/lib/x64/fmod_vc.lib"
@@ -62,6 +62,7 @@ public:
 	static void CheckError(FMOD_RESULT result) {
 		if (result != FMOD_OK) {
 			std::cerr << "FMOD Error: " << FMOD_ErrorString(result) << std::endl;
+			assert(result == FMOD_OK && "FMOD init failed");
 				exit(-1);
 		}
 	}

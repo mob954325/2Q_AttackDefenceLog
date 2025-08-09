@@ -12,7 +12,7 @@ void TestObject::OnCreate()
 void TestObject::OnStart()
 {
 	owner->SetRenderLayer(EngineData::RenderLayer::GameObject);
-	bitmapRenderer->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\WorkSpace\\HSK\\Test\\testA.png");
+	bitmapRenderer->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Mouse\\testA.png");
 	//bitmapRenderer->SetOrderInLayer(-1); // 이거 그럼 나중에 밖으로 빼야할 수 있음 잘 적용되는지 몰루임
  	//size = bitmapRenderer->GetResource()->GetBitmap()->GetSize();
 	//owner->GetTransform().SetUnityCoords(false);
