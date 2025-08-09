@@ -2,6 +2,7 @@
 #include "Components/Rendering/RenderComponent.h"
 #include "Platform/D2DRenderManager.h"
 #include "Resources/BitmapResource.h"
+#include "../Engine/Utils/EventDelegate.h"
 #include <array>
 
 /* 8.08. 한승규
@@ -30,6 +31,8 @@ public:
 
 	void SliceRect(const std::vector<int>& pattern);
 	void Draw(D2DRenderManager* manager);
+
+	EventDelegate<> OnFinished;// 종료되는 시점 밖으로 알려주는 델리만쥬 - 이거로 레디큐 관리함
 private:
 	std::shared_ptr<BitmapResource> atlasBitmap;
 	std::shared_ptr<BitmapResource> flashBitmap;

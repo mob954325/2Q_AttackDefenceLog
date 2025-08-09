@@ -28,13 +28,17 @@ void AnimatedChainEffect::Render(D2DRenderManager* manager)
 	timer += Singleton<GameTime>::GetInstance().GetDeltaTime();
 
 	const float frameDur = 1.0f / 10.0f; //FPS
-	while (timer >= frameDur) {
+	int safety = 4; // 세이프티 캡 - 4번이상 넘어가면 while 나가게
+	while (timer >= frameDur && safety-- > 0) {
 
 		timer -= frameDur;
 		++currentFrame;
 
 		if (currentFrame >= maxFrame) {
+			currentFrame = maxFrame - 1; // 마지막 프레임으로 고정
+            Draw(manager);               // 마지막 프레임 1프레임 보여줌
 			isPlaying = false;
+			OnFinished.Invoke();			
 			return;
 		}
 
