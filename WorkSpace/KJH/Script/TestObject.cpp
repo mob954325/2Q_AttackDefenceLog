@@ -139,8 +139,16 @@ void TestObject::OnStart()
 
 	/*owner->GetComponent<Slider>()->ButtonShow(false);*/
 
-	ObjInfo.x = 950.0f;
-	ObjInfo.y = 550.0f;
+
+
+
+	positionList = {
+	{100,-200},{400,-200},{700,-200},
+	{100,100},{400,100},{700,100},
+	{100,400},{400,400},{700,400}
+	};
+	
+	effectobj->SetAnimePosition(positionList);
 
 }
 
@@ -182,43 +190,43 @@ void TestObject::CheckInput()
 	{
 		effectobj->CallEffect(EffectType::ChargeEffect ,ObjInfo);
 	}
-	if (input->IsKeyPressed('9'))
-	{
-		effectobj->CallEffect(EffectType::HoldEffect, ObjInfo);
-	}
+	//if (input->IsKeyPressed('9'))
+	//{
+	//	effectobj->CallEffect(EffectType::HoldEffect, ObjInfo);
+	//}
 
 
-	if (input->IsKeyPressed('5'))
-	{
-		handleCam->GetComponent<CamInstance>()->SetSlowToFast();
-	}
-	if (input->IsKeyPressed('6'))
-	{
-		handleCam->GetComponent<CamInstance>()->SetFastToSlow();
-	}
-	if (input->IsKeyPressed('7'))
-	{
-		handleCam->GetComponent<CamInstance>()->SetSlowFastSlow();
-	}
+	//if (input->IsKeyPressed('5'))
+	//{
+	//	handleCam->GetComponent<CamInstance>()->SetSlowToFast();
+	//}
+	//if (input->IsKeyPressed('6'))
+	//{
+	//	handleCam->GetComponent<CamInstance>()->SetFastToSlow();
+	//}
+	//if (input->IsKeyPressed('7'))
+	//{
+	//	handleCam->GetComponent<CamInstance>()->SetSlowFastSlow();
+	//}
 
 
 
-	if (input->IsKeyPressed('1'))
-	{
-		handleCam->GetComponent<CamInstance>()->CallCamShake(ShakeType::X);
-	}
-	if (input->IsKeyPressed('2'))
-	{
-		handleCam->GetComponent<CamInstance>()->CallCamShake(ShakeType::Y);
-	}
-	if (input->IsKeyPressed('3'))
-	{
-		handleCam->GetComponent<CamInstance>()->CallCamShake(ShakeType::XY);
-	}
-	if (input->IsKeyPressed('4'))
-	{
-		handleCam->GetComponent<CamInstance>()->CallCamShake(ShakeType::X_Y);
-	}
+	//if (input->IsKeyPressed('1'))
+	//{
+	//	handleCam->GetComponent<CamInstance>()->CallCamShake(ShakeType::X);
+	//}
+	//if (input->IsKeyPressed('2'))
+	//{
+	//	handleCam->GetComponent<CamInstance>()->CallCamShake(ShakeType::Y);
+	//}
+	//if (input->IsKeyPressed('3'))
+	//{
+	//	handleCam->GetComponent<CamInstance>()->CallCamShake(ShakeType::XY);
+	//}
+	//if (input->IsKeyPressed('4'))
+	//{
+	//	handleCam->GetComponent<CamInstance>()->CallCamShake(ShakeType::X_Y);
+	//}
 
 
 
@@ -235,6 +243,42 @@ void TestObject::CheckInput()
 	//	std::cout << "s 입력됨" << std::endl;
 	//}
 
+	if (input->IsKeyPressed('1'))
+	{
+		effectobj->CallAnime(0);
+	}
+	if (input->IsKeyPressed('2'))
+	{
+		effectobj->CallAnime(1);
+	}
+	if (input->IsKeyPressed('3'))
+	{
+		effectobj->CallAnime(2);
+	}
+	if (input->IsKeyPressed('4'))
+	{
+		effectobj->CallAnime(3);
+	}
+	if (input->IsKeyPressed('5'))
+	{
+		effectobj->CallAnime(4);
+	}
+	if (input->IsKeyPressed('6'))
+	{
+		effectobj->CallAnime(5);
+	}
+	if (input->IsKeyPressed('7'))
+	{
+		effectobj->CallAnime(6);
+	}
+	if (input->IsKeyPressed('8'))
+	{
+		effectobj->CallAnime(7);
+	}
+	if (input->IsKeyPressed('9'))
+	{
+		effectobj->CallAnime(8);
+	}
 }
 
 

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "Components/Base/MonoBehavior.h"
 #include "Components/Rendering/BitmapRenderer.h"
 #include "Components/Rendering/AnimationRenderer.h"
@@ -26,15 +26,23 @@ protected:
 	GameObject* playerGuidelineA;
 	GameObject* playerGuidelineB;
 
-	std::queue<GameObject*> readyQueue;
+	std::queue<GameObject*> readyQueueForEnemyGuide;
 	std::vector<GameObject*> enemyGuidelines;
+
+	std::queue<GameObject*> readyQueueForAttackLine;
+	std::vector<GameObject*> attackLineEffects;
 
 	GameObject* attackPattenManager;
 	GameObject* enemy;
 	GameObject* AddGameObject;
 	GameObject* bettleManager;
-	GameObject* player;
+	GameObject* player;	
 
-	GameObject* test; // Å×½ºÆ®
+private:
+	std::vector<int> cachedVecA;
+
+	std::vector<int> cachedVecB;
+
 };
+
 

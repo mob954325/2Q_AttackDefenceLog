@@ -1,4 +1,4 @@
-#include "MouseTrailObject.h"
+ï»¿#include "MouseTrailObject.h"
 #include "Components/Base/GameObject.h"
 // Components
 #include "../Engine/Components/Rendering/TrailComponent.h"
@@ -17,8 +17,8 @@ void MouseTrailObject::OnStart()
 void MouseTrailObject::OnUpdate()
 {
 	auto t = owner->GetComponent<TrailComponent>();
-	t->isDraw = Input::leftButtonDown; //ÁÂÅ¬¸¯½Ã ±×¸®±â ¿¬µ¿
-	owner->GetTransform().SetPosition(Input::MouseX, Input::MouseY); // ¸¶¿ì½º ÁÂÇ¥ °»½Å(Æ®·£½ºÆû µû¶ó°¡´Â ½Ä)	
+	t->isDraw = Input::leftButtonDown; //ì¢Œí´ë¦­ì‹œ ê·¸ë¦¬ê¸° ì—°ë™
+	owner->GetTransform().SetPosition(Input::MouseX, Input::MouseY); // ë§ˆìš°ìŠ¤ ì¢Œí‘œ ê°±ì‹ (íŠ¸ëœìŠ¤í¼ ë”°ë¼ê°€ëŠ” ì‹)	
 }
 
 void MouseTrailObject::OnDestroy()

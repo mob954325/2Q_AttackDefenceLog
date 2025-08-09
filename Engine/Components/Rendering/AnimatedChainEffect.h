@@ -2,6 +2,7 @@
 #include "Components/Rendering/RenderComponent.h"
 #include "Platform/D2DRenderManager.h"
 #include "Resources/BitmapResource.h"
+#include "../Engine/Utils/EventDelegate.h"
 #include <array>
 
 /* 8.08. 한승규
@@ -18,6 +19,11 @@ struct SliceEffectPiece {
 	float length;
 };
 
+struct MaxNodeIndex {
+	int framePointIndex;
+	bool isCalled = false;
+};
+
 class AnimatedChainEffect : public RenderComponent {
 public:
 	void OnStart() override;
@@ -30,6 +36,15 @@ public:
 
 	void SliceRect(const std::vector<int>& pattern);
 	void Draw(D2DRenderManager* manager);
+
+	EventDelegate<> OnFinished;// 종료되는 시점 밖으로 알려주는 델리만쥬 - 이거로 레디큐 관리함
+	EventDelegate<int> OnNodeLightUp; // 빛나는 시점에 몇번째 노드가 빛나는지 int(숫자)를 반환해줌 
+
+	std::vector<MaxNodeIndex> maxNodeIndex;
+
+
+	float frameDur = 1.0f / 9.0f; // 뒤에 오는게 프레임임
+
 private:
 	std::shared_ptr<BitmapResource> atlasBitmap;
 	std::shared_ptr<BitmapResource> flashBitmap;
@@ -47,7 +62,8 @@ private:
 	int currentFrame = 0;
 	int maxFrame = 0;
 
-	bool  isPlaying = false;
+	bool isPlaying = false;
+	bool addLastNode = true;
 
 	D2D1_SIZE_F size;
 	D2D1_SIZE_F flashSize;

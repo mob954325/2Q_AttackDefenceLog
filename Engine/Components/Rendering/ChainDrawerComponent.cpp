@@ -65,8 +65,8 @@ void ChainDrawerComponent::Render(D2DRenderManager* manager) // 사실상, trail
 			progress = timer / duration;
 			if (progress >= 1.0f) {
 				progress = 1.0f;
-				Progress(progress);				
-				if (isPlay) {            
+				Progress(progress);
+				if (isPlay) {
 					isPlay = false;
 					OnFinished.Invoke(patternID);
 				}
@@ -74,7 +74,7 @@ void ChainDrawerComponent::Render(D2DRenderManager* manager) // 사실상, trail
 			else {
 				Progress(progress);
 			}
-//			std::cout << std::endl << "가이드라인 진행도" << progress << std::endl;
+			//			std::cout << std::endl << "가이드라인 진행도" << progress << std::endl;
 		}
 
 		Draw(manager);
@@ -101,20 +101,37 @@ void ChainDrawerComponent::Draw(D2DRenderManager* manager)
 		D2D1::Matrix3x2F transform = D2D1::Matrix3x2F::Rotation(pi.angle * 180.0f / PI, center);
 		manager->SetRenderTransform(transform);
 
-		manager->DrawBitmap(baseBitmap->GetBitmap(), destRect, pi.rect, 1.0f);
-		if (pi.fillAmount > 0.0f && useSlide) {
-			D2D1_RECT_F fillSrcRect = pi.rect;
-			fillSrcRect.right = fillSrcRect.left + width * pi.fillAmount;
+		if (useType) {
+			switch (type) {
+			case(UP):
+				manager->DrawBitmap(baseBitmap->GetBitmap(), destRect, pi.rect, 1.0f);
+				break;
+			case(MIDDLE):
+				manager->DrawBitmap(middleBitamp->GetBitmap(), destRect, pi.rect, 1.0f);
+				break;
+			case(DOWN):
+				manager->DrawBitmap(downBitmap->GetBitmap(), destRect, pi.rect, 1.0f);
+				break;
+			default: break;
+			}
+		}
+		else if (useSlide) {
+			manager->DrawBitmap(baseBitmap->GetBitmap(), destRect, pi.rect, 1.0f);
 
-			float displayWidth = width * pi.fillAmount;
-			D2D1_RECT_F partialDestRect = {
-			pi.pos.x - width * 0.5f,                // 왼쪽은 고정
-			pi.pos.y - height * 0.5f,
-			(pi.pos.x - width * 0.5f) + displayWidth, // 오른쪽만 늘어남
-			pi.pos.y + height * 0.5f
-			};
+			if (pi.fillAmount > 0.0f) {
+				D2D1_RECT_F fillSrcRect = pi.rect;
+				fillSrcRect.right = fillSrcRect.left + width * pi.fillAmount;
 
-			manager->DrawBitmap(fillBitmap->GetBitmap(), partialDestRect, fillSrcRect, 1.0f);
+				float displayWidth = width * pi.fillAmount;
+				D2D1_RECT_F partialDestRect = {
+				pi.pos.x - width * 0.5f,                // 왼쪽은 고정
+				pi.pos.y - height * 0.5f,
+				(pi.pos.x - width * 0.5f) + displayWidth, // 오른쪽만 늘어남
+				pi.pos.y + height * 0.5f
+				};
+
+				manager->DrawBitmap(fillBitmap->GetBitmap(), partialDestRect, fillSrcRect, 1.0f);
+			}
 		}
 	}
 }
@@ -156,13 +173,36 @@ void ChainDrawerComponent::SetFillBitmap(std::wstring path)
 	useSlide = true;
 }
 
-void ChainDrawerComponent::Start(std::vector<int> pattern,  float durationTime, std::string ID) { // durationTime = 0.0이면, 슬라이드바 사용안함
+void ChainDrawerComponent::Start(std::vector<int> pattern, float durationTime, std::string ID) { // durationTime = 0.0이면, 슬라이드바 사용안함
 	duration = durationTime;
 	timer = 0.0f;
 	progress = 0.0f;
 	isPlay = true; // 고고혓 
 	patternID = ID;
 	SliceRect(pattern);
+}
+
+void ChainDrawerComponent::StartByType(std::vector<int> pattern) {
+	if (useType == false) return;
+
+	if (pattern.empty()) {
+		isPlay = false;
+		return;
+	}
+
+	duration = 0.0f;
+	timer = 0.0f;
+	progress = 0.0f;
+	isPlay = true;
+	type = static_cast<GuideType>((pattern.front() - 1) / 3); // 0(상) 1(중) 2(하)
+
+	SliceRect(pattern);
+}
+
+void ChainDrawerComponent::SetTypeBitmap(std::wstring path1, std::wstring path2) { // 중단 / 하단 등록임
+	useType = true;
+	middleBitamp = resourceManager->CreateBitmapResource(path1);
+	downBitmap = resourceManager->CreateBitmapResource(path2);
 }
 
 void ChainDrawerComponent::SetupNodes(Vector2 node, float interval)
