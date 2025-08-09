@@ -28,16 +28,20 @@ void Enemy::OnStart() {
 	m_State->SetState("Enemy_Idle");
 	SelectPatten(); //  패턴 세팅
 	isPattenCooldown = true;
+	groggyTime = 0.0f;
 }
 
 
 
 // 업데이트에서 시간 받기???? -> 필요없음, 수정하기!!!
 void Enemy::OnUpdate() {
-	CalSpiritTime();		// 1초마다 기세게이지 증가
-	AddPattenLoop();		// 
+	if (! (nowStateName == "Enemy_Dead" || nowStateName == "Enemy_Groggy") ) {
+		CalSpiritTime();		// 1초마다 기세게이지 증가
+		AddPattenLoop();		// 
+		StateAct();            //   
+	}
+	DiffState();            // 이전 상태와 현재 상태를 비교
 	PrintConsole();
-	DiffStatePrint();
 }
 
 // onChangePatten에 TransitionTime 변경하기!!!
@@ -46,7 +50,9 @@ void Enemy::OnUpdate() {
 
 //이후 StateManager에 추가하는거 만들기
 void Enemy::SetState(std::string setStateName) {
-	m_State->SetState(setStateName);
+	if ( !(nowStateName == "Enemy_Dead" || nowStateName == "Enemy_Groggy")) {
+		m_State->SetState(setStateName);
+	}
 }
 
 void Enemy::OnCreateState() {
@@ -70,7 +76,7 @@ void Enemy::OnCreateState() {
 
 	m_State->CreateState("Enemy_Groggy"); //패턴 파회 X, 막음
 	m_State->SetNextState("Enemy_Groggy", "Enemy_Idle");
-	m_State->SetTransitionTime("Enemy_Groggy", 1.0f);
+	m_State->SetTransitionTime("Enemy_Groggy", 2.0f);
 
 
 	m_State->CreateState("Enemy_Dead");   // 죽음
@@ -199,16 +205,56 @@ void Enemy::CalSpiritTime() {
 }
 
 
-void Enemy::DiffStatePrint() {
+void Enemy::DiffState() {
 	if (m_State->GetNowName() != nowStateName) {
 		preStateName = nowStateName;
 		nowStateName = m_State->GetNowName();
 	}
-	if (isGroggy && preStateName == "Player_Groggy") {
-		Object_NowSpiritAmount = Object_SpiritAmount / 2.0f;
+	
+	if (isGroggy) {
+		groggyTime += GameTime::GetInstance().GetDeltaTime();
+
+	}
+
+	// 그로기 시간!!!
+	if (groggyTime >= 3.0f) {
+		groggyTime = 0.0f;
 		isGroggy = false;
+		isRestore = true;
 	}
 }
+
+
+
+
+//일단 임시로 스테이트마다 스프라이트 설정
+void Enemy::StateAct() {
+	if (nowStateName == "Enemy_Idle") {    // 평소 상태     
+
+	}
+	else if (nowStateName == "Enemy_AttackSuccess") { // 공격 성공
+
+
+	}
+	else if (nowStateName == "Enemy_AttackFail") {  // 공격 실패
+
+	}
+	else if (nowStateName == "Enemy_Hit") {     //패턴 파회 X, 맞음
+
+
+	}
+	else if (nowStateName == "Enemy_Defence") { //패턴 파회 X, 막음
+
+	}
+	else if (nowStateName == "Enemy_Groggy") { //패턴 파회 X, 막음
+
+	}
+	else if (nowStateName == "Enemy_Dead") {   // 패턴 파회 O
+
+	}
+
+}
+
 
 
 void Enemy::SetCursorPosition(int x, int y)

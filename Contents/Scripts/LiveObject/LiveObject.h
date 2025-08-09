@@ -49,6 +49,7 @@ public:
 	float GetSpiritAmount() { return Object_SpiritAmount; }
 	float GetNowSpiritAmount() { return Object_NowSpiritAmount; }
 	bool GetIsGroggy() { return isGroggy; }
+	bool GetIsRestore() { return isRestore; }
 
 	// 설정 함수들
 	void SetID(const std::string& id) { Object_ID = id; }							 // ID 설정
@@ -59,6 +60,7 @@ public:
 	void SetDefenseRate(float defenseRate) { Object_DefenseRate = defenseRate; }     // 방어율 설정
 	void SetPlayingAttackTime(float time) { Object_PlayingAttackTime = time; }		 // 가이드라인이 떠있는 시간 설정
 	void SetIsGroggy(bool Setbool) { isGroggy = Setbool; }
+	void SetIsRestore(bool Setbool) { isRestore = Setbool; }
 
 
 
@@ -113,7 +115,7 @@ protected:
 
 	bool isGroggy = false;				  // 그로기가 되었는지를 판별하는 변수 
 	float NodeTime;				  // 가이드라인의 판정 시간
-
+	bool isRestore = false;
 
 
 

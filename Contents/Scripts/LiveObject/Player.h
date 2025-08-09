@@ -3,7 +3,7 @@
 #include "../CsvData/DataClass/PlayerData.h"
 #include "../Component/StateController.h"
 #include "../CsvData/DataClass/AllNodePattenClass.h"
-
+#include "Components/Rendering/BitmapRenderer.h"
 /* 25.08.01
 	 플레이어의 데이터 불러오기 -> 일관성 없음?
 		- 스탯 : hp 같은 스탯들은 변해야 함으로 저장공간을 만들어 데이터를 인가하는 형태로 진행
@@ -39,12 +39,15 @@ public:
 	//업데이트에 들어갈 시간에 따라 변하는 함수들
 	void CalSpiritTime() override;  //초당 기세 : -0.3
 	void SetCoolTime() override;	//쿨타임이 0이 되었을 때, 플레이어의 쿨타임 설정
+	void StateAct(); // 각 state 별로 실행하는 함수
+	void DiffState();
 
 
 	//스테이트 설정하는 함수
 	void SetState(std::string setStateName) override;
 	void OnCreateState() override;
 	void SetEndAttack() { isAttackingPattern = true; }
+	
 
 	//플래그를 체크할 함수
 	void AddPattenLoop() override;
@@ -52,7 +55,9 @@ public:
 	AttackPatternManager* m_PattenManager = nullptr; // 패턴 매니저를  참조로 받아  사용할 변수
 	AllNodePattenClass* tmpNode = nullptr;  // 출력용 변수
 	AllNodePattenClass* tmpNode2 = nullptr;  // 출력용 변수
-	void DiffStatePrint();
+
+
+	
 private:
 	std::vector<std::string> PattenID;
 	PlayerData* nowPlayerData = nullptr; // 받아올 데이터를 가리키는 포인터
@@ -66,7 +71,17 @@ private:
 	std::string preStateName;
 	std::string nowStateName;
 
+	std::shared_ptr<BitmapResource> PlayerBitmap = nullptr;
+	BitmapRenderer* player_Idle = nullptr;
+	BitmapRenderer* player_Attack = nullptr;
+	BitmapRenderer* player_Guard = nullptr;
+	BitmapRenderer* player_Damaged = nullptr;
+
+	void SetBitmap(); //처음 비트맵을 설정할 함수
+
 	bool isAttackingPattern = false;
+
+	float groggyTime = 0.0f;
 };
 
 

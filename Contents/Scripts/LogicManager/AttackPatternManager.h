@@ -54,13 +54,14 @@ public:
 	bool isNewPattern = false; // 외부에서 확인하는 용도
 	NewPattern newPattern; // 버퍼
 	void DoneTimeOutPatten();
-
+	bool isAttack = false;
 private:
 	std::vector<int> playerPatternA;
 	std::vector<int> playerPatternB;
 	std::unordered_map<std::string, pattern*> tmpTimeOutPattern;
 	std::unordered_map<std::string, pattern*> timeOutPattern;
 	AttackPosition ConvertEndNodeToPosition(int endNode); // 끝의 노드를 enum (상, 중, 하) 로 바꿔주는 함수!
+	
 
 };
 
