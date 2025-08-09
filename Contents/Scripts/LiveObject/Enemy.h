@@ -71,6 +71,14 @@ private:
 	std::string preStateName;
 	float groggyTime = 0.0f;
 
+	std::shared_ptr<BitmapResource> PlayerBitmap = nullptr;
+	BitmapRenderer* enemy_Idle = nullptr;
+	BitmapRenderer* enemy_Attack = nullptr;
+	BitmapRenderer* enemy_Guard = nullptr;
+	BitmapRenderer* enemy_Damaged = nullptr;
+	void SetBitmap();  // 비트맵 설정하는 함수
+
+
 	std::shared_ptr<BitmapResource> EnemyBitmap = nullptr;
 };
 

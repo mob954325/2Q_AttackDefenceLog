@@ -142,7 +142,6 @@ pattern* AttackPatternManager::CorrectPattern(std::vector<int> PatternID) {  //�
 			}
 		}
 
-		
 		// 적 패턴이 2 이상이면 방어 패턴으로 처리
 		if (countNum >= 2) {
 			isPlayerSearch = false; // 공격 처리 안함!!
@@ -155,8 +154,6 @@ pattern* AttackPatternManager::CorrectPattern(std::vector<int> PatternID) {  //�
 				pair.second->isFail = true; // 방어 실패
 				break;  // 적 방어 판정 끝
 			}
-
-
 
 
 			for (int i = 0; i < PatternID.size(); i++) {	// 현재 그은 패턴 검사
