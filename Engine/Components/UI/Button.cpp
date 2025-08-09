@@ -21,6 +21,8 @@ void Button::OnStart()
 
 void Button::Update()
 {
+	if (!IsActiveSelf()) return;
+
 	// check mouse position
 	Vector2 mouseVec = { Input::MouseX, Input::MouseY };
 
@@ -107,6 +109,13 @@ bool Button::IsMouseOver(const Vector2& mousePos) const
 		mousePos.x <= screenRect.right &&	// 오른쪽 
 		mousePos.y >= screenRect.top &&		// 위
 		mousePos.y <= screenRect.bottom;	// 아래
+}
+
+void Button::DisableBitmaps()
+{
+	normal->SetActive(false);
+	hover->SetActive(false);
+	pressed->SetActive(false);
 }
 
 void Button::HandleButtonImage(ButtonState type)
