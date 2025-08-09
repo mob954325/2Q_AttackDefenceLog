@@ -3,14 +3,13 @@
 #include "Utils/GameTime.h"
 #include "Utils/DebugUtility.h"
 #include <iostream>
+#include "Application/AppPaths.h"
 
 void DummyEffectAnimation::OnCreate()
 {
 	anim = owner->AddComponent<AnimationRenderer>(); 
 	
-	WCHAR buffer[MAX_PATH];
-	GetCurrentDirectoryW(MAX_PATH, buffer);
-	std::wstring path = buffer;
+	std::wstring path = Singleton<AppPaths>::GetInstance().GetWorkingPath();
 
 	anim->CreateBitmapResource(path + L"\\..\\..\\Resource\\Particles\\Test\\attack_line_spreadsheet.png");
 	anim->SetSpriteSheet(path + L"\\..\\..\\Resource\\Json\\Test_Paticles\\attack_line_spreadsheet_sprites.json");
