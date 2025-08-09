@@ -67,6 +67,7 @@ void BettleManager::SetStateFormPattern() {
 	// 입력이 적, 플레이어의 패턴과 맞을 경우
 	if (tmpCorPatten != nullptr) {
 		if (tmpCorPatten->PattenID.substr(0, 2) == "EP") {
+			m_Enemy->SetState("Enemy_AttackSuccess");
 			if ((tmpCorPatten->PlayingAttackTime) <= 0.5f) {  // 플레이어가 0.5초 이내에 가드시 -> 패링
 
 				m_Player->SetState("Player_Perry");
