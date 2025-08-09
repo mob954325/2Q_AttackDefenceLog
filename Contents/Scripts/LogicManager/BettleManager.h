@@ -2,6 +2,7 @@
 #include "../LiveObject/Player.h"
 #include "../LiveObject/Enemy.h"
 #include "AttackPatternManager.h"
+#include "../Engine/Utils/EventDelegate.h"
 class State;
 
 
@@ -22,6 +23,10 @@ public:
 	void OnFixedUpdate() {};
 	Player* m_Player = nullptr;
 	Enemy* m_Enemy = nullptr;
+
+	EventDelegate<int> onParry; // 밖에 int << 마지막노드
+	EventDelegate<int> onGuard;
+
 private:
 
 	AttackPatternManager* m_PattenManager;

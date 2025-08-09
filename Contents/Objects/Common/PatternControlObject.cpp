@@ -98,6 +98,15 @@ void PatternControlObject::OnCreate()
 
 	bettleManager = new GameObject();             // GameObject 객체 생성
 	auto bettletmp = bettleManager->AddComponent<BettleManager>(); // MonoBehaivor 등록
+	bettletmp->onParry.Add([this](int nodeIndex) {
+		effInstance->DoParry(nodeIndex - 1);
+
+		});
+
+	bettletmp->onGuard.Add([this](int nodeIndex) {
+		effInstance->DoGuard(nodeIndex - 1);
+		});
+
 	bettletmp->m_Enemy = enemytmp;
 	bettletmp->m_Player = playertmp;
 	bettleManager->SetName("BettleManager");
@@ -133,7 +142,7 @@ void PatternControlObject::OnStart() // 처음
 		tmp.push_back({ x, y });
 	}
 
-	effInstance = owner->AddComponent<EffectInstance>();	
+	effInstance = owner->AddComponent<EffectInstance>();
 	effInstance->SetAnimePosition(tmp);
 	PM.SetNodes(m_nodes, r);
 
@@ -184,8 +193,6 @@ void PatternControlObject::OnStart() // 처음
 			});
 
 		queueBack->OnNodeLightUp.Add([this](int index) { // 1 ~ 9 >> -1 0 ~ 8
-			//std::cout << "반짝!!!!!!!!!!!: " << index << std::endl;			//여기에 이펙트 연결해주면 됨
-
 			effInstance->CallAnime(index - 1); // 0~8 
 			});
 
@@ -213,8 +220,7 @@ void PatternControlObject::OnUpdate() // 업데이트
 	// [1] 입력 발생하면
 
 	if (t->isNewCached) { // 새로운 노드 발생하면				
-		effInstance->DoGuard(1);
-		effInstance->DoParry(2);
+
 
 		PM.CheckTrails(t->CheckingCachedTrails());
 		const auto& vec = PM.GetPatternPathPositions(); // 여기에 담김!!! 1 3 2 4 이런거 <<<<< (연결지점)
@@ -274,8 +280,10 @@ void PatternControlObject::OnUpdate() // 업데이트
 			ec->Start(v, t, ID);
 		}
 	}
+
 	//===================================================================================================
 	// [4] 공격이 성공한 경우 - 이펙트 출력용
+
 	if (apm->isAttack) {
 		if (!readyQueueForAttackLine.empty()) {
 			attackLineEffects.push_back(readyQueueForAttackLine.front());
@@ -284,6 +292,13 @@ void PatternControlObject::OnUpdate() // 업데이트
 			ac->PlayOnce(apm->CheckIsAttck());
 		}
 	}
+
+	auto bt = bettleManager->GetComponent<BettleManager>();
+
+
+
+
+
 }
 
 //===================================================================================================

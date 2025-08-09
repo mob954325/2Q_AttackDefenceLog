@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <unordered_map>
 #include <string>
 #include "Components/Base/MonoBehavior.h"
@@ -14,14 +14,14 @@ public:
 	};
 
 	void OnExit() {
-		
+
 	};
 
 	void Update(float deltaTime) {
 		if (existTransition && nowTimer < ToNextTimer)
 			nowTimer += deltaTime;
 
-		else if ( existTransition && nowTimer >= ToNextTimer )
+		else if (existTransition && nowTimer >= ToNextTimer)
 			isNextState = true;
 	};
 
@@ -38,12 +38,12 @@ public:
 	bool  existTransition = false;
 	bool  isNextState = false;
 private:
-	
+
 };
 
 
 
-// ¿ªÇÒ state °áÁ¤ ´ã´ç
+// ì—­í•  state ê²°ì • ë‹´ë‹¹
 class StateController : public ScriptComponent {
 public:
 	StateController() {};
@@ -54,23 +54,23 @@ private:
 	State* nowState = nullptr;
 
 public:
-	//state¸¦ »ý¼ºÇÔ
+	//stateë¥¼ ìƒì„±í•¨
 	void CreateState(std::string stateName) {
 		State* tmpState = new State();
 		StateStorage[stateName] = tmpState;
 		tmpState->stateName = stateName;
 	}
 
-	//¿ÜºÎ¿¡¼­ state ¼³Á¤ÇÒ ÇÔ¼ö
+	//ì™¸ë¶€ì—ì„œ state ì„¤ì •í•  í•¨ìˆ˜
 	void SetState(std::string stateName) {
 		auto it = StateStorage.find(stateName);
 		if (it != StateStorage.end()) {
 			nowState = it->second;
-			nowState->OnStart();  // »ç¿ëÇÏ±âÀü, ÃÊ±âÈ­
+			nowState->OnStart();  // ì‚¬ìš©í•˜ê¸°ì „, ì´ˆê¸°í™”
 		}
 	}
 
-	// ´ÙÀ½ State ¼³Á¤
+	// ë‹¤ìŒ State ì„¤ì •
 	void SetNextState(std::string stateName, std::string NextstateName) {
 		State* tmpState = nullptr;
 		auto it1 = StateStorage.find(stateName);
@@ -80,12 +80,14 @@ public:
 
 		auto it2 = StateStorage.find(NextstateName);
 		if (it2 != StateStorage.end()) {
-			tmpState->nextState = it2->second;
+			if (tmpState) { // ì •ì‹  ë˜‘ë°”ë¡œ ì°¨ë¦¬ì„¸ìš” ì„±ë¹ˆì”¨
+				tmpState->nextState = it2->second;
+			}
 		}
 	}
 
 
-	//nextState·Î ÀÌµ¿ÇÒ Transition Á¶°Ç
+	//nextStateë¡œ ì´ë™í•  Transition ì¡°ê±´
 	void SetTransitionTime(std::string stateName, int tmpTime) {
 		auto it = StateStorage.find(stateName);
 		if (it != StateStorage.end()) {
@@ -93,7 +95,7 @@ public:
 		}
 	}
 
-	// ³»ºÎ¿¡¼­ transition¿¡ µû¶ó¼­ State ¸¦ °áÁ¤ ÇÒ ÇÔ¼ö
+	// ë‚´ë¶€ì—ì„œ transitionì— ë”°ë¼ì„œ State ë¥¼ ê²°ì • í•  í•¨ìˆ˜
 	void GoNextState() {
 		if (nowState->nextState != nullptr && nowState->isNextState)
 		{
@@ -101,17 +103,17 @@ public:
 		}
 	}
 
-	// ÇöÀç stateÀÇ ÀÌ¸§À» return
+	// í˜„ìž¬ stateì˜ ì´ë¦„ì„ return
 	std::string GetNowName() {
 		return nowState->stateName;
 	}
-	
 
-	void Update()override{
+
+	void Update()override {
 		nowState->Update(GameTime::GetInstance().GetDeltaTime());
 		GoNextState();
 	}
 
-	//delete ÇÔ¼ö ¸¸µé±â!!!
+	//delete í•¨ìˆ˜ ë§Œë“¤ê¸°!!!
 };
 
