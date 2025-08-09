@@ -15,6 +15,7 @@ void StageESCPanel::OnCreate()
 void StageESCPanel::OnStart()
 {
 	barBitmap->CreateBitmapResource(L"../Resource/UI/MenuUI/esc_menu_ui_bar.png");
+	DisablePanel();
 }
 
 void StageESCPanel::OnUpdate()

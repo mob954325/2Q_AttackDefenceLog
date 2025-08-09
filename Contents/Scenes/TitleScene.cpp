@@ -49,7 +49,6 @@ void TitleScene::OnEnterImpl()
 	AddGameObject(escPanel, "escPanel");
 	esc->SetButtons({ continueBtn, exitBtn, muteBtn });
 	esc->SetButtonsPosition();
-	esc->DisablePanel();
 }
 
 void TitleScene::OnExitImpl()
