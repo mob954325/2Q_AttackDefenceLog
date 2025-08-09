@@ -8,7 +8,7 @@
 #include "../Component/StateController.h"
 #include "Utils/GameTime.h"
 
-
+#include "../Engine/Scene/SceneManager.h" // 테스트 씬 전환용 8.09 추가
 
 
 
@@ -43,6 +43,10 @@ void Enemy::OnUpdate() {
 	}
 	DiffState();            // 이전 상태와 현재 상태를 비교
 	PrintConsole();
+	if (nowStateName == "Enemy_Dead")
+	{
+		Singleton<SceneManager>::GetInstance().LoadScene(0); // 나중에 딜레이 올려줘야함
+	}
 }
 
 // onChangePatten에 TransitionTime 변경하기!!!
@@ -152,7 +156,6 @@ void Enemy::AddPattenLoop() {
 		isPattenCooldown = true;
 	}
 }
-
 
 // 배틀 매니저에서 사용될 함수
 void Enemy::SelectPatten() {   //각 객체가 사용할 패턴을 고름

@@ -71,12 +71,12 @@ void EffectInstance::OnCreate()
 {
 	counttime = 0;
 	Emanager = owner->AddComponent<EffectManager>();
-	
+
 	for (size_t i = 0; i < 9; i++)
 	{
 		GameObject* obj = new GameObject();
 		obj->GetTransform().SetUnityCoords(false);
-		obj->SetRenderLayer(EngineData::RenderLayer::UI);		
+		obj->SetRenderLayer(EngineData::RenderLayer::UI);
 		auto ar = obj->AddComponent<AnimationRenderer>();
 		ar->SetOrderInLayer(131);
 		obj->SetName(std::string("Effect") + std::to_string(i));
@@ -107,17 +107,15 @@ void EffectInstance::OnStart()
 
 
 
-	Emanager->SetLayer(0, 30);
-	Emanager->SetLayer(1, 31);
-	Emanager->SetLayer(2, 32);
-	Emanager->SetLayer(3, 33);
-	Emanager->SetLayer(4, 34);
-	Emanager->SetLayer(5, 35);
-	Emanager->SetLayer(6, 35);
+	Emanager->SetLayer(0, 230);
+	Emanager->SetLayer(1, 231);
+	Emanager->SetLayer(2, 232);
+	Emanager->SetLayer(3, 233);
+	Emanager->SetLayer(4, 234);
+	Emanager->SetLayer(5, 235);
+	Emanager->SetLayer(6, 235);
 
-
-
-	Emanager->GetParticleComponent(0)->SetOrderInLayer(35);
+	Emanager->GetParticleComponent(0)->SetOrderInLayer(235);
 	Emanager->GetParticleComponent(0)->SetLoop(false);
 	Emanager->GetParticleComponent(0)->SetMinSpeed(1.3f);
 	Emanager->GetParticleComponent(0)->SetMaxSpeed(1.5f);
@@ -132,7 +130,7 @@ void EffectInstance::OnStart()
 	Emanager->GetParticleComponent(0)->SetSeeDirection(true);
 	Emanager->GetParticleComponent(0)->SetDecreasing(true);
 
-	Emanager->GetParticleComponent(1)->SetOrderInLayer(35);
+	Emanager->GetParticleComponent(1)->SetOrderInLayer(235);
 	Emanager->GetParticleComponent(1)->SetLoop(false);
 	Emanager->GetParticleComponent(1)->SetMinSpeed(0.3f);
 	Emanager->GetParticleComponent(1)->SetMaxSpeed(0.7f);
@@ -158,6 +156,11 @@ void EffectInstance::OnDestroy()
 {
 	Emanager = nullptr;
 }
+
+// 8.09 추가, 외부에서 쓰기 쉽게 랩핑함
+void EffectInstance::DoParry(int n) { CallEffect(EffectType::ParryEffect, nodePos[n]); }
+void EffectInstance::DoGuard(int n) { CallEffect(EffectType::GuardEffect, nodePos[n]); }
+
 
 void EffectInstance::CallEffect(EffectType type, Vector2 info)
 {
@@ -237,8 +240,9 @@ void EffectInstance::SetAnimePosition(const std::vector<Vector2>& vectorList)
 {
 	if (vectorList.size() != 9) return;
 	for (size_t i = 0; i < 9; ++i)
-	{	
+	{
 		AnimeList[i]->GetTransform().SetPosition(vectorList[i].x, vectorList[i].y);
+		nodePos.push_back(vectorList[i]);
 	}
 }
 

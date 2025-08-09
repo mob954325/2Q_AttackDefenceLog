@@ -32,6 +32,7 @@ void TitleScene::OnEnterImpl()
 	AddGameObject(trail, "MouseTrail");
 
 	// esc Panel init
+	/*
 	GameObject* continueBtn = new GameObject();
 	auto continuBtnComp = continueBtn->AddComponent<EscContinueButton>();
 	AddGameObject(continueBtn, "continueBtn");
@@ -49,6 +50,7 @@ void TitleScene::OnEnterImpl()
 	AddGameObject(escPanel, "escPanel");
 	esc->SetButtons({ continueBtn, exitBtn, muteBtn });
 	esc->SetButtonsPosition();
+	*/
 }
 
 void TitleScene::OnExitImpl()

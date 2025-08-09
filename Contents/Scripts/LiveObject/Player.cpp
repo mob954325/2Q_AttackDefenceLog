@@ -11,6 +11,7 @@
 #include <windows.h>
 #include <thread>
 
+#include "../Engine/Scene/SceneManager.h"
 
 
 // 각 값은 해당 함수가 출력 중일때, 각 플레그 변화
@@ -70,6 +71,10 @@ void Player::OnUpdate() {
 	DiffState();  //   이전상태와 현재상태를 결정하는 함수
 	StateAct();   //  각 state 별 행동
 	//}
+
+	if (m_State->GetNowName() == "Player_Dead") {
+		Singleton<SceneManager>::GetInstance().LoadScene(0);
+	}
 
 }
 

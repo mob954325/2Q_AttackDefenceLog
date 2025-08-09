@@ -28,12 +28,12 @@ void EffectManager::SetEffectPosition(float x, float y)
 {
 	for (auto it : effectList)
 	{
-		it->GetTransform().SetPosition(x, y);
+		it->GetTransform().SetPosition(x, y);		
 	}
 
 	for (auto it : particleList)
 	{
-		it->GetTransform().SetPosition(x, y);
+		it->GetTransform().SetPosition(x, y);		
 	}
 }
 
@@ -56,6 +56,7 @@ void EffectManager::CreateEffectObject(size_t value)
 	for (size_t i = 0; i < value; i++)
 	{
 		GameObject* obj = new GameObject();
+		obj->SetRenderLayer(EngineData::RenderLayer::UI);
 		obj->AddComponent<EffectObject>();
 		obj->SetName(std::string("Effect")+ std::to_string(i));
 		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(obj);
@@ -68,6 +69,7 @@ void EffectManager::CreateParticleObject(size_t value)
 	for(size_t i = 0; i < value; i++)
 	{
 	GameObject* obj = new GameObject();
+	obj->SetRenderLayer(EngineData::RenderLayer::UI);
 	obj->AddComponent<ParticleRenderer>();
 	obj->SetName(std::string("ParticleObject") + std::to_string(i));
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(obj);

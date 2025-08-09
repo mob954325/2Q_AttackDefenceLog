@@ -69,6 +69,9 @@ void BettleManager::SetStateFormPattern() {
 		if (tmpCorPatten->PattenID.substr(0, 2) == "EP") {
 			m_Enemy->SetState("Enemy_AttackSuccess");
 			if ((tmpCorPatten->PlayingAttackTime) <= 0.5f) {  // 플레이어가 0.5초 이내에 가드시 -> 패링
+				std::vector<int> tmp = tmpCorPatten->NodePatten;
+				tmp.erase(std::remove(tmp.begin(), tmp.end(), 0), tmp.end());
+				onParry.Invoke(tmp.front());			
 
 				m_Player->SetState("Player_Perry");
 				m_Player->RestoreSpiritDamage(
@@ -77,6 +80,10 @@ void BettleManager::SetStateFormPattern() {
 					ConvertSpiritDamageToPos(tmpCorPatten->lastPosition,m_Enemy->GetSpiritAttack() ));
 			}
 			else {
+				std::vector<int> tmp = tmpCorPatten->NodePatten;
+				tmp.erase(std::remove(tmp.begin(), tmp.end(), 0), tmp.end());
+				onGuard.Invoke(tmp.front());
+
 				m_Player->SetState("Player_Guard");		// 가드
 				m_Enemy->RestoreSpiritDamage(
 					ConvertSpiritDamageToPos(tmpCorPatten->lastPosition, m_Enemy->GetSpiritAttack() ));  // 기세 변경
