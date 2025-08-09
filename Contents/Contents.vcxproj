@@ -371,6 +371,10 @@
     <ClCompile Include="Scripts\CsvData\DataClass\EnemyData.cpp" />
     <ClCompile Include="Scripts\CsvData\DataClass\PlayerData.cpp" />
     <ClCompile Include="Scripts\CsvData\DataStorage\CsvDataStorage.cpp" />
+    <ClCompile Include="Scripts\Effect\EffectComponent.cpp" />
+    <ClCompile Include="Scripts\Effect\EffectInstance.cpp" />
+    <ClCompile Include="Scripts\Effect\EffectManager.cpp" />
+    <ClCompile Include="Scripts\Effect\EffectObject.cpp" />
     <ClCompile Include="Scripts\LiveObject\Enemy.cpp" />
     <ClCompile Include="Scripts\LiveObject\LiveObject.cpp" />
     <ClCompile Include="Scripts\LiveObject\Player.cpp" />
@@ -413,6 +417,10 @@
     <ClInclude Include="Scripts\CsvData\DataClass\EnemyData.h" />
     <ClInclude Include="Scripts\CsvData\DataClass\PlayerData.h" />
     <ClInclude Include="Scripts\CsvData\DataStorage\CsvDataStorage.h" />
+    <ClInclude Include="Scripts\Effect\EffectComponent.h" />
+    <ClInclude Include="Scripts\Effect\EffectInstance.h" />
+    <ClInclude Include="Scripts\Effect\EffectManager.h" />
+    <ClInclude Include="Scripts\Effect\EffectObject.h" />
     <ClInclude Include="Scripts\LiveObject\Enemy.h" />
     <ClInclude Include="Scripts\LiveObject\LiveObject.h" />
     <ClInclude Include="Scripts\LiveObject\Player.h" />

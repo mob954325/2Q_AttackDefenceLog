@@ -11,7 +11,7 @@
 
 // $(SolutionDir)Engine\External\FMOD\api\core\lib\x64
 // "../../Engine/External/FMOD/api/core/lib/x64/fmod_vc.lib"
-#pragma comment(lib, "../../Engine/External/Fmod/fmod_vc.lib")
+#pragma comment(lib, "../Engine/External/Fmod/fmod_vc.lib")
 
 /* 25.07.28 | 작성자 : 김정현
 FMOD_RESULT playSound(

@@ -6,6 +6,8 @@
 #include "Scene/SceneManager.h"
 #include "Utils/EventDelegate.h"
 
+#include "Scripts/Effect/EffectInstance.h" // 이펙트 정현씨꺼
+
 
 class PatternControlObject : public MonoBehavior
 {
@@ -16,7 +18,7 @@ public:
 	void OnDestroy() override;
 
 	PatternManager PM;
-	
+
 protected:
 	ListenerID lid_OnPatternCancel = 0;
 
@@ -36,7 +38,9 @@ protected:
 	GameObject* enemy;
 	GameObject* AddGameObject;
 	GameObject* bettleManager;
-	GameObject* player;	
+	GameObject* player;
+
+	EffectInstance* effInstance;
 
 private:
 	std::vector<int> cachedVecA;

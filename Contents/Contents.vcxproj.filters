@@ -67,6 +67,9 @@
     <Filter Include="Objects\Stage\EscMenu">
       <UniqueIdentifier>{18408eb4-7ef4-4c7b-86f6-c544076e2588}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scripts\Effect">
+      <UniqueIdentifier>{0c117a41-d587-47a4-857a-229d80db13c3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\Game.cpp">
@@ -192,6 +195,18 @@
     <ClCompile Include="Objects\Scenes\Stage\EscMenu\StageESCPanel.cpp">
       <Filter>Objects\Stage\EscMenu</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\Effect\EffectObject.cpp">
+      <Filter>Scripts\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Effect\EffectManager.cpp">
+      <Filter>Scripts\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Effect\EffectInstance.cpp">
+      <Filter>Scripts\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Effect\EffectComponent.cpp">
+      <Filter>Scripts\Effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameApp.h">
@@ -316,6 +331,18 @@
     </ClInclude>
     <ClInclude Include="Objects\Scenes\Stage\EscMenu\StageESCPanel.h">
       <Filter>Objects\Stage\EscMenu</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Effect\EffectObject.h">
+      <Filter>Scripts\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Effect\EffectManager.h">
+      <Filter>Scripts\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Effect\EffectInstance.h">
+      <Filter>Scripts\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Effect\EffectComponent.h">
+      <Filter>Scripts\Effect</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
