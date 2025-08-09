@@ -61,8 +61,7 @@ void BettleManager::SetStateFormPattern() {
 		m_PattenManager->SubPattern(pair.second->PattenID, "Time");
 	}
 
-	if (nowNode.size() < 2) return;
-
+	if (nowNode.size() < 1) return;
 
 	pattern* tmpCorPatten = m_PattenManager->CorrectPattern(nowNode);
 	// 입력이 적, 플레이어의 패턴과 맞을 경우
@@ -158,12 +157,25 @@ void BettleManager::ChangeFinalState() {
 	if (m_Enemy->GetHp() <= 0.0f) {
 		m_Enemy->SetState("Enemy_Dead");
 	}
-	if (m_Player->GetNowSpiritAmount() <= 0.0f) {
+
+
+	if (m_Enemy->GetIsRestore() || m_Player->GetIsRestore()) // 적과 아군 둘중 그로기가 끝나고 회복해야한다면
+	{
+		m_Enemy->ResetSpiritAmount();  // 서로 기세게이지가 절반으로 돌아감
+		m_Player->ResetSpiritAmount();
+		m_Enemy->SetIsRestore(false);  // 기세 게이지 회복 표시
+		m_Player->SetIsRestore(false);
+	}
+	else if ( (!m_Player->GetIsGroggy()) && m_Player->GetNowSpiritAmount() <= 0.0f) {
 		m_Player->SetState("Player_Groggy");
+		m_Player->SetIsGroggy(true);
 	}
-	if (m_Enemy->GetNowSpiritAmount() <= 0.0f) {
+	else if ( (!m_Enemy->GetIsGroggy()) && m_Enemy->GetNowSpiritAmount() <= 0.0f) {
 		m_Enemy->SetState("Enemy_Groggy");
+		m_Enemy->SetIsGroggy(true);
 	}
+	
+
 }
 
 

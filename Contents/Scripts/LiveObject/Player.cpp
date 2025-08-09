@@ -28,10 +28,21 @@ void Player::OnCreate() {
 }
 
 void Player::OnStart() {
+
+	//owner->GetTransform().SetUnityCoords(false); 
 	m_State = owner->GetComponent<StateController>();
 	m_PattenManager = owner->GetQuery()->FindByName("AttackPattenManager")->GetComponent<AttackPatternManager>();
 	SetStatData("CI_001");
 	SelectPatten(); // 공격을 했으면 다른 패턴 세팅
+	SetBitmap();    // 비트맵 설정
+
+	//player_BitmapRenderer->SetUseCustomRect(true);
+	//D2D1_RECT_F tmpRect = { -size.width / 10.0f , size.height / 10.0f ,  size.width / 10.0f,  -size.height / 10.0f };
+	//player_BitmapRenderer->SetDestRect(tmpRect);
+	//D2D1_RECT_F tmpRect1 = { 0, 0,  size.width ,  size.height};
+	//player_BitmapRenderer->SetSrcRect(tmpRect1);
+	//owner->SetRenderLayer(EngineData::RenderLayer::GameObject);
+
 	OnCreateState();
 	m_State->SetState("Player_Idle");
 	SetState("Player_Idle");
@@ -40,23 +51,38 @@ void Player::OnStart() {
 
 
 
+
+
+
+//player_BitmapRenderer->CreateBitmapResource(L"../../Resource/ContentsResource/player_attack.png");
+	//player_BitmapRenderer->CreateBitmapResource(L"../../Resource/ContentsResource/player_demaged.png");
+	//player_BitmapRenderer->CreateBitmapResource(L"../../Resource/ContentsResource/player_guard.png");
+	//player_BitmapRenderer->SetOrderInLayer(2);
+	// 
 // 업데이트에서 시간 받기???? -> 필요없음, 수정하기!!!
 void Player::OnUpdate() {
-	//if (m_State->GetNowName() != "Player_Dead"){
+	//if (m_State->GetNowName() != "Player_Dead"||m_State->GetNowName() != "Player_Groggy"){
 	CalSpiritTime();		// 1초마다 기세게이지 감소
 	AddPattenLoop();		// 패턴을 추가하는 루프
 	PrintConsole();
+
 	m_State->Update();
-	DiffStatePrint();
+	DiffState();  //   이전상태와 현재상태를 결정하는 함수
+	StateAct();   //  각 state 별 행동
 	//}
 
 }
 
 //이후 StateManager에 추가하는거 만들기
+
 void Player::SetState(std::string setStateName) {
-	m_State->SetState(setStateName);
+	if ( !(m_State->GetNowName() == "Player_Dead" || m_State->GetNowName()== "Player_Groggy")) {
+		m_State->SetState(setStateName);
+	}
 }
 
+//state 생성
+//평소에 줄여놓기!
 void Player::OnCreateState() {
 	m_State->CreateState("Player_Idle");    // 평소 상태     
 
@@ -92,6 +118,36 @@ void Player::OnCreateState() {
 }
 
 
+BitmapRenderer* player_Idle = nullptr;
+BitmapRenderer* player_Attack = nullptr;
+BitmapRenderer* player_Guard = nullptr;
+BitmapRenderer* player_Damaged = nullptr;
+
+
+
+
+void Player::SetBitmap() {
+	player_Idle = owner->AddComponent<BitmapRenderer>();
+	player_Idle->CreateBitmapResource(L"../Resource/ContentsResource/player_standing.png");
+
+	player_Attack = owner->AddComponent<BitmapRenderer>();
+	player_Attack->CreateBitmapResource(L"../Resource/ContentsResource/player_attack.png");
+
+
+	player_Damaged = owner->AddComponent<BitmapRenderer>();
+	player_Damaged->CreateBitmapResource(L"../Resource/ContentsResource/player_demaged.png");
+
+	player_Guard = owner->AddComponent<BitmapRenderer>();
+	player_Guard->CreateBitmapResource(L"../Resource/ContentsResource/player_guard.png");
+
+
+	D2D1_SIZE_F size = player_Idle->GetResource()->GetBitmap()->GetSize(); // 크기 같음으로 그냥 해도 될듯?
+	owner->GetTransform().SetOffset(-size.width / 2, size.height / 2);
+	//owner->GetTransform().SetScale(0.9f, 0.9f); //  크기 맞추기
+	owner->GetTransform().SetPosition(-330.0f, -600.0f);
+}
+
+
 // 플레이어 데이터에는 기세가 없음으로 적을 생성 후, 기세를 매개변수에 넣어주기!!
 // 패턴을 세팅하는 것은 처음?
 void Player::SetStatData(std::string tmp) {
@@ -118,7 +174,7 @@ void Player::SetSpiritData(float enemy_SpiritAmount) {
 void Player::SetAttackPattenData(std::string PattID) {
 	nowPlayerPattenData = CsvDataManager::GetInstance().getDataImpl(nowPlayerPattenData, PattID);
 
-}
+};
 
 
 
@@ -148,7 +204,7 @@ void Player::SetNowPatten() {
 	// 원래 100 자리에 공격 패턴이 떠있는 시간이 들어가나 플레이어는 없음으로 임의의 큰 숫자 100 을 넣음
 	m_PattenManager->AddPattern(modifiedID1, 100.0f, tmp);
 	m_PattenManager->AddPattern(modifiedID2, 100.0f, tmp2);
-}
+};
 
 
 
@@ -188,16 +244,28 @@ void Player::CalSpiritTime() {
 	Object_OverTimeSpirit += GameTime::GetInstance().GetDeltaTime();
 }
 
-void Player::DiffStatePrint() {
+
+
+void Player::DiffState() {
 	if (m_State->GetNowName() != nowStateName) {
 		preStateName = nowStateName;
 		nowStateName = m_State->GetNowName();
 	}
 
-	if (isGroggy && preStateName == "Player_Groggy") {
-		Object_NowSpiritAmount = Object_SpiritAmount / 2.0f;
-		isGroggy = false;
+
+	if (isGroggy) {
+		groggyTime += GameTime::GetInstance().GetDeltaTime();
+
 	}
+
+	// 그로기 시간!!!
+	if (groggyTime >= 3.0f) {
+		groggyTime = 0.0f;
+		isGroggy = false;
+		isRestore = true;
+	}
+
+
 }
 
 
@@ -216,8 +284,6 @@ void Player::AddPattenLoop() {
 		isPattenCooldown = true;
 		isAttackingPattern = false;
 	}
-
-
 	if (isPattenCooldown) {
 		// 패턴의 입력대기시간 카운트
 		Object_nowCoolTime -= GameTime::GetInstance().GetDeltaTime();
@@ -230,6 +296,44 @@ void Player::AddPattenLoop() {
 		}
 	}
 }
+
+
+//일단 임시로 스테이트마다 스프라이트 설정
+void Player::StateAct() {
+	if (nowStateName == "Player_Idle") {    // 평소 상태     
+		player_Idle->SetActive(true);
+		player_Attack->SetActive(false);
+		player_Damaged->SetActive(false);
+		player_Guard->SetActive(false);
+	}
+	else if (nowStateName == "Player_AttackSuccess" || nowStateName == "Player_AttackFail"){ // 공격 성공, 공격 실패
+		player_Idle->SetActive(false);
+		player_Attack->SetActive(true);
+		player_Damaged->SetActive(false);
+		player_Guard->SetActive(false);
+	}
+	else if (nowStateName == "Player_Hit" || nowStateName == "Player_Groggy"){     //피격 + 그로기
+		player_Idle->SetActive(false);
+		player_Attack->SetActive(false);
+		player_Damaged->SetActive(true);
+		player_Guard->SetActive(false);
+	}
+	else if (nowStateName == "Player_Guard" || nowStateName == "Player_Defence" || nowStateName == "Player_Perry"){   // 가드 + defence + 패링
+		player_Idle->SetActive(false);
+		player_Attack->SetActive(false);
+		player_Damaged->SetActive(false);
+		player_Guard->SetActive(true);
+	}
+
+	else if (nowStateName == "Player_Dead"){   // 죽음
+		player_Idle->SetActive(false);
+		player_Attack->SetActive(false);
+		player_Damaged->SetActive(true);
+		player_Guard->SetActive(false);
+	}
+}
+
+
 
 void Player::SetCursorPosition(int x, int y)
 {

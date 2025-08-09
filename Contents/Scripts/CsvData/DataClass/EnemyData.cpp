@@ -21,15 +21,15 @@ void EnemyData::SetData(std::vector<std::wstring> tmp) {
 
 
 void EnemyData::PrintMap(){
-	// std::cout << "enemyID : " << enemyID;
-	// std::cout << "enemyDifficulty : " << enemyDifficulty;
-	// std::cout << "enemyHealth : " << enemyHealth;
-	// std::cout << "enemyDamage : " << enemyDamage << std::endl;
-	// std::cout << "enemyCooldown : " << enemyCooldown;
-	// std::cout << "enemySpiritamount : " << enemySpiritamount;
-	// std::cout << "enemyGuardRate : " << enemyGuardRate << std::endl;
-	// for (int i = 0; i <= 15; i++) {
-	// 	std::cout << "enemyPattern" << i << " : " << enemyPattern[i];
-	// }
-	// std::cout << std::endl;
+	 std::cout << "enemyID : " << enemyID;
+	 std::cout << "enemyDifficulty : " << enemyDifficulty;
+	 std::cout << "enemyHealth : " << enemyHealth;
+	 std::cout << "enemyDamage : " << enemyDamage << std::endl;
+	 std::cout << "enemyCooldown : " << enemyCooldown;
+	 std::cout << "enemySpiritamount : " << enemySpiritamount;
+	 std::cout << "enemyGuardRate : " << enemyGuardRate << std::endl;
+	 for (int i = 0; i <= 15; i++) {
+	 	std::cout << "enemyPattern" << i << " : " << enemyPattern[i];
+	 }
+	 std::cout << std::endl;
 }; 
