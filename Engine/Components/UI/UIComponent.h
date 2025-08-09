@@ -1,8 +1,8 @@
 ﻿#pragma once
-#include "Components/Base/ActiveComponent.h"
+#include "Components/Base/Component.h"
 #include "Math/Vector2.h"
 
-class UIComponent : public ActiveComponent
+class UIComponent : public Component
 {
 public:
 	virtual void Update() = 0;

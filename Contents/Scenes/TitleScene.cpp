@@ -5,12 +5,6 @@
 #include "Objects/Scenes/TitleScene/TitleSceneBGI.h"
 #include "Objects/Scenes/TitleScene/TitleNodeManager.h"
 
-
-#include "Objects/Scenes/Stage/EscMenu/StageESCPanel.h"
-#include "Objects/Scenes/Stage/EscMenu/EscContinueButton.h"
-#include "Objects/Scenes/Stage/EscMenu/EscExitButton.h"
-#include "Objects/Scenes/Stage/EscMenu/EscMuteButton.h"
-
 void TitleScene::OnEnterImpl()
 {
 	std::cout << "타이틀씬 진입" << std::endl;
@@ -30,26 +24,6 @@ void TitleScene::OnEnterImpl()
 	trail = new GameObject();
 	trail->AddComponent<MouseTrailObject>();
 	AddGameObject(trail, "MouseTrail");
-
-	// esc Panel init
-	GameObject* continueBtn = new GameObject();
-	auto continuBtnComp = continueBtn->AddComponent<EscContinueButton>();
-	AddGameObject(continueBtn, "continueBtn");
-
-	GameObject* exitBtn = new GameObject();
-	auto exitBtnComp = exitBtn->AddComponent<EscExitButton>();
-	AddGameObject(exitBtn, "exitBtn");
-
-	GameObject* muteBtn = new GameObject();
-	auto muteBtnComp = muteBtn->AddComponent<EscMuteButton>();
-	AddGameObject(muteBtn, "muteBtn");
-
-	escPanel = new GameObject();
-	auto esc = escPanel->AddComponent<StageESCPanel>();
-	AddGameObject(escPanel, "escPanel");
-	esc->SetButtons({ continueBtn, exitBtn, muteBtn });
-	esc->SetButtonsPosition();
-	esc->DisablePanel();
 }
 
 void TitleScene::OnExitImpl()

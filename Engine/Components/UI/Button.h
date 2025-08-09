@@ -39,8 +39,6 @@ public:
 	void RemoveOnClickEventById(size_t id);
 
 	bool IsMouseOver(const Vector2& mousePos) const;
-
-	void DisableBitmaps();
 	
 private:
 	void HandleButtonImage(ButtonState type);
