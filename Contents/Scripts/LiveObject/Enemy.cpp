@@ -27,6 +27,7 @@ void Enemy::OnStart() {
 	OnCreateState();
 	m_State->SetState("Enemy_Idle");
 	SelectPatten(); //  패턴 세팅
+	SetBitmap();
 	isPattenCooldown = true;
 	groggyTime = 0.0f;
 }
@@ -81,6 +82,30 @@ void Enemy::OnCreateState() {
 
 	m_State->CreateState("Enemy_Dead");   // 죽음
 }
+
+
+void Enemy::SetBitmap() {
+	
+	enemy_Idle = owner->AddComponent<BitmapRenderer>();
+	enemy_Idle->CreateBitmapResource(L"../Resource/ContentsResource/enemy3_standing.png");
+
+	enemy_Attack = owner->AddComponent<BitmapRenderer>();
+	enemy_Attack->CreateBitmapResource(L"../Resource/ContentsResource/enemy3_attack.png");
+
+
+	enemy_Damaged = owner->AddComponent<BitmapRenderer>();
+	enemy_Damaged->CreateBitmapResource(L"../Resource/ContentsResource/enemy3_demaged.png");
+
+	enemy_Guard = owner->AddComponent<BitmapRenderer>();
+	enemy_Guard->CreateBitmapResource(L"../Resource/ContentsResource/enemy3_guard.png");
+
+	D2D1_SIZE_F size = enemy_Idle->GetResource()->GetBitmap()->GetSize(); // 크기 같음으로 그냥 해도 될듯?
+	owner->GetTransform().SetOffset(-size.width / 2, size.height / 2);
+	owner->GetTransform().SetScale(0.4f, 0.4f); //  크기 맞추기
+	owner->GetTransform().SetPosition(550.0f, 200.0f);
+}
+
+
 
 
 // 플레이어 데이터에는 기세가 없음으로 적을 생성 후, 기세를 매개변수에 넣어주기!!
@@ -230,29 +255,30 @@ void Enemy::DiffState() {
 //일단 임시로 스테이트마다 스프라이트 설정
 void Enemy::StateAct() {
 	if (nowStateName == "Enemy_Idle") {    // 평소 상태     
-
+		enemy_Idle->SetActive(true);
+		enemy_Attack->SetActive(false);
+		enemy_Damaged->SetActive(false);
+		enemy_Guard->SetActive(false);
 	}
-	else if (nowStateName == "Enemy_AttackSuccess") { // 공격 성공
-
-
+	else if (nowStateName == "Enemy_AttackSuccess" || nowStateName == "Enemy_AttackFail") { // 공격 성공
+		enemy_Idle->SetActive(false);
+		enemy_Attack->SetActive(true);
+		enemy_Damaged->SetActive(false);
+		enemy_Guard->SetActive(false);
 	}
-	else if (nowStateName == "Enemy_AttackFail") {  // 공격 실패
-
-	}
-	else if (nowStateName == "Enemy_Hit") {     //패턴 파회 X, 맞음
-
+	else if (nowStateName == "Enemy_Hit" ||  nowStateName == "Enemy_Groggy" || nowStateName == "Enemy_Dead") { 
+		enemy_Idle->SetActive(false);
+		enemy_Attack->SetActive(false);
+		enemy_Damaged->SetActive(true);
+		enemy_Guard->SetActive(false);
 
 	}
 	else if (nowStateName == "Enemy_Defence") { //패턴 파회 X, 막음
-
+		enemy_Idle->SetActive(false);
+		enemy_Attack->SetActive(false);
+		enemy_Damaged->SetActive(false);
+		enemy_Guard->SetActive(true);
 	}
-	else if (nowStateName == "Enemy_Groggy") { //패턴 파회 X, 막음
-
-	}
-	else if (nowStateName == "Enemy_Dead") {   // 패턴 파회 O
-
-	}
-
 }
 
 
