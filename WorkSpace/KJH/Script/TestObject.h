@@ -53,5 +53,7 @@ private:
 
 	GameObject* handleCam{};
 
+	std::vector<Vector2> positionList{};
+
 };
 

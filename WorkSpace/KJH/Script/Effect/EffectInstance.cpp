@@ -11,25 +11,58 @@
 //Update로 프레임마다 이펙트들 업데이트
 void EffectInstance::OnUpdate()
 {
-	if (effecttype == EffectType::None) return;
-	counttime += Singleton<GameTime>::GetInstance().GetDeltaTime();
-	
-	switch (effecttype)
+	/*if (CheckPlayAnime && AnimeCount < Animeduration)
 	{
-	case EffectType::ParryEffect:
-		ParryEffect();
-		break;
+		AnimeCount += Singleton<GameTime>::GetInstance().GetDeltaTime();
+	}
+	else if (CheckPlayAnime && AnimeCount >= Animeduration)
+	{
+		CheckPlayAnime = false;
+		AnimeList[AnimeNum]->GetComponent<AnimationRenderer>()->SetActive(false);
+		AnimeList[AnimeNum]->GetComponent<AnimationRenderer>()->GetAnimationPlayer()->Pause();
+		AnimeList[AnimeNum]->GetComponent<AnimationRenderer>()->GetAnimationPlayer()->Reset();
+	}*/
 
-	case EffectType::GuardEffect:
-		GuardEffect();
-		break;
+	float dt = Singleton<GameTime>::GetInstance().GetDeltaTime();
+	for (size_t i = 0; i < AnimeList.size(); ++i) {
+		auto& state = AnimeStates[i];
+		if (!state.playing) continue;
+		
+		state.t += dt;
+		if (state.t >= state.duration) {
+			state.playing = false;
+			state.t = 0.0f;
 
-	case EffectType::ChargeEffect:
-		ChargeEffect();
-		break;
-	case EffectType::HoldEffect:
-		HoldEffect();
-		break;
+			auto* r = AnimeList[i]->GetComponent<AnimationRenderer>();
+			r->SetActive(false);
+			auto* p = r->GetAnimationPlayer();
+			p->Pause();
+			p->Reset();
+		}
+	}
+
+	if (effecttype == EffectType::None) return;
+	else
+	{
+		counttime += Singleton<GameTime>::GetInstance().GetDeltaTime();
+
+		switch (effecttype)
+		{
+		case EffectType::ParryEffect:
+			ParryEffect();
+			break;
+
+		case EffectType::GuardEffect:
+			GuardEffect();
+			break;
+
+		case EffectType::ChargeEffect:
+			ChargeEffect();
+			break;
+		case EffectType::HoldEffect:
+			HoldEffect();
+			break;
+		}
 	}
 }
 
@@ -104,13 +137,16 @@ void EffectInstance::OnStart()
 		obj->AddComponent<AnimationRenderer>();
 		obj->SetName(std::string("Effect") + std::to_string(i));
 		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(obj);
-		obj->GetTransform().SetPosition(9999.0f, 9999.0f);
+		obj->GetComponent<AnimationRenderer>()->SetActive(false);
 		obj->GetComponent<AnimationRenderer>()->CreateBitmapResource(L"../../Resource/Particles/attack_circle_spreadsheet.png");
 		obj->GetComponent<AnimationRenderer>()->SetSpriteSheet(L"../../Resource/Json/attack_circle_sprites.json");
 		obj->GetComponent<AnimationRenderer>()->SetAnimationClip(L"../../Resource/Json/attack_circle_anim.json");
 		obj->GetComponent<AnimationRenderer>()->GetAnimationPlayer()->Pause();
 		AnimeList.push_back(obj);
 	}
+
+	//슬롯초기화
+	AnimeStates.resize(AnimeList.size());
 }
 
 void EffectInstance::OnDestroy()
@@ -192,6 +228,15 @@ void EffectInstance::EndEffects()
 	effecttype = EffectType::None;
 }
 
+void EffectInstance::SetAnimePosition(const std::vector<Vector2>& vectorList)
+{
+	if (vectorList.size() != 9) return;
+	for (size_t i = 0; i < 9; i++)
+	{
+		AnimeList[i]->GetTransform().SetPosition(vectorList[i].x, vectorList[i].y);
+	}
+}
+
 //증가 계산식
 float EffectInstance::GetValue(size_t type)
 {
@@ -236,5 +281,45 @@ float EffectInstance::GetValue(size_t type)
 	default:
 		return 0.0f;
 	}
+}
+
+void EffectInstance::CallAnime(size_t num)
+{
+	/*CheckPlayAnime = true;
+	AnimeNum = num;
+	AnimeList[AnimeNum]->GetComponent<AnimationRenderer>()->GetAnimationPlayer()->Play();
+	AnimeCount = 0;*/
+	if (num >= AnimeList.size()) return;
+
+	auto* r = AnimeList[num]->GetComponent<AnimationRenderer>();
+	r->SetActive(true);
+	auto* p = r->GetAnimationPlayer();
+	p->Play();
+
+	auto& s = AnimeStates[num];
+	s.playing = true;
+	s.t = 0.0f;
+	s.duration = Animeduration; // 슬롯마다 다르게 가능
+}
+
+void EffectInstance::StopAnime(size_t num)
+{
+	if (num >= AnimeList.size()) return;
+	auto& s = AnimeStates[num];
+	if (!s.playing) return;
+
+	s.playing = false;
+	s.t = 0.0f;
+
+	auto* r = AnimeList[num]->GetComponent<AnimationRenderer>();
+	r->SetActive(false);
+	auto* p = r->GetAnimationPlayer();
+	p->Pause();
+	p->Reset();
+}
+
+void EffectInstance::StopAllAnime()
+{
+	for (size_t i = 0; i < AnimeList.size(); ++i) StopAnime(i);
 }
 
