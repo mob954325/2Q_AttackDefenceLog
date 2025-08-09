@@ -10,8 +10,8 @@ void TestCollider::TestColliderApp::Initialize()
 
 	testColliderScene = new CircleColliderScene();
 	Singleton<SceneManager>::GetInstance().AddScene(testColliderScene);
-	testSliceScene = new SliceObjectScene();
-	Singleton<SceneManager>::GetInstance().AddScene(testSliceScene);
+	// testSliceScene = new SliceObjectScene();
+	// Singleton<SceneManager>::GetInstance().AddScene(testSliceScene);
 	Singleton<SceneManager>::GetInstance().Init();
 }
 
