@@ -41,6 +41,10 @@ public:
 	void ChargeEffect();
 	void HoldEffect();
 	void EndEffects();
+	
+	//8.09 추가
+	void DoParry(int n);	
+	void DoGuard(int n);
 
 	void SetAnimePosition(const std::vector<Vector2>& vectorList);
 
@@ -52,6 +56,7 @@ public:
 
 	void StopAllAnime();
 private:
+	std::vector<Vector2> nodePos; // 좌표 9개 기억 + 0 ~ 8
 
 	EffectManager* Emanager{};
 

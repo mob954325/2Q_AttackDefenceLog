@@ -9,7 +9,7 @@ void EffectObject::OnUpdate()
 
 void EffectObject::OnCreate()
 {
-	Effect = owner->AddComponent<BitmapRenderer>();
+	Effect = owner->AddComponent<BitmapRenderer>();	
 	Effect->SetUseCustomRect(true);
 	Effect->CreateBitmapResource(L"../Resource/Particles/circle_outer.png");
 	Effectsize = Effect->GetResource()->GetBitmap()->GetSize();

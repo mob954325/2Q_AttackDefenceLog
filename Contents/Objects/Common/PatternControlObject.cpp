@@ -133,7 +133,7 @@ void PatternControlObject::OnStart() // 처음
 		tmp.push_back({ x, y });
 	}
 
-	effInstance = owner->AddComponent<EffectInstance>();
+	effInstance = owner->AddComponent<EffectInstance>();	
 	effInstance->SetAnimePosition(tmp);
 	PM.SetNodes(m_nodes, r);
 
@@ -186,7 +186,7 @@ void PatternControlObject::OnStart() // 처음
 		queueBack->OnNodeLightUp.Add([this](int index) { // 1 ~ 9 >> -1 0 ~ 8
 			//std::cout << "반짝!!!!!!!!!!!: " << index << std::endl;			//여기에 이펙트 연결해주면 됨
 
-			effInstance->CallAnime(static_cast<size_t>(index - 1)); // 0~8
+			effInstance->CallAnime(index - 1); // 0~8 
 			});
 
 		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(readyQueueForAttackLine.back());
@@ -213,6 +213,9 @@ void PatternControlObject::OnUpdate() // 업데이트
 	// [1] 입력 발생하면
 
 	if (t->isNewCached) { // 새로운 노드 발생하면				
+		effInstance->DoGuard(1);
+		effInstance->DoParry(2);
+
 		PM.CheckTrails(t->CheckingCachedTrails());
 		const auto& vec = PM.GetPatternPathPositions(); // 여기에 담김!!! 1 3 2 4 이런거 <<<<< (연결지점)
 
