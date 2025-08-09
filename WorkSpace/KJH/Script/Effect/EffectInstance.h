@@ -11,6 +11,7 @@
 #include "Components/Rendering/AnimationPlayer.h"
 #include "Components/UI/Slider.h"
 #include "Math/Vector2.h"
+#include <vector>
 
 /*
 미리 풀링으로 만들어둔 이펙트, 파티클들
@@ -41,8 +42,15 @@ public:
 	void HoldEffect();
 	void EndEffects();
 
+	void SetAnimePosition(const std::vector<Vector2>& vectorList);
+
 	float GetValue(size_t type);
 
+	void CallAnime(size_t num);
+
+	void StopAnime(size_t num);
+
+	void StopAllAnime();
 private:
 
 	EffectManager* Emanager{};
@@ -65,6 +73,21 @@ private:
 
 	std::vector<GameObject*> AnimeList;
 
+	size_t AnimeNum = 0;
+	bool CheckPlayAnime = false;
+	float Animeduration = 0.33333334f;
+	float AnimeCount = 0.0f;
+	/*float Animeduration = 0.0f;*/
+
+	//각 애니메이션을 관리하기위한 struct
+	struct AnimeState {
+		bool   playing = false;
+		float  t = 0.0f;        // 경과 시간
+		float  duration = 0.0f; // 슬롯별 지속시간
+	};
+
+	//그것을 담는 백터
+	std::vector<AnimeState>  AnimeStates;
 };
 
 
