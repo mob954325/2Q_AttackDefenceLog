@@ -4,6 +4,7 @@
 #include "Scene/SceneManager.h"
 #include "Scene/TestScene.h"
 #include "Resources/Loaders/CsvLoader.h"
+#include "Application/AppPaths.h"
 
 
 void SoundApp::SoundApp::Initialize()
@@ -13,12 +14,12 @@ void SoundApp::SoundApp::Initialize()
 	//MessageBox(NULL, buffer, L"현재 작업 디렉터리", MB_OK);
 
 	/*WCHAR buffer[MAX_PATH];
-	GetFullPathName(L"../../Resource/UI/TestMouse/idle.png", MAX_PATH, buffer, nullptr);
+	GetFullPathName(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/UI/TestMouse/idle.png", MAX_PATH, buffer, nullptr);
 	MessageBox(NULL, buffer, L"실제 시도 중인 파일 경로", MB_OK);*/
 
 	__super::Initialize();
-
-	LoadCSV<SoundResource>::SetCSV(L"../../Resource/DataTable/AllSoundList.csv", soundList);
+	std::string path = StringConvert::WstringToString(Singleton<AppPaths>::GetInstance().GetWorkingPath());
+	LoadCSV<SoundResource>::SetCSV(path + L"/../Resource/DataTable/AllSoundList.csv", soundList);
 
 	// 출력 테스트
 	//for (const auto& sound : soundList) {
@@ -35,8 +36,8 @@ void SoundApp::SoundApp::Initialize()
 	AudioSystem::GetInstance().Register(soundList);
 
 
-	hCursorDefault = mouse.LoadPngCursor(L"../../Resource/UI/TestMouse/idle.png");
-	hCursorClicked = mouse.LoadPngCursor(L"../../Resource/UI/TestMouse/click.png");
+	hCursorDefault = mouse.LoadPngCursor(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/UI/TestMouse/idle.png");
+	hCursorClicked = mouse.LoadPngCursor(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/UI/TestMouse/click.png");
 
 
 	//if (!hCursorDefault)

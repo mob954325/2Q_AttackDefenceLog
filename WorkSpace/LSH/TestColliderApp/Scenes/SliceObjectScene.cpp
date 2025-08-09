@@ -3,6 +3,7 @@
 #include "Utils/StringConvert.h"
 #include "TestColliderApp/Scripts/SliceObject/SliceObject.h"
 #include "TestColliderApp/Scripts/ContentObject/EscMenubar.h"
+#include "Application/AppPaths.h"
 
 void SliceObjectScene::OnEnterImpl()
 {	
@@ -34,7 +35,7 @@ void SliceObjectScene::CreatePieces(std::vector<PieceObject*>& out)
 		// 이미지 찾기
 		std::wstring numStr = std::to_wstring(i + 1);
 		out[i]->SetName("piece" + StringConvert::WstringToString(numStr));
-		comp->SetBitmapByPath(L"../../Resource/Sprite/Test_Slice/node_fragment_" + numStr + L".png");
+		comp->SetBitmapByPath(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/Sprite/Test_Slice/node_fragment_" + numStr + L".png");
 	}
 }
 
@@ -48,7 +49,7 @@ SplitObject* SliceObjectScene::CreateGridNode()
 	std::vector<PieceObject*> out;
 	CreatePieces(out);
 	comp1->SetImages(out);
-	comp1->SetOriginImage(L"../../Resource/Sprite/Test_Slice/Original.png");
+	comp1->SetOriginImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/Sprite/Test_Slice/Original.png");
 	comp1->SetGrid(3);
 
 	return comp1;

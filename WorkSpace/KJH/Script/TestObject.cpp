@@ -6,6 +6,7 @@
 #include "Scene/SceneManager.h"
 #include "Math/EasingFunction.h"
 #include "Script/Camera/CamInstance.h"
+#include "Application/AppPaths.h"
 
 
 void TestObject::OnUpdate()
@@ -52,7 +53,7 @@ void TestObject::OnCreate()
 {
 	/*owner->AddComponent<Slider>();*/
 	/*TestImage = owner->AddComponent<BitmapRenderer>();
-	TestImage->CreateBitmapResource(L"../../Resource/UI/TestImage/test.png");
+	TestImage->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/UI/TestImage/test.png");
 	owner->GetTransform().SetOffset(-TestImage->GetResource()->GetBitmap()->GetSize().width / 2, TestImage->GetResource()->GetBitmap()->GetSize().height / 2);*/
 	counttime = 0;
 	input = owner->AddComponent<InputSystem>();
@@ -83,12 +84,12 @@ void TestObject::OnStart()
 	//Emanager->CreateEffectObject(5);
 	//Emanager->CreateParticleObject(2);
 	////패리
-	//Emanager->SetEffectImage(0, L"../../Resource/Particles/circle_outer.png");
-	//Emanager->SetEffectImage(1, L"../../Resource/Particles/circle_inner.png");
-	//Emanager->SetEffectImage(2, L"../../Resource/Particles/line_horizon.png");
+	//Emanager->SetEffectImage(0, Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/Particles/circle_outer.png");
+	//Emanager->SetEffectImage(1, Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/Particles/circle_inner.png");
+	//Emanager->SetEffectImage(2, Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/Particles/line_horizon.png");
 	////방어
-	//Emanager->SetEffectImage(3, L"../../Resource/Particles/defend/circle_inner.png");
-	//Emanager->SetEffectImage(4, L"../../Resource/Particles/defend/horizon_line.png");
+	//Emanager->SetEffectImage(3, Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/Particles/defend/circle_inner.png");
+	//Emanager->SetEffectImage(4, Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/Particles/defend/horizon_line.png");
 
 
 
@@ -107,9 +108,9 @@ void TestObject::OnStart()
 	//Emanager->GetParticleComponent(0)->SetDuration(0.8f);
 	//Emanager->GetParticleComponent(0)->SetFadeOutTime(0.7f);
 	//Emanager->GetParticleComponent(0)->SetAmount(25);
-	//Emanager->GetParticleComponent(0)->SetAnimPlayer(L"../../Resource/Particles/SparkSheet.png",
-	//	L"../../Resource/Json/SparkSheet/SparkSheet_sprites.json",
-	//	L"../../Resource/Json/SparkSheet/Red_Spark_anim.json");
+	//Emanager->GetParticleComponent(0)->SetAnimPlayer(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/Particles/SparkSheet.png",
+	//	Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/Json/SparkSheet/SparkSheet_sprites.json",
+	//	Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/Json/SparkSheet/Red_Spark_anim.json");
 	//Emanager->GetParticleComponent(0)->SetShowType(ParticleShowType::RandomSingle);
 	//Emanager->GetParticleComponent(0)->SetGravity(false);
 	//Emanager->GetParticleComponent(0)->SetSeeDirection(true);
@@ -122,17 +123,17 @@ void TestObject::OnStart()
 	//Emanager->GetParticleComponent(1)->SetDuration(0.8f);
 	//Emanager->GetParticleComponent(1)->SetFadeOutTime(0.7f);
 	//Emanager->GetParticleComponent(1)->SetAmount(25);
-	//Emanager->GetParticleComponent(1)->SetAnimPlayer(L"../../Resource/Particles/defend/ParticleGuard.png",
-	//	L"../../Resource/Json/SparkSheet/ParticleGuard_sprites.json",
-	//	L"../../Resource/Json/SparkSheet/ParticleGuard_Guard_anim.json");
+	//Emanager->GetParticleComponent(1)->SetAnimPlayer(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/Particles/defend/ParticleGuard.png",
+	//	Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/Json/SparkSheet/ParticleGuard_sprites.json",
+	//	Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/Json/SparkSheet/ParticleGuard_Guard_anim.json");
 	//Emanager->GetParticleComponent(1)->SetShowType(ParticleShowType::RandomSingle);
 	//Emanager->GetParticleComponent(1)->SetGravity(false);
 	//Emanager->GetParticleComponent(1)->SetSeeDirection(true);
 	//Emanager->GetParticleComponent(1)->SetDecreasing(true);
 
-	//AnimObject->CreateBitmapResource(L"../../Resource/Dance/Dance.png");
-	//AnimObject->SetSpriteSheet(L"../../Resource/Dance/Dance_sprites.json");
-	//AnimObject->SetAnimationClip(L"../../Resource/Dance/Dance_Dance_anim.json");
+	//AnimObject->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/Dance/Dance.png");
+	//AnimObject->SetSpriteSheet(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/Dance/Dance_sprites.json");
+	//AnimObject->SetAnimationClip(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/Dance/Dance_Dance_anim.json");
 
 	//AnimObject->GetAnimationPlayer().Play();
 	//AnimObject->SetOrderInLayer(15);

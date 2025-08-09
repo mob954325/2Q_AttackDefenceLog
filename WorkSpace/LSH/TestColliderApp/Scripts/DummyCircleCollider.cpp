@@ -4,6 +4,7 @@
 #include "TestCircleCollider.h"
 
 #include "Scene/SceneManager.h"
+#include "Application/AppPaths.h"
 
 void DummyCircleCollider::OnCreate()
 {
@@ -22,15 +23,15 @@ void DummyCircleCollider::OnStart()
 
 	circle->SetRadius(20.0f);
 
-	particle->SetBitmap(L"../../Resource/Particles/Test/Arrow.png");
+	particle->SetBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/Particles/Test/Arrow.png");
 	particle->SetMinSpeed(0.3f);
 	particle->SetMaxSpeed(0.7f);
 	particle->SetDuration(0.8f);
 	particle->SetFadeOutTime(0.7f);
 	particle->SetAmount(25);
-	particle->SetAnimPlayer(L"../../Resource/Particles/SparkSheet.png",
-		L"../../Resource/Json/SparkSheet/SparkSheet_sprites.json",
-		L"../../Resource/Json/SparkSheet/Red_Spark_anim.json");
+	particle->SetAnimPlayer(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/Particles/SparkSheet.png",
+		Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/Json/SparkSheet/SparkSheet_sprites.json",
+		Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/Json/SparkSheet/Red_Spark_anim.json");
 	particle->SetShowType(ParticleShowType::Animation);
 	particle->SetGravity(false);
 	particle->SetSeeDirection(true);

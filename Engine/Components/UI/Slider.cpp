@@ -2,6 +2,7 @@
 #include "Components/Base/GameObject.h"
 #include "Platform/Input.h"
 #include "Datas/EngineData.h"
+#include "Application/AppPaths.h"
 
 void Slider::OnStart()
 {
@@ -9,7 +10,7 @@ void Slider::OnStart()
 	GaugeBar = owner->AddComponent<BitmapRenderer>();
 	GaugeBar->SetUseCustomRect(true);
 	GaugeBar->SetOrderInLayer(6);
-	GaugeBar->CreateBitmapResource(L"../../Resource/UI/TestGauge/Bar.png");
+	GaugeBar->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\UI\\TestGauge\\Bar.png");
 	size = GaugeBar->GetResource()->GetBitmap()->GetSize();
 
 
@@ -20,7 +21,7 @@ void Slider::OnStart()
 
 
 	GaugeBackground = owner->AddComponent<BitmapRenderer>();
-	GaugeBackground->CreateBitmapResource(L"../../Resource/UI/TestGauge/backgroundBar.png");
+	GaugeBackground->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\UI\\TestGauge\\backgroundBar.png");
 	GaugeBackground->SetUseCustomRect(true);
 	GaugeBackground->SetOrderInLayer(5);
 	sizeBackground = GaugeBackground->GetResource()->GetBitmap()->GetSize();
@@ -35,7 +36,7 @@ void Slider::OnStart()
 	BarButton = owner->AddComponent<BitmapRenderer>();
 	BarButton->SetUseCustomRect(true);
 	BarButton->SetOrderInLayer(7);
-	BarButton->CreateBitmapResource(L"../../Resource/UI/TestGauge/BarBotton.png");
+	BarButton->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/UI/TestGauge/BarBotton.png");
 
 	sizeButton = BarButton->GetResource()->GetBitmap()->GetSize();
 

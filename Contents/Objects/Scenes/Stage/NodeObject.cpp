@@ -2,6 +2,8 @@
 #include "Components/Base/GameObject.h"
 #include "Components/Collision/CircleCollider.h"
 #include "Platform/Input.h"
+#include "Application/AppPaths.h"
+
 // #include "Components/Logic/InputSystem.h"
 
 /* 8.05. 한승규
@@ -16,7 +18,7 @@ void NodeObject::OnCreate() {
 	owner->GetTransform().SetUnityCoords(false); // 이건 유니티좌표계 하면 안댐
 
 	bitmapRenderer = owner->AddComponent<BitmapRenderer>();
-	bitmapRenderer->CreateBitmapResource(L"../WorkSpace/HSK/Test/ui03.png");
+	bitmapRenderer->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\WorkSpace\\HSK\\Test\\ui03.png");
 	bitmapRenderer->SetOrderInLayer(-1);
 
 	size = bitmapRenderer->GetResource()->GetBitmap()->GetSize();

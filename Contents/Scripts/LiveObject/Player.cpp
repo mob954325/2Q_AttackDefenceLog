@@ -12,7 +12,7 @@
 #include <thread>
 
 #include "../Engine/Scene/SceneManager.h"
-
+#include "Application/AppPaths.h"
 
 // 각 값은 해당 함수가 출력 중일때, 각 플레그 변화
 //														     
@@ -55,9 +55,9 @@ void Player::OnStart() {
 
 
 
-//player_BitmapRenderer->CreateBitmapResource(L"../../Resource/ContentsResource/player_attack.png");
-	//player_BitmapRenderer->CreateBitmapResource(L"../../Resource/ContentsResource/player_demaged.png");
-	//player_BitmapRenderer->CreateBitmapResource(L"../../Resource/ContentsResource/player_guard.png");
+//player_BitmapRenderer->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/ContentsResource/player_attack.png");
+	//player_BitmapRenderer->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/ContentsResource/player_demaged.png");
+	//player_BitmapRenderer->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/ContentsResource/player_guard.png");
 	//player_BitmapRenderer->SetOrderInLayer(2);
 	// 
 // 업데이트에서 시간 받기???? -> 필요없음, 수정하기!!!
@@ -133,17 +133,17 @@ BitmapRenderer* player_Damaged = nullptr;
 
 void Player::SetBitmap() {
 	player_Idle = owner->AddComponent<BitmapRenderer>();
-	player_Idle->CreateBitmapResource(L"../Resource/ContentsResource/player_standing.png");
+	player_Idle->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\player_standing.png");
 
 	player_Attack = owner->AddComponent<BitmapRenderer>();
-	player_Attack->CreateBitmapResource(L"../Resource/ContentsResource/player_attack.png");
+	player_Attack->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\player_attack.png");
 
 
 	player_Damaged = owner->AddComponent<BitmapRenderer>();
-	player_Damaged->CreateBitmapResource(L"../Resource/ContentsResource/player_demaged.png");
+	player_Damaged->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\player_demaged.png");
 
 	player_Guard = owner->AddComponent<BitmapRenderer>();
-	player_Guard->CreateBitmapResource(L"../Resource/ContentsResource/player_guard.png");
+	player_Guard->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\player_guard.png");
 
 
 	D2D1_SIZE_F size = player_Idle->GetResource()->GetBitmap()->GetSize(); // 크기 같음으로 그냥 해도 될듯?

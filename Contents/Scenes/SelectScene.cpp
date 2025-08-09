@@ -3,6 +3,7 @@
 #include "Objects/Common/InputObject.h"
 #include "Objects/Common/TestObject.h"
 #include "Objects/Common/MouseTrailObject.h"
+#include "Application/AppPaths.h"
 
 void SelectScene::OnEnterImpl()
 {
@@ -12,7 +13,7 @@ void SelectScene::OnEnterImpl()
 	auto t = testObj->AddComponent<TestObject>();
 
 	// 	auto r = testObj->AddComponent<BitmapRenderer>();
-	// 	r->CreateBitmapResource(L"../WorkSpace/HSK/Test/test2.png");
+	// 	r->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/WorkSpace/HSK/Test/test2.png");
 
 	AddGameObject(testObj);
 
@@ -24,7 +25,7 @@ void SelectScene::OnEnterImpl()
 	trail->AddComponent<MouseTrailObject>();
 	AddGameObject(trail, "MouseTrail");
 	
-	testObj->GetComponent<BitmapRenderer>()->CreateBitmapResource(L"../WorkSpace/HSK/Test/test2.png");
+	testObj->GetComponent<BitmapRenderer>()->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\WorkSpace\\HSK\\Test\\test2.png");
 
 }
 
@@ -39,7 +40,7 @@ void SelectScene::OnExitImpl()
 void SelectScene::UpdateImpl()
 {
 	if (start) {
-		//testObj->GetComponent<BitmapRenderer>()->CreateBitmapResource(L"../WorkSpace/HSK/Test/test2.png");
+		//testObj->GetComponent<BitmapRenderer>()->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/WorkSpace/HSK/Test/test2.png");
 		start = false;
 	}
 

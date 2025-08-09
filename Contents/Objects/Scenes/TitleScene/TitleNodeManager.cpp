@@ -5,12 +5,13 @@
 #include "Platform/Input.h"
 #include "Utils/GameTime.h"
 #include "Scripts/SceneCore.h"
+#include "Application/AppPaths.h"
 
 void TitleNodeManager::OnCreate()
 {
 	owner->GetTransform().SetUnityCoords(false);
 	patternDrawer = owner->AddComponent<PatternDrawerComponent>();
-	patternDrawer->SetBitmap(L"../Resource/Sprite/Mushroom.png");
+	patternDrawer->SetBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprite\\Mushroom.png");
 
 	for (int i = 0; i < 2; i++)
 	{

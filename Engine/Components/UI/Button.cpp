@@ -2,6 +2,7 @@
 #include "Components/Base/GameObject.h"
 #include "Platform/Input.h"
 #include "Datas/EngineData.h"
+#include "Application/AppPaths.h"
 
 void Button::OnStart()
 {
@@ -9,13 +10,13 @@ void Button::OnStart()
 	hover = owner->AddComponent<BitmapRenderer>();
 	pressed = owner->AddComponent<BitmapRenderer>();
 
-	normal->CreateBitmapResource(L"../../Resource/UI/Test_Button/button_square.png");
+	normal->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\UI\\Test_Button\\button_square.png");
 	normal->SetActive(true);
 
-	hover->CreateBitmapResource(L"../../Resource/UI/Test_Button/button_square_hover.png");
+	hover->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\UI\\Test_Button\\button_square_hover.png");
 	hover->SetActive(false);
 
-	pressed->CreateBitmapResource(L"../../Resource/UI/Test_Button/button_square_pressed.png");
+	pressed->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\UI\\Test_Button\\button_square_pressed.png");
 	pressed->SetActive(false);
 }
 

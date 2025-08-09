@@ -2,6 +2,7 @@
 #include "Resources/ResourceManager.h"
 #include "../Engine/Utils/GameTime.h"
 #include <cmath>
+#include "Application/AppPaths.h"
 
 constexpr float PI = 3.141592654f; // 3. 1415926535 8979323846 2643383279 5028841971 6939937510 5820974944 5923078164 0628620899 8628034825 이 얼마나 멋진 숫자인가
 
@@ -47,8 +48,8 @@ void AnimatedChainEffect::Render(D2DRenderManager* manager)
 
 void AnimatedChainEffect::OnCreate() {
 	//"C:\Users\User\Documents\GitHub\Kyu1\Resource\ContentsResource\attack_line_spreadsheet.png"
-	SetAtlasStrip(L"../Resource/ContentsResource/attack_line_spreadsheet.png", 9); // 경로 + 프레임 수
-	flashBitmap = resourceManager->CreateBitmapResource(L"../Resource/ContentsResource/attack_line_circle.png");
+	SetAtlasStrip(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\attack_line_spreadsheet.png", 9); // 경로 + 프레임 수
+	flashBitmap = resourceManager->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\attack_line_circle.png");
 	flashSize = flashBitmap->GetBitmap()->GetSize();
 }
 

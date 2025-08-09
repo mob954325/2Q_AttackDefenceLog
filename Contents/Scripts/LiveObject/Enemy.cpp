@@ -10,6 +10,7 @@
 
 #include "../Engine/Scene/SceneManager.h" // 테스트 씬 전환용 8.09 추가
 
+#include "Application/AppPaths.h"
 
 
 // 각 값은 해당 함수가 출력 중일때, 각 플레그 변화
@@ -91,17 +92,17 @@ void Enemy::OnCreateState() {
 void Enemy::SetBitmap() {
 	
 	enemy_Idle = owner->AddComponent<BitmapRenderer>();
-	enemy_Idle->CreateBitmapResource(L"../Resource/ContentsResource/enemy3_standing.png");
+	enemy_Idle->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\enemy3_standing.png");
 
 	enemy_Attack = owner->AddComponent<BitmapRenderer>();
-	enemy_Attack->CreateBitmapResource(L"../Resource/ContentsResource/enemy3_attack.png");
+	enemy_Attack->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\enemy3_attack.png");
 
 
 	enemy_Damaged = owner->AddComponent<BitmapRenderer>();
-	enemy_Damaged->CreateBitmapResource(L"../Resource/ContentsResource/enemy3_demaged.png");
+	enemy_Damaged->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\enemy3_demaged.png");
 
 	enemy_Guard = owner->AddComponent<BitmapRenderer>();
-	enemy_Guard->CreateBitmapResource(L"../Resource/ContentsResource/enemy3_guard.png");
+	enemy_Guard->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\enemy3_guard.png");
 
 	D2D1_SIZE_F size = enemy_Idle->GetResource()->GetBitmap()->GetSize(); // 크기 같음으로 그냥 해도 될듯?
 	owner->GetTransform().SetOffset(-size.width / 2, size.height / 2);

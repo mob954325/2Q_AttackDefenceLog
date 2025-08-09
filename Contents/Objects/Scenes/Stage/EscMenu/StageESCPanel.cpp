@@ -1,6 +1,7 @@
 #include "StageESCPanel.h"
 #include "Components/Base/GameObject.h"
 #include "Datas/EngineData.h"
+#include "Application/AppPaths.h"
 
 void StageESCPanel::OnCreate()
 {
@@ -14,7 +15,7 @@ void StageESCPanel::OnCreate()
 
 void StageESCPanel::OnStart()
 {
-	barBitmap->CreateBitmapResource(L"../Resource/UI/MenuUI/esc_menu_ui_bar.png");
+	barBitmap->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\MenuUI\\esc_menu_ui_bar.png");
 	DisablePanel();
 }
 

@@ -1,6 +1,7 @@
 ﻿#include "AudioSystem.h"
 
 #include "Utils/StringConvert.h"
+#include "Application/AppPaths.h"
 
 bool AudioSystem::FileExists(const std::wstring& path)
 {
@@ -19,7 +20,7 @@ void AudioSystem::Initialize(int num)
 void AudioSystem::Register(const std::vector<SoundResource>& soundlist)
 {
 	//디버깅용 코드
-	//if (!FileExists(L"../../Resource/sounds/공격/공격_3.mp3")) {
+	//if (!FileExists(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/sounds/공격/공격_3.mp3")) {
 	//	std::cout << "[오류] 파일이 존재하지 않음!" << std::endl;
 	//}
 	//else { std::cout << "정상적으로 로딩!" << std::endl; }

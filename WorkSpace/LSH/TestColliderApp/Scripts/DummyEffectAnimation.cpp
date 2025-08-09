@@ -2,13 +2,14 @@
 #include "Components/Base/GameObject.h"
 #include "Utils/GameTime.h"
 #include "Utils/DebugUtility.h"
+#include "Application/AppPaths.h"
 
 void DummyEffectAnimation::OnCreate()
 {
 	anim = owner->AddComponent<AnimationRenderer>();
-	anim->CreateBitmapResource(L"../../Resource/Particles/Test/attack_line_spreadsheet.png");
-	anim->SetSpriteSheet(L"../../Resource/Json/Test_Paticles/attack_line_spreadsheet_sprites.json");
-	anim->SetAnimationClip(L"../../Resource/Json/Test_Paticles/attack_line_spreadsheet_anim.json");
+	anim->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/Particles/Test/attack_line_spreadsheet.png");
+	anim->SetSpriteSheet(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/Json/Test_Paticles/attack_line_spreadsheet_sprites.json");
+	anim->SetAnimationClip(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/Json/Test_Paticles/attack_line_spreadsheet_anim.json");
 
 	// owner->GetTransform().SetRotation(-90.0f);
 	anim->GetAnimationPlayer()->Pause();

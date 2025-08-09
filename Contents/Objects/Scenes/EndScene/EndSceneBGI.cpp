@@ -1,6 +1,7 @@
 #include "EndSceneBGI.h"
 #include "Components/Base/GameObject.h"
 #include "Scene/SceneManager.h"
+#include "Application/AppPaths.h"
 
 void EndSceneBGI::OnStart()
 {
@@ -8,7 +9,7 @@ void EndSceneBGI::OnStart()
 	owner->GetTransform().SetUnityCoords(true);
 
 	bitmapRenderer = owner->AddComponent<BitmapRenderer>();
-	bitmapRenderer->CreateBitmapResource(L"../Resource/ContentsResource/robby_background.png");
+	bitmapRenderer->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\robby_background.png");
 	bitmapRenderer->SetOrderInLayer(-10);
 
 	size = bitmapRenderer->GetResource()->GetBitmap()->GetSize();

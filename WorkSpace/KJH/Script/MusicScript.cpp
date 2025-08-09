@@ -6,6 +6,7 @@
 #include "Components/UI/Slider.h"
 //#include "Components/Camera/CameraManager.h"
 #include "Math/Vector2.h" 
+#include "Application/AppPaths.h"
 
 
 void MusicScript::MusicScript::OnUpdate()
@@ -30,7 +31,7 @@ void MusicScript::MusicScript::OnCreate()
 
 
 	TestImage3 = owner->AddComponent<BitmapRenderer>();
-	TestImage3->CreateBitmapResource(L"../../Resource/UI/TestImage/test3.png");
+	TestImage3->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/UI/TestImage/test3.png");
 
 	/*owner->GetTransform().SetOffset(-TestImage3->GetResource()->GetBitmap()->GetSize().width / 2, TestImage->GetResource()->GetBitmap()->GetSize().height / 2);*/
 }
@@ -39,10 +40,10 @@ void MusicScript::MusicScript::OnStart()
 {
 	owner->GetComponent<FModComponent>()->AddSound(componentList);
 	owner->GetComponent<Slider>()->ButtonShow(false);
-	owner->GetComponent<Slider>()->SetGaugeBackgroundImage(L"../../Resource/UI/TestGauge/hp_ui_01.png");
-	owner->GetComponent<Slider>()->SetGaugeBarImage(L"../../Resource/UI/TestGauge/hp_ui_02.png");
-	//owner->GetComponent<Slider>()->SetGaugeBackgroundImage(L"../../Resource/UI/TestGauge/hp_ui_01.png");
-	//owner->GetComponent<Slider>()->SetGaugeBarImage(L"../../Resource/UI/TestGauge/hp_ui_01.png");
+	owner->GetComponent<Slider>()->SetGaugeBackgroundImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/UI/TestGauge/hp_ui_01.png");
+	owner->GetComponent<Slider>()->SetGaugeBarImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/UI/TestGauge/hp_ui_02.png");
+	//owner->GetComponent<Slider>()->SetGaugeBackgroundImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/UI/TestGauge/hp_ui_01.png");
+	//owner->GetComponent<Slider>()->SetGaugeBarImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/UI/TestGauge/hp_ui_01.png");
 }
 
 void MusicScript::MusicScript::OnDestroy()

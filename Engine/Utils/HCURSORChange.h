@@ -3,6 +3,8 @@
 #include <gdiplus.h>
 #pragma comment(lib, "gdiplus.lib")
 
+#include "Application/AppPaths.h"
+
 
 /* 25.08.01 | 작성자 : 김정현
 마우스포인터의 png는 배경의 알파값이 0 이어야함
@@ -20,8 +22,8 @@ bool isMousePressed = false;	: 마우스의 클릭관련 bool 변수
 위의 변수 4개를 Application에서 선언해줘야함
 
 상속받은 app의 init에
-hCursorDefault = mouse.LoadPngCursor(L"../../Resource/UI/TestMouse/idle.png");
-hCursorClicked = mouse.LoadPngCursor(L"../../Resource/UI/TestMouse/click.png"); 로 png이미지를 HCURSOR로 변환하여 저장
+hCursorDefault = mouse.LoadPngCursor(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/UI/TestMouse/idle.png");
+hCursorClicked = mouse.LoadPngCursor(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/UI/TestMouse/click.png"); 로 png이미지를 HCURSOR로 변환하여 저장
 
 부모의 MessageProc 를 override해야한다
 안의 내용에 부모의 Application::MessageProc(hWnd, msg, wParam, lParam);를 호출해야함

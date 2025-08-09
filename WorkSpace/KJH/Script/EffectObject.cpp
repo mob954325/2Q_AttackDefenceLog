@@ -1,6 +1,7 @@
 ﻿#include "EffectObject.h"
 #include "Resources/Loaders/SpriteSheetLoader.h"
 #include "Components/Base/GameObject.h"
+#include "Application/AppPaths.h"
 
 void EffectObject::OnUpdate()
 {
@@ -11,7 +12,7 @@ void EffectObject::OnCreate()
 {
 	Effect = owner->AddComponent<BitmapRenderer>();
 	Effect->SetUseCustomRect(true);
-	Effect->CreateBitmapResource(L"../../Resource/Particles/circle_outer.png");
+	Effect->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/Particles/circle_outer.png");
 	Effectsize = Effect->GetResource()->GetBitmap()->GetSize();
 }
 

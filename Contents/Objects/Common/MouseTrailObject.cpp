@@ -3,15 +3,16 @@
 // Components
 #include "../Engine/Components/Rendering/TrailComponent.h"
 #include "../Engine/Components/Logic/InputSystem.h"
+#include "Application/AppPaths.h"
 
 void MouseTrailObject::OnStart()
 {
 	owner->SetRenderLayer(EngineData::RenderLayer::UI);
 	auto t = owner->AddComponent<TrailComponent>();
 	t->SetOrderInLayer(100);
-	t->SetBitmap(L"../WorkSpace/HSK/Test/test5.png");
-	t->SetTailBitmap(L"../WorkSpace/HSK/Test/test1.png");
-	t->SetHeadBitmap(L"../WorkSpace/HSK/Test/white_brush_test3.png");
+	t->SetBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\WorkSpace\\HSK\\Test\\test5.png");
+	t->SetTailBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\WorkSpace\\HSK\\Test\\test1.png");
+	t->SetHeadBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\WorkSpace\\HSK\\Test\\white_brush_test3.png");
 }
 
 void MouseTrailObject::OnUpdate()

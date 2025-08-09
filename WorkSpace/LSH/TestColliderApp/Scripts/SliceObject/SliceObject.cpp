@@ -2,6 +2,7 @@
 #include "Components/Base/GameObject.h"
 #include "Scene/SceneManager.h"
 #include "Math/GameRandom.h"
+#include "Application/AppPaths.h"
 
 void SliceObject::OnCreate()
 {
@@ -10,7 +11,7 @@ void SliceObject::OnCreate()
 	{
 		sliceComp = owner->AddComponent<SliceRenderer>();
 		// 379, 726
-		sliceComp->SetOriginalByPath(L"../../Resource/Sprite/Test_Slice/teemo.png");
+		sliceComp->SetOriginalByPath(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/Sprite/Test_Slice/teemo.png");
 		rigid->SetGravity(false);
 	}
 	else // 추가된 오브젝트
@@ -24,7 +25,7 @@ void SliceObject::OnCreate()
 void SliceObject::OnStart()
 {
 	// 91 102
-	// sliceComp->SetOriginalByPath(L"../../Resource/Sprite/Test_Slice/Original.png");
+	// sliceComp->SetOriginalByPath(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/Sprite/Test_Slice/Original.png");
 	
 	// 가로 자르기
 	//auto obj = sliceComp->Slice({0,45}, {91, 45});

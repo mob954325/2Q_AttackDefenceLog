@@ -2,6 +2,7 @@
 #include "Components/Base/GameObject.h"
 #include "Scene/SceneManager.h"
 #include "Scripts/SceneCore.h"
+#include "Application/AppPaths.h"
 
 void StageSelectManager::OnCreate()
 {
@@ -11,9 +12,9 @@ void StageSelectManager::OnStart()
 {
 	CreateMenuObjects();
 
-	objs[0]->SetImage(L"../Resource/UI/MenuUI/esc_menu_ui_continue.png");
-	objs[1]->SetImage(L"../Resource/UI/MenuUI/esc_menu_ui_exit.png");
-	objs[2]->SetImage(L"../Resource/UI/MenuUI/esc_menu_ui_sound.png");
+	objs[0]->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\MenuUI\\esc_menu_ui_continue.png");
+	objs[1]->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\MenuUI\\esc_menu_ui_exit.png");
+	objs[2]->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\MenuUI\\esc_menu_ui_sound.png");
 	
 	objs[0]->owner->GetTransform().SetPosition(-400, 200);
 	objs[1]->owner->GetTransform().SetPosition(0, 0);

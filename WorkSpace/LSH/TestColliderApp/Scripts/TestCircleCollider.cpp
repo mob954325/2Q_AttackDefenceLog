@@ -1,5 +1,6 @@
 ﻿#include "TestCircleCollider.h"
 #include "Components/Base/GameObject.h"
+#include "Application/AppPaths.h"
 
 void TestCircleCollider::OnCreate()
 {
@@ -20,13 +21,13 @@ void TestCircleCollider::OnStart()
 	circle->SetRadius(10.0f);
 
 	bitmap = owner->AddComponent<BitmapRenderer>();
-	bitmap->CreateBitmapResource(L"../../Resource/Particles/circle_outer.png");
+	bitmap->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/Particles/circle_outer.png");
 	owner->GetTransform().SetOffset(-94.5f, 94.5f);
 
 	//slider
 	owner->GetComponent<Slider>()->ButtonShow(false);
-	owner->GetComponent<Slider>()->SetGaugeBackgroundImage(L"../../Resource/UI/TestGauge/hp_ui_01.png");
-	owner->GetComponent<Slider>()->SetGaugeBarImage(L"../../Resource/UI/TestGauge/hp_ui_02.png");
+	owner->GetComponent<Slider>()->SetGaugeBackgroundImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/UI/TestGauge/hp_ui_01.png");
+	owner->GetComponent<Slider>()->SetGaugeBarImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/UI/TestGauge/hp_ui_02.png");
 }
 
 void TestCircleCollider::OnFixedUpdate()

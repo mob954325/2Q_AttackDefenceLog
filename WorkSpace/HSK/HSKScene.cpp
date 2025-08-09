@@ -8,6 +8,9 @@
 #include "Components/Rendering/PatternDrawerComponent.h"
 #include "../Engine/Components/Rendering/ChainDrawerComponent.h"
 
+#include "Application/AppPaths.h"
+
+
 using namespace HSK;
 
 void HSKScene::OnEnterImpl()
@@ -15,8 +18,8 @@ void HSKScene::OnEnterImpl()
 	drawObj = new GameObject();
 	drawObj->SetRenderLayer(EngineData::RenderLayer::None);
 	auto c = drawObj->AddComponent<ChainDrawerComponent>();
-	c->SetBitmap(L"../HSK/Test/TestArrow_2.png");
-	c->SetFillBitmap(L"../HSK/Test/TestArrow_1.png");
+	c->SetBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\HSK\\Test\\TestArrow_2.png");
+	c->SetFillBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\HSK\\Test\\TestArrow_1.png");
 	c->SetOrderInLayer(-10);
 	AddGameObject(drawObj);
 
@@ -29,10 +32,10 @@ void HSKScene::OnEnterImpl()
 	auto d = obj->AddComponent<PatternDrawerComponent>();
 	d->SetOrderInLayer(80);
 
-	t->SetBitmap(L"../HSK/Test/white_brush_test3.png");
-	t->SetTailBitmap(L"../HSK/Test/white_brush_test3_tail.png");
-	t->SetHeadBitmap(L"../HSK/Test/white_brush_test3_head.png");
-	d->SetBitmap(L"../HSK/Test/test5.png");
+	t->SetBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\HSK\\Test\\white_brush_test3.png");
+	t->SetTailBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\HSK\\Test\\white_brush_test3_tail.png");
+	t->SetHeadBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\HSK\\Test\\white_brush_test3_head.png");
+	d->SetBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\HSK\\Test\\test5.png");
 
 	AddGameObject(obj, "trail");
 
