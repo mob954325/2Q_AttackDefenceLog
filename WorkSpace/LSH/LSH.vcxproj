@@ -348,6 +348,7 @@
     <ClCompile Include="TestColliderApp\Scripts\TestCircleCollider.cpp" />
     <ClCompile Include="TestColliderApp\Scripts\SliceObject\SplitObject.cpp" />
     <ClCompile Include="TestColliderApp\Scripts\SliceObject\TestSliceCursor.cpp" />
+    <ClCompile Include="TestColliderApp\Scripts\TestVignetteObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TestColliderApp\Scripts\ContentObject\EscMenuBar.h" />
@@ -363,6 +364,7 @@
     <ClInclude Include="TestColliderApp\Scripts\TestCircleCollider.h" />
     <ClInclude Include="TestColliderApp\Scripts\SliceObject\SplitObject.h" />
     <ClInclude Include="TestColliderApp\Scripts\SliceObject\TestSliceCursor.h" />
+    <ClInclude Include="TestColliderApp\Scripts\TestVignetteObject.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Engine\Engine.vcxproj">

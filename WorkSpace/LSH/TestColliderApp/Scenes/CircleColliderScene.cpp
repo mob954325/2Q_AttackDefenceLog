@@ -3,36 +3,15 @@
 #include "TestColliderApp/Scripts/DummyCircleCollider.h"
 #include "TestColliderApp/Scripts/DummyButton.h"
 #include "TestColliderApp/Scripts/DummyEffectAnimation.h"
+#include "TestColliderApp/Scripts/TestVignetteObject.h"
 #include "Utils/DebugUtility.h"
 
 void TestCollider::CircleColliderScene::OnEnterImpl()
 {
-	testCircle = new GameObject();
-	testCircle->SetName("Test Cirlce");
-	testCircle->AddComponent<TestCircleCollider>();
-	AddGameObject(testCircle);
-
-	//testCircle2 = new GameObject();
-	//testCircle2->SetName("Test Cirlce2");
-	//testCircle2->AddComponent<TestCircleCollider>();
-	//AddGameObject(testCircle2);
-	//testCircle2->GetTransform().SetPosition(100, 100);
-
-	dummyCircle = new GameObject();
-	dummyCircle->SetName("Dummy Cirlce");
-	dummyCircle->AddComponent<DummyCircleCollider>();
-	AddGameObject(dummyCircle);
-
-	dummyButton = new GameObject();
-	dummyButton->SetName("Dummy Button");
-	dummyButton->AddComponent<DummyButton>();
-	AddGameObject(dummyButton);
-
-	dummyEffectAnimation = new GameObject();
-	dummyEffectAnimation->SetName("Dummy Effect Animation");
-	dummyEffectAnimation->AddComponent<DummyEffectAnimation>();
-	AddGameObject(dummyEffectAnimation);
-	// dummyEffectAnimation->GetTransform().SetPosition(-200, 200);
+	GameObject* vignetteObject = new GameObject();
+	vignetteObject->SetName("vignette effect");
+	vignetteObject->AddComponent<TestVignetteObject>();
+	AddGameObject(vignetteObject);
 }
 
 void TestCollider::CircleColliderScene::OnExitImpl()
