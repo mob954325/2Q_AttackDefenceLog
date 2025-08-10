@@ -26,6 +26,7 @@ void EffectManager::OnDestroy()
 
 void EffectManager::SetEffectPosition(float x, float y)
 {
+
 	for (auto it : effectList)
 	{
 		it->GetTransform().SetPosition(x, y);		
@@ -35,6 +36,8 @@ void EffectManager::SetEffectPosition(float x, float y)
 	{
 		it->GetTransform().SetPosition(x, y);		
 	}
+
+	particleList[0]->GetTransform().SetPosition(x, y);
 }
 
 void EffectManager::SetEffectImage(size_t value, std::wstring path)
@@ -109,3 +112,4 @@ ParticleRenderer* EffectManager::GetParticleComponent(size_t index)
 }
 
 
+        

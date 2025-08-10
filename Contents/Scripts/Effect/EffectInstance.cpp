@@ -24,6 +24,7 @@ void EffectInstance::OnUpdate()
 		AnimeList[AnimeNum]->GetComponent<AnimationRenderer>()->GetAnimationPlayer()->Reset();
 	}*/
 
+
 	float dt = Singleton<GameTime>::GetInstance().GetDeltaTime();
 	for (size_t i = 0; i < AnimeList.size(); ++i) {
 		auto& state = AnimeStates[i];
@@ -89,13 +90,10 @@ void EffectInstance::OnCreate()
 		obj->GetComponent<AnimationRenderer>()->GetAnimationPlayer()->Pause();
 		AnimeList.push_back(obj);
 	}
-}
 
-//초기 이미시 셋팅 및  파티클 수치 설정
-void EffectInstance::OnStart()
-{
 	Emanager->CreateEffectObject(7);
 	Emanager->CreateParticleObject(2);
+
 	//패리
 	Emanager->SetEffectImage(0, Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Particles\\circle_outer.png");
 	Emanager->SetEffectImage(1, Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Particles\\circle_inner.png");
@@ -119,10 +117,10 @@ void EffectInstance::OnStart()
 	Emanager->GetParticleComponent(0)->SetOrderInLayer(235);
 	Emanager->GetParticleComponent(0)->SetLoop(false);
 	Emanager->GetParticleComponent(0)->SetMinSpeed(1.3f);
-	Emanager->GetParticleComponent(0)->SetMaxSpeed(1.5f);
+	Emanager->GetParticleComponent(0)->SetMaxSpeed(3.0f); 
 	Emanager->GetParticleComponent(0)->SetDuration(0.8f);
 	Emanager->GetParticleComponent(0)->SetFadeOutTime(0.7f);
-	Emanager->GetParticleComponent(0)->SetAmount(50);
+	Emanager->GetParticleComponent(0)->SetAmount(20);
 	Emanager->GetParticleComponent(0)->SetAnimPlayer(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Particles\\SparkSheet.png",
 		Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Json\\SparkSheet\\SparkSheet_sprites.json",
 		Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Json\\SparkSheet\\Red_Spark_anim.json");
@@ -146,9 +144,11 @@ void EffectInstance::OnStart()
 	Emanager->GetParticleComponent(1)->SetSeeDirection(true);
 	Emanager->GetParticleComponent(1)->SetDecreasing(true);
 	Emanager->SetUnityValue(false);
+}
 
-
-
+//초기 이미시 셋팅 및  파티클 수치 설정
+void EffectInstance::OnStart()
+{
 	//슬롯초기화
 	AnimeStates.resize(AnimeList.size());
 }
@@ -159,15 +159,21 @@ void EffectInstance::OnDestroy()
 }
 
 // 8.09 추가, 외부에서 쓰기 쉽게 랩핑함
-void EffectInstance::DoParry(int n) { CallEffect(EffectType::ParryEffect, nodePos[n]); }
+void EffectInstance::DoParry(int n) 
+{
+	CallEffect(EffectType::ParryEffect, nodePos[n]); 
+}
 void EffectInstance::DoGuard(int n) { CallEffect(EffectType::GuardEffect, nodePos[n]); }
 
 
-void EffectInstance::CallEffect(EffectType type, Vector2 info)
+void EffectInstance::CallEffect(EffectType type, const Vector2& info)
 {
 	effecttype = type;
 	Emanager->SetEffectPosition(info.x, info.y);
 	counttime = 0;
+
+	std::cout << "u info : " << info << std::endl;
+	std::cout << "position : " << owner->GetTransform().GetPosition() << std::endl;
 
 	switch (type)
 	{
@@ -181,7 +187,6 @@ void EffectInstance::CallEffect(EffectType type, Vector2 info)
 		Emanager->GetParticleComponent(1)->Play();
 		break;
 	}
-
 }
 
 void EffectInstance::ParryEffect()
@@ -243,8 +248,10 @@ void EffectInstance::SetAnimePosition(const std::vector<Vector2>& vectorList)
 	for (size_t i = 0; i < 9; ++i)
 	{
 		AnimeList[i]->GetTransform().SetPosition(vectorList[i].x, vectorList[i].y);
-		nodePos.push_back(vectorList[i]);
+		// nodePos.push_back(vectorList[i]);
 	}
+
+	nodePos = vectorList;
 }
 
 //증가 계산식
@@ -332,4 +339,3 @@ void EffectInstance::StopAllAnime()
 {
 	for (size_t i = 0; i < AnimeList.size(); ++i) StopAnime(i);
 }
-

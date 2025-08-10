@@ -88,6 +88,34 @@ void PatternControlObject::OnCreate()
 		if (target) target->CancelByID(id);
 		});
 
+	// ===================
+
+	float n = 200.0f; // 노드간의 간격
+	float r = 45.0f; // 반경
+	for (int i = 0; i < 9; ++i) {
+		int col = i % 3 - 1; // -1 0 1
+		int row = i / 3 - 1; // -1 0 1
+	
+		float x = 960.0f + col * n;
+		float y = 540.0f + row * n;
+	
+		m_nodes[i]->GetTransform().SetPosition(x, y);
+		m_nodes[i]->GetComponent<NodeObject>()->SetRadius(r);
+		nodePositions.push_back({ x, y });
+	}
+
+	PM.SetNodes(m_nodes, r);
+
+	// effect 9
+	for (int i = 0; i < 9; i++)
+	{
+		GameObject* obj = new GameObject;
+		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(obj);
+		auto comp = obj->AddComponent<EffectInstance>();
+		comp->SetAnimePosition(nodePositions);
+		effs.push_back(comp);
+	}
+
 	//===================================================================================================
 	// 적 + 플레이어 + 배틀매니저 생성
 	enemy = new GameObject();      // GameObject 객체 생성
@@ -104,13 +132,13 @@ void PatternControlObject::OnCreate()
 
 	bettleManager = new GameObject();             // GameObject 객체 생성
 	auto bettletmp = bettleManager->AddComponent<BettleManager>(); // MonoBehaivor 등록
-	bettletmp->onParry.Add([this](int nodeIndex) {
-		effInstance->DoParry(nodeIndex - 1);
-
+	bettletmp->onParry.Add([this](int nodeIndex)
+		{ 
+			this->effs[nodeIndex - 1]->DoParry(nodeIndex -1); // 1. 여기서 위치 초기화가 제대로 안된다
 		});
 
 	bettletmp->onGuard.Add([this](int nodeIndex) {
-		effInstance->DoGuard(nodeIndex - 1);
+			this->effs[nodeIndex - 1]->DoGuard(nodeIndex -1); // 1. 여기서 위치 초기화가 제대로 안된다
 		});
 
 	bettletmp->m_Enemy = enemytmp;
@@ -132,25 +160,11 @@ void PatternControlObject::OnStart() // 처음
 
 	//===================================================================================================
 
-	std::vector<Vector2> tmp;
-
 	float n = 200.0f; // 노드간의 간격
 	float r = 45.0f; // 반경
-	for (int i = 0; i < 9; ++i) {
-		int col = i % 3 - 1; // -1 0 1
-		int row = i / 3 - 1; // -1 0 1
-
-		float x = 960.0f + col * n;
-		float y = 540.0f + row * n;
-
-		m_nodes[i]->GetTransform().SetPosition(x, y);
-		m_nodes[i]->GetComponent<NodeObject>()->SetRadius(r);
-		tmp.push_back({ x, y });
-	}
 
 	effInstance = owner->AddComponent<EffectInstance>();
-	effInstance->SetAnimePosition(tmp);
-	PM.SetNodes(m_nodes, r);
+	effInstance->SetAnimePosition(nodePositions);
 
 	//===================================================================================================
 

@@ -34,7 +34,7 @@ public:
 	void OnStart() override;
 	void OnDestroy() override;
 
-	void CallEffect(EffectType type , Vector2 info);
+	void CallEffect(EffectType type , const Vector2& info);
 
 	void ParryEffect();
 	void GuardEffect();

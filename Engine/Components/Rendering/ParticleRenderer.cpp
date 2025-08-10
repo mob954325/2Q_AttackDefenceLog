@@ -54,6 +54,8 @@ void ParticleRenderer::Render(D2DRenderManager* manager)
 			mat.m22 = baseScaleY * scale;
 		}
 
+		manager->SetRenderTransform(mat);
+
 		for (int i = 0; i < particleAmount; i++)
 		{			
 			D2D1_MATRIX_3X2_F particleMat = mat;
@@ -63,8 +65,9 @@ void ParticleRenderer::Render(D2DRenderManager* manager)
 			Vector2 dir = infos[i].dirVec;
 			float speed = infos[i].speed;
 
-			infos[i].position.x += dir.x * speed + delta;
-			infos[i].position.y += dir.y * speed + delta;
+			float magnitution = 150;
+			infos[i].position.x += dir.x * speed * magnitution * delta;
+			infos[i].position.y += dir.y * speed * magnitution * delta;
 
 			// 회전 각도 계산
 			if (seeDirection)
@@ -94,9 +97,6 @@ void ParticleRenderer::Render(D2DRenderManager* manager)
 			}
 
 			// 위치 적용
-			particleMat.dx += infos[i].position.x;
-			particleMat.dy += infos[i].position.y;
-
 			particleMat.dx += infos[i].position.x;
 			particleMat.dy += infos[i].position.y;
 
@@ -174,6 +174,7 @@ void ParticleRenderer::Reset()
 		{
 			// dirVec 다시 추가
 			Vector2 vec = GameRandom::RandomInsideUnitCircle();
+			vec = vec * 1.5f;
 			info.dirVec = { vec.x, vec.y };
 			info.position = Vector2::Zero(); // 포지션 초기화
 			info.frameIndex = GameRandom::RandomRange(0, player.GetMaxFrame());
