@@ -146,33 +146,9 @@ void D2DRenderManager::PrintText(const wchar_t* str, float left, float top, D2D1
 	m_d2dDeviceContext->DrawTextW(str, (UINT32)wcslen(str), m_pDWriteTextFormat.Get(), D2D1::RectF(left, top, left + 300, top + 250), m_pBrush.Get());
 }
 
-void D2DRenderManager::CreateEffect(ID2D1Effect** skew, ID2D1Effect** shadow, Microsoft::WRL::ComPtr<ID2D1Bitmap> bitmap) // ?
+void D2DRenderManager::CreateVignetteEffect(ID2D1Effect** pVignette)
 {
-	// AffineTransform2D 이펙트 생성	
-	HRESULT hr = m_d2dDeviceContext->CreateEffect(CLSID_D2D12DAffineTransform, skew);
-
-	// 반투명 검정색으로 바꾸기 위해 ColorMatrix 사용 (선택적)
-	hr = m_d2dDeviceContext->CreateEffect(CLSID_D2D1ColorMatrix, shadow);
-
-	D2D1_MATRIX_3X2_F skewMatrix = {
-		1.0f, 0.0f,      // X scale, Y shear
-		1.4f, 1.0f,      // X shear, Y scale
-		-60.0f, 0.0f       // X, Y translation
-	};
-
-	// 이펙트에 입력 이미지와 행렬 설정
-	(*skew)->SetInput(0, bitmap.Get());  // 캐릭터 비트맵
-	(*skew)->SetValue(D2D1_2DAFFINETRANSFORM_PROP_TRANSFORM_MATRIX, skewMatrix);
-	(*skew)->SetValue(D2D1_2DAFFINETRANSFORM_PROP_INTERPOLATION_MODE, D2D1_2DAFFINETRANSFORM_INTERPOLATION_MODE_LINEAR);
-	D2D1_MATRIX_5X4_F shadowMatrix = {
-		0, 0, 0, 0,  // R
-		0, 0, 0, 0,  // G
-		0, 0, 0, 0,  // B
-		0, 0, 0, 0.5f,  // A (투명도 조절)
-		0, 0, 0, 0   // Offset
-	};
-	(*shadow)->SetInputEffect(0, *skew);
-	(*shadow)->SetValue(D2D1_COLORMATRIX_PROP_COLOR_MATRIX, shadowMatrix);
+	m_d2dDeviceContext->CreateEffect(CLSID_D2D1Vignette, pVignette);
 }
 
 void D2DRenderManager::CreatePathGeometry(ID2D1PathGeometry** pPath)

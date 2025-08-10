@@ -38,7 +38,8 @@ public:
 	HRESULT CreateBitmapFromFile(const wchar_t* path, ID2D1Bitmap1** outBitmap);
 	void PrintText(const wchar_t* str, float left, float top, bool isWorld = false);
 	void PrintText(const wchar_t* str, float left, float top, D2D1::ColorF color, bool isWorld = false);
-	void CreateEffect(ID2D1Effect** skew, ID2D1Effect** shadow, Microsoft::WRL::ComPtr<ID2D1Bitmap> bitmap);
+	// void CreateEffect(ID2D1Effect** skew, ID2D1Effect** shadow, Microsoft::WRL::ComPtr<ID2D1Bitmap> bitmap);
+	void CreateVignetteEffect(ID2D1Effect** pVignette);
 
 	void CreatePathGeometry(ID2D1PathGeometry** pPath);
 	void CreateLayer(ID2D1Layer** pLayer, D2D1_SIZE_F* size = NULL);
