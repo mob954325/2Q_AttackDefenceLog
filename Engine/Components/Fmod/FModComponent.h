@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "Components/Base/Component.h"
 #include "External/FMod/fmod.hpp"
 #include "External/FMod/fmod_errors.h"
@@ -7,13 +7,13 @@
 #include "Datas/SoundDatas.h"
 
 
-/* 25.07.29  | ÀÛ¼ºÀÚ : ±èÁ¤Çö
-¼³¸í
+/* 25.07.29  | ì‘ì„±ì : ê¹€ì •í˜„
+ì„¤ëª…
 
-»ı¼º½Ã
-¹İº¹ Àç»ı È¿°úÀ½	FMOD_DEFAULT | FMOD_LOOP_NORMAL
-·çÇÁ ¾ø´Â È¿°úÀ½	FMOD_DEFAULT | FMOD_LOOP_OFF (¶Ç´Â ±×³É FMOD_DEFAULT)
-·çÇÁ Àç»ı BGM		FMOD_CREATESTREAM | FMOD_LOOP_NORMAL
+ìƒì„±ì‹œ
+ë°˜ë³µ ì¬ìƒ íš¨ê³¼ìŒ	FMOD_DEFAULT | FMOD_LOOP_NORMAL
+ë£¨í”„ ì—†ëŠ” íš¨ê³¼ìŒ	FMOD_DEFAULT | FMOD_LOOP_OFF (ë˜ëŠ” ê·¸ëƒ¥ FMOD_DEFAULT)
+ë£¨í”„ ì¬ìƒ BGM		FMOD_CREATESTREAM | FMOD_LOOP_NORMAL
 
 */
 
@@ -26,6 +26,8 @@ public:
 	void OnDestroy() override;
 	void AddSound(const std::vector<SoundInfo>& list);
 	void PlaySound(const std::wstring& id);
+	void StopSound();
+	void PlayAgain();
 
 
 private:

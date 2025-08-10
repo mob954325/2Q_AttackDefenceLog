@@ -39,6 +39,9 @@
       <Filter>Scripts\ContentObject</Filter>
     </ClCompile>
     <ClCompile Include="TestColliderApp\Scripts\ContentObject\EscMenuBar.cpp" />
+    <ClCompile Include="TestColliderApp\Scripts\TestVignetteObject.cpp">
+      <Filter>Scripts</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TestColliderApp\App\TestColliderApp.h">
@@ -78,6 +81,9 @@
       <Filter>Scripts\ContentObject</Filter>
     </ClInclude>
     <ClInclude Include="TestColliderApp\Scripts\ContentObject\EscMenuBar.h" />
+    <ClInclude Include="TestColliderApp\Scripts\TestVignetteObject.h">
+      <Filter>Scripts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="App">

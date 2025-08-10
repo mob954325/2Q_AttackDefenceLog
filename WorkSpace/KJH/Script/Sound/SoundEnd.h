@@ -7,8 +7,24 @@
 class SoundEnd : public MonoBehavior
 {
 public:
+	void OnUpdate() override;
+	void OnCreate() override;
+	void OnStart() override;
+	void OnDestroy() override;
 
+	GameObject* GetEndObject();
+	std::vector<SoundInfo>* GetVector();
+	void SetKeyHandle(std::wstring Key);
+	void PlaySound();
+
+	void StopSound();
+	void PlayAgain();
+
+	
 private:
+
+	std::wstring KeyHandle{};
+	GameObject* EndSoundObj{};
 	FModComponent* EndSceneFModComponent{};
 	std::vector<SoundInfo> componentList = {
 			{L"Attack01" ,L"P_Attack01"},

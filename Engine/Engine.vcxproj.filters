@@ -314,6 +314,9 @@
     <ClInclude Include="Components\Rendering\AnimatedChainEffect.h">
       <Filter>Components\Rendering</Filter>
     </ClInclude>
+    <ClInclude Include="Components\Rendering\VignetteEffect.h">
+      <Filter>Components\Rendering</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\Application.cpp">
@@ -496,6 +499,9 @@
       <Filter>Datas</Filter>
     </ClCompile>
     <ClCompile Include="Components\Rendering\AnimatedChainEffect.cpp">
+      <Filter>Components\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\Rendering\VignetteEffect.cpp">
       <Filter>Components\Rendering</Filter>
     </ClCompile>
   </ItemGroup>

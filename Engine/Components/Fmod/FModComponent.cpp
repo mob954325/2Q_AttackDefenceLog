@@ -1,4 +1,4 @@
-#include "FModComponent.h"
+﻿#include "FModComponent.h"
 #include "Systems/AudioSystem.h"
 
 void FModComponent::OnDestroy()
@@ -20,4 +20,14 @@ void FModComponent::AddSound(const std::vector<SoundInfo>& list)
 void FModComponent::PlaySound(const std::wstring& id)
 {
 	AudioSystem::GetInstance().PlaySound2(soundsID[id]);
+}
+
+void FModComponent::StopSound()
+{
+	AudioSystem::GetInstance().PauseSound();
+}
+
+void FModComponent::PlayAgain()
+{
+	AudioSystem::GetInstance().AgainstSound();
 }
