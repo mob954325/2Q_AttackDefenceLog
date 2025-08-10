@@ -4,7 +4,7 @@
 #include "Components/Logic/InputSystem.h"
 #include "Components/Camera/Camera.h"
 #include "Components/Rendering/BitmapRenderer.h"
-#include "Component/EffectComponent.h"
+//#include "Component/EffectComponent.h"
 #include "Utils/GameTime.h"
 #include "Script/Manager/EffectManager.h"
 #include "Components/Rendering/AnimationRenderer.h"
