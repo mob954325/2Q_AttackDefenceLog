@@ -52,14 +52,6 @@ void Player::OnStart() {
 
 
 
-
-
-
-//player_BitmapRenderer->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/ContentsResource/player_attack.png");
-	//player_BitmapRenderer->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/ContentsResource/player_demaged.png");
-	//player_BitmapRenderer->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/ContentsResource/player_guard.png");
-	//player_BitmapRenderer->SetOrderInLayer(2);
-	// 
 // 업데이트에서 시간 받기???? -> 필요없음, 수정하기!!!
 void Player::OnUpdate() {
 	//if (m_State->GetNowName() != "Player_Dead"||m_State->GetNowName() != "Player_Groggy"){
@@ -215,11 +207,18 @@ void Player::SetNowPatten() {
 
 // 배틀 매니저에서 사용될 함수
 void Player::SelectPatten() {   //각 객체가 사용할 패턴을 고름
-	std::random_device rd;
-	std::mt19937 gen(rd());
-	std::uniform_int_distribution<> dist(1, PattenID.size()); // 1 ~ 10 사이의 정수
-	int randomValue = dist(gen);
-	SetAttackPattenData(PattenID[randomValue - 1]);
+	if (attackPlayerPatternIDFix.substr(0, 2) != "PI")
+	{
+		std::random_device rd;
+		std::mt19937 gen(rd());
+		std::uniform_int_distribution<> dist(1, PattenID.size()); // 1 ~ 10 사이의 정수
+		int randomValue = dist(gen);
+		SetAttackPattenData(PattenID[randomValue - 1]);
+	}
+	else {
+		SetAttackPattenData(attackPlayerPatternIDFix);
+	}
+	
 }
 
 
@@ -264,9 +263,9 @@ void Player::DiffState() {
 	}
 
 	// 그로기 시간!!!
-	if (groggyTime >= 3.0f) {
+	if (groggyTime >= totalGroggyTime) {
 		groggyTime = 0.0f;
-		isGroggy = false;
+		isGroggy = false;   /// 그로기를 표시하는 상태변수!!!, 나중에 
 		isRestore = true;
 	}
 

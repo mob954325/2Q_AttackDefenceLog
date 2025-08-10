@@ -21,6 +21,10 @@
 
 
 
+
+
+
+
 void Enemy::OnStart() {
 	m_State = owner->GetComponent<StateController>();
 	m_PattenManager = owner->GetQuery()->FindByName("AttackPattenManager")->GetComponent<AttackPatternManager>();
@@ -28,6 +32,7 @@ void Enemy::OnStart() {
 	OnCreateState();
 	m_State->SetState("Enemy_Idle");
 	SelectPatten(); //  패턴 세팅
+	SetCoolTime();
 	SetBitmap();
 	isPattenCooldown = true;
 	groggyTime = 0.0f;
@@ -51,6 +56,27 @@ void Enemy::OnUpdate() {
 }
 
 // onChangePatten에 TransitionTime 변경하기!!!
+
+//하드코딩함
+void SetNameDiff(std::string name, std::string difficulty) {
+	int indexID = 0;
+	int diffindex = 0;
+	int nameindex = 0;
+	if (name == "도적") { nameindex = 0; }
+	else if (name == "남궁서") { nameindex = 1; }
+	else if (name == "강림") { nameindex = 2; }
+	else { nameindex = 100;  }
+
+	if (difficulty == "easy") { diffindex = 1; }
+	else if (difficulty == "normal") { diffindex = 2; }
+	else if (difficulty == "hard") { diffindex = 3; }
+	else { diffindex = 100; }
+
+	indexID = nameindex * 3 + diffindex;
+	if (nameindex != 100 || diffindex != 100) return;
+
+	std::string EnemyName = "EI_00" + std::to_string(indexID);
+}
 
 
 
@@ -89,29 +115,6 @@ void Enemy::OnCreateState() {
 }
 
 
-void Enemy::SetBitmap() {
-	
-	enemy_Idle = owner->AddComponent<BitmapRenderer>();
-	enemy_Idle->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\enemy3_standing.png");
-
-	enemy_Attack = owner->AddComponent<BitmapRenderer>();
-	enemy_Attack->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\enemy3_attack.png");
-
-
-	enemy_Damaged = owner->AddComponent<BitmapRenderer>();
-	enemy_Damaged->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\enemy3_demaged.png");
-
-	enemy_Guard = owner->AddComponent<BitmapRenderer>();
-	enemy_Guard->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\enemy3_guard.png");
-
-	D2D1_SIZE_F size = enemy_Idle->GetResource()->GetBitmap()->GetSize(); // 크기 같음으로 그냥 해도 될듯?
-	owner->GetTransform().SetOffset(-size.width / 2, size.height / 2);
-	owner->GetTransform().SetScale(0.4f, 0.4f); //  크기 맞추기
-	owner->GetTransform().SetPosition(550.0f, 200.0f);
-}
-
-
-
 
 // 플레이어 데이터에는 기세가 없음으로 적을 생성 후, 기세를 매개변수에 넣어주기!!
 // 패턴을 세팅하는 것은 처음?
@@ -129,13 +132,62 @@ void Enemy::SetStatData(std::string tmp) {
 	Object_NowSpiritAmount = Object_SpiritAmount / 2.0f;   // 현재 기세 설정
 	Difficulty = nowEnemyData->enemyDifficulty;			   // 난이도 -> 아마 필요없을듯?
 
-	PattenID = nowEnemyData->enemyPattern;                 // 적의 패턴 가져오기
+
+
+	PattenID = nowEnemyData->enemyPattern;				   // 적이 가지고 있는 벡터
+
+	TotalPatternID = CsvDataManager::GetInstance().GetIDData(nowEnemyPattenData);  // 적 공격 전체의 데이터
+
+	// 적이 가지고 있는 공격과 적 패턴 전체의 벡터를 매핑
+	for (int i = 0; i < nowEnemyData->enemyPattern.size(); i++) {
+		int index = 0;
+		auto it = std::find(TotalPatternID.begin(), TotalPatternID.end(), nowEnemyData->enemyPattern[i]); // 
+		if (it != TotalPatternID.end()) {
+			index = std::distance(TotalPatternID.begin(), it); // 인덱스 계산
+		}
+		PattenMap[nowEnemyData->enemyPattern[i]] = index;      // 적의 패턴과 적의 전체 패턴을 매핑
+	}
+
+
 
 	Object_CoolTime = nowEnemyData->enemyCooldown;         // 적의 쿨타임 가져오기;
 	Object_nowCoolTime = nowEnemyData->enemyCooldown;	   // 현재 적의 쿨타임
 	Object_PlayingAttackTime = 0.0f;					   // 패턴의 입력 대기 시간
 	Object_nowPlayingAttackTime = 0.0f;					   // 현재 패턴의 입력 대기 시간
+
+	std::wstring enemy_CommonPath = L"\\..\\Resource\\ContentsResource\\";	// 적의 공통 이미지 경로
+
+	enemy_IdlePath = enemy_CommonPath + nowEnemyData->enemySprite[0] + L".png";         // 적의 이미지 이름 받기
+	enemy_AttackPath = enemy_CommonPath + nowEnemyData->enemySprite[1] + L".png";
+	enemy_GuardPath = enemy_CommonPath + nowEnemyData->enemySprite[2] + L".png";
+	enemy_DamagedPath = enemy_CommonPath+ nowEnemyData->enemySprite[3] + L".png";
+
+	
 }
+
+
+void Enemy::SetBitmap() {
+
+	enemy_Idle = owner->AddComponent<BitmapRenderer>();
+	enemy_Idle->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + enemy_IdlePath);
+
+	enemy_Attack = owner->AddComponent<BitmapRenderer>();
+	enemy_Attack->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + enemy_AttackPath);
+
+
+	enemy_Damaged = owner->AddComponent<BitmapRenderer>();
+	enemy_Damaged->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + enemy_GuardPath);
+
+	enemy_Guard = owner->AddComponent<BitmapRenderer>();
+	enemy_Guard->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + enemy_DamagedPath);
+
+	D2D1_SIZE_F size = enemy_Idle->GetResource()->GetBitmap()->GetSize(); // 크기 같음으로 그냥 해도 될듯?
+	owner->GetTransform().SetOffset(-size.width / 2, size.height / 2);
+	owner->GetTransform().SetScale(0.4f, 0.4f); //  크기 맞추기
+	owner->GetTransform().SetPosition(550.0f, 200.0f);
+}
+
+
 
 
 // 플래그를 정하는 함수
@@ -160,15 +212,35 @@ void Enemy::AddPattenLoop() {
 
 // 배틀 매니저에서 사용될 함수
 void Enemy::SelectPatten() {   //각 객체가 사용할 패턴을 고름
-	preEnemyPattenData = nowEnemyPattenData;
-	while (1) {
-		std::random_device rd;
-		std::mt19937 gen(rd());
-		std::uniform_int_distribution<> dist(1, PattenID.size());
-		int randomValue = dist(gen);
-		SetAttackPattenData(PattenID[randomValue - 1]);
-		if (preEnemyPattenData != nowEnemyPattenData)
-			break;
+	if (nowEnemyPattenData != nullptr) {
+		preEnemyPattenData = nowEnemyPattenData;
+		preRandomValue = nowRandomValue;
+	}
+	if (nowEnemyPattenData != nullptr && preEnemyPattenData->eComboCoolDown != 0) {
+		++patternCount;
+		SetAttackPattenData(  TotalPatternID[  PattenMap[  PattenID[nowRandomValue]  ] + patternCount]  );
+	}
+		
+	else {
+		patternCount = 0;
+		if(enemyAttackPatternFix.substr(0,2) != "EP")
+			while (1) { // 랜덤으로 적의 패턴을 정하기
+				std::random_device rd;
+				std::mt19937 gen(rd());
+				std::uniform_int_distribution<> dist(0, PattenID.size() - 1);
+				nowRandomValue = dist(gen);
+				SetAttackPattenData(PattenID[nowRandomValue]);
+
+
+				// 이전 패턴과 안겹치게 할때 사용하기!
+				//if (preEnemyPattenData != nowEnemyPattenData)
+				//	break;
+		}
+
+		else {
+			SetAttackPattenData(enemyAttackPatternFix);
+		}
+		
 	}
 }
 
@@ -207,21 +279,14 @@ void Enemy::ResetSpiritAmount() {
 //쿨타임을 세팅하는 함수
 // 연격의 여부에 따라서 객체의 쿨타임이 변경됨
 void Enemy::SetCoolTime() {
-	if (preEnemyPattenData == nullptr) {  //이전 루프가 없을시
-		// ( 1 + (현재기세 - 전체기세/2) / 전체기세 /2) * 해당 패턴의 전체 쿨타임
-		Object_nowCoolTime = (1 - ((Object_NowSpiritAmount - Object_SpiritAmount / 2.0f) / Object_SpiritAmount) / 2.0f) * Object_CoolTime;
+	if (nowEnemyPattenData->eComboCoolDown == 0) {
+		Object_nowCoolTime = (1 - ((Object_NowSpiritAmount - Object_SpiritAmount / 2.0f) / Object_SpiritAmount) / 2.0f)
+							* Object_CoolTime + nowEnemyPattenData->eAtkCoolDown;
 	}
-	else {  // 이전 루프가 있을 시
-		if (preEnemyPattenData->eComboCoolDown == 0) {  // 연격이 아닌때
-			//  ( 1 + (현재기세 - 전체기세/2) / 전체기세 /2) * 해당 패턴의 전체 쿨타임 + 이전 루프의 공격시간
-			Object_nowCoolTime = (1 - ((Object_NowSpiritAmount - Object_SpiritAmount / 2.0f) / Object_SpiritAmount) / 2.0f) * Object_CoolTime + preEnemyPattenData->eAtkCoolDown;
-		}
-		else {  // 연격일때
-			Object_nowCoolTime = nowEnemyPattenData->eComboCoolDown;
-		}
+	else {
+		Object_nowCoolTime = nowEnemyPattenData->eComboCoolDown;
 	}
 	// 현재 공격중인 시간
-	Object_PlayingAttackTime = nowEnemyPattenData->eAtkCoolDown;
 	Object_nowTotalCoolTime = Object_nowCoolTime;
 }
 
@@ -270,7 +335,7 @@ void Enemy::StateAct() {
 		enemy_Damaged->SetActive(false);
 		enemy_Guard->SetActive(false);
 	}
-	else if (nowStateName == "Enemy_Hit" ||  nowStateName == "Enemy_Groggy" || nowStateName == "Enemy_Dead") { 
+	else if (nowStateName == "Enemy_Hit" ||  nowStateName == "Enemy_Groggy") { 
 		enemy_Idle->SetActive(false);
 		enemy_Attack->SetActive(false);
 		enemy_Damaged->SetActive(true);
@@ -282,6 +347,12 @@ void Enemy::StateAct() {
 		enemy_Attack->SetActive(false);
 		enemy_Damaged->SetActive(false);
 		enemy_Guard->SetActive(true);
+	}
+	else if (nowStateName == "Enemy_Dead") {
+		enemy_Idle->SetActive(false);
+		enemy_Attack->SetActive(false);
+		enemy_Damaged->SetActive(true);
+		enemy_Guard->SetActive(false);
 	}
 }
 
