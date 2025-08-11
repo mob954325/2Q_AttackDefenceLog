@@ -20,7 +20,9 @@ public:
 
 private:
 	GameObject* ButtonAnime{};
+	GameObject* ButtonCover{};
 	Slider* sliderobj{};
+	
 
 	float x_width = 0.0f;
 	float y_height = 0.0f;
@@ -38,5 +40,8 @@ private:
 	
 	//변화율
 	float X_Value = 0.0f;
+
+	//덮개 크기
+	float coverX = 0.0f;
 };
 
