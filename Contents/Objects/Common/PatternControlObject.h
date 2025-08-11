@@ -41,11 +41,14 @@ protected:
 	GameObject* player;
 
 	EffectInstance* effInstance;
+	std::vector<EffectInstance*> effs;
 
 private:
 	std::vector<int> cachedVecA;
 
 	std::vector<int> cachedVecB;
+
+	std::vector<Vector2> nodePositions;
 
 };
 

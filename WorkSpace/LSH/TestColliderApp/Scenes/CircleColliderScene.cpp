@@ -12,6 +12,11 @@ void TestCollider::CircleColliderScene::OnEnterImpl()
 	vignetteObject->SetName("vignette effect");
 	vignetteObject->AddComponent<TestVignetteObject>();
 	AddGameObject(vignetteObject);
+
+	GameObject* aa = new GameObject();
+	aa->SetName("DummyCircleCollider");
+	aa->AddComponent<DummyCircleCollider>();
+	AddGameObject(aa);
 }
 
 void TestCollider::CircleColliderScene::OnExitImpl()
