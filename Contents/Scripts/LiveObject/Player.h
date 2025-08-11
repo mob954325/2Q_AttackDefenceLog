@@ -80,14 +80,19 @@ private:
 	void PrintConsole();
 	std::string PrePattenID;		  // 이전 패턴의 ID
 
-	std::string preStateName;
-	std::string nowStateName;
+	std::string preStateName;          // 이전 상태를 저장하는 변수
+	std::string oneLoopPreStateName;   // 한 루프 이전 상태를 저장하는 변수
+	std::string nowStateName;          // 현재 상태
 
 	std::shared_ptr<BitmapResource> PlayerBitmap = nullptr;
 	BitmapRenderer* player_Idle = nullptr;
-	BitmapRenderer* player_Attack = nullptr;
+	BitmapRenderer* player_Attack1 = nullptr;
+	BitmapRenderer* player_Attack2 = nullptr;
+	BitmapRenderer* player_Attack3 = nullptr;
 	BitmapRenderer* player_Guard = nullptr;
 	BitmapRenderer* player_Damaged = nullptr;
+	void AttackStateSelect(bool AttackActive); // 공격 패턴 3가지 중 랜덤으로 1개 선택해서 설정함
+
 
 	void SetBitmap(); //처음 비트맵을 설정할 함수
 

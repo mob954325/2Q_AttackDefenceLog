@@ -9,34 +9,6 @@
 #include "Components/Base/MonoBehavior.h"
 
 
-// 상중하에 따라서 체력과 기세 데미지를 적용함
-//-----------------------------------------------------------------------------------------------
-
-
-//상중하에 따라서 체력 데미지 리턴하는 함수 만들기
-float BettleManager::ConvertHPDamageToPos(AttackPosition lastPos, float HpDamage) {
-	switch (lastPos)
-	{
-	case UpNode:      return  HpDamage * 1.25f;    // 상단 노드일때 1.25배 추가뎀
-	case MiddleNode:  return  HpDamage;            // 중단 노드
-	case LowNode:     return  HpDamage * 0.75f;    // 하단 노드
-	default:		  return  0.0f;
-	}
-}
-
-//상중하에 따라서  기세 데미지 리턴하는 함수 만들기
-float BettleManager::ConvertSpiritDamageToPos(AttackPosition lastPos, float SpiritDamage) {
-	switch (lastPos)
-	{
-	case UpNode:      return SpiritDamage * 0.75f;  // 상단 노드일때  0.75배 뎀감
-	case MiddleNode:  return SpiritDamage;			// 중단 노드
-	case LowNode:     return SpiritDamage * 1.25f;  // 하단 노드
-	default:		  return 0.0f;
-	}
-}
-
-//------------------------------------------------------------------------------------------------
-
 
 
 
@@ -46,11 +18,29 @@ void BettleManager::OnStart() {
 	//m_Player = owner->GetQuery()->FindByName("Playertmp")->GetComponent<Player>();
 	m_Player->SetSpiritData(m_Enemy->GetSpiritAmount());
 	m_PattenManager = owner->GetQuery()->FindByName("AttackPattenManager")->GetComponent<AttackPatternManager>();
+
+	preSpiritAmount = m_Player->GetNowSpiritAmount();
+
+	owner->AddComponent<GiseGauge>();
+	giseObj = owner->GetComponent<GiseGauge>();
+	TotalValue = m_Player->GetSpiritAmount();
+	/*giseObj->SetMaxGague(TotalValue);*/
+
+	int a = 0;
 }
 
 void BettleManager::OnUpdate() {
+
+
 	SetStateFormPattern();
 	ChangeFinalState();
+	giseObj->SetMaxGague(TotalValue);
+	ChangeValue = m_Player->GetNowSpiritAmount();
+	/*preSpiritAmount = m_Player->GetNowSpiritAmount();*/
+
+	giseObj->CalculateValue(ChangeValue);
+
+	
 }
 
 // -> 생성자로 넣어야 할듯?
@@ -70,114 +60,128 @@ void BettleManager::SetInputNode(std::vector<int> InputNode) {
 
 //들어온 입력 노드에 따라서 공격, 방어를 처리하는 함수
 void BettleManager::SetStateFormPattern() {	
-	std::unordered_map<std::string, pattern*> tmpTimePatten = m_PattenManager->TimeOutPatten();  // 패턴이 공격 시간이 지났다면 
-	for (const auto& pair : tmpTimePatten) {
-		if (pair.second->PattenID.substr(0, 2) == "EP")            //적 패턴일시
-		{
-			m_Enemy->SetState("Enemy_AttackSuccess");			 // 적 공격 성공
-			if (m_Player->GetDefenseRate() >= RandomReturn(100) && pair.second->lastPosition != MiddleNode) {
-				m_Player->SetState("Player_Defence");			 // 방어
-			}
-			else {
-				m_Player->SetState("Player_Hit");   			// 피격됨
-				m_Player->GetDamage(
-					ConvertHPDamageToPos(pair.second->lastPosition, m_Enemy->GetAttack() )); // 상중하 적용한 데미지
-			}
-			// 기세 계산
-			m_Enemy->RestoreSpiritDamage(  
-				ConvertSpiritDamageToPos(pair.second->lastPosition, m_Enemy->GetSpiritAttack() )); // 적은기세를 회복
-			m_Player->GetSpiritdamage(  
-				ConvertSpiritDamageToPos(pair.second->lastPosition, m_Enemy->GetSpiritAttack() ));  // 플레이어는 기세를 잃음
-		}
-		m_PattenManager->SubPattern(pair.second->PattenID, "Time");
-	}
 
-	if (nowNode.size() < 1) return;
-
-	pattern* tmpCorPatten = m_PattenManager->CorrectPattern(nowNode);
-	// 입력이 적, 플레이어의 패턴과 맞을 경우
-	if (tmpCorPatten != nullptr) {
-		if (tmpCorPatten->PattenID.substr(0, 2) == "EP") {
-			m_Enemy->SetState("Enemy_AttackSuccess");
-			if ((tmpCorPatten->PlayingAttackTime) <= 0.5f) {  // 플레이어가 0.5초 이내에 가드시 -> 패링
-				std::vector<int> tmp = tmpCorPatten->NodePatten;
-				tmp.erase(std::remove(tmp.begin(), tmp.end(), 0), tmp.end());
-				
-				onParry.Invoke(tmp.front());			
-
-				m_Player->SetState("Player_Perry");
-				m_Player->RestoreSpiritDamage(
-					ConvertSpiritDamageToPos(tmpCorPatten->lastPosition, m_Enemy->GetSpiritAttack() ));  // 기세 변경
-				m_Enemy->GetSpiritdamage(
-					ConvertSpiritDamageToPos(tmpCorPatten->lastPosition,m_Enemy->GetSpiritAttack() ));
-
-			}
-			else {
-				std::vector<int> tmp = tmpCorPatten->NodePatten;
-				tmp.erase(std::remove(tmp.begin(), tmp.end(), 0), tmp.end());
-				onGuard.Invoke(tmp.front());
-
-				m_Player->SetState("Player_Guard");		// 가드
-				m_Enemy->RestoreSpiritDamage(
-					ConvertSpiritDamageToPos(tmpCorPatten->lastPosition, m_Enemy->GetSpiritAttack() ));  // 기세 변경
-				m_Player->GetSpiritdamage(
-					ConvertSpiritDamageToPos(tmpCorPatten->lastPosition, m_Enemy->GetSpiritAttack()));
-			}
-			m_PattenManager->SubPattern(tmpCorPatten->PattenID, "Enemy");
-		}
-		else {
-			m_Player->SetState("Player_AttackSuccess");   // 플레이어의 공격 성공
-			m_Player->SetEndAttack();
-			if (m_Enemy->GetDefenseRate() >= RandomReturn(100) && tmpCorPatten->lastPosition != MiddleNode)
-				m_Enemy->SetState("Enemy_Defence"); // 방어
-
-			else {
-				m_Enemy->SetState("Enemy_Hit"); // 피격됨`
-				m_Enemy->GetDamage(
-					ConvertHPDamageToPos(tmpCorPatten->lastPosition, m_Player->GetAttack() ));
-			}
-			m_Player->RestoreSpiritDamage(
-				ConvertSpiritDamageToPos(tmpCorPatten->lastPosition, m_Player->GetSpiritAttack() ));
-			m_Enemy->GetSpiritdamage(
-				ConvertSpiritDamageToPos(tmpCorPatten->lastPosition, m_Player->GetSpiritAttack() ));
-
-
-			m_PattenManager->SearchAndDestroyCouple(tmpCorPatten->PattenID);
-			m_PattenManager->SubPattern(tmpCorPatten->PattenID, "Player");
-		}
-	}
-
-	// 입력이 기존 가이드라인, 적 공격과 다를경우
-	else {
-		pattern* tmpPatten = m_PattenManager->failPattern(nowNode);
-		if (tmpPatten != nullptr) {   // 실패한 패턴이 있는 경우
-
-			if (tmpPatten->PattenID.substr(0, 2) == "EP") {
+	if (!m_Player->GetIsGroggy() || !m_Enemy->GetIsGroggy()) { // 그로기가 아니면!!
+		std::unordered_map<std::string, pattern*> tmpTimePatten = m_PattenManager->TimeOutPatten();  // 패턴이 공격 시간이 지났다면 
+		for (const auto& pair : tmpTimePatten) {
+			if (pair.second->PattenID.substr(0, 2) == "EP")            //적 패턴일시
+			{
 				m_Enemy->SetState("Enemy_AttackSuccess");			 // 적 공격 성공
-				if (m_Player->GetDefenseRate() >= RandomReturn(100)) {
+				if (m_Player->GetDefenseRate() >= RandomReturn(100) && pair.second->lastPosition != MiddleNode) {
 					m_Player->SetState("Player_Defence");			 // 방어
 				}
 				else {
 					m_Player->SetState("Player_Hit");   			// 피격됨
 					m_Player->GetDamage(
-						ConvertHPDamageToPos(tmpPatten->lastPosition, m_Enemy->GetAttack() ));
+						ConvertHPDamageToPos(pair.second->lastPosition, m_Enemy->GetAttack())); // 상중하 적용한 데미지
 				}
-				m_Player->RestoreSpiritDamage(
-					ConvertSpiritDamageToPos(tmpPatten->lastPosition, m_Player->GetSpiritAttack() )); // 기세 계산
-				m_Enemy->GetSpiritdamage(
-					ConvertSpiritDamageToPos(tmpPatten->lastPosition, m_Player->GetSpiritAttack() ));
+				// 기세 계산
+				m_Enemy->RestoreSpiritDamage(
+					ConvertSpiritDamageToPos(pair.second->lastPosition, m_Enemy->GetSpiritAttack())); // 적은기세를 회복
+				m_Player->GetSpiritdamage(
+					ConvertSpiritDamageToPos(pair.second->lastPosition, m_Enemy->GetSpiritAttack()));  // 플레이어는 기세를 잃음
+			}
+			m_PattenManager->SubPattern(pair.second->PattenID, "Time");
+		}
 
-				m_PattenManager->SubPattern(tmpPatten->PattenID, "Enemy");
+		if (nowNode.size() < 1) return;
+
+		pattern* tmpCorPatten = m_PattenManager->CorrectPattern(nowNode);
+		// 입력이 적, 플레이어의 패턴과 맞을 경우
+		if (tmpCorPatten != nullptr) {
+			if (tmpCorPatten->PattenID.substr(0, 2) == "EP") {
+				m_Enemy->SetState("Enemy_AttackSuccess");
+				if ((tmpCorPatten->PlayingAttackTime) <= 0.5f) {  // 플레이어가 0.5초 이내에 가드시 -> 패링
+					std::vector<int> tmp = tmpCorPatten->NodePatten;
+					tmp.erase(std::remove(tmp.begin(), tmp.end(), 0), tmp.end());
+
+					onParry.Invoke(tmp.front());
+
+					m_Player->SetState("Player_Perry");
+					m_Player->RestoreSpiritDamage(
+						ConvertSpiritDamageToPos(tmpCorPatten->lastPosition, m_Enemy->GetSpiritAttack()));  // 기세 변경
+					m_Enemy->GetSpiritdamage(
+						ConvertSpiritDamageToPos(tmpCorPatten->lastPosition, m_Enemy->GetSpiritAttack()));
+
+				}
+				else {
+					std::vector<int> tmp = tmpCorPatten->NodePatten;
+					tmp.erase(std::remove(tmp.begin(), tmp.end(), 0), tmp.end());
+					onGuard.Invoke(tmp.front());
+
+					m_Player->SetState("Player_Guard");		// 가드
+					m_Enemy->RestoreSpiritDamage(
+						ConvertSpiritDamageToPos(tmpCorPatten->lastPosition, m_Enemy->GetSpiritAttack()));  // 기세 변경
+					m_Player->GetSpiritdamage(
+						ConvertSpiritDamageToPos(tmpCorPatten->lastPosition, m_Enemy->GetSpiritAttack()));
+				}
+				m_PattenManager->SubPattern(tmpCorPatten->PattenID, "Enemy");
 			}
 			else {
-				m_Player->SetState("Player_AttackFail");
+				m_Player->SetState("Player_AttackSuccess");   // 플레이어의 공격 성공
 				m_Player->SetEndAttack();
-				m_PattenManager->SearchAndDestroyCouple(tmpPatten->PattenID);
-				m_PattenManager->SubPattern(tmpPatten->PattenID, "Player");
+				if (m_Enemy->GetDefenseRate() >= RandomReturn(100) && tmpCorPatten->lastPosition != MiddleNode)
+					m_Enemy->SetState("Enemy_Defence"); // 방어
+
+				else {
+					m_Enemy->SetState("Enemy_Hit"); // 피격됨`
+					m_Enemy->GetDamage(
+						ConvertHPDamageToPos(tmpCorPatten->lastPosition, m_Player->GetAttack()));
+				}
+				m_Player->RestoreSpiritDamage(
+					ConvertSpiritDamageToPos(tmpCorPatten->lastPosition, m_Player->GetSpiritAttack()));
+				m_Enemy->GetSpiritdamage(
+					ConvertSpiritDamageToPos(tmpCorPatten->lastPosition, m_Player->GetSpiritAttack()));
+
+
+				m_PattenManager->SearchAndDestroyCouple(tmpCorPatten->PattenID);
+				m_PattenManager->SubPattern(tmpCorPatten->PattenID, "Player");
 			}
 		}
-	}
 
+
+		// 입력이 기존 가이드라인, 적 공격과 다를경우
+		else {
+			pattern* tmpPatten = m_PattenManager->failPattern(nowNode);
+			if (tmpPatten != nullptr) {   // 실패한 패턴이 있는 경우
+				if (tmpPatten->PattenID.substr(0, 2) == "EP") {
+					m_Enemy->SetState("Enemy_AttackSuccess");			 // 적 공격 성공
+
+					if (m_Player->GetDefenseRate() >= RandomReturn(100)) {
+						m_Player->SetState("Player_Defence");			 // 방어
+					}
+					else {
+						m_Player->SetState("Player_Hit");   			// 피격됨
+						m_Player->GetDamage(
+							ConvertHPDamageToPos(tmpPatten->lastPosition, m_Enemy->GetAttack()));
+					}
+					m_Player->RestoreSpiritDamage(
+						ConvertSpiritDamageToPos(tmpPatten->lastPosition, m_Player->GetSpiritAttack())); // 기세 계산
+					m_Enemy->GetSpiritdamage(
+						ConvertSpiritDamageToPos(tmpPatten->lastPosition, m_Player->GetSpiritAttack()));
+
+					m_PattenManager->SubPattern(tmpPatten->PattenID, "Enemy");
+				}
+				else {
+					m_Player->SetState("Player_AttackFail");
+					m_Player->SetEndAttack();
+					m_PattenManager->SearchAndDestroyCouple(tmpPatten->PattenID);
+					m_PattenManager->SubPattern(tmpPatten->PattenID, "Player");
+				}
+			}
+		}
+
+		
+	}
+	else if (m_Player->GetIsGroggy() && m_Enemy->GetIsGroggy()) {  // 적과 아군의 그로기가 동시에 걸린 경우
+
+	}
+	else if (m_Enemy->GetIsGroggy()) { // 적이 그로기에 걸린 경우
+
+	}
+	else if (m_Player->GetIsGroggy()) { // 아군이 그로기에 걸린경우
+
+	}
 	nowNode.clear();
 }
 

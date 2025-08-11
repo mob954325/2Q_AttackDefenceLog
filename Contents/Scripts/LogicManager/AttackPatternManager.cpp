@@ -145,7 +145,7 @@ pattern* AttackPatternManager::CorrectPattern(std::vector<int> PatternID) {  //�
 
 		// 적 패턴이 2 이상이면 방어 패턴으로 처리
 		if (countNum >= 2) {
-			OnPatternCancel.Invoke(pair.second->PattenID); // 패턴 캔슬된거 알림 
+			OnPatternCancel.Invoke(pair.second->PattenID); // 방어 패턴 캔슬된거 알림 
 			isPlayerSearch = false; // 공격 처리 안함!!
 			//isAttack = false;
 			// 방어 시도 countNun 2 ~ 4개, 패턴이 적일 때				
@@ -211,6 +211,17 @@ pattern* AttackPatternManager::CorrectPattern(std::vector<int> PatternID) {  //�
 }
 
 
+// 적 연격시 검사할 패턴
+// 전부 저장소 clear 하고 사용하기
+void AttackPatternManager::CheckAllPattern(std::vector<int> PatternID) {
+	if (PatternID.size() < 1) return;
+	
+
+	
+}
+
+
+
 pattern* AttackPatternManager::failPattern(std::vector<int> PatternID) { // 공격 , 방어 실패여부!
 	for (const auto& pair : NowEnemyStorage) {
 		if (pair.second->isFail == true) {
@@ -272,6 +283,28 @@ void AttackPatternManager::SearchAndDestroyCouple(std::string ID) {
 	SubPattern(tmp, "Player");
 }
 
+
+// 적 패턴 전부 삭제, 생성한 객체삭제하기
+void AttackPatternManager::EnemyPatternAllClear() {
+	for (const auto& pair : NowEnemyStorage) {  // 생성한 객체 모두 삭제
+		OnPatternCancel.Invoke(pair.second->PattenID); // 방어 패턴 캔슬된거 알림 
+		delete pair.second;
+	}
+	NowEnemyStorage.clear();  //맵 초기화
+}
+	
+
+
+// 아군 패턴 전부 삭제
+void AttackPatternManager::PlayerPatternAllClear() {
+	for (const auto& pair : NowPlayerStorage) {  // 생성한 객체 모두 삭제
+		delete pair.second;
+	}
+	playerPatternA = playerPatternB = { 0 }; // 벡터 잠시 비워두기
+	isAttack = true; // 공격임(성공임)
+	//isAttackVec = PatternID;
+	NowPlayerStorage.clear();  //맵 초기화
+}
 
 
 //마지막 노드를 입력하면 상, 중, 하 enum 상태로 바꿈 
