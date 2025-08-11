@@ -10,6 +10,7 @@ void GiseGauge::OnUpdate()
 	ChangeGaugeBar();
 	SetAnimePosition();
 	ButtonAnime->GetTransform().SetPosition(x_width + x_pic/2, 38.1f);
+	ButtonCover->GetTransform().SetPosition(x_width - coverX, 0);
 }
 
 void GiseGauge::OnCreate()
@@ -34,6 +35,18 @@ void GiseGauge::OnStart()
 	obj->AddComponent<AnimationRenderer>();
 	obj->SetName(std::string("Button"));
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(obj);
+
+	GameObject* obj2 = new GameObject();
+	obj2->AddComponent<BitmapRenderer>();
+	obj2->SetName(std::string("Buttoncover"));
+	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(obj2);
+	ButtonCover = obj2;
+	ButtonCover->GetComponent<BitmapRenderer>()->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\UI\\Slider\\gise_ui_cover.png");
+	ButtonCover->GetTransform().SetUnityCoords(false);
+	ButtonCover->GetComponent<BitmapRenderer>()->SetOrderInLayer(600);
+	coverX = ButtonCover->GetComponent<BitmapRenderer>()->GetResource()->GetBitmap()->GetSize().width;
+	
+	
 
 	obj->GetComponent<AnimationRenderer>()->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\UI\\Slider\\force_clash_spreadsheet.png");
 	obj->GetComponent<AnimationRenderer>()->SetSpriteSheet(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Json\\force_clash_spreadsheet_sprites.json");

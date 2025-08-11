@@ -1,6 +1,6 @@
 {
     "texture": "final_blow_line_spreadsheet.png",
-    "textureWidth": 10000,
+    "textureWidth": 13000,
     "textureHeight": 500,
     "sprites": [
         {
@@ -9,8 +9,8 @@
             "y": 500.0,
             "width": 1000.0,
             "height": 500.0,
-            "pivotX": 0.17989425361156465,
-            "pivotY": 0.5591791868209839
+            "pivotX": 0.18008564412593842,
+            "pivotY": 0.5581660866737366
         },
         {
             "name": "final_blow_line_spreadsheet_1",
@@ -18,8 +18,8 @@
             "y": 500.0,
             "width": 1000.0,
             "height": 500.0,
-            "pivotX": 0.17989429831504823,
-            "pivotY": 0.5591791868209839
+            "pivotX": 0.18008559942245484,
+            "pivotY": 0.5581660866737366
         },
         {
             "name": "final_blow_line_spreadsheet_2",
@@ -27,8 +27,8 @@
             "y": 500.0,
             "width": 1000.0,
             "height": 500.0,
-            "pivotX": 0.17989429831504823,
-            "pivotY": 0.5591791868209839
+            "pivotX": 0.18008559942245484,
+            "pivotY": 0.5581660866737366
         },
         {
             "name": "final_blow_line_spreadsheet_3",
@@ -36,8 +36,8 @@
             "y": 500.0,
             "width": 1000.0,
             "height": 500.0,
-            "pivotX": 0.17989429831504823,
-            "pivotY": 0.5591791868209839
+            "pivotX": 0.18008559942245484,
+            "pivotY": 0.5581660866737366
         },
         {
             "name": "final_blow_line_spreadsheet_4",
@@ -45,8 +45,8 @@
             "y": 500.0,
             "width": 1000.0,
             "height": 500.0,
-            "pivotX": 0.17989429831504823,
-            "pivotY": 0.5591791868209839
+            "pivotX": 0.18008559942245484,
+            "pivotY": 0.5581660866737366
         },
         {
             "name": "final_blow_line_spreadsheet_5",
@@ -54,8 +54,8 @@
             "y": 500.0,
             "width": 1000.0,
             "height": 500.0,
-            "pivotX": 0.17989429831504823,
-            "pivotY": 0.5591791868209839
+            "pivotX": 0.18008559942245484,
+            "pivotY": 0.5581660866737366
         },
         {
             "name": "final_blow_line_spreadsheet_6",
@@ -63,26 +63,26 @@
             "y": 500.0,
             "width": 1000.0,
             "height": 500.0,
-            "pivotX": 0.17989429831504823,
-            "pivotY": 0.5591791868209839
+            "pivotX": 0.18008559942245484,
+            "pivotY": 0.5581660866737366
         },
         {
             "name": "final_blow_line_spreadsheet_7",
-            "x": 7000.0,
+            "x": 7008.0,
             "y": 500.0,
             "width": 1000.0,
             "height": 500.0,
-            "pivotX": 0.17989429831504823,
-            "pivotY": 0.5591791868209839
+            "pivotX": 0.18008559942245484,
+            "pivotY": 0.5581660866737366
         },
         {
             "name": "final_blow_line_spreadsheet_8",
-            "x": 8003.0,
+            "x": 8000.0,
             "y": 500.0,
             "width": 1000.0,
             "height": 500.0,
-            "pivotX": 0.17989429831504823,
-            "pivotY": 0.5591791868209839
+            "pivotX": 0.18008559942245484,
+            "pivotY": 0.5581660866737366
         },
         {
             "name": "final_blow_line_spreadsheet_9",
@@ -90,8 +90,35 @@
             "y": 500.0,
             "width": 1000.0,
             "height": 500.0,
-            "pivotX": 0.17989429831504823,
-            "pivotY": 0.5591791868209839
+            "pivotX": 0.18008559942245484,
+            "pivotY": 0.5581660866737366
+        },
+        {
+            "name": "final_blow_line_spreadsheet_10",
+            "x": 10000.0,
+            "y": 500.0,
+            "width": 1000.0,
+            "height": 500.0,
+            "pivotX": 0.18008559942245484,
+            "pivotY": 0.5581660866737366
+        },
+        {
+            "name": "final_blow_line_spreadsheet_11",
+            "x": 11000.0,
+            "y": 500.0,
+            "width": 1000.0,
+            "height": 500.0,
+            "pivotX": 0.18008559942245484,
+            "pivotY": 0.5581660866737366
+        },
+        {
+            "name": "final_blow_line_spreadsheet_12",
+            "x": 12000.0,
+            "y": 500.0,
+            "width": 1000.0,
+            "height": 500.0,
+            "pivotX": 0.18008559942245484,
+            "pivotY": 0.5581660866737366
         }
     ]
 }
