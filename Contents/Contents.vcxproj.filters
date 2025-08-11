@@ -213,6 +213,8 @@
     <ClCompile Include="Objects\Manager\ChargedSlashManager.cpp">
       <Filter>Objects\Manager</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\Slider\GiseGauge.cpp" />
+    <ClCompile Include="Scripts\GameManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameApp.h">
@@ -356,5 +358,7 @@
     <ClInclude Include="Objects\Manager\ChargedSlashManager.h">
       <Filter>Objects\Manager</Filter>
     </ClInclude>
+    <ClInclude Include="Scripts\Slider\GiseGauge.h" />
+    <ClInclude Include="Scripts\GameManager.h" />
   </ItemGroup>
 </Project>

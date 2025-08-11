@@ -16,6 +16,8 @@
 #include "Scripts/CsvData/CsvDataManager.h" // 싱글벙글
 #include "Application/AppPaths.h"
 
+#include "Scripts/GameManager.h"
+
 void PatternControlObject::OnCreate()
 {
 	//===================================================================================================
@@ -241,6 +243,11 @@ void PatternControlObject::OnStart() // 처음
 
 void PatternControlObject::OnUpdate() // 업데이트
 {
+	if (Singleton<GameManager>::GetInstance().GetGameState() == GameState::Pause)
+	{
+		return;
+	}
+
 	auto t = trail->GetComponent<TrailComponent>();
 	t->isOutFromBox = PM.CheckOutOfBox({ Input::MouseX, Input::MouseY }); // 마우스 좌표 기반으로, 박스 밖으로 나갔는지 확인
 
