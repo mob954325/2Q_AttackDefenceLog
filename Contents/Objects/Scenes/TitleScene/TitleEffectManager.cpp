@@ -37,6 +37,7 @@ void TitleEffectManager::OnStart()
 			bitmaps[i]->SetSrcRect({ 0.0f, 0.0f, rect.width, rect.height });
 		}
 
+		bitmaps[i]->SetActive(false);
 	}
 
 	//	bitmaps[7]->SetDestRect({ 10,10,0,0, });
