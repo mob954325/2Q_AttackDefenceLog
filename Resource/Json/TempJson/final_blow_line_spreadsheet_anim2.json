@@ -1,8 +1,8 @@
 {
-    "clipName": "final_blow_line_spreadsheet",
+    "clipName": "final_blow_line_spreadsheet2",
     "loop": false,
     "texturePath": "Assets/Character/Sprites/final_blow_line_spreadsheet.png",
-    "duration": 1.75,
+    "duration": 1.5833333730697632,
     "frames": [
         {
             "sprite": "final_blow_line_spreadsheet_0",
@@ -10,7 +10,7 @@
         },
         {
             "sprite": "final_blow_line_spreadsheet_1",
-            "time": 0.1666666716337204
+            "time": 0.3333333432674408
         },
         {
             "sprite": "final_blow_line_spreadsheet_2",
@@ -18,31 +18,31 @@
         },
         {
             "sprite": "final_blow_line_spreadsheet_3",
-            "time": 0.5833333134651184
+            "time": 0.4166666567325592
         },
         {
             "sprite": "final_blow_line_spreadsheet_4",
-            "time": 0.75
+            "time": 0.5
         },
         {
             "sprite": "final_blow_line_spreadsheet_5",
-            "time": 0.9166666865348816
+            "time": 1.1666666269302369
         },
         {
             "sprite": "final_blow_line_spreadsheet_6",
-            "time": 1.0833333730697632
+            "time": 1.25
         },
         {
             "sprite": "final_blow_line_spreadsheet_7",
-            "time": 1.3333333730697632
+            "time": 1.4166666269302369
         },
         {
             "sprite": "final_blow_line_spreadsheet_8",
-            "time": 1.5
+            "time": 1.4166666269302369
         },
         {
             "sprite": "final_blow_line_spreadsheet_9",
-            "time": 1.6666666269302369
+            "time": 1.5
         }
     ],
     "events": []
