@@ -1,4 +1,4 @@
-#include "Player.h"
+﻿#include "Player.h"
 #include <random>
 #include <cmath>
 #include "../CsvData/DataClass/PlayerData.h"
@@ -292,12 +292,10 @@ void Player::DiffState() {
 
 
 	// 그로기 시간!!!
+
+	//10초가 지나거나 or 적에게 쳐맞거나
 	if (groggyTime >= 10.0f || (isGroggy && preHp != Object_Hp) ) {
-		groggyTime = 0.0f;
-		IsOtherEndGroggy = false;
-		isGroggy = false;   /// 그로기를 표시하는 상태변수!!!, 나중에 
-		isRestore = true;
-		ResetPlayer();  // 상태, 쿨타임, 공격 패턴까지 초기화!
+		RestoreGroggy();
 	}
 
 	preHp = Object_Hp;
@@ -329,6 +327,15 @@ void Player::AddPattenLoop() {
 			isPattenCooldown = false;
 		}
 	}
+}
+
+void Player::RestoreGroggy()
+{
+	groggyTime = 0.0f;
+	IsOtherEndGroggy = false;
+	isGroggy = false;   /// 그로기를 표시하는 상태변수!!!, 나중에 
+	isRestore = true;
+	ResetPlayer();  // 상태, 쿨타임, 공격 패턴까지 초기화!
 }
 
 

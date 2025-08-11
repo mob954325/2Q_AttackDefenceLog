@@ -69,7 +69,7 @@ public:
 	AllNodePattenClass* tmpNode2 = nullptr;  // 출력용 변수
 
 
-
+	void RestoreGroggy();
 private:
 	std::vector<std::string> PattenID;
 	PlayerData* nowPlayerData = nullptr; // 받아올 데이터를 가리키는 포인터

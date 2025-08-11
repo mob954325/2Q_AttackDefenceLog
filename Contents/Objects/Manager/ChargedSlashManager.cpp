@@ -8,9 +8,11 @@
 
 void ChargedSlashManager::OnStart()
 {
+	owner->SetRenderLayer(EngineData::RenderLayer::UI);
 	inputSys = owner->AddComponent<InputSystem>();
 	bitmapRenderer = owner->AddComponent<BitmapRenderer>();
 	bitmapRenderer->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Mouse\\ui01.png");
+	bitmapRenderer->SetOrderInLayer(100);
 	size = bitmapRenderer->GetResource()->GetBitmap()->GetSize();
 	owner->GetTransform().SetUnityCoords(false); // 노드가 D2D좌표계임
 	owner->GetTransform().SetOffset(-size.width / 2.0f, size.height / 2.0f);
@@ -26,15 +28,17 @@ void ChargedSlashManager::OnStart()
 		filter[i]->GetTransform().SetUnityCoords(true);
 		filter[i]->SetRenderLayer(EngineData::RenderLayer::UI);
 		auto bir = filter[i]->AddComponent<BitmapRenderer>();
-		
+
 
 		bir->SetOrderInLayer(500);
 		bir->CreateBitmapResource(basePath + files[i]);
+		bir->SetActive(false); // 나중에 지워줘야함
 		auto si = bir->GetResource()->GetBitmap()->GetSize();
 		filter[i]->GetTransform().SetOffset(-si.width / 2.0f, si.height / 2.0f);
 
-		bir->SetFlip(true);
+		//bir->SetFlip(true);
 		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(filter[i], "filter." + i);
+
 	}
 }
 
@@ -109,7 +113,7 @@ void ChargedSlashManager::Start(int n) { // 1~9의 값이 들어옴
 	nowPos = slashCache[n - 1].pos;
 
 	owner->GetTransform().SetPosition(nowPos.x, nowPos.y); // 노드의 좌표로 오너를 옮김
-
+	
 	isPlay = true;
 	onChargeStart.Invoke(); // 시작되었다고 알려주면, 외부에서는 노드를 비활성화시켜줌(연결해야됨)	
 }
@@ -145,6 +149,7 @@ void ChargedSlashManager::Slashing(Vector2 pos, float time)
 	if (isSuccess(pos, time)) { // 성공
 		onFinisherSuccess.Invoke(); // 성공했다고 외부에 알려줌 << 인자 뭐 넣어줘야 할지도 모르겠네
 		std::cout << "슬래시 성공" << nowPos << nowNormalVec << std::endl;
+		Cancel();
 	}
 	else
 		Reset(); // 실패

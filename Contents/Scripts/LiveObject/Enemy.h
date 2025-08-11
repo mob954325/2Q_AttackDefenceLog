@@ -62,6 +62,11 @@ public:
 
 	StateController* m_State = nullptr;  //오브젝트 들은 State 내부에서 받을 수 있도록 포인터 생성
 	bool isFirstSpiriteDown = false;
+
+
+	void RestoreGroggy(); // 초기화 겸, 외부에서도 호출해주는 함수임
+
+
 private:
 	// 적이 가지고 있는 공격의 ID
 	std::vector<std::string> PattenID;
