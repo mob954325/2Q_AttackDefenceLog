@@ -9,12 +9,20 @@
 void DummyCircleCollider::OnCreate()
 {
 	owner->GetTransform().SetUnityCoords(false);
+	owner->GetTransform().SetPosition(400,400);
 
 	circle = owner->AddComponent<CircleCollider>();
 
 	input = owner->AddComponent<InputSystem>();
 
 	particle = owner->AddComponent<ParticleRenderer>();
+
+	anime = owner->AddComponent<AnimationRenderer>();
+	anime->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Dance\\Dance.png");
+	anime->SetSpriteSheet(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Dance\\Dance_sprites.json");
+	anime->SetAnimationClip(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Dance\\Dance_Dance_anim.json");
+	anime->GetAnimationPlayer()->SetLoop(true);
+	owner->GetTransform().SetRotation(45);
 }
 
 void DummyCircleCollider::OnStart()
@@ -42,6 +50,8 @@ void DummyCircleCollider::OnStart()
 
 void DummyCircleCollider::OnFixedUpdate()
 {
+	rot += 0.1f;
+	owner->GetTransform().SetRotation(rot);
 }
 
 void DummyCircleCollider::OnUpdate()

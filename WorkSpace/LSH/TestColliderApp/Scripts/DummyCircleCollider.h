@@ -7,6 +7,7 @@
 #include "Components/Collision/CircleCollider.h"
 #include "Components/Logic/InputSystem.h"
 #include "Components/Rendering/ParticleRenderer.h"
+#include "Components/Rendering/AnimationRenderer.h"
 
 class DummyCircleCollider : public MonoBehavior
 {
@@ -30,4 +31,8 @@ private:
 	GameObject* target{};
 
 	ParticleRenderer* particle{};
+
+	AnimationRenderer* anime{};
+
+	float rot = 0.0f;
 };
