@@ -89,6 +89,7 @@ public:
 	//Scene의 Start에 들어갈 것들
 	void SetForStart(AttackPatternManager* pattenManager); //-> 이거는 생성자에 넣을수도?
 	void ChangeFinalState();
+	void SetSpiritGauge();  // 기세 게이지  세팅하는 함수
 	std::vector<int> nowNode;
 	int RandomReturn(int MaxInt);
 
