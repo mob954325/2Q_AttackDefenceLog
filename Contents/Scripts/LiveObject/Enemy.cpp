@@ -51,18 +51,19 @@ void Enemy::OnUpdate() {
     }
     
     // 적이 죽지 않고 그로기(Groggy) 상태 일때
-	if (nowStateName != "Enemy_Dead" && (!isGroggy)) 
-    {
-	  CalSpiritTime();		// 1초마다 기세게이지 증가
-      AddPattenLoop();		// 
-	  StateAct();           //  
-    
-	  DiffState();            // 이전 상태와 현재 상태를 비교
-	  PrintConsole();
-	  if (nowStateName == "Enemy_Dead") // 적 사망 시 -> 씬 이동
-	  {
-		  Singleton<SceneManager>::GetInstance().LoadScene(0); // 나중에 딜레이 올려줘야함
-	  }
+	if (nowStateName != "Enemy_Dead" && (!isGroggy))
+	{
+		CalSpiritTime();		// 1초마다 기세게이지 증가
+		AddPattenLoop();		// 
+		StateAct();           //  
+
+		DiffState();            // 이전 상태와 현재 상태를 비교
+		PrintConsole();
+		if (nowStateName == "Enemy_Dead") // 적 사망 시 -> 씬 이동
+		{
+			Singleton<SceneManager>::GetInstance().LoadScene(0); // 나중에 딜레이 올려줘야함
+		}
+	}
 }
 
 // onChangePatten에 TransitionTime 변경하기!!!
