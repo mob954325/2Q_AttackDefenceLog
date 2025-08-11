@@ -24,6 +24,18 @@ public:
 	void OnFixedUpdate() override {};
 	void OnDestroy() override {};
 
+private:
+	//-------------------------------------------------------------------------------------
+	//플레이어 고정 공격패턴
+	std::string attackPlayerPatternIDFix = "PI_040";  //안쓰면 PI 붙이기 말기!!,  ex) "PI_040"
+
+	//기세가 0이 되었을때 그 시간이 유지되는 시간
+	float totalGroggyTime = 3.0f;         
+
+
+	//-------------------------------------------------------------------------------------
+public:
+
 
 	// 플레이어의 상태를 초기화하는 함수
 	void SetStatData(std::string tmp); // 스탯 데이터를 데이터에서 불러와 저장함
@@ -80,8 +92,8 @@ private:
 	void SetBitmap(); //처음 비트맵을 설정할 함수
 
 	bool isAttackingPattern = false;
-
 	float groggyTime = 0.0f;
+	
 };
 
 

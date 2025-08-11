@@ -42,7 +42,6 @@ void AttackPatternManager::AddPattern(std::string ID, float PlayingAttackTime, s
 }
 
 
-//
 void AttackPatternManager::OnUpdate() {
 	bool isFirst = true;
 	bool isSecond = false;
@@ -124,7 +123,9 @@ pattern* AttackPatternManager::CorrectPattern(std::vector<int> PatternID) {  //�
 
 	//적 패턴 검사
 	for (const auto& pair : NowEnemyStorage) { // 적 패턴 
-		
+		EnemyZero = 0;
+		PlayerZero1 = 0;
+		PlayerZero2 = 0;
 		for (int j = 0; j < pair.second->NodePatten.size(); j++) { // 0 개수 검사
 			if (pair.second->NodePatten[j] == 0)
 			{
@@ -144,6 +145,7 @@ pattern* AttackPatternManager::CorrectPattern(std::vector<int> PatternID) {  //�
 
 		// 적 패턴이 2 이상이면 방어 패턴으로 처리
 		if (countNum >= 2) {
+			OnPatternCancel.Invoke(pair.second->PattenID); // 패턴 캔슬된거 알림 
 			isPlayerSearch = false; // 공격 처리 안함!!
 			//isAttack = false;
 			// 방어 시도 countNun 2 ~ 4개, 패턴이 적일 때				
@@ -158,12 +160,11 @@ pattern* AttackPatternManager::CorrectPattern(std::vector<int> PatternID) {  //�
 
 			for (int i = 0; i < PatternID.size(); i++) {	// 현재 그은 패턴 검사
 				if (PatternID[i] != pair.second->NodePatten[PatternID.size() -1 - i ]) { // 그은 패턴과 적 패턴이 맞지 않음
-
 					pair.second->isFail = true; // 방어 실패
 					return nullptr;
 				}
 				if (i == PatternID.size() - 1) {
-					OnPatternCancel.Invoke(pair.second->PattenID); // 패턴 캔슬된거 알림 -> 방어 성공
+					
 					return pair.second; // 성공
 				}
 			}

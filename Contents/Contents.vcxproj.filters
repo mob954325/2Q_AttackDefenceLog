@@ -13,9 +13,6 @@
     <Filter Include="Objects">
       <UniqueIdentifier>{1dd4e186-6f63-442e-8e5a-9977f84cb2fe}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Objects\Stage">
-      <UniqueIdentifier>{4d699e70-f2ca-4084-91ca-79a5a1eea7f3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Scene\.h">
       <UniqueIdentifier>{9eff161a-10d2-4685-9fa3-c8045f3120d7}</UniqueIdentifier>
     </Filter>
@@ -64,11 +61,14 @@
     <Filter Include="Objects\SliceObject">
       <UniqueIdentifier>{c6803fa7-d9bd-479c-8c62-f3289d1a56aa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Objects\Stage\EscMenu">
-      <UniqueIdentifier>{18408eb4-7ef4-4c7b-86f6-c544076e2588}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Scripts\Effect">
       <UniqueIdentifier>{0c117a41-d587-47a4-857a-229d80db13c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\SceneObject\Stage">
+      <UniqueIdentifier>{4d699e70-f2ca-4084-91ca-79a5a1eea7f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\SceneObject\Stage\EscMenu">
+      <UniqueIdentifier>{18408eb4-7ef4-4c7b-86f6-c544076e2588}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -100,7 +100,7 @@
       <Filter>Scene\.cpp</Filter>
     </ClCompile>
     <ClCompile Include="Objects\Scenes\Stage\NodeObject.cpp">
-      <Filter>Objects\Stage</Filter>
+      <Filter>Objects\SceneObject\Stage</Filter>
     </ClCompile>
     <ClCompile Include="Objects\Manager\PatternManager.cpp">
       <Filter>Objects\Manager</Filter>
@@ -118,7 +118,7 @@
       <Filter>Objects\SceneObject\TitleScene</Filter>
     </ClCompile>
     <ClCompile Include="Objects\Scenes\Stage\StageBGI.cpp">
-      <Filter>Objects\Stage</Filter>
+      <Filter>Objects\SceneObject\Stage</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\Component\StateController.cpp">
       <Filter>Scripts\Components</Filter>
@@ -184,16 +184,16 @@
       <Filter>Objects\SliceObject</Filter>
     </ClCompile>
     <ClCompile Include="Objects\Scenes\Stage\EscMenu\EscContinueButton.cpp">
-      <Filter>Objects\Stage\EscMenu</Filter>
+      <Filter>Objects\SceneObject\Stage\EscMenu</Filter>
     </ClCompile>
     <ClCompile Include="Objects\Scenes\Stage\EscMenu\EscExitButton.cpp">
-      <Filter>Objects\Stage\EscMenu</Filter>
+      <Filter>Objects\SceneObject\Stage\EscMenu</Filter>
     </ClCompile>
     <ClCompile Include="Objects\Scenes\Stage\EscMenu\EscMuteButton.cpp">
-      <Filter>Objects\Stage\EscMenu</Filter>
+      <Filter>Objects\SceneObject\Stage\EscMenu</Filter>
     </ClCompile>
     <ClCompile Include="Objects\Scenes\Stage\EscMenu\StageESCPanel.cpp">
-      <Filter>Objects\Stage\EscMenu</Filter>
+      <Filter>Objects\SceneObject\Stage\EscMenu</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\Effect\EffectObject.cpp">
       <Filter>Scripts\Effect</Filter>
@@ -206,6 +206,9 @@
     </ClCompile>
     <ClCompile Include="Scripts\Effect\EffectComponent.cpp">
       <Filter>Scripts\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Scenes\TitleScene\TitleEffectManager.cpp">
+      <Filter>Objects\SceneObject\TitleScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -237,7 +240,7 @@
       <Filter>Scene\.h</Filter>
     </ClInclude>
     <ClInclude Include="Objects\Scenes\Stage\NodeObject.h">
-      <Filter>Objects\Stage</Filter>
+      <Filter>Objects\SceneObject\Stage</Filter>
     </ClInclude>
     <ClInclude Include="Objects\Manager\PatternManager.h">
       <Filter>Objects\Manager</Filter>
@@ -255,7 +258,7 @@
       <Filter>Objects\SceneObject\TitleScene</Filter>
     </ClInclude>
     <ClInclude Include="Objects\Scenes\Stage\StageBGI.h">
-      <Filter>Objects\Stage</Filter>
+      <Filter>Objects\SceneObject\Stage</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Component\StateController.h">
       <Filter>Scripts\Components</Filter>
@@ -321,16 +324,16 @@
       <Filter>Objects\SliceObject</Filter>
     </ClInclude>
     <ClInclude Include="Objects\Scenes\Stage\EscMenu\EscContinueButton.h">
-      <Filter>Objects\Stage\EscMenu</Filter>
+      <Filter>Objects\SceneObject\Stage\EscMenu</Filter>
     </ClInclude>
     <ClInclude Include="Objects\Scenes\Stage\EscMenu\EscExitButton.h">
-      <Filter>Objects\Stage\EscMenu</Filter>
+      <Filter>Objects\SceneObject\Stage\EscMenu</Filter>
     </ClInclude>
     <ClInclude Include="Objects\Scenes\Stage\EscMenu\EscMuteButton.h">
-      <Filter>Objects\Stage\EscMenu</Filter>
+      <Filter>Objects\SceneObject\Stage\EscMenu</Filter>
     </ClInclude>
     <ClInclude Include="Objects\Scenes\Stage\EscMenu\StageESCPanel.h">
-      <Filter>Objects\Stage\EscMenu</Filter>
+      <Filter>Objects\SceneObject\Stage\EscMenu</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Effect\EffectObject.h">
       <Filter>Scripts\Effect</Filter>
@@ -343,6 +346,9 @@
     </ClInclude>
     <ClInclude Include="Scripts\Effect\EffectComponent.h">
       <Filter>Scripts\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Scenes\TitleScene\TitleEffectManager.h">
+      <Filter>Objects\SceneObject\TitleScene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
