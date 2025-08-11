@@ -10,7 +10,7 @@ void Slider::OnStart()
 	GaugeBar = owner->AddComponent<BitmapRenderer>();
 	GaugeBar->SetUseCustomRect(true);
 	GaugeBar->SetOrderInLayer(6);
-	GaugeBar->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\UI\\TestGauge\\Bar.png");
+	GaugeBar->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\TestGauge\\Bar.png");
 	size = GaugeBar->GetResource()->GetBitmap()->GetSize();
 
 
@@ -21,7 +21,7 @@ void Slider::OnStart()
 
 
 	GaugeBackground = owner->AddComponent<BitmapRenderer>();
-	GaugeBackground->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\UI\\TestGauge\\backgroundBar.png");
+	GaugeBackground->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\TestGauge\\backgroundBar.png");
 	GaugeBackground->SetUseCustomRect(true);
 	GaugeBackground->SetOrderInLayer(5);
 	sizeBackground = GaugeBackground->GetResource()->GetBitmap()->GetSize();
@@ -128,7 +128,7 @@ void Slider::ChangeGauge(float x)
 {
 	/*D2D1_SIZE_F size = GaugeBar->GetResource()->GetBitmap()->GetSize();*/
 	if (pivotIsLeft) {
-		if ((GaugeBarRect.right < size.width && GaugeBarRect.right > 0))
+		if ((GaugeBarRect.right <= size.width && GaugeBarRect.right >= 0))
 		{
 			GaugeBarRect.right += x;
 		}

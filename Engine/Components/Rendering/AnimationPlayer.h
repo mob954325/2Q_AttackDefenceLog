@@ -18,7 +18,11 @@ public:
 	void SetBitmapResource(const BitmapResource& resource);
 	BitmapResource& GetBitmapResource();
 	void SetSpriteSheet(std::wstring path);
+	SpriteSheet GetSpriteSheet();
 	void SetAnimationClip(std::wstring path); // Sheet 정보가 있어야 로드 가능
+	AnimationClip GetAnimationClip();
+
+
 
 	void SetLoop(bool value);
 
@@ -26,6 +30,9 @@ public:
 	int GetCurrentFrame() const;
 
 	int GetMaxFrame() const;
+
+	
+	
 
 	void Play();
 	void Pause();

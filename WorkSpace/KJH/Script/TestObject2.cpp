@@ -13,10 +13,10 @@ void TestObject2::OnUpdate()
 
 void TestObject2::OnCreate()
 {
-	owner->GetTransform().SetPosition(-500, 50);
+	/*owner->GetTransform().SetPosition(-500, 50);
 	TestImage = owner->AddComponent<BitmapRenderer>();
-	TestImage->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/UI/TestImage/test2.png");
-	owner->GetTransform().SetOffset(-TestImage->GetResource()->GetBitmap()->GetSize().width / 2, TestImage->GetResource()->GetBitmap()->GetSize().height / 2);
+	TestImage->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\UI\\TestImage\\test2.png");
+	owner->GetTransform().SetOffset(-TestImage->GetResource()->GetBitmap()->GetSize().width / 2, TestImage->GetResource()->GetBitmap()->GetSize().height / 2);*/
 	/*owner->AddComponent<Slider>();*/
 }
 

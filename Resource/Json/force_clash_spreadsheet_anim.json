@@ -1,0 +1,41 @@
+{
+    "clipName": "force_clash_spreadsheet",
+    "loop": true,
+    "texturePath": "Assets/Character/Sprites/force_clash_spreadsheet.png",
+    "duration": 0.6666666865348816,
+    "frames": [
+        {
+            "sprite": "force_clash_spreadsheet_0",
+            "time": 0.0
+        },
+        {
+            "sprite": "force_clash_spreadsheet_1",
+            "time": 0.0833333358168602
+        },
+        {
+            "sprite": "force_clash_spreadsheet_2",
+            "time": 0.1666666716337204
+        },
+        {
+            "sprite": "force_clash_spreadsheet_3",
+            "time": 0.25
+        },
+        {
+            "sprite": "force_clash_spreadsheet_4",
+            "time": 0.3333333432674408
+        },
+        {
+            "sprite": "force_clash_spreadsheet_5",
+            "time": 0.4166666865348816
+        },
+        {
+            "sprite": "force_clash_spreadsheet_6",
+            "time": 0.5
+        },
+        {
+            "sprite": "force_clash_spreadsheet_7",
+            "time": 0.5833333730697632
+        }
+    ],
+    "events": []
+}

@@ -18,8 +18,8 @@ void SoundApp::SoundApp::Initialize()
 	MessageBox(NULL, buffer, L"실제 시도 중인 파일 경로", MB_OK);*/
 
 	__super::Initialize();
-	std::string path = StringConvert::WstringToString(Singleton<AppPaths>::GetInstance().GetWorkingPath());
-	LoadCSV<SoundResource>::SetCSV(path + L"/../Resource/DataTable/AllSoundList.csv", soundList);
+	std::wstring path = Singleton<AppPaths>::GetInstance().GetWorkingPath();
+	LoadCSV<SoundResource>::SetCSV(path + L"\\..\\Resource\\DataTable\\AllSoundList.csv", soundList);
 
 	// 출력 테스트
 	//for (const auto& sound : soundList) {
@@ -36,8 +36,10 @@ void SoundApp::SoundApp::Initialize()
 	AudioSystem::GetInstance().Register(soundList);
 
 
-	hCursorDefault = mouse.LoadPngCursor(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/UI/TestMouse/idle.png");
-	hCursorClicked = mouse.LoadPngCursor(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/UI/TestMouse/click.png");
+	std::wstring mouseIdleIcon = Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\TestMouse\\idle.png";
+	std::wstring mouseClickIcon = Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\TestMouse\\click.png";
+	hCursorDefault = mouse.LoadPngCursor(mouseIdleIcon.c_str());
+	hCursorClicked = mouse.LoadPngCursor(mouseClickIcon.c_str());
 
 
 	//if (!hCursorDefault)
@@ -61,22 +63,22 @@ void SoundApp::SoundApp::MessageProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM 
 
 	Application::MessageProc(hWnd, msg, wParam, lParam); // 부모 호출
 
-	switch (msg)
-	{
-	case WM_LBUTTONDOWN:
-		isMousePressed = true;
-		SetCursor(hCursorClicked);
-		break;
-	case WM_LBUTTONUP:
-		isMousePressed = false;
-		SetCursor(hCursorDefault);
-		break;
-	case WM_SETCURSOR:
-		SetCursor(isMousePressed ? hCursorClicked : hCursorDefault);
-		/*return TRUE;*/
-	default:
-		////Windows에서는 메시지를 직접 처리하지 않는 경우, 운영체제의 기본 처리로 넘겨야 함.
-		//return DefWindowProc(hWnd, msg, wParam, lParam);
-		break;
-	}
+	//switch (msg)
+	//{
+	//case WM_LBUTTONDOWN:
+	//	isMousePressed = true;
+	//	SetCursor(hCursorClicked);
+	//	break;
+	//case WM_LBUTTONUP:
+	//	isMousePressed = false;
+	//	SetCursor(hCursorDefault);
+	//	break;
+	//case WM_SETCURSOR:
+	//	SetCursor(isMousePressed ? hCursorClicked : hCursorDefault);
+	//	/*return TRUE;*/
+	//default:
+	//	////Windows에서는 메시지를 직접 처리하지 않는 경우, 운영체제의 기본 처리로 넘겨야 함.
+	//	//return DefWindowProc(hWnd, msg, wParam, lParam);
+	//	break;
+	//}
 }

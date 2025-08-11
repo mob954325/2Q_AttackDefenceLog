@@ -335,6 +335,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Script\giseSlider\GiseGauge.cpp" />
     <ClCompile Include="Script\App\AppEx.cpp" />
     <ClCompile Include="App\SoundApp.cpp" />
     <ClCompile Include="Script\Camera\CamInstance.cpp" />
@@ -358,6 +359,7 @@
     <ClCompile Include="Script\Sound\SoundEnd.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Script\giseSlider\GiseGauge.h" />
     <ClInclude Include="Script\App\AppEx.h" />
     <ClInclude Include="App\SoundApp.h" />
     <ClInclude Include="Script\Camera\CamInstance.h" />

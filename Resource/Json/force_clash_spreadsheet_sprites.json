@@ -1,0 +1,79 @@
+{
+    "texture": "force_clash_spreadsheet.png",
+    "textureWidth": 576,
+    "textureHeight": 72,
+    "sprites": [
+        {
+            "name": "force_clash_spreadsheet_0",
+            "x": 0.0,
+            "y": 72.0,
+            "width": 61.0,
+            "height": 72.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "force_clash_spreadsheet_1",
+            "x": 72.0,
+            "y": 72.0,
+            "width": 61.0,
+            "height": 72.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "force_clash_spreadsheet_2",
+            "x": 144.0,
+            "y": 72.0,
+            "width": 61.0,
+            "height": 72.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "force_clash_spreadsheet_3",
+            "x": 217.0,
+            "y": 72.0,
+            "width": 61.0,
+            "height": 72.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "force_clash_spreadsheet_4",
+            "x": 288.0,
+            "y": 72.0,
+            "width": 61.0,
+            "height": 72.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "force_clash_spreadsheet_5",
+            "x": 360.0,
+            "y": 72.0,
+            "width": 61.0,
+            "height": 72.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "force_clash_spreadsheet_6",
+            "x": 432.0,
+            "y": 72.0,
+            "width": 61.0,
+            "height": 72.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "force_clash_spreadsheet_7",
+            "x": 504.0,
+            "y": 72.0,
+            "width": 61.0,
+            "height": 72.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        }
+    ]
+}

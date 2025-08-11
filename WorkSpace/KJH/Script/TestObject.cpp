@@ -12,7 +12,9 @@
 void TestObject::OnUpdate()
 {
 	CheckInput();
-
+	
+	/*SetPosition();
+	ButtonAnime->GetTransform().SetPosition(x_width + x_pic , 40);*/
 	//if (eventvalue && counttime < maxtime)
 	//{
 	//	
@@ -51,9 +53,10 @@ void TestObject::OnUpdate()
 
 void TestObject::OnCreate()
 {
-	/*owner->AddComponent<Slider>();*/
+	//owner->GetTransform().SetUnityCoords(false);
+	//owner->AddComponent<Slider>();
 	/*TestImage = owner->AddComponent<BitmapRenderer>();
-	TestImage->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/UI/TestImage/test.png");
+	TestImage->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\UI\\Slider\\test.png");
 	owner->GetTransform().SetOffset(-TestImage->GetResource()->GetBitmap()->GetSize().width / 2, TestImage->GetResource()->GetBitmap()->GetSize().height / 2);*/
 	counttime = 0;
 	input = owner->AddComponent<InputSystem>();
@@ -79,8 +82,38 @@ void TestObject::OnCreate()
 
 }
 
+//void TestObject::SetPosition()
+//{
+//	auto it = owner->GetComponent<Slider>();
+//	x_width = it->GetGaugeRectValue().right;
+//	y_height = it->GetGaugeRectValue().bottom;
+//
+//}
+
 void TestObject::OnStart()
 {
+	owner->AddComponent <GiseGauge>();
+	giseG = owner->GetComponent<GiseGauge>();
+	//owner->GetComponent<Slider>()->ButtonShow(false);
+	//owner->GetComponent<Slider>()->SetGaugeBackgroundImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\UI\\Slider\\gise_ui_white.png");
+	//owner->GetComponent<Slider>()->SetGaugeBarImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\UI\\Slider\\gise_ui_black.png");
+
+	//GameObject* obj = new GameObject();
+	//obj->AddComponent<AnimationRenderer>();
+	//obj->SetName(std::string("Button"));
+	//Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(obj);
+
+	////obj->GetComponent<AnimationRenderer>()->SetActive(false);
+	//obj->GetComponent<AnimationRenderer>()->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\UI\\Slider\\force_clash_spreadsheet.png");
+	//obj->GetComponent<AnimationRenderer>()->SetSpriteSheet(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Json\\force_clash_spreadsheet_sprites.json");
+	//obj->GetComponent<AnimationRenderer>()->SetAnimationClip(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Json\\force_clash_anim.json");
+	///*obj->GetComponent<AnimationRenderer>()->GetAnimationPlayer()->Pause();*/
+	//obj->GetComponent<AnimationRenderer>()->SetOrderInLayer(500);
+	//obj->GetTransform().SetUnityCoords(false);
+	//ButtonAnime = obj;
+	//x_pic = 36.0f;
+	
+
 	//Emanager->CreateEffectObject(5);
 	//Emanager->CreateParticleObject(2);
 	////패리
@@ -161,6 +194,16 @@ void TestObject::OnDestroy()
 
 void TestObject::CheckInput()
 {
+	//if (input->IsKeyDown('W'))
+	//{
+	//	giseG->ChangeGaugeBar(-1.0f);
+	//}
+	//if (input->IsKeyDown('S'))
+	//{
+	//	giseG->ChangeGaugeBar(1.0f);
+	//}
+	// 
+	// 
 	//if (input->IsKeyPressed('N'))
 	//{
 	//	Emanager->GetParticleComponent(0)->Reset();
@@ -318,3 +361,5 @@ float TestObject::GetValue(size_t type)
 	}
 	}
 }
+
+

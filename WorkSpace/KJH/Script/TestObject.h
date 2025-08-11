@@ -12,6 +12,8 @@
 #include "Components/UI/Slider.h"
 #include "Script/Effect/EffectInstance.h"
 
+#include "Script/giseSlider/GiseGauge.h"
+
 
 class TestObject : public MonoBehavior
 {
@@ -25,7 +27,11 @@ public:
 
 	float GetValue(size_t type);
 
+	/*void SetPosition();*/
+
 private:
+	GiseGauge* giseG{};
+
 	BitmapRenderer* TestImage{};
 	InputSystem* input{};
 
@@ -54,6 +60,14 @@ private:
 	GameObject* handleCam{};
 
 	std::vector<Vector2> positionList{};
+
+	//08-11
+	GameObject* ButtonAnime{};
+
+	float x_width = 0.0f;
+	float y_height = 0.0f;
+
+	float x_pic = 0.0f;
 
 };
 

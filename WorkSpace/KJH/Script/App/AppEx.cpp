@@ -5,7 +5,7 @@
 #include "Scene/TestScene.h"
 #include "Resources/Loaders/CsvLoader.h"
 #include "Application/AppPaths.h"
-
+#include <windows.h>
 
 void AppEx::Initialize()
 {
@@ -18,13 +18,17 @@ void AppEx::Initialize()
 	//
 
 	//오디오시스템(싱글톤)에 사용할 모든 음원리소스 등록단계
-	LoadCSV<SoundResource>::SetCSV(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/DataTable/AllSoundList.csv", soundList);
+	LoadCSV<SoundResource>::SetCSV(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\DataTable\\AllSoundList.csv", soundList);
 	AudioSystem::GetInstance().Initialize(128);
 	AudioSystem::GetInstance().Register(soundList);
 
-	//마우스 이미지 등록(클릭이미지, 평소 이미지)
-	hCursorDefault = mouse.LoadPngCursor(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/UI/TestMouse/idle.png");
-	hCursorClicked = mouse.LoadPngCursor(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/UI/TestMouse/click.png");
+	WCHAR buffer[MAX_PATH];
+
+	////마우스 이미지 등록(클릭이미지, 평소 이미지)
+	std::wstring mouseIdleIcon = Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\TestMouse\\idle.png";
+	std::wstring mouseClickIcon = Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\TestMouse\\click.png";
+	hCursorDefault = mouse.LoadPngCursor(mouseIdleIcon.c_str());
+	hCursorClicked = mouse.LoadPngCursor(mouseClickIcon.c_str());
 }
 
 //게임종료시 해제할것들
