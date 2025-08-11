@@ -1,0 +1,89 @@
+#pragma once
+#include "Components/Base/MonoBehavior.h"
+#include "Components/Rendering/BitmapRenderer.h"
+#include "../Engine/Utils/EventDelegate.h"
+#include "../Engine/Components/Logic/InputSystem.h"
+
+/* 8.11. 한승규
+* 차징과 슬레쉬를 구현한 매니저
+* 특정 좌표 >> 1, 3, 7, 9의 노드 중 하나에 차징 판정이 생기고
+* 해당 좌표에서 마우스 좌클릭을 누른 상태로 기다리면 차징됨
+*
+* 차징이 충분히 된 상태에서
+* 정해진 방향으로 마우스를 움직여 좌클릭을 놓게되면
+*
+* 놓게된 시점의 좌표를 기준으로
+* 방향백터를 검사해서, 방향에 맞게 그었는지 판정 + 시간안에 그었는지 판정
+*
+* 만약 판정이 성공적이라면, 베틀매니저 쪽으로 성공했다고 알림
+* 배틀 매니저 내부에서, 시간 측정할꺼임.
+*
+* 혹시라도 시간이 초과된다면, 배틀매니저 내부에서 Cancel호출을 알려줄꺼임(델리게이트)
+*
+* + 이펙트도 넣어주긴 할꺼임
+*/
+
+
+struct SlashCache {
+	Vector2 pos; // 위치벡터
+	Vector2 normal; // 방향벡터
+};
+
+class ChargedSlashManager : public MonoBehavior
+{
+public:
+	void OnStart() override;
+	void OnUpdate() override;
+	void OnDestroy() override;
+
+	//=========================================================
+	// 외부에서 호출해줄꺼
+
+	void SetUpNodePos(const std::vector<Vector2>& vec); // 노드 9개의 좌표 등록
+
+	void Start(int n); //외부에서 이거 불러주면 시작함 << 델리게이트로 외부에서 뭐시기임
+	void Cancel(); // 다 집어치우라는 의미임 << 델리게이트로 외부에서 호출해줄 함수임
+
+
+	//=========================================================
+	void Reset(); // 내부에서 판정이 실패인 경우, 다시 처음부터 시켜주는 함수
+
+	EventDelegate<> onChargeStart; // 외부에 있는 오브젝트(노드)를 비활성화 해주기 위한 델리게이트 
+	EventDelegate<> onFinisherSuccess; // 내부에서 판정에 성공했다는걸 알려주는 델리게이트 - 베틀매니저 내부에 있는 함수와 연결해줄 생각
+
+protected:
+	float radius = 45.0f; //차징 범위
+	float timer = 0.0f; // 타이머(측정용)	
+	bool isPlay = false;
+
+	InputSystem* inputSys; // 쓰기 편하게 빼둠
+	BitmapRenderer* bitmapRenderer; // 마찬가지
+
+	D2D1_SIZE_F size;
+private:
+	Vector2 nowNormalVec = { 0,0 };
+	Vector2 nowPos = { 0,0 };
+
+	bool isInside = false; // 마우스가 차징범위 내부에 있는지를 판단하는 플래그
+
+	bool isCharged = false; // 차징 조건을 충족했는지
+
+	//bool isMoving = false; // 현재 움직이고 있는지 << 차징 범위 밖으로 나가는 순간 켜짐
+
+	//=========================================================
+	// [전제] 마우스가 좌클릭이 눌린 상태로, 차징 범위안에 올라갔다
+	bool CheckingMousInside();
+
+	// [판정 1] 차징 - 원 안에 얼마나 머물렀는가, 충분히 머물렀다면 차징성공
+	void Charging();
+
+	// [판정 2] 마우스 좌클릭 놓은 위치 + 시간 충족 여부 확인
+	// 놓은 위치는 항상 4번(중앙)노드를 기준으로 방향 백터를 생성함, 1 -> 5 혹은 9 -> 5 처럼
+	void Slashing();
+	//=========================================================
+
+	//std::vector<Vector2> nodPos;
+	std::vector<SlashCache> slashCache;
+
+};
+
