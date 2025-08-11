@@ -19,7 +19,7 @@ void MusicScript::MusicScript::OnCreate()
 	input = owner->AddComponent<InputSystem>();
 	owner->AddComponent<FModComponent>();
 
-	owner->AddComponent<Slider>();
+	/*owner->AddComponent<Slider>();*/
 
 	/*Came = owner->AddComponent<Camera>();
 
@@ -30,18 +30,18 @@ void MusicScript::MusicScript::OnCreate()
 	owner->GetTransform().SetUnityCoords(false);
 
 
-	TestImage3 = owner->AddComponent<BitmapRenderer>();
-	TestImage3->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/UI/TestImage/test3.png");
+	//TestImage3 = owner->AddComponent<BitmapRenderer>();
+	//TestImage3->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\UI\\TestImage\\test3.png");
 
 	/*owner->GetTransform().SetOffset(-TestImage3->GetResource()->GetBitmap()->GetSize().width / 2, TestImage->GetResource()->GetBitmap()->GetSize().height / 2);*/
 }
 
 void MusicScript::MusicScript::OnStart()
 {
-	owner->GetComponent<FModComponent>()->AddSound(componentList);
-	owner->GetComponent<Slider>()->ButtonShow(false);
-	owner->GetComponent<Slider>()->SetGaugeBackgroundImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/UI/TestGauge/hp_ui_01.png");
-	owner->GetComponent<Slider>()->SetGaugeBarImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/UI/TestGauge/hp_ui_02.png");
+	//owner->GetComponent<FModComponent>()->AddSound(componentList);
+	//owner->GetComponent<Slider>()->ButtonShow(false);
+	//owner->GetComponent<Slider>()->SetGaugeBackgroundImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\UI\\TestGauge\\hp_ui_01.png");
+	//owner->GetComponent<Slider>()->SetGaugeBarImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\UI\\TestGauge\\hp_ui_02.png");
 	//owner->GetComponent<Slider>()->SetGaugeBackgroundImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/UI/TestGauge/hp_ui_01.png");
 	//owner->GetComponent<Slider>()->SetGaugeBarImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/UI/TestGauge/hp_ui_01.png");
 }
@@ -53,18 +53,18 @@ void MusicScript::MusicScript::OnDestroy()
 
 void MusicScript::MusicScript::CheckInput()
 {
-	if (input->IsKeyDown('W'))
-	{
-		owner->GetComponent<Slider>()->ChangeGauge(-1);
-		owner->GetComponent<Slider>()->ChangeButtonPosition(-1);
-		std::cout << "w 입력됨" << std::endl;
-	}
-	if (input->IsKeyDown('S'))
-	{
-		owner->GetComponent<Slider>()->ChangeGauge(1);
-		owner->GetComponent<Slider>()->ChangeButtonPosition(1);
-		std::cout << "s 입력됨" << std::endl;
-	}
+	//if (input->IsKeyDown('W'))
+	//{
+	//	owner->GetComponent<Slider>()->ChangeGauge(-1);
+	//	owner->GetComponent<Slider>()->ChangeButtonPosition(-1);
+	//	std::cout << "w 입력됨" << std::endl;
+	//}
+	//if (input->IsKeyDown('S'))
+	//{
+	//	owner->GetComponent<Slider>()->ChangeGauge(1);
+	//	owner->GetComponent<Slider>()->ChangeButtonPosition(1);
+	//	std::cout << "s 입력됨" << std::endl;
+	//}
 
 	//if (input->IsKeyPressed('P') &&Input::leftButtonDown)
 	//{
