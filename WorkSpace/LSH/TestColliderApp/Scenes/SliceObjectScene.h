@@ -10,9 +10,6 @@ protected:
 	void OnExitImpl() override;
 	void UpdateImpl() override;
 private:
-	void CreatePieces(std::vector<PieceObject*>& out);
-	SplitObject* CreateGridNode();
-
 	std::vector<SplitObject*> sliceTargets{};
 	GameObject* cursor{};
 	GameObject* slice{};
