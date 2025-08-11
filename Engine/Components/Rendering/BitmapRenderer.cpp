@@ -15,7 +15,8 @@ void BitmapRenderer::Render(D2DRenderManager* manager)
 	{
 		D2D1_MATRIX_3X2_F mat = owner->GetTransform().GetFinalMatrix();
 		
-		if (isFlip) mat.m11 = -mat.m11;
+		if (isFlipX) mat.m11 = -mat.m11;
+		if (isFlipY) mat.m22 = -mat.m22;
 
 		// layer
 		if (!points.empty())
@@ -84,9 +85,24 @@ std::shared_ptr<BitmapResource> BitmapRenderer::GetResource()
 	return m_bitmapResource;
 }
 
-void BitmapRenderer::SetFlip(bool value)
+void BitmapRenderer::SetFlipX(bool value)
 {
-	isFlip = value;
+	isFlipX = value;
+}
+
+bool BitmapRenderer::IsFlipX()
+{
+	return isFlipX;
+}
+
+void BitmapRenderer::SetFlipY(bool value)
+{
+	isFlipY = value;
+}
+
+bool BitmapRenderer::IsFlipY()
+{
+	return isFlipY;
 }
 
 void BitmapRenderer::SetUseCustomRect(bool value)

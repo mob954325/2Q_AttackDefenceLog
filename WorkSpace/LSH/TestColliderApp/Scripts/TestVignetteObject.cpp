@@ -4,42 +4,29 @@
 #include "math.h"
 #include "Utils/GameTime.h"
 
+#include "Datas/EngineData.h"
+
 void TestVignetteObject::OnCreate()
 {
+	owner->GetTransform().SetUnityCoords(false);
+
 	//vignette = owner->AddComponent<VignetteEffect>();
 	bitmap = owner->AddComponent<BitmapRenderer>();
+	owner->GetTransform().SetOffset(EngineData::SceenWidth / 2, -EngineData::SceenHeight / 2);
 	input = owner->AddComponent<InputSystem>();
 }
 
 void TestVignetteObject::OnStart()
 {
 	bitmap->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Mouse\\testB.png");
-	// vignette->SetBitmap(bitmap->GetResource()->GetBitmap().Get());
-	// vignette->SetColor({ 1.0f, 0.0f,0.0f,1.0f });
-	// vignette->SetEffectSize(0.8f);
-	// vignette->SetStrength(0.4f);
-	// 
-	// vignette->SetOrderInLayer(10000);
-
-	owner->GetTransform().SetUnityCoords(false);
 
 	float offsetX = 30.0f;
 	float offsetY = 30.0f;
-	std::vector<Vector2> vec
-	{
-		{offsetX + 0,  offsetY + 50},
-		{offsetX + 14, offsetY +  15},
-		{offsetX + 47, offsetY +  15},
-		{offsetX + 23, offsetY +  -7},
-		{offsetX + 29, offsetY +  -40},
-		{offsetX + 0,  offsetY + -20},
-		{offsetX + -29, offsetY + -40},
-		{offsetX + -23, offsetY + -7},
-		{offsetX + -47, offsetY + 15},
-		{offsetX + -14, offsetY + 15}
-	};
 
-	bitmap->SetClipingPosition(vec);
+
+	D2D1_SIZE_F size = bitmap->GetResource()->GetBitmap()->GetSize();
+	bitmap->SetFlipX(!bitmap->IsFlipX());
+	owner->GetTransform().Translate({ size.width / 2, -size.height / 2 });
 }
 
 void TestVignetteObject::OnUpdate()
@@ -65,5 +52,14 @@ void TestVignetteObject::OnUpdate()
 	if (input->IsKeyDown('K'))
 	{
 		owner->GetTransform().Translate({ 0,-1 });
+	}
+
+	if (input->IsKeyDown('1'))
+	{
+		bitmap->SetFlipX(!bitmap->IsFlipX());
+	}
+	if (input->IsKeyDown('2'))
+	{
+		bitmap->SetFlipY(!bitmap->IsFlipY());
 	}
 }
