@@ -183,7 +183,7 @@ void BettleManager::SetStateFormPattern() {
 		m_PattenManager->PlayerPatternAllClear();
 		m_PattenManager->DoneTimeOutPatten();
 
-		if (nowNode.size() < 2) return; //플레이어가 입력을 하기 전까지 빠져나가질 못함 (8.12 확인)
+		if (nowNode.size() < 2) return;
 
 		if (allDistancePercent <= 0.0f) {	   //퍼센트가 0 이라면 길이에 따라서 배율 넣기 , 문제 있을 수 있음
 			onFinalBlow.Invoke(); // 외부에 공격 준비를 알림(총알이 장전된거임)
@@ -285,6 +285,6 @@ void BettleManager::ResetState() {
 	if (preManagerState != nowManagerState && preManagerState == enemyGroggy) {
 		allDistancePercent = 0.0f;
 		isOncePatternatk = false;
-		onTimeout.Invoke(); // 외부에 그로기 지속 시간이 끝났다는걸 알림 << 이거, 성공했을때는 잡히는데 실패할때 안잡히네
+		onTimeout.Invoke(); // 외부에 그로기 지속 시간이 끝났다는걸 알림
 	}
 }
