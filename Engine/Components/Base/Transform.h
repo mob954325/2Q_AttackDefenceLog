@@ -19,6 +19,9 @@
 //                           |          |
 // (-width / 2, -height / 2) +----------+ (width / 2, -height / 2) 
 
+// NOTE : Offset은 유니티 좌표계와 동일하게 이동시키야함 ( ex > D2D 좌표계를 사용하면서 offset의 y값을 감소시키면 이미지가 아래로 내려감 )
+//
+
 class Transform : public Component 
 {
 protected:
