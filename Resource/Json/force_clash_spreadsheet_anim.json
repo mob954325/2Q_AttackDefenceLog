@@ -2,7 +2,7 @@
     "clipName": "force_clash_spreadsheet",
     "loop": true,
     "texturePath": "Assets/Character/Sprites/force_clash_spreadsheet.png",
-    "duration": 0.6666666865348816,
+    "duration": 0.5833333730697632,
     "frames": [
         {
             "sprite": "force_clash_spreadsheet_0",
