@@ -101,6 +101,11 @@ Vector2& Vector2::operator-=(const Vector2& other)
 	return *this;
 }
 
+bool Vector2::operator==(const Vector2& other)
+{
+	return (x == other.x) && (y == other.y);
+}
+
 bool Vector2::IsZero() const
 {
 	return x < FLT_EPSILON + 1.1e-13f && y < FLT_EPSILON + 1.1e-13f;

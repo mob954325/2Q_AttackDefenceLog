@@ -31,6 +31,7 @@ struct Vector2
 
 	Vector2& operator+=(const Vector2& other);
 	Vector2& operator-=(const Vector2& other);
+	bool operator==(const Vector2& other);
 	friend std::ostream& operator<<(std::ostream& os, Vector2 vec);
 
 	bool IsZero() const;
