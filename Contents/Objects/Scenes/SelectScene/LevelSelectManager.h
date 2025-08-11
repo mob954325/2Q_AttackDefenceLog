@@ -3,7 +3,7 @@
 #include "Objects/SliceObject/SliceableObject.h"
 #include "Scripts/SceneCore.h"
 
-class StageSelectManager : public MonoBehavior
+class LevelSelectManager : public MonoBehavior
 {
 public:
 	void OnCreate() override;

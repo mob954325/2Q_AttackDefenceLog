@@ -210,7 +210,16 @@
     <ClCompile Include="Objects\Scenes\TitleScene\TitleEffectManager.cpp">
       <Filter>Objects\SceneObject\TitleScene</Filter>
     </ClCompile>
+    <ClCompile Include="Objects\Manager\ChargedSlashManager.cpp">
+      <Filter>Objects\Manager</Filter>
+    </ClCompile>
     <ClCompile Include="Scripts\Slider\GiseGauge.cpp" />
+    <ClCompile Include="Scripts\GameManager.cpp">
+      <Filter>Scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Scenes\SelectScene\LevelSelectManager.cpp">
+      <Filter>Objects\SceneObject\SelectScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameApp.h">
@@ -351,6 +360,15 @@
     <ClInclude Include="Objects\Scenes\TitleScene\TitleEffectManager.h">
       <Filter>Objects\SceneObject\TitleScene</Filter>
     </ClInclude>
+    <ClInclude Include="Objects\Manager\ChargedSlashManager.h">
+      <Filter>Objects\Manager</Filter>
+    </ClInclude>
     <ClInclude Include="Scripts\Slider\GiseGauge.h" />
+    <ClInclude Include="Scripts\GameManager.h">
+      <Filter>Scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Scenes\SelectScene\LevelSelectManager.h">
+      <Filter>Objects\SceneObject\SelectScene</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

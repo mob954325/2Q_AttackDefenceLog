@@ -5,8 +5,10 @@
 #include "Objects/Manager/PatternManager.h"
 #include "Scene/SceneManager.h"
 #include "Utils/EventDelegate.h"
+#include "Objects/Manager/ChargedSlashManager.h"
 
 #include "Scripts/Effect/EffectInstance.h" // 이펙트 정현씨꺼
+
 
 
 class PatternControlObject : public MonoBehavior
@@ -39,6 +41,8 @@ protected:
 	GameObject* AddGameObject;
 	GameObject* bettleManager;
 	GameObject* player;
+
+	ChargedSlashManager* csManager; 
 
 	EffectInstance* effInstance;
 	std::vector<EffectInstance*> effs;

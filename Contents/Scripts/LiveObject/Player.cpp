@@ -1,4 +1,4 @@
-﻿#include "Player.h"
+#include "Player.h"
 #include <random>
 #include <cmath>
 #include "../CsvData/DataClass/PlayerData.h"
@@ -13,6 +13,7 @@
 
 #include "../Engine/Scene/SceneManager.h"
 #include "Application/AppPaths.h"
+#include "Scripts/GameManager.h"
 
 // 각 값은 해당 함수가 출력 중일때, 각 플레그 변화
 //														     
@@ -58,18 +59,28 @@ void Player::ResetPlayer() {
 // 업데이트에서 시간 받기???? -> 필요없음, 수정하기!!!
 void Player::OnUpdate() {
 	
-	if (m_State->GetNowName() != "Player_Dead"  &&  (!isGroggy)){
-	CalSpiritTime();		// 1초마다 기세게이지 감소
-	AddPattenLoop();		// 패턴을 추가하는 루프
+	// 게임 상태가 Pause면 모든 Update 무시
+	if (Singleton<GameManager>::GetInstance().GetGameState() == GameState::Pause)
+	{
+		return;
 	}
-	 PrintConsole();
-	m_State->Update();
-	DiffState();  //   이전상태와 현재상태를 결정하는 함수
-	StateAct();   //  각 state 별 행동
 	
+	if (m_State->GetNowName() != "Player_Dead"  &&  (!isGroggy))
+	{
+		//if (m_State->GetNowName() != "Player_Dead"||m_State->GetNowName() != "Player_Groggy"){
+		CalSpiritTime();		// 1초마다 기세게이지 감소
+		AddPattenLoop();		// 패턴을 추가하는 루프
+	}
+	
+	
+	PrintConsole();		// 콘솔 호출
+	m_State->Update(); 	// 각 state별 추가로 정의된 행동 호출
+	DiffState();  		// 이전상태와 현재상태를 결정하는 함수
+	StateAct();   		// 각 state 별 행동 
 	
 	oneLoopPreStateName = nowStateName;
-	if (m_State->GetNowName() == "Player_Dead") {
+	if (m_State->GetNowName() == "Player_Dead") // 플레이어 사망 시 d
+	{
 		Singleton<SceneManager>::GetInstance().LoadScene(0);
 	}
 

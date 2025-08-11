@@ -1,4 +1,4 @@
-﻿#include "BettleManager.h"
+#include "BettleManager.h"
 #include <random>
 #include <cmath>
 #include "../LiveObject/Player.h"
@@ -7,6 +7,7 @@
 #include "AttackPatternManager.h"
 #include "Components/Base/GameObject.h"
 #include "Components/Base/MonoBehavior.h"
+#include "Scripts/GameManager.h"
 
 
 
@@ -29,12 +30,18 @@ void BettleManager::OnStart() {
 }
 
 void BettleManager::OnUpdate() {
-	
 	SetGroggyState();
-	SetStateFormPattern();
-	ChangeFinalState();
-	SetSpiritGauge();
-	ResetState(); // state가 다를 경우 초기화 하기!!!
+	
+	// 게임 상태가 Pause면 모든 Update 내용 무시
+	if (Singleton<GameManager>::GetInstance().GetGameState() == GameState::Pause)
+	{
+		return;
+	}
+
+	SetStateFormPattern();	// 각 상태별 공격 방어 처리 어
+	ChangeFinalState();		// 각 LiveObject의 사망 처리 Update - 유니티의 AnyState 유사
+	SetSpiritGauge();		// 기세 게이지 업데이트
+	ResetState(); 			// state가 다를 경우 초기화 하기!!!
 }
 
 // -> 생성자로 넣어야 할듯?

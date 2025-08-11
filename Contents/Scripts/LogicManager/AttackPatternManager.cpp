@@ -1,5 +1,6 @@
 ﻿#include "AttackPatternManager.h"
 #include "Utils/GameTime.h"
+#include "Scripts/GameManager.h"
 
 struct pattern;
 Pointxy Map(int node);
@@ -44,6 +45,11 @@ void AttackPatternManager::AddPattern(std::string ID, float PlayingAttackTime, s
 
 
 void AttackPatternManager::OnUpdate() {
+
+	if (Singleton<GameManager>::GetInstance().GetGameState() == GameState::Pause)
+	{
+		return;
+	}
 	bool isFirst = true;
 	bool isSecond = false;
 	int countNum = 0;	// 숫자 2개 일치하는지 검사하는 수
