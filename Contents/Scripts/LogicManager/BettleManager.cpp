@@ -34,12 +34,7 @@ void BettleManager::OnUpdate() {
 
 	SetStateFormPattern();
 	ChangeFinalState();
-	giseObj->SetMaxGague(TotalValue);
-	ChangeValue = m_Player->GetNowSpiritAmount();
-	/*preSpiritAmount = m_Player->GetNowSpiritAmount();*/
-
-	giseObj->CalculateValue(ChangeValue);
-
+	SetSpiritGauge();
 	
 }
 
@@ -223,6 +218,13 @@ void BettleManager::ChangeFinalState() {
 
 }
 
+void BettleManager::SetSpiritGauge(){
+	giseObj->SetMaxGague(TotalValue);
+	ChangeValue = m_Player->GetNowSpiritAmount();
+	/*preSpiritAmount = m_Player->GetNowSpiritAmount();*/
+
+	giseObj->CalculateValue(ChangeValue);
+}
 
 
 

@@ -4,12 +4,13 @@
 #include "Application/AppPaths.h"
 #include "Components/Rendering/AnimationRenderer.h"
 #include "Utils/GameTime.h"
+#include "../Engine/Datas/EngineData.h"
 
 void GiseGauge::OnUpdate()
 {
 	ChangeGaugeBar();
 	SetAnimePosition();
-	ButtonAnime->GetTransform().SetPosition(x_width + x_pic/2, 38.1f);
+	ButtonAnime->GetTransform().SetPosition(EngineData::SceenWidth / 2 - currentgague / 2 + x_width + x_pic/2, 38.1f);
 }
 
 void GiseGauge::OnCreate()
@@ -20,6 +21,7 @@ void GiseGauge::OnCreate()
 
 void GiseGauge::OnStart()
 {	
+	
 	sliderobj = owner->GetComponent<Slider>();
 	sliderobj->ButtonShow(false);
 	sliderobj->SetGaugeBackgroundImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\Slider\\gise_ui_white.png");
@@ -44,6 +46,8 @@ void GiseGauge::OnStart()
 	/*x_pic = 36.0f;*/
 	auto it = obj->GetComponent<AnimationRenderer>()->GetAnimationPlayer()->GetSpriteSheet();
 	x_pic = it.sprites[0].width;
+
+	owner->GetTransform().SetPosition(EngineData::SceenWidth / 2 - currentgague/2 , 0.0f);
 }
 
 void GiseGauge::OnDestroy()
