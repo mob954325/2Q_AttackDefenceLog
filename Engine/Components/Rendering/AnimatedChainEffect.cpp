@@ -111,7 +111,7 @@ void AnimatedChainEffect::SliceRect(const std::vector<int>& pattern)
 
 		Vector2 fromTo = to - from;
 
-		float dist = fromTo.Magnituede(); // 거리
+		float dist = fromTo.Magnitude(); // 거리
 
 		float remain = frameW - currentX; // 요구사항 
 		if (remain <= 0.0f) break; // 요구사항 충족시 탈출

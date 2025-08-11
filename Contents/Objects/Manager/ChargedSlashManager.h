@@ -1,32 +1,33 @@
-#pragma once
+ï»¿#pragma once
 #include "Components/Base/MonoBehavior.h"
 #include "Components/Rendering/BitmapRenderer.h"
 #include "../Engine/Utils/EventDelegate.h"
 #include "../Engine/Components/Logic/InputSystem.h"
 
-/* 8.11. ÇÑ½Â±Ô
-* Â÷Â¡°ú ½½·¹½¬¸¦ ±¸ÇöÇÑ ¸Å´ÏÀú
-* Æ¯Á¤ ÁÂÇ¥ >> 1, 3, 7, 9ÀÇ ³ëµå Áß ÇÏ³ª¿¡ Â÷Â¡ ÆÇÁ¤ÀÌ »ý±â°í
-* ÇØ´ç ÁÂÇ¥¿¡¼­ ¸¶¿ì½º ÁÂÅ¬¸¯À» ´©¸¥ »óÅÂ·Î ±â´Ù¸®¸é Â÷Â¡µÊ
+/* 8.11. í•œìŠ¹ê·œ
+* ì°¨ì§•ê³¼ ìŠ¬ë ˆì‰¬ë¥¼ êµ¬í˜„í•œ ë§¤ë‹ˆì €
+* íŠ¹ì • ì¢Œí‘œ >> 1, 3, 7, 9ì˜ ë…¸ë“œ ì¤‘ í•˜ë‚˜ì— ì°¨ì§• íŒì •ì´ ìƒê¸°ê³ 
+* í•´ë‹¹ ì¢Œí‘œì—ì„œ ë§ˆìš°ìŠ¤ ì¢Œí´ë¦­ì„ ëˆ„ë¥¸ ìƒíƒœë¡œ ê¸°ë‹¤ë¦¬ë©´ ì°¨ì§•ë¨
 *
-* Â÷Â¡ÀÌ ÃæºÐÈ÷ µÈ »óÅÂ¿¡¼­
-* Á¤ÇØÁø ¹æÇâÀ¸·Î ¸¶¿ì½º¸¦ ¿òÁ÷¿© ÁÂÅ¬¸¯À» ³õ°ÔµÇ¸é
+* ì°¨ì§•ì´ ì¶©ë¶„ížˆ ëœ ìƒíƒœì—ì„œ
+* ì •í•´ì§„ ë°©í–¥ìœ¼ë¡œ ë§ˆìš°ìŠ¤ë¥¼ ì›€ì§ì—¬ ì¢Œí´ë¦­ì„ ë†“ê²Œë˜ë©´
 *
-* ³õ°ÔµÈ ½ÃÁ¡ÀÇ ÁÂÇ¥¸¦ ±âÁØÀ¸·Î
-* ¹æÇâ¹éÅÍ¸¦ °Ë»çÇØ¼­, ¹æÇâ¿¡ ¸Â°Ô ±×¾ú´ÂÁö ÆÇÁ¤ + ½Ã°£¾È¿¡ ±×¾ú´ÂÁö ÆÇÁ¤
+* ë†“ê²Œëœ ì‹œì ì˜ ì¢Œí‘œë¥¼ ê¸°ì¤€ìœ¼ë¡œ
+* ë°©í–¥ë°±í„°ë¥¼ ê²€ì‚¬í•´ì„œ, ë°©í–¥ì— ë§žê²Œ ê·¸ì—ˆëŠ”ì§€ íŒì • + ì‹œê°„ì•ˆì— ê·¸ì—ˆëŠ”ì§€ íŒì •
 *
-* ¸¸¾à ÆÇÁ¤ÀÌ ¼º°øÀûÀÌ¶ó¸é, º£Æ²¸Å´ÏÀú ÂÊÀ¸·Î ¼º°øÇß´Ù°í ¾Ë¸²
-* ¹èÆ² ¸Å´ÏÀú ³»ºÎ¿¡¼­, ½Ã°£ ÃøÁ¤ÇÒ²¨ÀÓ.
+* ë§Œì•½ íŒì •ì´ ì„±ê³µì ì´ë¼ë©´, ë² í‹€ë§¤ë‹ˆì € ìª½ìœ¼ë¡œ ì„±ê³µí–ˆë‹¤ê³  ì•Œë¦¼
+* ë°°í‹€ ë§¤ë‹ˆì € ë‚´ë¶€ì—ì„œ, ì‹œê°„ ì¸¡ì •í• êº¼ìž„.
 *
-* È¤½Ã¶óµµ ½Ã°£ÀÌ ÃÊ°úµÈ´Ù¸é, ¹èÆ²¸Å´ÏÀú ³»ºÎ¿¡¼­ CancelÈ£ÃâÀ» ¾Ë·ÁÁÙ²¨ÀÓ(µ¨¸®°ÔÀÌÆ®)
+* í˜¹ì‹œë¼ë„ ì‹œê°„ì´ ì´ˆê³¼ëœë‹¤ë©´, ë°°í‹€ë§¤ë‹ˆì € ë‚´ë¶€ì—ì„œ Cancelí˜¸ì¶œì„ ì•Œë ¤ì¤„êº¼ìž„(ë¸ë¦¬ê²Œì´íŠ¸)
 *
-* + ÀÌÆåÆ®µµ ³Ö¾îÁÖ±ä ÇÒ²¨ÀÓ
+* + ì´íŽ™íŠ¸ë„ ë„£ì–´ì£¼ê¸´ í• êº¼ìž„
 */
 
+constexpr float PI = 3.14159265358979323846f; // ì´ ì–¼ë§ˆë‚˜ ì•„ë¦„ë‹¤ìš´ ìˆ«ìžì¸ê°€
 
 struct SlashCache {
-	Vector2 pos; // À§Ä¡º¤ÅÍ
-	Vector2 normal; // ¹æÇâº¤ÅÍ
+	Vector2 pos; // ìœ„ì¹˜ë²¡í„°
+	Vector2 normal; // ë°©í–¥ë²¡í„°
 };
 
 class ChargedSlashManager : public MonoBehavior
@@ -37,49 +38,57 @@ public:
 	void OnDestroy() override;
 
 	//=========================================================
-	// ¿ÜºÎ¿¡¼­ È£ÃâÇØÁÙ²¨
+	// ì™¸ë¶€ì—ì„œ í˜¸ì¶œí•´ì¤„êº¼
 
-	void SetUpNodePos(const std::vector<Vector2>& vec); // ³ëµå 9°³ÀÇ ÁÂÇ¥ µî·Ï
+	void SetUpNodePos(const std::vector<Vector2>& vec); // ë…¸ë“œ 9ê°œì˜ ì¢Œí‘œ ë“±ë¡
 
-	void Start(int n); //¿ÜºÎ¿¡¼­ ÀÌ°Å ºÒ·¯ÁÖ¸é ½ÃÀÛÇÔ << µ¨¸®°ÔÀÌÆ®·Î ¿ÜºÎ¿¡¼­ ¹¹½Ã±âÀÓ
-	void Cancel(); // ´Ù Áý¾îÄ¡¿ì¶ó´Â ÀÇ¹ÌÀÓ << µ¨¸®°ÔÀÌÆ®·Î ¿ÜºÎ¿¡¼­ È£ÃâÇØÁÙ ÇÔ¼öÀÓ
+	void Start(int n); //ì™¸ë¶€ì—ì„œ ì´ê±° ë¶ˆëŸ¬ì£¼ë©´ ì‹œìž‘í•¨ << ë¸ë¦¬ê²Œì´íŠ¸ë¡œ ì™¸ë¶€ì—ì„œ ë­ì‹œê¸°ìž„
+	void Cancel(); // ë‹¤ ì§‘ì–´ì¹˜ìš°ë¼ëŠ” ì˜ë¯¸ìž„ << ë¸ë¦¬ê²Œì´íŠ¸ë¡œ ì™¸ë¶€ì—ì„œ í˜¸ì¶œí•´ì¤„ í•¨ìˆ˜ìž„
 
+	float chargeTimeRequired = 5.0f; // ì°¨ì§• ìš”êµ¬ ì‹œê°„
+	float allowedAngleRadians = 0.8660f; // 15ë„ í—ˆìš©
+	float exitTimeRequired = 1.0f; // ì´íƒˆ ì´í›„, ë§ˆìš°ìŠ¤ë¥¼ ë†“ëŠ”ë°ê¹Œì§€ ê±¸ë¦¬ëŠ” ìš”êµ¬ì‹œê°„
+	float minDist = 100.0f; // ìµœì†Œ ê±°ë¦¬	
 
 	//=========================================================
-	void Reset(); // ³»ºÎ¿¡¼­ ÆÇÁ¤ÀÌ ½ÇÆÐÀÎ °æ¿ì, ´Ù½Ã Ã³À½ºÎÅÍ ½ÃÄÑÁÖ´Â ÇÔ¼ö
+	void Reset(); // ë‚´ë¶€ì—ì„œ íŒì •ì´ ì‹¤íŒ¨ì¸ ê²½ìš°, ë‹¤ì‹œ ì²˜ìŒë¶€í„° ì‹œì¼œì£¼ëŠ” í•¨ìˆ˜
 
-	EventDelegate<> onChargeStart; // ¿ÜºÎ¿¡ ÀÖ´Â ¿ÀºêÁ§Æ®(³ëµå)¸¦ ºñÈ°¼ºÈ­ ÇØÁÖ±â À§ÇÑ µ¨¸®°ÔÀÌÆ® 
-	EventDelegate<> onFinisherSuccess; // ³»ºÎ¿¡¼­ ÆÇÁ¤¿¡ ¼º°øÇß´Ù´Â°É ¾Ë·ÁÁÖ´Â µ¨¸®°ÔÀÌÆ® - º£Æ²¸Å´ÏÀú ³»ºÎ¿¡ ÀÖ´Â ÇÔ¼ö¿Í ¿¬°áÇØÁÙ »ý°¢
-
+	EventDelegate<> onChargeStart; // ì™¸ë¶€ì— ìžˆëŠ” ì˜¤ë¸Œì íŠ¸(ë…¸ë“œ)ë¥¼ ë¹„í™œì„±í™” í•´ì£¼ê¸° ìœ„í•œ ë¸ë¦¬ê²Œì´íŠ¸ 
+	EventDelegate<> onFinisherSuccess; // ë‚´ë¶€ì—ì„œ íŒì •ì— ì„±ê³µí–ˆë‹¤ëŠ”ê±¸ ì•Œë ¤ì£¼ëŠ” ë¸ë¦¬ê²Œì´íŠ¸ - ë² í‹€ë§¤ë‹ˆì € ë‚´ë¶€ì— ìžˆëŠ” í•¨ìˆ˜ì™€ ì—°ê²°í•´ì¤„ ìƒê°	
 protected:
-	float radius = 45.0f; //Â÷Â¡ ¹üÀ§
-	float timer = 0.0f; // Å¸ÀÌ¸Ó(ÃøÁ¤¿ë)	
+	float radius = 50.0f; //ì°¨ì§• ë²”ìœ„
+	float timer = 0.0f; // íƒ€ì´ë¨¸(ì¸¡ì •ìš©)	
+	float mouseTimer = 0.0f;
+
 	bool isPlay = false;
 
-	InputSystem* inputSys; // ¾²±â ÆíÇÏ°Ô »©µÒ
-	BitmapRenderer* bitmapRenderer; // ¸¶Âù°¡Áö
+	InputSystem* inputSys; // ì“°ê¸° íŽ¸í•˜ê²Œ ë¹¼ë‘ 
+	BitmapRenderer* bitmapRenderer; // ë§ˆì°¬ê°€ì§€
 
 	D2D1_SIZE_F size;
 private:
 	Vector2 nowNormalVec = { 0,0 };
 	Vector2 nowPos = { 0,0 };
 
-	bool isInside = false; // ¸¶¿ì½º°¡ Â÷Â¡¹üÀ§ ³»ºÎ¿¡ ÀÖ´ÂÁö¸¦ ÆÇ´ÜÇÏ´Â ÇÃ·¡±×
+	bool isInside = false; // ë§ˆìš°ìŠ¤ê°€ ì°¨ì§•ë²”ìœ„ ë‚´ë¶€ì— ìžˆëŠ”ì§€ë¥¼ íŒë‹¨í•˜ëŠ” í”Œëž˜ê·¸
+	bool isCharged = false; // ì°¨ì§• ì¡°ê±´ì„ ì¶©ì¡±í–ˆëŠ”ì§€
 
-	bool isCharged = false; // Â÷Â¡ Á¶°ÇÀ» ÃæÁ·Çß´ÂÁö
-
-	//bool isMoving = false; // ÇöÀç ¿òÁ÷ÀÌ°í ÀÖ´ÂÁö << Â÷Â¡ ¹üÀ§ ¹ÛÀ¸·Î ³ª°¡´Â ¼ø°£ ÄÑÁü
+	//bool isMoving = false; // í˜„ìž¬ ì›€ì§ì´ê³  ìžˆëŠ”ì§€ << ì°¨ì§• ë²”ìœ„ ë°–ìœ¼ë¡œ ë‚˜ê°€ëŠ” ìˆœê°„ ì¼œì§
 
 	//=========================================================
-	// [ÀüÁ¦] ¸¶¿ì½º°¡ ÁÂÅ¬¸¯ÀÌ ´­¸° »óÅÂ·Î, Â÷Â¡ ¹üÀ§¾È¿¡ ¿Ã¶ó°¬´Ù
-	bool CheckingMousInside();
+	// [ì „ì œ] ë§ˆìš°ìŠ¤ê°€ ì¢Œí´ë¦­ì´ ëˆŒë¦° ìƒíƒœë¡œ, ì°¨ì§• ë²”ìœ„ì•ˆì— ì˜¬ë¼ê°”ë‹¤
+	bool CheckMouseInside();
 
-	// [ÆÇÁ¤ 1] Â÷Â¡ - ¿ø ¾È¿¡ ¾ó¸¶³ª ¸Ó¹°·¶´Â°¡, ÃæºÐÈ÷ ¸Ó¹°·¶´Ù¸é Â÷Â¡¼º°ø
-	void Charging();
+	// [íŒì • 1] ì°¨ì§• - ì› ì•ˆì— ì–¼ë§ˆë‚˜ ë¨¸ë¬¼ë €ëŠ”ê°€, ì¶©ë¶„ížˆ ë¨¸ë¬¼ë €ë‹¤ë©´ ì°¨ì§•ì„±ê³µ
+	//void Charging();
+	
+	// [íŒ?ì •] ìµœì†Œ ê±°ë¦¬ ì´ìƒ + ì´íƒˆ íƒ€ì´ë¨¸ í™•ì¸ + ë°©í–¥ë²¡í„° í™•ì¸
+	bool isSuccess(Vector2 pos,float t);
 
-	// [ÆÇÁ¤ 2] ¸¶¿ì½º ÁÂÅ¬¸¯ ³õÀº À§Ä¡ + ½Ã°£ ÃæÁ· ¿©ºÎ È®ÀÎ
-	// ³õÀº À§Ä¡´Â Ç×»ó 4¹ø(Áß¾Ó)³ëµå¸¦ ±âÁØÀ¸·Î ¹æÇâ ¹éÅÍ¸¦ »ý¼ºÇÔ, 1 -> 5 È¤Àº 9 -> 5 Ã³·³
-	void Slashing();
+	// [íŒì • 2] ë§ˆìš°ìŠ¤ ì¢Œí´ë¦­ ë†“ì€ ìœ„ì¹˜ + ì‹œê°„ ì¶©ì¡± ì—¬ë¶€ í™•ì¸
+	// ë†“ì€ ìœ„ì¹˜ëŠ” í•­ìƒ 4ë²ˆ(ì¤‘ì•™)ë…¸ë“œë¥¼ ê¸°ì¤€ìœ¼ë¡œ ë°©í–¥ ë°±í„°ë¥¼ ìƒì„±í•¨, 1 -> 5 í˜¹ì€ 9 -> 5 ì²˜ëŸ¼
+	void Slashing(Vector2 pos, float time);
+
 	//=========================================================
 
 	//std::vector<Vector2> nodPos;
