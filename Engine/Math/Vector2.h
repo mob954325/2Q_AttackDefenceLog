@@ -38,8 +38,8 @@ struct Vector2
 	static float Dot(const Vector2& lhs, const Vector2& rhs);
 	static float Cross(const Vector2& lhs, const Vector2& rhs);
 	Vector2	Lerp(Vector2& start, Vector2& end, float t);
-	float Megnituede() const;
-	float SqrMegnitude() const;
+	float Magnitude() const;
+	float SqrMagnitude() const;
 	Vector2 Normalize() const;
 };
 

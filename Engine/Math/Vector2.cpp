@@ -121,19 +121,19 @@ float Vector2::Cross(const Vector2& lhs, const Vector2& rhs)
 	return lhs.x * rhs.y - lhs.y * rhs.x;
 }
 
-float Vector2::Megnituede() const
+float Vector2::Magnitude() const
 {
 	return sqrt(x * x + y * y);
 }
 
-float Vector2::SqrMegnitude() const
+float Vector2::SqrMagnitude() const
 {
 	return x * x + y * y;
 }
 
 Vector2 Vector2::Normalize() const
 {
-	float len = Megnituede();
+	float len = Magnitude();
 	if (len < FLT_EPSILON)
 		return Vector2(0.0f, 0.0f);
 	return Vector2(x / len, y / len);
