@@ -13,6 +13,7 @@
 
 #include "../Engine/Scene/SceneManager.h"
 #include "Application/AppPaths.h"
+#include "Scripts/GameManager.h"
 
 // 각 값은 해당 함수가 출력 중일때, 각 플레그 변화
 //														     
@@ -54,7 +55,12 @@ void Player::OnStart() {
 
 // 업데이트에서 시간 받기???? -> 필요없음, 수정하기!!!
 void Player::OnUpdate() {
-	
+
+	if (Singleton<GameManager>::GetInstance().GetGameState() == GameState::Pause)
+	{
+		return;
+	}
+
 	//if (m_State->GetNowName() != "Player_Dead"||m_State->GetNowName() != "Player_Groggy"){
 	CalSpiritTime();		// 1초마다 기세게이지 감소
 	AddPattenLoop();		// 패턴을 추가하는 루프

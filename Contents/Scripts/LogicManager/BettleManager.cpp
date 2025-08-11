@@ -7,6 +7,7 @@
 #include "AttackPatternManager.h"
 #include "Components/Base/GameObject.h"
 #include "Components/Base/MonoBehavior.h"
+#include "Scripts/GameManager.h"
 
 
 
@@ -31,6 +32,10 @@ void BettleManager::OnStart() {
 
 void BettleManager::OnUpdate() {
 
+	if (Singleton<GameManager>::GetInstance().GetGameState() == GameState::Pause)
+	{
+		return;
+	}
 
 	SetStateFormPattern();
 	ChangeFinalState();

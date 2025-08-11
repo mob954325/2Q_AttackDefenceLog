@@ -11,6 +11,7 @@
 #include "../Engine/Scene/SceneManager.h" // 테스트 씬 전환용 8.09 추가
 
 #include "Application/AppPaths.h"
+#include "Scripts/GameManager.h"
 
 
 // 각 값은 해당 함수가 출력 중일때, 각 플레그 변화
@@ -42,6 +43,12 @@ void Enemy::OnStart() {
 
 // 업데이트에서 시간 받기???? -> 필요없음, 수정하기!!!
 void Enemy::OnUpdate() {
+
+	if (Singleton<GameManager>::GetInstance().GetGameState() == GameState::Pause)
+	{
+		return;
+	}
+
 	if (! (nowStateName == "Enemy_Dead" || nowStateName == "Enemy_Groggy") ) {
 		CalSpiritTime();		// 1초마다 기세게이지 증가
 		AddPattenLoop();		// 
