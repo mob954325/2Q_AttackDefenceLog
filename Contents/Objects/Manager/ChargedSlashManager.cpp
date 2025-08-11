@@ -1,6 +1,7 @@
 ﻿#include "ChargedSlashManager.h"
 #include "Components/Base/GameObject.h"
 #include "Scene/SceneManager.h"
+#include "../Engine/Datas/EngineData.h"
 
 #include "../Engine/Utils/GameTime.h"
 #include "Application/AppPaths.h"
@@ -11,8 +12,30 @@ void ChargedSlashManager::OnStart()
 	bitmapRenderer = owner->AddComponent<BitmapRenderer>();
 	bitmapRenderer->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Mouse\\ui01.png");
 	size = bitmapRenderer->GetResource()->GetBitmap()->GetSize();
-	owner->GetTransform().SetUnityCoords(false);
+	owner->GetTransform().SetUnityCoords(false); // 노드가 D2D좌표계임
 	owner->GetTransform().SetOffset(-size.width / 2.0f, size.height / 2.0f);
+
+
+	//그거임 좌우 상단에 필터 설정해주는 부분
+	auto basePath = Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\filter\\";
+	std::wstring files[] = { L"left_filter_gradient.png", L"left_filter_black.png" , L"right_filter_gradient.png", L"right_filter_black.png" };
+
+	filter.clear();
+	for (int i = 0; i < std::size(files); ++i) {// 0, 2 >>
+		filter.push_back(new GameObject);
+		filter[i]->GetTransform().SetUnityCoords(true);
+		filter[i]->SetRenderLayer(EngineData::RenderLayer::UI);
+		auto bir = filter[i]->AddComponent<BitmapRenderer>();
+		
+
+		bir->SetOrderInLayer(500);
+		bir->CreateBitmapResource(basePath + files[i]);
+		auto si = bir->GetResource()->GetBitmap()->GetSize();
+		filter[i]->GetTransform().SetOffset(-si.width / 2.0f, si.height / 2.0f);
+
+		bir->SetFlip(true);
+		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(filter[i], "filter." + i);
+	}
 }
 
 void ChargedSlashManager::OnUpdate() {
@@ -56,6 +79,8 @@ void ChargedSlashManager::OnUpdate() {
 		isCharged = true;
 		std::cout << "차징 완료!" << std::endl;
 	}
+
+	std::cout << timer << std::endl;
 
 }
 
