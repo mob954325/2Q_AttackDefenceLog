@@ -29,9 +29,9 @@ void EndScene::OnExitImpl()
 
 void EndScene::UpdateImpl()
 {
-	auto input = inputObj->GetComponent<InputSystem>();
-	if (input->IsKeyPressed('2')) {
-		Singleton<SceneManager>::GetInstance().LoadScene(MENU);
-	}
+	//auto input = inputObj->GetComponent<InputSystem>();
+	//if (input->IsKeyPressed('2')) {
+	//	Singleton<SceneManager>::GetInstance().LoadScene(MENU);
+	//}
 }
 

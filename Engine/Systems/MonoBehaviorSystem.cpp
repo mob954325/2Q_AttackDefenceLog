@@ -28,6 +28,8 @@ void MonoBehaviorSystem::Update()
 {
 	for (MonoBehavior* mono : components)
 	{
+		if (!mono->IsStarted()) continue;
+
 		if (mono->IsActiveSelf())
 		{
 			mono->OnUpdate();
@@ -39,6 +41,8 @@ void MonoBehaviorSystem::FixedUpdate()
 {
 	for (MonoBehavior* mono : components)
 	{
+		if (!mono->IsStarted()) continue;
+
 		if (mono->IsActiveSelf())
 		{
 			mono->OnFixedUpdate();

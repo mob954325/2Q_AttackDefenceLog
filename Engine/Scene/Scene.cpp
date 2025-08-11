@@ -11,6 +11,8 @@
 
 #include "Utils/GameTime.h"
 
+#include "Systems/TaskSystem.h"
+
 #pragma region Event Update
 void Scene::OnEnter()
 {

@@ -39,8 +39,8 @@ void MenuScene::OnExitImpl()
 
 void MenuScene::UpdateImpl()
 {
-	auto input = inputObj->GetComponent<InputSystem>();
-	if (input->IsKeyPressed('1')) {
-		Singleton<SceneManager>::GetInstance().LoadScene(STAGE1);
-	}
+	//auto input = inputObj->GetComponent<InputSystem>();
+	//if (input->IsKeyPressed('1')) {
+	//	Singleton<SceneManager>::GetInstance().LoadScene(STAGE1);
+	//}
 }

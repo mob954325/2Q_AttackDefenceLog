@@ -68,6 +68,8 @@ void RenderSystem::Update(D2DRenderManager* manager)
 	{
 		for (auto comp : group.second)
 		{
+			if (!comp->IsStarted()) continue;
+
 			comp->Render(manager);
 		}
 	}

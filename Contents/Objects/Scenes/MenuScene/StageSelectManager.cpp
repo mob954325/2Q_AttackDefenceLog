@@ -6,11 +6,11 @@
 
 void StageSelectManager::OnCreate()
 {
+	CreateMenuObjects();
 }
 
 void StageSelectManager::OnStart()
 {
-	CreateMenuObjects();
 
 	objs[0]->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\MenuUI\\esc_menu_ui_continue.png");
 	objs[1]->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\MenuUI\\esc_menu_ui_exit.png");

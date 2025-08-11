@@ -28,6 +28,8 @@ void PhysicSystem::FixedUpdate(std::vector<CollisionInfo>& collisions)
 {
 	for (auto comp : components)
 	{
+		if (!comp->IsStarted()) continue;
+
 		comp->FixedUpdate(collisions);
 	}
 }

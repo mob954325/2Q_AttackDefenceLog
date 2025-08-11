@@ -57,8 +57,8 @@ void Stage1::OnExitImpl()
 
 void Stage1::UpdateImpl()
 {					
-	auto input = inputObj->GetComponent<InputSystem>();
-	if (input->IsKeyPressed('2')) {
-		Singleton<SceneManager>::GetInstance().LoadScene(END);
-	}
+	//auto input = inputObj->GetComponent<InputSystem>();
+	//if (input->IsKeyPressed('2')) {
+	//	Singleton<SceneManager>::GetInstance().LoadScene(END);
+	//}
 }

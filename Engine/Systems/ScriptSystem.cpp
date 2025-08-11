@@ -1,4 +1,5 @@
 ﻿#include "Systems/ScriptSystem.h"
+#include "Components/Base/GameObject.h"
 
 ScriptSystem::~ScriptSystem()
 {
@@ -40,6 +41,8 @@ void ScriptSystem::Update()
 {
 	for (ScriptComponent* comp : components)
 	{
+		if (!comp->IsStarted()) continue;
+
 		comp->Update();
 	}
 }

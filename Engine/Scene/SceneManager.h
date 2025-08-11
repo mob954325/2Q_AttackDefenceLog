@@ -26,6 +26,7 @@ private:
 	~SceneManager();
 
 	std::map<int, Scene*> scenes; // sceneIndex, Scene로 저장된 씬 모음
+	Scene* loadingScene;
 
 	Scene* currentScene = nullptr; // 실행되고 있는 현재 씬
 	int currentSceneIndex = -1;

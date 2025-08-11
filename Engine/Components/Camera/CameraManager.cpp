@@ -26,6 +26,8 @@ void CameraManager::Update()
 	{
 		for (auto cam : cameras)
 		{
+			if (!cam->camera->IsStarted()) continue;
+
 			cam->camera->ResetIsPriorityChanged();
 		}
 	}

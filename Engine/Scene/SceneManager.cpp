@@ -7,6 +7,7 @@
 #include "Systems/MonoBehaviorSystem.h"
 #include "Components/Camera/CameraManager.h"
 #include "Systems/UISystem.h"
+#include "Systems/TaskSystem.h"
 
 SceneManager::~SceneManager()
 {
@@ -50,6 +51,7 @@ void SceneManager::CheckSceneLoad()
 			Singleton<RenderSystem>::GetInstance().ClearAll();
 			Singleton<MonoBehaviorSystem>::GetInstance().ClearAll();
 			Singleton<UISystem>::GetInstance().ClearAll();
+			Singleton<TaskSystem>::GetInstance().Clear();
 		}
 
 		// 씬 교체
@@ -65,6 +67,8 @@ void SceneManager::CheckSceneLoad()
 		std::cout << "currnet Scene : " << currentSceneIndex << std::endl;
 
 		Singleton<RenderSystem>::GetInstance().InitializeRenderLayers();
+
+		// 여기에 이제 로딩 씬 추가하고 관련 내용은 LoadingScene에서 처리함
 		currentScene->OnEnter();
 
 		targetSceneIndex = -1;

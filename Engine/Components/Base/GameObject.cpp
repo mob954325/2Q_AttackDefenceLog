@@ -6,6 +6,7 @@
 #include "Systems/TransformSystem.h"
 #include "Systems/MonoBehaviorSystem.h"
 #include "Systems/UISystem.h"
+#include "Systems/TaskSystem.h"
 
 GameObject::GameObject()
 {
@@ -83,9 +84,16 @@ void GameObject::CheckComponent(Component* comp)
 	}
 
 	DispatchComponentToSystem(comp);
-	comp->OnCreate(); // 즉시 OnCreate 호출
-	comp->SetCreated();
-	startQueue.push(comp);
+
+	comp->OnCreate();
+	comp->SetCreated();		// true
+	startQueue.push(comp);  // OnCreate 완료된 컴포넌트 등록
+
+	// TaskSystem::GetInstance().AddTask([this, comp]() {
+	// 	comp->OnCreate();
+	//  	comp->SetCreated();		// true
+	//  	startQueue.push(comp);  // OnCreate 완료된 컴포넌트 등록
+	//  }, false);
 }
 
 void GameObject::DispatchComponentToSystem(Component* comp)

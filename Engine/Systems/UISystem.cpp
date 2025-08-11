@@ -24,6 +24,8 @@ void UISystem::Update()
 {
 	for (auto comp : components)
 	{
+		if (!comp->IsStarted()) continue;
+
 		comp->Update();
 	}
 }

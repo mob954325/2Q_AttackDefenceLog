@@ -40,9 +40,12 @@ void BitmapRenderer::Render(D2DRenderManager* manager)
 			manager->DrawBitmap(m_bitmapResource->GetBitmap(), destRect, srcRect, capacity); // 0730 : 작성자 : 이성호, rect로 직접 수정할 수 있게 코드 추가
 		}
 
-		if (!points.empty()) renderManager->PopLayer(); // 레이어 제거
-		layer->Release();
-		layer = NULL;
+		if (!points.empty())
+		{
+			renderManager->PopLayer(); // 레이어 제거
+			layer->Release();
+			layer = NULL;
+		}
 	}
 	else // 예외 처리
 	{

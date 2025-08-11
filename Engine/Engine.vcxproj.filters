@@ -317,6 +317,12 @@
     <ClInclude Include="Components\Rendering\VignetteEffect.h">
       <Filter>Components\Rendering</Filter>
     </ClInclude>
+    <ClInclude Include="Scene\LoadingScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\TaskSystem.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\Application.cpp">
@@ -503,6 +509,12 @@
     </ClCompile>
     <ClCompile Include="Components\Rendering\VignetteEffect.cpp">
       <Filter>Components\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\LoadingScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\TaskSystem.cpp">
+      <Filter>Systems</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

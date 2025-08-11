@@ -106,16 +106,6 @@ void PatternControlObject::OnCreate()
 
 	PM.SetNodes(m_nodes, r);
 
-	// effect 9
-	for (int i = 0; i < 9; i++)
-	{
-		GameObject* obj = new GameObject;
-		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(obj);
-		auto comp = obj->AddComponent<EffectInstance>();
-		comp->SetAnimePosition(nodePositions);
-		effs.push_back(comp);
-	}
-
 	//===================================================================================================
 	// 적 + 플레이어 + 배틀매니저 생성
 	enemy = new GameObject();      // GameObject 객체 생성
@@ -165,6 +155,16 @@ void PatternControlObject::OnStart() // 처음
 
 	effInstance = owner->AddComponent<EffectInstance>();
 	effInstance->SetAnimePosition(nodePositions);
+
+	// effect 9
+	for (int i = 0; i < 9; i++)
+	{
+		GameObject* obj = new GameObject;
+		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(obj);
+		auto comp = obj->AddComponent<EffectInstance>();
+		comp->SetAnimePosition(nodePositions);
+		effs.push_back(comp);
+	}
 
 	//===================================================================================================
 

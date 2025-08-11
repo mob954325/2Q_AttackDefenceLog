@@ -16,6 +16,7 @@
 #include "Utils/GameTime.h"
 #include "AppPaths.h"
 #include "Utils/DebugUtility.h"
+#include "Systems/TaskSystem.h"
 
 LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -247,6 +248,7 @@ void Application::Run()
 		}
 		else 
 		{
+			Singleton<TaskSystem>::GetInstance().ProcessTaskQueue(15);
 
 			Update();
 			Render();
@@ -255,7 +257,6 @@ void Application::Run()
 			Input::ResetMouseEventFrameState();
 			Singleton<SceneManager>::GetInstance().CheckSceneLoad();	// 씬 교체 확인 
 		}
-
 	}
 }
 

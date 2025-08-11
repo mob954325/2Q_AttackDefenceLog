@@ -48,9 +48,9 @@ void SelectScene::UpdateImpl()
 
 	auto input = inputObj->GetComponent<InputSystem>();	
 
-	if (input->IsKeyPressed('1')) {
-		Singleton<SceneManager>::GetInstance().LoadScene(STAGE1);
-	}
+	//if (input->IsKeyPressed('1')) {
+	//	Singleton<SceneManager>::GetInstance().LoadScene(STAGE1);
+	//}
 	// 	if (input->IsKeyPressed('3')) {
 	// 		Singleton<SceneManager>::GetInstance().LoadScene(STAGE2);
 	// 	}

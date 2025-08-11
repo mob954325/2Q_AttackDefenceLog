@@ -38,8 +38,8 @@ void TitleScene::OnExitImpl()
 
 void TitleScene::UpdateImpl()
 {
-	auto input = inputObj->GetComponent<InputSystem>();
-	if (input->IsKeyPressed('1')) {
-		Singleton<SceneManager>::GetInstance().LoadScene(MENU);
-	}
+	// auto input = inputObj->GetComponent<InputSystem>();
+	// if (input->IsKeyPressed('1')) {
+	// 	Singleton<SceneManager>::GetInstance().LoadScene(MENU);
+	// }
 }
