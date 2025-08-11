@@ -223,20 +223,20 @@ void Enemy::SelectPatten() {   //각 객체가 사용할 패턴을 고름
 		
 	else {
 		patternCount = 0;
-		if(enemyAttackPatternFix.substr(0,2) != "EP")
-			while (1) { // 랜덤으로 적의 패턴을 정하기
-				std::random_device rd;
-				std::mt19937 gen(rd());
-				std::uniform_int_distribution<> dist(0, PattenID.size() - 1);
-				nowRandomValue = dist(gen);
-				SetAttackPattenData(PattenID[nowRandomValue]);
+		if (enemyAttackPatternFix.substr(0, 2) != "EP") {
+			//while (1) { // 랜덤으로 적의 패턴을 정하기
+			std::random_device rd;
+			std::mt19937 gen(rd());
+			std::uniform_int_distribution<> dist(0, PattenID.size() - 1);
+			nowRandomValue = dist(gen);
+			SetAttackPattenData(PattenID[nowRandomValue]);
 
 
-				// 이전 패턴과 안겹치게 할때 사용하기!
-				//if (preEnemyPattenData != nowEnemyPattenData)
-				//	break;
+			// 이전 패턴과 안겹치게 할때 사용하기!
+			//if (preEnemyPattenData != nowEnemyPattenData)
+			//	break;
+	//}
 		}
-
 		else {
 			SetAttackPattenData(enemyAttackPatternFix);
 		}
