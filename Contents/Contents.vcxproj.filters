@@ -207,6 +207,9 @@
     <ClCompile Include="Scripts\Effect\EffectComponent.cpp">
       <Filter>Scripts\Effect</Filter>
     </ClCompile>
+    <ClCompile Include="Objects\Scenes\TitleScene\TitleEffectManager.cpp">
+      <Filter>Objects\SceneObject\TitleScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameApp.h">
@@ -343,6 +346,9 @@
     </ClInclude>
     <ClInclude Include="Scripts\Effect\EffectComponent.h">
       <Filter>Scripts\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Scenes\TitleScene\TitleEffectManager.h">
+      <Filter>Objects\SceneObject\TitleScene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

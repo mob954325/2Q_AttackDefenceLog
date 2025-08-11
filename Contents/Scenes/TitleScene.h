@@ -14,4 +14,9 @@ private:
 	GameObject* inputObj;
 	GameObject* trail;
 	GameObject* backGroundImg;
+
+
+
+
+	GameObject* titleEffectManager;
 };
