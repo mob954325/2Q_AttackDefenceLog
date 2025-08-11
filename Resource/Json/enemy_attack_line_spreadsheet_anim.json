@@ -1,0 +1,37 @@
+﻿{
+    "clipName": "enemy_attack_line_spreadsheet",
+    "loop": true,
+    "texturePath": "Assets/Character/Sprites/enemy_attack_line_spreadsheet.png",
+    "duration": 0.5833333134651184,
+    "frames": [
+        {
+            "sprite": "enemy_attack_line_spreadsheet_0",
+            "time": 0.0
+        },
+        {
+            "sprite": "enemy_attack_line_spreadsheet_1",
+            "time": 0.0833333358168602
+        },
+        {
+            "sprite": "enemy_attack_line_spreadsheet_2",
+            "time": 0.1666666716337204
+        },
+        {
+            "sprite": "enemy_attack_line_spreadsheet_3",
+            "time": 0.25
+        },
+        {
+            "sprite": "enemy_attack_line_spreadsheet_4",
+            "time": 0.3333333432674408
+        },
+        {
+            "sprite": "enemy_attack_line_spreadsheet_5",
+            "time": 0.4166666865348816
+        },
+        {
+            "sprite": "enemy_attack_line_spreadsheet_6",
+            "time": 0.5
+        }
+    ],
+    "events": []
+}
