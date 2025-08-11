@@ -12,7 +12,6 @@
 
 
 
-
 void BettleManager::OnStart() {
 	//m_Enemy = owner->GetQuery()->FindByName("Enemytmp")->GetComponent<Enemy>();
 	//m_Player = owner->GetQuery()->FindByName("Playertmp")->GetComponent<Player>();
@@ -30,12 +29,12 @@ void BettleManager::OnStart() {
 }
 
 void BettleManager::OnUpdate() {
-
-
+	
+	SetGroggyState();
 	SetStateFormPattern();
 	ChangeFinalState();
 	SetSpiritGauge();
-	
+	ResetState(); // state가 다를 경우 초기화 하기!!!
 }
 
 // -> 생성자로 넣어야 할듯?
@@ -56,7 +55,8 @@ void BettleManager::SetInputNode(std::vector<int> InputNode) {
 //들어온 입력 노드에 따라서 공격, 방어를 처리하는 함수
 void BettleManager::SetStateFormPattern() {	
 
-	if (!m_Player->GetIsGroggy() || !m_Enemy->GetIsGroggy()) { // 그로기가 아니면!!
+	if (!m_Player->GetIsGroggy() && !m_Enemy->GetIsGroggy()) { // 그로기가 아니면!!
+		nowManagerState = noneGroggy;
 		std::unordered_map<std::string, pattern*> tmpTimePatten = m_PattenManager->TimeOutPatten();  // 패턴이 공격 시간이 지났다면 
 		for (const auto& pair : tmpTimePatten) {
 			if (pair.second->PattenID.substr(0, 2) == "EP")            //적 패턴일시
@@ -168,15 +168,28 @@ void BettleManager::SetStateFormPattern() {
 
 		
 	}
-	else if (m_Player->GetIsGroggy() && m_Enemy->GetIsGroggy()) {  // 적과 아군의 그로기가 동시에 걸린 경우
+	//else if (m_Player->GetIsGroggy() && m_Enemy->GetIsGroggy()) {  // 적과 아군의 그로기가 동시에 걸린 경우 // 버그 터지면 처리해!!!!!
 
-	}
-	else if (m_Enemy->GetIsGroggy()) { // 적이 그로기에 걸린 경우
+	//}
+	else if (m_Enemy->GetIsGroggy()) { // 적이 그로기에 걸린 경우 
+		m_Player->SetIsOtherEndGroggy(true);
+		m_PattenManager->EnemyPatternAllClear();  //이것도 잘 처리하기!!!
+		m_PattenManager->PlayerPatternAllClear();
+		m_PattenManager->DoneTimeOutPatten();
 
-	}
-	else if (m_Player->GetIsGroggy()) { // 아군이 그로기에 걸린경우
+		if (nowNode.size() < 1) return;
 
+		if (allDistancePercent == 0.0f) {	   //퍼센트가 0 이라면 길이에 따라서 배율 넣기 , 문제 있을 수 있음
+			allDistancePercent = m_PattenManager->OnceAllNodePatternDistance(nowNode);
+		}
 	}
+
+
+	//else if (m_Player->GetIsGroggy()) { // 아군이 그로기에 걸린경우
+	// nowManagerState = playerGroggy;
+	//	m_Enemy->SetIsGroggy(true);
+	//	//m_Player->GetDamage( m_Enemy->GetAttack() * 2.5f);
+	//}
 	nowNode.clear();
 }
 
@@ -198,7 +211,6 @@ void BettleManager::ChangeFinalState() {
 		m_Enemy->SetState("Enemy_Dead");
 	}
 
-
 	if (m_Enemy->GetIsRestore() || m_Player->GetIsRestore()) // 적과 아군 둘중 그로기가 끝나고 회복해야한다면
 	{
 		m_Enemy->ResetSpiritAmount();  // 서로 기세게이지가 절반으로 돌아감
@@ -206,26 +218,54 @@ void BettleManager::ChangeFinalState() {
 		m_Enemy->SetIsRestore(false);  // 기세 게이지 회복 표시
 		m_Player->SetIsRestore(false);
 	}
-	else if ( (!m_Player->GetIsGroggy()) && m_Player->GetNowSpiritAmount() <= 0.0f) {
+	else if ((!m_Player->GetIsGroggy()) && m_Player->GetNowSpiritAmount() <= 0.0f) {
 		m_Player->SetState("Player_Groggy");
 		m_Player->SetIsGroggy(true);
+		m_Enemy->SetIsOtherEndGroggy(true);
 	}
-	else if ( (!m_Enemy->GetIsGroggy()) && m_Enemy->GetNowSpiritAmount() <= 0.0f) {
+	else if ((!m_Enemy->GetIsGroggy()) && m_Enemy->GetNowSpiritAmount() <= 0.0f) {
 		m_Enemy->SetState("Enemy_Groggy");
 		m_Enemy->SetIsGroggy(true);
+		m_Player->SetIsOtherEndGroggy(true);
 	}
-	
-
 }
 
 void BettleManager::SetSpiritGauge(){
 	giseObj->SetMaxGague(TotalValue);
 	ChangeValue = m_Player->GetNowSpiritAmount();
 	/*preSpiritAmount = m_Player->GetNowSpiritAmount();*/
-
 	giseObj->CalculateValue(ChangeValue);
 }
 
+/// 아군 홀드 공격 완료!!!
+void BettleManager::FinalAttackToEnemy(){
+	if (m_Enemy->GetIsGroggy()) {
+		m_Enemy->GetDamage((m_Player->GetAttack() * allDistancePercent * 10.0f));  /// 나중에 적 hp 배율 따로 빼기!!!!
+		m_Enemy->SetState("Enemy_Hit");
+		m_Player->SetState("Player_AttackSuccess");
+	}
+	// 적과 아군 state 끝
+}
+
+void BettleManager::SetGroggyState() {
+	preManagerState = nowManagerState;
+	if (m_Player->GetIsGroggy()) {
+		nowManagerState = playerGroggy;
+	}
+	else if (m_Enemy->GetIsGroggy()) {
+		nowManagerState = enemyGroggy;
+	}
+	else if( (!m_Enemy->GetIsGroggy()) && (!m_Player->GetIsGroggy())) {
+		nowManagerState = noneGroggy;
+	}
+	else {
+		nowManagerState = noneGroggy;
+	}
+}
 
 
-
+void BettleManager::ResetState() {
+	if (preManagerState != nowManagerState || preManagerState == enemyGroggy) {
+		allDistancePercent = 0.0f;
+	}
+}

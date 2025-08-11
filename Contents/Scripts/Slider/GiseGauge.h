@@ -38,5 +38,9 @@ private:
 	
 	//변화율
 	float X_Value = 0.0f;
+
+	//
+	float coverX = 0.0f;
+	GameObject* ButtonCover{};
 };
 

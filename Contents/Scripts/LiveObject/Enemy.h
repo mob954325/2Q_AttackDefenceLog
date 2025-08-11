@@ -92,6 +92,8 @@ private:
 	void PrintConsole();
 	void SetCursorPosition(int x, int y);
 	AttackPatternManager* m_PattenManager = nullptr; // 패턴 매니저를  참조로 받아  사용할 변수
+
+	bool isFirstSpiriteDown = false;
 private:
 	std::string Difficulty;			   // 적의 난이도 k
 	EnemyData* nowEnemyData = nullptr; // 현재 적의 데이터 클래스를 담을 변수
@@ -117,6 +119,8 @@ private:
 	std::wstring enemy_CommonPath;
 
 	void SetBitmap();  // 비트맵 설정하는 함수
+
+	
 };
 
 

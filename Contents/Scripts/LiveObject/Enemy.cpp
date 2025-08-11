@@ -42,13 +42,13 @@ void Enemy::OnStart() {
 
 // 업데이트에서 시간 받기???? -> 필요없음, 수정하기!!!
 void Enemy::OnUpdate() {
-	if (! (nowStateName == "Enemy_Dead" || nowStateName == "Enemy_Groggy") ) {
+	if (  nowStateName != "Enemy_Dead" && (!isGroggy) ) {
 		CalSpiritTime();		// 1초마다 기세게이지 증가
 		AddPattenLoop();		// 
 		StateAct();            //   
 	}
 	DiffState();            // 이전 상태와 현재 상태를 비교
-	// PrintConsole();
+	PrintConsole();
 	if (nowStateName == "Enemy_Dead")
 	{
 		Singleton<SceneManager>::GetInstance().LoadScene(0); // 나중에 딜레이 올려줘야함
@@ -286,6 +286,9 @@ void Enemy::SetCoolTime() {
 		Object_nowCoolTime = (1 - ((Object_NowSpiritAmount - Object_SpiritAmount / 2.0f) / Object_SpiritAmount) / 2.0f)
 							* Object_CoolTime + nowEnemyPattenData->eAtkCoolDown;
 	}
+	else if (IsOtherEndGroggy) {
+		Object_nowCoolTime = nowEnemyPattenData->eAtkCoolDown;
+	}
 	else {
 		Object_nowCoolTime = nowEnemyPattenData->eComboCoolDown;
 	}
@@ -308,17 +311,22 @@ void Enemy::DiffState() {
 		nowStateName = m_State->GetNowName();
 	}
 	
-	if (isGroggy) {
-		groggyTime += GameTime::GetInstance().GetDeltaTime();
-
+	if (IsOtherEndGroggy || isFirstSpiriteDown) { // 딴 놈이 해줌
+		SelectPatten(); // 패턴 정하기!!
+		SetCoolTime();
 	}
 
+
+
 	// 그로기 시간!!!
-	if (groggyTime >= 3.0f) {
+	if ((IsOtherEndGroggy   && Object_nowCoolTime <= 0 )|| (isGroggy && preHp != Object_Hp)) {
 		groggyTime = 0.0f;
+		IsOtherEndGroggy = false;
 		isGroggy = false;
 		isRestore = true;
 	}
+
+	preHp = Object_Hp;
 }
 
 

@@ -11,6 +11,7 @@ void GiseGauge::OnUpdate()
 	ChangeGaugeBar();
 	SetAnimePosition();
 	ButtonAnime->GetTransform().SetPosition(EngineData::SceenWidth / 2 - currentgague / 2 + x_width + x_pic/2, 38.1f);
+	ButtonCover->GetTransform().SetPosition(EngineData::SceenWidth / 2 - currentgague / 2 + x_width - coverX / 2, 0);
 }
 
 void GiseGauge::OnCreate()
@@ -43,7 +44,18 @@ void GiseGauge::OnStart()
 	obj->GetComponent<AnimationRenderer>()->SetOrderInLayer(500);
 	obj->GetTransform().SetUnityCoords(false);
 	ButtonAnime = obj;
-	/*x_pic = 36.0f;*/
+	
+	GameObject* obj2 = new GameObject();
+	obj2->AddComponent<BitmapRenderer>();
+	obj2->SetName(std::string("Buttoncover"));
+	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(obj2);
+	obj2->GetTransform().SetUnityCoords(false);
+	ButtonCover = obj2;
+	ButtonCover->GetComponent<BitmapRenderer>()->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\Slider\\gise_ui_cover.png");
+	ButtonCover->GetComponent<BitmapRenderer>()->SetOrderInLayer(600);
+	coverX = ButtonCover->GetComponent<BitmapRenderer>()->GetResource()->GetBitmap()->GetSize().width;
+
+
 	auto it = obj->GetComponent<AnimationRenderer>()->GetAnimationPlayer()->GetSpriteSheet();
 	x_pic = it.sprites[0].width;
 

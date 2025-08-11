@@ -30,7 +30,7 @@ private:
 	std::string attackPlayerPatternIDFix = "PI_040";  //안쓰면 PI 붙이기 말기!!,  ex) "PI_040"
 
 	//기세가 0이 되었을때 그 시간이 유지되는 시간
-	float totalGroggyTime = 3.0f;         
+	float totalGroggyTime = 3.0f;
 
 
 	//-------------------------------------------------------------------------------------
@@ -59,7 +59,7 @@ public:
 	void SetState(std::string setStateName) override;
 	void OnCreateState() override;
 	void SetEndAttack() { isAttackingPattern = true; }
-	
+
 
 	//플래그를 체크할 함수
 	void AddPattenLoop() override;
@@ -69,7 +69,7 @@ public:
 	AllNodePattenClass* tmpNode2 = nullptr;  // 출력용 변수
 
 
-	
+
 private:
 	std::vector<std::string> PattenID;
 	PlayerData* nowPlayerData = nullptr; // 받아올 데이터를 가리키는 포인터
@@ -93,13 +93,10 @@ private:
 	BitmapRenderer* player_Damaged = nullptr;
 	void AttackStateSelect(bool AttackActive); // 공격 패턴 3가지 중 랜덤으로 1개 선택해서 설정함
 
+	void ResetPlayer(); // 플레이어의 상태 재설정
 
 	void SetBitmap(); //처음 비트맵을 설정할 함수
 
 	bool isAttackingPattern = false;
 	float groggyTime = 0.0f;
-	
 };
-
-
-

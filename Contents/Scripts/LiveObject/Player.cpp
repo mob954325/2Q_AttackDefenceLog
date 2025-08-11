@@ -34,7 +34,7 @@ void Player::OnStart() {
 	m_State = owner->GetComponent<StateController>();
 	m_PattenManager = owner->GetQuery()->FindByName("AttackPattenManager")->GetComponent<AttackPatternManager>();
 	SetStatData("CI_001");
-	SelectPatten(); // 공격을 했으면 다른 패턴 세팅
+	
 	SetBitmap();    // 비트맵 설정
 
 	//player_BitmapRenderer->SetUseCustomRect(true);
@@ -46,25 +46,28 @@ void Player::OnStart() {
 
 	OnCreateState();
 	m_State->SetState("Player_Idle");
-	SetState("Player_Idle");
 	isAttackingPattern = true;
 }
 
-
+void Player::ResetPlayer() {
+	isAttackingPattern = true;
+	SelectPatten(); // 공격을 했으면 다른 패턴 세팅
+	SetState("Player_Idle");
+}
 
 // 업데이트에서 시간 받기???? -> 필요없음, 수정하기!!!
 void Player::OnUpdate() {
 	
-	//if (m_State->GetNowName() != "Player_Dead"||m_State->GetNowName() != "Player_Groggy"){
+	if (m_State->GetNowName() != "Player_Dead"  &&  (!isGroggy)){
 	CalSpiritTime();		// 1초마다 기세게이지 감소
 	AddPattenLoop();		// 패턴을 추가하는 루프
-	// PrintConsole();
-
+	}
+	 PrintConsole();
 	m_State->Update();
 	DiffState();  //   이전상태와 현재상태를 결정하는 함수
 	StateAct();   //  각 state 별 행동
 	
-	//}
+	
 	oneLoopPreStateName = nowStateName;
 	if (m_State->GetNowName() == "Player_Dead") {
 		Singleton<SceneManager>::GetInstance().LoadScene(0);
@@ -126,7 +129,7 @@ BitmapRenderer* player_Damaged = nullptr;
 
 
 void Player::SetBitmap() {
-	player_Idle = owner->AddComponent<BitmapRenderer>();
+ 	player_Idle = owner->AddComponent<BitmapRenderer>();
 	player_Idle->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\player_standing_fin.png");
 
 	player_Attack1 = owner->AddComponent<BitmapRenderer>();
@@ -267,22 +270,26 @@ void Player::DiffState() {
 	}
 
 
-	
-
-
-	if (isGroggy) {
+	if (IsOtherEndGroggy) { // 적과 나 둘중 1명이 그로기
 		groggyTime += GameTime::GetInstance().GetDeltaTime();
 
 	}
 
+	if (isGroggy) {
+
+   }
+
+
 	// 그로기 시간!!!
-	if (groggyTime >= totalGroggyTime) {
+	if (groggyTime >= totalGroggyTime || (isGroggy && preHp != Object_Hp) ) {
 		groggyTime = 0.0f;
+		IsOtherEndGroggy = false;
 		isGroggy = false;   /// 그로기를 표시하는 상태변수!!!, 나중에 
 		isRestore = true;
+		ResetPlayer();  // 상태, 쿨타임, 공격 패턴까지 초기화!
 	}
 
-	
+	preHp = Object_Hp;
 }
 
 
