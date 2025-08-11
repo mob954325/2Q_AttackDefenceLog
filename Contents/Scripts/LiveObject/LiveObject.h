@@ -49,6 +49,7 @@ public:
 	float GetSpiritAmount() { return Object_SpiritAmount; }
 	float GetNowSpiritAmount() { return Object_NowSpiritAmount; }
 	bool GetIsGroggy() { return isGroggy; }
+	bool GetIsOtherEndGroggy() {return IsOtherEndGroggy; }
 	bool GetIsRestore() { return isRestore; }
 
 	// 설정 함수들
@@ -60,6 +61,7 @@ public:
 	void SetDefenseRate(float defenseRate) { Object_DefenseRate = defenseRate; }     // 방어율 설정
 	void SetPlayingAttackTime(float time) { Object_PlayingAttackTime = time; }		 // 가이드라인이 떠있는 시간 설정
 	void SetIsGroggy(bool Setbool) { isGroggy = Setbool; }
+	void SetIsOtherEndGroggy(bool tmp) { IsOtherEndGroggy = tmp; }
 	void SetIsRestore(bool Setbool) { isRestore = Setbool; }
 
 
@@ -112,16 +114,15 @@ protected:
 
 
 
-
+	bool IsOtherEndGroggy = false;  // 다른 객체가 그로기 상태인지?
 	bool isGroggy = false;				  // 그로기가 되었는지를 판별하는 변수 
 	float NodeTime;				  // 가이드라인의 판정 시간
 	bool isRestore = false;
-
-
-
+	float preHp = 0.0f;
 
 
 public:
+
 	//배틀 매니저에서 사용할 flag
 	bool isPattenCooldown = false; //공격 패턴의 쿨타임이 줄어드는지
 	bool isAddPath = false;        // 패턴 추가 했는지

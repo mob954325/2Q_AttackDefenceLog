@@ -1,33 +1,31 @@
-﻿#include "StageSelectManager.h"
+﻿#include "LevelSelectManager.h"
 #include "Components/Base/GameObject.h"
 #include "Scene/SceneManager.h"
 #include "Application/AppPaths.h"
 #include "Utils/GameTime.h"
 #include "Scripts/GameManager.h"
 
-void StageSelectManager::OnCreate()
+void LevelSelectManager::OnCreate()
 {
 }
 
-void StageSelectManager::OnStart()
+void LevelSelectManager::OnStart()
 {
 	CreateMenuObjects();
 
 	objs[0]->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\MenuUI\\esc_menu_ui_continue.png");
 	objs[1]->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\MenuUI\\esc_menu_ui_exit.png");
 	objs[2]->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\MenuUI\\esc_menu_ui_sound.png");
-	
+
 	objs[0]->owner->GetTransform().SetPosition(-400, 200);
 	objs[1]->owner->GetTransform().SetPosition(0, 0);
 	objs[2]->owner->GetTransform().SetPosition(400, 400);
-	  
-	objs[0]->AddEvent([this]() 
+
+	objs[0]->AddEvent([this]()
 		{
 			if (!isSceneChange)
 			{
-				Singleton<GameManager>::GetInstance().SetBattleStage(SceneCount::STAGE1);
-				// Singleton<SceneManager>::GetInstance().LoadScene(SceneCount::STAGE1); 
-				isSceneChange = true;
+				isSceneChange = true; // NOTE : 나중에 난이도 세팅하기
 			}
 		});
 	// objs[1]->AddEvent([this]() 
@@ -48,35 +46,43 @@ void StageSelectManager::OnStart()
 	// 	});
 }
 
-void StageSelectManager::OnUpdate()
+void LevelSelectManager::OnUpdate()
 {
 	if (isSceneChange)
 	{
 		timer += Singleton<GameTime>::GetInstance().GetDeltaTime();
 
-		if(timer >= maxTimer)
+		if (timer >= maxTimer)
 		{
-			Singleton<SceneManager>::GetInstance().LoadScene(SceneCount::SELECT);
+			Singleton<SceneManager>::GetInstance().LoadScene(Singleton<GameManager>::GetInstance().GetTargetBattleStage());
 		}
 	}
 }
 
-void StageSelectManager::OnDestroy()
+void LevelSelectManager::OnDestroy()
 {
 	objs.clear();
 }
 
-void StageSelectManager::CreateMenuObjects() 
+void LevelSelectManager::CreateMenuObjects()
 {
 	for (int i = 0; i < 3; i++)
 	{
 		GameObject* obj = new GameObject();
 		obj->SetName("stage" + std::to_string(i + 1));
-		obj->GetTransform().SetParent(&(this->owner->GetTransform()));
 
 		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(obj);
 		SliceableObject* comp = obj->AddComponent<SliceableObject>();
 		objs.push_back(comp);
 	}
 
+	int startX = EngineData::SceenWidth * 0.3f;
+	Vector2 ownerPos = owner->GetTransform().GetPosition();
+	float gap = 250.0f;
+
+	// 위치 맞추기
+	for (int i = 0; i < objs.size(); i++)
+	{
+		objs[i]->owner->GetTransform().SetPosition(startX + gap * i, ownerPos.y);
+	}
 }

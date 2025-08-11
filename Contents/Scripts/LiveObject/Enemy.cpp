@@ -11,6 +11,7 @@
 #include "../Engine/Scene/SceneManager.h" // 테스트 씬 전환용 8.09 추가
 
 #include "Application/AppPaths.h"
+#include "Scripts/GameManager.h"
 
 
 // 각 값은 해당 함수가 출력 중일때, 각 플레그 변화
@@ -42,17 +43,26 @@ void Enemy::OnStart() {
 
 // 업데이트에서 시간 받기???? -> 필요없음, 수정하기!!!
 void Enemy::OnUpdate() {
-	if (! (nowStateName == "Enemy_Dead" || nowStateName == "Enemy_Groggy") ) {
-		CalSpiritTime();		// 1초마다 기세게이지 증가
-		AddPattenLoop();		// 
-		StateAct();            //   
-	}
-	DiffState();            // 이전 상태와 현재 상태를 비교
-	// PrintConsole();
-	if (nowStateName == "Enemy_Dead")
-	{
-		Singleton<SceneManager>::GetInstance().LoadScene(0); // 나중에 딜레이 올려줘야함
-	}
+    
+    // Game 상태가 Pause면 모든 Update 무시
+    if (Singleton<GameManager>::GetInstance().GetGameState() == GameState::Pause)
+    {
+        return;
+    }
+    
+    // 적이 죽지 않고 그로기(Groggy) 상태 일때
+	if (nowStateName != "Enemy_Dead" && (!isGroggy)) 
+    {
+	  CalSpiritTime();		// 1초마다 기세게이지 증가
+      AddPattenLoop();		// 
+	  StateAct();           //  
+    
+	  DiffState();            // 이전 상태와 현재 상태를 비교
+	  PrintConsole();
+	  if (nowStateName == "Enemy_Dead") // 적 사망 시 -> 씬 이동
+	  {
+		  Singleton<SceneManager>::GetInstance().LoadScene(0); // 나중에 딜레이 올려줘야함
+	  }
 }
 
 // onChangePatten에 TransitionTime 변경하기!!!
@@ -286,6 +296,9 @@ void Enemy::SetCoolTime() {
 		Object_nowCoolTime = (1 - ((Object_NowSpiritAmount - Object_SpiritAmount / 2.0f) / Object_SpiritAmount) / 2.0f)
 							* Object_CoolTime + nowEnemyPattenData->eAtkCoolDown;
 	}
+	else if (IsOtherEndGroggy) {
+		Object_nowCoolTime = nowEnemyPattenData->eAtkCoolDown;
+	}
 	else {
 		Object_nowCoolTime = nowEnemyPattenData->eComboCoolDown;
 	}
@@ -308,17 +321,23 @@ void Enemy::DiffState() {
 		nowStateName = m_State->GetNowName();
 	}
 	
-	if (isGroggy) {
-		groggyTime += GameTime::GetInstance().GetDeltaTime();
-
+	if (IsOtherEndGroggy && isFirstSpiriteDown) { 
+		SelectPatten(); // 패턴 정하기!!
+		SetCoolTime();
+		isFirstSpiriteDown = false;
 	}
 
+
+
 	// 그로기 시간!!!
-	if (groggyTime >= 3.0f) {
+	if ((IsOtherEndGroggy   && Object_nowCoolTime <= 0 )|| (isGroggy && preHp != Object_Hp)) {
 		groggyTime = 0.0f;
+		IsOtherEndGroggy = false;
 		isGroggy = false;
 		isRestore = true;
 	}
+
+	preHp = Object_Hp;
 }
 
 
