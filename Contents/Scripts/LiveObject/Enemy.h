@@ -61,6 +61,7 @@ public:
 
 
 	StateController* m_State = nullptr;  //오브젝트 들은 State 내부에서 받을 수 있도록 포인터 생성
+	bool isFirstSpiriteDown = false;
 private:
 	// 적이 가지고 있는 공격의 ID
 	std::vector<std::string> PattenID;
@@ -93,7 +94,7 @@ private:
 	void SetCursorPosition(int x, int y);
 	AttackPatternManager* m_PattenManager = nullptr; // 패턴 매니저를  참조로 받아  사용할 변수
 
-	bool isFirstSpiriteDown = false;
+	
 private:
 	std::string Difficulty;			   // 적의 난이도 k
 	EnemyData* nowEnemyData = nullptr; // 현재 적의 데이터 클래스를 담을 변수

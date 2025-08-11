@@ -172,7 +172,6 @@ void BettleManager::SetStateFormPattern() {
 
 	//}
 	else if (m_Enemy->GetIsGroggy()) { // 적이 그로기에 걸린 경우 
-		m_Player->SetIsOtherEndGroggy(true);
 		m_PattenManager->EnemyPatternAllClear();  //이것도 잘 처리하기!!!
 		m_PattenManager->PlayerPatternAllClear();
 		m_PattenManager->DoneTimeOutPatten();
@@ -183,13 +182,15 @@ void BettleManager::SetStateFormPattern() {
 			allDistancePercent = m_PattenManager->OnceAllNodePatternDistance(nowNode);
 		}
 	}
-
-
-	//else if (m_Player->GetIsGroggy()) { // 아군이 그로기에 걸린경우
-	// nowManagerState = playerGroggy;
-	//	m_Enemy->SetIsGroggy(true);
-	//	//m_Player->GetDamage( m_Enemy->GetAttack() * 2.5f);
-	//}
+	else if (m_Player->GetIsGroggy() ||
+		(!m_Enemy->GetIsOtherEndGroggy() && !m_Enemy->GetIsGroggy())){ // 아군이 그로기에 걸린경우
+			m_PattenManager->EnemyPatternAllClear();  //이것도 잘 처리하기!!!
+			m_PattenManager->PlayerPatternAllClear();
+			m_PattenManager->DoneTimeOutPatten();
+		m_Player->GetDamage( m_Enemy->GetAttack() * 2.5f);
+		m_Player->SetState("Player_Hit");
+		m_Enemy->SetState("Enemy_AttackSuccess");
+	}
 	nowNode.clear();
 }
 
@@ -203,6 +204,7 @@ int  BettleManager::RandomReturn(int MaxInt) {
 }
 
 // State정하기
+//그로기 + 죽음
 void BettleManager::ChangeFinalState() {
 	if (m_Player->GetHp() <= 0.0f) {
 		m_Player->SetState("Player_Dead");
@@ -222,11 +224,13 @@ void BettleManager::ChangeFinalState() {
 		m_Player->SetState("Player_Groggy");
 		m_Player->SetIsGroggy(true);
 		m_Enemy->SetIsOtherEndGroggy(true);
+		m_Enemy->isFirstSpiriteDown = true;  // 오류 수정하기!!
 	}
 	else if ((!m_Enemy->GetIsGroggy()) && m_Enemy->GetNowSpiritAmount() <= 0.0f) {
 		m_Enemy->SetState("Enemy_Groggy");
 		m_Enemy->SetIsGroggy(true);
 		m_Player->SetIsOtherEndGroggy(true);
+		isOncePatternatk = true;
 	}
 }
 
@@ -242,11 +246,16 @@ void BettleManager::FinalAttackToEnemy(){
 	if (m_Enemy->GetIsGroggy()) {
 		m_Enemy->GetDamage((m_Player->GetAttack() * allDistancePercent * 10.0f));  /// 나중에 적 hp 배율 따로 빼기!!!!
 		m_Enemy->SetState("Enemy_Hit");
+		m_Player->SetIsOtherEndGroggy(false);
 		m_Player->SetState("Player_AttackSuccess");
 	}
 	// 적과 아군 state 끝
+
 }
 
+
+
+// ㅁ
 void BettleManager::SetGroggyState() {
 	preManagerState = nowManagerState;
 	if (m_Player->GetIsGroggy()) {
@@ -267,5 +276,6 @@ void BettleManager::SetGroggyState() {
 void BettleManager::ResetState() {
 	if (preManagerState != nowManagerState || preManagerState == enemyGroggy) {
 		allDistancePercent = 0.0f;
+		isOncePatternatk = false;
 	}
 }

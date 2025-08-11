@@ -99,4 +99,5 @@ private:
 
 	bool isAttackingPattern = false;
 	float groggyTime = 0.0f;
+	bool isFirstGroggyLoop = false;
 };

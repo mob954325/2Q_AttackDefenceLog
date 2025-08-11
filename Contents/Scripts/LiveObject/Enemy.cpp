@@ -311,9 +311,10 @@ void Enemy::DiffState() {
 		nowStateName = m_State->GetNowName();
 	}
 	
-	if (IsOtherEndGroggy || isFirstSpiriteDown) { // 딴 놈이 해줌
+	if (IsOtherEndGroggy && isFirstSpiriteDown) { 
 		SelectPatten(); // 패턴 정하기!!
 		SetCoolTime();
+		isFirstSpiriteDown = false;
 	}
 
 

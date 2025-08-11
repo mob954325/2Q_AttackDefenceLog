@@ -281,7 +281,7 @@ void Player::DiffState() {
 
 
 	// 그로기 시간!!!
-	if (groggyTime >= totalGroggyTime || (isGroggy && preHp != Object_Hp) ) {
+	if (groggyTime >= 10.0f || (isGroggy && preHp != Object_Hp) ) {
 		groggyTime = 0.0f;
 		IsOtherEndGroggy = false;
 		isGroggy = false;   /// 그로기를 표시하는 상태변수!!!, 나중에 
@@ -302,7 +302,6 @@ void Player::DiffState() {
 
 // 플래그를 정하는 함수
 void Player::AddPattenLoop() {
-
 	if (isAttackingPattern) {
 		SetCoolTime();
 		isPattenCooldown = true;

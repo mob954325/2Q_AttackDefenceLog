@@ -107,6 +107,8 @@ private:
 	float allDistancePercent = 0.0f;
 	GroggyState nowManagerState = noneGroggy;
 	GroggyState preManagerState = noneGroggy;
+
+	bool isOncePatternatk = false; // 한붓그리기 공격 끝나는 bool 값
 };
 
 
