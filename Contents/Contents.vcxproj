@@ -363,6 +363,7 @@
     <ClCompile Include="Objects\Common\MouseTrailObject.cpp" />
     <ClCompile Include="Objects\Common\PatternControlObject.cpp" />
     <ClCompile Include="Objects\Scenes\SelectScene\SelectSceneBGI.cpp" />
+    <ClCompile Include="Objects\Scenes\TitleScene\TitleEffectManager.cpp" />
     <ClCompile Include="Objects\SliceObject\SliceableObject.cpp" />
     <ClCompile Include="Objects\Scenes\Stage\NodeObject.cpp" />
     <ClCompile Include="Objects\Scenes\Stage\StageBGI.cpp" />
@@ -409,6 +410,7 @@
     <ClInclude Include="Objects\Common\MouseTrailObject.h" />
     <ClInclude Include="Objects\Common\PatternControlObject.h" />
     <ClInclude Include="Objects\Scenes\SelectScene\SelectSceneBGI.h" />
+    <ClInclude Include="Objects\Scenes\TitleScene\TitleEffectManager.h" />
     <ClInclude Include="Objects\SliceObject\SliceableObject.h" />
     <ClInclude Include="Objects\Scenes\Stage\NodeObject.h" />
     <ClInclude Include="Objects\Scenes\Stage\StageBGI.h" />

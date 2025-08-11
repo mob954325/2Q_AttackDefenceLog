@@ -22,6 +22,7 @@
     <ClCompile Include="Script\Sound\SoundTittle.cpp" />
     <ClCompile Include="Script\Sound\SoundPlayScene.cpp" />
     <ClCompile Include="Script\Sound\SoundEnd.cpp" />
+    <ClCompile Include="Script\giseSlider\GiseGauge.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Script\MusicScript.h" />
@@ -44,5 +45,6 @@
     <ClInclude Include="Script\Sound\SoundTittle.h" />
     <ClInclude Include="Script\Sound\SoundPlayScene.h" />
     <ClInclude Include="Script\Sound\SoundEnd.h" />
+    <ClInclude Include="Script\giseSlider\GiseGauge.h" />
   </ItemGroup>
 </Project>

@@ -74,6 +74,11 @@ void AnimationPlayer::SetSpriteSheet(std::wstring path)
 	SpriteSheetLoader::LoadSpriteSheet(path, sheet);
 }
 
+SpriteSheet AnimationPlayer::GetSpriteSheet()
+{
+	return sheet;
+}
+
 void AnimationPlayer::SetAnimationClip(std::wstring path)
 {
 	if (sheet.texture == L"")
@@ -87,6 +92,11 @@ void AnimationPlayer::SetAnimationClip(std::wstring path)
 		currentFrameIndex = 0;
 		timer = 0;
 	}
+}
+
+AnimationClip AnimationPlayer::GetAnimationClip()
+{
+	return clip;
 }
 
 void AnimationPlayer::SetLoop(bool value)
@@ -110,6 +120,8 @@ int AnimationPlayer::GetMaxFrame() const
 {
 	return maxFrameIndex;
 }
+
+
 
 void AnimationPlayer::Play()
 {

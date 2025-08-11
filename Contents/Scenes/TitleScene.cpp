@@ -4,6 +4,7 @@
 #include "Objects/Common/MouseTrailObject.h"
 #include "Objects/Scenes/TitleScene/TitleSceneBGI.h"
 #include "Objects/Scenes/TitleScene/TitleNodeManager.h"
+#include "Objects/Scenes/TitleScene/TitleEffectManager.h"
 
 void TitleScene::OnEnterImpl()
 {
@@ -19,8 +20,12 @@ void TitleScene::OnEnterImpl()
 
 	backGroundImg = new GameObject();
 	backGroundImg->AddComponent<TitleSceneBGI>();
-	AddGameObject(backGroundImg, "TitleBGI");
-	
+	AddGameObject(backGroundImg, "TitleBGI");	
+
+	titleEffectManager = new GameObject();
+	titleEffectManager->AddComponent<TitleEffectManager>();
+	AddGameObject(titleEffectManager, "TItleEffectManager");
+
 	trail = new GameObject();
 	trail->AddComponent<MouseTrailObject>();
 	AddGameObject(trail, "MouseTrail");
