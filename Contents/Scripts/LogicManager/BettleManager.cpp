@@ -9,6 +9,37 @@
 #include "Components/Base/MonoBehavior.h"
 
 
+// 상중하에 따라서 체력과 기세 데미지를 적용함
+//-----------------------------------------------------------------------------------------------
+
+
+//상중하에 따라서 체력 데미지 리턴하는 함수 만들기
+float BettleManager::ConvertHPDamageToPos(AttackPosition lastPos, float HpDamage) {
+	switch (lastPos)
+	{
+	case UpNode:      return  HpDamage * 1.25f;    // 상단 노드일때 1.25배 추가뎀
+	case MiddleNode:  return  HpDamage;            // 중단 노드
+	case LowNode:     return  HpDamage * 0.75f;    // 하단 노드
+	default:		  return  0.0f;
+	}
+}
+
+//상중하에 따라서  기세 데미지 리턴하는 함수 만들기
+float BettleManager::ConvertSpiritDamageToPos(AttackPosition lastPos, float SpiritDamage) {
+	switch (lastPos)
+	{
+	case UpNode:      return SpiritDamage * 0.75f;  // 상단 노드일때  0.75배 뎀감
+	case MiddleNode:  return SpiritDamage;			// 중단 노드
+	case LowNode:     return SpiritDamage * 1.25f;  // 하단 노드
+	default:		  return 0.0f;
+	}
+}
+
+//------------------------------------------------------------------------------------------------
+
+
+
+
 
 void BettleManager::OnStart() {
 	//m_Enemy = owner->GetQuery()->FindByName("Enemytmp")->GetComponent<Enemy>();
@@ -44,7 +75,7 @@ void BettleManager::SetStateFormPattern() {
 		if (pair.second->PattenID.substr(0, 2) == "EP")            //적 패턴일시
 		{
 			m_Enemy->SetState("Enemy_AttackSuccess");			 // 적 공격 성공
-			if (m_Player->GetDefenseRate() >= RandomReturn(100)) {
+			if (m_Player->GetDefenseRate() >= RandomReturn(100) && pair.second->lastPosition != MiddleNode) {
 				m_Player->SetState("Player_Defence");			 // 방어
 			}
 			else {
@@ -97,7 +128,7 @@ void BettleManager::SetStateFormPattern() {
 		else {
 			m_Player->SetState("Player_AttackSuccess");   // 플레이어의 공격 성공
 			m_Player->SetEndAttack();
-			if (m_Enemy->GetDefenseRate() >= RandomReturn(100))
+			if (m_Enemy->GetDefenseRate() >= RandomReturn(100) && tmpCorPatten->lastPosition != MiddleNode)
 				m_Enemy->SetState("Enemy_Defence"); // 방어
 
 			else {
@@ -191,24 +222,4 @@ void BettleManager::ChangeFinalState() {
 
 
 
-//상중하에 따라서 체력 데미지 리턴하는 함수 만들기
-float BettleManager::ConvertHPDamageToPos(AttackPosition lastPos, float HpDamage) {
-	switch (lastPos)
-	{
-	case UpNode:      return  HpDamage * 1.25f;
-	case MiddleNode:  return  HpDamage;
-	case LowNode:     return  HpDamage * 0.75f;
-	default:		  return  0.0f;
-	}
-}
 
-//상중하에 따라서  기세 데미지 리턴하는 함수 만들기
-float BettleManager::ConvertSpiritDamageToPos(AttackPosition lastPos, float SpiritDamage) {
-	switch (lastPos)
-	{
-	case UpNode:      return SpiritDamage * 0.75f;
-	case MiddleNode:  return SpiritDamage;
-	case LowNode:     return SpiritDamage * 1.25f;
-	default:		  return 0.0f;
-	}
-}

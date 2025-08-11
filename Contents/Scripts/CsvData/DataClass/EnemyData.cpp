@@ -17,6 +17,9 @@ void EnemyData::SetData(std::vector<std::wstring> tmp) {
 		if(tmp[i + 9] != L"null")
 			enemyPattern.push_back(StringConvert::WstringToString(tmp[i+9].c_str()));
 	}
+	for (int i = 0; i < 4; i++) {
+		enemySprite.push_back(tmp[i + 25]);
+	}
 } 
 
 

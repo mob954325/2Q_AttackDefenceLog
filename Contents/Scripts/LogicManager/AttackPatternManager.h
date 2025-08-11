@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include <vector>
 #include <unordered_map>
+#include <queue>
 #include "Components/Base/MonoBehavior.h"
 #include "../Engine/Utils/EventDelegate.h"
 
@@ -35,6 +36,7 @@ public:
 
 	std::unordered_map<std::string, pattern*> NowPlayerStorage;
 	std::unordered_map<std::string, pattern*> NowEnemyStorage;
+	//std::queue<pattern*>  nowEnemy
 
 
 	void OnStart() override;

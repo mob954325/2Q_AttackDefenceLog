@@ -9,8 +9,8 @@
 #include "../DataClass/PlayerData.h"
 
 /*2025.07.30 - 안성빈
-   역할 : CsvDataStorage 클래스는 CSV 파일에서 읽어온 데이터를 unordered_map에 저장하는 클래스 
-	
+   역할 : CsvDataStorage 클래스는 CSV 파일에서 읽어온 데이터를 unordered_map에 저장하는 클래스
+
 */
 
 
@@ -55,11 +55,11 @@ public:
 		return nullptr; //명시적으로 null 반환
 	}
 
+
 	//데이터의 Id 벡터를 반환하는 함수
-	std::vector<std::string> GetIDVect(){
+	std::vector<std::string> GetIDVect() {
 		return IDStorage;
 	}
-
 
 
 	void PrintData() {
