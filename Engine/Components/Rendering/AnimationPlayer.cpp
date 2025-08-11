@@ -10,11 +10,8 @@ void AnimationPlayer::Update(float delta)
 
 		if (timer >= clip.duration)
 		{
-			if (clip.loop)
-			{
 				currentFrameIndex = 0;
 				timer = 0.0f;
-			}
 		}
 		else
 		{

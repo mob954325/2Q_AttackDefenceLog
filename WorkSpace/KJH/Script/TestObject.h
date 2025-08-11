@@ -14,6 +14,9 @@
 
 #include "Script/giseSlider/GiseGauge.h"
 
+#include "Script/Effect/EffectMonoB.h"
+#include "Script/Effect/Finaleffect.h"
+
 
 class TestObject : public MonoBehavior
 {
@@ -30,6 +33,11 @@ public:
 	/*void SetPosition();*/
 
 private:
+	EffectMonoB* PAtkE{};
+	Finaleffect* FinalA{};
+	std::vector<float> RotationList{};
+	
+
 	GiseGauge* giseG{};
 
 	BitmapRenderer* TestImage{};
