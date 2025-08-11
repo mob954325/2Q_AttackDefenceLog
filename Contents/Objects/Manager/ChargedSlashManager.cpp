@@ -16,6 +16,7 @@ void ChargedSlashManager::OnStart()
 	size = bitmapRenderer->GetResource()->GetBitmap()->GetSize();
 	owner->GetTransform().SetUnityCoords(false); // 노드가 D2D좌표계임
 	owner->GetTransform().SetOffset(-size.width / 2.0f, size.height / 2.0f);
+	bitmapRenderer->SetActive(false);
 
 
 	//그거임 좌우 상단에 필터 설정해주는 부분
@@ -114,6 +115,7 @@ void ChargedSlashManager::Start(int n) { // 1~9의 값이 들어옴
 
 	owner->GetTransform().SetPosition(nowPos.x, nowPos.y); // 노드의 좌표로 오너를 옮김
 	
+	bitmapRenderer->SetActive(true);
 	isPlay = true;
 	onChargeStart.Invoke(); // 시작되었다고 알려주면, 외부에서는 노드를 비활성화시켜줌(연결해야됨)	
 }
@@ -121,6 +123,7 @@ void ChargedSlashManager::Start(int n) { // 1~9의 값이 들어옴
 void ChargedSlashManager::Cancel() {
 	nowNormalVec = { 0,0 };
 	nowPos = { 0, 0 };
+	bitmapRenderer->SetActive(false);
 	isPlay = false;
 }
 

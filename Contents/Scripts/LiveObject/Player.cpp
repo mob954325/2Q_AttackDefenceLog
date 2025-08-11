@@ -336,6 +336,7 @@ void Player::RestoreGroggy()
 	isGroggy = false;   /// 그로기를 표시하는 상태변수!!!, 나중에 
 	isRestore = true;
 	ResetPlayer();  // 상태, 쿨타임, 공격 패턴까지 초기화!
+	onTimeOut.Invoke(); // 외부에 알려줌
 }
 
 

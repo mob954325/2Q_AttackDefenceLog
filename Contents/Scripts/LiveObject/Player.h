@@ -4,6 +4,7 @@
 #include "../Component/StateController.h"
 #include "../CsvData/DataClass/AllNodePattenClass.h"
 #include "Components/Rendering/BitmapRenderer.h"
+#include "../Engine/Utils/EventDelegate.h"
 /* 25.08.01
 	 플레이어의 데이터 불러오기 -> 일관성 없음?
 		- 스탯 : hp 같은 스탯들은 변해야 함으로 저장공간을 만들어 데이터를 인가하는 형태로 진행
@@ -69,6 +70,7 @@ public:
 	AllNodePattenClass* tmpNode2 = nullptr;  // 출력용 변수
 
 
+	EventDelegate<> onTimeOut; // 8.12추가, 그로기 타이머가 플레이어에 있어서 델리게이트 연결함
 	void RestoreGroggy();
 private:
 	std::vector<std::string> PattenID;

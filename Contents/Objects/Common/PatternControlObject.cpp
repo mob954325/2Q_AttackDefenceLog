@@ -131,6 +131,10 @@ void PatternControlObject::OnCreate()
 	auto playertmp = player->AddComponent<Player>(); // MonoBehaivor 등록
 	playertmp->m_State = player->AddComponent<StateController>();
 	player->SetName("Playertmp");
+	playertmp->onTimeOut.Add([this]() {
+		csManager->Cancel(); // 플레이어 쪽에서 그로기 타이머를 관리하고 있어서, 캔슬연결함		
+		});
+
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(player);            // Scene에 GameObject 추가
 
 	bettleManager = new GameObject();             // GameObject 객체 생성
