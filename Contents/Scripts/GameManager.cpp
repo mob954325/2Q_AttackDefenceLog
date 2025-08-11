@@ -19,3 +19,13 @@ void GameManager::SetGameState(GameState state)
         Singleton<AudioSystem>::GetInstance().AgainstSound();   // fmod 플레이
     }
 }
+
+void GameManager::SetBattleStage(SceneCount scene)
+{
+    targetBattleStageScene = scene;
+}
+
+SceneCount GameManager::GetTargetBattleStage()
+{
+    return targetBattleStageScene;
+}

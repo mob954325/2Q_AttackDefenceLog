@@ -353,6 +353,7 @@
   <ItemGroup>
     <ClCompile Include="Application\Game.cpp" />
     <ClCompile Include="Application\GameApp.cpp" />
+    <ClCompile Include="Objects\Scenes\SelectScene\LevelSelectManager.cpp" />
     <ClCompile Include="Scripts\GameManager.cpp" />
     <ClCompile Include="Objects\Manager\ChargedSlashManager.cpp" />
     <ClCompile Include="Objects\Scenes\Stage\EscMenu\EscContinueButton.cpp" />
@@ -403,6 +404,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameApp.h" />
+    <ClInclude Include="Objects\Scenes\SelectScene\LevelSelectManager.h" />
     <ClInclude Include="Scripts\GameManager.h" />
     <ClInclude Include="Objects\Manager\ChargedSlashManager.h" />
     <ClInclude Include="Objects\Scenes\Stage\EscMenu\EscContinueButton.h" />

@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "Utils/Singleton.h"
+#include "Scripts/SceneCore.h"
 
 /* 25.08.11 | 작성자 : 이성호
 * 기능 : Contents 프로젝트에서 게임을 전체적으로 관리하는 싱글톤 클래스
@@ -17,7 +18,11 @@ public:
 	GameState GetGameState();
 	void SetGameState(GameState state);
 
+	void SetBattleStage(SceneCount scene);
+	SceneCount GetTargetBattleStage();
+
 private:
 	GameState state = GameState::Play;
+	SceneCount targetBattleStageScene{};
 };
 
