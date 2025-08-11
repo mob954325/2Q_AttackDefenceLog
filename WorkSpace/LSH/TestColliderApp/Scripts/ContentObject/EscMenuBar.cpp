@@ -6,15 +6,15 @@
 void EscMenuBar::OnCreate()
 {
 	br = owner->AddComponent<BitmapRenderer>();
-	br->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/UI/MenuUI/esc_menu_ui_bar.png");
+	br->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\UI\\MenuUI\\esc_menu_ui_bar.png");
 }
 
 void EscMenuBar::OnStart()
 {
 	CreateMenuObjects();
-	objs[0]->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/UI/MenuUI/esc_menu_ui_continue.png");
-	objs[1]->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/UI/MenuUI/esc_menu_ui_exit.png");
-	objs[2]->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/UI/MenuUI/esc_menu_ui_sound.png");
+	objs[0]->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\UI\\MenuUI\\esc_menu_ui_continue.png");
+	objs[1]->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\UI\\MenuUI\\esc_menu_ui_exit.png");
+	objs[2]->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\UI\\MenuUI\\esc_menu_ui_sound.png");
 
 	for (int i = 0; i < objs.size(); i++)
 	{
