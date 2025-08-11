@@ -42,6 +42,7 @@ void EffectMonoB::OnCreate()
 		obj->GetComponent<AnimationRenderer>()->SetSpriteSheet(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Json\\enemy_attack_line_spreadsheet_sprites.json");
 		obj->GetComponent<AnimationRenderer>()->SetAnimationClip(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Json\\enemy_attack_line_spreadsheet_anim.json");
 		obj->GetComponent<AnimationRenderer>()->GetAnimationPlayer()->Pause();
+		obj->GetTransform().SetUnityCoords(false);
 		AnimeList.push_back(obj);
 	}
 
@@ -78,8 +79,7 @@ void EffectMonoB::CallAnime(int num , const std::vector<float>& rotationValue)
 		auto* p = r->GetAnimationPlayer();
 		p->Play();
 
-		auto t = AnimeList[i]->GetTransform();
-		t.SetRotation(rotationValue[i]);
+		AnimeList[i]->GetTransform().SetRotation(rotationValue[i]);
 
 		auto& s = AnimeStates[i];
 		s.playing = true;

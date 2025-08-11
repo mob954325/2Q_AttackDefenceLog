@@ -23,8 +23,11 @@ void Finaleffect::OnUpdate()
 			r->SetActive(false);
 			auto* p = r->GetAnimationPlayer();
 			p->Pause();
-			p->Reset();
-	}
+		}
+
+
+		 std::cout << AnimeList->GetComponent<AnimationRenderer>()->GetAnimationPlayer()->GetCurrentFrame() << std::endl;;
+
 }
 
 void Finaleffect::OnCreate()
@@ -38,15 +41,15 @@ void Finaleffect::OnCreate()
 	obj->GetComponent<AnimationRenderer>()->SetSpriteSheet(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Json\\final_blow_line_spreadsheet_sprites.json");
 	obj->GetComponent<AnimationRenderer>()->SetAnimationClip(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Json\\final_blow_line_spreadsheet_anim.json");
 	obj->GetComponent<AnimationRenderer>()->GetAnimationPlayer()->Pause();
+	obj->GetComponent<AnimationRenderer>()->GetAnimationPlayer()->SetLoop(false);
+	obj->GetTransform().SetUnityCoords(false);
 	AnimeList = obj;
 
 	Animeduration = AnimeList->GetComponent<AnimationRenderer>()->GetAnimationPlayer()->GetAnimationClip().duration;
-
 }
 
 void Finaleffect::OnStart()
 {
-
 }
 
 void Finaleffect::OnDestroy()
@@ -66,11 +69,10 @@ void Finaleffect::CallAnime(float rotationValue)
 	if (AnimeList == nullptr) return;
 	auto* r = AnimeList->GetComponent<AnimationRenderer>();
 	r->SetActive(true);
-	auto* p = r->GetAnimationPlayer();
-	p->Play();
+	r->GetAnimationPlayer()->Reset();
+	r->GetAnimationPlayer()->Play();
 
-	auto t = AnimeList->GetTransform();
-	t.SetRotation(rotationValue);
+	AnimeList->GetTransform().SetRotation(rotationValue);
 
 	auto& s = AnimeStates;
 	s.playing = true;

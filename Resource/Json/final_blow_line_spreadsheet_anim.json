@@ -1,6 +1,6 @@
-{
+﻿{
     "clipName": "final_blow_line_spreadsheet",
-    "loop": true,
+    "loop": false,
     "texturePath": "Assets/Character/Sprites/final_blow_line_spreadsheet.png",
     "duration": 0.75,
     "frames": [

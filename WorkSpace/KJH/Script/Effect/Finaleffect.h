@@ -37,5 +37,6 @@ private:
 	GameObject* AnimeList{};
 
 	float Animeduration = 0.0f;
+	float rot = 0.0f;
 };
 
