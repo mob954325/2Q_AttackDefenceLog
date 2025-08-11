@@ -80,6 +80,22 @@ void TestObject::OnCreate()
 	handleCam = TempObj;
 	handleCam->GetComponent<CamInstance>()->SetWaveValue(2.0f, 25.0f, 150.0f, 96.0f, 54.0f);
 
+	owner->AddComponent<Finaleffect>();
+	owner->AddComponent<EffectMonoB>();
+	PAtkE = owner->GetComponent<EffectMonoB>();
+	FinalA = owner->GetComponent<Finaleffect>();
+
+	Vector2 A = { 800.0f , 550.0f };
+
+	PAtkE->SetAnimePosition(A);
+	FinalA->SetAnimePosition(A);
+
+	for (int i = 0; i < 5; i++)
+	{
+		RotationList.push_back(20.0f + (i * 50));
+	}
+	
+
 }
 
 //void TestObject::SetPosition()
@@ -184,6 +200,8 @@ void TestObject::OnStart()
 	
 	effectobj->SetAnimePosition(positionList);
 
+	
+
 }
 
 void TestObject::OnDestroy()
@@ -194,6 +212,15 @@ void TestObject::OnDestroy()
 
 void TestObject::CheckInput()
 {
+	if (input->IsKeyPressed('W'))
+	{
+		PAtkE->CallAnime(5, RotationList);
+	}
+	if (input->IsKeyPressed('S'))
+	{
+		FinalA->CallAnime(60.0f);
+	}
+
 	//if (input->IsKeyDown('W'))
 	//{
 	//	giseG->ChangeGaugeBar(-1.0f);

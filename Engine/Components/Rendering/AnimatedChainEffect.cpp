@@ -6,7 +6,7 @@
 
 constexpr float PI = 3.141592654f; // 3. 1415926535 8979323846 2643383279 5028841971 6939937510 5820974944 5923078164 0628620899 8628034825 이 얼마나 멋진 숫자인가
 
-// static inline float Magnitude(const Vector2& v) { return v.Megnituede(); }
+// static inline float Magnitude(const Vector2& v) { return v.Magnituede(); }
 // static inline Vector2 Normalize(const Vector2& v) { return v.Normalize(); }
 
 //=======================================================================================
@@ -111,7 +111,7 @@ void AnimatedChainEffect::SliceRect(const std::vector<int>& pattern)
 
 		Vector2 fromTo = to - from;
 
-		float dist = fromTo.Megnituede(); // 거리
+		float dist = fromTo.Magnitude(); // 거리
 
 		float remain = frameW - currentX; // 요구사항 
 		if (remain <= 0.0f) break; // 요구사항 충족시 탈출

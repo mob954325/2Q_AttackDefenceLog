@@ -17,7 +17,7 @@ void ChainDrawerComponent::SliceRect(std::vector<int> pattern) // 1 3 2 4 5 이�
 		Vector2 from = positions[pattern[i] - 1]; // 1~9 > 0~8 (현재)
 		Vector2 to = positions[pattern[i + 1] - 1]; // 다음 좌표
 
-		float dist = (to - from).Megnituede(); // sqrt(x * x + y * y);		
+		float dist = (to - from).Magnitude(); // sqrt(x * x + y * y);		
 		float remainingWidth = bmpSize.width - currentX; // 이번 dist 요구값
 
 		if (dist > remainingWidth) { // 요구값보다 많으면 -> 초과됨

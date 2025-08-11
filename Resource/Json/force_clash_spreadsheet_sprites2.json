@@ -5,7 +5,7 @@
     "sprites": [
         {
             "name": "force_clash_spreadsheet_0",
-            "x": 2.0,
+            "x": 0.0,
             "y": 72.0,
             "width": 61.0,
             "height": 72.0,
@@ -14,7 +14,7 @@
         },
         {
             "name": "force_clash_spreadsheet_1",
-            "x": 75.0,
+            "x": 73.0,
             "y": 72.0,
             "width": 61.0,
             "height": 72.0,
@@ -23,7 +23,7 @@
         },
         {
             "name": "force_clash_spreadsheet_2",
-            "x": 147.0,
+            "x": 145.0,
             "y": 72.0,
             "width": 61.0,
             "height": 72.0,
@@ -32,7 +32,7 @@
         },
         {
             "name": "force_clash_spreadsheet_3",
-            "x": 220.0,
+            "x": 218.0,
             "y": 72.0,
             "width": 61.0,
             "height": 72.0,
@@ -41,7 +41,7 @@
         },
         {
             "name": "force_clash_spreadsheet_4",
-            "x": 291.0,
+            "x": 289.0,
             "y": 72.0,
             "width": 61.0,
             "height": 72.0,
@@ -50,7 +50,7 @@
         },
         {
             "name": "force_clash_spreadsheet_5",
-            "x": 363.0,
+            "x": 361.0,
             "y": 72.0,
             "width": 61.0,
             "height": 72.0,
@@ -59,7 +59,7 @@
         },
         {
             "name": "force_clash_spreadsheet_6",
-            "x": 435.0,
+            "x": 433.0,
             "y": 72.0,
             "width": 61.0,
             "height": 72.0,
@@ -68,7 +68,7 @@
         },
         {
             "name": "force_clash_spreadsheet_7",
-            "x": 507.0,
+            "x": 505.0,
             "y": 72.0,
             "width": 61.0,
             "height": 72.0,
