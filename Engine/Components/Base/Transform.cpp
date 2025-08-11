@@ -10,7 +10,7 @@ void Transform::SetOffset(float x, float y)
 {
 	offsetX = x; offsetY = y;
 
-	normalRenderMatrix = D2D1::Matrix3x2F::Scale(1.0f, 1.0f) * D2D1::Matrix3x2F::Translation(offsetX, -offsetY);
+	normalRenderMatrix = D2D1::Matrix3x2F::Scale(1.0f, 1.0f) * D2D1::Matrix3x2F::Translation(offsetX, -offsetY); //  유니티 좌표와 혼동을 피하기 위해 offset 움직임 둥일 시 처리 ( y 축을 내리면 이미지가 내려감 )
 	unityRenderMatrix = D2D1::Matrix3x2F::Scale(1.0f, -1.0f) * D2D1::Matrix3x2F::Translation(offsetX, offsetY);
 }
 
