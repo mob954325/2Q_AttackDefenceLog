@@ -54,6 +54,7 @@ void Player::OnStart() {
 
 // 업데이트에서 시간 받기???? -> 필요없음, 수정하기!!!
 void Player::OnUpdate() {
+	
 	//if (m_State->GetNowName() != "Player_Dead"||m_State->GetNowName() != "Player_Groggy"){
 	CalSpiritTime();		// 1초마다 기세게이지 감소
 	AddPattenLoop();		// 패턴을 추가하는 루프
@@ -62,8 +63,9 @@ void Player::OnUpdate() {
 	m_State->Update();
 	DiffState();  //   이전상태와 현재상태를 결정하는 함수
 	StateAct();   //  각 state 별 행동
+	
 	//}
-
+	oneLoopPreStateName = nowStateName;
 	if (m_State->GetNowName() == "Player_Dead") {
 		Singleton<SceneManager>::GetInstance().LoadScene(0);
 	}
@@ -125,23 +127,29 @@ BitmapRenderer* player_Damaged = nullptr;
 
 void Player::SetBitmap() {
 	player_Idle = owner->AddComponent<BitmapRenderer>();
-	player_Idle->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\player_standing.png");
+	player_Idle->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\player_standing_fin.png");
 
-	player_Attack = owner->AddComponent<BitmapRenderer>();
-	player_Attack->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\player_attack.png");
+	player_Attack1 = owner->AddComponent<BitmapRenderer>();
+	player_Attack1->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\player_attack1_fin.png");
+
+	player_Attack2 = owner->AddComponent<BitmapRenderer>();
+	player_Attack2->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\player_attack2_fin.png");
+
+	player_Attack3 = owner->AddComponent<BitmapRenderer>();
+	player_Attack3->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\player_attack3_fin.png");
 
 
 	player_Damaged = owner->AddComponent<BitmapRenderer>();
-	player_Damaged->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\player_demaged.png");
+	player_Damaged->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\player_demaged_fin.png");
 
 	player_Guard = owner->AddComponent<BitmapRenderer>();
-	player_Guard->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\player_guard.png");
+	player_Guard->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\player_guard_fin.png");
 
 
 	D2D1_SIZE_F size = player_Idle->GetResource()->GetBitmap()->GetSize(); // 크기 같음으로 그냥 해도 될듯?
 	owner->GetTransform().SetOffset(-size.width / 2, size.height / 2);
 	//owner->GetTransform().SetScale(0.9f, 0.9f); //  크기 맞추기
-	owner->GetTransform().SetPosition(-330.0f, -600.0f);
+	owner->GetTransform().SetPosition(-330.0f, -200.0f);
 }
 
 
@@ -251,10 +259,15 @@ void Player::CalSpiritTime() {
 
 
 void Player::DiffState() {
-	if (m_State->GetNowName() != nowStateName) {
+
+
+	if (m_State->GetNowName() != nowStateName) { // 값이 항상 다름
 		preStateName = nowStateName;
 		nowStateName = m_State->GetNowName();
 	}
+
+
+	
 
 
 	if (isGroggy) {
@@ -269,7 +282,7 @@ void Player::DiffState() {
 		isRestore = true;
 	}
 
-
+	
 }
 
 
@@ -306,36 +319,74 @@ void Player::AddPattenLoop() {
 void Player::StateAct() {
 	if (nowStateName == "Player_Idle") {    // 평소 상태     
 		player_Idle->SetActive(true);
-		player_Attack->SetActive(false);
+		AttackStateSelect(false);
 		player_Damaged->SetActive(false);
 		player_Guard->SetActive(false);
 	}
 	else if (nowStateName == "Player_AttackSuccess" || nowStateName == "Player_AttackFail"){ // 공격 성공, 공격 실패
 		player_Idle->SetActive(false);
-		player_Attack->SetActive(true);
+		AttackStateSelect(true);
 		player_Damaged->SetActive(false);
 		player_Guard->SetActive(false);
 	}
 	else if (nowStateName == "Player_Hit" || nowStateName == "Player_Groggy"){     //피격 + 그로기
 		player_Idle->SetActive(false);
-		player_Attack->SetActive(false);
+		AttackStateSelect(false);
 		player_Damaged->SetActive(true);
 		player_Guard->SetActive(false);
 	}
 	else if (nowStateName == "Player_Guard" || nowStateName == "Player_Defence" || nowStateName == "Player_Perry"){   // 가드 + defence + 패링
 		player_Idle->SetActive(false);
-		player_Attack->SetActive(false);
+		AttackStateSelect(false);
 		player_Damaged->SetActive(false);
 		player_Guard->SetActive(true);
 	}
 
 	else if (nowStateName == "Player_Dead"){   // 죽음
 		player_Idle->SetActive(false);
-		player_Attack->SetActive(false);
+		AttackStateSelect(false);
 		player_Damaged->SetActive(true);
 		player_Guard->SetActive(false);
 	}
 }
+
+
+void Player::AttackStateSelect( bool AttackActive) {
+	if (oneLoopPreStateName == nowStateName) return;
+	std::cout << "11" << std::endl;
+	if (AttackActive) {
+		std::random_device rd;
+		std::mt19937 gen(rd());
+		std::uniform_int_distribution<> dist(1, 3); // 1 ~ 10 사이의 정수
+		int randomValue = dist(gen);
+		switch (randomValue)
+		{
+		case 1:
+			player_Attack1->SetActive(true);
+			player_Attack2->SetActive(false);
+			player_Attack3->SetActive(false);
+			break;
+		case 2:
+			player_Attack1->SetActive(false);
+			player_Attack2->SetActive(true);
+			player_Attack3->SetActive(false);
+			break;
+		case 3:
+			player_Attack1->SetActive(false);
+			player_Attack2->SetActive(false);
+			player_Attack3->SetActive(true);
+			break;
+		default:
+			break;
+		}
+	}
+	else {
+		player_Attack1->SetActive(false);
+		player_Attack2->SetActive(false);
+		player_Attack3->SetActive(false);
+	}
+}
+
 
 
 

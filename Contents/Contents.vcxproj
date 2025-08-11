@@ -397,6 +397,7 @@
     <ClCompile Include="Objects\Scenes\MenuScene\StageSelectManager.cpp" />
     <ClCompile Include="Objects\SliceObject\SlicedObject.cpp" />
     <ClCompile Include="Objects\Scenes\Stage\EscMenu\StageESCPanel.cpp" />
+    <ClCompile Include="Scripts\Slider\GiseGauge.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameApp.h" />
@@ -445,6 +446,7 @@
     <ClInclude Include="Objects\Scenes\MenuScene\StageSelectManager.h" />
     <ClInclude Include="Objects\SliceObject\SlicedObject.h" />
     <ClInclude Include="Objects\Scenes\Stage\EscMenu\StageESCPanel.h" />
+    <ClInclude Include="Scripts\Slider\GiseGauge.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -45,13 +45,24 @@ public:
 	void AddPattern(std::string ID, float PlayingAttackTime, std::vector<int> PatternID);
 	void SubPattern(std::string ID, std::string StorageType);
 
+	// 패턴 검사 로직
 	pattern* CorrectPattern(std::vector<int> PatternID);
 	pattern* failPattern(std::vector<int> PatternID);
+	void CheckAllPattern(std::vector<int> PatternID);
 	std::unordered_map<std::string, pattern*> TimeOutPatten();
 
+	// 패턴 전부 삭제
+	void EnemyPatternAllClear();
+	void PlayerPatternAllClear();
+
+
+	// 패넡 가져오기 
 	void GetPlayerPatten(std::vector<int>& P1, std::vector<int>& P2);
 	void GetEnemyPattern(std::vector<int>& pattern, float& time, std::string& ID);
+
+	//플레이어 커플 패턴 찾고 지우기
 	void SearchAndDestroyCouple(std::string ID);
+
 
 	bool isNewPattern = false; // 외부에서 확인하는 용도
 	NewPattern newPattern; // 버퍼
@@ -63,7 +74,13 @@ public:
 		isAttackVec.clear();
 		return vec;
 	};
-	bool isAttack = false;
+	bool isAttack = false;  // 공격을 하고 있는지?
+
+	bool isSpiritDamage = false;
+	/*GetisSpiritDamage() {
+		return isSpiritDamage}*/
+
+
 
 private:	
 	std::vector<int> isAttackVec;

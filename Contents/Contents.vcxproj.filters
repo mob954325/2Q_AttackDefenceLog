@@ -210,6 +210,7 @@
     <ClCompile Include="Objects\Scenes\TitleScene\TitleEffectManager.cpp">
       <Filter>Objects\SceneObject\TitleScene</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\Slider\GiseGauge.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameApp.h">
@@ -350,5 +351,6 @@
     <ClInclude Include="Objects\Scenes\TitleScene\TitleEffectManager.h">
       <Filter>Objects\SceneObject\TitleScene</Filter>
     </ClInclude>
+    <ClInclude Include="Scripts\Slider\GiseGauge.h" />
   </ItemGroup>
 </Project>

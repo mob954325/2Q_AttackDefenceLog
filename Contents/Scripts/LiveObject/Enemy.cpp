@@ -57,7 +57,10 @@ void Enemy::OnUpdate() {
 
 // onChangePatten에 TransitionTime 변경하기!!!
 
-//하드코딩함
+
+
+
+//하드코딩함, 이걸 할려고 하면 자료 구조의 키값을 뜯어 고쳐야함!!!
 void SetNameDiff(std::string name, std::string difficulty) {
 	int indexID = 0;
 	int diffindex = 0;
@@ -157,10 +160,10 @@ void Enemy::SetStatData(std::string tmp) {
 
 	std::wstring enemy_CommonPath = L"\\..\\Resource\\ContentsResource\\";	// 적의 공통 이미지 경로
 
-	enemy_IdlePath = enemy_CommonPath + nowEnemyData->enemySprite[0] + L".png";         // 적의 이미지 이름 받기
-	enemy_AttackPath = enemy_CommonPath + nowEnemyData->enemySprite[1] + L".png";
-	enemy_GuardPath = enemy_CommonPath + nowEnemyData->enemySprite[2] + L".png";
-	enemy_DamagedPath = enemy_CommonPath+ nowEnemyData->enemySprite[3] + L".png";
+	enemy_IdlePath = enemy_CommonPath + nowEnemyData->enemySprite[0] + L"_fin.png";         // 적의 이미지 이름 받기
+	enemy_AttackPath = enemy_CommonPath + nowEnemyData->enemySprite[1] + L"_fin.png";
+	enemy_GuardPath = enemy_CommonPath + nowEnemyData->enemySprite[2] + L"_fin.png";
+	enemy_DamagedPath = enemy_CommonPath+ nowEnemyData->enemySprite[3] + L"_fin.png";
 
 	
 }
@@ -265,7 +268,7 @@ void Enemy::SetNowPatten() {
 		tmp = tmpNode->Node_Number;
 	}
 	// AddPattern 함수 호출
-	m_PattenManager->AddPattern(nowEnemyPattenData->ePatternID, Object_PlayingAttackTime, tmp);
+	m_PattenManager->AddPattern(nowEnemyPattenData->ePatternID, nowEnemyPattenData->eAtkCoolDown, tmp);
 }
 
 
