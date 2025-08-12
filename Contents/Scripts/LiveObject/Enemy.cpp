@@ -12,6 +12,7 @@
 
 #include "Application/AppPaths.h"
 #include "Scripts/GameManager.h"
+#include "Objects/Scenes/Stage/StageResult/StageResult.h"
 
 
 // 각 값은 해당 함수가 출력 중일때, 각 플레그 변화
@@ -41,7 +42,6 @@ void Enemy::OnStart()
 // 업데이트에서 시간 받기???? -> 필요없음, 수정하기!!!
 void Enemy::OnUpdate() 
 {
-
 	// Game 상태가 Pause면 모든 Update 무시
 	if (Singleton<GameManager>::GetInstance().GetGameState() == GameState::Pause)
 	{
@@ -61,7 +61,7 @@ void Enemy::OnUpdate()
 
 	if (nowStateName == "Enemy_Dead") // 적 사망 시 -> 씬 이동
 	{
-		Singleton<SceneManager>::GetInstance().LoadScene(0); // 나중에 딜레이 올려줘야함
+		ChecKChnageScene();
 	}
 }
 
@@ -197,9 +197,6 @@ void Enemy::SetBitmap()
 	owner->GetTransform().SetScale(1.0f, 1.0f); //  크기 맞추기
 	owner->GetTransform().SetPosition(550.0f, 200.0f);
 }
-
-
-
 
 // 플래그를 정하는 함수
 void Enemy::AddPattenLoop() 
@@ -488,7 +485,21 @@ void Enemy::PrintConsole()
 
 }
 
+void Enemy::ChecKChnageScene()
+{
+	timer += Singleton<GameTime>::GetInstance().GetDeltaTime();
 
+	if (!isCreatedResult)
+	{
+		GameObject* obj = new GameObject();
+		obj->SetRenderLayer(EngineData::RenderLayer::UI);
+		auto comp = obj->AddComponent<StageResult>();
+		comp->SetPanelState(ResultPanelState::Defeat);
+		isCreatedResult = true;
+	}
 
-
-
+	if (timer >= maxTimer)
+	{
+		Singleton<SceneManager>::GetInstance().LoadScene(SceneCount::MENU);
+	}
+}
