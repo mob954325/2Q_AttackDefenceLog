@@ -57,7 +57,7 @@ void Enemy::OnUpdate()
 	}
 
 	DiffState();            // 이전 상태와 현재 상태를 비교
-	PrintConsole();
+	//PrintConsole();
 
 	if (nowStateName == "Enemy_Dead") // 적 사망 시 -> 씬 이동
 	{
@@ -140,7 +140,7 @@ void Enemy::SetStatData(std::string tmp)
 	Object_Attack = nowEnemyData->enemyDamage;			   // 공격력
 	Object_SpiritAttack = nowEnemyData->enemySpiritdamage; // 기세 공격력
 	Object_DefenseRate = nowEnemyData->enemyGuardRate;	   // 방어율
-	Object_SpiritAmount = 5.0f;//nowEnemyData->enemySpiritamount; // 기세
+	Object_SpiritAmount = 5.0f; //nowEnemyData->enemySpiritamount; // 기세
 	Object_NowSpiritAmount = Object_SpiritAmount / 2.0f;   // 현재 기세 설정
 	Difficulty = nowEnemyData->enemyDifficulty;			   // 난이도 -> 아마 필요없을듯?
 
@@ -228,10 +228,9 @@ void Enemy::AddPattenLoop()
 void Enemy::RestoreGroggy()
 {
 	groggyTime = 0.0f;
-	IsOtherEndGroggy = false;
-	isGroggy = false;
+	//IsOtherEndGroggy = false;
+	IsOtherGroggy = false;
 	isRestore = true; // 베틀매니저에서 읽는데, true가 있다면 << 플레이어와 적의 기세를 초기화시키는 플레그
-	
 	ReserEnemy();
 }
 
@@ -270,7 +269,6 @@ void Enemy::SelectPattern() //각 객체가 사용할 패턴을 고름
 		{
 			SetAttackPattenData(enemyAttackPatternFix);
 		}
-
 	}
 }
 
@@ -322,9 +320,9 @@ void Enemy::SetCoolTime()
 		Object_nowCoolTime = nowEnemyPattenData->eComboCoolDown;
 	}
 
-	if (IsOtherEndGroggy)
+	if (IsOtherGroggy)
     {
-		Object_nowCoolTime = nowEnemyPattenData->eAtkCoolDown;
+		Object_nowCoolTime = Object_nowCoolTime / 2.0f;
 	}
 	// 현재 공격중인 시간
 	Object_nowTotalCoolTime = Object_nowCoolTime;
@@ -332,13 +330,15 @@ void Enemy::SetCoolTime()
 
 void Enemy::CalSpiritTime() 
 {
-	if (Object_OverTimeSpirit >= 1) 
-	{
-		Object_NowSpiritAmount += 0.3f;									 //초당 0.3씩 감소
-		Object_OverTimeSpirit = std::fmod(Object_OverTimeSpirit, 1.0f);  //실수형 나머지 연산자
-	}
+	if ( (!isGroggy ) && (!IsOtherGroggy) ) {
+		if (Object_OverTimeSpirit >= 1)
+		{
+			Object_NowSpiritAmount += 0.3f;									 //초당 0.3씩 감소
+			Object_OverTimeSpirit = std::fmod(Object_OverTimeSpirit, 1.0f);  //실수형 나머지 연산자
+		}
 
-	Object_OverTimeSpirit += GameTime::GetInstance().GetDeltaTime();
+		Object_OverTimeSpirit += GameTime::GetInstance().GetDeltaTime();
+	}
 }
 
 
@@ -350,27 +350,38 @@ void Enemy::DiffState()
 		nowStateName = m_State->GetNowName();
 	}
 
-	if (IsOtherEndGroggy && isFirstSpiriteDown) 
-	{
-		SelectPattern(); // 패턴 정하기!!
-		SetCoolTime();
-		isFirstSpiriteDown = false;
-	}
+	//if (IsOtherEndGroggy && isFirstSpiriteDown) 
+	//{
+	//	SelectPattern(); // 패턴 정하기!!
+	//	SetCoolTime();
+	//	isFirstSpiriteDown = false;
+	//}
 
 	// 그로기 시간!!!
-	// 플레이어가 그로기 상태에서, 적에게 공격을 맞으면, 초기화 한다
-	if ((IsOtherEndGroggy && Object_nowCoolTime <= 0.0f)) 
-    {
+	if (IsOtherGroggy)
+	{
+		OtherGroggyTime += GameTime::GetInstance().GetDeltaTime();
+	}
+
+	if (OtherGroggyTime >= 10.0f) 
+	{
+		IsOtherEndGroggy = true;
 		RestoreGroggy();
-		isEnemyGroggyAttack = true;
 	}
 
 
-	// 기세 게이지가 벗어나지 않게 고정!!!
+	// 기세 게이지가 벗어나지 않게 고정!!! + 기세 게이지가 0 이하면 그로기 T
 	if (Object_NowSpiritAmount <= 0.0f) 
     {
+		isGroggy = true;
 		Object_NowSpiritAmount = 0.0f;
 	}
+	else {
+		isGroggy = false;
+	}
+
+
+
 	if (Object_NowSpiritAmount >= Object_SpiritAmount) 
     {
 		Object_NowSpiritAmount = Object_SpiritAmount;
@@ -378,10 +389,11 @@ void Enemy::DiffState()
 }
 
 void Enemy::ReserEnemy() {
+	OtherGroggyTime = 0.0f;
 	SelectPattern(); // 공격을 했으면 다른 패턴 세팅
 	SetCoolTime();
 	isPattenCooldown = true;
-	SetState("Player_Idle");
+	SetState("Player_Idle"); // 이거 플레이어 아니라 적으로 교체하기
 }
 
 

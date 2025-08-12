@@ -74,8 +74,28 @@ void BettleManager::OnStart()
 
 void BettleManager::OnUpdate() 
 {
-    SetSpiritGauge();		// 기세 게이지 업데이트
-	SetGroggyState();
+	SetSpiritGauge();		  // 기세 게이지 업데이트
+	SetGroggyState();         // 그로기 스테이트 업데이트
+	ChangeCommonFinalState(); // 
+	if (!m_Player->GetIsGroggy() && !m_Enemy->GetIsGroggy()) {
+		SetStateFormPatternIdle();
+		ChangeFinalStateIdle();
+	}		
+	else {
+		if (m_Enemy->GetIsGroggy()) {  // 적이 그로기 상태일때
+			SetStateFormPatternEnemyGroggy(); 	
+			ChangeFinalStateEnemyGroggy();
+
+
+		}
+		else if (m_Player->GetIsGroggy()) { // 플레이어가 그로기 상태일 때
+			SetStateFormPatternPlayerGroggy();
+			ChangeFinalStatePlayerGroggy();
+
+
+		}
+	}
+
 	//HpObj->SetHpUiPosition(Player2, Enemy2);
 	/*HpObj->CalculatePlayerValue(m_Player->GetHp());
 	HpObj->CalculateEnemyValue(m_Enemy->GetHp());*/
@@ -86,11 +106,18 @@ void BettleManager::OnUpdate()
 		return;
 	}
 
+	// 이거 밑에 2개 정의안된듯?
+	//ChangeFinalState();		// 각 LiveObject의 사망 처리 Update - 유니티의 AnyState 유사
 	SetGroggyState();
-	SetStateFormPattern();	// 각 상태별 공격 방어 처리 어
-	ChangeFinalState();		// 각 LiveObject의 사망 처리 Update - 유니티의 AnyState 유사
+
+	//SetStateFormPattern();	// 각 상태별 공격 방어 처리 어
+
 	ResetState(); 			// state가 다를 경우 초기화 하기!!!
 }
+
+
+
+
 
 float BettleManager::ConvertHPDamageToPos(AttackPosition lastPos, float HpDamage)
 {
@@ -123,11 +150,35 @@ void BettleManager::SetInputNode(std::vector<int> InputNode)
 }
 
 //들어온 입력 노드에 따라서 공격, 방어를 처리하는 함수
-void BettleManager::SetStateFormPattern() 
+
+
+
+
+void BettleManager::SetStateFormPatternPlayerGroggy() // 플레이어 그로기 상태에 패턴 검색
+{
+	m_PattenManager->PlayerPatternAllClear();
+	SetStateFormPatternIdle(); //
+}
+
+void BettleManager::SetStateFormPatternEnemyGroggy()// 적 그로기 상태에 패턴 검색
+{
+		// 모든 패턴 제거
+	m_PattenManager->EnemyPatternAllClear();
+	m_PattenManager->PlayerPatternAllClear();
+	m_PattenManager->DoneTimeOutPatten();
+	if (nowNode.size() < 2) return; // 플레이어가 입력을 하기 전까지 빠져나가질 못함 (8.12 확인)
+	if (allDistancePercent <= 0.001f) //퍼센트가 0 이라면 길이에 따라서 배율 넣기 , 문제 있을 수 있음
+	{
+		// 연격 패턴 이벤트 호출
+		onFinalBlow.Invoke(); // 외부에 공격 준비를 알림(총알이 장전된거임)
+		allDistancePercent = m_PattenManager->OnceAllNodePatternDistance(nowNode); // 연격 길이 퍼센트 반환
+	}
+	nowNode.clear();
+}
+
+void BettleManager::SetStateFormPatternIdle() 
 {
 	// 플레이어와 적 모두가 그로기 상태가 아니면
-	if (!m_Player->GetIsGroggy() && !m_Enemy->GetIsGroggy())  
-	{
 		nowManagerState = noneGroggy;
 		std::unordered_map<std::string, pattern*> tmpTimePatten = m_PattenManager->TimeOutPatten();  // 패턴의 시간이 만료되었으면 
 		for (const auto& pair : tmpTimePatten) 
@@ -148,8 +199,16 @@ void BettleManager::SetStateFormPattern()
 				}
 
 				// 기세 계산
-				m_Enemy->RestoreSpiritDamage(ConvertSpiritDamageToPos(pair.second->lastPosition, m_Enemy->GetSpiritAttack()));	// 적은기세를 회복
-				m_Player->GetSpiritdamage(ConvertSpiritDamageToPos(pair.second->lastPosition, m_Enemy->GetSpiritAttack()));		// 플레이어는 기세를 잃음
+				
+				if (m_Player->GetIsGroggy()) {
+					m_Player->GetDamage(ConvertSpiritDamageToPos(pair.second->lastPosition, m_Enemy->GetSpiritAttack()));		// 플레이어는 데미지 받음
+				}
+				else {
+					m_Enemy->RestoreSpiritDamage(ConvertSpiritDamageToPos(pair.second->lastPosition, m_Enemy->GetSpiritAttack()));	// 적은기세를 회복
+					m_Player->GetSpiritdamage(ConvertSpiritDamageToPos(pair.second->lastPosition, m_Enemy->GetSpiritAttack()));		// 플레이어는 기세를 잃음
+				}
+				
+			
 			}
 
 			m_PattenManager->SubPattern(pair.second->PattenID, "Time"); // 시간 종료된 패턴 제거
@@ -175,8 +234,12 @@ void BettleManager::SetStateFormPattern()
 					m_Player->SetState("Player_Perry"); // 플레이어 상태 변경 -> 플레이어 패링 상태
 
 					// 패링에 따른 기세값 반영
-					m_Player->RestoreSpiritDamage(ConvertSpiritDamageToPos(tmpCorPatten->lastPosition, m_Enemy->GetSpiritAttack())); 
-					m_Enemy->GetSpiritdamage(ConvertSpiritDamageToPos(tmpCorPatten->lastPosition, m_Enemy->GetSpiritAttack()));
+					if (!m_Player->GetIsGroggy()) {
+						m_Player->RestoreSpiritDamage(ConvertSpiritDamageToPos(tmpCorPatten->lastPosition, m_Enemy->GetSpiritAttack()));
+						m_Enemy->GetSpiritdamage(ConvertSpiritDamageToPos(tmpCorPatten->lastPosition, m_Enemy->GetSpiritAttack()));
+					}
+
+					
 
 				}
 				else // 플레이어 패링 실패
@@ -188,8 +251,13 @@ void BettleManager::SetStateFormPattern()
 					m_Player->SetState("Player_Guard");		// 플레이어 상태 변경 -> 플레이어 방어
 
 					// 패링 실패에 따른 기세값 변경
-					m_Enemy->RestoreSpiritDamage(ConvertSpiritDamageToPos(tmpCorPatten->lastPosition, m_Enemy->GetSpiritAttack()));
-					m_Player->GetSpiritdamage(ConvertSpiritDamageToPos(tmpCorPatten->lastPosition, m_Enemy->GetSpiritAttack()));
+					if (m_Player->GetIsGroggy()) {
+						m_Player->GetDamage(ConvertSpiritDamageToPos(tmpCorPatten->lastPosition, m_Enemy->GetSpiritAttack()));
+					}
+					else{
+						m_Enemy->RestoreSpiritDamage(ConvertSpiritDamageToPos(tmpCorPatten->lastPosition, m_Enemy->GetSpiritAttack()));
+						m_Player->GetSpiritdamage(ConvertSpiritDamageToPos(tmpCorPatten->lastPosition, m_Enemy->GetSpiritAttack()));
+					}
 				}
 				
 				m_PattenManager->SubPattern(tmpCorPatten->PattenID, "Enemy"); // 적 패턴 제거
@@ -240,8 +308,11 @@ void BettleManager::SetStateFormPattern()
 					}
 
 					// 기세 계산
-					m_Player->RestoreSpiritDamage(ConvertSpiritDamageToPos(tmpPatten->lastPosition, m_Player->GetSpiritAttack())); 
-					m_Enemy->GetSpiritdamage(ConvertSpiritDamageToPos(tmpPatten->lastPosition, m_Player->GetSpiritAttack()));
+					if (!m_Player->GetIsGroggy()){
+						m_Player->RestoreSpiritDamage(ConvertSpiritDamageToPos(tmpPatten->lastPosition, m_Player->GetSpiritAttack()));
+						m_Enemy->GetSpiritdamage(ConvertSpiritDamageToPos(tmpPatten->lastPosition, m_Player->GetSpiritAttack()));
+					}
+					
 
 					// 사용된 적 패턴 제거
 					m_PattenManager->SubPattern(tmpPatten->PattenID, "Enemy");
@@ -257,48 +328,61 @@ void BettleManager::SetStateFormPattern()
 				}
 			}
 		}
-	}
-	else if (m_Enemy->GetIsGroggy()) // 적이 그로기에 걸린 경우 
-	{ 
-		// 모든 패턴 제거
-		m_PattenManager->EnemyPatternAllClear(); 
-		m_PattenManager->PlayerPatternAllClear();
-		m_PattenManager->DoneTimeOutPatten();
-
-		if (nowNode.size() < 2) return; // 플레이어가 입력을 하기 전까지 빠져나가질 못함 (8.12 확인)
-
-		if (allDistancePercent <= 0.0f) //퍼센트가 0 이라면 길이에 따라서 배율 넣기 , 문제 있을 수 있음
-		{	   
-			// 연격 패턴 이벤트 호출
-			onFinalBlow.Invoke(); // 외부에 공격 준비를 알림(총알이 장전된거임)
-			allDistancePercent = m_PattenManager->OnceAllNodePatternDistance(nowNode); // 연격 길이 퍼센트 반환
-		}
-	}
-	else if (m_Player->GetIsGroggy()) // 아군이 그로기에 걸린경우
-    { 
-		m_PattenManager->EnemyPatternAllClear();  //이것도 잘 처리하기!!!
-		m_PattenManager->PlayerPatternAllClear();
-		m_PattenManager->DoneTimeOutPatten();
-	}
-
 	nowNode.clear(); // 플레이어 입력 노드 초기화
 }
 
+
+
+void BettleManager::ChangeFinalStateIdle()  //평소 상태에서  적과 플레이어의 상태를 변하게 하는 함수
+{
+
+}
+
+
+void BettleManager::ChangeFinalStateEnemyGroggy()  // 적의 그로기 상태에서 적과 플레이어의 상태를 변하게하는 함수
+{
+	if (!m_Player->IsOtherGroggy) {
+		m_Player->IsOtherGroggy = true;
+		
+	}
+	if (m_Player->isOtherGroggyEnd) {
+		m_Player->isOtherGroggyEnd = false;
+	}
+}
+
+
+void BettleManager::ChangeFinalStatePlayerGroggy() // 아군의  그로기 상태에서 적과 플레이어의 상태를 변하게 하는 함수 
+{
+	if (m_Player->GetIsGroggy() && !m_Enemy->IsOtherEndGroggy)
+	{
+		m_Enemy->IsOtherGroggy = true;
+	}
+
+	if (m_Enemy->IsOtherEndGroggy) {
+		m_Enemy->IsOtherEndGroggy = false;
+	}
+	
+}
+
+
+
 // State정하기
 //그로기 + 죽음
-void BettleManager::ChangeFinalState() 
+void BettleManager::ChangeCommonFinalState() 
 {
+	
 	// 플레이어 사망 확인
-	if (m_Player->GetHp() <= 0.0f) 
+	if (m_Player->GetHp() <= 0.0f)
 	{
 		m_Player->SetState("Player_Dead");
 	}
 
 	// 적 사망 확인
-	if (m_Enemy->GetHp() <= 0.0f) 
+	if (m_Enemy->GetHp() <= 0.0f)
 	{
 		m_Enemy->SetState("Enemy_Dead");
 	}
+
 
 	// 적과 아군 둘중 그로기가 끝나고 회복해야한다면
 	if (m_Enemy->GetIsRestore() || m_Player->GetIsRestore()) 
@@ -308,46 +392,29 @@ void BettleManager::ChangeFinalState()
 		m_Enemy->SetIsRestore(false);  // 기세 게이지 회복 표시
 		m_Player->SetIsRestore(false);
 	}
-	else if ((!m_Player->GetIsGroggy()) && m_Player->GetNowSpiritAmount() <= 0.0f)  // 플레이어 그로기 상태 처리
-	{
-		m_Player->SetState("Player_Groggy");	// 플레이어 상태 변경 - 플레이어 그로기 
-		m_Player->SetIsGroggy(true);
 
-		m_Enemy->SetIsOtherEndGroggy(true);
-		m_Enemy->isFirstSpiriteDown = true;		// 오류 수정하기!!
-	}
-	else if ((!m_Enemy->GetIsGroggy()) && m_Enemy->GetNowSpiritAmount() <= 0.0f)	// 적 그로기 상태 처리
-	{
-		m_Enemy->SetState("Enemy_Groggy");		// 적 상태 변경 - 적 그로기
-		m_Enemy->SetIsGroggy(true);
 
-		m_Player->SetIsOtherEndGroggy(true);
+	//else if ((!m_Player->GetIsGroggy()) && m_Player->GetNowSpiritAmount() <= 0.0f)  // 플레이어 그로기 상태 처리
+	//{
+	//	m_Player->SetState("Player_Groggy");	// 플레이어 상태 변경 - 플레이어 그로기 
+	//	m_Player->SetIsGroggy(true);
 
-		isOncePatternAttack = true;
-	}
-	else if (m_Player->GetIsGroggy() && m_Enemy->isEnemyGroggyAttack) {
-		m_Player->GetDamage(m_Enemy->GetAttack() * 2.5f);
-		m_Player->SetState("Player_Hit");
-		m_Enemy->SetState("Enemy_AttackSuccess"); 
-		m_Enemy->isEnemyGroggyAttack = false;
-		// 그로기시 패턴을 한번 진행
-	}
+	//	m_Enemy->SetIsOtherEndGroggy(true);
+	//}
+	//else if ((!m_Enemy->GetIsGroggy()) && m_Enemy->GetNowSpiritAmount() <= 0.0f)	// 적 그로기 상태 처리
+	//{
+	//	m_Enemy->SetState("Enemy_Groggy");		// 적 상태 변경 - 적 그로기
+	//	m_Enemy->SetIsGroggy(true);
+
+	//	m_Player->SetIsOtherEndGroggy(true);
+
+	//	isOncePatternAttack = true;
+	//}
 	
 
-
-
-
-
-
-	if (m_Enemy->GetIsGroggy() && !m_Player->GetIsOtherEndGroggy()) {
-		onTimeout.Invoke();
-		m_Enemy->RestoreGroggy();
-	}
-	else if (m_Player->GetIsGroggy() && !m_Enemy->GetIsOtherEndGroggy()) {
-		m_Player->RestoreGroggy();
-	}
-
 }
+
+
 
 void BettleManager::SetSpiritGauge() 
 {
@@ -365,14 +432,15 @@ void BettleManager::FinalAttackToEnemy() // 델리게이트로 외부에서 연�
 		m_Enemy->GetDamage((m_Player->GetAttack() * allDistancePercent * 10.0f));  /// 나중에 적 hp 배율 따로 빼기!!!!
 		m_Enemy->SetState("Enemy_Hit");				// 적 상태 변경 -> 적 피격
 
-		m_Player->SetIsOtherEndGroggy(false);		// 적 그로기 상태 해제
+		m_Player->isOtherGroggyEnd = false;		// 적 그로기 상태 해제
 		m_Player->SetState("Player_AttackSuccess");	// 플레이어 상태 변경 -> 공격 성공
+		m_Enemy->SetIsRestore(true);
 	}
 }
 
+
 void BettleManager::SetGroggyState() 
 {
-	preManagerState = nowManagerState;
 	if (m_Player->GetIsGroggy())		// 플레이어가 그로기 일 때
 	{
 		nowManagerState = playerGroggy;
@@ -389,15 +457,22 @@ void BettleManager::SetGroggyState()
 	{
 		nowManagerState = noneGroggy;
 	}
-}
 
-void BettleManager::ResetState() 
-{
 	// 상태에 변경이 있고 이전 상태가 적 그로기 상태면 
-	if (preManagerState != nowManagerState && preManagerState == enemyGroggy) 
+	if (preManagerState != nowManagerState && preManagerState == enemyGroggy)
 	{
 		allDistancePercent = 0.0f;
 		isOncePatternAttack = false;
 		onTimeout.Invoke(); // 외부에 그로기 지속 시간이 끝났다는걸 알림 << 이거, 성공했을때는 잡히는데 실패할때 안잡히네
 	}
+
+
+
+
+	preManagerState = nowManagerState;
+}
+
+void BettleManager::ResetState()
+{
+
 }

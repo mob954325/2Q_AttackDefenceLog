@@ -85,6 +85,18 @@ public:
 	/// <param name="InputNode">받을 노드 인덱스들</param>
 	void SetInputNode(std::vector<int> InputNode); 
 
+	void SetStateFormPatternPlayerGroggy();
+	void SetStateFormPatternEnemyGroggy();
+	void SetStateFormPatternIdle();
+
+
+
+	void  ChangeFinalStateIdle();
+	void  ChangeFinalStateEnemyGroggy();
+	void  ChangeFinalStatePlayerGroggy();
+	void ChangeCommonFinalState();
+
+
 	//Scene의 Start에 들어갈 것들
 
 	/// <summary>

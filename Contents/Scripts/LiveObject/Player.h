@@ -63,6 +63,9 @@ public:
 	AllNodePattenClass* tmpNode2 = nullptr;  // 출력용 변수
 
 
+	bool isOtherGroggyEnd = false; // 아군의 연격이  끝났다는 불변수
+	bool IsOtherGroggy = false;
+
 	EventDelegate<> onTimeOut; // 8.12추가, 그로기 타이머가 플레이어에 있어서 델리게이트 연결함
 private:
 	void AttackStateSelect(bool AttackActive); // 공격 패턴 3가지 중 랜덤으로 1개 선택해서 설정함
