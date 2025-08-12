@@ -29,3 +29,45 @@ SceneCount GameManager::GetTargetBattleStage()
 {
     return targetBattleStageScene;
 }
+
+void GameManager::SetStageClear(int stageNum)
+{
+    if (stageNum == 1)
+    {
+        isStage1Clear = true;
+    }
+    else if (stageNum == 2)
+    {
+        isStage2Clear = true;
+    }
+    else if (stageNum == 3)
+    {
+        isStage3Clear = true;
+    }
+    else
+    {
+        std::cerr << "없는 스테이지 번호 입니다." << std::endl;
+    }
+}
+
+void GameManager::ResetClear()
+{
+    isStage1Clear = false;
+    isStage2Clear = false;
+    isStage3Clear = false;
+}
+
+bool GameManager::IsStage1Clear()
+{
+    return isStage1Clear;
+}
+
+bool GameManager::IsStage2Clear()
+{
+    return isStage2Clear;
+}
+
+bool GameManager::IsStage3Clear()
+{
+    return isStage3Clear;
+}
