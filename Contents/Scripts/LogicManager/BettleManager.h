@@ -4,6 +4,7 @@
 #include "AttackPatternManager.h"
 #include "../Engine/Utils/EventDelegate.h"
 #include "Scripts/Slider/GiseGauge.h"
+#include "Scripts/HPBar/HpGauge.h"
 class State;
 
 enum GroggyState { playerGroggy = 0, enemyGroggy, noneGroggy };
@@ -62,6 +63,9 @@ private:
 
 	//------------------------------------------------------------------------------------------------
 
+	Vector2 Player2{ 400.0f , 200.0f };
+	Vector2 Enemy2{ 800.0f , 200.0f };
+
 
 public:
 	Player* m_Player = nullptr;
@@ -105,6 +109,8 @@ public:
 
 private:
 	GiseGauge* giseObj{};
+	HpGauge* HpObj{};
+
 	float ChangeValue = 0.0f;
 	float TotalValue = 0.0f;
 	float preSpiritAmount = 0.0f;

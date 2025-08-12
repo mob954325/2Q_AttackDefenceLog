@@ -100,6 +100,6 @@ private:
 	void SetBitmap(); //처음 비트맵을 설정할 함수
 
 	bool isAttackingPattern = false;
-	float groggyTime = 0.0f;
+	float enemyGroggyTime = 0.0f;
 	bool isFirstGroggyLoop = false;
 };

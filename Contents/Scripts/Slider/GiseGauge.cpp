@@ -60,6 +60,19 @@ void GiseGauge::OnStart()
 	x_pic = it.sprites[0].width;
 
 	owner->GetTransform().SetPosition(EngineData::SceenWidth / 2 - currentgague/2 , 0.0f);
+
+	float offsetX = 567.0f;
+	float offsetY = 0.0f;
+
+	std::vector<Vector2> vec
+	{
+		{offsetX + 0,  offsetY},
+		{offsetX + 786, offsetY},
+		{offsetX + 735, offsetY + 73.0f},
+		{offsetX + 55, offsetY + 73.0f}
+	};
+	ButtonAnime->GetComponent<AnimationRenderer>()->SetClipingPosition(vec);
+	ButtonCover->GetComponent<BitmapRenderer>()->SetClipingPosition(vec);
 }
 
 void GiseGauge::OnDestroy()

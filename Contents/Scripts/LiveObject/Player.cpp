@@ -131,13 +131,6 @@ void Player::OnCreateState() {
 }
 
 
-BitmapRenderer* player_Idle = nullptr;
-BitmapRenderer* player_Attack = nullptr;
-BitmapRenderer* player_Guard = nullptr;
-BitmapRenderer* player_Damaged = nullptr;
-
-
-
 
 void Player::SetBitmap() {
  	player_Idle = owner->AddComponent<BitmapRenderer>();
@@ -174,6 +167,7 @@ void Player::SetStatData(std::string tmp) {
 	Object_ID = nowPlayerData->Character_ID;					 // ID
 	Object_Name = nowPlayerData->Character_name;				 // 이름
 	Object_Hp = nowPlayerData->Character_helath;				 // 체력
+	Object_TotalHp = Object_Hp;									 // 전체 체력
 	Object_Attack = nowPlayerData->Character_damage;			 // 공격력
 	Object_SpiritAttack = nowPlayerData->Character_spritdamage;  // 기세 공격력
 	Object_DefenseRate = nowPlayerData->Character_guard_rate;	 // 방어율
@@ -282,25 +276,29 @@ void Player::DiffState() {
 
 
 	if (IsOtherEndGroggy) { // 적과 나 둘중 1명이 그로기
-		groggyTime += GameTime::GetInstance().GetDeltaTime();
+		enemyGroggyTime += GameTime::GetInstance().GetDeltaTime();
 
 	}
-
-	if (isGroggy) {
-
-   }
-
 
 	// 그로기 시간!!!
 
 	//10초가 지나거나 or 적에게 쳐맞거나
-	if (groggyTime >= 10.0f || (isGroggy && preHp != Object_Hp) ) {
+	if (enemyGroggyTime >= 10.0f ) {
 		RestoreGroggy();
 	}
 
-	preHp = Object_Hp;
-}
+	if (Object_NowSpiritAmount <= 0.0f) {
+		Object_NowSpiritAmount = 0.0f;
+	}
 
+	// 기세 게이지가 벗어나지 않게 고정!!!
+	if (Object_NowSpiritAmount <= 0.0f) {
+		Object_NowSpiritAmount = 0.0f;
+	}
+	if (Object_NowSpiritAmount >= Object_SpiritAmount) {
+		Object_NowSpiritAmount = Object_SpiritAmount;
+	}
+}
 
 
 
@@ -331,7 +329,7 @@ void Player::AddPattenLoop() {
 
 void Player::RestoreGroggy()
 {
-	groggyTime = 0.0f;
+	enemyGroggyTime = 0.0f;
 	IsOtherEndGroggy = false;
 	isGroggy = false;   /// 그로기를 표시하는 상태변수!!!, 나중에 
 	isRestore = true;
