@@ -221,6 +221,12 @@
       <Filter>Objects\SceneObject\SelectScene</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\HpBar\HpGauge.cpp" />
+    <ClCompile Include="Objects\Scenes\SelectScene\SelectEffectManager.cpp">
+      <Filter>Objects\SceneObject\SelectScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Scenes\Stage\CloudManager.cpp">
+      <Filter>Objects\SceneObject\Stage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameApp.h">
@@ -372,5 +378,14 @@
       <Filter>Objects\SceneObject\SelectScene</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\HpBar\HpGauge.h" />
+    <ClInclude Include="Objects\Scenes\TitleScene\EffectProgress.h">
+      <Filter>Objects\SceneObject\TitleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Scenes\SelectScene\SelectEffectManager.h">
+      <Filter>Objects\SceneObject\SelectScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Scenes\Stage\CloudManager.h">
+      <Filter>Objects\SceneObject\Stage</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

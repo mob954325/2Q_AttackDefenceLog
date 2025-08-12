@@ -6,10 +6,20 @@
 #include "Application/AppPaths.h"
 #include "Objects/Scenes/SelectScene/LevelSelectManager.h"
 #include "Objects/Scenes/SelectScene/SelectSceneBGI.h"
+#include "Objects/Scenes/SelectScene/SelectEffectManager.h"
+#include "Objects/Scenes/Stage/CloudManager.h"
 
 void SelectScene::OnEnterImpl()
 {
 	std::cout << "선택씬 진입" << std::endl;
+
+	selectEffectManager = new GameObject();
+	auto tem = selectEffectManager->AddComponent<SelectEffectManager>();
+	AddGameObject(selectEffectManager, "SelectEffectManager");
+
+	cloudManager = new GameObject();
+	auto cloud = cloudManager->AddComponent<CloudManager>();
+	AddGameObject(cloudManager, "CloudManagerSelcet");
 
 	inputObj = new GameObject();
 	inputObj->AddComponent<InputObject>();

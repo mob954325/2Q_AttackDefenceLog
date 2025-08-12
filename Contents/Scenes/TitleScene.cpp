@@ -5,13 +5,27 @@
 #include "Objects/Scenes/TitleScene/TitleSceneBGI.h"
 #include "Objects/Scenes/TitleScene/TitleNodeManager.h"
 #include "Objects/Scenes/TitleScene/TitleEffectManager.h"
+#include "Objects/Scenes/Stage/CloudManager.h"
 
 void TitleScene::OnEnterImpl()
 {
 	std::cout << "타이틀씬 진입" << std::endl;
 
+	titleEffectManager = new GameObject();
+	auto tem = titleEffectManager->AddComponent<TitleEffectManager>();
+	AddGameObject(titleEffectManager, "TItleEffectManager");
+
+	cloudManager = new GameObject();
+	auto cloud = cloudManager->AddComponent<CloudManager>();
+	AddGameObject(cloudManager, "CloudManagerTitle");
+
+
 	nodeManager = new GameObject();
-	nodeManager->AddComponent<TitleNodeManager>();
+	auto tm = nodeManager->AddComponent<TitleNodeManager>();
+	tm->onononStart.Add([this]() {
+		titleEffectManager->GetComponent<TitleEffectManager>()->Start();		
+
+		});
 	AddGameObject(nodeManager, "node");
 
 	inputObj = new GameObject();
@@ -20,11 +34,9 @@ void TitleScene::OnEnterImpl()
 
 	backGroundImg = new GameObject();
 	backGroundImg->AddComponent<TitleSceneBGI>();
-	AddGameObject(backGroundImg, "TitleBGI");	
+	AddGameObject(backGroundImg, "TitleBGI");
 
-	titleEffectManager = new GameObject();
-	titleEffectManager->AddComponent<TitleEffectManager>();
-	AddGameObject(titleEffectManager, "TItleEffectManager");
+
 
 	trail = new GameObject();
 	trail->AddComponent<MouseTrailObject>();

@@ -17,6 +17,6 @@ private:
 
 
 
-
+	GameObject* cloudManager;
 	GameObject* titleEffectManager;
 };
