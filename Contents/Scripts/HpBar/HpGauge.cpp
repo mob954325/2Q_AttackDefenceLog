@@ -12,35 +12,60 @@ void HpGauge::OnUpdate()
 
 void HpGauge::OnCreate()
 {
+	owner->GetTransform().SetUnityCoords(false);
+	owner->AddComponent<Slider>();
+
+
+
 	GameObject* obj = new GameObject();
 	obj->AddComponent<Slider>();
 	obj->SetName(std::string("PlayerHP"));
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(obj);
 	PlayerHP = obj;
 	Playerslider = PlayerHP->GetComponent<Slider>();
-	PlayerHP->GetTransform().SetUnityCoords(false);
 
 	GameObject* obj2 = new GameObject();
 	obj2->AddComponent<Slider>();
 	obj2->SetName(std::string("EnemyHP"));
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(obj2);
 	EnemyHP = obj2;
-	Enemyslider = EnemyHP->GetComponent<Slider>();
-	EnemyHP->GetTransform().SetUnityCoords(false);
+	Enemyslider = PlayerHP->GetComponent<Slider>();
+
+	Playerslider->SetGaugeBackgroundImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\HP\\hp_ui_background.png");
+	Playerslider->SetGaugeBarImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\HP\\hp_ui_left.png");
+
+	Enemyslider->SetGaugeBackgroundImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\HP\\Slider\\hp_ui_background.png");
+	Enemyslider->SetGaugeBarImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\HP\\hp_ui_right.png");
+
 }
 
 void HpGauge::OnStart()
 {
-	Playerslider->SetGaugeBackgroundImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\HP\\hp_ui_background.png");
-	Playerslider->SetGaugeBarImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\HP\\hp_ui_left.png");
+	/*GameObject* obj = new GameObject();
+	obj->AddComponent<Slider>();
+	obj->SetName(std::string("PlayerHP"));
+	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(obj);
+	PlayerHP = obj;
+	Playerslider = PlayerHP->GetComponent<Slider>();
 
-	Enemyslider->SetGaugeBackgroundImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\HP\\hp_ui_background.png");
-	Enemyslider->SetGaugeBarImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\HP\\hp_ui_right.png");
+	GameObject* obj2 = new GameObject();
+	obj2->AddComponent<Slider>();
+	obj2->SetName(std::string("EnemyHP"));
+	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(obj2);
+	EnemyHP = obj2;
+	Enemyslider = PlayerHP->GetComponent<Slider>();*/
 
 
 	Playerslider->ButtonShow(false);
 	Enemyslider->ButtonShow(false);
-	Enemyslider->SetPivotSide(false);
+
+
+	//Playerslider->SetGaugeBackgroundImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\HP\\hp_ui_background.png");
+	//Playerslider->SetGaugeBarImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\HP\\hp_ui_left.png");
+
+	//Enemyslider->SetGaugeBackgroundImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\HP\\Slider\\hp_ui_background.png");
+	//Enemyslider->SetGaugeBarImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\HP\\hp_ui_right.png");
+
 
 	ImageMaxwidth = Playerslider->GetGaugeBarImage()->GetResource()->GetBitmap()->GetSize().width;
 }
@@ -54,7 +79,7 @@ void HpGauge::OnDestroy()
 void HpGauge::ChangeGaugeBar()
 {
 	Playerslider->ChangeGauge(PlayerValue);
-	Enemyslider->ChangeGauge(-EnemyValue);
+	Enemyslider->ChangeGauge(EnemyValue);
 }
 
 void HpGauge::SetHpUiPosition(Vector2 player, Vector2 Enemy)
@@ -95,8 +120,5 @@ void HpGauge::CalculateEnemyValue(float endvalue)
 	//현재 게이지의 길이
 	auto it = Enemyslider->GetGaugeRectValue();
 
-	it.right;
-	it.left;
-
-	EnemyValue = (targetRight - (it.right - it.left)) * (Singleton<GameTime>::GetInstance().GetDeltaTime() * speed);
+	EnemyValue = (targetRight - it.right) * (Singleton<GameTime>::GetInstance().GetDeltaTime() * speed);
 }
