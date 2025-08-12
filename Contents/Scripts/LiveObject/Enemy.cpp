@@ -496,7 +496,7 @@ void Enemy::ChecKChnageScene()
 		GameObject* obj = new GameObject();
 		obj->SetRenderLayer(EngineData::RenderLayer::UI);
 		auto comp = obj->AddComponent<StageResult>();
-		comp->SetPanelState(ResultPanelState::Defeat);
+		comp->SetPanelState(ResultPanelState::Win);
 		isCreatedResult = true;
 	}
 
