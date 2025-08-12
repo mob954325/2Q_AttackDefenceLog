@@ -48,6 +48,8 @@ protected:
 	std::vector<EffectInstance*> effectInstances;		// 이펙트 여러개 -> 이 오브젝트와 개별 오브젝트
 
 private:
+	bool isSkipped = false; // 이거 켜지면, 노드 관련 행동 스킵함
+
 	std::vector<int> cachedVecA;
 
 	std::vector<int> cachedVecB;
