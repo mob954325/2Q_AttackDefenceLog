@@ -16,7 +16,7 @@ void StageResult::OnCreate()
 
 	winPanelObject->SetRenderLayer(EngineData::RenderLayer::UI);
 	winPanelObject->GetTransform().SetPosition(93.5f, 159.0f);
-	winPanel->SetOrderInLayer(100000);
+	winPanel->SetOrderInLayer(20000);
 
 	// winMark 초기화
 	GameObject* winMarkObject = new GameObject();
@@ -27,7 +27,7 @@ void StageResult::OnCreate()
 
 	winMarkObject->SetRenderLayer(EngineData::RenderLayer::UI);
 	winMarkObject->GetTransform().SetPosition(93.5f, 159.0f);
-	winMark->SetOrderInLayer(100000);
+	winMark->SetOrderInLayer(20000);
 
 	// defeatPanel 초기화
 	GameObject* defeatPanelObject = new GameObject();
@@ -38,7 +38,7 @@ void StageResult::OnCreate()
 
 	defeatPanelObject->SetRenderLayer(EngineData::RenderLayer::UI);
 	defeatPanelObject->GetTransform().SetPosition(93.5f, 159.0f);
-	defeatPanel->SetOrderInLayer(100000);
+	defeatPanel->SetOrderInLayer(20000);
 
 	// defeatMark 초기화
 	GameObject* defeatMarkObject = new GameObject();
@@ -49,7 +49,7 @@ void StageResult::OnCreate()
 
 	defeatMarkObject->SetRenderLayer(EngineData::RenderLayer::UI);
 	defeatMarkObject->GetTransform().SetPosition(93.5f, 159.0f);
-	defeatMark->SetOrderInLayer(100000);
+	defeatMark->SetOrderInLayer(20000);
 }
 
 void StageResult::OnStart()
