@@ -43,7 +43,7 @@ void SliceableObject::HandleOverlap()
 	D2D1_MATRIX_3X2_F mat = owner->GetTransform().GetFinalMatrix();	// Unity 좌표계를 고려해 매트릭스 값 가져오기
 	Vector2 currentPosition = { mat.dx , mat.dy }; // 위치 값을 Vector2로 변경
 
-	if (IsOverlap(Input::MouseX, Input::MouseY))
+	if (IsOverlap(Input::MouseX, Input::MouseY) && Input::leftButtonDown)
 	{
 		if (state == OverlapState::Notyet) // 충돌 전
 		{
