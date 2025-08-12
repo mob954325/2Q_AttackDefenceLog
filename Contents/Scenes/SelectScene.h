@@ -13,4 +13,5 @@ private:
 	GameObject* testObj;
 	GameObject* trail;
 	GameObject* selectManager;
+	GameObject* SoundSeletObj;
 };

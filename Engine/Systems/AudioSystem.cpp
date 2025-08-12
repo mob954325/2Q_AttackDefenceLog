@@ -31,7 +31,8 @@ void AudioSystem::Register(const std::vector<SoundResource>& soundlist)
 		if (sounds.count(it.id)) continue;
 
 		FMOD::Sound* sound = nullptr;
-		fmodSystem->createSound(StringConvert::WStringToUTF8(it.path).c_str(), it.mode, nullptr, &sound);
+		//25.08.12 | 경로 절대값으로 변경에 따라 코드수정
+		fmodSystem->createSound((StringConvert::WStringToUTF8(Singleton<AppPaths>::GetInstance().GetWorkingPath() + it.path)).c_str(), it.mode, nullptr, &sound);
 		sounds[it.id] = sound;
 	}
 }
@@ -74,4 +75,21 @@ void AudioSystem::ReSetChannel()
 void AudioSystem::Setvolume(float state)
 {
 	muteGroup->setVolume(state);
+}
+
+void AudioSystem::Getvolume(float& num )
+{
+	if (muteGroup) // nullptr 체크
+	{
+		FMOD_RESULT result = muteGroup->getVolume(&num);
+		if (result != FMOD_OK)
+		{
+			std::cout << "[FMOD ERROR] " << FMOD_ErrorString(result) << std::endl;
+			num = 0.0f; // 실패 시 기본값
+		}
+	}
+	else
+	{
+		num = 0.0f;
+	}
 }

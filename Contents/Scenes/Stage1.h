@@ -14,4 +14,6 @@ private:
 	GameObject* stageBGI;
 
 	GameObject* escPanel;
+
+	GameObject* SoundStageOne;
 };

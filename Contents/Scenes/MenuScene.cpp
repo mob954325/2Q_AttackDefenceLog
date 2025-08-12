@@ -6,6 +6,7 @@
 #include "Objects/Common/MouseTrailObject.h"
 #include "Objects/Scenes/MenuScene/MenuSceneBGI.h"
 #include "Objects/Scenes/MenuScene/StageSelectManager.h"
+#include "Objects/Sound/SoundTittle.h"
 
 void MenuScene::OnEnterImpl()
 {
@@ -30,6 +31,10 @@ void MenuScene::OnEnterImpl()
 	selectManager = new GameObject();
 	selectManager->AddComponent<StageSelectManager>();
 	AddGameObject(selectManager, "selectManager");
+
+	SoundMenuObj = new GameObject();
+	SoundMenuObj->AddComponent<SoundTittle>();
+	AddGameObject(SoundMenuObj, "SoundMenu");
 }
 
 void MenuScene::OnExitImpl()

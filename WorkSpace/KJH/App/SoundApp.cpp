@@ -18,8 +18,7 @@ void SoundApp::SoundApp::Initialize()
 	MessageBox(NULL, buffer, L"실제 시도 중인 파일 경로", MB_OK);*/
 
 	__super::Initialize();
-	std::wstring path = Singleton<AppPaths>::GetInstance().GetWorkingPath();
-	LoadCSV<SoundResource>::SetCSV(path + L"\\..\\Resource\\DataTable\\AllSoundList.csv", soundList);
+	LoadCSV<SoundResource>::SetCSV(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\DataTable\\AllSoundList.csv", soundList);
 
 	// 출력 테스트
 	//for (const auto& sound : soundList) {
@@ -29,6 +28,22 @@ void SoundApp::SoundApp::Initialize()
 	//		<< std::endl;
 	//}
 
+	///==================================================================
+	FILE* file = nullptr;
+	std::string fullPath = StringConvert::WStringToUTF8( Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\sounds\\attack\\attack_1.mp3");
+
+	if (fopen_s(&file, (StringConvert::WStringToUTF8(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\sounds\\attack\\attack_1.mp3")).c_str(), "rb") == 0 && file)
+	{
+		std::cout << "[DEBUG] File exists: " << (StringConvert::WStringToUTF8(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..Resource\\sounds\\attack\\attack_1.mp3")) << std::endl;
+		fclose(file);
+	}
+	else
+	{
+		std::cout << "[DEBUG] File NOT found: " << (StringConvert::WStringToUTF8(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..Resource\\sounds\\attack\\attack_1.mp3")) << std::endl;
+	}
+
+	///==================================================================
+
 	testScene = new TestScene::TestScene();
 	Singleton<SceneManager>::GetInstance().AddScene(testScene);
 	Singleton<SceneManager>::GetInstance().Init();
@@ -36,8 +51,8 @@ void SoundApp::SoundApp::Initialize()
 	AudioSystem::GetInstance().Register(soundList);
 
 
-	std::wstring mouseIdleIcon = Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\TestMouse\\idle.png";
-	std::wstring mouseClickIcon = Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\TestMouse\\click.png";
+	std::wstring mouseIdleIcon = Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\UI\\TestMouse\\idle.png";
+	std::wstring mouseClickIcon = Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\UI\\TestMouse\\click.png";
 	hCursorDefault = mouse.LoadPngCursor(mouseIdleIcon.c_str());
 	hCursorClicked = mouse.LoadPngCursor(mouseClickIcon.c_str());
 

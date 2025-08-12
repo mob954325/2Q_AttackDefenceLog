@@ -10,4 +10,5 @@ protected:
 
 private:
 	GameObject* inputObj;
+	GameObject* SoundStageThree;
 };

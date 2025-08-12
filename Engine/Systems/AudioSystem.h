@@ -47,8 +47,6 @@ public:
 	void PlaySound2(const std::wstring& id);
 	void UnRegister();
 
-	
-
 	void PauseSound();
 
 	void AgainstSound();
@@ -58,6 +56,8 @@ public:
 	//채널 개별 사운드 조절은 함수 추가하면됨
 
 	void Setvolume(float state);
+
+	void Getvolume(float& num);
 
 	static void CheckError(FMOD_RESULT result) {
 		if (result != FMOD_OK) {
