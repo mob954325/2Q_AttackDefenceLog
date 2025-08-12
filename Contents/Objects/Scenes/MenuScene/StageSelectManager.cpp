@@ -30,22 +30,22 @@ void StageSelectManager::OnStart()
 				isSceneChange = true;
 			}
 		});
-	// objs[1]->AddEvent([this]() 
-	// 	{ 
-	// 		if (!isSceneChange)
-	// 		{
-	// 			Singleton<SceneManager>::GetInstance().LoadScene(SceneCount::STAGE2);
-	// 			isSceneChange = true;
-	// 		}
-	// 	});
-	// objs[2]->AddEvent([this]() 
-	// 	{ 
-	// 		if (!isSceneChange)
-	// 		{
-	// 			Singleton<SceneManager>::GetInstance().LoadScene(SceneCount::STAGE3);
-	// 			isSceneChange = true;
-	// 		}
-	// 	});
+	objs[1]->AddEvent([this]() 
+		{ 
+			if (!isSceneChange)
+			{
+				Singleton<SceneManager>::GetInstance().LoadScene(SceneCount::STAGE2);
+				isSceneChange = true;
+			}
+		});
+	objs[2]->AddEvent([this]() 
+		{ 
+			if (!isSceneChange)
+			{
+				Singleton<SceneManager>::GetInstance().LoadScene(SceneCount::STAGE3);
+				isSceneChange = true;
+			}
+		});
 }
 
 void StageSelectManager::OnUpdate()
