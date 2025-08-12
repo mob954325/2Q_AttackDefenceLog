@@ -63,15 +63,6 @@ void StageResult::OnStart()
 
 void StageResult::OnUpdate()
 {
-	if (Input::leftButtonDown)
-	{
-		SetPanelState(ResultPanelState::Win);
-	}
-	
-	if (Input::rightButtonDown)
-	{
-		SetPanelState(ResultPanelState::Defeat);
-	}
 }
 
 void StageResult::SetPanelState(ResultPanelState state)

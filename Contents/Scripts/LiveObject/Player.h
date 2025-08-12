@@ -24,7 +24,7 @@ public:
 
 private:
 	//플레이어 고정 공격패턴
-	std::string attackPlayerPatternIDFix = "PI_040";  //안쓰면 PI 붙이기 말기!!,  ex) "PI_040"
+	std::string attackPlayerPatternIDFix = "";  //안쓰면 PI 붙이기 말기!!,  ex) "PI_040"
 
 	//기세가 0이 되었을때 그 시간이 유지되는 시간
 	float totalGroggyTime = 3.0f;
