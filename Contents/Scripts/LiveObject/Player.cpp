@@ -121,6 +121,10 @@ void Player::OnCreateState()
 	m_State->SetNextState("Player_Groggy", "Player_Idle");			// Player_Groggy -> Player_Idle
 	m_State->SetTransitionTime("Player_Groggy", 2.0f);				// 2.0f 뒤 변경
 
+	m_State->CreateState("Player_OtherGroggy");							// 패턴 파회 O + 특정 시간 안에
+	m_State->SetNextState("Player_OtherGroggy", "Player_Idle");			// Player_Groggy -> Player_Idle
+	m_State->SetTransitionTime("Player_OtherGroggy", 2.0f);				// 2.0f 뒤 변경
+
 	m_State->CreateState("Player_Dead");							// 죽음
 }
 
@@ -250,18 +254,15 @@ void Player::ResetSpiritAmount()
 
 void Player::SetCoolTime()
 {
-	//if (prePlayerPattenData == nullptr) //이전 루프가 없을시
-	//{
-		// ( 1 - (현재기세 - 전체기세/2) / 전체기세 /2) * 해당 패턴의 전체 쿨타임
-		Object_nowCoolTime = (1 - ((Object_NowSpiritAmount - Object_SpiritAmount / 2.0f) / Object_SpiritAmount) / 2.0f) * Object_CoolTime;
 
-	//}
+		// 공격 주기 * (1.25 - 0.5 * (현재 기세 / 기세 게이지))
+		Object_nowCoolTime = (1.25f - Object_NowSpiritAmount / Object_SpiritAmount / 2.0f) * Object_CoolTime;
 }
 
 
 void Player::CalSpiritTime()
 {
-	if ((!isGroggy) && (IsOtherGroggy)) {  // 적이나 내가 그로기 상태라면
+	if ((!isGroggy) && (!IsOtherGroggy)) {  // 적이나 내가 그로기 상태라면
 		if (Object_OverTimeSpirit >= 1)
 		{
 			Object_NowSpiritAmount -= 0.3f;									 //초당 0.3씩 감소
@@ -284,6 +285,7 @@ void Player::DiffState()
 
 	if (IsOtherGroggy) // 적과 나 둘중 1명이 그로기
 	{
+		if(!OtherGroggyTimeStop)
 		enemyGroggyTime += GameTime::GetInstance().GetDeltaTime();
 	}
 
@@ -297,6 +299,7 @@ void Player::DiffState()
 
 	// 기세 게이지가 벗어나지 않게 고정!!!
 	// 현재 플레이어의 기세 게이지가 0.0f
+	// 한 번의 그로기에 restore 2번 되는 현상방지 
 	if (isRestore) {
 		isGroggy = false;
 	}
@@ -304,7 +307,7 @@ void Player::DiffState()
 	{
 		isGroggy = true;
 		Object_NowSpiritAmount = 0.0f;
-		SetState("Player_Groggy");
+		
 	}
 	else // 0.0f 초과면 false
 	{
@@ -371,40 +374,42 @@ void Player::RestoreGroggy()
 //일단 임시로 스테이트마다 스프라이트 설정
 void Player::StateAct()
 {
-	if (nowStateName == "Player_Idle")
-	{    // 평소 상태     
-		player_Idle->SetActive(true);
-		AttackStateSelect(false);
-		player_Damaged->SetActive(false);
-		player_Guard->SetActive(false);
-	}
-	else if (nowStateName == "Player_AttackSuccess" || nowStateName == "Player_AttackFail") // 공격 성공, 공격 실패
-	{
-		player_Idle->SetActive(false);
-		AttackStateSelect(true);
-		player_Damaged->SetActive(false);
-		player_Guard->SetActive(false);
-	}
-	else if (nowStateName == "Player_Hit" || nowStateName == "Player_Groggy") //피격 + 그로기
-	{
-		player_Idle->SetActive(false);
-		AttackStateSelect(false);
-		player_Damaged->SetActive(true);
-		player_Guard->SetActive(false);
-	}
-	else if (nowStateName == "Player_Guard" || nowStateName == "Player_Defence" || nowStateName == "Player_Perry") // 가드 + defence + 패링
-	{
-		player_Idle->SetActive(false);
-		AttackStateSelect(false);
-		player_Damaged->SetActive(false);
-		player_Guard->SetActive(true);
-	}
-	else if (nowStateName == "Player_Dead") // 죽음
-	{
-		player_Idle->SetActive(false);
-		AttackStateSelect(false);
-		player_Damaged->SetActive(true);
-		player_Guard->SetActive(false);
+	if (!OtherGroggyTimeStop) {
+		if (nowStateName == "Player_Idle")
+		{    // 평소 상태     
+			player_Idle->SetActive(true);
+			AttackStateSelect(false);
+			player_Damaged->SetActive(false);
+			player_Guard->SetActive(false);
+		}
+		else if (nowStateName == "Player_AttackSuccess" || nowStateName == "Player_AttackFail") // 공격 성공, 공격 실패
+		{
+			player_Idle->SetActive(false);
+			AttackStateSelect(true);
+			player_Damaged->SetActive(false);
+			player_Guard->SetActive(false);
+		}
+		else if (nowStateName == "Player_Hit") //피격 + 그로기
+		{
+			player_Idle->SetActive(false);
+			AttackStateSelect(false);
+			player_Damaged->SetActive(true);
+			player_Guard->SetActive(false);
+		}
+		else if (nowStateName == "Player_Guard" || nowStateName == "Player_Defence" || nowStateName == "Player_Perry") // 가드 + defence + 패링
+		{
+			player_Idle->SetActive(false);
+			AttackStateSelect(false);
+			player_Damaged->SetActive(false);
+			player_Guard->SetActive(true);
+		}
+		else if (nowStateName == "Player_Dead") // 죽음
+		{
+			player_Idle->SetActive(false);
+			AttackStateSelect(false);
+			player_Damaged->SetActive(true);
+			player_Guard->SetActive(false);
+		}
 	}
 }
 
@@ -446,6 +451,34 @@ void Player::AttackStateSelect(bool AttackActive)
 	}
 }
 
+void Player::AttackAniSelect(int count) {
+	// 1) 전부 끄기 (기본 화면 포함)
+	player_Idle->SetActive(false);
+	player_Attack1->SetActive(false);
+	player_Attack2->SetActive(false);
+	player_Attack3->SetActive(false);
+	player_Guard->SetActive(false);
+	player_Damaged->SetActive(false);
+
+	// 2) 필요한 것만 켜기 (원하는 매핑대로)
+	switch (count){
+	case 0: // 1프레임
+		player_Attack1->SetActive(true);
+		break;
+	case 1: // 2프레임
+		player_Attack2->SetActive(true);
+		break;
+	case 2: // 3프레임
+		player_Attack3->SetActive(true);
+		break;
+	case 3: // 마무리 포즈(가드 등)
+		player_Guard->SetActive(true);
+		break;
+	default:
+		// 범위를 벗어나면 기본(Idle)로 보이게 하려면 여기서 Idle을 켜도 됨
+		break;
+	}
+}
 
 // ===================================================================================
 // Debug

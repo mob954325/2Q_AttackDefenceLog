@@ -84,7 +84,8 @@ void BettleManager::OnUpdate()
 	}		
 	else {
 		if (m_Enemy->GetIsGroggy()) {  // 적이 그로기 상태일때
-			SetStateFormPatternEnemyGroggy(); 	
+			SetStateFormPatternEnemyGroggy();
+			SetAnimationAtOtherGroggy();
 			ChangeFinalStateEnemyGroggy();
 
 			if (!usedStartBlow) { // 상태에 처음 진입했을때만 켜짐
@@ -162,7 +163,7 @@ void BettleManager::SetInputNode(std::vector<int> InputNode)
 void BettleManager::SetStateFormPatternPlayerGroggy() // 플레이어 그로기 상태에 패턴 검색
 {
 	m_PattenManager->PlayerPatternAllClear();
-	SetStateFormPatternIdle(); //
+	SetStateFormPatternIdle(); 
 }
 
 void BettleManager::SetStateFormPatternEnemyGroggy()// 적 그로기 상태에 패턴 검색
@@ -179,8 +180,13 @@ void BettleManager::SetStateFormPatternEnemyGroggy()// 적 그로기 상태에 �
 		onFinalBlow.Invoke(); // 외부에 공격 준비를 알림(총알이 장전된거임)
 		allDistancePercent = m_PattenManager->OnceAllNodePatternDistance(nowNode); // 연격 길이 퍼센트 반환
 	}
+
+	tmpAttackNode = nowNode;   //연격을 임시 벡터에 저장!!
 	nowNode.clear();
 }
+
+
+//분리는 나중에.......
 
 void BettleManager::SetStateFormPatternIdle() 
 {
@@ -216,7 +222,6 @@ void BettleManager::SetStateFormPatternIdle()
 				
 			
 			}
-
 			m_PattenManager->SubPattern(pair.second->PattenID, "Time"); // 시간 종료된 패턴 제거
 		}
 
@@ -351,10 +356,55 @@ void BettleManager::ChangeFinalStateEnemyGroggy()  // 적의 그로기 상태에
 		m_Player->IsOtherGroggy = true;
 		
 	}
+
+	if (isPlayingAni) { // 초기화 하기!!
+		m_Player->OtherGroggyTimeStop = true;
+	}
+	else {
+		m_Player->OtherGroggyTimeStop = false;
+	}
+
+	
 	if (m_Player->isOtherGroggyEnd) {
 		m_Player->isOtherGroggyEnd = false;
-
 	}
+
+	
+}
+
+
+void BettleManager::SetAnimationAtOtherGroggy() {
+	if (tmpAttackNode.size() < 2) return;
+
+	const float total = 1.5f;                                // 전체 재생 시간
+	const int   steps = static_cast<int>(tmpAttackNode.size() - 1); // 스텝 개수
+	const float aniTerm = total / steps;                      // 스텝 간격(초)
+
+	AniTime += GameTime::GetInstance().GetDeltaTime();
+
+	static int stepIdx = -1; // 직전 적용한 스텝 인덱스(프레임 간 유지)
+
+	if (AniTime < total) {
+		isPlayingAni = true;
+
+		// 현재 스텝(0 ~ steps-1)
+		int curStep = static_cast<int>(AniTime / aniTerm);
+		if (curStep >= steps) curStep = steps - 1;
+
+		// 스텝이 바뀌었을 때만 이미지 교체
+		if (curStep != stepIdx) {
+			stepIdx = curStep;
+			m_Player->AttackAniSelect(stepIdx % 4); // 필요하면 다른 매핑으로 변경
+		}
+	}
+	else {
+		// 재생 종료 및 리셋
+		isPlayingAni = false;
+		AniTime = 0.0f;
+		stepIdx = -1;
+		tmpAttackNode.clear();
+	}
+	
 }
 
 
@@ -472,3 +522,4 @@ void BettleManager::ResetState()
 {
 
 }
+

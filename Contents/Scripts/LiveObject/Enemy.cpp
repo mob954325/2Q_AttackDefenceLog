@@ -57,7 +57,7 @@ void Enemy::OnUpdate()
 	}
 	StateAct();            //  
 	DiffState();            // 이전 상태와 현재 상태를 비교
-	// PrintConsole();
+	PrintConsole();
 
 	if (nowStateName == "Enemy_Dead") // 적 사망 시 -> 씬 이동
 	{
@@ -194,7 +194,7 @@ void Enemy::SetBitmap()
 
 	D2D1_SIZE_F size = enemy_Idle->GetResource()->GetBitmap()->GetSize(); // 크기 같음으로 그냥 해도 될듯?
 	owner->GetTransform().SetOffset(-size.width / 2, size.height / 2);
-	owner->GetTransform().SetScale(0.4f, 0.4f); //  크기 맞추기
+	owner->GetTransform().SetScale(1.0f, 1.0f); //  크기 맞추기
 	owner->GetTransform().SetPosition(550.0f, 200.0f);
 }
 
@@ -324,8 +324,7 @@ void Enemy::SetCoolTime()
 {
 	if (nowEnemyPattenData->eComboCoolDown == 0) 
 	{
-		Object_nowCoolTime = (1 - ((Object_NowSpiritAmount - Object_SpiritAmount / 2.0f) / Object_SpiritAmount) / 2.0f)
-			* Object_CoolTime + nowEnemyPattenData->eAtkCoolDown;
+		Object_nowCoolTime = (1.25f - Object_NowSpiritAmount  / Object_SpiritAmount / 2.0f) * Object_CoolTime + nowEnemyPattenData->eAtkCoolDown;
 	}
 	else 
     {
