@@ -214,9 +214,6 @@ void BettleManager::SetStateFormPattern() {
 		m_PattenManager->EnemyPatternAllClear();  //이것도 잘 처리하기!!!
 		m_PattenManager->PlayerPatternAllClear();
 		m_PattenManager->DoneTimeOutPatten();
-		m_Player->GetDamage(m_Enemy->GetAttack() * 2.5f);
-		m_Player->SetState("Player_Hit");
-		m_Enemy->SetState("Enemy_AttackSuccess");
 	}
 	nowNode.clear();
 }
@@ -258,6 +255,13 @@ void BettleManager::ChangeFinalState() {
 		m_Enemy->SetIsGroggy(true);
 		m_Player->SetIsOtherEndGroggy(true);
 		isOncePatternatk = true;
+	}
+	else if (m_Player->GetIsGroggy() && m_Enemy->isEnemyGroggyAttack) {
+		m_Player->GetDamage(m_Enemy->GetAttack() * 2.5f);
+		m_Player->SetState("Player_Hit");
+		m_Enemy->SetState("Enemy_AttackSuccess"); 
+		m_Enemy->isEnemyGroggyAttack = false;
+		// 그로기시 패턴을 한번 진행
 	}
 	
 

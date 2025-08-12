@@ -131,13 +131,6 @@ void Player::OnCreateState() {
 }
 
 
-BitmapRenderer* player_Idle = nullptr;
-BitmapRenderer* player_Attack = nullptr;
-BitmapRenderer* player_Guard = nullptr;
-BitmapRenderer* player_Damaged = nullptr;
-
-
-
 
 void Player::SetBitmap() {
  	player_Idle = owner->AddComponent<BitmapRenderer>();
@@ -287,8 +280,6 @@ void Player::DiffState() {
 
 	}
 
-
-
 	// 그로기 시간!!!
 
 	//10초가 지나거나 or 적에게 쳐맞거나
@@ -299,8 +290,15 @@ void Player::DiffState() {
 	if (Object_NowSpiritAmount <= 0.0f) {
 		Object_NowSpiritAmount = 0.0f;
 	}
-}
 
+	// 기세 게이지가 벗어나지 않게 고정!!!
+	if (Object_NowSpiritAmount <= 0.0f) {
+		Object_NowSpiritAmount = 0.0f;
+	}
+	if (Object_NowSpiritAmount >= Object_SpiritAmount) {
+		Object_NowSpiritAmount = Object_SpiritAmount;
+	}
+}
 
 
 

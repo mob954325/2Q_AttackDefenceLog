@@ -233,6 +233,7 @@ void Enemy::RestoreGroggy()
 	IsOtherEndGroggy = false;
 	isGroggy = false;
 	isRestore = true; // 베틀매니저에서 읽는데, true가 있다면 << 플레이어와 적의 기세를 초기화시키는 플레그
+	
 	ReserEnemy();
 }
 
@@ -341,21 +342,27 @@ void Enemy::DiffState() {
 		isFirstSpiriteDown = false;
 	}
 
-
-
 	// 그로기 시간!!!
 	// 플레이어가 그로기 상태에서, 적에게 공격을 맞으면, 초기화 한다
 	if ((IsOtherEndGroggy && Object_nowCoolTime <= 0.0f)) {
 		RestoreGroggy();
+		isEnemyGroggyAttack = true;
 	}
 
+
+	// 기세 게이지가 벗어나지 않게 고정!!!
 	if (Object_NowSpiritAmount <= 0.0f) {
 		Object_NowSpiritAmount = 0.0f;
+	}
+	if (Object_NowSpiritAmount >= Object_SpiritAmount) {
+		Object_NowSpiritAmount = Object_SpiritAmount;
 	}
 }
 
 void Enemy::ReserEnemy() {
 	SelectPatten(); // 공격을 했으면 다른 패턴 세팅
+	SetCoolTime();
+	isPattenCooldown = true;
 	SetState("Player_Idle");
 }
 
