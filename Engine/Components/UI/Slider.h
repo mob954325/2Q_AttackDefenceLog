@@ -23,10 +23,11 @@ SetPivotSide은 false를 던져줄때 오른쪽에서 왼쪽으로 늘어나도�
 class Slider : public UIComponent
 {
 public:
+	void OnCreate() override;
 	void OnStart() override;
 	void Update() override;
 
-	/*void SetPivotSide( bool isLeft);*/
+	void SetPivotSide( bool isLeft);
 
 	//이미지들을 셋팅 및 가져오는 함수
 	void SetGaugeBackgroundImage(std::wstring path);

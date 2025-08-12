@@ -66,6 +66,8 @@ void TestObject::OnCreate()
 	
 	effectobj = owner->AddComponent<EffectInstance>();
 
+	
+
 
 	//GameObject* Test = new GameObject();
 	//Test->AddComponent<AnimationRenderer>();
@@ -102,6 +104,8 @@ void TestObject::OnCreate()
 	owner->AddComponent<EnemyAttackEffect>();
 	EATK = owner->GetComponent<EnemyAttackEffect>();
 
+	HP = owner->AddComponent<HpGauge>();
+
 }
 
 //void TestObject::SetPosition()
@@ -114,8 +118,9 @@ void TestObject::OnCreate()
 
 void TestObject::OnStart()
 {
-	owner->AddComponent <GiseGauge>();
-	giseG = owner->GetComponent<GiseGauge>();
+	/*owner->AddComponent <GiseGauge>();
+	giseG = owner->GetComponent<GiseGauge>();*/
+	
 	//owner->GetComponent<Slider>()->ButtonShow(false);
 	//owner->GetComponent<Slider>()->SetGaugeBackgroundImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\UI\\Slider\\gise_ui_white.png");
 	//owner->GetComponent<Slider>()->SetGaugeBarImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\UI\\Slider\\gise_ui_black.png");
@@ -210,7 +215,11 @@ void TestObject::OnStart()
 	{300,600},{700,600},{1100,600}
 	};
 
-	
+	Vector2 T1{ 500.0f, 500.0f };
+	Vector2 T2{ 1000.0f, 500.0f };
+
+	HP->SetHpUiPosition(T1, T2);
+
 	effectobj->SetAnimePosition(positionList);
 
 	EATK->SetAnimePosition(positionList2);
@@ -249,11 +258,13 @@ void TestObject::CheckInput()
 
 	if (input->IsKeyDown('W'))
 	{
-		giseG->ChangeGaugeBar(-1.0f);
+		/*giseG->ChangeGaugeBar(-1.0f);*/
+		HP->ChangeGaugeBar(-1.0f);
 	}
 	if (input->IsKeyDown('S'))
 	{
-		giseG->ChangeGaugeBar(1.0f);
+		//giseG->ChangeGaugeBar(1.0f);
+		HP->ChangeGaugeBar(1.0f);
 	}
 	// 
 	// 
