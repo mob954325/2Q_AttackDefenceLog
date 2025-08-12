@@ -19,4 +19,6 @@ protected:
 	D2D1_SIZE_F size;
 	BitmapRenderer* bitmapRenderer{};	
 
+
+
 };

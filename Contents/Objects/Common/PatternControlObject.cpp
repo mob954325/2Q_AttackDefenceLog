@@ -8,6 +8,7 @@
 #include "../Engine/Utils/GameTime.h"
 #include "../Engine/Components/Rendering/AnimatedChainEffect.h" 
 #include "../Engine/Math/GameRandom.h"
+#include "Objects/Scenes/Stage/StageBGI.h"
 
 //성빈씨꺼
 #include "Scripts/LogicManager/BettleManager.h"
@@ -150,6 +151,7 @@ void PatternControlObject::OnCreate()
 		{
 			chargedSlashManager->Cancel(); // 플레이어 쪽에서 그로기 타이머를 관리하고 있어서, 캔슬연결함	
 			isSkipped = false;
+
 			trail->GetComponent<TrailComponent>()->Clear(); // 이거 해줘야함
 			for (int i = 0; i < m_nodes.size(); ++i) {
 				m_nodes[i]->GetComponent<BitmapRenderer>()->SetActive(true);
@@ -162,6 +164,11 @@ void PatternControlObject::OnCreate()
 	// 7. BattleManager 추가
 	bettleManager = new GameObject();
 	auto bettletmp = bettleManager->AddComponent<BettleManager>();
+
+	bettletmp->onStartBlow.Add([this]() { // 비네트 ON
+		auto bgi = owner->GetQuery()->FindByName("StageBGI1");
+		if (bgi) { bgi->GetComponent<StageBGI>()->Start(); } 
+		});
 
 	// OnParry 이벤트 추가
 	bettletmp->onParry.Add([this](int nodeIndex)
@@ -178,8 +185,14 @@ void PatternControlObject::OnCreate()
 	// OnFinalBlow 이벤트 추가
 	bettletmp->onFinalBlow.Add([this]()
 		{ // 한붓그리기 완료되는 시점에, 랜덤으로 Start 호출됨
-			int n = GameRandom::RandomRange(0, 4); // 0 ~ 3
+			auto bgi = owner->GetQuery()->FindByName("StageBGI1");
+			if (bgi) { bgi->GetComponent<StageBGI>()->End(); }
+			
+			//auto bt = bettleManager->GetComponent<BettleManager>();
+			//bt->usedStartBlow = false;
 
+			int n = GameRandom::RandomRange(0, 4); // 0 ~ 3
+		
 			switch (n)
 			{
 			case 0: n = 1; break;
@@ -200,7 +213,13 @@ void PatternControlObject::OnCreate()
 
 	// OntimeOut 이벤트 추가 - slash가 시간 경과시 캔슬됨
 	bettletmp->onTimeout.Add([this]()
-		{
+		{		
+			auto bgi = owner->GetQuery()->FindByName("StageBGI1");
+			if (bgi) { bgi->GetComponent<StageBGI>()->End(); }
+
+			//auto bt = bettleManager->GetComponent<BettleManager>();
+			//bt->usedStartBlow = false;
+
 			chargedSlashManager->Cancel();
 			isSkipped = false;
 			trail->GetComponent<TrailComponent>()->Clear(); // 이거 해줘야함
