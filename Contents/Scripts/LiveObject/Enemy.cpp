@@ -27,7 +27,7 @@ void Enemy::OnStart()
 	m_State = owner->GetComponent<StateController>();
 	m_PattenManager = owner->GetQuery()->FindByName("AttackPattenManager")->GetComponent<AttackPatternManager>();
 
-	SetStatData("EI_001");				// 객체 데이터 불러오기
+	SetStatData(Enemy_ID);				// 객체 데이터 불러오기
 	OnCreateState();					// 상태들 구성
 	m_State->SetState("Enemy_Idle");	// 초기 상태로 초기화
 
@@ -63,19 +63,21 @@ void Enemy::OnUpdate()
 	{
 		ChecKChnageScene();
 	}
+
+	//SetNameDiff("Stage1", "easy");
 }
 
 
 // onChangePatten에 TransitionTime 변경하기!!!
 
-//하드코딩함, 이걸 할려고 하면 자료 구조의 키값을 뜯어 고쳐야함!!!
-void SetNameDiff(std::string name, std::string difficulty) {
+//밖에서 미리 값을 입력해서 ID를 입력할 수 있게 함
+void Enemy::SetNameDiff(std::string Stage, std::string difficulty) {
 	int indexID = 0;
 	int diffindex = 0;
 	int nameindex = 0;
-	if (name == "도적") { nameindex = 0; }
-	else if (name == "남궁서") { nameindex = 1; }
-	else if (name == "강림") { nameindex = 2; }
+	if (Stage == "Stage1") { nameindex = 0; }
+	else if (Stage == "Stage2") { nameindex = 1; }
+	else if (Stage == "Stage3") { nameindex = 2; }
 	else { nameindex = 100; }
 
 	if (difficulty == "easy") { diffindex = 1; }
@@ -84,9 +86,9 @@ void SetNameDiff(std::string name, std::string difficulty) {
 	else { diffindex = 100; }
 
 	indexID = nameindex * 3 + diffindex;
-	if (nameindex != 100 || diffindex != 100) return;
+	if (nameindex == 100 || diffindex == 100) return;
 
-	std::string EnemyName = "EI_00" + std::to_string(indexID);
+	Enemy_ID = "EI_00" + std::to_string(indexID);
 }
 
 
@@ -195,7 +197,7 @@ void Enemy::SetBitmap()
 	D2D1_SIZE_F size = enemy_Idle->GetResource()->GetBitmap()->GetSize(); // 크기 같음으로 그냥 해도 될듯?
 	owner->GetTransform().SetOffset(-size.width / 2, size.height / 2);
 	owner->GetTransform().SetScale(1.0f, 1.0f); //  크기 맞추기
-	owner->GetTransform().SetPosition(550.0f, 200.0f);
+	owner->GetTransform().SetPosition(580.0f, 150.0f);
 }
 
 // 플래그를 정하는 함수

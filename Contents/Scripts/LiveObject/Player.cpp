@@ -154,7 +154,7 @@ void Player::SetBitmap()
 	D2D1_SIZE_F size = player_Idle->GetResource()->GetBitmap()->GetSize(); // 크기 같음으로 그냥 해도 될듯?
 	owner->GetTransform().SetOffset(-size.width / 2, size.height / 2);
 	//owner->GetTransform().SetScale(0.9f, 0.9f); //  크기 맞추기
-	owner->GetTransform().SetPosition(-330.0f, -200.0f);
+	owner->GetTransform().SetPosition(-450.0f, 50.0f);
 }
 
 
