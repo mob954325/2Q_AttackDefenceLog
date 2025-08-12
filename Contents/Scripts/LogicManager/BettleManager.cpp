@@ -59,7 +59,7 @@ void BettleManager::OnStart()
 	owner->AddComponent<GiseGauge>();
 	giseObj = owner->GetComponent<GiseGauge>();
 
-	TotalValue = m_Player->GetSpiritAmount();
+	giseTotalValue = m_Player->GetSpiritAmount();
 	/*giseObj->SetMaxGague(TotalValue);*/
 
 	//HpObj = owner->AddComponent<HpGauge>();

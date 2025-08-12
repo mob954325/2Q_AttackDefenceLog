@@ -33,7 +33,7 @@ public:
 	void ResetSpiritAmount();
 
 	// 배틀 매니저에서 사용될 함수
-	void SelectPatten() override;   //플레이어가 사용할 패턴을 고름
+	void SelectPattern() override;   //플레이어가 사용할 패턴을 고름
 	void SetNowPatten() override;   //플레이어의 현재 패턴의 노드를 반환함
 
 

@@ -30,7 +30,7 @@ void Enemy::OnStart()
 	OnCreateState();					// 상태들 구성
 	m_State->SetState("Enemy_Idle");	// 초기 상태로 초기화
 
-	SelectPatten(); //  패턴 세팅
+	SelectPattern(); //  패턴 세팅
 	SetCoolTime();	
 	SetBitmap();
 
@@ -218,7 +218,7 @@ void Enemy::AddPattenLoop()
 	}
 	else // 현재 패턴의 지속 시간이 끝났으면
 	{
-		SelectPatten(); // 패턴 정하기!!
+		SelectPattern(); // 패턴 정하기!!
 		SetCoolTime();	// 적일때는 수정하기!!
 		SetNowPattern(); // 공격대기시간 + 데이터 주기!!
 		isPatternLive = true;
@@ -236,7 +236,7 @@ void Enemy::RestoreGroggy()
 }
 
 // 배틀 매니저에서 사용될 함수
-void Enemy::SelectPatten() //각 객체가 사용할 패턴을 고름
+void Enemy::SelectPattern() //각 객체가 사용할 패턴을 고름
 {   
 	if (nowEnemyPattenData != nullptr) 
 	{
@@ -352,7 +352,7 @@ void Enemy::DiffState()
 
 	if (IsOtherEndGroggy && isFirstSpiriteDown) 
 	{
-		SelectPatten(); // 패턴 정하기!!
+		SelectPattern(); // 패턴 정하기!!
 		SetCoolTime();
 		isFirstSpiriteDown = false;
 	}
@@ -378,7 +378,7 @@ void Enemy::DiffState()
 }
 
 void Enemy::ReserEnemy() {
-	SelectPatten(); // 공격을 했으면 다른 패턴 세팅
+	SelectPattern(); // 공격을 했으면 다른 패턴 세팅
 	SetCoolTime();
 	isPattenCooldown = true;
 	SetState("Player_Idle");
