@@ -64,11 +64,4 @@ void Stage2::OnExitImpl()
 
 void Stage2::UpdateImpl()
 {
-	if (Input::leftButtonDown) {
-		Singleton<SceneManager>::GetInstance().LoadScene(END);
-	}
-	auto input = inputObj->GetComponent<InputSystem>();
-	if (input->IsKeyPressed('6')) {
-		Singleton<SceneManager>::GetInstance().LoadScene(END);
-	}
 }
