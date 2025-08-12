@@ -48,7 +48,7 @@ public:
 	// 패턴 검사 로직
 	pattern* CorrectPattern(std::vector<int> PatternID);
 	pattern* failPattern(std::vector<int> PatternID);
-	void CheckAllPattern(std::vector<int> PatternID);
+	float OnceAllNodePatternDistance(std::vector<int> PatternID);  // 노드를 받고 그 거리를 계산함
 	std::unordered_map<std::string, pattern*> TimeOutPatten();
 
 	// 패턴 전부 삭제
@@ -93,6 +93,7 @@ private:
 
 };
 
-
-
-
+struct Pointxy {
+	int x = 0;
+	int y = 0;
+};

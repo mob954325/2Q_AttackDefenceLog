@@ -1,7 +1,8 @@
-#include "StageESCPanel.h"
+﻿#include "StageESCPanel.h"
 #include "Components/Base/GameObject.h"
 #include "Datas/EngineData.h"
 #include "Application/AppPaths.h"
+#include "Scripts/GameManager.h"
 
 void StageESCPanel::OnCreate()
 {
@@ -63,5 +64,8 @@ void StageESCPanel::DisablePanel()
 		comp->SetActive((comp->IsActiveSelf() ? false : true));
 	}
 
-	barBitmap->SetActive(barBitmap->IsActiveSelf() ? false : true);
+	bool isActive = barBitmap->IsActiveSelf();
+	barBitmap->SetActive(isActive ? false : true);
+
+	Singleton<GameManager>::GetInstance().SetGameState(isActive ? GameState::Play : GameState::Pause);
 }

@@ -1,4 +1,4 @@
-#include "VignetteEffect.h"
+ï»¿#include "VignetteEffect.h"
 #include "Platform/D2DRenderManager.h"
 
 void VignetteEffect::OnCreate()
@@ -17,9 +17,9 @@ void VignetteEffect::Render(D2DRenderManager* manager)
 
 	vignetteEffect->SetInput(0, refBitmap);
 	vignetteEffect->SetValue(D2D1_VIGNETTE_PROP_COLOR, color); // ??
-	vignetteEffect->SetValue(D2D1_VIGNETTE_PROP_TRANSITION_SIZE, effectSize); // È¿°ú Å©±â
-	vignetteEffect->SetValue(D2D1_VIGNETTE_PROP_STRENGTH, strength); // °­µµ 
-	manager->DrawImage(vignetteEffect.Get()); // vignette È¿°ú Ãâ·Â
+	vignetteEffect->SetValue(D2D1_VIGNETTE_PROP_TRANSITION_SIZE, effectSize); // íš¨ê³¼ í¬ê¸°
+	vignetteEffect->SetValue(D2D1_VIGNETTE_PROP_STRENGTH, strength); // ê°•ë„ 
+	manager->DrawImage(vignetteEffect.Get()); // vignette íš¨ê³¼ ì¶œë ¥
 }
 
 void VignetteEffect::SetBitmap(ID2D1Bitmap1* pBitmap)

@@ -65,7 +65,10 @@ protected:
 	InputSystem* inputSys; // 쓰기 편하게 빼둠
 	BitmapRenderer* bitmapRenderer; // 마찬가지
 
-	D2D1_SIZE_F size;
+	D2D1_SIZE_F size;	
+
+	std::vector<GameObject*> filter; // 필터 4개
+
 private:
 	Vector2 nowNormalVec = { 0,0 };
 	Vector2 nowPos = { 0,0 };

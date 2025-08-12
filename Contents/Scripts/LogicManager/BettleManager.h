@@ -6,6 +6,7 @@
 #include "Scripts/Slider/GiseGauge.h"
 class State;
 
+enum GroggyState { playerGroggy = 0, enemyGroggy, noneGroggy };
 
 //
 /*
@@ -69,6 +70,10 @@ public:
 	EventDelegate<int> onParry; // 밖에 int << 마지막노드
 	EventDelegate<int> onGuard;
 
+	EventDelegate<> onFinalBlow;
+	EventDelegate<>	onTimeout;
+	//bool isDuringFinalBlow = false;
+
 private:
 
 	AttackPatternManager* m_PattenManager;
@@ -79,6 +84,9 @@ private:
 	std::vector<int> SetGuideLine(LiveObject* unknown);     //쿨타임 확인 후, 가이드라인, 적 공격 라인 생성
 
 	void SetStateFormPattern();	  //현재 마우스의 입력 받기  -> 승규님 데이터 받기
+	void ResetState();
+	void SetGroggyState();
+
 
 	//float ConvertHPDamageToPos(AttackPosition lastPos, float HpDamage);
 	//float ConvertSpiritDamageToPos(AttackPosition lastPos, float SpiritDamage);
@@ -92,13 +100,19 @@ public:
 	void SetSpiritGauge();  // 기세 게이지  세팅하는 함수
 	std::vector<int> nowNode;
 	int RandomReturn(int MaxInt);
+	void FinalAttackToEnemy(); // 홀드 어택 !!!!!!
+	
 
 private:
 	GiseGauge* giseObj{};
 	float ChangeValue = 0.0f;
 	float TotalValue = 0.0f;
 	float preSpiritAmount = 0.0f;
+	float allDistancePercent = 0.0f;
+	GroggyState nowManagerState = noneGroggy;
+	GroggyState preManagerState = noneGroggy;
 
+	bool isOncePatternatk = false; // 한붓그리기 공격 끝나는 bool 값
 };
 
 

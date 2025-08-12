@@ -19,7 +19,12 @@ public:
 
 	std::shared_ptr<BitmapResource> GetResource();
 
-	void SetFlip(bool value);
+	void SetFlipX(bool value);
+	bool IsFlipX();
+
+	void SetFlipY(bool value);
+	bool IsFlipY();
+
 	void SetUseCustomRect(bool value);
 
 	void SetDestRect(const D2D1_RECT_F& rect);
@@ -45,7 +50,8 @@ protected:
 	float timer = 0;
 	float maxtimer = 0.2f;
 
-	bool isFlip = false;
+	bool isFlipX = false;
+	bool isFlipY = false;
 	bool useCustomRect = false; // 위 destRect, srcRect 사용여부 변수
 
 	float capacity = 1.0f;
