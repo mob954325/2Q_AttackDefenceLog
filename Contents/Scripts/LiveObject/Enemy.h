@@ -62,6 +62,8 @@ public:
 	bool IsOtherGroggy = false;
 	bool restoredThisCycle = false; // 복구 되었는가를 체크하는 플래그
 
+
+	void SetNameDiff(std::string name, std::string difficulty); // 밖에서 추가할 때 ID를 미리 생성할 수 있게 함
 private:
 	// 적이 가지고 있는 공격의 ID
 	std::vector<std::string> PattenID;
@@ -120,6 +122,9 @@ private:
 	std::wstring enemy_DamagedPath;
 	//  이미지의 공통된 위치
 	std::wstring enemy_CommonPath;
+
+	std::string  Enemy_ID; // 적 ID를 받을 변수 
+
 
 	void SetBitmap();  // 비트맵 설정하는 함수	
 };

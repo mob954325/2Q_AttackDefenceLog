@@ -60,12 +60,12 @@ void BettleManager::OnStart()
 	giseObj = owner->GetComponent<GiseGauge>();
 
 	giseTotalValue = m_Player->GetSpiritAmount();
-	/*giseObj->SetMaxGague(TotalValue);*/
+	//giseObj->SetMaxGague(m_Player->GetTotalHp());
 
-	//HpObj = owner->AddComponent<HpGauge>();
-	////HP 최대치 설정 플레이어, 적
-	//HpObj->SetPlayerMaxGague(m_Player->GetTotalHp());
-	//HpObj->SetEnemyMaxGague(m_Enemy->GetTotalHp());
+	HpObj = owner->AddComponent<HpGauge>();
+	//HP 최대치 설정 플레이어, 적
+	HpObj->SetPlayerMaxGague(m_Player->GetTotalHp());
+	HpObj->SetEnemyMaxGague(m_Enemy->GetTotalHp());
 
 
 
@@ -97,9 +97,9 @@ void BettleManager::OnUpdate()
 		}
 	}
 
-	//HpObj->SetHpUiPosition(Player2, Enemy2);
-	/*HpObj->CalculatePlayerValue(m_Player->GetHp());
-	HpObj->CalculateEnemyValue(m_Enemy->GetHp());*/
+	HpObj->SetHpUiPosition(Player2, Enemy2);
+	HpObj->CalculatePlayerValue(m_Player->GetHp());
+	HpObj->CalculateEnemyValue(m_Enemy->GetHp());
     
 	// 게임 상태가 Pause면 모든 Update 내용 무시
 	if (Singleton<GameManager>::GetInstance().GetGameState() == GameState::Pause)
