@@ -221,6 +221,9 @@
       <Filter>Objects\SceneObject\SelectScene</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\HpBar\HpGauge.cpp" />
+    <ClCompile Include="Objects\Scenes\Stage\EscMenu\SoundMutePanel.cpp">
+      <Filter>Objects\SceneObject\Stage\EscMenu</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameApp.h">
@@ -372,5 +375,8 @@
       <Filter>Objects\SceneObject\SelectScene</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\HpBar\HpGauge.h" />
+    <ClInclude Include="Objects\Scenes\Stage\EscMenu\SoundMutePanel.h">
+      <Filter>Objects\SceneObject\Stage\EscMenu</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

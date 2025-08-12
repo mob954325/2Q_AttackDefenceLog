@@ -3,9 +3,12 @@
 #include "Datas/EngineData.h"
 #include "Application/AppPaths.h"
 #include "Scripts/GameManager.h"
+#include "EscMuteButton.h"
 
 void StageESCPanel::OnCreate()
 {
+	owner->SetRenderLayer(EngineData::RenderLayer::UI);
+
 	owner->GetTransform().SetUnityCoords(false);
 	barBitmap = owner->AddComponent<BitmapRenderer>();
 
@@ -26,19 +29,68 @@ void StageESCPanel::OnUpdate()
 	{
 		if (buttons.empty()) return;
 
-		DisablePanel();
+		if (buttons[2]->GetComponent<EscMuteButton>()->GetSoundMutePanel()->IsOpen())
+		{
+			buttons[2]->GetComponent<EscMuteButton>()->GetSoundMutePanel()->SetOpen(false);
+
+			int size = buttons.size();
+			for (int i = 0; i < size; i++)
+			{
+				auto comp = buttons[i]->GetComponent<Button>();
+				comp->DisableBitmaps();
+				comp->SetActive(true);
+			}
+
+		}
+		else
+		{
+			DisablePanel();
+		}
+
 	}
 }
 
 void StageESCPanel::SetButtons(const std::vector<GameObject*> buttons)
 {
 	this->buttons = buttons;
-	auto comp = this->buttons[0]->GetComponent<Button>();
 
-	if (comp)
-	{
-		comp->AddOnClickEvent([&]() {DisablePanel(); });
-	}
+	if (buttons.empty()) return;
+
+	auto button0 = this->buttons[0]->GetComponent<Button>();
+	button0->AddOnClickEvent([&]() 
+		{ 
+			if(!this->buttons[2]->GetComponent<EscMuteButton>()->GetSoundMutePanel()->IsOpen())
+			{
+				DisablePanel(); 
+			}
+		});
+
+	auto button1 = this->buttons[1]->GetComponent<Button>();
+	button1->AddOnClickEvent([&]()
+		{
+			if (!this->buttons[2]->GetComponent<EscMuteButton>()->GetSoundMutePanel()->IsOpen())
+			{
+				Singleton<SceneManager>::GetInstance().LoadScene(1);
+			}
+		});
+
+	auto button2 = this->buttons[2]->GetComponent<Button>();
+	button2->AddOnClickEvent([&]() 
+		{ 
+			auto comp = this->buttons[2]->GetComponent<EscMuteButton>();
+			if (!comp->GetSoundMutePanel()->IsOpen())
+			{
+				comp->GetSoundMutePanel()->SetOpen(true);
+
+				int size = this->buttons.size();
+				for (int i = 0; i < size; i++)
+				{
+					auto comp = this->buttons[i]->GetComponent<Button>();
+					comp->DisableBitmaps();
+					comp->SetActive(false);
+				}
+			}
+		});
 }
 
 void StageESCPanel::SetButtonsPosition()
