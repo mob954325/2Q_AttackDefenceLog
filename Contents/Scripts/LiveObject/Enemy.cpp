@@ -141,10 +141,11 @@ void Enemy::SetStatData(std::string tmp) {
 	Object_ID = nowEnemyData->enemyID;					   // ID
 	Object_Name = nowEnemyData->enemyName;				   // 이름
 	Object_Hp = nowEnemyData->enemyHealth;		           // 체력
+	Object_TotalHp = Object_Hp;							  // 전체 체력
 	Object_Attack = nowEnemyData->enemyDamage;			   // 공격력
 	Object_SpiritAttack = nowEnemyData->enemySpiritdamage; // 기세 공격력
 	Object_DefenseRate = nowEnemyData->enemyGuardRate;	   // 방어율
-	Object_SpiritAmount = nowEnemyData->enemySpiritamount; // 기세
+	Object_SpiritAmount = 5.0f;//nowEnemyData->enemySpiritamount; // 기세
 	Object_NowSpiritAmount = Object_SpiritAmount / 2.0f;   // 현재 기세 설정
 	Difficulty = nowEnemyData->enemyDifficulty;			   // 난이도 -> 아마 필요없을듯?
 
@@ -232,6 +233,7 @@ void Enemy::RestoreGroggy()
 	IsOtherEndGroggy = false;
 	isGroggy = false;
 	isRestore = true; // 베틀매니저에서 읽는데, true가 있다면 << 플레이어와 적의 기세를 초기화시키는 플레그
+	ReserEnemy();
 }
 
 // 배틀 매니저에서 사용될 함수
@@ -307,11 +309,12 @@ void Enemy::SetCoolTime() {
 		Object_nowCoolTime = (1 - ((Object_NowSpiritAmount - Object_SpiritAmount / 2.0f) / Object_SpiritAmount) / 2.0f)
 			* Object_CoolTime + nowEnemyPattenData->eAtkCoolDown;
 	}
-	else if (IsOtherEndGroggy) {
-		Object_nowCoolTime = nowEnemyPattenData->eAtkCoolDown;
-	}
 	else {
 		Object_nowCoolTime = nowEnemyPattenData->eComboCoolDown;
+	}
+
+	if (IsOtherEndGroggy) {
+		Object_nowCoolTime = nowEnemyPattenData->eAtkCoolDown;
 	}
 	// 현재 공격중인 시간
 	Object_nowTotalCoolTime = Object_nowCoolTime;
@@ -342,13 +345,19 @@ void Enemy::DiffState() {
 
 	// 그로기 시간!!!
 	// 플레이어가 그로기 상태에서, 적에게 공격을 맞으면, 초기화 한다
-	if ((IsOtherEndGroggy && Object_nowCoolTime <= 0)) {
+	if ((IsOtherEndGroggy && Object_nowCoolTime <= 0.0f)) {
 		RestoreGroggy();
 	}
 
-	preHp = Object_Hp;
+	if (Object_NowSpiritAmount <= 0.0f) {
+		Object_NowSpiritAmount = 0.0f;
+	}
 }
 
+void Enemy::ReserEnemy() {
+	SelectPatten(); // 공격을 했으면 다른 패턴 세팅
+	SetState("Player_Idle");
+}
 
 
 

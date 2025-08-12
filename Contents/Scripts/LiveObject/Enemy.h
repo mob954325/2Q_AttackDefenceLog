@@ -98,7 +98,7 @@ private:
 	void PrintConsole();
 	void SetCursorPosition(int x, int y);
 	AttackPatternManager* m_PattenManager = nullptr; // 패턴 매니저를  참조로 받아  사용할 변수
-
+	void ReserEnemy();
 	
 private:
 	std::string Difficulty;			   // 적의 난이도 k

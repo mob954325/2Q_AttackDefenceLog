@@ -23,14 +23,27 @@ void BettleManager::OnStart() {
 
 	owner->AddComponent<GiseGauge>();
 	giseObj = owner->GetComponent<GiseGauge>();
+
 	TotalValue = m_Player->GetSpiritAmount();
 	/*giseObj->SetMaxGague(TotalValue);*/
+
+
+
+	//HpObj = owner->AddComponent<HpGauge>();
+	////HP 최대치 설정 플레이어, 적
+	//HpObj->SetPlayerMaxGague(m_Player->GetTotalHp());
+	//HpObj->SetEnemyMaxGague(m_Enemy->GetTotalHp());
+
+
+
+	/*HpObj->SetHpUiPosition(Player, Enemy);*/
 
 	int a = 0;
 }
 
 void BettleManager::OnUpdate() {
 	SetGroggyState();
+	//HpObj->SetHpUiPosition(Player2, Enemy2);
 
 	// 게임 상태가 Pause면 모든 Update 내용 무시
 	if (Singleton<GameManager>::GetInstance().GetGameState() == GameState::Pause)
@@ -41,6 +54,11 @@ void BettleManager::OnUpdate() {
 	SetStateFormPattern();	// 각 상태별 공격 방어 처리 어
 	ChangeFinalState();		// 각 LiveObject의 사망 처리 Update - 유니티의 AnyState 유사
 	SetSpiritGauge();		// 기세 게이지 업데이트
+	//
+	/*HpObj->CalculatePlayerValue(m_Player->GetHp());
+	HpObj->CalculateEnemyValue(m_Enemy->GetHp());*/
+
+	//
 	ResetState(); 			// state가 다를 경우 초기화 하기!!!
 }
 
@@ -183,6 +201,8 @@ void BettleManager::SetStateFormPattern() {
 		m_PattenManager->PlayerPatternAllClear();
 		m_PattenManager->DoneTimeOutPatten();
 
+
+
 		if (nowNode.size() < 2) return; //플레이어가 입력을 하기 전까지 빠져나가질 못함 (8.12 확인)
 
 		if (allDistancePercent <= 0.0f) {	   //퍼센트가 0 이라면 길이에 따라서 배율 넣기 , 문제 있을 수 있음
@@ -190,8 +210,7 @@ void BettleManager::SetStateFormPattern() {
 			allDistancePercent = m_PattenManager->OnceAllNodePatternDistance(nowNode);
 		}
 	}
-	else if (m_Player->GetIsGroggy() ||
-		(!m_Enemy->GetIsOtherEndGroggy() && !m_Enemy->GetIsGroggy())) { // 아군이 그로기에 걸린경우
+	else if (m_Player->GetIsGroggy() ) { // 아군이 그로기에 걸린경우
 		m_PattenManager->EnemyPatternAllClear();  //이것도 잘 처리하기!!!
 		m_PattenManager->PlayerPatternAllClear();
 		m_PattenManager->DoneTimeOutPatten();
@@ -240,6 +259,21 @@ void BettleManager::ChangeFinalState() {
 		m_Player->SetIsOtherEndGroggy(true);
 		isOncePatternatk = true;
 	}
+	
+
+
+
+
+
+
+	if (m_Enemy->GetIsGroggy() && !m_Player->GetIsOtherEndGroggy()) {
+		onTimeout.Invoke();
+		m_Enemy->RestoreGroggy();
+	}
+	else if (m_Player->GetIsGroggy() && !m_Enemy->GetIsOtherEndGroggy()) {
+		m_Player->RestoreGroggy();
+	}
+
 }
 
 void BettleManager::SetSpiritGauge() {
@@ -263,7 +297,7 @@ void BettleManager::FinalAttackToEnemy() { // 델리게이트로 외부에서 �
 
 
 
-// ㅁ
+//
 void BettleManager::SetGroggyState() {
 	preManagerState = nowManagerState;
 	if (m_Player->GetIsGroggy()) {

@@ -220,6 +220,7 @@
     <ClCompile Include="Objects\Scenes\SelectScene\LevelSelectManager.cpp">
       <Filter>Objects\SceneObject\SelectScene</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\HpBar\HpGauge.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameApp.h">
@@ -370,5 +371,6 @@
     <ClInclude Include="Objects\Scenes\SelectScene\LevelSelectManager.h">
       <Filter>Objects\SceneObject\SelectScene</Filter>
     </ClInclude>
+    <ClInclude Include="Scripts\HpBar\HpGauge.h" />
   </ItemGroup>
 </Project>
