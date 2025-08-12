@@ -7,6 +7,7 @@
 #include "Objects/Scenes/TitleScene/TitleEffectManager.h"
 #include "Objects/Scenes/Stage/CloudManager.h"
 #include "Objects/Sound/SoundTittle.h"
+#include "Objects/Scenes/Stage/StageResult/StageResult.h"
 
 void TitleScene::OnEnterImpl()
 {
@@ -50,6 +51,11 @@ void TitleScene::OnEnterImpl()
 
 	SoundTittleObj->GetComponent<SoundTittle>()->SetKeyHandle(L"Lobby");
 	SoundTittleObj->GetComponent<SoundTittle>()->PlaySound();
+
+	// Test - result 오브젝트 생성 함수
+	// GameObject* result = new GameObject();
+	// result->AddComponent<StageResult>();
+	// AddGameObject(result, "result");
 }
 
 void TitleScene::OnExitImpl()
