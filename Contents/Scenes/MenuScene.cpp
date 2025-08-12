@@ -8,6 +8,7 @@
 #include "Objects/Scenes/MenuScene/StageSelectManager.h"
 #include "Objects/Scenes/SelectScene/SelectEffectManager.h"
 #include "Objects/Scenes/Stage/CloudManager.h"
+#include "Objects/Sound/SoundTittle.h"
 
 void MenuScene::OnEnterImpl()
 {
@@ -43,6 +44,10 @@ void MenuScene::OnEnterImpl()
 	selectManager = new GameObject();
 	selectManager->AddComponent<StageSelectManager>();
 	AddGameObject(selectManager, "selectManager");
+
+	SoundMenuObj = new GameObject();
+	SoundMenuObj->AddComponent<SoundTittle>();
+	AddGameObject(SoundMenuObj, "SoundMenu");
 }
 
 void MenuScene::OnExitImpl()

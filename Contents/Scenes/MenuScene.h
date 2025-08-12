@@ -17,4 +17,5 @@ private:
 	GameObject* selectEffectManager;
 
 	GameObject* cloudManager;
+	GameObject* SoundMenuObj;
 };

@@ -127,17 +127,17 @@ float Camera::GetOffset(float externalAmplitude , ShakeCalcu value, float MaxTim
 	case ShakeCalcu::FastToSlow:
 	{
 		float damping = EasingList[OutCubic](progress);
-		return Amplitude * (1.0f - damping) * wave * scale * localTransform->GetScale().x;
+		return Amplitude * (1.0f - damping) * wave * scale;
 	}
 	case ShakeCalcu::SlowToFast:
 	{
 		float growth = EasingList[InCubic](progress); // 점점 커짐
-		return Amplitude * growth * wave * scale * localTransform->GetScale().x;
+		return Amplitude * growth * wave * scale;
 	}
 	case ShakeCalcu::SlowFastSlow:
 	{
 		float bell = std::sin(progress * PI);         // 0 → 1 → 0
-		return Amplitude * bell * wave * scale * localTransform->GetScale().x;// 진폭 변화 * 왕복 * 스케일
+		return Amplitude * bell * wave * scale;// 진폭 변화 * 왕복 * 스케일
 	}
 	default:
 		return 0.0f;

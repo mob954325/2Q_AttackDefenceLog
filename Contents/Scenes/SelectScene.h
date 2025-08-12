@@ -15,4 +15,5 @@ private:
 	GameObject* selectManager;
 	GameObject* cloudManager;
 
+	GameObject* SoundSeletObj;
 };
