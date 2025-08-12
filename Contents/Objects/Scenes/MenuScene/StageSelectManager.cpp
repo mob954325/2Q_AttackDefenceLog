@@ -25,7 +25,6 @@ void StageSelectManager::OnStart()
 			if (!isSceneChange)
 			{
 				Singleton<GameManager>::GetInstance().SetBattleStage(SceneCount::STAGE1);
-				// Singleton<SceneManager>::GetInstance().LoadScene(SceneCount::STAGE1); 
 				isSceneChange = true;
 			}
 		});
@@ -35,7 +34,7 @@ void StageSelectManager::OnStart()
 
 			if (!isSceneChange)
 			{
-				Singleton<SceneManager>::GetInstance().LoadScene(SceneCount::STAGE2);
+				Singleton<GameManager>::GetInstance().SetBattleStage(SceneCount::STAGE2);
 				isSceneChange = true;
 			}
 		});
@@ -45,7 +44,7 @@ void StageSelectManager::OnStart()
 
 			if (!isSceneChange)
 			{
-				Singleton<SceneManager>::GetInstance().LoadScene(SceneCount::STAGE3);
+				Singleton<GameManager>::GetInstance().SetBattleStage(SceneCount::STAGE3);
 				isSceneChange = true;
 			}
 		});

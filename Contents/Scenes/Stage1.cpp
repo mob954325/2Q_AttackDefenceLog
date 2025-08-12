@@ -10,6 +10,7 @@
 #include "Objects/Sound/SoundPlayScene.h"
 #include "Objects/Scenes/Stage/BackboardObject.h"
 #include "../Engine/Systems/AudioSystem.h"
+#include "Scripts/GameManager.h"
 
 void Stage1::OnEnterImpl()
 {
@@ -20,8 +21,9 @@ void Stage1::OnEnterImpl()
 	AddGameObject(inputObj, "InputStage1");
 
 	PCO = new GameObject();
-	PCO->AddComponent<PatternControlObject>();
+	auto comp = PCO->AddComponent<PatternControlObject>();
 	AddGameObject(PCO , "PatternControlObject");
+	comp->GetEnemy()->SetNameDiff("Stage1", Singleton<GameManager>::GetInstance().GetDifficultyString());
 
 	stageBGI = new GameObject();
 	stageBGI->AddComponent<StageBGI>();

@@ -102,4 +102,9 @@ private:
 	// Debug
 	void SetCursorPosition(int x, int y);         // 플레이어 출력함수
 	void PrintConsole();
+
+	float timer = 0.0f;
+	float maxTimer = 1.0f;
+	bool isCreatedResult = false;
+	void ChecKChnageScene();	// 씬 교체를 해야하는지 확인하는 함수
 };

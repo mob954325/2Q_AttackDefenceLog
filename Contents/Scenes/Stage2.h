@@ -12,4 +12,6 @@ private:
 	GameObject* inputObj;
 	GameObject* escPanel;
 	GameObject* SoundStageTwo;
+
+	GameObject* PCO;
 };

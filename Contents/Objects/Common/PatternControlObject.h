@@ -6,6 +6,7 @@
 #include "Scene/SceneManager.h"
 #include "Utils/EventDelegate.h"
 #include "Objects/Manager/ChargedSlashManager.h"
+#include "Scripts/LiveObject/Enemy.h"
 
 #include "Scripts/Effect/EffectInstance.h" // 이펙트 정현씨꺼
 
@@ -21,6 +22,7 @@ public:
 	void OnDestroy() override;
 
 	PatternManager PM;					// 패턴 매니저
+	Enemy* GetEnemy();
 
 protected:
 	ListenerID lid_OnPatternCancel = 0;

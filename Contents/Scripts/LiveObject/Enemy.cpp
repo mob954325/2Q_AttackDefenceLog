@@ -12,6 +12,7 @@
 
 #include "Application/AppPaths.h"
 #include "Scripts/GameManager.h"
+#include "Objects/Scenes/Stage/StageResult/StageResult.h"
 
 
 // 각 값은 해당 함수가 출력 중일때, 각 플레그 변화
@@ -56,11 +57,11 @@ void Enemy::OnUpdate()
 	}
 	StateAct();            //  
 	DiffState();            // 이전 상태와 현재 상태를 비교
-	PrintConsole();
+	// PrintConsole();
 
 	if (nowStateName == "Enemy_Dead") // 적 사망 시 -> 씬 이동
 	{
-		Singleton<SceneManager>::GetInstance().LoadScene(0); // 나중에 딜레이 올려줘야함
+		ChecKChnageScene();
 	}
 
 	//SetNameDiff("Stage1", "easy");
@@ -198,9 +199,6 @@ void Enemy::SetBitmap()
 	owner->GetTransform().SetScale(1.0f, 1.0f); //  크기 맞추기
 	owner->GetTransform().SetPosition(580.0f, 150.0f);
 }
-
-
-
 
 // 플래그를 정하는 함수
 void Enemy::AddPattenLoop() 
@@ -489,7 +487,21 @@ void Enemy::PrintConsole()
 
 }
 
+void Enemy::ChecKChnageScene()
+{
+	timer += Singleton<GameTime>::GetInstance().GetDeltaTime();
 
+	if (!isCreatedResult)
+	{
+		GameObject* obj = new GameObject();
+		obj->SetRenderLayer(EngineData::RenderLayer::UI);
+		auto comp = obj->AddComponent<StageResult>();
+		comp->SetPanelState(ResultPanelState::Defeat);
+		isCreatedResult = true;
+	}
 
-
-
+	if (timer >= maxTimer)
+	{
+		Singleton<SceneManager>::GetInstance().LoadScene(SceneCount::MENU);
+	}
+}

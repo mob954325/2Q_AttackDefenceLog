@@ -8,6 +8,9 @@
 #include "Objects/Scenes/Stage/EscMenu/EscContinueButton.h"
 #include "Objects/Scenes/Stage/EscMenu/EscExitButton.h"
 #include "Objects/Scenes/Stage/EscMenu/EscMuteButton.h"
+#include "Objects/Common/PatternControlObject.h"
+#include "Scripts/LiveObject/Enemy.h"
+#include "Scripts/GameManager.h"
 
 void Stage2::OnEnterImpl()
 {
@@ -21,6 +24,12 @@ void Stage2::OnEnterImpl()
 	SoundStageTwo = new GameObject();
 	SoundStageTwo->AddComponent<SoundPlayScene>();
 	AddGameObject(SoundStageTwo, "SoundMenu2");
+
+
+	PCO = new GameObject();
+	auto comp = PCO->AddComponent<PatternControlObject>();
+	AddGameObject(PCO, "PatternControlObject");
+	comp->GetEnemy()->SetNameDiff("Stage2", Singleton<GameManager>::GetInstance().GetDifficultyString());
 
 	SoundStageTwo->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Stage02");
 	SoundStageTwo->GetComponent<SoundPlayScene>()->PlaySound();
@@ -55,11 +64,4 @@ void Stage2::OnExitImpl()
 
 void Stage2::UpdateImpl()
 {
-	if (Input::leftButtonDown) {
-		Singleton<SceneManager>::GetInstance().LoadScene(END);
-	}
-	auto input = inputObj->GetComponent<InputSystem>();
-	if (input->IsKeyPressed('6')) {
-		Singleton<SceneManager>::GetInstance().LoadScene(END);
-	}
 }

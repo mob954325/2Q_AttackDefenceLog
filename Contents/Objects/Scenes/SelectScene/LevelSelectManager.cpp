@@ -25,25 +25,26 @@ void LevelSelectManager::OnStart()
 		{
 			if (!isSceneChange)
 			{
+				Singleton<GameManager>::GetInstance().SetDifficulty("easy");
 				isSceneChange = true; // NOTE : 나중에 난이도 세팅하기
 			}
 		});
-	// objs[1]->AddEvent([this]() 
-	// 	{ 
-	// 		if (!isSceneChange)
-	// 		{
-	// 			Singleton<SceneManager>::GetInstance().LoadScene(SceneCount::STAGE2);
-	// 			isSceneChange = true;
-	// 		}
-	// 	});
-	// objs[2]->AddEvent([this]() 
-	// 	{ 
-	// 		if (!isSceneChange)
-	// 		{
-	// 			Singleton<SceneManager>::GetInstance().LoadScene(SceneCount::STAGE3);
-	// 			isSceneChange = true;
-	// 		}
-	// 	});
+	objs[1]->AddEvent([this]() 
+		{ 
+			if (!isSceneChange)
+			{
+				Singleton<GameManager>::GetInstance().SetDifficulty("normal");
+				isSceneChange = true;
+			}
+		});
+	objs[2]->AddEvent([this]() 
+		{ 
+			if (!isSceneChange)
+			{
+				Singleton<GameManager>::GetInstance().SetDifficulty("hard");
+				isSceneChange = true;
+			}
+		});
 }
 
 void LevelSelectManager::OnUpdate()

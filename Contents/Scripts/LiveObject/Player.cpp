@@ -17,6 +17,8 @@
 #include "Scripts/GameManager.h"
 #include "Math/GameRandom.h"
 
+#include "Objects/Scenes/Stage/StageResult/StageResult.h"
+
 // 각 값은 해당 함수가 출력 중일때, 각 플레그 변화
 //														     
 //                    IonStartI 다음 루프ㅣ 공격 노드추가ㅣ			    I
@@ -62,7 +64,7 @@ void Player::OnUpdate() {
 		AddPattenLoop();		// 패턴을 추가하는 루프
 	}
 
-	PrintConsole();		// 콘솔 호출
+	// PrintConsole();		// 콘솔 호출
 	m_State->Update(); 	// 각 state별 추가로 정의된 행동 호출
 	DiffState();  		// 이전상태와 현재상태를 결정하는 함수
 	StateAct();   		// 각 state 별 행동 
@@ -72,9 +74,8 @@ void Player::OnUpdate() {
 
 	if (m_State->GetNowName() == "Player_Dead") // 플레이어 사망 시 
 	{
-		Singleton<SceneManager>::GetInstance().LoadScene(0);
+		ChecKChnageScene();
 	}
-
 }
 
 //이후 StateManager에 추가하는거 만들기
@@ -188,8 +189,6 @@ void Player::SetAttackPattenData(std::string PattID)
 	nowPlayerPattenData = CsvDataManager::GetInstance().getDataImpl(nowPlayerPattenData, PattID);
 };
 
-
-
 // 플레이어의 가이드 패턴2개를 패턴매니저에 등록
 void Player::SetNowPattern()
 {
@@ -286,6 +285,8 @@ void Player::DiffState()
 	{
 		if(!OtherGroggyTimeStop)
 		enemyGroggyTime += GameTime::GetInstance().GetDeltaTime();
+
+		std::cout << enemyGroggyTime << std::endl;
 	}
 
 	// 그로기 시간!!!
@@ -522,4 +523,21 @@ void Player::PrintConsole() {
 	}
 }
 
+void Player::ChecKChnageScene()
+{
+	timer += Singleton<GameTime>::GetInstance().GetDeltaTime();
 
+	if (!isCreatedResult)
+	{
+		GameObject* obj = new GameObject();
+		obj->SetRenderLayer(EngineData::RenderLayer::UI);
+		auto comp = obj->AddComponent<StageResult>();
+		comp->SetPanelState(ResultPanelState::Defeat);
+		isCreatedResult = true;
+	}
+
+	if (timer >= maxTimer)
+	{
+		Singleton<SceneManager>::GetInstance().LoadScene(SceneCount::MENU);
+	}
+}
