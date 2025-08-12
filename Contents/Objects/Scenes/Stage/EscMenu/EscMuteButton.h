@@ -1,9 +1,10 @@
-#pragma once
+ï»¿#pragma once
 #include "Components/Base/MonoBehavior.h"
 #include "Components/UI/Button.h"
+#include "SoundMutePanel.h"
 
-/* 25.08.09 | ÀÛ¼ºÀÚ: ÀÌ¼ºÈ£
-* esc¸Ş´º À½¼Ò°Å ¹öÆ° ¿ÀºêÁ§Æ®¿¡ ºÙÀÏ monobehavior
+/* 25.08.09 | ì‘ì„±ì: ì´ì„±í˜¸
+* escë©”ë‰´ ìŒì†Œê±° ë²„íŠ¼ ì˜¤ë¸Œì íŠ¸ì— ë¶™ì¼ monobehavior
 */
 
 class EscMuteButton : public MonoBehavior
@@ -12,6 +13,9 @@ public:
 	void OnCreate() override;
 	void OnStart() override;
 
+	SoundMutePanel* GetSoundMutePanel();
+
 private:
 	Button* muteButton{};
+	SoundMutePanel* soundMutePanel{};
 };

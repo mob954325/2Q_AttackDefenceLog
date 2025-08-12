@@ -14,9 +14,9 @@ private:
 	GameObject* inputObj;
 	GameObject* trail;
 	GameObject* backGroundImg;
+	GameObject* SoundTittleObj;
 
 
-
-
+	GameObject* cloudManager;
 	GameObject* titleEffectManager;
 };

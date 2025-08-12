@@ -1,10 +1,12 @@
-#include "EscContinueButton.h"
+﻿#include "EscContinueButton.h"
 #include "Components/Base/GameObject.h"
 #include "Scene/SceneManager.h"
 #include "Application/AppPaths.h"
 
 void EscContinueButton::OnCreate()
 {
+	owner->SetRenderLayer(EngineData::RenderLayer::UI);
+
 	continueButton = owner->AddComponent<Button>();
 	owner->GetTransform().SetUnityCoords(false);
 }
