@@ -1,0 +1,61 @@
+{
+    "texture": "hit_spreadsheet.png",
+    "textureWidth": 882,
+    "textureHeight": 72,
+    "sprites": [
+        {
+            "name": "hit_spreadsheet_0",
+            "x": 0.0,
+            "y": 72.0,
+            "width": 147.0,
+            "height": 72.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "hit_spreadsheet_1",
+            "x": 147.0,
+            "y": 72.0,
+            "width": 147.0,
+            "height": 72.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "hit_spreadsheet_2",
+            "x": 294.0,
+            "y": 72.0,
+            "width": 147.0,
+            "height": 72.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "hit_spreadsheet_3",
+            "x": 441.0,
+            "y": 72.0,
+            "width": 147.0,
+            "height": 72.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "hit_spreadsheet_4",
+            "x": 588.0,
+            "y": 72.0,
+            "width": 147.0,
+            "height": 72.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "hit_spreadsheet_5",
+            "x": 735.0,
+            "y": 72.0,
+            "width": 147.0,
+            "height": 72.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        }
+    ]
+}

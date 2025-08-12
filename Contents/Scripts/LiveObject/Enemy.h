@@ -62,7 +62,7 @@ public:
 
 	StateController* m_State = nullptr;  //오브젝트 들은 State 내부에서 받을 수 있도록 포인터 생성
 	bool isFirstSpiriteDown = false;
-
+	bool isEnemyGroggyAttack = false; //
 
 	void RestoreGroggy(); // 초기화 겸, 외부에서도 호출해주는 함수임
 
@@ -98,7 +98,8 @@ private:
 	void PrintConsole();
 	void SetCursorPosition(int x, int y);
 	AttackPatternManager* m_PattenManager = nullptr; // 패턴 매니저를  참조로 받아  사용할 변수
-
+	void ReserEnemy();
+	
 	
 private:
 	std::string Difficulty;			   // 적의 난이도 k

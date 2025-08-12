@@ -24,10 +24,6 @@ void Finaleffect::OnUpdate()
 			auto* p = r->GetAnimationPlayer();
 			p->Pause();
 		}
-
-
-		 std::cout << AnimeList->GetComponent<AnimationRenderer>()->GetAnimationPlayer()->GetCurrentFrame() << std::endl;;
-
 }
 
 void Finaleffect::OnCreate()
@@ -58,10 +54,7 @@ void Finaleffect::OnDestroy()
 
 void Finaleffect::SetAnimePosition(const Vector2& vector)
 {
-	for (size_t i = 0; i < 9; i++)
-	{
-		AnimeList->GetTransform().SetPosition(vector.x, vector.y);
-	}
+	AnimeList->GetTransform().SetPosition(vector.x, vector.y);
 }
 
 void Finaleffect::CallAnime(float rotationValue)

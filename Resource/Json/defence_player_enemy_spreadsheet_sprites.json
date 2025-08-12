@@ -1,0 +1,88 @@
+{
+    "texture": "defence_player_enemy_spreadsheet.png",
+    "textureWidth": 2889,
+    "textureHeight": 323,
+    "sprites": [
+        {
+            "name": "defence_player_enemy_spreadsheet_0",
+            "x": 0.0,
+            "y": 323.0,
+            "width": 321.0,
+            "height": 323.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "defence_player_enemy_spreadsheet_1",
+            "x": 321.0,
+            "y": 323.0,
+            "width": 321.0,
+            "height": 323.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "defence_player_enemy_spreadsheet_2",
+            "x": 642.0,
+            "y": 323.0,
+            "width": 321.0,
+            "height": 323.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "defence_player_enemy_spreadsheet_3",
+            "x": 963.0,
+            "y": 323.0,
+            "width": 321.0,
+            "height": 323.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "defence_player_enemy_spreadsheet_4",
+            "x": 1284.0,
+            "y": 323.0,
+            "width": 321.0,
+            "height": 323.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "defence_player_enemy_spreadsheet_5",
+            "x": 1605.0,
+            "y": 323.0,
+            "width": 321.0,
+            "height": 323.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "defence_player_enemy_spreadsheet_6",
+            "x": 1926.0,
+            "y": 323.0,
+            "width": 321.0,
+            "height": 323.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "defence_player_enemy_spreadsheet_7",
+            "x": 2247.0,
+            "y": 323.0,
+            "width": 321.0,
+            "height": 323.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "defence_player_enemy_spreadsheet_8",
+            "x": 2568.0,
+            "y": 323.0,
+            "width": 321.0,
+            "height": 323.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        }
+    ]
+}
