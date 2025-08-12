@@ -11,6 +11,7 @@ public:
 	void OnDestroy() override;
 
 	void ChangeGaugeBar();
+	void ChangeGaugeBar(float num);
 
 	void SetHpUiPosition(Vector2 player , Vector2 Enemy);
 
