@@ -13,9 +13,8 @@
 
 
 
-void BettleManager::OnStart() {
-	//m_Enemy = owner->GetQuery()->FindByName("Enemytmp")->GetComponent<Enemy>();
-	//m_Player = owner->GetQuery()->FindByName("Playertmp")->GetComponent<Player>();
+void BettleManager::OnStart() 
+{
 	m_Player->SetSpiritData(m_Enemy->GetSpiritAmount());
 	m_PattenManager = owner->GetQuery()->FindByName("AttackPattenManager")->GetComponent<AttackPatternManager>();
 
@@ -24,13 +23,13 @@ void BettleManager::OnStart() {
 	owner->AddComponent<GiseGauge>();
 	giseObj = owner->GetComponent<GiseGauge>();
 	TotalValue = m_Player->GetSpiritAmount();
-	/*giseObj->SetMaxGague(TotalValue);*/
 
 	int a = 0;
 }
 
 void BettleManager::OnUpdate() {
-	SetGroggyState();
+
+	SetSpiritGauge();	// 기세 게이지 업데이트
 
 	// 게임 상태가 Pause면 모든 Update 내용 무시
 	if (Singleton<GameManager>::GetInstance().GetGameState() == GameState::Pause)
@@ -38,9 +37,9 @@ void BettleManager::OnUpdate() {
 		return;
 	}
 
+	SetGroggyState();
 	SetStateFormPattern();	// 각 상태별 공격 방어 처리 어
 	ChangeFinalState();		// 각 LiveObject의 사망 처리 Update - 유니티의 AnyState 유사
-	SetSpiritGauge();		// 기세 게이지 업데이트
 	ResetState(); 			// state가 다를 경우 초기화 하기!!!
 }
 
