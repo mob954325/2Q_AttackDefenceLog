@@ -21,28 +21,26 @@
 //
 
 
-
-
-
-
-
-void Enemy::OnStart() {
+void Enemy::OnStart() 
+{
 	m_State = owner->GetComponent<StateController>();
 	m_PattenManager = owner->GetQuery()->FindByName("AttackPattenManager")->GetComponent<AttackPatternManager>();
-	SetStatData("EI_001");
-	OnCreateState();
-	m_State->SetState("Enemy_Idle");
-	SelectPatten(); //  패턴 세팅
-	SetCoolTime();
+
+	SetStatData("EI_001");				// 객체 데이터 불러오기
+	OnCreateState();					// 상태들 구성
+	m_State->SetState("Enemy_Idle");	// 초기 상태로 초기화
+
+	SelectPattern(); //  패턴 세팅
+	SetCoolTime();	
 	SetBitmap();
-	isPattenCooldown = true;
+
+	isPatternLive = true;
 	groggyTime = 0.0f;
 }
 
-
-
 // 업데이트에서 시간 받기???? -> 필요없음, 수정하기!!!
-void Enemy::OnUpdate() {
+void Enemy::OnUpdate() 
+{
 
 	// Game 상태가 Pause면 모든 Update 무시
 	if (Singleton<GameManager>::GetInstance().GetGameState() == GameState::Pause)
@@ -55,7 +53,7 @@ void Enemy::OnUpdate() {
 	{
 		CalSpiritTime();		// 1초마다 기세게이지 증가
 		AddPattenLoop();		// 
-		StateAct();           //  
+		StateAct();            //  
 	}
 
 	DiffState();            // 이전 상태와 현재 상태를 비교
@@ -69,9 +67,6 @@ void Enemy::OnUpdate() {
 
 
 // onChangePatten에 TransitionTime 변경하기!!!
-
-
-
 
 //하드코딩함, 이걸 할려고 하면 자료 구조의 키값을 뜯어 고쳐야함!!!
 void SetNameDiff(std::string name, std::string difficulty) {
@@ -103,41 +98,41 @@ void Enemy::SetState(std::string setStateName) {
 	}
 }
 
-void Enemy::OnCreateState() {
-	m_State->CreateState("Enemy_Idle");    // 평소 상태     
+void Enemy::OnCreateState() 
+{
+	m_State->CreateState("Enemy_Idle");							// 평소 상태 - Default State  
 
-	m_State->CreateState("Enemy_AttackSuccess"); // 공격 성공
-	m_State->SetNextState("Enemy_AttackSuccess", "Enemy_Idle");
-	m_State->SetTransitionTime("Enemy_AttackSuccess", 1.0f);
+	m_State->CreateState("Enemy_AttackSuccess");				// 공격 성공
+	m_State->SetNextState("Enemy_AttackSuccess", "Enemy_Idle");	// Enemy_AttackSuccess -> Enemy_Idle
+	m_State->SetTransitionTime("Enemy_AttackSuccess", 1.0f);	// 1.0f 뒤 변경
 
-	m_State->CreateState("Enemy_AttackFail"); // 공격 성공
-	m_State->SetNextState("Enemy_AttackFail", "Enemy_Idle");
-	m_State->SetTransitionTime("Enemy_AttackFail", 1.0f);
+	m_State->CreateState("Enemy_AttackFail");					// 공격 실패 
+	m_State->SetNextState("Enemy_AttackFail", "Enemy_Idle");	// Enemy_AttackFail -> Enemy_Idle
+	m_State->SetTransitionTime("Enemy_AttackFail", 1.0f);		// 1.0f 뒤 변경
 
-	m_State->CreateState("Enemy_Hit");     //패턴 파회 X, 맞음
-	m_State->SetNextState("Enemy_Hit", "Enemy_Idle");
-	m_State->SetTransitionTime("Enemy_Hit", 1.0f);
+	m_State->CreateState("Enemy_Hit");							// 패턴 파회 X, 맞음
+	m_State->SetNextState("Enemy_Hit", "Enemy_Idle");			// Enemy_Hit -> Enemy_Idle
+	m_State->SetTransitionTime("Enemy_Hit", 1.0f);				// 1.0f 뒤 변경
 
-	m_State->CreateState("Enemy_Defence"); //패턴 파회 X, 막음
-	m_State->SetNextState("Enemy_Defence", "Enemy_Idle");
-	m_State->SetTransitionTime("Enemy_Defence", 1.0f);
+	m_State->CreateState("Enemy_Defence");						// 패턴 파회 X, 막음
+	m_State->SetNextState("Enemy_Defence", "Enemy_Idle");		// Enemy_Defence -> Enemy_Idle
+	m_State->SetTransitionTime("Enemy_Defence", 1.0f);			// 1.0f 뒤 변경
 
-	m_State->CreateState("Enemy_Groggy"); //패턴 파회 X, 막음
-	m_State->SetNextState("Enemy_Groggy", "Enemy_Idle");
-	m_State->SetTransitionTime("Enemy_Groggy", 2.0f);
+	m_State->CreateState("Enemy_Groggy");						// 패턴 파회 X, 막음
+	m_State->SetNextState("Enemy_Groggy", "Enemy_Idle");		// Enemy_Groggy -> Enemy_Idle
+	m_State->SetTransitionTime("Enemy_Groggy", 2.0f);			// 2.0f 뒤 변경
 
-
-	m_State->CreateState("Enemy_Dead");   // 죽음
+	m_State->CreateState("Enemy_Dead");							// 죽음
 }
-
-
 
 // 플레이어 데이터에는 기세가 없음으로 적을 생성 후, 기세를 매개변수에 넣어주기!!
 // 패턴을 세팅하는 것은 처음?
 
 // 매개변수를 통해 데이터의 키값을 받아서 데이터를 찾고 데이터의 값을 적에게 전부 인가
-void Enemy::SetStatData(std::string tmp) {
+void Enemy::SetStatData(std::string tmp) 
+{
 	nowEnemyData = CsvDataManager::GetInstance().getDataImpl(nowEnemyData, tmp);
+
 	Object_ID = nowEnemyData->enemyID;					   // ID
 	Object_Name = nowEnemyData->enemyName;				   // 이름
 	Object_Hp = nowEnemyData->enemyHealth;		           // 체력
@@ -149,23 +144,22 @@ void Enemy::SetStatData(std::string tmp) {
 	Object_NowSpiritAmount = Object_SpiritAmount / 2.0f;   // 현재 기세 설정
 	Difficulty = nowEnemyData->enemyDifficulty;			   // 난이도 -> 아마 필요없을듯?
 
-
-
 	PattenID = nowEnemyData->enemyPattern;				   // 적이 가지고 있는 벡터
 
 	TotalPatternID = CsvDataManager::GetInstance().GetIDData(nowEnemyPattenData);  // 적 공격 전체의 데이터
 
 	// 적이 가지고 있는 공격과 적 패턴 전체의 벡터를 매핑
-	for (int i = 0; i < nowEnemyData->enemyPattern.size(); i++) {
+	for (int i = 0; i < nowEnemyData->enemyPattern.size(); i++) 
+	{
 		int index = 0;
 		auto it = std::find(TotalPatternID.begin(), TotalPatternID.end(), nowEnemyData->enemyPattern[i]); // 
-		if (it != TotalPatternID.end()) {
+		if (it != TotalPatternID.end()) 
+		{
 			index = std::distance(TotalPatternID.begin(), it); // 인덱스 계산
 		}
+
 		PattenMap[nowEnemyData->enemyPattern[i]] = index;      // 적의 패턴과 적의 전체 패턴을 매핑
 	}
-
-
 
 	Object_CoolTime = nowEnemyData->enemyCooldown;         // 적의 쿨타임 가져오기;
 	Object_nowCoolTime = nowEnemyData->enemyCooldown;	   // 현재 적의 쿨타임
@@ -174,16 +168,16 @@ void Enemy::SetStatData(std::string tmp) {
 
 	std::wstring enemy_CommonPath = L"\\..\\Resource\\ContentsResource\\";	// 적의 공통 이미지 경로
 
-	enemy_IdlePath = enemy_CommonPath + nowEnemyData->enemySprite[0] + L"_fin.png";         // 적의 이미지 이름 받기
+	// 적의 이미지 이름 받기
+	enemy_IdlePath = enemy_CommonPath + nowEnemyData->enemySprite[0] + L"_fin.png";        
 	enemy_AttackPath = enemy_CommonPath + nowEnemyData->enemySprite[1] + L"_fin.png";
 	enemy_GuardPath = enemy_CommonPath + nowEnemyData->enemySprite[2] + L"_fin.png";
 	enemy_DamagedPath = enemy_CommonPath + nowEnemyData->enemySprite[3] + L"_fin.png";
-
-
 }
 
 
-void Enemy::SetBitmap() {
+void Enemy::SetBitmap() 
+{
 
 	enemy_Idle = owner->AddComponent<BitmapRenderer>();
 	enemy_Idle->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + enemy_IdlePath);
@@ -208,22 +202,26 @@ void Enemy::SetBitmap() {
 
 
 // 플래그를 정하는 함수
-void Enemy::AddPattenLoop() {
-	// isPattenCooldown : T  -> 쿨타임을 계산
-	// isPattenCooldown : F  -> 계산 X
-	if (isPattenCooldown) {
+void Enemy::AddPattenLoop() 
+{
+	// isPatternLive : T  -> 쿨타임을 계산
+	// isPatternLive : F  -> 계산 X
+	if (isPatternLive) // 패턴이 아직 살아있으면
+	{
 		// 패턴의 입력대기시간 카운트
 		Object_nowCoolTime -= GameTime::GetInstance().GetDeltaTime();
-		// 현재 시간이  정해진 대기시간보다 크거나 같을 경우 
-		if (Object_nowCoolTime <= 0.0f) {
-			isPattenCooldown = false;
+
+		if (Object_nowCoolTime <= 0.0f) 
+		{
+			isPatternLive = false; // 패턴 지속 시간이 끝나면 false
 		}
 	}
-	else {
-		SelectPatten(); // 패턴 정하기!!
+	else // 현재 패턴의 지속 시간이 끝났으면
+	{
+		SelectPattern(); // 패턴 정하기!!
 		SetCoolTime();	// 적일때는 수정하기!!
-		SetNowPatten(); // 공격대기시간 + 데이터 주기!!
-		isPattenCooldown = true;
+		SetNowPattern(); // 공격대기시간 + 데이터 주기!!
+		isPatternLive = true;
 	}
 }
 
@@ -238,20 +236,24 @@ void Enemy::RestoreGroggy()
 }
 
 // 배틀 매니저에서 사용될 함수
-void Enemy::SelectPatten() {   //각 객체가 사용할 패턴을 고름
-	if (nowEnemyPattenData != nullptr) {
+void Enemy::SelectPattern() //각 객체가 사용할 패턴을 고름
+{   
+	if (nowEnemyPattenData != nullptr) 
+	{
 		preEnemyPattenData = nowEnemyPattenData;
 		preRandomValue = nowRandomValue;
 	}
-	if (nowEnemyPattenData != nullptr && preEnemyPattenData->eComboCoolDown != 0) {
+	if (nowEnemyPattenData != nullptr && preEnemyPattenData->eComboCoolDown != 0) 
+	{
 		++patternCount;
 		SetAttackPattenData(TotalPatternID[PattenMap[PattenID[nowRandomValue]] + patternCount]);
 	}
 
-	else {
+	else 
+	{
 		patternCount = 0;
-		if (enemyAttackPatternFix.substr(0, 2) != "EP") {
-			//while (1) { // 랜덤으로 적의 패턴을 정하기
+		if (enemyAttackPatternFix.substr(0, 2) != "EP") 
+		{
 			std::random_device rd;
 			std::mt19937 gen(rd());
 			std::uniform_int_distribution<> dist(0, PattenID.size() - 1);
@@ -262,9 +264,10 @@ void Enemy::SelectPatten() {   //각 객체가 사용할 패턴을 고름
 			// 이전 패턴과 안겹치게 할때 사용하기!
 			//if (preEnemyPattenData != nowEnemyPattenData)
 			//	break;
-	//}
+			//}
 		}
-		else {
+		else 
+		{
 			SetAttackPattenData(enemyAttackPatternFix);
 		}
 
@@ -272,7 +275,8 @@ void Enemy::SelectPatten() {   //각 객체가 사용할 패턴을 고름
 }
 
 //패턴 ID에 맞는 데이터를 포인터로 가리킴
-void Enemy::SetAttackPattenData(std::string PattID) {
+void Enemy::SetAttackPattenData(std::string PattID) 
+{
 	nowEnemyPattenData = CsvDataManager::GetInstance().getDataImpl(nowEnemyPattenData, PattID);
 	Object_PlayingAttackTime = nowEnemyPattenData->eAtkCoolDown;
 
@@ -281,86 +285,100 @@ void Enemy::SetAttackPattenData(std::string PattID) {
 
 
 //적의 가이드 패턴을 패턴매니저에 등록
-void Enemy::SetNowPatten() {
+void Enemy::SetNowPattern() 
+{
 	std::vector<int> tmp; // 저장할 벡터 선언
 
 	tmpNode = CsvDataManager::GetInstance().getDataImpl(tmpNode, nowEnemyPattenData->eNodepattern);
 
 	// 널 포인터 체크: tmpNode가 유효한지 확인
-	if (tmpNode != nullptr) {
+	if (tmpNode != nullptr) 
+	{
 		// tmpNode가 유효할 때만 벡터에 값을 추가
 		tmp = tmpNode->Node_Number;
+
+		// AddPattern 함수 호출
+		m_PattenManager->AddPattern(nowEnemyPattenData->ePatternID, nowEnemyPattenData->eAtkCoolDown, tmp); // 
 	}
-	// AddPattern 함수 호출
-	m_PattenManager->AddPattern(nowEnemyPattenData->ePatternID, nowEnemyPattenData->eAtkCoolDown, tmp);
 }
 
-
-
-
 //처음에 받은 기세 게이지로 복구
-void Enemy::ResetSpiritAmount() {
+void Enemy::ResetSpiritAmount() 
+{
 	Object_NowSpiritAmount = Object_SpiritAmount / 2.0f;
 }
 
 //쿨타임을 세팅하는 함수
 // 연격의 여부에 따라서 객체의 쿨타임이 변경됨
-void Enemy::SetCoolTime() {
-	if (nowEnemyPattenData->eComboCoolDown == 0) {
+void Enemy::SetCoolTime() 
+{
+	if (nowEnemyPattenData->eComboCoolDown == 0) 
+	{
 		Object_nowCoolTime = (1 - ((Object_NowSpiritAmount - Object_SpiritAmount / 2.0f) / Object_SpiritAmount) / 2.0f)
 			* Object_CoolTime + nowEnemyPattenData->eAtkCoolDown;
 	}
-	else {
+	else 
+    {
 		Object_nowCoolTime = nowEnemyPattenData->eComboCoolDown;
 	}
 
-	if (IsOtherEndGroggy) {
+	if (IsOtherEndGroggy)
+    {
 		Object_nowCoolTime = nowEnemyPattenData->eAtkCoolDown;
 	}
 	// 현재 공격중인 시간
 	Object_nowTotalCoolTime = Object_nowCoolTime;
 }
 
-void Enemy::CalSpiritTime() {
-	if (Object_OverTimeSpirit >= 1) {
+void Enemy::CalSpiritTime() 
+{
+	if (Object_OverTimeSpirit >= 1) 
+	{
 		Object_NowSpiritAmount += 0.3f;									 //초당 0.3씩 감소
 		Object_OverTimeSpirit = std::fmod(Object_OverTimeSpirit, 1.0f);  //실수형 나머지 연산자
 	}
+
 	Object_OverTimeSpirit += GameTime::GetInstance().GetDeltaTime();
 }
 
 
-void Enemy::DiffState() {
-	if (m_State->GetNowName() != nowStateName) {
+void Enemy::DiffState() 
+{
+	if (m_State->GetNowName() != nowStateName) 
+	{
 		preStateName = nowStateName;
 		nowStateName = m_State->GetNowName();
 	}
 
-	if (IsOtherEndGroggy && isFirstSpiriteDown) {
-		SelectPatten(); // 패턴 정하기!!
+	if (IsOtherEndGroggy && isFirstSpiriteDown) 
+	{
+		SelectPattern(); // 패턴 정하기!!
 		SetCoolTime();
 		isFirstSpiriteDown = false;
 	}
 
 	// 그로기 시간!!!
 	// 플레이어가 그로기 상태에서, 적에게 공격을 맞으면, 초기화 한다
-	if ((IsOtherEndGroggy && Object_nowCoolTime <= 0.0f)) {
+	if ((IsOtherEndGroggy && Object_nowCoolTime <= 0.0f)) 
+    {
 		RestoreGroggy();
 		isEnemyGroggyAttack = true;
 	}
 
 
 	// 기세 게이지가 벗어나지 않게 고정!!!
-	if (Object_NowSpiritAmount <= 0.0f) {
+	if (Object_NowSpiritAmount <= 0.0f) 
+    {
 		Object_NowSpiritAmount = 0.0f;
 	}
-	if (Object_NowSpiritAmount >= Object_SpiritAmount) {
+	if (Object_NowSpiritAmount >= Object_SpiritAmount) 
+    {
 		Object_NowSpiritAmount = Object_SpiritAmount;
 	}
 }
 
 void Enemy::ReserEnemy() {
-	SelectPatten(); // 공격을 했으면 다른 패턴 세팅
+	SelectPattern(); // 공격을 했으면 다른 패턴 세팅
 	SetCoolTime();
 	isPattenCooldown = true;
 	SetState("Player_Idle");
@@ -369,33 +387,39 @@ void Enemy::ReserEnemy() {
 
 
 //일단 임시로 스테이트마다 스프라이트 설정
-void Enemy::StateAct() {
-	if (nowStateName == "Enemy_Idle") {    // 평소 상태     
+void Enemy::StateAct() 
+{
+	if (nowStateName == "Enemy_Idle") // idle
+	{        
 		enemy_Idle->SetActive(true);
 		enemy_Attack->SetActive(false);
 		enemy_Damaged->SetActive(false);
 		enemy_Guard->SetActive(false);
 	}
-	else if (nowStateName == "Enemy_AttackSuccess" || nowStateName == "Enemy_AttackFail") { // 공격 성공
+	else if (nowStateName == "Enemy_AttackSuccess" || nowStateName == "Enemy_AttackFail") // 적 공격 시 ( 실패 성공 상관없음 )
+	{ 
 		enemy_Idle->SetActive(false);
 		enemy_Attack->SetActive(true);
 		enemy_Damaged->SetActive(false);
 		enemy_Guard->SetActive(false);
 	}
-	else if (nowStateName == "Enemy_Hit" || nowStateName == "Enemy_Groggy") {
+	else if (nowStateName == "Enemy_Hit" || nowStateName == "Enemy_Groggy") // 적 피격이나 그로기 시
+	{
 		enemy_Idle->SetActive(false);
 		enemy_Attack->SetActive(false);
 		enemy_Damaged->SetActive(true);
 		enemy_Guard->SetActive(false);
 
 	}
-	else if (nowStateName == "Enemy_Defence") { //패턴 파회 X, 막음
+	else if (nowStateName == "Enemy_Defence") // 패턴 파회 X, 막음
+	{ 
 		enemy_Idle->SetActive(false);
 		enemy_Attack->SetActive(false);
 		enemy_Damaged->SetActive(false);
 		enemy_Guard->SetActive(true);
 	}
-	else if (nowStateName == "Enemy_Dead") {
+	else if (nowStateName == "Enemy_Dead")	// 적 사망 시 
+	{
 		enemy_Idle->SetActive(false);
 		enemy_Attack->SetActive(false);
 		enemy_Damaged->SetActive(true);
@@ -403,7 +427,8 @@ void Enemy::StateAct() {
 	}
 }
 
-
+//------------------------------------------------------------------------
+// Debug
 
 void Enemy::SetCursorPosition(int x, int y)
 {
@@ -425,7 +450,7 @@ void Enemy::PrintConsole()
 	std::cout << "Enemy PlayingAttackTime	    : " << Object_PlayingAttackTime << "                                                " << std::endl;
 	std::cout << "Enemy nowState              : " << nowStateName << "                                                " << std::endl;
 	std::cout << "Enemy preState              : " << preStateName << "                                                " << std::endl;
-	std::cout << "Enemy PattenID              : ";
+	std::cout << "Enemy PatternID              : ";
 	if (nowEnemyPattenData != nullptr)
 		std::cout << nowEnemyPattenData->ePatternID << "                                                " << std::endl;
 	std::cout << "Enemy PattenNode            :  ";

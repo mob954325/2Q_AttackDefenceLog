@@ -21,35 +21,36 @@ void ChargedSlashManager::OnStart()
 
 	//그거임 좌우 상단에 필터 설정해주는 부분
 	auto basePath = Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\filter\\";
-	std::wstring files[] = { L"left_filter_gradient.png", L"left_filter_black.png" , L"right_filter_gradient.png", L"right_filter_black.png" };
+	std::wstring files[] = { L"left_filter_black.png", L"left_filter_gradient.png", L"right_filter_black.png" , L"right_filter_gradient.png" };
 
 	filter.clear();
+	filterSizes.clear();
+
 	for (int i = 0; i < std::size(files); ++i) {// 0, 2 >>
 		filter.push_back(new GameObject);
 		filter[i]->GetTransform().SetUnityCoords(true);
 		filter[i]->SetRenderLayer(EngineData::RenderLayer::UI);
 		auto bir = filter[i]->AddComponent<BitmapRenderer>();
 
-
+		bir->SetActive(false);
 		bir->SetOrderInLayer(500);
 		bir->CreateBitmapResource(basePath + files[i]);
-		bir->SetActive(false); // 나중에 지워줘야함
-		auto si = bir->GetResource()->GetBitmap()->GetSize();
-		filter[i]->GetTransform().SetOffset(-si.width / 2.0f, si.height / 2.0f);
+		filterSizes.push_back(bir->GetResource()->GetBitmap()->GetSize());
+		filter[i]->GetTransform().SetOffset(-filterSizes[i].width / 2.0f, filterSizes[i].height / 2.0f);
 
-		//bir->SetFlip(true);
 		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(filter[i], "filter." + i);
-
 	}
 }
 
 void ChargedSlashManager::OnUpdate() {
+	float delta = Singleton<GameTime>::GetInstance().GetDeltaTime();
+	HideOrRevealFilter(delta); // 필터 관리해주는 함수임, 내부에서 알아서 얼리리턴 해줌
 
 	if (nowPos == Vector2::Zero() || nowNormalVec == Vector2::Zero()) return;
 
-	if (!isPlay) return; // 어차피 여기서 isPlay로 걸러주긴 함
 
-	float delta = Singleton<GameTime>::GetInstance().GetDeltaTime();
+
+	if (!isPlay) return; // 어차피 여기서 isPlay로 걸러주긴 함
 
 	if (Input::leftButtonDown) {
 
@@ -82,11 +83,10 @@ void ChargedSlashManager::OnUpdate() {
 
 	if (!isCharged && timer >= chargeTimeRequired) {
 		isCharged = true;
-		std::cout << "차징 완료!" << std::endl;
+		std::cout << "차징 완료!!!!!" << std::endl;
 	}
 
-	std::cout << timer << std::endl;
-
+	//std::cout << timer << std::endl;
 }
 
 void ChargedSlashManager::OnDestroy() {
@@ -114,9 +114,45 @@ void ChargedSlashManager::Start(int n) { // 1~9의 값이 들어옴
 	nowPos = slashCache[n - 1].pos;
 
 	owner->GetTransform().SetPosition(nowPos.x, nowPos.y); // 노드의 좌표로 오너를 옮김
-	
+
 	bitmapRenderer->SetActive(true);
 	isPlay = true;
+
+	isUpperLeft = (n == 1 || n == 9);
+	isUpperRight = (n == 3 || n == 7);
+	isHide = false;
+	isMoveDone = false;
+
+	//================================================(필터설정)
+	if (isUpperLeft) { //뒤집어줘야함
+		for (int i = 0; i < filter.size(); ++i) {
+			auto fttt = filter[i]->GetComponent<BitmapRenderer>();
+			fttt->SetFlipY(true);
+			fttt->SetActive(true);
+
+			if (i == 0 || i == 1)
+				filter[i]->GetTransform().SetPosition(-EngineData::SceenWidth, -filterSizes[i].height);
+			else // 2 3
+				filter[i]->GetTransform().SetPosition(EngineData::SceenWidth, -filterSizes[i].height);
+
+		}
+	}
+	else if (isUpperRight) { // 돌려놔야함(원본)
+		for (int i = 0; i < filter.size(); ++i) { //필터 전부를 뒤집는거임 헷갈리면 안댐
+			auto fttt = filter[i]->GetComponent<BitmapRenderer>();
+			fttt->SetFlipY(false);
+			fttt->SetActive(true);
+
+			if (i == 0 || i == 1)
+				filter[i]->GetTransform().SetPosition(-EngineData::SceenWidth, 0);
+			else // 2 3
+				filter[i]->GetTransform().SetPosition(EngineData::SceenWidth, 0);
+		}
+	}
+
+	//1 3 -> 2 4 순서 등장
+	// 2 4 -> 1 3 순서로 퇴장
+
 	onChargeStart.Invoke(); // 시작되었다고 알려주면, 외부에서는 노드를 비활성화시켜줌(연결해야됨)	
 }
 
@@ -125,22 +161,21 @@ void ChargedSlashManager::Cancel() {
 	nowPos = { 0, 0 };
 	bitmapRenderer->SetActive(false);
 	isPlay = false;
+	isHide = true;
+	isMoveDone = false;
 }
-
-//void ChargedSlashManager::Charging(){}
 
 bool ChargedSlashManager::isSuccess(Vector2 pos, float t)
 {
-
 	if (t > exitTimeRequired) return false; // 시간 초과
 	std::cout << t << " ";
 
 	Vector2 v = pos - nowPos;
 	if (v.Magnitude() < minDist) return false; // 최소거리 못넘김
-	std::cout << t << v.Magnitude();
+	std::cout << v.Magnitude();
 
 	float dot = Vector2::Dot(v.Normalize(), nowNormalVec);
-	std::cout << "끼얏호우~!!!! >?> " << dot << std::endl;
+	std::cout << "내적 결과 >>>>>>>> " << dot << std::endl;
 
 	if (dot <= allowedAngleRadians) return false; // 방향 안 맞음	
 
@@ -151,11 +186,13 @@ void ChargedSlashManager::Slashing(Vector2 pos, float time)
 {
 	if (isSuccess(pos, time)) { // 성공
 		onFinisherSuccess.Invoke(); // 성공했다고 외부에 알려줌 << 인자 뭐 넣어줘야 할지도 모르겠네
-		std::cout << "슬래시 성공" << nowPos << nowNormalVec << std::endl;
+		std::cout << "슬래시 성공!!!!!" << nowPos << nowNormalVec << std::endl;
 		Cancel();
 	}
-	else
+	else {
+		std::cout << "슬래시 실패...." << nowPos << nowNormalVec << std::endl;
 		Reset(); // 실패
+	}
 }
 
 bool ChargedSlashManager::CheckMouseInside()
@@ -172,4 +209,71 @@ void ChargedSlashManager::Reset() // 차징을 실패한다거나, 마우스가 
 	isCharged = false;
 
 }
+
+void ChargedSlashManager::HideOrRevealFilter(float dt) // 델타를 받음
+{
+	if (isMoveDone == true) return;
+
+	// 0이면 화면밖, 1이면 중앙임
+	if (isHide) {
+		progress -= 0.4f * dt; // 화면밖으로 나감
+		if (progress <= 0.0f) isMoveDone = true;
+	}
+	else {
+		progress += 0.2f * dt; // 중앙으로 옴
+		if (progress >= 1.0f) isMoveDone = true;
+	}
+
+	progress = clampf(progress, 0.0f, 1.0f); \
+
+		//progress(0.0 ~ 1.0) 기반으로, 좌표를 옮겨주면 되는데
+
+		//1,3 항 같은 경우에는 0.0 ~ 0.5의 진행도로 움직임 << 먼저 나와야함
+		//currentProgress = clampF((progress) * (1.0f / 0.5f), 0.0f, 1.0f) 
+
+		// 0,2 항 같은 경우에는 0.5 ~ 1.0 << 나중에 나와야함
+		// currentProgress = clampF((progress - 0.5f) * (1.0f / ( 1.0f - 0.5f)), 0.0f, 1.0f)
+
+		// 보간식은, startPos + (targetPos - startPos) * currentProgress
+
+		// 0, 1 항은 왼쪽 x = -EngineData::SceenWidth;  
+		// 2, 3 항은 오른쪽 x = EngineData::SceenWidth;
+
+		// Y는 변하지 않음, Flip여부에 따라서만 움직임
+		// 즉, 플립한 경우 >> y = -filterSizes[i].height 플립 아니면 >> y = 0
+
+		// X의 목표는 0임, 중앙으로 들어가는것 즉, 
+		// targetPos는 플립 안하면 (0, 0), 플립하면 (0, -filterSizes[i].height)
+
+		// isUpperRight인 경우, 원본 이미지(플립X)
+		// isUpperLeft인 경우, 플립한 거임
+
+		for (int i = 0; i < filter.size(); ++i) {
+
+			float currentY = 0.0f;
+			if (isUpperRight)
+				currentY = 0.0f;
+			else if (isUpperLeft)
+				currentY = -filterSizes[i].height;
+
+			float startX = 0.0f;
+
+			if (i == 0 || i == 1)
+				startX = -EngineData::SceenWidth;  //-startX << 왼쪽 , +startX << 오른쪽
+			else if (i == 2 || i == 3)
+				startX = EngineData::SceenWidth;
+
+			float currentProgress = 0.0f;
+			if (i == 1 || i == 3)
+				currentProgress = clampf((progress) * (1.0f / 0.5f), 0.0f, 1.0f);
+			else if (i == 0 || i == 2)
+				currentProgress = clampf((progress - 0.5f) * (1.0f / (1.0f - 0.5f)), 0.0f, 1.0f);
+
+			float currentX = startX + (0.0f - startX) * currentProgress;
+
+			filter[i]->GetTransform().SetPosition(currentX, currentY);
+		}
+}
+
+
 

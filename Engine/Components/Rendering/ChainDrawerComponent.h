@@ -53,8 +53,8 @@ public:
 	
 	void SetupNodes(Vector2 node, float interval); // 중앙의 노드 좌표와 간격을 넣어주세오
 	
-	EventDelegate<const std::string&> OnInterrupted;
-	EventDelegate<const std::string&> OnFinished;
+	EventDelegate<> OnInterrupted;
+	EventDelegate<> OnFinished;
 
 	void CancelByID(const std::string& id);
 

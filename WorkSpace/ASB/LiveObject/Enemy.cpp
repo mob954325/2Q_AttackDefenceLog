@@ -27,7 +27,7 @@ void Enemy::OnStart() {
 	SetStatData("EI_001");
 	OnCreateState();
 	m_State->SetState("Enemy_Idle");
-	SelectPatten(); //  패턴 세팅
+	SelectPattern(); //  패턴 세팅
 	isPattenCooldown = true;
 }
 
@@ -116,7 +116,7 @@ void Enemy::AddPattenLoop() {
 		}
 	}
 	else {
-		SelectPatten(); // 패턴 정하기!!
+		SelectPattern(); // 패턴 정하기!!
 		SetCoolTime();	// 적일때는 수정하기!!
 		SetNowPatten(); // 공격대기시간 + 데이터 주기!!
 		isPattenCooldown = true;
@@ -125,7 +125,7 @@ void Enemy::AddPattenLoop() {
 
 
 // 배틀 매니저에서 사용될 함수
-void Enemy::SelectPatten() {   //각 객체가 사용할 패턴을 고름
+void Enemy::SelectPattern() {   //각 객체가 사용할 패턴을 고름
 	preEnemyPattenData = nowEnemyPattenData;
 	while (1) {
 		std::random_device rd;
