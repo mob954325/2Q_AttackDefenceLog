@@ -50,6 +50,9 @@ public:
 	EventDelegate<int> onParry;		// 패링 이벤트 - 밖에 int << 마지막노드
 	EventDelegate<int> onGuard;		// 회피 이벤트
 
+	EventDelegate<> onStartBlow;    // 한붓그리기 시작 이벤트
+	bool usedStartBlow = false;		// 델리게이트 한번만 호출할려는 플래그임
+
 	EventDelegate<> onFinalBlow;	// 연격 이벤트
 	EventDelegate<>	onTimeout;		// 패턴 종료 이벤트
 
@@ -84,6 +87,18 @@ public:
 	/// </summary>
 	/// <param name="InputNode">받을 노드 인덱스들</param>
 	void SetInputNode(std::vector<int> InputNode); 
+
+	void SetStateFormPatternPlayerGroggy();
+	void SetStateFormPatternEnemyGroggy();
+	void SetStateFormPatternIdle();
+
+
+
+	void  ChangeFinalStateIdle();
+	void  ChangeFinalStateEnemyGroggy();
+	void  ChangeFinalStatePlayerGroggy();
+	void ChangeCommonFinalState();
+
 
 	//Scene의 Start에 들어갈 것들
 

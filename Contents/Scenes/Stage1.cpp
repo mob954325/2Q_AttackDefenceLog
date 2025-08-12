@@ -8,6 +8,7 @@
 #include "Objects/Scenes/Stage/EscMenu/EscExitButton.h"
 #include "Objects/Scenes/Stage/EscMenu/EscMuteButton.h"
 #include "Objects/Sound/SoundPlayScene.h"
+#include "Objects/Scenes/Stage/BackboardObject.h"
 #include "../Engine/Systems/AudioSystem.h"
 
 void Stage1::OnEnterImpl()
@@ -24,7 +25,11 @@ void Stage1::OnEnterImpl()
 
 	stageBGI = new GameObject();
 	stageBGI->AddComponent<StageBGI>();
-	AddGameObject(stageBGI);
+	AddGameObject(stageBGI, "StageBGI1");
+
+	GameObject* nodePanel = new GameObject();
+	nodePanel->AddComponent<BackboardObject>();
+	AddGameObject(nodePanel);
 
 	GameObject* continueBtn = new GameObject();
 	continueBtn->SetRenderLayer(EngineData::UI);

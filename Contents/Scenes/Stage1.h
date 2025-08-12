@@ -13,6 +13,7 @@ private:
 	GameObject* inputObj;
 	GameObject* stageBGI;
 
+
 	GameObject* escPanel;
 
 	GameObject* SoundStageOne;

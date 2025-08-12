@@ -53,9 +53,9 @@ void Enemy::OnUpdate()
 	{
 		CalSpiritTime();		// 1초마다 기세게이지 증가
 		AddPattenLoop();		// 
-		StateAct();            //  
+		
 	}
-
+	StateAct();            //  
 	DiffState();            // 이전 상태와 현재 상태를 비교
 	// PrintConsole();
 
@@ -140,7 +140,7 @@ void Enemy::SetStatData(std::string tmp)
 	Object_Attack = nowEnemyData->enemyDamage;			   // 공격력
 	Object_SpiritAttack = nowEnemyData->enemySpiritdamage; // 기세 공격력
 	Object_DefenseRate = nowEnemyData->enemyGuardRate;	   // 방어율
-	Object_SpiritAmount = 5.0f;//nowEnemyData->enemySpiritamount; // 기세
+	Object_SpiritAmount = 5.0f; //nowEnemyData->enemySpiritamount; // 기세
 	Object_NowSpiritAmount = Object_SpiritAmount / 2.0f;   // 현재 기세 설정
 	Difficulty = nowEnemyData->enemyDifficulty;			   // 난이도 -> 아마 필요없을듯?
 
@@ -187,10 +187,10 @@ void Enemy::SetBitmap()
 
 
 	enemy_Damaged = owner->AddComponent<BitmapRenderer>();
-	enemy_Damaged->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + enemy_GuardPath);
+	enemy_Damaged->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + enemy_DamagedPath);
 
 	enemy_Guard = owner->AddComponent<BitmapRenderer>();
-	enemy_Guard->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + enemy_DamagedPath);
+	enemy_Guard->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + enemy_GuardPath);
 
 	D2D1_SIZE_F size = enemy_Idle->GetResource()->GetBitmap()->GetSize(); // 크기 같음으로 그냥 해도 될듯?
 	owner->GetTransform().SetOffset(-size.width / 2, size.height / 2);
@@ -227,12 +227,23 @@ void Enemy::AddPattenLoop()
 
 void Enemy::RestoreGroggy()
 {
+	if (!isGroggy) return;          // 그로기 아니면 무시
+	if (restoredThisCycle) return;  // 이번 사이클에서 이미 복구했으면 무시
+	restoredThisCycle = true;
+
+	// === 즉시 복구 처리 (재진입 방지) ===
+	isGroggy = false;               // 바로 그로기 해제
+	ResetSpiritAmount();           
+
+	// 부가 플래그/타이머 정리
 	groggyTime = 0.0f;
-	IsOtherEndGroggy = false;
-	isGroggy = false;
-	isRestore = true; // 베틀매니저에서 읽는데, true가 있다면 << 플레이어와 적의 기세를 초기화시키는 플레그
-	
-	ReserEnemy();
+	OtherGroggyTime = 0.0f;
+	IsOtherGroggy = false;
+
+	// 베틀매니저 공통 회복 루틴용 플래그(멱등)
+	isRestore = true;
+
+	ResetEnemy();
 }
 
 // 배틀 매니저에서 사용될 함수
@@ -270,7 +281,6 @@ void Enemy::SelectPattern() //각 객체가 사용할 패턴을 고름
 		{
 			SetAttackPattenData(enemyAttackPatternFix);
 		}
-
 	}
 }
 
@@ -322,9 +332,9 @@ void Enemy::SetCoolTime()
 		Object_nowCoolTime = nowEnemyPattenData->eComboCoolDown;
 	}
 
-	if (IsOtherEndGroggy)
+	if (IsOtherGroggy)
     {
-		Object_nowCoolTime = nowEnemyPattenData->eAtkCoolDown;
+		Object_nowCoolTime = Object_nowCoolTime / 2.0f;
 	}
 	// 현재 공격중인 시간
 	Object_nowTotalCoolTime = Object_nowCoolTime;
@@ -332,56 +342,73 @@ void Enemy::SetCoolTime()
 
 void Enemy::CalSpiritTime() 
 {
-	if (Object_OverTimeSpirit >= 1) 
-	{
-		Object_NowSpiritAmount += 0.3f;									 //초당 0.3씩 감소
-		Object_OverTimeSpirit = std::fmod(Object_OverTimeSpirit, 1.0f);  //실수형 나머지 연산자
-	}
+	if ( (!isGroggy ) && (!IsOtherGroggy) ) {
+		if (Object_OverTimeSpirit >= 1)
+		{
+			Object_NowSpiritAmount += 0.3f;									 //초당 0.3씩 감소
+			Object_OverTimeSpirit = std::fmod(Object_OverTimeSpirit, 1.0f);  //실수형 나머지 연산자
+		}
 
-	Object_OverTimeSpirit += GameTime::GetInstance().GetDeltaTime();
+		Object_OverTimeSpirit += GameTime::GetInstance().GetDeltaTime();
+	}
 }
 
 
 void Enemy::DiffState() 
 {
-	if (m_State->GetNowName() != nowStateName) 
+	if (m_State->GetNowName() != nowStateName)
 	{
 		preStateName = nowStateName;
 		nowStateName = m_State->GetNowName();
 	}
 
-	if (IsOtherEndGroggy && isFirstSpiriteDown) 
+	// 상대(플레이어)가 그로기일 때 재는 타이머
+	if (IsOtherGroggy)
 	{
-		SelectPattern(); // 패턴 정하기!!
-		SetCoolTime();
-		isFirstSpiriteDown = false;
+		OtherGroggyTime += GameTime::GetInstance().GetDeltaTime();
 	}
 
-	// 그로기 시간!!!
-	// 플레이어가 그로기 상태에서, 적에게 공격을 맞으면, 초기화 한다
-	if ((IsOtherEndGroggy && Object_nowCoolTime <= 0.0f)) 
-    {
-		RestoreGroggy();
-		isEnemyGroggyAttack = true;
+	// 상대 그로기 10초 타임아웃: '신호'만 세우고, 내 Restore는 호출하지 않음
+	if (OtherGroggyTime >= 10.0f)
+	{
+		IsOtherEndGroggy = true;   // 표시만
+		OtherGroggyTime = 0.0f;   // 소진
+		// RestoreGroggy();        
 	}
 
+	// === 내 그로기 판정 ===
 
-	// 기세 게이지가 벗어나지 않게 고정!!!
-	if (Object_NowSpiritAmount <= 0.0f) 
-    {
+	if (isRestore)
+	{
+		isGroggy = false;
+	}
+	else if (Object_NowSpiritAmount <= 0.0f)
+	{
+		isGroggy = true;
+		restoredThisCycle = false;   // 새 사이클 시작
 		Object_NowSpiritAmount = 0.0f;
+		// SetState("Enemy_Groggy"); // 상태 전환은 네 로직에 맞게
 	}
-	if (Object_NowSpiritAmount >= Object_SpiritAmount) 
-    {
+	else
+	{
+		isGroggy = false;
+	}
+
+	// 상한 클램프
+	if (Object_NowSpiritAmount >= Object_SpiritAmount)
+	{
 		Object_NowSpiritAmount = Object_SpiritAmount;
 	}
 }
 
-void Enemy::ReserEnemy() {
+
+
+void Enemy::ResetEnemy() {
+	OtherGroggyTime = 0.0f;
 	SelectPattern(); // 공격을 했으면 다른 패턴 세팅
 	SetCoolTime();
 	isPattenCooldown = true;
-	SetState("Player_Idle");
+	SetState("Enemy_Idle"); // 이거 플레이어 아니라 적으로 교체하기
 }
 
 

@@ -355,6 +355,7 @@
     <ClCompile Include="Application\GameApp.cpp" />
     <ClCompile Include="Objects\Scenes\SelectScene\LevelSelectManager.cpp" />
     <ClCompile Include="Objects\Scenes\SelectScene\SelectEffectManager.cpp" />
+    <ClCompile Include="Objects\Scenes\Stage\BackboardObject.cpp" />
     <ClCompile Include="Objects\Scenes\Stage\CloudManager.cpp" />
     <ClCompile Include="Objects\Sound\SoundEnd.cpp" />
     <ClCompile Include="Objects\Sound\SoundPlayScene.cpp" />
@@ -414,6 +415,7 @@
     <ClInclude Include="Application\GameApp.h" />
     <ClInclude Include="Objects\Scenes\SelectScene\LevelSelectManager.h" />
     <ClInclude Include="Objects\Scenes\SelectScene\SelectEffectManager.h" />
+    <ClInclude Include="Objects\Scenes\Stage\BackboardObject.h" />
     <ClInclude Include="Objects\Scenes\Stage\CloudManager.h" />
     <ClInclude Include="Objects\Scenes\TitleScene\EffectProgress.h" />
     <ClInclude Include="Objects\Sound\SoundEnd.h" />

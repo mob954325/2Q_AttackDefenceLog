@@ -238,6 +238,8 @@
     <ClCompile Include="Objects\Sound\SoundTittle.cpp" />
     <ClCompile Include="Objects\Scenes\Stage\StageResult\StageResult.cpp">
       <Filter>Objects\SceneObject\Stage\StageResult</Filter>
+    <ClCompile Include="Objects\Scenes\Stage\BackboardObject.cpp">
+      <Filter>Objects\SceneObject\Stage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -407,6 +409,8 @@
     <ClInclude Include="Objects\Sound\SoundTittle.h" />
     <ClInclude Include="Objects\Scenes\Stage\StageResult\StageResult.h">
       <Filter>Objects\SceneObject\Stage\StageResult</Filter>
+    <ClInclude Include="Objects\Scenes\Stage\BackboardObject.h">
+      <Filter>Objects\SceneObject\Stage</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

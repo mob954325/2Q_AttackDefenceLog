@@ -49,7 +49,6 @@ public:
 	float GetSpiritAmount() { return Object_SpiritAmount; }
 	float GetNowSpiritAmount() { return Object_NowSpiritAmount; }
 	bool GetIsGroggy() { return isGroggy; }
-	bool GetIsOtherEndGroggy() {return IsOtherEndGroggy; }
 	bool GetIsRestore() { return isRestore; }
 	float GetTotalHp() { return Object_TotalHp; }
 
@@ -63,7 +62,6 @@ public:
 	void SetDefenseRate(float defenseRate) { Object_DefenseRate = defenseRate; }     // 방어율 설정
 	void SetPlayingAttackTime(float time) { Object_PlayingAttackTime = time; }		 // 가이드라인이 떠있는 시간 설정
 	void SetIsGroggy(bool Setbool) { isGroggy = Setbool; }
-	void SetIsOtherEndGroggy(bool tmp) { IsOtherEndGroggy = tmp; }
 	void SetIsRestore(bool Setbool) { isRestore = Setbool; }
 	//void SetTotalHp(bool Setbool) { isRestore = Setbool; }
 
@@ -117,7 +115,6 @@ protected:
 
 
 
-	bool IsOtherEndGroggy = false;  // 다른 객체가 그로기 상태인지? << 플레이어
 	bool isGroggy = false;				  // 그로기가 되었는지를 판별하는 변수 
 	float NodeTime;				  // 가이드라인의 판정 시간
 	bool isRestore = false;
