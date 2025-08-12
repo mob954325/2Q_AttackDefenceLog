@@ -18,15 +18,21 @@ public:
 	bool IsOpen();
 
 	void MuteEvent();
+	bool CheckMouseHoverOnSlider(float x, float y);
 
 private:
-	BitmapRenderer* bitmap;
-	Button* muteButton;
-	GameObject* muteButtonObj;
-	StageESCPanel* panel;
+	BitmapRenderer* panelBitmap{};
+	Button* muteButton{};
+	GameObject* muteButtonObj{};
+	StageESCPanel* panel{};
+
+	GameObject* sliderButton{};
+	BitmapRenderer* sliderButtonBitmap{};
 
 	std::wstring offUIImagePath;
 	std::wstring onUIImagePath;
+
+	D2D1_RECT_F soundSliceRect{}; // 음량 조절 슬라이스 감지 범위 rect
 
 	bool isPressed = false;
 	bool isOpen = false;
