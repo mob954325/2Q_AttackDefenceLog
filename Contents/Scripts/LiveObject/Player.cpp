@@ -24,7 +24,7 @@
 //
 
 
-void Player::OnStart() 
+void Player::OnStart()
 {
 	m_State = owner->GetComponent<StateController>();
 	m_PattenManager = owner->GetQuery()->FindByName("AttackPattenManager")->GetComponent<AttackPatternManager>();
@@ -38,35 +38,35 @@ void Player::OnStart()
 	isAttackingPattern = true;
 }
 
-void Player::ResetPlayer() 
+void Player::ResetPlayer()
 {
 	isAttackingPattern = true;
 
 	SelectPattern();				// 공격을 했으면 다른 패턴 세팅 - 
+	SetNowPattern();
 	SetState("Player_Idle");	// 플레이어 상태 변경 - idle
 }
 
 void Player::OnUpdate() {
-	
+
 	// 게임 상태가 Pause면 모든 Update 무시
 	if (Singleton<GameManager>::GetInstance().GetGameState() == GameState::Pause)
 	{
 		return;
 	}
-	
+
 	// 플레이어가 사망이나 그로기 상태가 아니면
-	if (m_State->GetNowName() != "Player_Dead"  &&  (!isGroggy))
+	if (m_State->GetNowName() != "Player_Dead" && (!isGroggy))
 	{
 		CalSpiritTime();		// 1초마다 기세게이지 감소
 		AddPattenLoop();		// 패턴을 추가하는 루프
 	}
-	
-	
-	// PrintConsole();		// 콘솔 호출
+
+	PrintConsole();		// 콘솔 호출
 	m_State->Update(); 	// 각 state별 추가로 정의된 행동 호출
 	DiffState();  		// 이전상태와 현재상태를 결정하는 함수
 	StateAct();   		// 각 state 별 행동 
-	
+
 	// 이전 상태 저장
 	oneLoopPreStateName = nowStateName;
 
@@ -79,9 +79,9 @@ void Player::OnUpdate() {
 
 //이후 StateManager에 추가하는거 만들기
 
-void Player::SetState(std::string setStateName) 
+void Player::SetState(std::string setStateName)
 {
-	if ( !(m_State->GetNowName() == "Player_Dead" || m_State->GetNowName()== "Player_Groggy")) 
+	if (!(m_State->GetNowName() == "Player_Dead" || m_State->GetNowName() == "Player_Groggy"))
 	{
 		m_State->SetState(setStateName);
 	}
@@ -89,7 +89,7 @@ void Player::SetState(std::string setStateName)
 
 //state 생성
 //평소에 줄여놓기!
-void Player::OnCreateState() 
+void Player::OnCreateState()
 {
 	m_State->CreateState("Player_Idle");							// 평소 상태 - Default State
 
@@ -124,9 +124,9 @@ void Player::OnCreateState()
 	m_State->CreateState("Player_Dead");							// 죽음
 }
 
-void Player::SetBitmap() 
+void Player::SetBitmap()
 {
- 	player_Idle = owner->AddComponent<BitmapRenderer>();
+	player_Idle = owner->AddComponent<BitmapRenderer>();
 	player_Idle->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\player_standing_fin.png");
 
 	player_Attack1 = owner->AddComponent<BitmapRenderer>();
@@ -155,12 +155,13 @@ void Player::SetBitmap()
 
 // 플레이어 데이터에는 기세가 없음으로 적을 생성 후, 기세를 매개변수에 넣어주기!!
 // 패턴을 세팅하는 것은 처음?
-void Player::SetStatData(std::string tmp) 
+void Player::SetStatData(std::string tmp)
 {
 	nowPlayerData = CsvDataManager::GetInstance().getDataImpl(nowPlayerData, tmp);
 	Object_ID = nowPlayerData->Character_ID;					 // ID
 	Object_Name = nowPlayerData->Character_name;				 // 이름
-	Object_Hp = nowPlayerData->Character_helath;				 // 체력
+	//Object_Hp = nowPlayerData->Character_helath;				 // 체력
+	Object_Hp = 1111111111111;				 // 체력
 	Object_TotalHp = Object_Hp;									 // 전체 체력
 	Object_Attack = nowPlayerData->Character_damage;			 // 공격력
 	Object_SpiritAttack = nowPlayerData->Character_spritdamage;  // 기세 공격력
@@ -172,7 +173,7 @@ void Player::SetStatData(std::string tmp)
 	Object_nowCoolTime = 1.0f;									 //
 }
 
-void Player::SetSpiritData(float enemy_SpiritAmount) 
+void Player::SetSpiritData(float enemy_SpiritAmount)
 {
 	Object_SpiritAmount = enemy_SpiritAmount;					 // 기세의 총량을 설정
 	Object_NowSpiritAmount = enemy_SpiritAmount / 2.0f;
@@ -183,6 +184,8 @@ void Player::SetAttackPattenData(std::string PattID)
 {
 	nowPlayerPattenData = CsvDataManager::GetInstance().getDataImpl(nowPlayerPattenData, PattID);
 };
+
+
 
 // 플레이어의 가이드 패턴2개를 패턴매니저에 등록
 void Player::SetNowPattern()
@@ -201,14 +204,14 @@ void Player::SetNowPattern()
 
 	// 첫 번째 패턴 데이터 가져오기
 	tmpNode = CsvDataManager::GetInstance().getDataImpl(tmpNode, nowPlayerPattenData->Node_pattern01);
-	if (tmpNode != nullptr) 
-	{ 
+	if (tmpNode != nullptr)
+	{
 		tmp = tmpNode->Node_Number;
 	}
 
 	// 두 번째 패턴 데이터 가져오기
 	tmpNode2 = CsvDataManager::GetInstance().getDataImpl(tmpNode2, nowPlayerPattenData->Node_pattern02);
-	if (tmpNode2 != nullptr) 
+	if (tmpNode2 != nullptr)
 	{
 		tmp2 = tmpNode2->Node_Number;
 	}
@@ -218,46 +221,58 @@ void Player::SetNowPattern()
 	m_PattenManager->AddPattern(modifiedID2, 100.0f, tmp2);
 };
 
+
+
 // 배틀 매니저에서 사용될 함수
 void Player::SelectPattern()  // 각 객체가 사용할 패턴을 고름
-{  
+{
 	if (attackPlayerPatternIDFix.substr(0, 2) != "PI")
 	{
 		int patternSize = PatternID.size();
 		SetAttackPattenData(PatternID[GameRandom::RandomRange(1, patternSize)]);
 	}
-	else 
+	else
 	{
 		SetAttackPattenData(attackPlayerPatternIDFix);
-	}	
+	}
 }
 
+
+
 //처음에 받은 기세 게이지로 복구
-void Player::ResetSpiritAmount() 
+void Player::ResetSpiritAmount()
 {
 	Object_NowSpiritAmount = Object_SpiritAmount / 2.0f;
 }
 
-void Player::SetCoolTime() 
+
+
+
+void Player::SetCoolTime()
 {
-	if (prePlayerPattenData == nullptr) //이전 루프가 없을시
-	{  
+	//if (prePlayerPattenData == nullptr) //이전 루프가 없을시
+	//{
 		// ( 1 - (현재기세 - 전체기세/2) / 전체기세 /2) * 해당 패턴의 전체 쿨타임
 		Object_nowCoolTime = (1 - ((Object_NowSpiritAmount - Object_SpiritAmount / 2.0f) / Object_SpiritAmount) / 2.0f) * Object_CoolTime;
-	}
 
+	//}
 }
+
 
 void Player::CalSpiritTime()
 {
-	if (Object_OverTimeSpirit >= 1) 
-	{
-		Object_NowSpiritAmount -= 0.3f;									 //초당 0.3씩 감소
-		Object_OverTimeSpirit = std::fmod(Object_OverTimeSpirit, 1.0f);  //실수형 나머지 연산자
-	}
+	if ((!isGroggy) && (IsOtherGroggy)) {  // 적이나 내가 그로기 상태라면
+		if (Object_OverTimeSpirit >= 1)
+		{
+			Object_NowSpiritAmount -= 0.3f;									 //초당 0.3씩 감소
+			Object_OverTimeSpirit = std::fmod(Object_OverTimeSpirit, 1.0f);  //실수형 나머지 연산자
+		}
 
-	Object_OverTimeSpirit += GameTime::GetInstance().GetDeltaTime();
+		Object_OverTimeSpirit += GameTime::GetInstance().GetDeltaTime();
+	}
 }
+
+
 
 void Player::DiffState()
 {
@@ -267,32 +282,37 @@ void Player::DiffState()
 		nowStateName = m_State->GetNowName();
 	}
 
-	if (IsOtherEndGroggy) // 적과 나 둘중 1명이 그로기
-    { 
+	if (IsOtherGroggy) // 적과 나 둘중 1명이 그로기
+	{
 		enemyGroggyTime += GameTime::GetInstance().GetDeltaTime();
-
 	}
 
 	// 그로기 시간!!!
 	// 10초가 지나거나
-	if (enemyGroggyTime >= 10.0f ) 
-    {
+	if (enemyGroggyTime >= 10.0f)
+	{
+		isOtherGroggyEnd = true;  // 아군의 연격 시간이 끝났다는 것을 표시
 		RestoreGroggy();
 	}
 
-	if (Object_NowSpiritAmount <= 0.0f) 
-    {
-		Object_NowSpiritAmount = 0.0f;
-	}
-
 	// 기세 게이지가 벗어나지 않게 고정!!!
-	if (Object_NowSpiritAmount <= 0.0f) 
-    {
-		Object_NowSpiritAmount = 0.0f;
+	// 현재 플레이어의 기세 게이지가 0.0f
+	if (isRestore) {
+		isGroggy = false;
 	}
-    
-	if (Object_NowSpiritAmount >= Object_SpiritAmount) 
-    {
+	else if (Object_NowSpiritAmount <= 0.0f) // 기세 게이지
+	{
+		isGroggy = true;
+		Object_NowSpiritAmount = 0.0f;
+		SetState("Player_Groggy");
+	}
+	else // 0.0f 초과면 false
+	{
+		isGroggy = false;
+	}
+	// 
+	if (Object_NowSpiritAmount >= Object_SpiritAmount)
+	{
 		Object_NowSpiritAmount = Object_SpiritAmount;
 	}
 }
@@ -305,22 +325,24 @@ void Player::DiffState()
 
 
 // 플래그를 정하는 함수
-void Player::AddPattenLoop() 
+void Player::AddPattenLoop()
 {
-	if (isAttackingPattern) 
+	// ??
+
+	if (isAttackingPattern) // 플레이어의 패턴이 성공시 작동
 	{
 		SetCoolTime();
 		isPattenCooldown = true;
 		isAttackingPattern = false;
 	}
 
-	if (isPattenCooldown) 
+	if (isPattenCooldown) // -> 
 	{
 		// 패턴의 입력대기시간 카운트
 		Object_nowCoolTime -= GameTime::GetInstance().GetDeltaTime();
 
 		// 현재 패턴의 시간이 0이거나 이하가 되면 쿨타임계산 X
-		if (Object_nowCoolTime <= 0) 
+		if (Object_nowCoolTime <= 0)
 		{
 			Object_nowPlayingAttackTime = 1.0f;
 			SelectPattern();
@@ -333,19 +355,23 @@ void Player::AddPattenLoop()
 void Player::RestoreGroggy()
 {
 	enemyGroggyTime = 0.0f;
-	IsOtherEndGroggy = false;
-	isGroggy = false;   /// 그로기를 표시하는 상태변수!!!, 나중에 
-	isRestore = true;
+	IsOtherGroggy = false;
 
-	ResetPlayer();  // 상태, 쿨타임, 공격 패턴까지 초기화!
-	onTimeOut.Invoke(); // 외부에 알려줌
+	// 복구 직후 다음 프레임에 다시 그로기 재진입을 막기 위한 처리
+	isGroggy = false;          // 지금 당장 그로기 해제
+	ResetSpiritAmount();       
+
+	isRestore = true;          // 베틀매니저에서 공통 회복 흐름에 쓰는 플래그 (유지)
+
+	ResetPlayer();             // 상태/쿨타임/패턴 초기화 (기존 로직)
+	onTimeOut.Invoke();        // 외부 알림 (기존 로직)
 }
 
 
 //일단 임시로 스테이트마다 스프라이트 설정
-void Player::StateAct() 
+void Player::StateAct()
 {
-	if (nowStateName == "Player_Idle") 
+	if (nowStateName == "Player_Idle")
 	{    // 평소 상태     
 		player_Idle->SetActive(true);
 		AttackStateSelect(false);
@@ -353,28 +379,28 @@ void Player::StateAct()
 		player_Guard->SetActive(false);
 	}
 	else if (nowStateName == "Player_AttackSuccess" || nowStateName == "Player_AttackFail") // 공격 성공, 공격 실패
-	{ 
+	{
 		player_Idle->SetActive(false);
 		AttackStateSelect(true);
 		player_Damaged->SetActive(false);
 		player_Guard->SetActive(false);
 	}
 	else if (nowStateName == "Player_Hit" || nowStateName == "Player_Groggy") //피격 + 그로기
-	{     
+	{
 		player_Idle->SetActive(false);
 		AttackStateSelect(false);
 		player_Damaged->SetActive(true);
 		player_Guard->SetActive(false);
 	}
 	else if (nowStateName == "Player_Guard" || nowStateName == "Player_Defence" || nowStateName == "Player_Perry") // 가드 + defence + 패링
-	{   
+	{
 		player_Idle->SetActive(false);
 		AttackStateSelect(false);
 		player_Damaged->SetActive(false);
 		player_Guard->SetActive(true);
 	}
 	else if (nowStateName == "Player_Dead") // 죽음
-	{   
+	{
 		player_Idle->SetActive(false);
 		AttackStateSelect(false);
 		player_Damaged->SetActive(true);
@@ -383,7 +409,7 @@ void Player::StateAct()
 }
 
 
-void Player::AttackStateSelect( bool AttackActive) 
+void Player::AttackStateSelect(bool AttackActive)
 {
 	if (oneLoopPreStateName == nowStateName) return;
 
@@ -432,33 +458,33 @@ void Player::SetCursorPosition(int x, int y)
 
 void Player::PrintConsole() {
 
-	 //SetCursorPosition(0, 600);
-	 std::cout << "                                                "  << std::endl;
-	 std::cout << "Player HP		      : " << Object_Hp << "                                                "<< std::endl;
-	 std::cout << "Player Attack		      : " << Object_Attack << "                                                "<< std::endl;
-	 std::cout << "Player SpiritAttack           : " << Object_SpiritAttack << "                                                "<< std::endl;
-	 std::cout << "Player NowSpiritAmount        : " << Object_NowSpiritAmount << "                                                "<< std::endl;
-	 std::cout << "Player Object_CoolTime	      : " << Object_CoolTime << "                                                " << std::endl;
-	 std::cout << "Player nowCoolTime	      : " << Object_nowCoolTime << "                                                "<<  std::endl;
-	 std::cout << "Player nowTotalCoolTime	      : " << Object_nowTotalCoolTime << "                                                " << std::endl;
-	 std::cout << "Player PlayingAttackTime      : " << Object_PlayingAttackTime << "                                                "<< std::endl;
-	 std::cout << "Player nowState               : " << nowStateName << "                                                "<< std::endl;
-	 std::cout << "Player preState               : " << preStateName << "                                                "<<std::endl;
-	 std::cout << "Player PatternID               : ";
-	 if(nowPlayerPattenData != nullptr)
-	 	std::cout << nowPlayerPattenData->Player_pattern_ID << "                                                " <<  std::endl;
-	 std::cout << "Player PattenNode01           :  ";
-	 if (tmpNode != nullptr) {
-	 	for (int i = 0; i < tmpNode->Node_Number.size(); i++)
-	 		std::cout << tmpNode->Node_Number[i] << ", ";
-	 	std::cout << "                                 " << std::endl;
-	 }
-	 std::cout << "Player PattenNode02           :  ";
-	 if (tmpNode2 != nullptr) {
-	 	for (int i = 0; i < tmpNode2->Node_Number.size(); i++)
-	 		std::cout << tmpNode2->Node_Number[i] << ", ";
-	 	std::cout << "                                   " << std::endl;
-	 }
+	//SetCursorPosition(0, 600);
+	std::cout << "                                                " << std::endl;
+	std::cout << "Player HP		      : " << Object_Hp << "                                                " << std::endl;
+	std::cout << "Player Attack		      : " << Object_Attack << "                                                " << std::endl;
+	std::cout << "Player SpiritAttack           : " << Object_SpiritAttack << "                                                " << std::endl;
+	std::cout << "Player NowSpiritAmount        : " << Object_NowSpiritAmount << "                                                " << std::endl;
+	std::cout << "Player Object_CoolTime	      : " << Object_CoolTime << "                                                " << std::endl;
+	std::cout << "Player nowCoolTime	      : " << Object_nowCoolTime << "                                                " << std::endl;
+	std::cout << "Player nowTotalCoolTime	      : " << Object_nowTotalCoolTime << "                                                " << std::endl;
+	std::cout << "Player PlayingAttackTime      : " << Object_PlayingAttackTime << "                                                " << std::endl;
+	std::cout << "Player nowState               : " << nowStateName << "                                                " << std::endl;
+	std::cout << "Player preState               : " << preStateName << "                                                " << std::endl;
+	std::cout << "Player PatternID               : ";
+	if (nowPlayerPattenData != nullptr)
+		std::cout << nowPlayerPattenData->Player_pattern_ID << "                                                " << std::endl;
+	std::cout << "Player PattenNode01           :  ";
+	if (tmpNode != nullptr) {
+		for (int i = 0; i < tmpNode->Node_Number.size(); i++)
+			std::cout << tmpNode->Node_Number[i] << ", ";
+		std::cout << "                                 " << std::endl;
+	}
+	std::cout << "Player PattenNode02           :  ";
+	if (tmpNode2 != nullptr) {
+		for (int i = 0; i < tmpNode2->Node_Number.size(); i++)
+			std::cout << tmpNode2->Node_Number[i] << ", ";
+		std::cout << "                                   " << std::endl;
+	}
 }
 
 
