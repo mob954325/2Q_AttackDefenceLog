@@ -7,6 +7,7 @@
 #include "../Engine/Components/Rendering/ChainDrawerComponent.h"
 #include "../Engine/Utils/GameTime.h"
 #include "../Engine/Components/Rendering/AnimatedChainEffect.h" 
+#include "../Engine/Math/GameRandom.h"
 
 //성빈씨꺼
 #include "Scripts/LogicManager/BettleManager.h"
@@ -130,6 +131,10 @@ void PatternControlObject::OnCreate()
 	auto playertmp = player->AddComponent<Player>(); // MonoBehaivor 등록
 	playertmp->m_State = player->AddComponent<StateController>();
 	player->SetName("Playertmp");
+	playertmp->onTimeOut.Add([this]() {
+		csManager->Cancel(); // 플레이어 쪽에서 그로기 타이머를 관리하고 있어서, 캔슬연결함		
+		});
+
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(player);            // Scene에 GameObject 추가
 
 	bettleManager = new GameObject();             // GameObject 객체 생성
@@ -143,6 +148,24 @@ void PatternControlObject::OnCreate()
 		this->effs[nodeIndex - 1]->DoGuard(nodeIndex - 1); // 1. 여기서 위치 초기화가 제대로 안된다
 		});
 
+	bettletmp->onFinalBlow.Add([this]() { // 한붓그리기 완료되는 시점에, 랜덤으로 Start 호출됨
+		int n = GameRandom::RandomRange(0, 4); //0 ~ 3
+
+		switch (n) {
+		case 0: n = 1; break;
+		case 1: n = 3; break;
+		case 2: n = 7; break;
+		case 3: n = 9; break;
+		default: break;
+		}
+		csManager->Start(n);
+		});
+
+	bettletmp->onTimeout.Add([this]() { // 시간 경과되면 캔슬됨
+		csManager->Cancel();
+		});
+
+
 	bettletmp->m_Enemy = enemytmp;
 	bettletmp->m_Player = playertmp;
 	bettleManager->SetName("BettleManager");
@@ -152,6 +175,18 @@ void PatternControlObject::OnCreate()
 	GameObject* csm = new GameObject();
 	csManager = csm->AddComponent<ChargedSlashManager>();
 	csManager->SetUpNodePos(nodePositions);
+	csManager->onFinisherSuccess.Add([this]() {
+		auto btt = bettleManager->GetComponent<BettleManager>();
+		btt->FinalAttackToEnemy();
+
+		auto emm = enemy->GetComponent<Enemy>();
+		emm->RestoreGroggy();
+
+		auto pll = player->GetComponent<Player>();
+		pll->RestoreGroggy();
+
+		});
+
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(csm, "ChargedSlashManager"); // 이 오브젝트도 망망대해를 떠돌겠지
 }
 
@@ -162,7 +197,7 @@ void PatternControlObject::OnCreate()
 void PatternControlObject::OnStart() // 처음
 {
 
-	csManager->Start(1);
+	//csManager->Start(1);
 	owner->SetRenderLayer(EngineData::RenderLayer::UI);
 	auto d = owner->AddComponent<PatternDrawerComponent>();
 	d->SetOrderInLayer(80);

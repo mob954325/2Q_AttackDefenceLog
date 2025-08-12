@@ -70,6 +70,10 @@ public:
 	EventDelegate<int> onParry; // 밖에 int << 마지막노드
 	EventDelegate<int> onGuard;
 
+	EventDelegate<> onFinalBlow;
+	EventDelegate<>	onTimeout;
+	//bool isDuringFinalBlow = false;
+
 private:
 
 	AttackPatternManager* m_PattenManager;

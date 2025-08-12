@@ -30,7 +30,7 @@ void AttackPatternManager::AddPattern(std::string ID, float PlayingAttackTime, s
 	tmpPattern->NodePatten = PatternID;
 	for (int i = 0; i < PatternID.size(); ++i) {
 		if (PatternID[i] == 0 && i > 0) {
-			tmpPattern->lastPosition = ConvertEndNodeToPosition(PatternID[i-1]);
+			tmpPattern->lastPosition = ConvertEndNodeToPosition(PatternID[i - 1]);
 			break;
 		}
 	}
@@ -55,19 +55,19 @@ void AttackPatternManager::OnUpdate() {
 	int countNum = 0;	// 숫자 2개 일치하는지 검사하는 수
 	for (const auto& pair : NowPlayerStorage) {
 		if (isFirst) { // 시간이 남고, 플레이어의 첫번쩨 패턴 이면 저장
-				playerPatternA = pair.second->NodePatten;
-				isSecond = true;
-				isFirst = false;
+			playerPatternA = pair.second->NodePatten;
+			isSecond = true;
+			isFirst = false;
 		}
 		else if (isSecond) // 시간이 남고, 플레이어의 두번쩨 패턴이면 저장
 		{
-				playerPatternB = pair.second->NodePatten;
-				isSecond = false;
+			playerPatternB = pair.second->NodePatten;
+			isSecond = false;
 		}
 	}
 
 	// 현재 새로 생성되어 있는 적 패턴의 정보를  따로 저장 -> 패턴 UI에 사용할것!
-	for(const auto& pair : NowEnemyStorage){
+	for (const auto& pair : NowEnemyStorage) {
 		if (pair.second->PlayingAttackTime == pair.second->TotalPlayingAttackTime) { //
 			isNewPattern = true;
 			newPattern.pattern = pair.second->NodePatten;
@@ -116,14 +116,14 @@ void AttackPatternManager::SubPattern(std::string ID, std::string StorageType) {
 			NowEnemyStorage.erase(it);
 		}
 	}
-}; 
+};
 
 
 pattern* AttackPatternManager::CorrectPattern(std::vector<int> PatternID) {  //해당 패턴의 성공여부
 	//순서 검사
 	bool isVaild = true;
 	bool isPlayerSearch = true;
-	int EnemyZero = 0;   
+	int EnemyZero = 0;
 	int PlayerZero1 = 0;
 	int PlayerZero2 = 0;
 	//적 검사
@@ -156,8 +156,8 @@ pattern* AttackPatternManager::CorrectPattern(std::vector<int> PatternID) {  //�
 			isPlayerSearch = false; // 공격 처리 안함!!
 			//isAttack = false;
 			// 방어 시도 countNun 2 ~ 4개, 패턴이 적일 때				
-			
-			if (PatternID.size() != pair.second->NodePatten.size() - EnemyZero) 
+
+			if (PatternID.size() != pair.second->NodePatten.size() - EnemyZero)
 			{ //입력 노드와 0을 제외한 적 공격 노드의 개수가 같지 않다면
 				isPlayerSearch = false; // 플레이어 가이드라인 판정함
 				pair.second->isFail = true; // 방어 실패
@@ -166,12 +166,12 @@ pattern* AttackPatternManager::CorrectPattern(std::vector<int> PatternID) {  //�
 
 
 			for (int i = 0; i < PatternID.size(); i++) {	// 현재 그은 패턴 검사
-				if (PatternID[i] != pair.second->NodePatten[PatternID.size() -1 - i ]) { // 그은 패턴과 적 패턴이 맞지 않음
+				if (PatternID[i] != pair.second->NodePatten[PatternID.size() - 1 - i]) { // 그은 패턴과 적 패턴이 맞지 않음
 					pair.second->isFail = true; // 방어 실패
 					return nullptr;
 				}
 				if (i == PatternID.size() - 1) {
-					
+
 					return pair.second; // 성공
 				}
 			}
@@ -203,13 +203,13 @@ pattern* AttackPatternManager::CorrectPattern(std::vector<int> PatternID) {  //�
 					break;
 				}
 				//
-				if( i == PatternID.size() -1){
+				if (i == PatternID.size() - 1) {
 					playerPatternA = playerPatternB = { 0 }; // 벡터 잠시 비워두기
 					isAttack = true; // 공격임(성공임)
 					isAttackVec = PatternID;
 					return pair.second; // 성공
 				}
-					
+
 			}
 		}
 		return nullptr;
@@ -222,20 +222,21 @@ pattern* AttackPatternManager::CorrectPattern(std::vector<int> PatternID) {  //�
 // 전부 저장소 clear 하고 사용하기
 // 이동거리는 기본적으로 1
 float AttackPatternManager::OnceAllNodePatternDistance(std::vector<int> PatternID) {
-	int distanceNode = 0;
+	int distanceNodeSqr = 0;
 	float distancePercent = 0.0f;
-	if (PatternID.size() < 2) return distancePercent;
-	for (int i = 0; i < PatternID.size()-1; i++) {
+	//if (PatternID.size() < 2) return distancePercent; // 연결 되면 안됨
+
+	for (int i = 0; i < PatternID.size() - 1; i++) {
 		Pointxy tmpNode1 = Map(PatternID[i]);
-		Pointxy tmpNode2 = Map(PatternID[i+1]);
+		Pointxy tmpNode2 = Map(PatternID[i + 1]);
+		Pointxy tmp = { tmpNode1.x - tmpNode2.x, tmpNode1.y - tmpNode2.y };
 
-		int tmpDistance = (tmpNode1.x - tmpNode2.x) * (tmpNode1.x - tmpNode2.x)
-			+ (tmpNode1.y - tmpNode2.y) * (tmpNode1.x - tmpNode2.x);
-
-		distanceNode += tmpDistance;
+		int tmpDistance = tmp.x * tmp.x + tmp.y * tmp.y;
+		distanceNodeSqr += tmpDistance;
 	}
-	bool isOnceAllNode = true;
-	distancePercent = distanceNode / 41.0f;
+
+	//bool isOnceAllNode = true;
+	distancePercent = distanceNodeSqr / 41.0f; //
 	return distancePercent;
 }
 
@@ -307,7 +308,7 @@ void AttackPatternManager::EnemyPatternAllClear() {
 	}
 	NowEnemyStorage.clear();  //맵 초기화
 }
-	
+
 
 
 // 아군 패턴 전부 삭제
@@ -336,7 +337,7 @@ int CalDistance(int node1, int node2) {
 	Pointxy tmpNode1 = Map(node1);
 	Pointxy tmpNode2 = Map(node2);
 	int tmpDistance = (tmpNode1.x - tmpNode2.x) * (tmpNode1.x - tmpNode2.x)
-					  + (tmpNode1.y - tmpNode2.y) * (tmpNode1.x - tmpNode2.x);
+		+ (tmpNode1.y - tmpNode2.y) * (tmpNode1.x - tmpNode2.x);
 	return  tmpDistance;
 }
 

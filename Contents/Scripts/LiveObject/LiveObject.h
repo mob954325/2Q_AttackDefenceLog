@@ -114,7 +114,7 @@ protected:
 
 
 
-	bool IsOtherEndGroggy = false;  // 다른 객체가 그로기 상태인지?
+	bool IsOtherEndGroggy = false;  // 다른 객체가 그로기 상태인지? << 플레이어
 	bool isGroggy = false;				  // 그로기가 되었는지를 판별하는 변수 
 	float NodeTime;				  // 가이드라인의 판정 시간
 	bool isRestore = false;

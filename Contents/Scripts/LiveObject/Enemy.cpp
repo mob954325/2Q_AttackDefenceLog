@@ -43,28 +43,30 @@ void Enemy::OnStart() {
 
 // 업데이트에서 시간 받기???? -> 필요없음, 수정하기!!!
 void Enemy::OnUpdate() {
-    
-    // Game 상태가 Pause면 모든 Update 무시
-    if (Singleton<GameManager>::GetInstance().GetGameState() == GameState::Pause)
-    {
-        return;
-    }
-    
-    // 적이 죽지 않고 그로기(Groggy) 상태 일때
+
+	// Game 상태가 Pause면 모든 Update 무시
+	if (Singleton<GameManager>::GetInstance().GetGameState() == GameState::Pause)
+	{
+		return;
+	}
+
+	// 적이 죽지 않고 그로기(Groggy) 상태 일때
 	if (nowStateName != "Enemy_Dead" && (!isGroggy))
 	{
 		CalSpiritTime();		// 1초마다 기세게이지 증가
 		AddPattenLoop();		// 
 		StateAct();           //  
+	}
 
-		DiffState();            // 이전 상태와 현재 상태를 비교
-		PrintConsole();
-		if (nowStateName == "Enemy_Dead") // 적 사망 시 -> 씬 이동
-		{
-			Singleton<SceneManager>::GetInstance().LoadScene(0); // 나중에 딜레이 올려줘야함
-		}
+	DiffState();            // 이전 상태와 현재 상태를 비교
+	PrintConsole();
+
+	if (nowStateName == "Enemy_Dead") // 적 사망 시 -> 씬 이동
+	{
+		Singleton<SceneManager>::GetInstance().LoadScene(0); // 나중에 딜레이 올려줘야함
 	}
 }
+
 
 // onChangePatten에 TransitionTime 변경하기!!!
 
@@ -79,7 +81,7 @@ void SetNameDiff(std::string name, std::string difficulty) {
 	if (name == "도적") { nameindex = 0; }
 	else if (name == "남궁서") { nameindex = 1; }
 	else if (name == "강림") { nameindex = 2; }
-	else { nameindex = 100;  }
+	else { nameindex = 100; }
 
 	if (difficulty == "easy") { diffindex = 1; }
 	else if (difficulty == "normal") { diffindex = 2; }
@@ -96,7 +98,7 @@ void SetNameDiff(std::string name, std::string difficulty) {
 
 //이후 StateManager에 추가하는거 만들기
 void Enemy::SetState(std::string setStateName) {
-	if ( !(nowStateName == "Enemy_Dead" || nowStateName == "Enemy_Groggy")) {
+	if (!(nowStateName == "Enemy_Dead" || nowStateName == "Enemy_Groggy")) {
 		m_State->SetState(setStateName);
 	}
 }
@@ -174,9 +176,9 @@ void Enemy::SetStatData(std::string tmp) {
 	enemy_IdlePath = enemy_CommonPath + nowEnemyData->enemySprite[0] + L"_fin.png";         // 적의 이미지 이름 받기
 	enemy_AttackPath = enemy_CommonPath + nowEnemyData->enemySprite[1] + L"_fin.png";
 	enemy_GuardPath = enemy_CommonPath + nowEnemyData->enemySprite[2] + L"_fin.png";
-	enemy_DamagedPath = enemy_CommonPath+ nowEnemyData->enemySprite[3] + L"_fin.png";
+	enemy_DamagedPath = enemy_CommonPath + nowEnemyData->enemySprite[3] + L"_fin.png";
 
-	
+
 }
 
 
@@ -224,6 +226,14 @@ void Enemy::AddPattenLoop() {
 	}
 }
 
+void Enemy::RestoreGroggy()
+{
+	groggyTime = 0.0f;
+	IsOtherEndGroggy = false;
+	isGroggy = false;
+	isRestore = true; // 베틀매니저에서 읽는데, true가 있다면 << 플레이어와 적의 기세를 초기화시키는 플레그
+}
+
 // 배틀 매니저에서 사용될 함수
 void Enemy::SelectPatten() {   //각 객체가 사용할 패턴을 고름
 	if (nowEnemyPattenData != nullptr) {
@@ -232,9 +242,9 @@ void Enemy::SelectPatten() {   //각 객체가 사용할 패턴을 고름
 	}
 	if (nowEnemyPattenData != nullptr && preEnemyPattenData->eComboCoolDown != 0) {
 		++patternCount;
-		SetAttackPattenData(  TotalPatternID[  PattenMap[  PattenID[nowRandomValue]  ] + patternCount]  );
+		SetAttackPattenData(TotalPatternID[PattenMap[PattenID[nowRandomValue]] + patternCount]);
 	}
-		
+
 	else {
 		patternCount = 0;
 		if (enemyAttackPatternFix.substr(0, 2) != "EP") {
@@ -254,7 +264,7 @@ void Enemy::SelectPatten() {   //각 객체가 사용할 패턴을 고름
 		else {
 			SetAttackPattenData(enemyAttackPatternFix);
 		}
-		
+
 	}
 }
 
@@ -295,7 +305,7 @@ void Enemy::ResetSpiritAmount() {
 void Enemy::SetCoolTime() {
 	if (nowEnemyPattenData->eComboCoolDown == 0) {
 		Object_nowCoolTime = (1 - ((Object_NowSpiritAmount - Object_SpiritAmount / 2.0f) / Object_SpiritAmount) / 2.0f)
-							* Object_CoolTime + nowEnemyPattenData->eAtkCoolDown;
+			* Object_CoolTime + nowEnemyPattenData->eAtkCoolDown;
 	}
 	else if (IsOtherEndGroggy) {
 		Object_nowCoolTime = nowEnemyPattenData->eAtkCoolDown;
@@ -321,8 +331,8 @@ void Enemy::DiffState() {
 		preStateName = nowStateName;
 		nowStateName = m_State->GetNowName();
 	}
-	
-	if (IsOtherEndGroggy && isFirstSpiriteDown) { 
+
+	if (IsOtherEndGroggy && isFirstSpiriteDown) {
 		SelectPatten(); // 패턴 정하기!!
 		SetCoolTime();
 		isFirstSpiriteDown = false;
@@ -331,11 +341,9 @@ void Enemy::DiffState() {
 
 
 	// 그로기 시간!!!
-	if ((IsOtherEndGroggy   && Object_nowCoolTime <= 0 )|| (isGroggy && preHp != Object_Hp)) {
-		groggyTime = 0.0f;
-		IsOtherEndGroggy = false;
-		isGroggy = false;
-		isRestore = true;
+	// 플레이어가 그로기 상태에서, 적에게 공격을 맞으면, 초기화 한다
+	if ((IsOtherEndGroggy && Object_nowCoolTime <= 0)) {
+		RestoreGroggy();
 	}
 
 	preHp = Object_Hp;
@@ -358,7 +366,7 @@ void Enemy::StateAct() {
 		enemy_Damaged->SetActive(false);
 		enemy_Guard->SetActive(false);
 	}
-	else if (nowStateName == "Enemy_Hit" ||  nowStateName == "Enemy_Groggy") { 
+	else if (nowStateName == "Enemy_Hit" || nowStateName == "Enemy_Groggy") {
 		enemy_Idle->SetActive(false);
 		enemy_Attack->SetActive(false);
 		enemy_Damaged->SetActive(true);

@@ -1,4 +1,4 @@
-#include "BettleManager.h"
+﻿#include "BettleManager.h"
 #include <random>
 #include <cmath>
 #include "../LiveObject/Player.h"
@@ -31,7 +31,7 @@ void BettleManager::OnStart() {
 
 void BettleManager::OnUpdate() {
 	SetGroggyState();
-	
+
 	// 게임 상태가 Pause면 모든 Update 내용 무시
 	if (Singleton<GameManager>::GetInstance().GetGameState() == GameState::Pause)
 	{
@@ -60,7 +60,7 @@ void BettleManager::SetInputNode(std::vector<int> InputNode) {
 }
 
 //들어온 입력 노드에 따라서 공격, 방어를 처리하는 함수
-void BettleManager::SetStateFormPattern() {	
+void BettleManager::SetStateFormPattern() {
 
 	if (!m_Player->GetIsGroggy() && !m_Enemy->GetIsGroggy()) { // 그로기가 아니면!!
 		nowManagerState = noneGroggy;
@@ -173,7 +173,7 @@ void BettleManager::SetStateFormPattern() {
 			}
 		}
 
-		
+
 	}
 	//else if (m_Player->GetIsGroggy() && m_Enemy->GetIsGroggy()) {  // 적과 아군의 그로기가 동시에 걸린 경우 // 버그 터지면 처리해!!!!!
 
@@ -183,18 +183,19 @@ void BettleManager::SetStateFormPattern() {
 		m_PattenManager->PlayerPatternAllClear();
 		m_PattenManager->DoneTimeOutPatten();
 
-		if (nowNode.size() < 1) return;
+		if (nowNode.size() < 2) return; //플레이어가 입력을 하기 전까지 빠져나가질 못함 (8.12 확인)
 
-		if (allDistancePercent == 0.0f) {	   //퍼센트가 0 이라면 길이에 따라서 배율 넣기 , 문제 있을 수 있음
+		if (allDistancePercent <= 0.0f) {	   //퍼센트가 0 이라면 길이에 따라서 배율 넣기 , 문제 있을 수 있음
+			onFinalBlow.Invoke(); // 외부에 공격 준비를 알림(총알이 장전된거임)
 			allDistancePercent = m_PattenManager->OnceAllNodePatternDistance(nowNode);
 		}
 	}
 	else if (m_Player->GetIsGroggy() ||
-		(!m_Enemy->GetIsOtherEndGroggy() && !m_Enemy->GetIsGroggy())){ // 아군이 그로기에 걸린경우
-			m_PattenManager->EnemyPatternAllClear();  //이것도 잘 처리하기!!!
-			m_PattenManager->PlayerPatternAllClear();
-			m_PattenManager->DoneTimeOutPatten();
-		m_Player->GetDamage( m_Enemy->GetAttack() * 2.5f);
+		(!m_Enemy->GetIsOtherEndGroggy() && !m_Enemy->GetIsGroggy())) { // 아군이 그로기에 걸린경우
+		m_PattenManager->EnemyPatternAllClear();  //이것도 잘 처리하기!!!
+		m_PattenManager->PlayerPatternAllClear();
+		m_PattenManager->DoneTimeOutPatten();
+		m_Player->GetDamage(m_Enemy->GetAttack() * 2.5f);
 		m_Player->SetState("Player_Hit");
 		m_Enemy->SetState("Enemy_AttackSuccess");
 	}
@@ -241,7 +242,7 @@ void BettleManager::ChangeFinalState() {
 	}
 }
 
-void BettleManager::SetSpiritGauge(){
+void BettleManager::SetSpiritGauge() {
 	giseObj->SetMaxGague(TotalValue);
 	ChangeValue = m_Player->GetNowSpiritAmount();
 	/*preSpiritAmount = m_Player->GetNowSpiritAmount();*/
@@ -249,7 +250,7 @@ void BettleManager::SetSpiritGauge(){
 }
 
 /// 아군 홀드 공격 완료!!!
-void BettleManager::FinalAttackToEnemy(){
+void BettleManager::FinalAttackToEnemy() { // 델리게이트로 외부에서 연결
 	if (m_Enemy->GetIsGroggy()) {
 		m_Enemy->GetDamage((m_Player->GetAttack() * allDistancePercent * 10.0f));  /// 나중에 적 hp 배율 따로 빼기!!!!
 		m_Enemy->SetState("Enemy_Hit");
@@ -271,7 +272,7 @@ void BettleManager::SetGroggyState() {
 	else if (m_Enemy->GetIsGroggy()) {
 		nowManagerState = enemyGroggy;
 	}
-	else if( (!m_Enemy->GetIsGroggy()) && (!m_Player->GetIsGroggy())) {
+	else if ((!m_Enemy->GetIsGroggy()) && (!m_Player->GetIsGroggy())) {
 		nowManagerState = noneGroggy;
 	}
 	else {
@@ -281,8 +282,9 @@ void BettleManager::SetGroggyState() {
 
 
 void BettleManager::ResetState() {
-	if (preManagerState != nowManagerState || preManagerState == enemyGroggy) {
+	if (preManagerState != nowManagerState && preManagerState == enemyGroggy) {
 		allDistancePercent = 0.0f;
 		isOncePatternatk = false;
+		onTimeout.Invoke(); // 외부에 그로기 지속 시간이 끝났다는걸 알림 << 이거, 성공했을때는 잡히는데 실패할때 안잡히네
 	}
 }
