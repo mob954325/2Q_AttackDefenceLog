@@ -21,8 +21,20 @@ public:
 	void SetBattleStage(SceneCount scene);
 	SceneCount GetTargetBattleStage();
 
+	// stageClear functions
+	void SetStageClear(int stageNum);
+	void ResetClear();
+
+	bool IsStage1Clear();
+	bool IsStage2Clear();
+	bool IsStage3Clear();
+
 private:
 	GameState state = GameState::Play;
 	SceneCount targetBattleStageScene{};
+
+	bool isStage1Clear = false;
+	bool isStage2Clear = false;
+	bool isStage3Clear = false;
 };
 

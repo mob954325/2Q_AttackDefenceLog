@@ -409,6 +409,7 @@
     <ClCompile Include="Objects\Scenes\Stage\EscMenu\StageESCPanel.cpp" />
     <ClCompile Include="Scripts\Slider\GiseGauge.cpp" />
     <ClCompile Include="Objects\Scenes\Stage\EscMenu\SoundMutePanel.cpp" />
+    <ClCompile Include="Objects\Scenes\Stage\StageResult\StageResult.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameApp.h" />
@@ -470,6 +471,7 @@
     <ClInclude Include="Objects\Scenes\Stage\EscMenu\StageESCPanel.h" />
     <ClInclude Include="Scripts\Slider\GiseGauge.h" />
     <ClInclude Include="Objects\Scenes\Stage\EscMenu\SoundMutePanel.h" />
+    <ClInclude Include="Objects\Scenes\Stage\StageResult\StageResult.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

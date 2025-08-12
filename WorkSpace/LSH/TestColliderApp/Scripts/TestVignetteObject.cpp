@@ -10,8 +10,9 @@ void TestVignetteObject::OnCreate()
 {
 	owner->GetTransform().SetUnityCoords(false);
 
-	//vignette = owner->AddComponent<VignetteEffect>();
+	vignette = owner->AddComponent<VignetteEffect>();
 	bitmap = owner->AddComponent<BitmapRenderer>();
+
 	owner->GetTransform().SetOffset(EngineData::SceenWidth / 2, -EngineData::SceenHeight / 2);
 	input = owner->AddComponent<InputSystem>();
 }
@@ -27,6 +28,13 @@ void TestVignetteObject::OnStart()
 	D2D1_SIZE_F size = bitmap->GetResource()->GetBitmap()->GetSize();
 	bitmap->SetFlipX(!bitmap->IsFlipX());
 	owner->GetTransform().Translate({ size.width / 2, -size.height / 2 });
+
+	vignette->SetBitmap(bitmap->GetResource()->GetBitmap().Get());
+	vignette->SetColor({ 1.0f, 0.0f,0.0f,1.0f });
+	vignette->SetEffectSize(0.8f);
+	vignette->SetStrength(0.4f);
+
+	vignette->SetOrderInLayer(10000);
 }
 
 void TestVignetteObject::OnUpdate()
@@ -34,7 +42,7 @@ void TestVignetteObject::OnUpdate()
 	value += Singleton<GameTime>::GetInstance().GetDeltaTime() * 4.0f;
 
 	float y = (std::sin(value) * 0.5f) + 0.5f;
-	//vignette->SetEffectSize(y);
+	vignette->SetEffectSize(y);
 
 
 	if (input->IsKeyDown('J'))

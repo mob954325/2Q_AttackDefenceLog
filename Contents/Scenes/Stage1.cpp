@@ -25,7 +25,7 @@ void Stage1::OnEnterImpl()
 
 	stageBGI = new GameObject();
 	stageBGI->AddComponent<StageBGI>();
-	AddGameObject(stageBGI);
+	AddGameObject(stageBGI, "StageBGI1");
 
 	GameObject* nodePanel = new GameObject();
 	nodePanel->AddComponent<BackboardObject>();

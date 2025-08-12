@@ -34,6 +34,9 @@ private:
 
 	D2D1_RECT_F soundSliceRect{}; // 음량 조절 슬라이스 감지 범위 rect
 
+	float offsetX = 0;
+	float offsetY = 0;
+
 	bool isPressed = false;
 	bool isOpen = false;
 	bool isMute = false;
