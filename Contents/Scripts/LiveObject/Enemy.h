@@ -60,7 +60,7 @@ public:
 	float OtherGroggyTime = 0.0f; // 플레이어의 그로기 타임
 	bool IsOtherEndGroggy = false;
 	bool IsOtherGroggy = false;
-
+	bool restoredThisCycle = false; // 복구 되었는가를 체크하는 플래그
 
 private:
 	// 적이 가지고 있는 공격의 ID
@@ -93,7 +93,7 @@ private:
 	void PrintConsole();
 	void SetCursorPosition(int x, int y);
 	AttackPatternManager* m_PattenManager = nullptr; // 패턴 매니저를  참조로 받아  사용할 변수
-	void ReserEnemy();
+	void ResetEnemy();
 	
 	
 private:

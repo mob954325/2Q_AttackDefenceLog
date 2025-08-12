@@ -337,7 +337,7 @@ int CalDistance(int node1, int node2) {
 	Pointxy tmpNode1 = Map(node1);
 	Pointxy tmpNode2 = Map(node2);
 	int tmpDistance = (tmpNode1.x - tmpNode2.x) * (tmpNode1.x - tmpNode2.x)
-		+ (tmpNode1.y - tmpNode2.y) * (tmpNode1.x - tmpNode2.x);
+		+ (tmpNode1.y - tmpNode2.y) * (tmpNode1.y - tmpNode2.y);
 	return  tmpDistance;
 }
 

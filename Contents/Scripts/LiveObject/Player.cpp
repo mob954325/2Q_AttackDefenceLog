@@ -63,7 +63,7 @@ void Player::OnUpdate() {
 	}
 
 
-	//PrintConsole();		// 콘솔 호출
+	PrintConsole();		// 콘솔 호출
 	m_State->Update(); 	// 각 state별 추가로 정의된 행동 호출
 	DiffState();  		// 이전상태와 현재상태를 결정하는 함수
 	StateAct();   		// 각 state 별 행동 
@@ -251,12 +251,12 @@ void Player::ResetSpiritAmount()
 
 void Player::SetCoolTime()
 {
-	if (prePlayerPattenData == nullptr) //이전 루프가 없을시
-	{
+	//if (prePlayerPattenData == nullptr) //이전 루프가 없을시
+	//{
 		// ( 1 - (현재기세 - 전체기세/2) / 전체기세 /2) * 해당 패턴의 전체 쿨타임
 		Object_nowCoolTime = (1 - ((Object_NowSpiritAmount - Object_SpiritAmount / 2.0f) / Object_SpiritAmount) / 2.0f) * Object_CoolTime;
-	}
 
+	//}
 }
 
 
@@ -298,13 +298,16 @@ void Player::DiffState()
 
 	// 기세 게이지가 벗어나지 않게 고정!!!
 	// 현재 플레이어의 기세 게이지가 0.0f
-	if (Object_NowSpiritAmount <= 0.0f) // 기세 게이지
+	if (isRestore) {
+		isGroggy = false;
+	}
+	else if (Object_NowSpiritAmount <= 0.0f) // 기세 게이지
 	{
 		isGroggy = true;
 		Object_NowSpiritAmount = 0.0f;
 		SetState("Player_Groggy");
 	}
-	else // 0.0f 면 false
+	else // 0.0f 초과면 false
 	{
 		isGroggy = false;
 	}
@@ -327,7 +330,7 @@ void Player::AddPattenLoop()
 {
 	// ??
 
-	if (isAttackingPattern)
+	if (isAttackingPattern) // 플레이어의 패턴이 성공시 작동
 	{
 		SetCoolTime();
 		isPattenCooldown = true;
@@ -354,11 +357,15 @@ void Player::RestoreGroggy()
 {
 	enemyGroggyTime = 0.0f;
 	IsOtherGroggy = false;
-	isGroggy = false;   /// 그로기를 표시하는 상태변수!!!, 나중에 
-	isRestore = true;
 
-	ResetPlayer();  // 상태, 쿨타임, 공격 패턴까지 초기화!
-	onTimeOut.Invoke(); // 외부에 알려줌
+	// 복구 직후 다음 프레임에 다시 그로기 재진입을 막기 위한 처리
+	isGroggy = false;          // 지금 당장 그로기 해제
+	ResetSpiritAmount();       
+
+	isRestore = true;          // 베틀매니저에서 공통 회복 흐름에 쓰는 플래그 (유지)
+
+	ResetPlayer();             // 상태/쿨타임/패턴 초기화 (기존 로직)
+	onTimeOut.Invoke();        // 외부 알림 (기존 로직)
 }
 
 

@@ -347,6 +347,7 @@ void BettleManager::ChangeFinalStateEnemyGroggy()  // 적의 그로기 상태에
 	}
 	if (m_Player->isOtherGroggyEnd) {
 		m_Player->isOtherGroggyEnd = false;
+
 	}
 }
 
@@ -359,8 +360,12 @@ void BettleManager::ChangeFinalStatePlayerGroggy() // 아군의  그로기 상�
 	}
 
 	if (m_Enemy->IsOtherEndGroggy) {
-		m_Enemy->IsOtherEndGroggy = false;
+		m_Enemy->IsOtherEndGroggy = false; 
+		m_Enemy->IsOtherGroggy = false; 
+
+		m_Player->RestoreGroggy();
 	}
+	
 	
 }
 
@@ -394,22 +399,7 @@ void BettleManager::ChangeCommonFinalState()
 	}
 
 
-	//else if ((!m_Player->GetIsGroggy()) && m_Player->GetNowSpiritAmount() <= 0.0f)  // 플레이어 그로기 상태 처리
-	//{
-	//	m_Player->SetState("Player_Groggy");	// 플레이어 상태 변경 - 플레이어 그로기 
-	//	m_Player->SetIsGroggy(true);
 
-	//	m_Enemy->SetIsOtherEndGroggy(true);
-	//}
-	//else if ((!m_Enemy->GetIsGroggy()) && m_Enemy->GetNowSpiritAmount() <= 0.0f)	// 적 그로기 상태 처리
-	//{
-	//	m_Enemy->SetState("Enemy_Groggy");		// 적 상태 변경 - 적 그로기
-	//	m_Enemy->SetIsGroggy(true);
-
-	//	m_Player->SetIsOtherEndGroggy(true);
-
-	//	isOncePatternAttack = true;
-	//}
 	
 
 }
@@ -463,7 +453,7 @@ void BettleManager::SetGroggyState()
 	{
 		allDistancePercent = 0.0f;
 		isOncePatternAttack = false;
-		onTimeout.Invoke(); // 외부에 그로기 지속 시간이 끝났다는걸 알림 << 이거, 성공했을때는 잡히는데 실패할때 안잡히네
+		onTimeout.Invoke(); // 외부에 그로기 지속 시간이 끝났다는걸 알림
 	}
 
 
