@@ -80,12 +80,17 @@ void BettleManager::OnUpdate()
 	if (!m_Player->GetIsGroggy() && !m_Enemy->GetIsGroggy()) {
 		SetStateFormPatternIdle();
 		ChangeFinalStateIdle();
+		usedStartBlow = false;
 	}		
 	else {
 		if (m_Enemy->GetIsGroggy()) {  // 적이 그로기 상태일때
 			SetStateFormPatternEnemyGroggy(); 	
 			ChangeFinalStateEnemyGroggy();
 
+			if (!usedStartBlow) { // 상태에 처음 진입했을때만 켜짐
+				onStartBlow.Invoke();
+				usedStartBlow = true; 
+			}
 
 		}
 		else if (m_Player->GetIsGroggy()) { // 플레이어가 그로기 상태일 때
@@ -93,7 +98,7 @@ void BettleManager::OnUpdate()
 			ChangeFinalStatePlayerGroggy();
 
 
-		}
+		}	
 	}
 
 	//HpObj->SetHpUiPosition(Player2, Enemy2);
@@ -167,6 +172,7 @@ void BettleManager::SetStateFormPatternEnemyGroggy()// 적 그로기 상태에 �
 	m_PattenManager->PlayerPatternAllClear();
 	m_PattenManager->DoneTimeOutPatten();
 	if (nowNode.size() < 2) return; // 플레이어가 입력을 하기 전까지 빠져나가질 못함 (8.12 확인)
+
 	if (allDistancePercent <= 0.001f) //퍼센트가 0 이라면 길이에 따라서 배율 넣기 , 문제 있을 수 있음
 	{
 		// 연격 패턴 이벤트 호출
