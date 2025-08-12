@@ -5,6 +5,7 @@
 #include "Objects/Scenes/TitleScene/TitleSceneBGI.h"
 #include "Objects/Scenes/TitleScene/TitleNodeManager.h"
 #include "Objects/Scenes/TitleScene/TitleEffectManager.h"
+#include "Objects/Sound/SoundTittle.h"
 
 void TitleScene::OnEnterImpl()
 {
@@ -29,6 +30,14 @@ void TitleScene::OnEnterImpl()
 	trail = new GameObject();
 	trail->AddComponent<MouseTrailObject>();
 	AddGameObject(trail, "MouseTrail");
+	
+	//사운드 추가
+	SoundTittleObj = new GameObject();
+	SoundTittleObj->AddComponent<SoundTittle>();
+	AddGameObject(SoundTittleObj, "SoundTittle");
+
+	SoundTittleObj->GetComponent<SoundTittle>()->SetKeyHandle(L"Lobby");
+	SoundTittleObj->GetComponent<SoundTittle>()->PlaySound();
 }
 
 void TitleScene::OnExitImpl()

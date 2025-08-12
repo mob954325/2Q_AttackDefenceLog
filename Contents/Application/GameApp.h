@@ -2,6 +2,7 @@
 #pragma once
 #include "Application/Application.h"
 #include "Scene/Scene.h"
+#include "Datas/SoundDatas.h"
 
 /* 실제 실행할 게임 App 클래스 | 작성자 : 이성호
 * 
@@ -22,4 +23,6 @@ private:
 	Scene* stage1;
 	Scene* stage2;
 	Scene* stage3;
+
+	std::vector<SoundResource> soundList;
 };

@@ -81,7 +81,7 @@ void TestObject::OnCreate()
 	TempObj->AddComponent<CamInstance>();
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(TempObj);
 	handleCam = TempObj;
-	handleCam->GetComponent<CamInstance>()->SetWaveValue(2.0f, 25.0f, 150.0f, 96.0f, 54.0f);
+	handleCam->GetComponent<CamInstance>()->SetWaveValue(1.0f, 25.0f, 20.0f, 96.0f, 54.0f);
 
 	owner->AddComponent<Finaleffect>();
 	owner->AddComponent<EffectMonoB>();
@@ -105,6 +105,22 @@ void TestObject::OnCreate()
 	EATK = owner->GetComponent<EnemyAttackEffect>();
 
 	HP = owner->AddComponent<HpGauge>();
+
+
+
+	GameObject* Test = new GameObject();
+	Test->AddComponent<BitmapRenderer>();
+	Test->SetName("test");
+	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(Test);
+	Test->GetComponent<BitmapRenderer>()->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\UI\\TestImage\\player_attack1_fin.png");
+	Test->GetTransform().SetPosition(-1000.0f, 1000.0f);
+
+	GameObject* Test2 = new GameObject();
+	Test2->AddComponent<BitmapRenderer>();
+	Test2->SetName("test");
+	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(Test2);
+	Test2->GetComponent<BitmapRenderer>()->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\UI\\TestImage\\enemy1_attack_fin.png");
+	Test2->GetTransform().SetPosition(200.0, 500.0f);
 
 }
 
@@ -304,37 +320,37 @@ void TestObject::CheckInput()
 	//}
 
 
-	//if (input->IsKeyPressed('5'))
-	//{
-	//	handleCam->GetComponent<CamInstance>()->SetSlowToFast();
-	//}
-	//if (input->IsKeyPressed('6'))
-	//{
-	//	handleCam->GetComponent<CamInstance>()->SetFastToSlow();
-	//}
-	//if (input->IsKeyPressed('7'))
-	//{
-	//	handleCam->GetComponent<CamInstance>()->SetSlowFastSlow();
-	//}
+	if (input->IsKeyPressed('5'))
+	{
+		handleCam->GetComponent<CamInstance>()->SetSlowToFast();
+	}
+	if (input->IsKeyPressed('6'))
+	{
+		handleCam->GetComponent<CamInstance>()->SetFastToSlow();
+	}
+	if (input->IsKeyPressed('7'))
+	{
+		handleCam->GetComponent<CamInstance>()->SetSlowFastSlow();
+	}
 
 
 
-	//if (input->IsKeyPressed('1'))
-	//{
-	//	handleCam->GetComponent<CamInstance>()->CallCamShake(ShakeType::X);
-	//}
-	//if (input->IsKeyPressed('2'))
-	//{
-	//	handleCam->GetComponent<CamInstance>()->CallCamShake(ShakeType::Y);
-	//}
-	//if (input->IsKeyPressed('3'))
-	//{
-	//	handleCam->GetComponent<CamInstance>()->CallCamShake(ShakeType::XY);
-	//}
-	//if (input->IsKeyPressed('4'))
-	//{
-	//	handleCam->GetComponent<CamInstance>()->CallCamShake(ShakeType::X_Y);
-	//}
+	if (input->IsKeyPressed('1'))
+	{
+		handleCam->GetComponent<CamInstance>()->CallCamShake(ShakeType::X);
+	}
+	if (input->IsKeyPressed('2'))
+	{
+		handleCam->GetComponent<CamInstance>()->CallCamShake(ShakeType::Y);
+	}
+	if (input->IsKeyPressed('3'))
+	{
+		handleCam->GetComponent<CamInstance>()->CallCamShake(ShakeType::XY);
+	}
+	if (input->IsKeyPressed('4'))
+	{
+		handleCam->GetComponent<CamInstance>()->CallCamShake(ShakeType::X_Y);
+	}
 
 
 
@@ -351,60 +367,60 @@ void TestObject::CheckInput()
 	//	std::cout << "s 입력됨" << std::endl;
 	//}
 
-	if (input->IsKeyPressed('1'))
-	{
-		//effectobj->CallAnime(0);
-		//HitE->CallAnime(0);
-		//EATK->CallAnime(0);
-	}
-	if (input->IsKeyPressed('2'))
-	{
-		//effectobj->CallAnime(1);
-		//HitE->CallAnime(1);
-		//EATK->CallAnime(1);
-	}
-	if (input->IsKeyPressed('3'))
-	{
-		//effectobj->CallAnime(2);
-		//HitE->CallAnime(2);
-		//EATK->CallAnime(2);
-	}
-	if (input->IsKeyPressed('4'))
-	{
-		//effectobj->CallAnime(3);
-		//HitE->CallAnime(3);
-		//EATK->CallAnime(3);
-	}
-	if (input->IsKeyPressed('5'))
-	{
-		//effectobj->CallAnime(4);
-		//HitE->CallAnime(4);
-		//EATK->CallAnime(4);
-	}
-	if (input->IsKeyPressed('6'))
-	{
-		//effectobj->CallAnime(5);
-		//HitE->CallAnime(5);
-		//EATK->CallAnime(5);
-	}
-	if (input->IsKeyPressed('7'))
-	{
-		//effectobj->CallAnime(6);
-		//HitE->CallAnime(6);
-		//EATK->CallAnime(6);
-	}
-	if (input->IsKeyPressed('8'))
-	{
-		//effectobj->CallAnime(7);
-		//HitE->CallAnime(7);
-		//EATK->CallAnime(7);
-	}
-	if (input->IsKeyPressed('9'))
-	{
-		//effectobj->CallAnime(8);
-		//HitE->CallAnime(8);
-		//EATK->CallAnime(8);
-	}
+	//if (input->IsKeyPressed('1'))
+	//{
+	//	//effectobj->CallAnime(0);
+	//	//HitE->CallAnime(0);
+	//	//EATK->CallAnime(0);
+	//}
+	//if (input->IsKeyPressed('2'))
+	//{
+	//	//effectobj->CallAnime(1);
+	//	//HitE->CallAnime(1);
+	//	//EATK->CallAnime(1);
+	//}
+	//if (input->IsKeyPressed('3'))
+	//{
+	//	//effectobj->CallAnime(2);
+	//	//HitE->CallAnime(2);
+	//	//EATK->CallAnime(2);
+	//}
+	//if (input->IsKeyPressed('4'))
+	//{
+	//	//effectobj->CallAnime(3);
+	//	//HitE->CallAnime(3);
+	//	//EATK->CallAnime(3);
+	//}
+	//if (input->IsKeyPressed('5'))
+	//{
+	//	//effectobj->CallAnime(4);
+	//	//HitE->CallAnime(4);
+	//	//EATK->CallAnime(4);
+	//}
+	//if (input->IsKeyPressed('6'))
+	//{
+	//	//effectobj->CallAnime(5);
+	//	//HitE->CallAnime(5);
+	//	//EATK->CallAnime(5);
+	//}
+	//if (input->IsKeyPressed('7'))
+	//{
+	//	//effectobj->CallAnime(6);
+	//	//HitE->CallAnime(6);
+	//	//EATK->CallAnime(6);
+	//}
+	//if (input->IsKeyPressed('8'))
+	//{
+	//	//effectobj->CallAnime(7);
+	//	//HitE->CallAnime(7);
+	//	//EATK->CallAnime(7);
+	//}
+	//if (input->IsKeyPressed('9'))
+	//{
+	//	//effectobj->CallAnime(8);
+	//	//HitE->CallAnime(8);
+	//	//EATK->CallAnime(8);
+	//}
 }
 
 

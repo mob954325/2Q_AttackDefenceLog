@@ -6,6 +6,7 @@
 #include "Application/AppPaths.h"
 #include "Objects/Scenes/SelectScene/LevelSelectManager.h"
 #include "Objects/Scenes/SelectScene/SelectSceneBGI.h"
+#include "Objects/Sound/SoundTittle.h"
 
 void SelectScene::OnEnterImpl()
 {
@@ -27,6 +28,10 @@ void SelectScene::OnEnterImpl()
 	selectManager = new GameObject();
 	selectManager->AddComponent<LevelSelectManager>();
 	AddGameObject(selectManager, "LevelSelectManager");
+
+	SoundSeletObj = new GameObject();
+	SoundSeletObj->AddComponent<SoundTittle>();
+	AddGameObject(SoundSeletObj, "SoundSelect");
 }
 
 void SelectScene::OnExitImpl()
