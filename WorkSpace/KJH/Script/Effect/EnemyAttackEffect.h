@@ -7,9 +7,7 @@
 #include "Components/Rendering/AnimationPlayer.h"
 #include "Math/Vector2.h"
 #include <vector>
-
-
-class Finaleffect : public MonoBehavior
+class EnemyAttackEffect : public MonoBehavior
 {
 public:
 	void OnUpdate() override;
@@ -17,10 +15,11 @@ public:
 	void OnStart() override;
 	void OnDestroy() override;
 
-	void SetAnimePosition(const Vector2& vector);
+	void SetAnimePosition(const std::vector<Vector2>& vectorList);
 
-	void CallAnime(float rotationValue);
-	void StopAnime();
+	void CallAnime(int num);
+	void StopAnime(int num);
+	void StopAllAnime();
 
 private:
 	struct AnimeState {
@@ -29,13 +28,10 @@ private:
 		float  duration = 0.0f; // 슬롯별 지속시간
 	};
 
-	/*std::vector<AnimeState>  AnimeStates;
-	std::vector<GameObject*> AnimeList;*/
-
-	AnimeState  AnimeStates{};
-	GameObject* AnimeList{};
+	//그것을 담는 백터
+	std::vector<AnimeState>  AnimeStates;
+	std::vector<GameObject*> AnimeList;
 
 	float Animeduration = 0.0f;
-	float rot = 0.0f;
 };
 

@@ -13,6 +13,7 @@ public:
 	void SetAnimePosition();
 
 	void ChangeGaugeBar();
+	void ChangeGaugeBar(float num);
 
 	void SetMaxGague(float MaxGague);
 
