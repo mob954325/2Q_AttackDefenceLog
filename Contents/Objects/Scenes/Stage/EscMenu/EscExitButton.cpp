@@ -1,14 +1,14 @@
-#include "EscExitButton.h"
+﻿#include "EscExitButton.h"
 #include "Components/Base/GameObject.h"
 #include "Scene/SceneManager.h"
 #include "Application/AppPaths.h"
 
 void EscExitButton::OnCreate()
 {
+	owner->SetRenderLayer(EngineData::RenderLayer::UI);
+
 	toTitleButton = owner->AddComponent<Button>();
 	owner->GetTransform().SetUnityCoords(false);
-
-	toTitleButton->AddOnClickEvent([this]() { Singleton<SceneManager>::GetInstance().LoadScene(1); });
 }
 
 void EscExitButton::OnStart()
