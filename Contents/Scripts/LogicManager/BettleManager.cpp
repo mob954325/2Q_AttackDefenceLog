@@ -27,7 +27,8 @@ void BettleManager::OnStart()
 	int a = 0;
 }
 
-void BettleManager::OnUpdate() {
+void BettleManager::OnUpdate() 
+{
 
 	SetSpiritGauge();	// 기세 게이지 업데이트
 
@@ -249,7 +250,8 @@ void BettleManager::SetSpiritGauge() {
 }
 
 /// 아군 홀드 공격 완료!!!
-void BettleManager::FinalAttackToEnemy() { // 델리게이트로 외부에서 연결
+void BettleManager::FinalAttackToEnemy() 
+{ // 델리게이트로 외부에서 연결
 	if (m_Enemy->GetIsGroggy()) {
 		m_Enemy->GetDamage((m_Player->GetAttack() * allDistancePercent * 10.0f));  /// 나중에 적 hp 배율 따로 빼기!!!!
 		m_Enemy->SetState("Enemy_Hit");

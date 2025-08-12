@@ -42,10 +42,10 @@ protected:
 	GameObject* bettleManager;
 	GameObject* player;
 
-	ChargedSlashManager* csManager; 
+	ChargedSlashManager* chargedSlashManager; 
 
 	EffectInstance* effInstance;
-	std::vector<EffectInstance*> effs;
+	std::vector<EffectInstance*> effectInstances;
 
 private:
 	std::vector<int> cachedVecA;
