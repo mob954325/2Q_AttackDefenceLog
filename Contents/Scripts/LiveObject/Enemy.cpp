@@ -141,7 +141,7 @@ void Enemy::SetStatData(std::string tmp)
 	Object_Attack = nowEnemyData->enemyDamage;			   // 공격력
 	Object_SpiritAttack = nowEnemyData->enemySpiritdamage; // 기세 공격력
 	Object_DefenseRate = nowEnemyData->enemyGuardRate;	   // 방어율
-	Object_SpiritAmount = 5.0f; //nowEnemyData->enemySpiritamount; // 기세
+	Object_SpiritAmount = nowEnemyData->enemySpiritamount; // 기세
 	Object_NowSpiritAmount = Object_SpiritAmount / 2.0f;   // 현재 기세 설정
 	Difficulty = nowEnemyData->enemyDifficulty;			   // 난이도 -> 아마 필요없을듯?
 
