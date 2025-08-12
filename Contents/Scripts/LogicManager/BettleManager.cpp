@@ -58,13 +58,28 @@ void BettleManager::OnStart()
 	// 게이지 스크립트 등록
 	owner->AddComponent<GiseGauge>();
 	giseObj = owner->GetComponent<GiseGauge>();
-	giseTotalValue = m_Player->GetSpiritAmount();
+
+	TotalValue = m_Player->GetSpiritAmount();
+	/*giseObj->SetMaxGague(TotalValue);*/
+
+	//HpObj = owner->AddComponent<HpGauge>();
+	////HP 최대치 설정 플레이어, 적
+	//HpObj->SetPlayerMaxGague(m_Player->GetTotalHp());
+	//HpObj->SetEnemyMaxGague(m_Enemy->GetTotalHp());
+
+
+
+	/*HpObj->SetHpUiPosition(Player, Enemy);*/
 }
 
 void BettleManager::OnUpdate() 
 {
-	SetSpiritGauge();		// 기세 게이지 업데이트
-
+    SetSpiritGauge();		// 기세 게이지 업데이트
+	SetGroggyState();
+	//HpObj->SetHpUiPosition(Player2, Enemy2);
+	/*HpObj->CalculatePlayerValue(m_Player->GetHp());
+	HpObj->CalculateEnemyValue(m_Enemy->GetHp());*/
+    
 	// 게임 상태가 Pause면 모든 Update 내용 무시
 	if (Singleton<GameManager>::GetInstance().GetGameState() == GameState::Pause)
 	{
@@ -259,17 +274,11 @@ void BettleManager::SetStateFormPattern()
 			allDistancePercent = m_PattenManager->OnceAllNodePatternDistance(nowNode); // 연격 길이 퍼센트 반환
 		}
 	}
-	else if (m_Player->GetIsGroggy() || (!m_Enemy->GetIsOtherEndGroggy() && !m_Enemy->GetIsGroggy())) // 플레이어가 그로기에 걸린경우
-	{ 
-		// 모든 패턴 제거
-		m_PattenManager->EnemyPatternAllClear(); 
+	else if (m_Player->GetIsGroggy()) // 아군이 그로기에 걸린경우
+    { 
+		m_PattenManager->EnemyPatternAllClear();  //이것도 잘 처리하기!!!
 		m_PattenManager->PlayerPatternAllClear();
 		m_PattenManager->DoneTimeOutPatten();
-
-		// 플레이어 피격
-		m_Player->GetDamage(m_Enemy->GetAttack() * 2.5f);	// 플레이어 데미지 입음
-		m_Player->SetState("Player_Hit");					// 플레이어 상태 변경 -> 플레이어 피격
-		m_Enemy->SetState("Enemy_AttackSuccess");			// 적 공격 상태 변경 -> 공격 성공
 	}
 
 	nowNode.clear(); // 플레이어 입력 노드 초기화
@@ -316,6 +325,28 @@ void BettleManager::ChangeFinalState()
 
 		isOncePatternAttack = true;
 	}
+	else if (m_Player->GetIsGroggy() && m_Enemy->isEnemyGroggyAttack) {
+		m_Player->GetDamage(m_Enemy->GetAttack() * 2.5f);
+		m_Player->SetState("Player_Hit");
+		m_Enemy->SetState("Enemy_AttackSuccess"); 
+		m_Enemy->isEnemyGroggyAttack = false;
+		// 그로기시 패턴을 한번 진행
+	}
+	
+
+
+
+
+
+
+	if (m_Enemy->GetIsGroggy() && !m_Player->GetIsOtherEndGroggy()) {
+		onTimeout.Invoke();
+		m_Enemy->RestoreGroggy();
+	}
+	else if (m_Player->GetIsGroggy() && !m_Enemy->GetIsOtherEndGroggy()) {
+		m_Player->RestoreGroggy();
+	}
+
 }
 
 void BettleManager::SetSpiritGauge() 

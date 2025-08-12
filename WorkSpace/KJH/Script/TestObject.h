@@ -11,11 +11,12 @@
 #include "Components/Rendering/AnimationPlayer.h"
 #include "Components/UI/Slider.h"
 #include "Script/Effect/EffectInstance.h"
-
 #include "Script/giseSlider/GiseGauge.h"
-
 #include "Script/Effect/EffectMonoB.h"
 #include "Script/Effect/Finaleffect.h"
+#include "Script/Effect/HitEffect.h"
+#include "Script/Effect/EnemyAttackEffect.h"
+#include "Script/HpBar/HpGauge.h"
 
 
 class TestObject : public MonoBehavior
@@ -33,6 +34,11 @@ public:
 	/*void SetPosition();*/
 
 private:
+	HpGauge* HP{};
+
+	EnemyAttackEffect* EATK{};
+	HitEffect* HitE{};
+
 	EffectMonoB* PAtkE{};
 	Finaleffect* FinalA{};
 	std::vector<float> RotationList{};
@@ -68,6 +74,7 @@ private:
 	GameObject* handleCam{};
 
 	std::vector<Vector2> positionList{};
+	std::vector<Vector2> positionList2{};
 
 	//08-11
 	GameObject* ButtonAnime{};

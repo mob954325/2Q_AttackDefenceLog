@@ -8,8 +8,7 @@
 #include "Math/Vector2.h"
 #include <vector>
 
-
-class Finaleffect : public MonoBehavior
+class HitEffect : public MonoBehavior
 {
 public:
 	void OnUpdate() override;
@@ -17,11 +16,11 @@ public:
 	void OnStart() override;
 	void OnDestroy() override;
 
-	void SetAnimePosition(const Vector2& vector);
+	void SetAnimePosition(const Vector2& position);
 
-	void CallAnime(float rotationValue);
-	void StopAnime();
-
+	void CallAnime(int num, const Vector2& position);
+	void StopAnime(int num);
+	void StopAllAnime();
 private:
 	struct AnimeState {
 		bool   playing = false;
@@ -32,8 +31,8 @@ private:
 	/*std::vector<AnimeState>  AnimeStates;
 	std::vector<GameObject*> AnimeList;*/
 
-	AnimeState  AnimeStates{};
-	GameObject* AnimeList{};
+	std::vector<AnimeState>  AnimeStates;
+	std::vector<GameObject*> AnimeList;
 
 	float Animeduration = 0.0f;
 	float rot = 0.0f;

@@ -4,9 +4,8 @@
 #include "Datas/EngineData.h"
 #include "Application/AppPaths.h"
 
-void Slider::OnStart()
+void Slider::OnCreate()
 {
-
 	GaugeBar = owner->AddComponent<BitmapRenderer>();
 	GaugeBar->SetUseCustomRect(true);
 	GaugeBar->SetOrderInLayer(6);
@@ -25,7 +24,7 @@ void Slider::OnStart()
 	GaugeBackground->SetUseCustomRect(true);
 	GaugeBackground->SetOrderInLayer(5);
 	sizeBackground = GaugeBackground->GetResource()->GetBitmap()->GetSize();
-	//변동값
+
 	GaugeBarBackGroundSrcRect.right = sizeBackground.width;
 	GaugeBarBackGroundSrcRect.bottom = sizeBackground.height;
 	GaugeBarBackGroundDestRect.right = sizeBackground.width;
@@ -45,11 +44,13 @@ void Slider::OnStart()
 	BarButSrctonRect.right = sizeButton.width;
 
 	ButtonDestRect.bottom = sizeButton.height;
-	ButtonDestRect.left = size.width - sizeButton.width/2;
-	ButtonDestRect.right = size.width + sizeButton.width/2;
+	ButtonDestRect.left = size.width - sizeButton.width / 2;
+	ButtonDestRect.right = size.width + sizeButton.width / 2;
+}
 
-	//테스트용 함수
-	onClickEvent.Add([](float value) { std::cout << value << std::endl; });
+void Slider::OnStart()
+{
+
 }
 
 void Slider::Update()
@@ -69,10 +70,10 @@ void Slider::Update()
 
 
 
-//void Slider::SetPivotSide(bool isLeft)
-//{
-//	pivotIsLeft = isLeft;
-//}
+void Slider::SetPivotSide(bool isLeft)
+{
+	pivotIsLeft = isLeft;
+}
 
 void Slider::SetGaugeBackgroundImage(std::wstring path)
 {	
@@ -138,17 +139,17 @@ void Slider::ChangeGauge(float x)
 			if (GaugeBarRect.right <= 0) { GaugeBarRect.right = 0.1f; }
 		}
 	}
-	//else {
-	//	if ((GaugeBarRect.right < size.width && GaugeBarRect.right > 0))
-	//	{
-	//		GaugeBarRect.right -= x;
-	//	}
-	//	else
-	//	{
-	//		if (GaugeBarRect.right >= -size.width) { GaugeBarRect.right = -size.width + 0.1f; }
-	//		if (GaugeBarRect.right >= 0) { GaugeBarRect.right = -0.1f; }
-	//	}
-	//}
+	else {
+		if ((GaugeBarRect.left >= 0 && GaugeBarRect.left <= size.width))
+		{
+			GaugeBarRect.left += x;
+		}
+		else
+		{
+			if (GaugeBarRect.left > size.width) { GaugeBarRect.left = size.width - 0.1f; }
+			if (GaugeBarRect.left < 0 ) { GaugeBarRect.left = 0.1f; }
+		}
+	}
 }
 
 //x는 좌표값
@@ -229,11 +230,10 @@ void Slider::SetSize()
 	size = GaugeBar->GetResource()->GetBitmap()->GetSize();
 	GaugeBarRect.bottom = size.height;
 	GaugeBarRect.right = size.width;
-	//고정값
+
 	BarButSrctonRect.bottom = sizeButton.height;
 	BarButSrctonRect.right = sizeButton.width;
 
-	//변동값
 	ButtonDestRect.bottom = sizeButton.height;
 	ButtonDestRect.left = size.width - sizeButton.width / 2;
 	ButtonDestRect.right = size.width + sizeButton.width / 2;

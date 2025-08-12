@@ -4,6 +4,7 @@
 #include "AttackPatternManager.h"
 #include "../Engine/Utils/EventDelegate.h"
 #include "Scripts/Slider/GiseGauge.h"
+#include "Scripts/HPBar/HpGauge.h"
 class State;
 
 enum GroggyState 
@@ -36,10 +37,12 @@ public:
 	float ConvertSpiritDamageToPos(AttackPosition lastPos, float SpiritDamage);
 
 private:
-
 	//플레이어의 기세 게이지가 0 일때, 적이 플레이어에게 데미지를 주는 배율
 	float spiritDamageMulToPlayer = 2.5f;
 
+	Vector2 Player2{ 400.0f , 200.0f }; // ???
+	Vector2 Enemy2{ 800.0f , 200.0f };
+    
 public:
 	Player* m_Player = nullptr;
 	Enemy* m_Enemy = nullptr;
@@ -106,6 +109,7 @@ public:
 	
 
 private:
+	HpGauge* HpObj{};
 	GiseGauge* giseObj{};
 	float giseChangeValue = 0.0f;				// 변경될 기세 값
 	float giseTotalValue = 0.0f;				// 최종 기세 값

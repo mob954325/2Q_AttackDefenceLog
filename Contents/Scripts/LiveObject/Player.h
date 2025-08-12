@@ -91,7 +91,7 @@ private:
 	bool isAttackingPattern = false;	// ??
 	float groggyTime = 0.0f;			// 그로기 시간?
 	bool isFirstGroggyLoop = false;		// 첫 그로기 루프인지 확인?
-
+    
 	// Debug
 	void SetCursorPosition(int x, int y);         // 플레이어 출력함수
 	void PrintConsole();

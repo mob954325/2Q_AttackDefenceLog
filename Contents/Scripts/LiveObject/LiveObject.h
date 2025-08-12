@@ -51,6 +51,8 @@ public:
 	bool GetIsGroggy() { return isGroggy; }
 	bool GetIsOtherEndGroggy() {return IsOtherEndGroggy; }
 	bool GetIsRestore() { return isRestore; }
+	float GetTotalHp() { return Object_TotalHp; }
+
 
 	// 설정 함수들
 	void SetID(const std::string& id) { Object_ID = id; }							 // ID 설정
@@ -63,7 +65,7 @@ public:
 	void SetIsGroggy(bool Setbool) { isGroggy = Setbool; }
 	void SetIsOtherEndGroggy(bool tmp) { IsOtherEndGroggy = tmp; }
 	void SetIsRestore(bool Setbool) { isRestore = Setbool; }
-
+	//void SetTotalHp(bool Setbool) { isRestore = Setbool; }
 
 
 	//값 변경 함수
@@ -97,6 +99,7 @@ protected:
 	std::string Object_ID; 	      // ID
 	std::wstring Object_Name;     // 이름
 	float Object_Hp;		      // 체력
+	float Object_TotalHp;		  // 전체 체력 
 	float Object_Attack;		  // 공격력
 	float Object_SpiritAttack;	  // 기세 공격력
 	float Object_DefenseRate;	  // 방어율

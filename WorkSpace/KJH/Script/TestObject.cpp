@@ -53,6 +53,7 @@ void TestObject::OnUpdate()
 
 void TestObject::OnCreate()
 {
+	
 	//owner->GetTransform().SetUnityCoords(false);
 	//owner->AddComponent<Slider>();
 	/*TestImage = owner->AddComponent<BitmapRenderer>();
@@ -64,6 +65,8 @@ void TestObject::OnCreate()
 	/*AnimObject = owner->AddComponent<AnimationRenderer>();*/
 	
 	effectobj = owner->AddComponent<EffectInstance>();
+
+	
 
 
 	//GameObject* Test = new GameObject();
@@ -95,6 +98,13 @@ void TestObject::OnCreate()
 		RotationList.push_back(20.0f + (i * 50));
 	}
 	
+	
+	owner->AddComponent<HitEffect>();
+	HitE = owner->GetComponent<HitEffect>();
+	owner->AddComponent<EnemyAttackEffect>();
+	EATK = owner->GetComponent<EnemyAttackEffect>();
+
+	HP = owner->AddComponent<HpGauge>();
 
 }
 
@@ -108,8 +118,9 @@ void TestObject::OnCreate()
 
 void TestObject::OnStart()
 {
-	owner->AddComponent <GiseGauge>();
-	giseG = owner->GetComponent<GiseGauge>();
+	/*owner->AddComponent <GiseGauge>();
+	giseG = owner->GetComponent<GiseGauge>();*/
+	
 	//owner->GetComponent<Slider>()->ButtonShow(false);
 	//owner->GetComponent<Slider>()->SetGaugeBackgroundImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\UI\\Slider\\gise_ui_white.png");
 	//owner->GetComponent<Slider>()->SetGaugeBarImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\UI\\Slider\\gise_ui_black.png");
@@ -197,10 +208,34 @@ void TestObject::OnStart()
 	{100,100},{400,100},{700,100},
 	{100,400},{400,400},{700,400}
 	};
-	
+
+	positionList2 = {
+	{300,200},{700,200},{1100,200},
+	{300,400},{700,400},{1100,400},
+	{300,600},{700,600},{1100,600}
+	};
+
+	Vector2 T1{ 500.0f, 500.0f };
+	Vector2 T2{ 1000.0f, 500.0f };
+
+	HP->SetHpUiPosition(T1, T2);
+
 	effectobj->SetAnimePosition(positionList);
 
-	
+	EATK->SetAnimePosition(positionList2);
+	/*HitE->SetAnimePosition(positionList2);*/
+
+	// 567.0f;
+	float offsetX = 0.0f;
+	float offsetY = 0.0f;
+
+	std::vector<Vector2> vec
+	{
+		{offsetX + 0,  offsetY},
+		{offsetX + 786, offsetY},
+		{offsetX + 735, offsetY + 73.0f},
+		{offsetX + 55, offsetY + 73.0f}
+	};
 
 }
 
@@ -212,23 +247,25 @@ void TestObject::OnDestroy()
 
 void TestObject::CheckInput()
 {
-	if (input->IsKeyPressed('W'))
-	{
-		PAtkE->CallAnime(5, RotationList);
-	}
-	if (input->IsKeyPressed('S'))
-	{
-		FinalA->CallAnime(60.0f);
-	}
+	//if (input->IsKeyPressed('W'))
+	//{
+	//	PAtkE->CallAnime(5, RotationList);
+	//}
+	//if (input->IsKeyPressed('S'))
+	//{
+	//	FinalA->CallAnime(60.0f);
+	//}
 
-	//if (input->IsKeyDown('W'))
-	//{
-	//	giseG->ChangeGaugeBar(-1.0f);
-	//}
-	//if (input->IsKeyDown('S'))
-	//{
-	//	giseG->ChangeGaugeBar(1.0f);
-	//}
+	if (input->IsKeyDown('W'))
+	{
+		/*giseG->ChangeGaugeBar(-1.0f);*/
+		HP->ChangeGaugeBar(-1.0f);
+	}
+	if (input->IsKeyDown('S'))
+	{
+		//giseG->ChangeGaugeBar(1.0f);
+		HP->ChangeGaugeBar(1.0f);
+	}
 	// 
 	// 
 	//if (input->IsKeyPressed('N'))
@@ -316,39 +353,57 @@ void TestObject::CheckInput()
 
 	if (input->IsKeyPressed('1'))
 	{
-		effectobj->CallAnime(0);
+		//effectobj->CallAnime(0);
+		//HitE->CallAnime(0);
+		//EATK->CallAnime(0);
 	}
 	if (input->IsKeyPressed('2'))
 	{
-		effectobj->CallAnime(1);
+		//effectobj->CallAnime(1);
+		//HitE->CallAnime(1);
+		//EATK->CallAnime(1);
 	}
 	if (input->IsKeyPressed('3'))
 	{
-		effectobj->CallAnime(2);
+		//effectobj->CallAnime(2);
+		//HitE->CallAnime(2);
+		//EATK->CallAnime(2);
 	}
 	if (input->IsKeyPressed('4'))
 	{
-		effectobj->CallAnime(3);
+		//effectobj->CallAnime(3);
+		//HitE->CallAnime(3);
+		//EATK->CallAnime(3);
 	}
 	if (input->IsKeyPressed('5'))
 	{
-		effectobj->CallAnime(4);
+		//effectobj->CallAnime(4);
+		//HitE->CallAnime(4);
+		//EATK->CallAnime(4);
 	}
 	if (input->IsKeyPressed('6'))
 	{
-		effectobj->CallAnime(5);
+		//effectobj->CallAnime(5);
+		//HitE->CallAnime(5);
+		//EATK->CallAnime(5);
 	}
 	if (input->IsKeyPressed('7'))
 	{
-		effectobj->CallAnime(6);
+		//effectobj->CallAnime(6);
+		//HitE->CallAnime(6);
+		//EATK->CallAnime(6);
 	}
 	if (input->IsKeyPressed('8'))
 	{
-		effectobj->CallAnime(7);
+		//effectobj->CallAnime(7);
+		//HitE->CallAnime(7);
+		//EATK->CallAnime(7);
 	}
 	if (input->IsKeyPressed('9'))
 	{
-		effectobj->CallAnime(8);
+		//effectobj->CallAnime(8);
+		//HitE->CallAnime(8);
+		//EATK->CallAnime(8);
 	}
 }
 

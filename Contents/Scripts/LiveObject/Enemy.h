@@ -49,10 +49,11 @@ public:
 	//플래그를 체크할 함수
 	void AddPattenLoop() override;
 
-	StateController* m_State = nullptr;  //오브젝트 들은 State 내부에서 받을 수 있도록 포인터 생성
+	StateController* m_State = nullptr;  // 오브젝트 들은 State 내부에서 받을 수 있도록 포인터 생성
 	bool isFirstSpiriteDown = false;
+	bool isEnemyGroggyAttack = false;    // 플레이어가 그로기 상태일 때 Enemy 공격 상태 여부
 
-	void RestoreGroggy(); // 초기화 겸, 외부에서도 호출해주는 함수임
+	void RestoreGroggy();  // 초기화 겸, 외부에서도 호출해주는 함수임
 
 private:
 	// 적이 가지고 있는 공격의 ID
@@ -85,7 +86,8 @@ private:
 	void PrintConsole();
 	void SetCursorPosition(int x, int y);
 	AttackPatternManager* m_PattenManager = nullptr; // 패턴 매니저를  참조로 받아  사용할 변수
-
+	void ReserEnemy();
+	
 	
 private:
 	std::string Difficulty;					// 적의 난이도 k
