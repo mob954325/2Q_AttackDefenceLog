@@ -2,7 +2,7 @@
 // <example>
 // 등록 방식
 // 1. Add() 사용
-// ListenerID id1 = player->OnHpChange.Add(std::bind(&HpComponent::ChangeValue, this, std::placeholders::_1));
+// ListenerID id1 = player->OnHpChange.Add(std::bind(&HpComponent::giseChangeValue, this, std::placeholders::_1));
 // 
 // 2. += 오퍼레이터 사용
 // id2 = player->OnHpChange += std::bind(&HpComponent::ChangeValue2, this, std::placeholders::_1);
