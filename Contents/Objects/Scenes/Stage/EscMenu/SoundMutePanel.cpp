@@ -9,8 +9,8 @@ void SoundMutePanel::OnCreate()
 {
 	owner->SetRenderLayer(EngineData::RenderLayer::UI);
 
-	float offsetX = EngineData::SceenWidth / 4;
-	float offsetY = EngineData::SceenHeight / 3;
+	offsetX = EngineData::SceenWidth / 4;
+	offsetY = EngineData::SceenHeight / 3;
 
 	owner->GetTransform().SetUnityCoords(false);
 	owner->GetTransform().Translate({ offsetX, offsetY });
@@ -59,10 +59,6 @@ void SoundMutePanel::OnCreate()
 
 void SoundMutePanel::OnStart()
 {
-	// 버튼 초기화
-	float offsetX = EngineData::SceenWidth / 4;
-	float offsetY = EngineData::SceenHeight / 3;
-
 	muteButton->SetNormalImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + offUIImagePath);
 	muteButton->SetHoverImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + offUIImagePath);
 	muteButton->SetPressedImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + offUIImagePath);
@@ -91,6 +87,8 @@ void SoundMutePanel::OnStart()
 
 void SoundMutePanel::OnUpdate()
 {
+	if (!isOpen) return;
+
 	if (!Input::leftButtonDown)
 	{
 		isPressed = false;
@@ -98,10 +96,9 @@ void SoundMutePanel::OnUpdate()
 
 	if (CheckMouseHoverOnSlider(Input::MouseX, Input::MouseY) && Input::leftButtonDown)
 	{
-		std::cout << "충돌" << std::endl;
 		Vector2 currPosition = sliderButton->GetTransform().GetPosition();
 		D2D1_SIZE_F size = panelBitmap->GetResource()->GetBitmap()->GetSize();
-		float offsetX = EngineData::SceenWidth / 4;
+
 		if (currPosition.x < offsetX + size.width * 0.3f)
 		{
 			sliderButton->GetTransform().SetPosition(offsetX + size.width * 0.3f, currPosition.y);
@@ -116,7 +113,7 @@ void SoundMutePanel::OnUpdate()
 		float delta = mouseDeltaVec.Magnitude();	// 마우스 움직인 크기
 
 		float minX = offsetX + size.width * 0.3f;	// 슬라이드 최소 위치
-		float maxX = offsetX + size.width * 0.875f;	// 슬라이드 최대 위치
+		float maxX = offsetX + size.width * 0.85f;	// 슬라이드 최대 위치
 
 		float ratio = Input::MouseX / maxX;			// 볼륨 현재 비율 - 위치값 비율
 
@@ -124,7 +121,7 @@ void SoundMutePanel::OnUpdate()
 
 		float volumRatio = ((Input::MouseX - offsetX + size.width * 0.3f) / (maxX - offsetX + size.width * 0.3f) * 2.0f) - 1.0f; // 0.0 - 1.0 : 실제 볼륨 값
 
-		// TODO : 오디오 볼륨 시스템에 연결, 버튼위치 볼륨값과 싱크맞추기
+		Singleton<AudioSystem>::GetInstance().Setvolume(volumRatio);
 	}
 }
 
@@ -145,6 +142,18 @@ void SoundMutePanel::SetOpen(bool value)
 		sliderButtonBitmap->SetActive(true);
 
 		muteButton->SetActive(true);
+
+		// 슬라이더 버튼 위치 초기화 - 볼륨값과 동일하게 초기화
+		Vector2 currPosition = sliderButton->GetTransform().GetPosition();
+		D2D1_SIZE_F size = panelBitmap->GetResource()->GetBitmap()->GetSize();
+
+		float soundVolum = 0;
+		Singleton<AudioSystem>::GetInstance().Getvolume(soundVolum); // -1.0 ~ 1.0 범위
+		float maxX = offsetX + size.width * 0.85f;
+
+		float sliderX = (soundVolum + 1.0f) * 0.5f * (maxX - offsetX + size.width * 0.3f) + offsetX - size.width * 0.3f;
+
+		sliderButton->GetTransform().SetPosition(sliderX, currPosition.y);
 
 		isOpen = true;
 	}
