@@ -38,7 +38,7 @@ void MusicScript::MusicScript::OnCreate()
 
 void MusicScript::MusicScript::OnStart()
 {
-	//owner->GetComponent<FModComponent>()->AddSound(componentList);
+	owner->GetComponent<FModComponent>()->AddSound(componentList);
 	//owner->GetComponent<Slider>()->ButtonShow(false);
 	//owner->GetComponent<Slider>()->SetGaugeBackgroundImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\UI\\TestGauge\\hp_ui_01.png");
 	//owner->GetComponent<Slider>()->SetGaugeBarImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\UI\\TestGauge\\hp_ui_02.png");

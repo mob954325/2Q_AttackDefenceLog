@@ -7,13 +7,12 @@
 #include "Objects/Scenes/Stage/EscMenu/EscContinueButton.h"
 #include "Objects/Scenes/Stage/EscMenu/EscExitButton.h"
 #include "Objects/Scenes/Stage/EscMenu/EscMuteButton.h"
-
+#include "Objects/Sound/SoundPlayScene.h"
+#include "../Engine/Systems/AudioSystem.h"
 
 void Stage1::OnEnterImpl()
 {
 	std::cout << "스테이지1 진입" << std::endl;
-
-
 
 	inputObj = new GameObject();
 	inputObj->AddComponent<InputObject>();
@@ -48,6 +47,15 @@ void Stage1::OnEnterImpl()
 	AddGameObject(escPanel, "escPanel");
 	esc->SetButtons({ continueBtn, exitBtn, muteBtn });
 	esc->SetButtonsPosition();
+
+	Singleton<AudioSystem>::GetInstance().ReSetChannel();
+
+	SoundStageOne = new GameObject();
+	SoundStageOne->AddComponent<SoundPlayScene>();
+	AddGameObject(SoundStageOne, "SoundMenu1");
+
+	SoundStageOne->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Stage01");
+	SoundStageOne->GetComponent<SoundPlayScene>()->PlaySound();
 }
 
 void Stage1::OnExitImpl()

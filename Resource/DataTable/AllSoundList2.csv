@@ -1,0 +1,26 @@
+﻿SoundID,Path,Mode
+P_Attack01,\..Resource\sounds\attack\attack_1.mp3,FMOD_DEFAULT | FMOD_LOOP_OFF
+P_Attack02,\..Resource\sounds\attack\attack_2.mp3,FMOD_DEFAULT | FMOD_LOOP_OFF
+P_Attack03,\..Resource\sounds\attack\attack_2.mp3,FMOD_DEFAULT | FMOD_LOOP_OFF
+P_Break01,\..Resource\sounds\vigor\vigorbreak_1.mp3,FMOD_DEFAULT | FMOD_LOOP_OFF
+P_NodeActive01,\..Resource\sounds\node\node_active_1.wav,FMOD_DEFAULT | FMOD_LOOP_OFF
+P_NodeActive02,\..Resource\sounds\node\node_active_2.wav,FMOD_DEFAULT | FMOD_LOOP_OFF
+P_NodeActive03,\..Resource\sounds\node\node_active_3.wav,FMOD_DEFAULT | FMOD_LOOP_OFF
+P_Guard01,\..Resource\sounds\defence\defence_1.mp3,FMOD_DEFAULT | FMOD_LOOP_OFF
+P_Guard02,\..Resource\sounds\defence\defence_2.mp3,FMOD_DEFAULT | FMOD_LOOP_OFF
+P_Button,\..Resource\sounds\button\button_click.wav,FMOD_DEFAULT | FMOD_LOOP_OFF
+P_Down,\..Resource\sounds\down\down.mp3,FMOD_DEFAULT | FMOD_LOOP_OFF
+P_ComboLine,\..Resource\sounds\combo\combo_line.mp3,FMOD_DEFAULT | FMOD_LOOP_OFF
+P_ComboFinish,\..Resource\sounds\combo_end\combo_end.mp3,FMOD_DEFAULT | FMOD_LOOP_OFF
+P_ComboCharge,\..Resource\sounds\combo_charge\combo_charge.wav,FMOD_DEFAULT | FMOD_LOOP_OFF
+P_Parry01,\..Resource\sounds\parry\parry_1.mp3,FMOD_DEFAULT | FMOD_LOOP_OFF
+P_Parry02,\..Resource\sounds\parry\parry_2.mp3,FMOD_DEFAULT | FMOD_LOOP_OFF
+P_Parry03,\..Resource\sounds\parry\parry_3.mp3,FMOD_DEFAULT | FMOD_LOOP_OFF
+P_Hit01,\..Resource\sounds\hit\hit.wav,FMOD_DEFAULT | FMOD_LOOP_OFF
+P_Dodge01,\..Resource\sounds\dodge\dodge_1.mp3,FMOD_DEFAULT | FMOD_LOOP_OFF
+P_Dodge02,\..Resource\sounds\dodge\dodge_2.mp3,FMOD_DEFAULT | FMOD_LOOP_OFF
+M_Stage01,\..Resource\sounds\stage_1.mp3,FMOD_CREATESTREAM | FMOD_LOOP_NORMAL
+M_Stage02,\..Resource\sounds\stage_2.mp3,FMOD_CREATESTREAM | FMOD_LOOP_NORMAL
+M_Stage03,\..Resource\sounds\stage_3_2.mp3,FMOD_CREATESTREAM | FMOD_LOOP_NORMAL
+M_End,\..Resource\sounds\End_bgm.mp3,FMOD_CREATESTREAM | FMOD_LOOP_NORMAL
+M_Lobby,\..Resource\sounds\main_bgm.mp3,FMOD_CREATESTREAM | FMOD_LOOP_NORMAL

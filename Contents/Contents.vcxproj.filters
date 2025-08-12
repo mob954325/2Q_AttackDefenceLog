@@ -224,6 +224,15 @@
     <ClCompile Include="Objects\Scenes\Stage\EscMenu\SoundMutePanel.cpp">
       <Filter>Objects\SceneObject\Stage\EscMenu</Filter>
     </ClCompile>
+    <ClCompile Include="Objects\Scenes\SelectScene\SelectEffectManager.cpp">
+      <Filter>Objects\SceneObject\SelectScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Scenes\Stage\CloudManager.cpp">
+      <Filter>Objects\SceneObject\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Sound\SoundEnd.cpp" />
+    <ClCompile Include="Objects\Sound\SoundPlayScene.cpp" />
+    <ClCompile Include="Objects\Sound\SoundTittle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameApp.h">
@@ -378,5 +387,17 @@
     <ClInclude Include="Objects\Scenes\Stage\EscMenu\SoundMutePanel.h">
       <Filter>Objects\SceneObject\Stage\EscMenu</Filter>
     </ClInclude>
+    <ClInclude Include="Objects\Scenes\TitleScene\EffectProgress.h">
+      <Filter>Objects\SceneObject\TitleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Scenes\SelectScene\SelectEffectManager.h">
+      <Filter>Objects\SceneObject\SelectScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Scenes\Stage\CloudManager.h">
+      <Filter>Objects\SceneObject\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Sound\SoundEnd.h" />
+    <ClInclude Include="Objects\Sound\SoundPlayScene.h" />
+    <ClInclude Include="Objects\Sound\SoundTittle.h" />
   </ItemGroup>
 </Project>

@@ -10,6 +10,12 @@
 #include "Scenes/Stage2.h"
 #include "Scenes/Stage3.h"
 
+#include "Systems/AudioSystem.h"
+#include "Components/Logic/InputSystem.h"
+#include "Resources/Loaders/CsvLoader.h"
+#include "Application/AppPaths.h"
+#include <windows.h>
+
 void GameApp::Initialize()
 {
 	__super::Initialize();
@@ -32,6 +38,11 @@ void GameApp::Initialize()
 	stage1 = new Stage1();				Singleton<SceneManager>::GetInstance().AddScene(stage1);
 	stage2 = new Stage2();				Singleton<SceneManager>::GetInstance().AddScene(stage2);
 	stage3 = new Stage3();				Singleton<SceneManager>::GetInstance().AddScene(stage3);
+
+
+	LoadCSV<SoundResource>::SetCSV(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\DataTable\\AllSoundList.csv", soundList);
+	AudioSystem::GetInstance().Initialize(128);
+	AudioSystem::GetInstance().Register(soundList);
 
 	Singleton<SceneManager>::GetInstance().Init();
 }
