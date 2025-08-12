@@ -13,21 +13,15 @@ class Enemy : public LiveObject
 public:
 	Enemy() = default;
 	~Enemy() = default;
-	void OnCreate() {};
+
 	void OnStart();
 	void OnUpdate();
-	void OnFixedUpdate() {};
-	void OnDestroy() {};
 
 private:
-	//------------------------------------------------------------------------
 	// 적 공격 패턴 고정
 	std::string  enemyAttackPatternFix = " ";   //<=== 해당 ID의 적 공격 ID, 안쓰면  " " 안에 EP쓰지말기  
 	//ex) "EP_013"
 
-
-
-	//------------------------------------------------------------------------
 public:
 	// 플레이어의 상태를 초기화하는 함수
 	void ResetPlayerState() {};
@@ -40,15 +34,13 @@ public:
 
 	// 배틀 매니저에서 사용될 함수
 	void SelectPatten() override;   //플레이어가 사용할 패턴을 고름
-	void SetNowPatten() override;   //플레이어의 현재 패턴의 노드를 반환함
-
-
+	void SetNowPattern() override;  
 
 	//업데이트에 들어갈 시간에 따라 변하는 함수들
 	void CalSpiritTime() override;  //초당 기세 : -0.3
 	void SetCoolTime() override;	//쿨타임이 0이 되었을 때, 플레이어의 쿨타임 설정
-	void StateAct();
-	void DiffState();
+	void StateAct();				// 상태에 따른 행동 호출 함수
+	void DiffState();				// 상태 변환과 그로기 관련 업데이트 함수 포함되어있음
 
 	//스테이트 설정하는 함수
 	void SetState(std::string setStateName) override;
@@ -57,15 +49,10 @@ public:
 	//플래그를 체크할 함수
 	void AddPattenLoop() override;
 
-	//반환하는 함수
-
-
 	StateController* m_State = nullptr;  //오브젝트 들은 State 내부에서 받을 수 있도록 포인터 생성
 	bool isFirstSpiriteDown = false;
 
-
 	void RestoreGroggy(); // 초기화 겸, 외부에서도 호출해주는 함수임
-
 
 private:
 	// 적이 가지고 있는 공격의 ID
@@ -90,7 +77,7 @@ private:
 	//이전 패턴의 변수를 저장 할 함수!
 	int nowRandomValue = 0;  // 적이 가지고 있는 연속 공격 패턴을 정하는 변수
 	int preRandomValue = 0;
-	int patternCount = 0;   // 연격일 경우 다음 패턴을 정하는 변수
+	int patternCount = 0;	 // 연격일 경우 다음 패턴을 정하는 변수
 
 
 	std::string PrePattenID;  // 이전 패턴의 ID
@@ -101,14 +88,15 @@ private:
 
 	
 private:
-	std::string Difficulty;			   // 적의 난이도 k
-	EnemyData* nowEnemyData = nullptr; // 현재 적의 데이터 클래스를 담을 변수
+	std::string Difficulty;					// 적의 난이도 k
+	EnemyData* nowEnemyData = nullptr;		// 현재 적의 데이터 클래스를 담을 변수
 	AllNodePattenClass* tmpNode = nullptr;
 	
 	std::string nowStateName;
 	std::string preStateName;
 	float groggyTime = 0.0f;
-
+	
+	// 이미지 관련 ==================================================
 	std::shared_ptr<BitmapResource> EnemyBitmap = nullptr;
 	BitmapRenderer* enemy_Idle = nullptr;
 	BitmapRenderer* enemy_Attack = nullptr;
@@ -124,9 +112,7 @@ private:
 	//  이미지의 공통된 위치
 	std::wstring enemy_CommonPath;
 
-	void SetBitmap();  // 비트맵 설정하는 함수
-
-	
+	void SetBitmap();  // 비트맵 설정하는 함수	
 };
 
 
