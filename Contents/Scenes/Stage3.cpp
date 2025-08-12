@@ -8,6 +8,9 @@
 #include "Objects/Scenes/Stage/EscMenu/EscContinueButton.h"
 #include "Objects/Scenes/Stage/EscMenu/EscExitButton.h"
 #include "Objects/Scenes/Stage/EscMenu/EscMuteButton.h"
+#include "Objects/Common/PatternControlObject.h"
+#include "Scripts/LiveObject/Enemy.h"
+#include "Scripts/GameManager.h"
 
 void Stage3::OnEnterImpl()
 {
@@ -46,6 +49,11 @@ void Stage3::OnEnterImpl()
 	AddGameObject(escPanel, "escPanel");
 	esc->SetButtons({ continueBtn, exitBtn, muteBtn });
 	esc->SetButtonsPosition();
+
+	PCO = new GameObject();
+	auto comp = PCO->AddComponent<PatternControlObject>();
+	AddGameObject(PCO, "PatternControlObject");
+	comp->GetEnemy()->SetNameDiff("Stage3", Singleton<GameManager>::GetInstance().GetDifficultyString());
 }
 
 void Stage3::OnExitImpl()

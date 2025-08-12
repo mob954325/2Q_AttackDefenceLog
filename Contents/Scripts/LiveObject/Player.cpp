@@ -64,7 +64,7 @@ void Player::OnUpdate() {
 		AddPattenLoop();		// 패턴을 추가하는 루프
 	}
 
-	PrintConsole();		// 콘솔 호출
+	// PrintConsole();		// 콘솔 호출
 	m_State->Update(); 	// 각 state별 추가로 정의된 행동 호출
 	DiffState();  		// 이전상태와 현재상태를 결정하는 함수
 	StateAct();   		// 각 state 별 행동 
@@ -285,6 +285,8 @@ void Player::DiffState()
 	{
 		if(!OtherGroggyTimeStop)
 		enemyGroggyTime += GameTime::GetInstance().GetDeltaTime();
+
+		std::cout << enemyGroggyTime << std::endl;
 	}
 
 	// 그로기 시간!!!

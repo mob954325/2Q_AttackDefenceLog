@@ -71,3 +71,13 @@ bool GameManager::IsStage3Clear()
 {
     return isStage3Clear;
 }
+
+void GameManager::SetDifficulty(std::string diffStr)
+{
+    difficulty = diffStr;
+}
+
+std::string GameManager::GetDifficultyString()
+{
+    return difficulty;
+}

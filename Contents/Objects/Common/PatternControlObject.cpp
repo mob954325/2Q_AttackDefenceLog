@@ -486,3 +486,8 @@ void PatternControlObject::OnDestroy()
 		}
 	}
 }
+
+Enemy* PatternControlObject::GetEnemy()
+{
+	return enemy->GetComponent<Enemy>();
+}
