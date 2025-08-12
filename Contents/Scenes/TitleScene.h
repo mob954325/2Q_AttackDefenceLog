@@ -17,6 +17,6 @@ private:
 	GameObject* SoundTittleObj;
 
 
-
+	GameObject* cloudManager;
 	GameObject* titleEffectManager;
 };

@@ -3,14 +3,14 @@
 #include "Components/Rendering/BitmapRenderer.h"
 #include "Objects/Scenes/TitleScene/EffectProgress.h" // 여기에 구조체 있음
 
-class TitleEffectManager : public MonoBehavior
+class SelectEffectManager : public MonoBehavior
 {
 public:
 	void OnStart() override;
 	void OnUpdate() override;
 	void OnDestroy() override;
 	D2D1_SIZE_F GetSize() { return size; };
-
+	
 	void Start();
 
 	void Reset();//원래 자리로 돌리는 기능임 << Start내부에서 호출되긴 함

@@ -8,9 +8,16 @@
 #include "Objects/Scenes/SelectScene/SelectSceneBGI.h"
 #include "Objects/Sound/SoundTittle.h"
 
+
+#include "Objects/Scenes/Stage/CloudManager.h"
+
 void SelectScene::OnEnterImpl()
 {
 	std::cout << "선택씬 진입" << std::endl;
+
+	cloudManager = new GameObject();
+	cloudManager->AddComponent<CloudManager>();
+	AddGameObject(cloudManager, "CloudManagerSelcet");
 
 	inputObj = new GameObject();
 	inputObj->AddComponent<InputObject>();
@@ -41,4 +48,15 @@ void SelectScene::OnExitImpl()
 
 void SelectScene::UpdateImpl()
 {
+	auto input = inputObj->GetComponent<InputSystem>();
+
+
+	if (input->IsKeyPressed('3')) {
+		cloudManager->GetComponent<CloudManager>()->Start();
+	}
+
+	if (input->IsKeyPressed('4')) {
+		cloudManager->GetComponent<CloudManager>()->ReverseStart();
+	}
+
 }

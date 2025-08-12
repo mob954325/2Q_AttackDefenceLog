@@ -2,6 +2,7 @@
 #include "Components/Base/MonoBehavior.h"
 #include "Components/Rendering/PatternDrawerComponent.h"
 #include "Objects/Scenes/Stage/NodeObject.h"
+#include "../Engine/Utils/EventDelegate.h"
 
 /*  25.08.08 | 작성자 : 이성호
 *   기능 : titleScene의 노드관리를 하는 MonoBehavior로 
@@ -18,6 +19,7 @@ public:
 	void HandleSliceNode();
 	void HandleSceneChangeTimer();
 
+	EventDelegate<> onononStart;
 private:
 	PatternDrawerComponent* patternDrawer;
 	std::vector<NodeObject*> nodes; // 입력용 노드
