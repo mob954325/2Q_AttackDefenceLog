@@ -30,7 +30,7 @@ void Player::OnStart() {
 	m_State = owner->GetComponent<StateController>();
 	m_PattenManager = owner->GetQuery()->FindByName("AttackPattenManager")->GetComponent<AttackPatternManager>();
 	SetStatData("CI_001");
-	SelectPatten(); // 공격을 했으면 다른 패턴 세팅
+	SelectPattern(); // 공격을 했으면 다른 패턴 세팅
 	OnCreateState();
 	m_State->SetState("Player_Idle");
 	SetState("Player_Idle");
@@ -154,7 +154,7 @@ void Player::SetNowPatten() {
 
 
 // 배틀 매니저에서 사용될 함수
-void Player::SelectPatten() {   //각 객체가 사용할 패턴을 고름
+void Player::SelectPattern() {   //각 객체가 사용할 패턴을 고름
 	std::random_device rd;
 	std::mt19937 gen(rd());
 	std::uniform_int_distribution<> dist(1, PattenID.size()); // 1 ~ 10 사이의 정수
@@ -224,7 +224,7 @@ void Player::AddPattenLoop() {
 		// 현재 패턴의 시간이 0이거나 이하가 되면 쿨타임계산 X
 		if (Object_nowCoolTime <= 0) {
 			Object_nowPlayingAttackTime = 1.0f;
-			SelectPatten();
+			SelectPattern();
 			SetNowPatten();
 			isPattenCooldown = false;
 		}

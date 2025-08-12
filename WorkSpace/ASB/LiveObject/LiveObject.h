@@ -76,7 +76,7 @@ public:
 	virtual void CalSpiritTime() = 0;  //이거는 플레이어 : -0.3,  적 : +0.3  고정!!!
 
 	//배틀 매니저에 들어갈 스탯 계산할 함수
-	virtual void SelectPatten() = 0;   //각 객체가 사용할 패턴을 고름
+	virtual void SelectPattern() = 0;   //각 객체가 사용할 패턴을 고름
 	virtual void SetNowPatten() = 0;   //각 객체가 현재 패턴을 반환함
 	virtual void AddPattenLoop() = 0;  // 각 플래그를 관리하여 패턴을 추가하는 코드
 	

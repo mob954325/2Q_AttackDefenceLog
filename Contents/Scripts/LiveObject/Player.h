@@ -37,8 +37,8 @@ public:
 	void ResetSpiritAmount();
 
 	// 배틀 매니저에서 사용될 함수
-	void SelectPatten() override;   //플레이어가 사용할 패턴을 고름
-	void SetNowPatten() override;   //플레이어의 현재 패턴의 노드를 반환함
+	void SelectPattern() override;   //플레이어가 사용할 패턴을 고름
+	void SetNowPattern() override;   //플레이어의 현재 패턴의 노드를 반환함
 
 
 	//업데이트에 들어갈 시간에 따라 변하는 함수들
@@ -74,10 +74,10 @@ private:
 	PlayerAtkPetternData* nowPlayerPattenData = nullptr; //사용할 패턴 데이터를 가리키는 포인터
 	PlayerAtkPetternData* prePlayerPattenData = nullptr;
 
-	std::string PrePattenID;		  // 이전 패턴의 ID
-	std::string preStateName;          // 이전 상태를 저장하는 변수
-	std::string oneLoopPreStateName;   // 한 루프 이전 상태를 저장하는 변수
-	std::string nowStateName;          // 현재 상태
+	std::string PrePattenID;			// 이전 패턴의 ID
+	std::string preStateName;			// 이전 상태를 저장하는 변수
+	std::string oneLoopPreStateName;	// 한 루프 이전 상태를 저장하는 변수
+	std::string nowStateName;			// 현재 상태
 
 	// 플레이어 이미지 비트맵들
 	std::shared_ptr<BitmapResource> PlayerBitmap = nullptr;
@@ -89,7 +89,7 @@ private:
 	BitmapRenderer* player_Damaged = nullptr;
 
 	bool isAttackingPattern = false;	// ??
-	float groggyTime = 0.0f;			// 그로기 시간?
+	float enemyGroggyTime = 0.0f;		// 그로기 시간?
 	bool isFirstGroggyLoop = false;		// 첫 그로기 루프인지 확인?
     
 	// Debug

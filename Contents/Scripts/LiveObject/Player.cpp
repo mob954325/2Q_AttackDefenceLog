@@ -42,7 +42,7 @@ void Player::ResetPlayer()
 {
 	isAttackingPattern = true;
 
-	SelectPatten();				// 공격을 했으면 다른 패턴 세팅 - 
+	SelectPattern();				// 공격을 했으면 다른 패턴 세팅 - 
 	SetState("Player_Idle");	// 플레이어 상태 변경 - idle
 }
 
@@ -185,7 +185,7 @@ void Player::SetAttackPattenData(std::string PattID)
 };
 
 // 플레이어의 가이드 패턴2개를 패턴매니저에 등록
-void Player::SetNowPatten() 
+void Player::SetNowPattern()
 {
 	std::vector<int> tmp;
 	std::vector<int> tmp2;
@@ -219,7 +219,7 @@ void Player::SetNowPatten()
 };
 
 // 배틀 매니저에서 사용될 함수
-void Player::SelectPatten()  // 각 객체가 사용할 패턴을 고름
+void Player::SelectPattern()  // 각 객체가 사용할 패턴을 고름
 {  
 	if (attackPlayerPatternIDFix.substr(0, 2) != "PI")
 	{
@@ -274,7 +274,7 @@ void Player::DiffState()
 	}
 
 	// 그로기 시간!!!
-	//10초가 지나거나
+	// 10초가 지나거나
 	if (enemyGroggyTime >= 10.0f ) 
     {
 		RestoreGroggy();
@@ -323,8 +323,8 @@ void Player::AddPattenLoop()
 		if (Object_nowCoolTime <= 0) 
 		{
 			Object_nowPlayingAttackTime = 1.0f;
-			SelectPatten();
-			SetNowPatten();
+			SelectPattern();
+			SetNowPattern();
 			isPattenCooldown = false;
 		}
 	}

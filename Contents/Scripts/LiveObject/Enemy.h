@@ -33,7 +33,7 @@ public:
 	void ResetSpiritAmount();
 
 	// 배틀 매니저에서 사용될 함수
-	void SelectPatten() override;   //플레이어가 사용할 패턴을 고름
+	void SelectPattern() override;   //플레이어가 사용할 패턴을 고름
 	void SetNowPattern() override;  
 
 	//업데이트에 들어갈 시간에 따라 변하는 함수들
@@ -52,6 +52,7 @@ public:
 	StateController* m_State = nullptr;  // 오브젝트 들은 State 내부에서 받을 수 있도록 포인터 생성
 	bool isFirstSpiriteDown = false;
 	bool isEnemyGroggyAttack = false;    // 플레이어가 그로기 상태일 때 Enemy 공격 상태 여부
+	bool isPatternLive = false;
 
 	void RestoreGroggy();  // 초기화 겸, 외부에서도 호출해주는 함수임
 
