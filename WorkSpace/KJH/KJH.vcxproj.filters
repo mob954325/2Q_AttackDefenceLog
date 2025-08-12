@@ -25,6 +25,8 @@
     <ClCompile Include="Script\giseSlider\GiseGauge.cpp" />
     <ClCompile Include="Script\Effect\EffectMonoB.cpp" />
     <ClCompile Include="Script\Effect\Finaleffect.cpp" />
+    <ClCompile Include="Script\Effect\HitEffect.cpp" />
+    <ClCompile Include="Script\Effect\EnemyAttackEffect.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Script\MusicScript.h" />
@@ -50,5 +52,7 @@
     <ClInclude Include="Script\giseSlider\GiseGauge.h" />
     <ClInclude Include="Script\Effect\EffectMonoB.h" />
     <ClInclude Include="Script\Effect\Finaleffect.h" />
+    <ClInclude Include="Script\Effect\HitEffect.h" />
+    <ClInclude Include="Script\Effect\EnemyAttackEffect.h" />
   </ItemGroup>
 </Project>
