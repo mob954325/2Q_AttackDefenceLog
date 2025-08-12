@@ -16,7 +16,20 @@ void AnimationRenderer::Render(D2DRenderManager* manager)
 	// 출력할 최종 위치 설정
 	D2D1_MATRIX_3X2_F mat = owner->GetTransform().GetFinalMatrix();
 
+	// flips
 	if (isFlipX) mat.m11 = -mat.m11;
+	if (isFlipY) mat.m22 = -mat.m22;
+
+	// layer
+	if (!points.empty())
+	{
+		D2D1_MATRIX_3X2_F layerMat = D2D1::Matrix3x2F::Identity();
+		manager->SetRenderTransform(layerMat);
+		renderManager->CreateLayer(&layer); // 레이어 생성
+		renderManager->PushLayer(D2D1::InfiniteRect(), pathGeometry.Get(), layer); // 레이어 추가
+	}
+
+	// setTransform
 	manager->SetRenderTransform(mat);
 
 	// Spirte 정보에 맞게 위치 조정
@@ -25,7 +38,16 @@ void AnimationRenderer::Render(D2DRenderManager* manager)
 
 	manager->DrawBitmap(m_bitmapResource.get()->GetBitmap(), destRect, srcRect, capacity);
 
+	// animPlayer update
 	player.Update(Singleton<GameTime>::GetInstance().GetDeltaTime());
+
+	// layer 소멸
+	if (!points.empty())
+	{
+		renderManager->PopLayer(); // 레이어 제거
+		layer->Release();
+		layer = NULL;
+	}
 }
 
 void AnimationRenderer::CreateBitmapResource(std::wstring filePath)

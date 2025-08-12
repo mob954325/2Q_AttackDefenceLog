@@ -27,6 +27,7 @@
     <ClCompile Include="Script\Effect\Finaleffect.cpp" />
     <ClCompile Include="Script\Effect\HitEffect.cpp" />
     <ClCompile Include="Script\Effect\EnemyAttackEffect.cpp" />
+    <ClCompile Include="Script\HpBar\HpGauge.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Script\MusicScript.h" />
@@ -54,5 +55,6 @@
     <ClInclude Include="Script\Effect\Finaleffect.h" />
     <ClInclude Include="Script\Effect\HitEffect.h" />
     <ClInclude Include="Script\Effect\EnemyAttackEffect.h" />
+    <ClInclude Include="Script\HpBar\HpGauge.h" />
   </ItemGroup>
 </Project>

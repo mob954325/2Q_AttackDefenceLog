@@ -335,6 +335,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Script\HpBar\HpGauge.cpp" />
     <ClCompile Include="Script\Effect\EnemyAttackEffect.cpp" />
     <ClCompile Include="Script\Effect\HitEffect.cpp" />
     <ClCompile Include="Script\Effect\Finaleffect.cpp" />
@@ -363,6 +364,7 @@
     <ClCompile Include="Script\Sound\SoundEnd.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Script\HpBar\HpGauge.h" />
     <ClInclude Include="Script\Effect\EnemyAttackEffect.h" />
     <ClInclude Include="Script\Effect\HitEffect.h" />
     <ClInclude Include="Script\Effect\Finaleffect.h" />

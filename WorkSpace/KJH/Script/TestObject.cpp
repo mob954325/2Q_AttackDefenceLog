@@ -53,6 +53,7 @@ void TestObject::OnUpdate()
 
 void TestObject::OnCreate()
 {
+	
 	//owner->GetTransform().SetUnityCoords(false);
 	//owner->AddComponent<Slider>();
 	/*TestImage = owner->AddComponent<BitmapRenderer>();
@@ -215,6 +216,18 @@ void TestObject::OnStart()
 	EATK->SetAnimePosition(positionList2);
 	/*HitE->SetAnimePosition(positionList2);*/
 
+	// 567.0f;
+	float offsetX = 0.0f;
+	float offsetY = 0.0f;
+
+	std::vector<Vector2> vec
+	{
+		{offsetX + 0,  offsetY},
+		{offsetX + 786, offsetY},
+		{offsetX + 735, offsetY + 73.0f},
+		{offsetX + 55, offsetY + 73.0f}
+	};
+
 }
 
 void TestObject::OnDestroy()
@@ -225,23 +238,23 @@ void TestObject::OnDestroy()
 
 void TestObject::CheckInput()
 {
-	if (input->IsKeyPressed('W'))
-	{
-		PAtkE->CallAnime(5, RotationList);
-	}
-	if (input->IsKeyPressed('S'))
-	{
-		FinalA->CallAnime(60.0f);
-	}
+	//if (input->IsKeyPressed('W'))
+	//{
+	//	PAtkE->CallAnime(5, RotationList);
+	//}
+	//if (input->IsKeyPressed('S'))
+	//{
+	//	FinalA->CallAnime(60.0f);
+	//}
 
-	//if (input->IsKeyDown('W'))
-	//{
-	//	giseG->ChangeGaugeBar(-1.0f);
-	//}
-	//if (input->IsKeyDown('S'))
-	//{
-	//	giseG->ChangeGaugeBar(1.0f);
-	//}
+	if (input->IsKeyDown('W'))
+	{
+		giseG->ChangeGaugeBar(-1.0f);
+	}
+	if (input->IsKeyDown('S'))
+	{
+		giseG->ChangeGaugeBar(1.0f);
+	}
 	// 
 	// 
 	//if (input->IsKeyPressed('N'))

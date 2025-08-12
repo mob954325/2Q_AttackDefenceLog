@@ -16,6 +16,7 @@
 #include "Script/Effect/Finaleffect.h"
 #include "Script/Effect/HitEffect.h"
 #include "Script/Effect/EnemyAttackEffect.h"
+#include "Script/HpBar/HpGauge.h"
 
 
 class TestObject : public MonoBehavior
@@ -33,6 +34,8 @@ public:
 	/*void SetPosition();*/
 
 private:
+	HpGauge* HP{};
+
 	EnemyAttackEffect* EATK{};
 	HitEffect* HitE{};
 
