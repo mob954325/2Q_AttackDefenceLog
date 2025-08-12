@@ -14,5 +14,5 @@ private:
 	GameObject* trail;
 	GameObject* selectManager;
 	GameObject* cloudManager;
-	GameObject* selectEffectManager;
+
 };
