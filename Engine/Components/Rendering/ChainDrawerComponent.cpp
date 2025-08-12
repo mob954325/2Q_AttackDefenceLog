@@ -68,7 +68,7 @@ void ChainDrawerComponent::Render(D2DRenderManager* manager) // 사실상, trail
 				Progress(progress);
 				if (isPlay) {
 					isPlay = false;
-					OnFinished.Invoke(patternID);
+					OnFinished.Invoke();
 				}
 			}
 			else {
@@ -223,6 +223,6 @@ void ChainDrawerComponent::CancelByID(const std::string& id) {
 	isPlay = false;
 	timer = progress = 0.0f;
 	for (auto& p : pieces) p.fillAmount = 0.0f;
-	OnInterrupted.Invoke(patternID);
+	OnInterrupted.Invoke();
 }
 

@@ -49,6 +49,11 @@ public:
 	pattern* CorrectPattern(std::vector<int> PatternID);
 	pattern* failPattern(std::vector<int> PatternID);
 	float OnceAllNodePatternDistance(std::vector<int> PatternID);  // 노드를 받고 그 거리를 계산함
+
+	/// <summary>
+	/// 패턴 시간 종료시 종료된 패턴 내용을 반환하는 함수
+	/// </summary>
+	/// <returns>종료된 pattern 클래스</returns>
 	std::unordered_map<std::string, pattern*> TimeOutPatten();
 
 	// 패턴 전부 삭제

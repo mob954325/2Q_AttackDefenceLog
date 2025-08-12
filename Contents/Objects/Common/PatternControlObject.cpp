@@ -22,12 +22,13 @@
 void PatternControlObject::OnCreate()
 {
 	//===================================================================================================
-	// 트레일 + 노드 오브젝트 생성
+	// 1. 트레일 + 노드 오브젝트 생성
 	trail = new GameObject();
 	trail->AddComponent<MouseTrailObject>();
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(trail, "MouseTrail");
 
-	for (int i = 0; i < 9; ++i) {
+	for (int i = 0; i < 9; ++i) 
+	{
 		m_nodes[i] = new GameObject();
 		auto nodeComponent = m_nodes[i]->AddComponent<NodeObject>();
 		std::string name = "Node." + std::to_string(i + 1);
@@ -35,7 +36,7 @@ void PatternControlObject::OnCreate()
 	}
 
 	//===================================================================================================
-	// 가이드라인 A B 생성
+	// 2. 가이드라인 A B 생성
 	playerGuidelineA = new GameObject();
 	playerGuidelineA->SetRenderLayer(EngineData::RenderLayer::None);
 	auto cb = playerGuidelineA->AddComponent<ChainDrawerComponent>(); // 빨강(상단) 초록(중단) 하단(파랑)
@@ -53,7 +54,7 @@ void PatternControlObject::OnCreate()
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(playerGuidelineB);
 
 	//===================================================================================================
-	// 데?이터 읽어오는거
+	// 3. 데이터 읽어오는거
 
 	char buffer[MAX_PATH];
 	GetCurrentDirectoryA(MAX_PATH, buffer);
@@ -75,27 +76,36 @@ void PatternControlObject::OnCreate()
 	CsvDataManager::GetInstance().SetCSV<PlayerData>(path + "\\..\\Resource\\DataTable\\플레이어 데이터 테이블.csv"); // 데이터 파일 읽어오기
 
 	//===================================================================================================
-	// 어택 패턴 매니저 생성
-	attackPattenManager = new GameObject();                    // GameObject 객체 생성
-	auto apm = attackPattenManager->AddComponent<AttackPatternManager>(); // MonoBehaivor 등록
+	// 4. 어택 패턴 매니저 생성
+	attackPattenManager = new GameObject();                    
+	auto apm = attackPattenManager->AddComponent<AttackPatternManager>(); 
 	attackPattenManager->SetName("AttackPattenManager");
-	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(attackPattenManager);                           // Scene에 GameObject 추가
+	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(attackPattenManager); 
 
-	lid_OnPatternCancel = apm->OnPatternCancel.Add([this](const std::string& id) {
+	// OnPatterCancel 이벤트 등록
+	lid_OnPatternCancel = apm->OnPatternCancel.Add([this](const std::string& id)
+	{
 		ChainDrawerComponent* target = nullptr;
-		for (auto* go : enemyGuidelines) {
-			if (auto* cdc = go->GetComponent<ChainDrawerComponent>()) {
+		for (auto* go : enemyGuidelines) 
+		{
+			if (auto* cdc = go->GetComponent<ChainDrawerComponent>()) // 매개변수의 id를 가가진 Chain Drawer 컴포넌트 찾기
+			{
 				if (cdc->patternID == id) { target = cdc; break; }
 			}
 		}
-		if (target) target->CancelByID(id);
-		});
+		if (target) // 찾으면 취소 함수 호출
+		{
+			target->CancelByID(id);
+		}
+	});
 
-	// ===================
+	//===================================================================================================
+	// 5. 노드 오브젝트 추가
 
 	float n = 200.0f; // 노드간의 간격
 	float r = 45.0f; // 반경
-	for (int i = 0; i < 9; ++i) {
+	for (int i = 0; i < 9; ++i) 
+	{
 		int col = i % 3 - 1; // -1 0 1
 		int row = i / 3 - 1; // -1 0 1
 
@@ -116,66 +126,86 @@ void PatternControlObject::OnCreate()
 		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(obj);
 		auto comp = obj->AddComponent<EffectInstance>();
 		comp->SetAnimePosition(nodePositions);
-		effs.push_back(comp);
+		effectInstances.push_back(comp);
 	}
 
 	//===================================================================================================
-	// 적 + 플레이어 + 배틀매니저 생성
-	enemy = new GameObject();      // GameObject 객체 생성
-	auto enemytmp = enemy->AddComponent<Enemy>(); // MonoBehaivor 등록
+	// 6. 적 + 플레이어 + 배틀매니저 생성
+
+	// 적 오브젝트 생성 (Enemy.h)
+	enemy = new GameObject();    
+	auto enemytmp = enemy->AddComponent<Enemy>();
 	enemytmp->m_State = enemy->AddComponent<StateController>();
 	enemy->SetName("Enemytmp");
-	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(enemy);          // Scene에 GameObject 추가
+	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(enemy);
 
-	player = new GameObject();      // GameObject 객체 생성
-	auto playertmp = player->AddComponent<Player>(); // MonoBehaivor 등록
+	// 플레이어 오브젝트 생성 (Player.h)
+	player = new GameObject();      
+	auto playertmp = player->AddComponent<Player>(); 
 	playertmp->m_State = player->AddComponent<StateController>();
 	player->SetName("Playertmp");
-	playertmp->onTimeOut.Add([this]() {
-		csManager->Cancel(); // 플레이어 쪽에서 그로기 타이머를 관리하고 있어서, 캔슬연결함		
-		});
 
-	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(player);            // Scene에 GameObject 추가
+	// player.onTimeOut 이벤트 연결
+	playertmp->onTimeOut.Add([this]() 
+	{
+		chargedSlashManager->Cancel(); // 플레이어 쪽에서 그로기 타이머를 관리하고 있어서, 캔슬연결함		
+	});
 
-	bettleManager = new GameObject();             // GameObject 객체 생성
-	auto bettletmp = bettleManager->AddComponent<BettleManager>(); // MonoBehaivor 등록
+	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(player); 
+
+	// 7. BattleManager 추가
+	bettleManager = new GameObject();           
+	auto bettletmp = bettleManager->AddComponent<BettleManager>();
+
+	// OnParry 이벤트 추가
 	bettletmp->onParry.Add([this](int nodeIndex)
+	{
+		this->effectInstances[nodeIndex - 1]->DoParry(nodeIndex - 1); 
+	});
+
+	// OnGuard 이벤트 추가
+	bettletmp->onGuard.Add([this](int nodeIndex) 
+	{
+		this->effectInstances[nodeIndex - 1]->DoGuard(nodeIndex - 1); 
+	});
+
+	// OnFinalBlow 이벤트 추가
+	bettletmp->onFinalBlow.Add([this]() 
+	{ // 한붓그리기 완료되는 시점에, 랜덤으로 Start 호출됨
+		int n = GameRandom::RandomRange(0, 4); // 0 ~ 3
+
+		switch (n) 
 		{
-			this->effs[nodeIndex - 1]->DoParry(nodeIndex - 1); // 1. 여기서 위치 초기화가 제대로 안된다
-		});
-
-	bettletmp->onGuard.Add([this](int nodeIndex) {
-		this->effs[nodeIndex - 1]->DoGuard(nodeIndex - 1); // 1. 여기서 위치 초기화가 제대로 안된다
-		});
-
-	bettletmp->onFinalBlow.Add([this]() { // 한붓그리기 완료되는 시점에, 랜덤으로 Start 호출됨
-		int n = GameRandom::RandomRange(0, 4); //0 ~ 3
-
-		switch (n) {
-		case 0: n = 1; break;
-		case 1: n = 3; break;
-		case 2: n = 7; break;
-		case 3: n = 9; break;
-		default: break;
+			case 0: n = 1; break;
+			case 1: n = 3; break;
+			case 2: n = 7; break;
+			case 3: n = 9; break;
+			default: break;
 		}
-		csManager->Start(n);
-		});
 
-	bettletmp->onTimeout.Add([this]() { // 시간 경과되면 캔슬됨
-		csManager->Cancel();
-		});
+		chargedSlashManager->Start(n);
+	});
 
+	// OntimeOut 이벤트 추가 - slash가 시간 경과시 캔슬됨
+	bettletmp->onTimeout.Add([this]() 
+	{
+		chargedSlashManager->Cancel();
+	});
 
+	// Manager의 Player와 Enemy 참조
 	bettletmp->m_Enemy = enemytmp;
 	bettletmp->m_Player = playertmp;
 	bettleManager->SetName("BettleManager");
-	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(bettleManager);                  // Scene에 GameObject 추가
+	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(bettleManager); 
 
-
+	// ChargedSlashManager 추가
 	GameObject* csm = new GameObject();
-	csManager = csm->AddComponent<ChargedSlashManager>();
-	csManager->SetUpNodePos(nodePositions);
-	csManager->onFinisherSuccess.Add([this]() {
+	chargedSlashManager = csm->AddComponent<ChargedSlashManager>();
+	chargedSlashManager->SetUpNodePos(nodePositions);
+
+	// OnFinisherSuccess 이벤트 추가
+	chargedSlashManager->onFinisherSuccess.Add([this]() 
+	{
 		auto btt = bettleManager->GetComponent<BettleManager>();
 		btt->FinalAttackToEnemy();
 
@@ -184,64 +214,84 @@ void PatternControlObject::OnCreate()
 
 		auto pll = player->GetComponent<Player>();
 		pll->RestoreGroggy();
+	});
 
-		});
-
-	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(csm, "ChargedSlashManager"); // 이 오브젝트도 망망대해를 떠돌겠지
+	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(csm, "ChargedSlashManager"); 
 }
 
 //===================================================================================================
 // START ////////////////////////////////////////////////////////////////////////////////////////////
 //===================================================================================================
 
-void PatternControlObject::OnStart() // 처음
+void PatternControlObject::OnStart()
 {
-
-	//csManager->Start(1);
 	owner->SetRenderLayer(EngineData::RenderLayer::UI);
-	auto d = owner->AddComponent<PatternDrawerComponent>();
-	d->SetOrderInLayer(80);
-	d->SetBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Mouse\\test5.png");
+	auto patternDrawerComp = owner->AddComponent<PatternDrawerComponent>();
+	patternDrawerComp->SetOrderInLayer(80);
+	patternDrawerComp->SetBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Mouse\\test5.png");
 
 	//===================================================================================================
+	// PatternControlObject에 effInstance 추가
 
-	float n = 200.0f; // 노드간의 간격
-	float r = 45.0f; // 반경
+	float n = 200.0f;	// 노드간의 간격 -> 바로 위에서 보기 위해 일부로 OnCreate와 OnStart에 지역변수 중복 선언
+	float r = 45.0f;	// 반경
 
 	effInstance = owner->AddComponent<EffectInstance>();
 	effInstance->SetAnimePosition(nodePositions);
 
 	//===================================================================================================
 
-	for (int i = 0; i < 10; ++i) {
+	// 적 공격 패링 가이드 세팅 - 빨강색 패링 이미지 
+	for (int i = 0; i < 10; ++i)
+	{
 		readyQueueForEnemyGuide.push(new GameObject());
+
 		auto queueBack = readyQueueForEnemyGuide.back()->AddComponent<ChainDrawerComponent>();
 		queueBack->SetBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Mouse\\TestArrow_2.png");
 		queueBack->SetFillBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Mouse\\TestArrow_1.png");
 		queueBack->SetOrderInLayer(0);
+
 		readyQueueForEnemyGuide.back()->SetName("EnemyGuideline." + std::to_string(i));
 		queueBack->SetupNodes(m_nodes[4]->GetTransform().GetPosition(), n); // 스타트에서 하기
 
-		queueBack->OnInterrupted.Add([this, go = readyQueueForEnemyGuide.back()](const std::string& id) {
-			for (auto it = enemyGuidelines.begin(); it != enemyGuidelines.end(); ++it) {
-				if (*it == go) { enemyGuidelines.erase(it); break; }
+		// OnInterrupted 이벤트 추가 ( 중단 시 )
+		queueBack->OnInterrupted.Add([this, go = readyQueueForEnemyGuide.back()]() 
+		{
+			for (auto it = enemyGuidelines.begin(); it != enemyGuidelines.end(); ++it) 
+			{
+				if (*it == go) // 매개변수 go를 가진 가이드 라인을 찾으면 제거
+				{ 
+					enemyGuidelines.erase(it); 
+					break; 
+				}
 			}
-			readyQueueForEnemyGuide.push(go);
-			});
 
-		queueBack->OnFinished.Add([this, go = readyQueueForEnemyGuide.back()](const std::string&) {
-			for (auto it = enemyGuidelines.begin(); it != enemyGuidelines.end(); ++it) {
-				if (*it == go) { enemyGuidelines.erase(it); break; }
-			}
 			readyQueueForEnemyGuide.push(go);
-			});
+		});
+
+		// OnFinished 이벤트 추가 - 연격 패턴이 끝나고 마우스가 홀드가 된 상태
+		queueBack->OnFinished.Add([this, go = readyQueueForEnemyGuide.back()]() 
+		{
+			for (auto it = enemyGuidelines.begin(); it != enemyGuidelines.end(); ++it)
+			{
+				if (*it == go) 
+				{ 
+					enemyGuidelines.erase(it); 
+					break; 
+				}
+			}
+
+			readyQueueForEnemyGuide.push(go);			
+		});
 
 		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(readyQueueForEnemyGuide.back());
 	}
 
 	//===================================================================================================
 
-	for (int i = 0; i < 10; ++i) {
+	// 공격 가이드 세팅 - 파랑 빨강 화살표 이미지
+	for (int i = 0; i < 10; ++i) 
+	{
 		readyQueueForAttackLine.push(new GameObject());
 		readyQueueForAttackLine.back()->SetRenderLayer(EngineData::RenderLayer::UI);
 		auto queueBack = readyQueueForAttackLine.back()->AddComponent<AnimatedChainEffect>();
@@ -250,21 +300,30 @@ void PatternControlObject::OnStart() // 처음
 		readyQueueForAttackLine.back()->SetName("AttackEffectLine." + std::to_string(i));
 		queueBack->SetupNodes(m_nodes[4]->GetTransform().GetPosition(), n);
 
-		queueBack->OnFinished.Add([this, go = readyQueueForAttackLine.back()]() {
-			for (auto it = attackLineEffects.begin(); it != attackLineEffects.end(); ++it) {
-				if (*it == go) { attackLineEffects.erase(it); break; } // 백터에서 삭제함
+		// OnFinished 이벤트 추가
+		queueBack->OnFinished.Add([this, go = readyQueueForAttackLine.back()]() 
+		{
+			for (auto it = attackLineEffects.begin(); it != attackLineEffects.end(); ++it) 
+			{
+				if (*it == go) 
+				{ 
+					attackLineEffects.erase(it); 
+					break; 
+				}
 			}
 			readyQueueForAttackLine.push(go);
-			});
+		});
 
-		queueBack->OnNodeLightUp.Add([this](int index) { // 1 ~ 9 >> -1 0 ~ 8
+		// OnNodeLightUp 추가 - 아마 라인 긋고 흰색 이펙트로 추정됨
+		queueBack->OnNodeLightUp.Add([this](int index) 
+		{ // 1 ~ 9 >> -1 0 ~ 8
 			effInstance->CallAnime(index - 1); // 0~8 
-			});
-
+		});
 		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(readyQueueForAttackLine.back());
 	}
 
 	//===================================================================================================
+	// 공격 가이드 초기 세팅 - 아마 테스트 용으로 추정
 
 	auto PCA = playerGuidelineA->GetComponent<ChainDrawerComponent>();
 	PCA->SetupNodes(m_nodes[4]->GetTransform().GetPosition(), n);
@@ -278,6 +337,7 @@ void PatternControlObject::OnStart() // 처음
 
 void PatternControlObject::OnUpdate() // 업데이트
 {
+	// 게임 상태가 Pause면 Update 중단
 	if (Singleton<GameManager>::GetInstance().GetGameState() == GameState::Pause)
 	{
 		return;
@@ -289,21 +349,23 @@ void PatternControlObject::OnUpdate() // 업데이트
 	//===================================================================================================
 	// [1] 입력 발생하면
 
-	if (t->isNewCached) { // 새로운 노드 발생하면				
-
-
-		PM.CheckTrails(t->CheckingCachedTrails());
+	if (t->isNewCached) // 새로운 노드 발생하면	
+	{ 	
+		PM.CheckTrails(t->CheckingCachedTrails());		// trail 찍힌 위치들을 확인하고 저장함
 		const auto& vec = PM.GetPatternPathPositions(); // 여기에 담김!!! 1 3 2 4 이런거 <<<<< (연결지점)
 
 		auto d = owner->GetComponent<PatternDrawerComponent>();
 		d->SetLine(vec);
+
 		if (!vec.empty()) // 노드가 그어졌다면, 바로 삭제해서 가시성 up
+		{
 			t->Clear();
+		}
 
 		auto bt = bettleManager->GetComponent<BettleManager>();
 		bt->SetInputNode(PM.GetPattern());
 
-		for (int value : PM.GetPattern()) { std::cout << value << "-"; }
+		for (int value : PM.GetPattern()) { std::cout << value << "-"; } // Debug
 		std::cout << std::endl << std::endl;
 	}
 
@@ -316,7 +378,8 @@ void PatternControlObject::OnUpdate() // 업데이트
 	auto apm = attackPattenManager->GetComponent<AttackPatternManager>();
 	apm->GetPlayerPatten(pca, pcb);
 
-	if (pca != cachedVecA) {
+	if (pca != cachedVecA) 
+	{
 		cachedVecA = pca;
 		pca.erase(std::remove(pca.begin(), pca.end(), 0), pca.end());
 		std::reverse(pca.begin(), pca.end());
@@ -324,7 +387,8 @@ void PatternControlObject::OnUpdate() // 업데이트
 		PCA->StartByType(pca);
 	}
 
-	if (pcb != cachedVecB) {
+	if (pcb != cachedVecB) 
+	{
 		cachedVecB = pcb;
 		pcb.erase(std::remove(pcb.begin(), pcb.end(), 0), pcb.end());
 		std::reverse(pcb.begin(), pcb.end());
@@ -334,49 +398,52 @@ void PatternControlObject::OnUpdate() // 업데이트
 
 	//===================================================================================================
 	// [3] 적패턴 갱신되면
-	if (apm->isNewPattern) {
-		std::vector<int> v;
-		float t;
+
+	if (apm->isNewPattern) 
+	{
+		std::vector<int> enemyPatterns;
+		float time;
 		std::string ID;
 
-		apm->GetEnemyPattern(v, t, ID);
-		v.erase(std::remove(v.begin(), v.end(), 0), v.end());
+		apm->GetEnemyPattern(enemyPatterns, time, ID);
+		enemyPatterns.erase(std::remove(enemyPatterns.begin(), enemyPatterns.end(), 0), enemyPatterns.end());
 
-		if (!readyQueueForEnemyGuide.empty()) {
+		if (!readyQueueForEnemyGuide.empty()) 
+		{
 			enemyGuidelines.push_back(readyQueueForEnemyGuide.front());
 			readyQueueForEnemyGuide.pop();
 			auto ec = enemyGuidelines.back()->GetComponent<ChainDrawerComponent>();
 
-			ec->Start(v, t, ID);
+			ec->Start(enemyPatterns, time, ID); // ChainDrawer 시작
 		}
 	}
 
 	//===================================================================================================
 	// [4] 공격이 성공한 경우 - 이펙트 출력용
 
-	if (apm->isAttack) {
-		if (!readyQueueForAttackLine.empty()) {
+	if (apm->isAttack) 
+	{
+		if (!readyQueueForAttackLine.empty()) 
+		{
 			attackLineEffects.push_back(readyQueueForAttackLine.front());
 			readyQueueForAttackLine.pop();
 			auto ac = attackLineEffects.back()->GetComponent<AnimatedChainEffect>();
+
 			ac->PlayOnce(apm->CheckIsAttck());
 		}
 	}
 
 	auto bt = bettleManager->GetComponent<BettleManager>();
-
-
-
-
-
 }
 
 //===================================================================================================
 
 void PatternControlObject::OnDestroy()
 {
-	if (auto* apm = attackPattenManager->GetComponent<AttackPatternManager>()) {
-		if (lid_OnPatternCancel) {
+	if (auto* apm = attackPattenManager->GetComponent<AttackPatternManager>()) 
+	{
+		if (lid_OnPatternCancel) 
+		{
 			apm->OnPatternCancel.RemoveByID(lid_OnPatternCancel);
 			lid_OnPatternCancel = 0;
 		}
