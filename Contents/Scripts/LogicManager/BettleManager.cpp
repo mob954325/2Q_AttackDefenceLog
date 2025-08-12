@@ -400,6 +400,7 @@ void BettleManager::SetAnimationAtOtherGroggy() {
 	else {
 		// 재생 종료 및 리셋
 		isPlayingAni = false;
+		m_Player->AttackAniSelect(4);
 		AniTime = 0.0f;
 		stepIdx = -1;
 		tmpAttackNode.clear();
@@ -454,10 +455,6 @@ void BettleManager::ChangeCommonFinalState()
 		m_Player->SetIsRestore(false);
 	}
 
-
-
-	
-
 }
 
 
@@ -477,7 +474,6 @@ void BettleManager::FinalAttackToEnemy() // 델리게이트로 외부에서 연�
 	{
 		m_Enemy->GetDamage((m_Player->GetAttack() * allDistancePercent * 10.0f));  /// 나중에 적 hp 배율 따로 빼기!!!!
 		m_Enemy->SetState("Enemy_Hit");				// 적 상태 변경 -> 적 피격
-
 		m_Player->isOtherGroggyEnd = false;		// 적 그로기 상태 해제
 		m_Player->SetState("Player_AttackSuccess");	// 플레이어 상태 변경 -> 공격 성공
 		m_Enemy->SetIsRestore(true);
@@ -509,6 +505,9 @@ void BettleManager::SetGroggyState()
 	{
 		allDistancePercent = 0.0f;
 		isOncePatternAttack = false;
+		m_Player->isOtherGroggyEnd = false;
+		m_Player->IsOtherGroggy = false;
+		m_Player->SetState("Player_Idle");
 		onTimeout.Invoke(); // 외부에 그로기 지속 시간이 끝났다는걸 알림
 	}
 

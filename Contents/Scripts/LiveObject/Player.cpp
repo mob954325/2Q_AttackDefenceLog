@@ -164,8 +164,7 @@ void Player::SetStatData(std::string tmp)
 	nowPlayerData = CsvDataManager::GetInstance().getDataImpl(nowPlayerData, tmp);
 	Object_ID = nowPlayerData->Character_ID;					 // ID
 	Object_Name = nowPlayerData->Character_name;				 // 이름
-	//Object_Hp = nowPlayerData->Character_helath;				 // 체력
-	Object_Hp = 1111111111111;				 // 체력
+	Object_Hp = nowPlayerData->Character_helath;				 // 체력
 	Object_TotalHp = Object_Hp;									 // 전체 체력
 	Object_Attack = nowPlayerData->Character_damage;			 // 공격력
 	Object_SpiritAttack = nowPlayerData->Character_spritdamage;  // 기세 공격력
@@ -471,8 +470,11 @@ void Player::AttackAniSelect(int count) {
 	case 2: // 3프레임
 		player_Attack3->SetActive(true);
 		break;
-	case 3: // 마무리 포즈(가드 등)
+	case 3: //(가드 등)
 		player_Guard->SetActive(true);
+		break;
+	case 4: // 초기화
+		player_Idle->SetActive(true);
 		break;
 	default:
 		// 범위를 벗어나면 기본(Idle)로 보이게 하려면 여기서 Idle을 켜도 됨
