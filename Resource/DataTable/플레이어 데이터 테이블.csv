@@ -1,6 +1,6 @@
-﻿최종 수정일 : 2025.07.26,,,,,,,,,,,
+최종 수정일 : 2025.07.26,,,,,,,,,,,
 * 데이터 테이블에 문제가 있거나 질문사항이 있다면 '이기석' 혹은 '진승오' 에게 연락 부탁드립니다.,,,,,,,,,,,
 플레이어 캐릭터 ID,캐릭터 이름,체력,공격력,기세 공격력,방어율,스프라이트_대기,스프라이트_공격,스프라이트_방어,스프라이트_피격,스프라이트_회피,스프라이트_다운
 string,string,float,float,float,float,string,string,string,string,string,string
 Character_ID,Character_name,Character_helath,Character_damage,Character_spritdamage,Character_guard_rate,Character_sprite_idle,Character_sprite_attack,Character_sprite_guard,Character_sprite_hit,Character_sprite_evade,Character_sprite_down
-CI_001,아령,100,7,7,25,,,,,,
+CI_001,아령,100,14,20,25,,,,,,
