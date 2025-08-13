@@ -8,6 +8,7 @@
 #include "Objects/Scenes/SelectScene/SelectSceneBGI.h"
 #include "Objects/Sound/SoundTittle.h"
 #include "../Engine/Systems/AudioSystem.h"
+#include "Scripts/GameManager.h"
 
 #include "Objects/Scenes/Stage/CloudManager.h"
 
