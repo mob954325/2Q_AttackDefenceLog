@@ -26,11 +26,6 @@ void MenuScene::OnEnterImpl()
 	cloudManager->AddComponent<CloudManager>();
 	AddGameObject(cloudManager, "CloudManagerMenu");
 
-
-	testObj = new GameObject();
-	testObj->AddComponent<TestObject>();
-	AddGameObject(testObj);
-
 	inputObj = new GameObject();
 	inputObj -> AddComponent<InputObject>();
 	AddGameObject(inputObj);

@@ -17,6 +17,7 @@ public:
 	void OnStart();
 	void OnUpdate();
 
+
 private:
 	// 적 공격 패턴 고정
 	std::string  enemyAttackPatternFix = " ";   //<=== 해당 ID의 적 공격 ID, 안쓰면  " " 안에 EP쓰지말기  

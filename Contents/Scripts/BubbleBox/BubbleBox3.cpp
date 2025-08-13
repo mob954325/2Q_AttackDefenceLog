@@ -1,4 +1,4 @@
-﻿#include "BubbleBox.h"
+﻿#include "BubbleBox3.h"
 #include "Components/Base/GameObject.h"
 #include "Scene/SceneManager.h"
 #include "Application/AppPaths.h"
@@ -6,14 +6,13 @@
 #include "scripts/GameManager.h"
 #include "../Engine/Systems/AudioSystem.h"
 
-
-void BubbleBox::OnUpdate()
+void BubbleBox3::OnUpdate()
 {
-	if(StartCheck) CheckInput();
+	if (StartCheck) CheckInput();
 	delaytime += Singleton<GameTime>::GetInstance().GetDeltaTime();
 }
 
-void BubbleBox::OnCreate()
+void BubbleBox3::OnCreate()
 {
 	owner->SetRenderLayer(EngineData::UI);
 	owner->GetTransform().SetPosition(-200.0f, 100.0f);
@@ -26,41 +25,46 @@ void BubbleBox::OnCreate()
 	Text_01 = owner->AddComponent<BitmapRenderer>();
 	Text_02 = owner->AddComponent<BitmapRenderer>();
 	Text_03 = owner->AddComponent<BitmapRenderer>();
+	Text_04 = owner->AddComponent<BitmapRenderer>();
+	Text_05 = owner->AddComponent<BitmapRenderer>();
 
 	TextBox->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\bubbleBox\\textbox.png");
-	Text_01->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\BoxText\\1stage\\01.png");
-	Text_02->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\BoxText\\1stage\\02.png");
-	Text_03->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\BoxText\\1stage\\03.png");
-	
+	Text_01->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\BoxText\\3stage\\01.png");
+	Text_02->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\BoxText\\3stage\\02.png");
+	Text_03->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\BoxText\\3stage\\03.png");
+	Text_04->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\BoxText\\3stage\\04.png");
+	Text_05->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\BoxText\\3stage\\05.png");
+
 	TextBox->SetActive(true);
 	Text_01->SetActive(true);
 	Text_02->SetActive(false);
 	Text_03->SetActive(false);
-	
+	Text_04->SetActive(false);
+	Text_05->SetActive(false);
+
 	Text_01->SetOrderInLayer(19000);
 	Text_02->SetOrderInLayer(19000);
 	Text_03->SetOrderInLayer(19000);
-	
+	Text_04->SetOrderInLayer(19000);
+	Text_05->SetOrderInLayer(19000);
 
 	count = 0;
 	StartCheck = true;
-
 }
 
-void BubbleBox::OnStart()
+void BubbleBox3::OnStart()
 {
 	Singleton<GameManager>::GetInstance().SetGameState(Pause);
 	Singleton<AudioSystem>::GetInstance().PauseSound();
 }
 
-void BubbleBox::OnDestroy()
+void BubbleBox3::OnDestroy()
 {
-
 }
 
-void BubbleBox::CheckInput()
+void BubbleBox3::CheckInput()
 {
-	if (Input::leftButtonDown && delaytime > 3.0f && count < 3)
+	if (Input::leftButtonDown && delaytime > 3.0f && count < 5)
 	{
 		delaytime = 0.0f;
 		switch (count)
@@ -69,17 +73,38 @@ void BubbleBox::CheckInput()
 			Text_01->SetActive(false);
 			Text_02->SetActive(true);
 			Text_03->SetActive(false);
+			Text_04->SetActive(false);
+			Text_05->SetActive(false);
 			break;
 		case 1:
 			Text_01->SetActive(false);
 			Text_02->SetActive(false);
 			Text_03->SetActive(true);
+			Text_04->SetActive(false);
+			Text_05->SetActive(false);
 			break;
 		case 2:
+			Text_01->SetActive(false);
+			Text_02->SetActive(false);
+			Text_03->SetActive(false);
+			Text_04->SetActive(true);
+			Text_05->SetActive(false);
+			break;
+		case 3:
+			Text_01->SetActive(false);
+			Text_02->SetActive(false);
+			Text_03->SetActive(false);
+			Text_04->SetActive(false);
+			Text_05->SetActive(true);
+			break;
+		case 4:
 			TextBox->SetActive(false);
 			Text_01->SetActive(false);
 			Text_02->SetActive(false);
 			Text_03->SetActive(false);
+			Text_04->SetActive(false);
+			Text_05->SetActive(false);
+
 			StartCheck = false;
 			Singleton<GameManager>::GetInstance().SetGameState(Play);
 			Singleton<AudioSystem>::GetInstance().AgainstSound();

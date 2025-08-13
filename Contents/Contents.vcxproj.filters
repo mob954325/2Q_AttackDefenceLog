@@ -79,6 +79,9 @@
     <Filter Include="Objects\SceneObject\Stage\Stage3">
       <UniqueIdentifier>{6c96ab10-fb52-438a-b88a-3709cf49f265}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scripts\BubbleBox">
+      <UniqueIdentifier>{fb6091c3-ba89-487d-a275-041e5bedb90b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\Game.cpp">
@@ -242,7 +245,6 @@
     <ClCompile Include="Objects\Sound\SoundEnd.cpp" />
     <ClCompile Include="Objects\Sound\SoundPlayScene.cpp" />
     <ClCompile Include="Objects\Sound\SoundTittle.cpp" />
-    <ClCompile Include="Scripts\BubbleBox\BubbleBox.cpp" />
     <ClCompile Include="Objects\Scenes\Stage\StageResult\StageResult.cpp">
       <Filter>Objects\SceneObject\Stage\StageResult</Filter>
     </ClCompile>
@@ -266,6 +268,22 @@
     </ClCompile>
     <ClCompile Include="Scripts\Effect\HitEffect.cpp">
       <Filter>Scripts\Effect</Filter>
+    <ClCompile Include="Scripts\BubbleBox\BubbleBox.cpp">
+      <Filter>Scripts\BubbleBox</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\BubbleBox\BubbleBox2.cpp">
+      <Filter>Scripts\BubbleBox</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\BubbleBox\BubbleBox3.cpp">
+      <Filter>Scripts\BubbleBox</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\BubbleBox\BubbleBoxTittle.cpp" />
+    <ClCompile Include="Objects\Scenes\Stage\StageTopUI.cpp" />
+    <ClCompile Include="Objects\Scenes\Stage\StageEnemyProfile.cpp">
+      <Filter>Objects\SceneObject\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Scenes\Stage\StagePlayerProfile.cpp">
+      <Filter>Objects\SceneObject\Stage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -433,7 +451,6 @@
     <ClInclude Include="Objects\Sound\SoundEnd.h" />
     <ClInclude Include="Objects\Sound\SoundPlayScene.h" />
     <ClInclude Include="Objects\Sound\SoundTittle.h" />
-    <ClInclude Include="Scripts\BubbleBox\BubbleBox.h" />
     <ClInclude Include="Objects\Scenes\Stage\StageResult\StageResult.h">
       <Filter>Objects\SceneObject\Stage\StageResult</Filter>
     </ClInclude>
@@ -457,6 +474,22 @@
     </ClInclude>
     <ClInclude Include="Scripts\Effect\HitEffect.h">
       <Filter>Scripts\Effect</Filter>
+    <ClInclude Include="Scripts\BubbleBox\BubbleBox2.h">
+      <Filter>Scripts\BubbleBox</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\BubbleBox\BubbleBox.h">
+      <Filter>Scripts\BubbleBox</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\BubbleBox\BubbleBox3.h">
+      <Filter>Scripts\BubbleBox</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\BubbleBox\BubbleBoxTittle.h" />
+    <ClInclude Include="Objects\Scenes\Stage\StageTopUI.h" />
+    <ClInclude Include="Objects\Scenes\Stage\StagePlayerProfile.h">
+      <Filter>Objects\SceneObject\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Scenes\Stage\StageEnemyProfile.h">
+      <Filter>Objects\SceneObject\Stage</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
