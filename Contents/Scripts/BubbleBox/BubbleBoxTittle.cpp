@@ -9,7 +9,16 @@
 
 void BubbleBoxTittle::OnUpdate()
 {
+	timer += Singleton<GameTime>::GetInstance().GetDeltaTime();
+
 	if (StartCheck) CheckInput();
+
+	if (timer > 2.0f) {
+		if (Input::leftButtonDown && flag) {
+
+			Singleton<SceneManager>::GetInstance().LoadScene(SceneCount::MENU); // MenuScene으로 이동
+		}
+	}
 }
 
 void BubbleBoxTittle::OnCreate()
@@ -42,13 +51,14 @@ void BubbleBoxTittle::OnCreate()
 	timer = 0.0f;
 
 	StartCheck = true;
+	flag = false;
 }
 
 void BubbleBoxTittle::OnStart()
 {
 	/*Singleton<GameManager>::GetInstance().SetGameState(Pause);*/
 	/*Singleton<AudioSystem>::GetInstance().PauseSound();*/
-	tttt = 0.0f;
+
 }
 
 void BubbleBoxTittle::OnDestroy()
@@ -57,7 +67,10 @@ void BubbleBoxTittle::OnDestroy()
 
 void BubbleBoxTittle::CheckInput()
 {
-	timer += Singleton<GameTime>::GetInstance().GetDeltaTime();
+
+
+
+
 	if (timer > delaytime) // 시간이 다 지났으면
 	{
 		if (Input::leftButtonDown) // 왼쪽 클릭 했으면
@@ -80,24 +93,22 @@ void BubbleBoxTittle::CheckInput()
 				texts[count]->SetActive(true); // 마지막 텍스트 활성화
 				count++;
 
-	
-			
+				auto cld = owner->GetQuery()->FindByName("CloudManagerTitle");
+				if (cld) { cld->GetComponent<CloudManager>()->Start(); }
 			}
 
 			if (count == 11) // 11번째 클릭에선 씬 전환
 			{
 
-				auto cld = owner->GetQuery()->FindByName("CloudManagerTitle");
-				if (cld) { cld->GetComponent<CloudManager>()->Start(); }
 
 				StartCheck = false;
-				tttt += Singleton<GameTime>::GetInstance().GetDeltaTime();
-				if (tttt > 3.0f) {
-					Singleton<SceneManager>::GetInstance().LoadScene(SceneCount::MENU); // MenuScene으로 이동
-				}
-	
+				flag = true;
+				timer = 0.0f;
+				//Singleton<SceneManager>::GetInstance().LoadScene(SceneCount::MENU); // MenuScene으로 이동
+
+
 				/*Singleton<AudioSystem>::GetInstance().AgainstSound();*/
-			
+
 			}
 		}
 	}

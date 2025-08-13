@@ -7,12 +7,14 @@
 #include "Objects/Scenes/SelectScene/LevelSelectManager.h"
 #include "Objects/Scenes/SelectScene/SelectSceneBGI.h"
 #include "Objects/Sound/SoundTittle.h"
-
+#include "../Engine/Systems/AudioSystem.h"
 
 #include "Objects/Scenes/Stage/CloudManager.h"
 
 void SelectScene::OnEnterImpl()
 {
+	Singleton<AudioSystem>::GetInstance().ReSetChannel();
+
 	std::cout << "선택씬 진입" << std::endl;
 
 	cloudManager = new GameObject();
@@ -39,6 +41,9 @@ void SelectScene::OnEnterImpl()
 	SoundSeletObj = new GameObject();
 	SoundSeletObj->AddComponent<SoundTittle>();
 	AddGameObject(SoundSeletObj, "SOUNDMENU"); // SOUNDMENU << 이름 유지해주세요
+
+	SoundSeletObj->GetComponent<SoundTittle>()->SetKeyHandle(L"Lobby");
+	SoundSeletObj->GetComponent<SoundTittle>()->PlaySound();
 }
 
 void SelectScene::OnExitImpl()

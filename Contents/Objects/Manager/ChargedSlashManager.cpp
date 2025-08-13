@@ -6,6 +6,8 @@
 #include "../Engine/Utils/GameTime.h"
 #include "Application/AppPaths.h"
 #include "../Contents/Scripts/Camera/CamInstance.h"
+#include "../Contents/Objects/Sound/SoundPlayScene.h"
+
 
 void ChargedSlashManager::OnStart()
 {
@@ -49,6 +51,8 @@ void ChargedSlashManager::OnStart()
 	eff = owner->AddComponent<EffectInstance>();	
 	fff = owner->AddComponent<Finaleffect>();		
 	fff->SetAnimePosition(centerPos);
+
+	soundFlag = true;
 }
 
 void ChargedSlashManager::OnUpdate() {
@@ -69,6 +73,14 @@ void ChargedSlashManager::OnUpdate() {
 			mouseTimer = 0.0f;			
 
 			//차징하고 있으면 여기옴, 나중에 델리게이트 연결해주면 될듯? <<<<<<<<<<<<<<<<<<<<<<<< 끼뺫!
+			if (soundFlag) {
+				auto SoundCom = owner->GetQuery()->FindByName("SOUNDSTAGE");
+				if (SoundCom) {
+					SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"ComboCharge");
+					SoundCom->GetComponent<SoundPlayScene>()->PlaySound();;
+				}
+				soundFlag = false;
+			}
 		}
 		else { // [2] 좌클릭 유지한상태로 밖으로 나감
 			eff->EndEffects(); // 모든 이펙트 끔
@@ -83,6 +95,8 @@ void ChargedSlashManager::OnUpdate() {
 	}
 	else // [3] 좌클릭을 놔버리면, 타이머 초기화
 	{
+		soundFlag = true;
+
 		eff->EndEffects(); // 모든 이펙트 끔
 		timer = 0.0f;
 		if (isCharged)  //차징이 된 상황에서 마우스를 놓았다 = Slash의 마지막 지점임
@@ -195,13 +209,24 @@ bool ChargedSlashManager::isSuccess(Vector2 pos, float t)
 }
 
 void ChargedSlashManager::Slashing(Vector2 pos, float time)
-{
-	
-
+{	
 	if (isSuccess(pos, time)) { // 성공
 		//fff->CallAnime(std::atan2(nowPos.y, nowPos.x) * 2 * PI );
 		fff->CallAnime(std::atan2(nowNormalVec.y, nowNormalVec.x) * (180.0f / PI));
 		onFinisherSuccess.Invoke(); // 성공했다고 외부에 알려줌 << 인자 뭐 넣어줘야 할지도 모르겠네
+
+		auto camIns = owner->GetQuery()->FindByName("CAM");
+		if (camIns) {
+			camIns->GetComponent<CamInstance>()->Start(2.0f, 10.0f, 30.0f, ShakeType::X_Y);
+			camIns->GetComponent<CamInstance>()->SetFastToSlow();
+		}
+
+		auto SoundCom = owner->GetQuery()->FindByName("SOUNDSTAGE");
+		if (SoundCom) {
+			SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"ComboFinish");
+			SoundCom->GetComponent<SoundPlayScene>()->PlaySound();;
+		}
+
 
 		std::cout << "슬래시 성공!!!!!" << nowPos << nowNormalVec << std::endl;
 		Cancel();
