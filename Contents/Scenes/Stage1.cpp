@@ -114,6 +114,7 @@ void Stage1::OnEnterImpl()
 void Stage1::OnExitImpl()
 {
 	std::cout << "스테이지1 이탈" << std::endl;
+	Singleton<AudioSystem>::GetInstance().ReSetChannel();
 }
 
 void Stage1::UpdateImpl()

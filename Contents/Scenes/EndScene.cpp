@@ -36,6 +36,7 @@ void EndScene::OnEnterImpl()
 void EndScene::OnExitImpl()
 {
 	std::cout << "엔드씬 이탈" << std::endl;
+	Singleton<AudioSystem>::GetInstance().ReSetChannel();
 }
 
 void EndScene::UpdateImpl()
