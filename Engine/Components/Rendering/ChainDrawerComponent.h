@@ -25,10 +25,10 @@ struct SlicePiece {
 	float alpha;
 };
 
-enum GuideType {	
-	UP = 0, // 상단
-	MIDDLE = 1, // 중단
-	DOWN = 2, // 하단
+enum GuideType {
+	DOWN = 0, // 하단
+	MIDDLE = 1, // 중단	
+	UP = 2, // 상단
 	NONE = 3, // 단다단단다단단다단단다단
 };
 
@@ -38,21 +38,21 @@ public:
 	void Render(D2DRenderManager* manager) override;
 	void OnStart() override;
 	void OnCreate() override;
-	
+
 	void Draw(D2DRenderManager* manager);
 	void Progress(float value);
 	void SliceRect(std::vector<int> pattern);
 
 	void Start(std::vector<int> pattern, float durationTime = 0.0f, std::string ID = " ");
-	
+
 	void StartByType(std::vector<int> pattern); // UP MIDDLE DONW임 - 가이드라인 전용
 	void SetTypeBitmap(std::wstring path1, std::wstring path2); // 순서대로 중단 / 하단
 
 	void SetBitmap(std::wstring path); // 슬라이드 사용시 상단에 해당하는 이미지를 등록
 	void SetFillBitmap(std::wstring path); // 채우는 비트맵 + 플래그 처리
-	
+
 	void SetupNodes(Vector2 node, float interval); // 중앙의 노드 좌표와 간격을 넣어주세오
-	
+
 	EventDelegate<> OnInterrupted;
 	EventDelegate<> OnFinished;
 

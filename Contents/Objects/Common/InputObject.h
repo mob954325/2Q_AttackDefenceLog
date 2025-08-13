@@ -1,9 +1,14 @@
-#pragma once
+﻿#pragma once
 #include "Components/Base/MonoBehavior.h"
 #include "Components/Rendering/BitmapRenderer.h"
+#include "../Contents/Scripts/Camera/CamInstance.h"
 
-/* 8.04. �ѽ±�
-* ��ǲ �޾Ƽ� ó���ϴ� ������Ʈ
+/* 8.04. 한승규
+* 인풋 받아서 처리하는 오브젝트
+*/
+
+/* 8.13. 한승규
+* 이왕 하는김에 카메로도 좀 흔들기로함
 */
 
 class InputObject : public MonoBehavior
@@ -14,6 +19,7 @@ public:
 	void OnDestroy() override;	
 
 protected:
+	CamInstance* cmaInstance;
 		
 };
 
