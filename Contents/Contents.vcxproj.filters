@@ -266,6 +266,7 @@
     <ClCompile Include="Scripts\BubbleBox\BubbleBox3.cpp">
       <Filter>Scripts\BubbleBox</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\BubbleBox\BubbleBoxTittle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameApp.h">
@@ -453,5 +454,6 @@
     <ClInclude Include="Scripts\BubbleBox\BubbleBox3.h">
       <Filter>Scripts\BubbleBox</Filter>
     </ClInclude>
+    <ClInclude Include="Scripts\BubbleBox\BubbleBoxTittle.h" />
   </ItemGroup>
 </Project>
