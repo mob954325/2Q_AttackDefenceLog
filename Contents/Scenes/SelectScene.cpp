@@ -7,7 +7,7 @@
 #include "Objects/Scenes/SelectScene/LevelSelectManager.h"
 #include "Objects/Scenes/SelectScene/SelectSceneBGI.h"
 #include "Objects/Sound/SoundTittle.h"
-
+#include "Scripts/GameManager.h"
 
 #include "Objects/Scenes/Stage/CloudManager.h"
 
@@ -39,6 +39,7 @@ void SelectScene::OnEnterImpl()
 	SoundSeletObj = new GameObject();
 	SoundSeletObj->AddComponent<SoundTittle>();
 	AddGameObject(SoundSeletObj, "SOUNDMENU"); // SOUNDMENU << 이름 유지해주세요
+
 }
 
 void SelectScene::OnExitImpl()

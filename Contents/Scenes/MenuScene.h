@@ -20,4 +20,10 @@ private:
 
 	GameObject* cloudManager;
 	GameObject* SoundMenuObj;
+
+
+	bool isDone = false;
+
+	float timer = 0.0f;
+	float maxTimer = 5.0f;
 };

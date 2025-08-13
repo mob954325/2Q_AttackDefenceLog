@@ -46,6 +46,11 @@ void MenuScene::OnEnterImpl()
 	SoundMenuObj->AddComponent<SoundTittle>();
 	AddGameObject(SoundMenuObj, "SOUNDMENU"); // SOUNDMENU << 이름 유지해주세요
 
+	if (Singleton<GameManager>::GetInstance().IsStage1Clear() && Singleton<GameManager>::GetInstance().IsStage2Clear() && Singleton<GameManager>::GetInstance().IsStage3Clear())
+	{
+		isDone = true;
+	}
+
 	isFirst = true;
 }
 
@@ -88,5 +93,16 @@ void MenuScene::UpdateImpl()
 	if (input->IsKeyPressed('M'))
 	{
 		Singleton<GameManager>::GetInstance().SetStageClear(3);
+	}
+
+	// ending 가기
+	if (isDone)
+	{
+		timer += Singleton<GameTime>::GetInstance().GetDeltaTime();
+
+		if (timer > maxTimer)
+		{
+			Singleton<SceneManager>::GetInstance().LoadScene(SceneCount::END); // endScene 호출
+		}
 	}
 }
