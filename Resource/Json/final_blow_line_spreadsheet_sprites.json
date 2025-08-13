@@ -1,124 +1,124 @@
 {
     "texture": "final_blow_line_spreadsheet.png",
     "textureWidth": 13000,
-    "textureHeight": 500,
+    "textureHeight": 566,
     "sprites": [
         {
             "name": "final_blow_line_spreadsheet_0",
             "x": 0.0,
-            "y": 500.0,
+            "y": 566.0,
             "width": 1000.0,
-            "height": 500.0,
+            "height": 566.0,
             "pivotX": 0.5,
-            "pivotY": 0.5581655502319336
+            "pivotY": 0.5
         },
         {
             "name": "final_blow_line_spreadsheet_1",
             "x": 1000.0,
-            "y": 500.0,
+            "y": 566.0,
             "width": 1000.0,
-            "height": 500.0,
+            "height": 566.0,
             "pivotX": 0.5,
-            "pivotY": 0.5581656098365784
+            "pivotY": 0.5
         },
         {
             "name": "final_blow_line_spreadsheet_2",
             "x": 2000.0,
-            "y": 500.0,
+            "y": 566.0,
             "width": 1000.0,
-            "height": 500.0,
+            "height": 566.0,
             "pivotX": 0.5,
-            "pivotY": 0.5581656098365784
+            "pivotY": 0.5
         },
         {
             "name": "final_blow_line_spreadsheet_3",
             "x": 3000.0,
-            "y": 500.0,
+            "y": 566.0,
             "width": 1000.0,
-            "height": 500.0,
+            "height": 566.0,
             "pivotX": 0.5,
-            "pivotY": 0.5581656098365784
+            "pivotY": 0.5
         },
         {
             "name": "final_blow_line_spreadsheet_4",
             "x": 4000.0,
-            "y": 500.0,
+            "y": 566.0,
             "width": 1000.0,
-            "height": 500.0,
+            "height": 566.0,
             "pivotX": 0.5,
-            "pivotY": 0.5581656098365784
+            "pivotY": 0.5
         },
         {
             "name": "final_blow_line_spreadsheet_5",
             "x": 5000.0,
-            "y": 500.0,
+            "y": 566.0,
             "width": 1000.0,
-            "height": 500.0,
+            "height": 566.0,
             "pivotX": 0.5,
-            "pivotY": 0.5581656098365784
+            "pivotY": 0.5
         },
         {
             "name": "final_blow_line_spreadsheet_6",
-            "x": 6017.0,
-            "y": 500.0,
+            "x": 6000.0,
+            "y": 566.0,
             "width": 1000.0,
-            "height": 500.0,
+            "height": 566.0,
             "pivotX": 0.5,
-            "pivotY": 0.5581656098365784
+            "pivotY": 0.5
         },
         {
             "name": "final_blow_line_spreadsheet_7",
             "x": 7000.0,
-            "y": 500.0,
+            "y": 566.0,
             "width": 1000.0,
-            "height": 500.0,
+            "height": 566.0,
             "pivotX": 0.5,
-            "pivotY": 0.5581656098365784
+            "pivotY": 0.5
         },
         {
             "name": "final_blow_line_spreadsheet_8",
             "x": 8000.0,
-            "y": 500.0,
+            "y": 566.0,
             "width": 1000.0,
-            "height": 500.0,
+            "height": 566.0,
             "pivotX": 0.5,
-            "pivotY": 0.5581656098365784
+            "pivotY": 0.5
         },
         {
             "name": "final_blow_line_spreadsheet_9",
             "x": 9000.0,
-            "y": 500.0,
+            "y": 566.0,
             "width": 1000.0,
-            "height": 500.0,
+            "height": 566.0,
             "pivotX": 0.5,
-            "pivotY": 0.5581656098365784
+            "pivotY": 0.5
         },
         {
             "name": "final_blow_line_spreadsheet_10",
             "x": 10000.0,
-            "y": 500.0,
+            "y": 566.0,
             "width": 1000.0,
-            "height": 500.0,
+            "height": 566.0,
             "pivotX": 0.5,
-            "pivotY": 0.5581656098365784
+            "pivotY": 0.5
         },
         {
             "name": "final_blow_line_spreadsheet_11",
             "x": 11000.0,
-            "y": 500.0,
+            "y": 566.0,
             "width": 1000.0,
-            "height": 500.0,
+            "height": 566.0,
             "pivotX": 0.5,
-            "pivotY": 0.5581656098365784
+            "pivotY": 0.5
         },
         {
             "name": "final_blow_line_spreadsheet_12",
             "x": 12000.0,
-            "y": 500.0,
+            "y": 566.0,
             "width": 1000.0,
-            "height": 500.0,
+            "height": 566.0,
             "pivotX": 0.5,
-            "pivotY": 0.5581656098365784
+            "pivotY": 0.5
         }
     ]
 }

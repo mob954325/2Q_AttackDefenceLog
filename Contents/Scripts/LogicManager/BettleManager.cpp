@@ -72,7 +72,7 @@ void BettleManager::OnStart()
 
 void BettleManager::OnUpdate()
 {
-	//SetSpiritGauge();		  // 기세 게이지 업데이트
+	SetSpiritGauge();		  // 기세 게이지 업데이트
 	SetGroggyState();         // 그로기 스테이트 업데이트
 	ChangeCommonFinalState(); // 
 	if (!m_Player->GetIsGroggy() && !m_Enemy->GetIsGroggy()) {
@@ -131,8 +131,8 @@ void BettleManager::InitHpGauge()
 
 	float enemyOffsetX = EngineData::SceenWidth * 0.705f;
 	float enemyOffsetY = 0;
-	
-	
+
+
 	HpObj->SetHpUiPosition({ playerOffsetX, playerOffsetY }, { enemyOffsetX, enemyOffsetY });
 }
 
@@ -470,28 +470,40 @@ void BettleManager::ChangeCommonFinalState()
 
 }
 
+void BettleManager::SetSpiritGauge()
+{
+	if (m_Enemy->GetIsGroggy()) { // 적 그로기인경우
+		if (!isEffectOnce) {
+			//연출 << 반짝 넣어주면 됨
+			giseObj->BlinkBlack();
+			isEffectOnce = true;
+		}
+		giseObj->SetMaxGague(20.0f);
+		//std::cout << m_Player->enemyGroggyTime << "끼얏끼얏호우!!!!" << std::endl; // 왜인지 모르지만 20초임, 오른쪽에서 왼쪽, 즉 1 -> 0이 되야함
+		giseChangeValue = 20.0f - m_Player->enemyGroggyTime; // 1 ~ 0
+		giseObj->CalculateValue(giseChangeValue);
 
-// 그로기가 시작되면  따라서 게이지가 시간에 따라 연속적으로 움직이고, 그로기가 끝나면 기세 게이지를 따라감
-//void BettleManager::SetSpiritGauge()
-//{
-//	if (m_Enemy->GetIsGroggy()) { // 적 그로기인경우
-//		giseObj->SetMaxGague(1.0f);
-//		m_Player->enemyGroggyTime
-//
-//
-//	}
-//	else if (m_Player->GetIsGroggy()) { //플레이어 그로기인 경우
-//		giseObj->SetMaxGague(1.0f);
-//
-//
-//	}
-//	else { // 둘다 그로기가 아닌경우
-//		giseObj->SetMaxGague(giseTotalValue);
-//		giseChangeValue = m_Player->GetNowSpiritAmount();
-//		giseObj->CalculateValue(giseChangeValue);
-//	}
-//
-//}
+	}
+	else if (m_Player->GetIsGroggy()) { //플레이어 그로기인 경우
+		if (!isEffectOnce) {
+			//연출 << 반짝 넣어주면 됨
+			giseObj->BlinkWhite();
+			isEffectOnce = true;
+		}
+		giseObj->SetMaxGague(10.0f);
+		// 플레이어의 그로기타임
+		//std::cout << m_Enemy->OtherGroggyTime << "끼뺫끼뺫!!!!" << std::endl; // 왜인진 모르지만 10초임 + 왼쪽에서 오른쪽, 즉 0 -> 1이 되야함
+		giseChangeValue = m_Enemy->OtherGroggyTime; // 0 ~ 1
+		giseObj->CalculateValue(giseChangeValue);
+	}
+	else { // 둘다 그로기가 아닌경우
+		isEffectOnce = false;
+		giseObj->SetMaxGague(giseTotalValue);
+		giseChangeValue = m_Player->GetNowSpiritAmount();
+		giseObj->CalculateValue(giseChangeValue);
+	}
+
+}
 
 /// 아군 홀드 공격 완료!!!
 void BettleManager::FinalAttackToEnemy() // 델리게이트로 외부에서 연결	

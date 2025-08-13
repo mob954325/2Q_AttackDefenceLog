@@ -119,7 +119,7 @@ public:
 	/// <summary>
 	/// 기세 게이지  세팅하는 함수
 	/// </summary>
-	//void SetSpiritGauge();		
+	void SetSpiritGauge();		
 
 	/// <summary>
 	/// 현재 확인하는 노드 내용 ( 패턴 index 값 )
@@ -143,6 +143,8 @@ private:
 	GroggyState preManagerState = noneGroggy;	// 매니저의 이전 그로기 상태 여부
 
 	bool isOncePatternAttack = false; // 한붓그리기 공격 끝나는 bool 값
+
+	bool isEffectOnce = true;
 
 	std::vector<int> tmpAttackNode;             // 플레이어가 연격 후 임시 저장 할 int 벡터
 	bool isPlayingAni = false; // 연격이 끝나고 sprite가 나오는 시간인지?
