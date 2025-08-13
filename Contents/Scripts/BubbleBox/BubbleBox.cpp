@@ -15,8 +15,12 @@ void BubbleBox::OnUpdate()
 
 void BubbleBox::OnCreate()
 {
+	Singleton<GameManager>::GetInstance().SetGameState(Pause);
+	Singleton<AudioSystem>::GetInstance().PauseSound();
+
 	input = owner->AddComponent<InputSystem>();
 
+	owner->GetTransform().SetUnityCoords(false);
 	TextBox = owner->AddComponent<BitmapRenderer>();
 	Text_01 = owner->AddComponent<BitmapRenderer>();
 	Text_02 = owner->AddComponent<BitmapRenderer>();
@@ -36,8 +40,7 @@ void BubbleBox::OnCreate()
 
 	count = 0;
 	StartCheck = true;
-	Singleton<GameManager>::GetInstance().SetGameState(Pause);
-	Singleton<AudioSystem>::GetInstance().PauseSound();
+
 }
 
 void BubbleBox::OnStart()
@@ -54,7 +57,6 @@ void BubbleBox::CheckInput()
 {
 	if (Input::leftButtonDown && delaytime > 3.0f && count < 3)
 	{
-		++count;
 		delaytime = 0.0f;
 		switch (count)
 		{
@@ -78,5 +80,6 @@ void BubbleBox::CheckInput()
 			Singleton<AudioSystem>::GetInstance().AgainstSound();
 			break;
 		}
+		++count;
 	}
 }
