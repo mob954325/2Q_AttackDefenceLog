@@ -18,6 +18,7 @@
 #include "Scripts/GameManager.h"
 #include "Scripts/BubbleBox/BubbleBox.h"
 #include "../Engine/Components/Rendering/BoxRenderer.h"
+#include "Vignette.h"
 
 void Stage1::OnEnterImpl()
 {
@@ -109,6 +110,9 @@ void Stage1::OnEnterImpl()
 
 	//randomBox->GetComponent<BoxRenderer>()->SetRect(A);
 
+	GameObject* obj = new GameObject();
+	auto vi = obj->AddComponent<Vignette>();
+	AddGameObject(obj, "Vignette");
 }
 
 void Stage1::OnExitImpl()
