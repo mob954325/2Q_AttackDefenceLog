@@ -72,7 +72,7 @@ public:
 	bool OtherGroggyTimeStop = false; // 연격 타이밍 때, 플레이어의 이미지가 연속해서 출력되도록 시간을 잠시 멈춤
 	void AttackAniSelect(int count); // 애니메이션 출력용 함수
 
-
+	float enemyGroggyTime = 0.0f;		// 그로기 시간?
 	EventDelegate<> onTimeOut; // 8.12추가, 그로기 타이머가 플레이어에 있어서 델리게이트 연결함
 private:
 	void AttackStateSelect(bool AttackActive); // 공격 패턴 3가지 중 랜덤으로 1개 선택해서 설정함
@@ -99,7 +99,7 @@ private:
 	BitmapRenderer* player_Damaged = nullptr;
 
 	bool isAttackingPattern = false;	// ??
-	float enemyGroggyTime = 0.0f;		// 그로기 시간?
+	
 	bool isFirstGroggyLoop = false;		// 첫 그로기 루프인지 확인?
     
 	// Debug

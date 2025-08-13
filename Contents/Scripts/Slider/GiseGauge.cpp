@@ -8,10 +8,24 @@
 
 void GiseGauge::OnUpdate()
 {
+	float delta = Singleton<GameTime>::GetInstance().GetDeltaTime();
 	ChangeGaugeBar();
 	SetAnimePosition();
-	ButtonAnime->GetTransform().SetPosition(EngineData::SceenWidth / 2 - currentgague / 2 + x_width + x_pic/2, 38.1f);
+	ButtonAnime->GetTransform().SetPosition(EngineData::SceenWidth / 2 - currentgague / 2 + x_width + x_pic / 2, 38.1f);
 	ButtonCover->GetTransform().SetPosition(EngineData::SceenWidth / 2 - currentgague / 2 + x_width - coverX / 2, 0);
+
+	if (blackAlpha > 0.0f) {
+		blackAlpha -= delta * 0.5f;
+		if (blackAlpha < 0.0f) blackAlpha = 0.0f;
+		blackEffect->SetCapacity(blackAlpha);
+	}
+
+	if (whiteAlpha > 0.0f) {
+		whiteAlpha -= delta * 0.5f;
+		if (whiteAlpha < 0.0f) whiteAlpha = 0.0f;		
+		whiteEffect->SetCapacity(whiteAlpha);
+	}
+
 }
 
 void GiseGauge::OnCreate()
@@ -21,8 +35,8 @@ void GiseGauge::OnCreate()
 }
 
 void GiseGauge::OnStart()
-{	
-	
+{
+
 	sliderobj = owner->GetComponent<Slider>();
 	sliderobj->ButtonShow(false);
 	sliderobj->SetGaugeBackgroundImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\Slider\\gise_ui_white.png");
@@ -30,7 +44,7 @@ void GiseGauge::OnStart()
 
 
 	currentgague = sliderobj->GetGaugeBarImage()->GetResource()->GetBitmap()->GetSize().width;
-	sliderobj->ChangeGauge(-(currentgague/2));
+	sliderobj->ChangeGauge(-(currentgague / 2));
 
 
 	GameObject* obj = new GameObject();
@@ -44,7 +58,7 @@ void GiseGauge::OnStart()
 	obj->GetComponent<AnimationRenderer>()->SetOrderInLayer(500);
 	obj->GetTransform().SetUnityCoords(false);
 	ButtonAnime = obj;
-	
+
 	GameObject* obj2 = new GameObject();
 	obj2->AddComponent<BitmapRenderer>();
 	obj2->SetName(std::string("Buttoncover"));
@@ -59,7 +73,7 @@ void GiseGauge::OnStart()
 	auto it = obj->GetComponent<AnimationRenderer>()->GetAnimationPlayer()->GetSpriteSheet();
 	x_pic = it.sprites[0].width;
 
-	owner->GetTransform().SetPosition(EngineData::SceenWidth / 2 - currentgague/2 , 0.0f);
+	owner->GetTransform().SetPosition((EngineData::SceenWidth - currentgague) / 2.0f, 0.0f);
 
 	float offsetX = 567.0f;
 	float offsetY = 0.0f;
@@ -73,6 +87,34 @@ void GiseGauge::OnStart()
 	};
 	ButtonAnime->GetComponent<AnimationRenderer>()->SetClipingPosition(vec);
 	ButtonCover->GetComponent<BitmapRenderer>()->SetClipingPosition(vec);
+
+	//게이지바 위에 나타날 뭐시깽 ============================== 8.13. 추가
+	GameObject* blackEff = new GameObject();
+	blackEff->SetRenderLayer(EngineData::RenderLayer::UI);
+	blackEff->GetTransform().SetUnityCoords(false);
+
+	blackEffect = blackEff->AddComponent<BitmapRenderer>();
+	blackEffect->SetOrderInLayer(1000);
+	blackEffect->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\Slider\\force_destroy_black.png");
+	blackEffect->SetCapacity(0.0f);
+
+
+	auto bSize = blackEffect->GetResource()->GetBitmap()->GetSize();
+	blackEff->GetTransform().SetPosition((EngineData::SceenWidth - bSize.width) / 2.0f, -bSize.height / 2.0f);
+	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(blackEff);
+
+	GameObject* whiteEff = new GameObject();
+	whiteEff->SetRenderLayer(EngineData::RenderLayer::UI);
+	whiteEff->GetTransform().SetUnityCoords(false);
+
+	whiteEffect = whiteEff->AddComponent<BitmapRenderer>();
+	whiteEffect->SetOrderInLayer(1000);
+	whiteEffect->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\Slider\\force_destroy_white.png");
+	whiteEffect->SetCapacity(0.0f);
+
+	auto wSize = whiteEffect->GetResource()->GetBitmap()->GetSize();
+	whiteEff->GetTransform().SetPosition((EngineData::SceenWidth - wSize.width) / 2.0f, -wSize.height / 2.0f);
+	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(whiteEff);
 }
 
 void GiseGauge::OnDestroy()

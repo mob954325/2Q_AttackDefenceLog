@@ -42,9 +42,8 @@ void ChargedSlashManager::OnStart()
 	}
 
 	eff = owner->AddComponent<EffectInstance>();	
-	fff = owner->AddComponent<Finaleffect>();	
+	fff = owner->AddComponent<Finaleffect>();		
 	fff->SetAnimePosition(centerPos);
-
 }
 
 void ChargedSlashManager::OnUpdate() {
