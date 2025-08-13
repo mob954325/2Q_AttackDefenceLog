@@ -88,6 +88,7 @@ void AnimationPlayer::SetAnimationClip(std::wstring path)
 		maxFrameIndex = clip.frames.size();
 		currentFrameIndex = 0;
 		timer = 0;
+		isLoop = clip.loop;
 	}
 }
 
