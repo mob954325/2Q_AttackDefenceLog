@@ -62,9 +62,19 @@ void Player::ResetPlayer()
 
 void Player::OnUpdate() {
 	
-	if (CheckPlayPerry)
-	{
+	TimeDelta += Singleton<GameTime>::GetInstance().GetDeltaTime();
 
+	if (TimeDelta >= delays[currentStep] && CheckPlayPerry)
+	{
+		GuardEff->CallAnime(currentStep, ParryPosition[currentStep]);
+		TimeDelta = 0.0f;
+		currentStep++;
+
+		if (currentStep >= 3)
+		{
+			currentStep = 0;
+			CheckPlayPerry = false; // 반복 안 하려면 끔
+		}
 	}
 	// 게임 상태가 Pause면 모든 Update 무시
 	if (Singleton<GameManager>::GetInstance().GetGameState() == GameState::Pause)
@@ -566,7 +576,8 @@ void Player::CallGuardEffect(int num, Vector2 vector)
 	GuardEff->CallAnime(num, vector);
 }
 
-void Player::CallParryEffect(int num, Vector2 vector)
+void Player::CallPerryEffect(const std::vector<Vector2>& list)
 {
-	GuardEff->CallAnime(num, vector);
+	CheckPlayPerry = true;
+	ParryPosition = list;
 }

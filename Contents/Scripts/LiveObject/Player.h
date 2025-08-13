@@ -127,8 +127,12 @@ private:
 	//패리변수
 	float TimeDelta = 0.0f;
 	bool CheckPlayPerry = false;
+	int currentStep = 0;
+	float delays[3] = { 0.0f, 0.1f, 0.1f };
+	
+	std::vector<Vector2> ParryPosition{};
 	
 public:
 	void CallGuardEffect(int num, Vector2 vector);
-	void CallParryEffect(int num, Vector2 vector);
+	void CallPerryEffect(const std::vector<Vector2>& list);
 };
