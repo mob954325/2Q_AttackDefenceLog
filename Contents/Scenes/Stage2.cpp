@@ -100,4 +100,10 @@ void Stage2::OnExitImpl()
 
 void Stage2::UpdateImpl()
 {
+	const int maxSFXChannels = 128; // 최대 허용 SFX 채널 수
+
+	if (Singleton<AudioSystem>::GetInstance().IsSFXChannelFull(maxSFXChannels))
+	{
+		Singleton<AudioSystem>::GetInstance().ClearSFXChannels();
+	}
 }

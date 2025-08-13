@@ -700,12 +700,6 @@ void BettleManager::ChangeCommonFinalState()
 	if (m_Player->GetHp() <= 0.0f)
 	{
 		m_Player->SetState("Player_Dead");
-		//사망모션사운드
-		auto SoundCom = owner->GetQuery()->FindByName("SOUNDSTAGE");
-		if (SoundCom) {
-			SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Down");
-			SoundCom->GetComponent<SoundPlayScene>()->PlaySound();;
-		}
 	}
 
 	// 적 사망 확인

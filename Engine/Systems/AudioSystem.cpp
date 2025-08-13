@@ -10,12 +10,83 @@ bool AudioSystem::FileExists(const std::wstring& path)
 }
 
 
+void AudioSystem::Setvolume(float volume)
+{
+	if (masterGroup)
+		masterGroup->setVolume(volume);
+}
+
+void AudioSystem::Getvolume(float& volume)
+{
+	if (masterGroup)
+		masterGroup->getVolume(&volume);
+	else
+		volume = 0.0f;
+}
+
+// 채널풀 체크함수
+bool AudioSystem::IsSFXChannelFull(int maxCount)
+{
+	if (!sfxGroup) return false;
+
+	int numChannels = 0;
+	sfxGroup->getNumChannels(&numChannels);
+
+	return numChannels >= maxCount;
+}
+
+//채널 초기화 함수
+void AudioSystem::ClearSFXChannels()
+{
+	if (!sfxGroup) return;
+
+	int numChannels = 0;
+	sfxGroup->getNumChannels(&numChannels);
+
+	for (int i = numChannels - 1; i >= 0; --i)  // 뒤에서부터 제거
+	{
+		FMOD::Channel* channel = nullptr;
+		sfxGroup->getChannel(i, &channel);
+		if (channel)
+		{
+			bool isPlaying = false;
+			channel->isPlaying(&isPlaying);
+
+			// 재생 중인 SFX만 정리, 반복 BGM은 건드리지 않음
+			if (isPlaying)
+				channel->stop();
+		}
+	}
+}
+
+void AudioSystem::PauseSound()
+{
+	if (masterGroup)
+		masterGroup->setPaused(true);
+}
+
+void AudioSystem::AgainstSound()
+{
+	if (masterGroup)
+		masterGroup->setPaused(false);
+}
+
+
 void AudioSystem::Initialize(int num)
 {
 	CheckError(FMOD::System_Create(&fmodSystem));
 	CheckError(fmodSystem->init(num, FMOD_INIT_NORMAL, nullptr));
 
-	fmodSystem->createChannelGroup("MuteGroup", &muteGroup);
+	// 마스터 그룹 가져오기
+	fmodSystem->getMasterChannelGroup(&masterGroup);
+
+	// BGM/SFX 그룹 생성
+	fmodSystem->createChannelGroup("BGM_Group", &bgmGroup);
+	fmodSystem->createChannelGroup("SFX_Group", &sfxGroup);
+
+	// 마스터 그룹에 붙이기
+	masterGroup->addGroup(bgmGroup);
+	masterGroup->addGroup(sfxGroup);
 }
 
 void AudioSystem::Register(const std::vector<SoundResource>& soundlist)
@@ -33,76 +104,95 @@ void AudioSystem::Register(const std::vector<SoundResource>& soundlist)
 		FMOD::Sound* sound = nullptr;
 		//25.08.12 | 경로 절대값으로 변경에 따라 코드수정
 		fmodSystem->createSound((StringConvert::WStringToUTF8(Singleton<AppPaths>::GetInstance().GetWorkingPath() + it.path)).c_str(), it.mode, nullptr, &sound);
-		sounds[it.id] = sound;
+		
+		bool isLoop = (it.mode & FMOD_LOOP_NORMAL) || (it.mode & FMOD_LOOP_BIDI);
+		sounds[it.id] = { sound, isLoop };
+
+		/*sounds[it.id] = sound;*/
 	}
 }
 
 
 void AudioSystem::PlaySound2(const std::wstring& id)
 {
-	CheckError(fmodSystem->playSound(sounds[id], muteGroup, false, &channel));
+	if (!sounds.count(id)) return;
+
+	FMOD::ChannelGroup* targetGroup = sounds[id].isLoop ? bgmGroup : sfxGroup;
+	CheckError(fmodSystem->playSound(sounds[id].sound, targetGroup, false, &channel));
+
+	/*CheckError(fmodSystem->playSound(sounds[id], muteGroup, false, &channel));*/
 }
 
 
 void AudioSystem::UnRegister()
 {
+	//for (auto& it : sounds) {
+	//	it.second->release();
+	//	it.second = nullptr;
+	//}
+	////Fmod는 release로 해제해야함 , delete 사용시 Fmod 내부 리소스 손상 위험존재
+	//sounds.clear();
+
 	for (auto& it : sounds) {
-		it.second->release();
-		it.second = nullptr;
+		if (it.second.sound) {
+			it.second.sound->release();
+			it.second.sound = nullptr;
+		}
 	}
-	//Fmod는 release로 해제해야함 , delete 사용시 Fmod 내부 리소스 손상 위험존재
 	sounds.clear();
 }
 
-void AudioSystem::PauseSound()
-{
-	std::cout << "멈춤 호출" << std::endl;
-	muteGroup->setPaused(true);
-}
-
-void AudioSystem::AgainstSound()
-{
-	std::cout << "재시작 호출" << std::endl;
-	muteGroup->setPaused(false);
-}
+//void AudioSystem::PauseSound()
+//{
+//	std::cout << "멈춤 호출" << std::endl;
+//	muteGroup->setPaused(true);
+//}
+//
+//void AudioSystem::AgainstSound()
+//{
+//	std::cout << "재시작 호출" << std::endl;
+//	muteGroup->setPaused(false);
+//}
 
 void AudioSystem::ReSetChannel()
 {
-	std::cout << "채널삭제 호출" << std::endl;
-	/*muteGroup->stop();*/
-	int numChannels = 0;
-	muteGroup->getNumChannels(&numChannels);
+	if (!masterGroup) return;
 
-	for (int i = numChannels - 1; i >= 0; --i)  // 뒤에서부터 제거
+	int numChannels = 0;
+	masterGroup->getNumChannels(&numChannels);
+
+	for (int i = numChannels - 1; i >= 0; --i)
 	{
 		FMOD::Channel* channel = nullptr;
-		muteGroup->getChannel(i, &channel);
+		masterGroup->getChannel(i, &channel);
 		if (channel)
 		{
-			channel->stop();   // 채널 재생 멈춤
-			// channel 포인터는 FMOD가 관리, 더 이상 참조하지 않으면 안전
+			channel->stop();  // 채널 재생 종료
+			channel = nullptr; // 포인터 끊기
 		}
 	}
-}
 
-void AudioSystem::Setvolume(float state)
-{
-	muteGroup->setVolume(state);
-}
+	// masterGroup 하위 그룹 처리
+	int numSubGroups = 0;
+	masterGroup->getNumGroups(&numSubGroups);
 
-void AudioSystem::Getvolume(float& num )
-{
-	if (muteGroup) // nullptr 체크
+	for (int i = numSubGroups - 1; i >= 0; --i)
 	{
-		FMOD_RESULT result = muteGroup->getVolume(&num);
-		if (result != FMOD_OK)
+		FMOD::ChannelGroup* subGroup = nullptr;
+		masterGroup->getGroup(i, &subGroup);
+		if (subGroup)
 		{
-			std::cout << "[FMOD ERROR] " << FMOD_ErrorString(result) << std::endl;
-			num = 0.0f; // 실패 시 기본값
+			int subNumChannels = 0;
+			subGroup->getNumChannels(&subNumChannels);
+			for (int j = subNumChannels - 1; j >= 0; --j)
+			{
+				FMOD::Channel* subChannel = nullptr;
+				subGroup->getChannel(j, &subChannel);
+				if (subChannel)
+					subChannel->stop();
+			}
 		}
 	}
-	else
-	{
-		num = 0.0f;
-	}
+
+	fmodSystem->update(); // 상태 갱신
 }
