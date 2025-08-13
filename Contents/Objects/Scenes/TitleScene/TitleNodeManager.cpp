@@ -27,6 +27,23 @@ void TitleNodeManager::OnCreate()
 		nodes.push_back(comp);
 		nodeOverlap.push_back(false);
 	}
+
+	// 연출 에니메이션 추가
+	GameObject* animObj = new GameObject();
+	animObj->GetTransform().SetUnityCoords(true);
+	animObj->SetRenderLayer(EngineData::RenderLayer::UI);
+	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(animObj);
+
+	whiteAnim = animObj->AddComponent<AnimationRenderer>();
+	whiteAnim->SetOrderInLayer(111100);
+	whiteAnim->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Particles\\attack_line_spreadsheet.png");
+	whiteAnim->SetSpriteSheet(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Json\\WhiteAttack\\attack_line_spreadsheet_sprites.json");
+	whiteAnim->SetAnimationClip(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Json\\WhiteAttack\\attack_line_anim.json");
+	whiteAnim->SetActive(false);
+	whiteAnim->GetAnimationPlayer()->Pause();
+	whiteAnim->GetAnimationPlayer()->SetLoop(false);
+
+	//whiteAnim->SetFlipX(true);
 }
 
 void TitleNodeManager::OnStart()
@@ -49,6 +66,11 @@ void TitleNodeManager::HandleSliceNode()
 		{
 			if (nodes[i]->IsOverlap())
 			{
+				if (firstHitIndex == -1)
+				{
+					firstHitIndex = i; // 첫번째 닿은 노드 인덱스 저장
+				}
+
 				nodeOverlap[i] = true;
 			}
 		}
@@ -57,7 +79,11 @@ void TitleNodeManager::HandleSliceNode()
 	{
 		for (int i = 0; i < 2; i++)
 		{
-			if (!nodeOverlap[i]) return;
+			if (!nodeOverlap[i]) // 겹친 인덱스 없으면 취소
+			{
+				firstHitIndex = -1;
+				return;
+			}
 		}
 
 		// 모든 노드를 건듦
@@ -67,6 +93,32 @@ void TitleNodeManager::HandleSliceNode()
 		D2D1_MATRIX_3X2_F node2Mat = nodes[1]->owner->GetTransform().ToWorldMatrix();
 
 		patternDrawer->SetLine({ {{ node1Mat.dx, node1Mat.dy }, { node2Mat.dx ,node2Mat.dy }}});
+
+		if (!isPlayAnim)
+		{
+			if (firstHitIndex == 1)
+			{
+				whiteAnim->SetFlipX(true);
+				Vector2 pos = nodes[1]->owner->GetTransform().GetPosition();
+				whiteAnim->owner->GetTransform().SetPosition(pos.x - EngineData::SceenWidth * 0.2f, pos.y);
+			}
+			else
+			{
+				Vector2 pos = nodes[0]->owner->GetTransform().GetPosition();
+				whiteAnim->owner->GetTransform().SetPosition(pos.x, pos.y);
+			}
+
+			whiteAnim->SetActive(true);
+			whiteAnim->GetAnimationPlayer()->Reset();
+			whiteAnim->GetAnimationPlayer()->Play();
+
+			isPlayAnim = true;
+		}
+	}
+
+	if (isPlayAnim && (whiteAnim->GetAnimationPlayer()->GetCurrentFrame() == whiteAnim->GetAnimationPlayer()->GetMaxFrame() - 1))
+	{
+		whiteAnim->SetActive(false);
 	}
 }
 
