@@ -29,7 +29,7 @@ public:
 	// 플레이어의 상태를 초기화하는 함수
 	void ResetPlayerState() {};
 	void SetStatData(std::string tmp); // 스탯 데이터를 데이터에서 불러와 저장함
-
+	float eSpriteDamage_Second = 0.0f; //  초당 줄어들 기세데미지
 	//패턴 ID에 맞는 데이터를 포인터로 가리킴
 	void SetAttackPattenData(std::string PattID); //  패턴ID에 맞는 가이드라인 데이터를 불러옴
 
@@ -44,7 +44,7 @@ public:
 	void SetCoolTime() override;	//쿨타임이 0이 되었을 때, 플레이어의 쿨타임 설정
 	void StateAct();				// 상태에 따른 행동 호출 함수
 	void DiffState();				// 상태 변환과 그로기 관련 업데이트 함수 포함되어있음
-
+	
 	//스테이트 설정하는 함수
 	void SetState(std::string setStateName) override;
 	void OnCreateState() override;

@@ -54,12 +54,18 @@ void BettleManager::OnStart()
 {
 	// 플레이어 기세 값 설정
 	m_Player->SetSpiritData(m_Enemy->GetSpiritAmount());
+	// 플레이어 기세 감소 값 설정
+	m_Player->SetSpriteDamageSecond(m_Enemy->eSpriteDamage_Second);
+
+
 
 	// AttackPatternManager 찾기
 	m_PattenManager = owner->GetQuery()->FindByName("AttackPattenManager")->GetComponent<AttackPatternManager>();
 
 	// 이전 기세 량 초기화
 	preSpiritAmount = m_Player->GetNowSpiritAmount();
+
+
 
 	// 게이지 스크립트 등록
 	owner->AddComponent<GiseGauge>();

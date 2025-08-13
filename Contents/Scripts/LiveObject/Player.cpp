@@ -287,7 +287,7 @@ void Player::CalSpiritTime()
 	if ((!isGroggy) && (!IsOtherGroggy)) {  // 적이나 내가 그로기 상태라면
 		if (Object_OverTimeSpirit >= 1)
 		{
-			Object_NowSpiritAmount -= 0.3f;									 //초당 0.3씩 감소
+			Object_NowSpiritAmount -= pSpriteDamage_Second;									 //초당 0.3씩 감소
 			Object_OverTimeSpirit = std::fmod(Object_OverTimeSpirit, 1.0f);  //실수형 나머지 연산자
 		}
 

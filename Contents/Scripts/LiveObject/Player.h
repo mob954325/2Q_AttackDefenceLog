@@ -82,6 +82,9 @@ public:
 	void CallPlayerHit(int num , Vector2 position , float rotate);
 	void callPlayerDefence();
 
+	float pSpriteDamage_Second = 0.0f;
+	void SetSpriteDamageSecond(float SpriteDamageSecond) {pSpriteDamage_Second = SpriteDamageSecond;}
+
 private:
 	void AttackStateSelect(bool AttackActive); // 공격 패턴 3가지 중 랜덤으로 1개 선택해서 설정함
 	void ResetPlayer(); // 플레이어의 상태 재설정
