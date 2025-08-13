@@ -1,4 +1,4 @@
-#include "TitleScene.h"
+﻿#include "TitleScene.h"
 #include "Components/Logic/InputSystem.h"
 #include "Objects/Common/InputObject.h"
 #include "Objects/Common/MouseTrailObject.h"
@@ -72,6 +72,12 @@ void TitleScene::UpdateImpl()
 	}
 	if (input->IsKeyPressed('2')) {
 		titleEffectManager->GetComponent<TitleEffectManager>()->Start();
-
+		
+	}
+// 	if (input->IsKeyDown('3')) {
+// 		cloudManager->GetComponent<CloudManager >()->ReverseStart();
+// 	}
+	if (input->IsKeyDown('3')) {
+		cloudManager->GetComponent<CloudManager >()->Start();
 	}
 }

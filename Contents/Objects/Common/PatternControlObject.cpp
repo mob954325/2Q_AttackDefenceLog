@@ -21,7 +21,7 @@
 #include "Scripts/GameManager.h"
 
 void PatternControlObject::OnCreate()
-{ 
+{
 	//===================================================================================================
 	// 1. 트레일 + 노드 오브젝트 생성
 	trail = new GameObject();
@@ -137,7 +137,7 @@ void PatternControlObject::OnCreate()
 	enemy = new GameObject();
 	auto enemytmp = enemy->AddComponent<Enemy>();
 	enemytmp->m_State = enemy->AddComponent<StateController>();
-	enemytmp->SetNameDiff("Stage1","easy");
+	enemytmp->SetNameDiff("Stage1", "easy");
 	enemy->SetName("Enemytmp");
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(enemy);
 
@@ -168,7 +168,7 @@ void PatternControlObject::OnCreate()
 
 	bettletmp->onStartBlow.Add([this]() { // 비네트 ON
 		auto bgi = owner->GetQuery()->FindByName("StageBGI1");
-		if (bgi) { bgi->GetComponent<StageBGI>()->Start(); } 
+		if (bgi) { bgi->GetComponent<StageBGI>()->Start(); }
 		});
 
 	// OnParry 이벤트 추가
@@ -188,12 +188,12 @@ void PatternControlObject::OnCreate()
 		{ // 한붓그리기 완료되는 시점에, 랜덤으로 Start 호출됨			
 			auto bgi = owner->GetQuery()->FindByName("StageBGI1");
 			if (bgi) { bgi->GetComponent<StageBGI>()->End(); }
-			
+
 			//auto bt = bettleManager->GetComponent<BettleManager>();
 			//bt->usedStartBlow = false;
 
 			int n = GameRandom::RandomRange(0, 4); // 0 ~ 3
-		
+
 			switch (n)
 			{
 			case 0: n = 1; break;
@@ -214,7 +214,7 @@ void PatternControlObject::OnCreate()
 
 	// OntimeOut 이벤트 추가 - slash가 시간 경과시 캔슬됨
 	bettletmp->onTimeout.Add([this]()
-		{		
+		{
 			chargedSlashManager->owner->GetComponent<EffectInstance>()->EndEffects();
 
 			auto bgi = owner->GetQuery()->FindByName("StageBGI1");
@@ -403,9 +403,12 @@ void PatternControlObject::OnUpdate() // 업데이트
 		}
 
 		auto bt = bettleManager->GetComponent<BettleManager>();
-		bt->SetInputNode(PM.GetPattern());
+		std::vector<int> pttt = PM.GetPattern();
+		for (int value : pttt) { std::cout << value << "-"; } // Debug
+		std::reverse(pttt.begin(), pttt.end()); // 뒤집어서 집어넣음
+		bt->SetInputNode(pttt);
 
-		for (int value : PM.GetPattern()) { std::cout << value << "-"; } // Debug
+
 		std::cout << std::endl << std::endl;
 	}
 
@@ -422,7 +425,7 @@ void PatternControlObject::OnUpdate() // 업데이트
 	{
 		cachedVecA = pca;
 		pca.erase(std::remove(pca.begin(), pca.end(), 0), pca.end());
-		std::reverse(pca.begin(), pca.end());
+		//std::reverse(pca.begin(), pca.end());
 		auto PCA = playerGuidelineA->GetComponent<ChainDrawerComponent>();
 		PCA->StartByType(pca);
 	}
@@ -431,7 +434,7 @@ void PatternControlObject::OnUpdate() // 업데이트
 	{
 		cachedVecB = pcb;
 		pcb.erase(std::remove(pcb.begin(), pcb.end(), 0), pcb.end());
-		std::reverse(pcb.begin(), pcb.end());
+		//std::reverse(pcb.begin(), pcb.end());
 		auto PCB = playerGuidelineB->GetComponent<ChainDrawerComponent>();
 		PCB->StartByType(pcb);
 	}
@@ -447,6 +450,7 @@ void PatternControlObject::OnUpdate() // 업데이트
 
 		apm->GetEnemyPattern(enemyPatterns, time, ID);
 		enemyPatterns.erase(std::remove(enemyPatterns.begin(), enemyPatterns.end(), 0), enemyPatterns.end());
+		std::reverse(enemyPatterns.begin(), enemyPatterns.end());
 
 		if (!readyQueueForEnemyGuide.empty())
 		{
@@ -468,8 +472,9 @@ void PatternControlObject::OnUpdate() // 업데이트
 			attackLineEffects.push_back(readyQueueForAttackLine.front());
 			readyQueueForAttackLine.pop();
 			auto ac = attackLineEffects.back()->GetComponent<AnimatedChainEffect>();
-
-			ac->PlayOnce(apm->CheckIsAttck());
+			std::vector<int> appp = apm->CheckIsAttck();
+			std::reverse(appp.begin(), appp.end());
+			ac->PlayOnce(appp);
 		}
 	}
 
