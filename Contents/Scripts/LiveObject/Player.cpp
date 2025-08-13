@@ -89,7 +89,7 @@ void Player::OnUpdate() {
 		AddPattenLoop();		// 패턴을 추가하는 루프
 	}
 
-	// PrintConsole();		// 콘솔 호출
+	PrintConsole();		// 콘솔 호출
 	m_State->Update(); 	// 각 state별 추가로 정의된 행동 호출
 	DiffState();  		// 이전상태와 현재상태를 결정하는 함수
 	StateAct();   		// 각 state 별 행동 
@@ -287,7 +287,7 @@ void Player::CalSpiritTime()
 	if ((!isGroggy) && (!IsOtherGroggy)) {  // 적이나 내가 그로기 상태라면
 		if (Object_OverTimeSpirit >= 1)
 		{
-			Object_NowSpiritAmount -= 0.3f;									 //초당 0.3씩 감소
+			Object_NowSpiritAmount -= pSpriteDamage_Second;									 //초당 0.3씩 감소
 			Object_OverTimeSpirit = std::fmod(Object_OverTimeSpirit, 1.0f);  //실수형 나머지 연산자
 		}
 
