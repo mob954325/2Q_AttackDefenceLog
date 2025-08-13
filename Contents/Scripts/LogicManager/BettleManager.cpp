@@ -294,8 +294,9 @@ void BettleManager::SetStateFormPatternIdle()
 				m_Enemy->GetSpiritdamage(ConvertSpiritDamageToPos(tmpCorPatten->lastPosition, m_Player->GetSpiritAttack()));
 
 				// 플레이어 공격 가이드 패턴 ( A, B ) 파괴 - 점선 화살표 이미지
-				m_PattenManager->SearchAndDestroyCouple(tmpCorPatten->PattenID);
-				m_PattenManager->SubPattern(tmpCorPatten->PattenID, "Player");
+				//m_PattenManager->SearchAndDestroyCouple(tmpCorPatten->PattenID);
+				//m_PattenManager->SubPattern(tmpCorPatten->PattenID, "Player");
+				m_PattenManager->PlayerPatternAllClear();
 			}
 		}
 		else // 입력이 생성된 가이드라인 또는 적 공격과 다른 경우 
@@ -318,10 +319,11 @@ void BettleManager::SetStateFormPatternIdle()
 						m_Player->GetDamage(ConvertHPDamageToPos(tmpPatten->lastPosition, m_Enemy->GetAttack()));
 					}
 
-					// 기세 계산
+					// 기세 계산		Object_SpiritAttack	7.00000000	float
+
 					if (!m_Player->GetIsGroggy()){
-						m_Player->RestoreSpiritDamage(ConvertSpiritDamageToPos(tmpPatten->lastPosition, m_Player->GetSpiritAttack()));
-						m_Enemy->GetSpiritdamage(ConvertSpiritDamageToPos(tmpPatten->lastPosition, m_Player->GetSpiritAttack()));
+						m_Player->GetSpiritdamage(ConvertSpiritDamageToPos(tmpPatten->lastPosition, m_Player->GetSpiritAttack()));
+						m_Enemy->RestoreSpiritDamage(ConvertSpiritDamageToPos(tmpPatten->lastPosition, m_Player->GetSpiritAttack()));
 					}
 					
 
@@ -507,7 +509,8 @@ void BettleManager::SetGroggyState()
 		isOncePatternAttack = false;
 		m_Player->isOtherGroggyEnd = false;
 		m_Player->IsOtherGroggy = false;
-		//m_Player->SetState("Player_Idle");
+		m_Player->SetState("Player_AttackSuccess");
+		m_Enemy->SetState("Enemy_Hit");
 		onTimeout.Invoke(); // 외부에 그로기 지속 시간이 끝났다는걸 알림
 	}
 
