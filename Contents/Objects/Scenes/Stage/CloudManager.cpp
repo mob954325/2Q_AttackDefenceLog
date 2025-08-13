@@ -13,8 +13,8 @@ void CloudManager::OnStart()
 		GameObject* obj = new GameObject();
 		obj->GetTransform().SetUnityCoords(true);
 		obj->SetRenderLayer(EngineData::RenderLayer::UI);
-		auto br = obj->AddComponent<BitmapRenderer>();
-		br->SetOrderInLayer(i);
+		auto br = obj->AddComponent<BitmapRenderer>();		
+		br->SetOrderInLayer(i + 100);
 
 		effectProgress.push_back({ br, 0.0f });
 

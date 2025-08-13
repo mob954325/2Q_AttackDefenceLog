@@ -68,11 +68,9 @@ void TitleScene::UpdateImpl()
 	auto input = inputObj->GetComponent<InputSystem>();
 	if (input->IsKeyPressed('1')) {
 		Singleton<SceneManager>::GetInstance().LoadScene(MENU);
-
 	}
 	if (input->IsKeyPressed('2')) {
 		titleEffectManager->GetComponent<TitleEffectManager>()->Start();
-		
 	}
 // 	if (input->IsKeyDown('3')) {
 // 		cloudManager->GetComponent<CloudManager >()->ReverseStart();
