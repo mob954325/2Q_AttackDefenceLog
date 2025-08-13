@@ -8,6 +8,7 @@
 #include "Objects/Scenes/Stage/CloudManager.h"
 #include "Objects/Sound/SoundTittle.h"
 #include "Objects/Scenes/Stage/StageResult/StageResult.h"
+#include "Scripts/GameManager.h"
 
 void TitleScene::OnEnterImpl()
 {
@@ -56,6 +57,8 @@ void TitleScene::OnEnterImpl()
 	// GameObject* result = new GameObject();
 	// result->AddComponent<StageResult>();
 	// AddGameObject(result, "result");
+
+	Singleton<GameManager>::GetInstance().Reset();
 }
 
 void TitleScene::OnExitImpl()

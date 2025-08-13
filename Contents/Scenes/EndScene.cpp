@@ -6,6 +6,8 @@
 #include "Objects/Common/TestObject.h"
 #include "Objects/Sound/SoundEnd.h"
 #include "../Engine/Systems/AudioSystem.h"
+#include "Scripts/End/EndBackground.h"
+#include "Scripts/BubbleBox/BubbleEnd.h"
 
 void EndScene::OnEnterImpl()
 {
@@ -31,6 +33,18 @@ void EndScene::OnEnterImpl()
 
 	SoundEndObj->GetComponent<SoundEnd>()->SetKeyHandle(L"End");
 	SoundEndObj->GetComponent<SoundEnd>()->PlaySound();
+
+	SoundEndObj = new GameObject();
+	SoundEndObj->AddComponent<SoundEnd>();
+	AddGameObject(SoundEndObj, "EndSound");
+
+	GameObject* ebg = new GameObject();
+	ebg->AddComponent<EndBackground>();
+	AddGameObject(ebg, "EndBackGround");
+
+	GameObject* bbe = new GameObject();
+	bbe->AddComponent<BubbleEnd>();
+	AddGameObject(bbe, "BubbleEnd");
 }
 
 void EndScene::OnExitImpl()
