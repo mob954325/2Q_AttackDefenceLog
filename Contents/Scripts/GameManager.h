@@ -29,6 +29,8 @@ public:
 	bool IsStage2Clear();
 	bool IsStage3Clear();
 
+	void Reset();
+
 	void SetDifficulty(std::string diffStr); // stage Scene 시작 시 str을 받기 때문에 | 급해서 이렇게 처리
 	std::string GetDifficultyString();
 

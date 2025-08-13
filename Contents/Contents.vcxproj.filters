@@ -297,6 +297,8 @@
     </ClCompile>
     <ClCompile Include="Scripts\SelectSeal\SelectSeal.cpp" />
     <ClCompile Include="Vignette.cpp" />
+    <ClCompile Include="Scripts\End\EndBackground.cpp" />
+    <ClCompile Include="Scripts\BubbleBox\BubbleEnd.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameApp.h">
@@ -512,5 +514,7 @@
     </ClInclude>
     <ClInclude Include="Scripts\SelectSeal\SelectSeal.h" />
     <ClInclude Include="Vignette.h" />
+    <ClInclude Include="Scripts\End\EndBackground.h" />
+    <ClInclude Include="Scripts\BubbleBox\BubbleEnd.h" />
   </ItemGroup>
 </Project>

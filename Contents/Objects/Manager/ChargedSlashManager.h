@@ -65,6 +65,8 @@ public:
 
 
 protected:	
+	bool soundFlag = true;
+
 	EffectInstance* eff;
 	Finaleffect* fff; // FinaleFFect
 

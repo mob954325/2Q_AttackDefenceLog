@@ -1,10 +1,9 @@
-﻿#pragma once
+#pragma once
 #include "Components/Base/MonoBehavior.h"
 #include "../Engine/Components/Rendering/BitmapRenderer.h"
 #include "../Engine/Components/Logic/InputSystem.h"
 
-
-class BubbleBoxTittle : public MonoBehavior
+class BubbleEnd : public MonoBehavior
 {
 public:
 	void OnUpdate() override;
@@ -14,10 +13,8 @@ public:
 	void CheckInput();
 
 private:
-	bool flag = false;	
 
 	std::vector<BitmapRenderer*> texts;
-
 
 	InputSystem* input{};
 
