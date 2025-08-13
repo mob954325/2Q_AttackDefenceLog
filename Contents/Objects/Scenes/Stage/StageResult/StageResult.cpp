@@ -1,4 +1,4 @@
-癤#include "StageResult.h"
+﻿#include "StageResult.h"
 #include "Components/Base/GameObject.h"
 #include "Scene/SceneManager.h"
 #include "Datas/EngineData.h"
