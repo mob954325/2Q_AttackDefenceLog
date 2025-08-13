@@ -23,9 +23,9 @@ enum class ShakeType
 class CamInstance : public MonoBehavior
 {
 public:
-	void OnUpdate() override;
 	void OnCreate() override;
 	void OnStart() override;
+	void OnUpdate() override;
 	void OnDestroy() override;
 
 	void start(float MaxTime, float Period, float Amplitude, ShakeType type);

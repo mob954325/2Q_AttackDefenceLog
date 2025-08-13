@@ -4,6 +4,7 @@
 
 
 void EnemyData::SetData(std::vector<std::wstring> tmp) {
+	if (tmp[0] == L"") return;
 	enemyID = StringConvert::WstringToString(tmp[0].c_str());
 	enemyName = tmp[1];
 	enemyDifficulty = StringConvert::WstringToString(tmp[2].c_str());

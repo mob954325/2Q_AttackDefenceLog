@@ -93,20 +93,21 @@ void Stage1::OnEnterImpl()
 	enemyProfileComp->owner->GetTransform().SetPosition(EngineData::SceenWidth * 0.95f, 1);
 	AddGameObject(enemyProfileUIObj, "enemyProfileUIObj");
 
+	//D2D1_RECT_F HiteffectPlayer = { 570.0f,  680.0f , 970.0f,  810.0f };
+	//randomBox = new GameObject();  // 97
+	//randomBox->AddComponent<BoxRenderer>();
+	//AddGameObject(randomBox, "randombox");
+	//randomBox->GetTransform().SetUnityCoords(false);
+	//randomBox->GetComponent<BoxRenderer>()->SetOrderInLayer(90000);
 
-	randomBox = new GameObject();
-	randomBox->AddComponent<BoxRenderer>();
-	AddGameObject(randomBox, "randombox");
-	randomBox->GetTransform().SetUnityCoords(false);
-	randomBox->GetComponent<BoxRenderer>()->SetOrderInLayer(90000);
-	
-	D2D1_RECT_F A{};
-	A.left = 1540.0f;
-	A.right = 1620.0f;
-	A.top = 180.0f;
-	A.bottom = 310.0f;
+	//D2D1_RECT_F A{};
+	//A.left = 570.0f;
+	//A.right = 970.0f;
+	//A.top = 680.0f;
+	//A.bottom = 810.0f;
 
-	randomBox->GetComponent<BoxRenderer>()->SetRect(A);
+	//randomBox->GetComponent<BoxRenderer>()->SetRect(A);
+
 }
 
 void Stage1::OnExitImpl()
