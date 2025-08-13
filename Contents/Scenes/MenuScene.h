@@ -8,6 +8,8 @@ protected:
 	void OnExitImpl() override;
 	void UpdateImpl() override;
 
+	bool isFirst = false;
+
 private:
 	GameObject* testObj;
 	GameObject* inputObj;

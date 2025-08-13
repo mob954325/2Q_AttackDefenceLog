@@ -118,7 +118,7 @@ void PatternControlObject::OnCreate()
 		m_nodes[i]->GetComponent<NodeObject>()->SetRadius(r);
 		nodePositions.push_back({ x, y });
 	}
-	PM.padding = 150.0f;
+	PM.padding = 350.0f;
 	PM.SetNodes(m_nodes, r);
 
 	// effect 9
