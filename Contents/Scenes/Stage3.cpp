@@ -35,7 +35,7 @@ void Stage3::OnEnterImpl()
 
 	SoundStageThree = new GameObject();
 	SoundStageThree->AddComponent<SoundPlayScene>();
-	AddGameObject(SoundStageThree, "SoundMenu3");
+	AddGameObject(SoundStageThree, "SOUNDSTAGE"); // SOUNDSTAGE << 이름 유지해주세요
 
 	SoundStageThree->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Stage03");
 	SoundStageThree->GetComponent<SoundPlayScene>()->PlaySound();

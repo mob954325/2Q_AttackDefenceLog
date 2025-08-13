@@ -44,7 +44,7 @@ void MenuScene::OnEnterImpl()
 
 	SoundMenuObj = new GameObject();
 	SoundMenuObj->AddComponent<SoundTittle>();
-	AddGameObject(SoundMenuObj, "SoundMenu");
+	AddGameObject(SoundMenuObj, "SOUNDMENU"); // SOUNDMENU << 이름 유지해주세요
 }
 
 void MenuScene::OnExitImpl()
