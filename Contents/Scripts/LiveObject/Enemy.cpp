@@ -518,9 +518,11 @@ void Enemy::ChecKChnageScene()
 	if (!isCreatedResult)
 	{
 		GameObject* obj = new GameObject();
+		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(obj);
 		obj->SetRenderLayer(EngineData::RenderLayer::UI);
 		auto comp = obj->AddComponent<StageResult>();
 		comp->SetPanelState(ResultPanelState::Win);
+
 		isCreatedResult = true;
 	}
 

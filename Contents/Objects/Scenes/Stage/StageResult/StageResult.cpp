@@ -6,9 +6,11 @@
 #include "Platform/Input.h"
 #include "Math/EasingFunction.h"
 #include "Utils/GameTime.h"
+#include "Objects/Sound/SoundPlayScene.h"
 
 void StageResult::OnCreate()
 {
+	isSoundPlay = false;
 	// winPanel 초기화
 	GameObject* winPanelObject = new GameObject();
 	winPanelObject->GetTransform().SetUnityCoords(false);
@@ -17,10 +19,9 @@ void StageResult::OnCreate()
 	
 	winPanel = winPanelObject->AddComponent<BitmapRenderer>();
 	winPanel->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\Result\\victory_ui_1.png");
-
+	winPanel->SetOrderInLayer(100000000);
 
 	winPanelObject->GetTransform().SetPosition(93.5f, 159.0f);
-	winPanel->SetOrderInLayer(20000);
 
 	// winMark 초기화
 	GameObject* winMarkObject = new GameObject();
@@ -30,10 +31,10 @@ void StageResult::OnCreate()
 	
 	winMark = winMarkObject->AddComponent<BitmapRenderer>();
 	winMark->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\Result\\victory_ui_b2.png");
+	winMark->SetOrderInLayer(100000000);
 
 	
 	winMarkObject->GetTransform().SetPosition(93.5f, 159.0f);
-	winMark->SetOrderInLayer(20000);
 
 	// defeatPanel 초기화
 
@@ -43,10 +44,10 @@ void StageResult::OnCreate()
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(defeatPanelObject);
 	defeatPanel = defeatPanelObject->AddComponent<BitmapRenderer>();
 	defeatPanel->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\Result\\defeat_ui_1.png");
+	defeatPanel->SetOrderInLayer(100000000);
 
 
 	defeatPanelObject->GetTransform().SetPosition(93.5f, 159.0f);
-	defeatPanel->SetOrderInLayer(20000);
 
 	// defeatMark 초기화
 	GameObject* defeatMarkObject = new GameObject();
@@ -55,10 +56,10 @@ void StageResult::OnCreate()
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(defeatMarkObject);
 	defeatMark = defeatMarkObject->AddComponent<BitmapRenderer>();
 	defeatMark->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\Result\\defeat_ui_b2.png");
+	defeatMark->SetOrderInLayer(100000000);
 
 	
 	defeatMarkObject->GetTransform().SetPosition(93.5f, 159.0f);
-	defeatMark->SetOrderInLayer(20000);
 }
 
 void StageResult::OnStart()
@@ -78,13 +79,34 @@ void StageResult::OnUpdate()
 	}	
 	else
 	{
+		// 도장
 		if (winPanel->IsActiveSelf())
 		{
 			winMark->SetActive(true);
+
+			if (!isSoundPlay)
+			{
+				auto SoundCom = owner->GetQuery()->FindByName("SOUNDSTAGE");
+				if (SoundCom) {
+					SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Stamp");
+					SoundCom->GetComponent<SoundPlayScene>()->PlaySound();
+				}
+				isSoundPlay = true;
+			}
 		}
 		else
 		{
 			defeatMark->SetActive(true);
+
+			if (!isSoundPlay)
+			{
+				auto SoundCom = owner->GetQuery()->FindByName("SOUNDSTAGE");
+				if (SoundCom) {
+					SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Stamp");
+					SoundCom->GetComponent<SoundPlayScene>()->PlaySound();
+				}
+				isSoundPlay = true;
+			}
 		}
 	}
 }
