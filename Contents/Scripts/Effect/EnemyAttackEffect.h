@@ -17,9 +17,8 @@ public:
 
 	void SetAnimePosition(int num, const Vector2& vector);
 
-	void CallAnime(int num, Vector2 vector, float rotationValue);
+	void CallAnime(int num, Vector2 vector);
 
-	void CallAnime(int num);
 	void StopAnime(int num);
 	void StopAllAnime();
 

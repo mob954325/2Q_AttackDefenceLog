@@ -46,7 +46,7 @@ void Player::OnStart()
 	player_Guard->SetActive(false);
 
 	PlayerHit = owner->AddComponent<EffectMonoB>();
-	/*PlayerHit = owner->GetComponent<EffectMonoB>();*/
+	GuardEff = owner->AddComponent<EnemyAttackEffect>();
 
 
 }
@@ -61,7 +61,11 @@ void Player::ResetPlayer()
 }
 
 void Player::OnUpdate() {
+	
+	if (CheckPlayPerry)
+	{
 
+	}
 	// 게임 상태가 Pause면 모든 Update 무시
 	if (Singleton<GameManager>::GetInstance().GetGameState() == GameState::Pause)
 	{
@@ -555,4 +559,14 @@ void Player::ChecKChnageScene()
 	{
 		Singleton<SceneManager>::GetInstance().LoadScene(SceneCount::MENU);
 	}
+}
+
+void Player::CallGuardEffect(int num, Vector2 vector)
+{
+	GuardEff->CallAnime(num, vector);
+}
+
+void Player::CallParryEffect(int num, Vector2 vector)
+{
+	GuardEff->CallAnime(num, vector);
 }

@@ -3,6 +3,7 @@
 
 
 void EnemyAtkPattenData::SetData(std::vector<std::wstring> tmp) {
+	if (tmp[0] == L"") return;
 	ePatternID = StringConvert::WstringToString(tmp[0].c_str()); // 적의 공격 패턴 ID를 저장
 	atkPetternGroup = std::stoi(tmp[1]);       // 적의 공격 그룹을 저장
 	eNodepattern = StringConvert::WstringToString(tmp[2].c_str());;  // 적의 노드 패턴을 저장

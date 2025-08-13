@@ -66,7 +66,7 @@ void EnemyAttackEffect::SetAnimePosition(int num, const Vector2& vector)
 	AnimeList[num]->GetTransform().SetPosition(vector.x, vector.y);
 }
 
-void EnemyAttackEffect::CallAnime(int num, Vector2 vector, float rotationValue)
+void EnemyAttackEffect::CallAnime(int num, Vector2 vector)
 {
 	size_t Animesize = AnimeList.size();
 	int a = 0;
@@ -77,13 +77,11 @@ void EnemyAttackEffect::CallAnime(int num, Vector2 vector, float rotationValue)
 	auto* p = r->GetAnimationPlayer();
 	p->Play();
 	SetAnimePosition(num, vector);
-	AnimeList[num]->GetTransform().SetRotation(rotationValue);
 
 	auto& s = AnimeStates[num];
 	s.playing = true;
 	s.t = 0.0f;
 	s.duration = Animeduration; // 슬롯마다 다르게 가능
-
 }
 
 void EnemyAttackEffect::StopAnime(int num)
