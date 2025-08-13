@@ -43,6 +43,10 @@
 /// 
 /// m_State->CreateState("Player_Dead");   // 죽음
 
+void BettleManager::OnCreate()
+{
+
+}
 
 void BettleManager::OnStart() 
 {
@@ -62,14 +66,8 @@ void BettleManager::OnStart()
 	giseTotalValue = m_Player->GetSpiritAmount();
 	//giseObj->SetMaxGague(m_Player->GetTotalHp());
 
-	HpObj = owner->AddComponent<HpGauge>();
-	//HP 최대치 설정 플레이어, 적
-	HpObj->SetPlayerMaxGague(m_Player->GetTotalHp());
-	HpObj->SetEnemyMaxGague(m_Enemy->GetTotalHp());
+	InitHpGauge();
 
-
-
-	/*HpObj->SetHpUiPosition(Player, Enemy);*/
 }
 
 void BettleManager::OnUpdate() 
@@ -121,9 +119,16 @@ void BettleManager::OnUpdate()
 	ResetState(); 			// state가 다를 경우 초기화 하기!!!
 }
 
+void BettleManager::InitHpGauge()
+{
+	HpObj = owner->AddComponent<HpGauge>();
 
+	//HP 최대치 설정 플레이어, 적
+	HpObj->SetPlayerMaxGague(m_Player->GetTotalHp());
+	HpObj->SetEnemyMaxGague(m_Enemy->GetTotalHp());
 
-
+	HpObj->SetHpUiPosition({200,200}, { 1449 ,0}); // NOTE : hp바 위치 바꾸기
+}
 
 float BettleManager::ConvertHPDamageToPos(AttackPosition lastPos, float HpDamage)
 {

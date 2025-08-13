@@ -13,6 +13,7 @@
 #include "Application/AppPaths.h"
 #include "Scripts/BubbleBox/BubbleBox.h"
 #include "Scripts/GameManager.h"
+#include "Objects/Scenes/Stage/StageTopUI.h"
 
 void Stage1::OnEnterImpl()
 {
@@ -72,6 +73,10 @@ void Stage1::OnEnterImpl()
 	Textbox->AddComponent<BubbleBox>();
 	AddGameObject(Textbox, "Textbox");
 
+	GameObject* topUIObj = new GameObject();
+	auto topUIComp = exitBtn->AddComponent<StageTopUI>();
+	topUIComp->owner->GetTransform().SetPosition(-EngineData::SceenWidth * 0.1f, -EngineData::SceenHeight * 0.025f);
+	AddGameObject(topUIObj, "topUIObj");
 }
 
 void Stage1::OnExitImpl()

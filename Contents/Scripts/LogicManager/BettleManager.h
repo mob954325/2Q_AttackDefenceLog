@@ -24,8 +24,14 @@ public:
 	BettleManager() {};
 	~BettleManager() {};
 
+	void OnCreate() override;
 	void OnStart();
 	void OnUpdate();
+
+	/// <summary>
+	/// PatternControlObject가 호출할 체력 게이지 초기화 함수
+	/// </summary>
+	void InitHpGauge();
 
 public:
 	//상중하에 따라서 체력과 기세 데미지를 적용함, 플레이어와 적 ㄴ동일하게 적용
