@@ -10,6 +10,7 @@
 #include "../Engine/Math/GameRandom.h"
 #include "Objects/Scenes/Stage/StageBGI.h"
 
+
 //성빈씨꺼
 #include "Scripts/LogicManager/BettleManager.h"
 #include "Scripts/LogicManager/AttackPatternManager.h" 
@@ -41,16 +42,16 @@ void PatternControlObject::OnCreate()
 	playerGuidelineA = new GameObject();
 	playerGuidelineA->SetRenderLayer(EngineData::RenderLayer::None);
 	auto cb = playerGuidelineA->AddComponent<ChainDrawerComponent>(); // 빨강(상단) 초록(중단) 하단(파랑)
-	cb->SetBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\player_guide_line 3.png");
-	cb->SetTypeBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\player_guide_line 1.png", Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\player_guide_line 2.png");
+	cb->SetBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\player_guide_line 1.png");
+	cb->SetTypeBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\player_guide_line 3.png", Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\player_guide_line 2.png");
 	cb->SetOrderInLayer(0);
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(playerGuidelineA);
 
 	playerGuidelineB = new GameObject();
 	playerGuidelineB->SetRenderLayer(EngineData::RenderLayer::None);
 	auto cc = playerGuidelineB->AddComponent<ChainDrawerComponent>();
-	cc->SetBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\player_guide_line 3.png");
-	cc->SetTypeBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\player_guide_line 1.png", Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource/player_guide_line 2.png");
+	cc->SetBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\player_guide_line 1.png");
+	cc->SetTypeBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\player_guide_line 3.png", Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource/player_guide_line 2.png");
 	cc->SetOrderInLayer(0);
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(playerGuidelineB);
 
@@ -175,12 +176,14 @@ void PatternControlObject::OnCreate()
 	bettletmp->onParry.Add([this](int nodeIndex)
 		{
 			this->effectInstances[nodeIndex - 1]->DoParry(nodeIndex - 1);
+			signBoard->ShowParrySign();
 		});
 
 	// OnGuard 이벤트 추가
 	bettletmp->onGuard.Add([this](int nodeIndex)
 		{
 			this->effectInstances[nodeIndex - 1]->DoGuard(nodeIndex - 1);
+			signBoard->ShowGuardSign();
 		});
 
 	// OnFinalBlow 이벤트 추가
@@ -257,6 +260,8 @@ void PatternControlObject::OnCreate()
 		});
 
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(csm, "ChargedSlashManager");
+
+	signBoard = owner->AddComponent<SignBoard>();	
 }
 
 //===================================================================================================
@@ -477,6 +482,19 @@ void PatternControlObject::OnUpdate() // 업데이트
 			std::vector<int> appp = apm->CheckIsAttck();
 			std::reverse(appp.begin(), appp.end());
 			ac->PlayOnce(appp);
+			if (!appp.empty()) {
+				switch ((appp.back() - 1) / 3) {
+				case 0: // 1 2 3 상단
+					signBoard->ShowHighSign();
+					break;
+				case 1: // 4 5 6 중단
+					signBoard->ShowMiddleSign();
+					break;
+				case 2: // 7 8 9 하단
+					signBoard->ShowLowSign();
+					break;
+				}
+			}
 		}
 	}
 

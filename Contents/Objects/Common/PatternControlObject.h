@@ -6,7 +6,9 @@
 #include "Scene/SceneManager.h"
 #include "Utils/EventDelegate.h"
 #include "Objects/Manager/ChargedSlashManager.h"
+#include "Objects/Common/SignBoard.h"
 #include "Scripts/LiveObject/Enemy.h"
+
 
 #include "Scripts/Effect/EffectInstance.h" // 이펙트 정현씨꺼
 
@@ -49,6 +51,8 @@ protected:
 	EffectInstance* effInstance;						// 단일 이펙트 -> 이 오브젝트가 소유하고 있음
 	std::vector<EffectInstance*> effectInstances;		// 이펙트 여러개 -> 이 오브젝트와 개별 오브젝트
 
+	SignBoard* signBoard;
+
 private:
 	bool isSkipped = false; // 이거 켜지면, 노드 관련 행동 스킵함
 
@@ -57,9 +61,6 @@ private:
 	std::vector<int> cachedVecB;
 
 	std::vector<Vector2> nodePositions;
-
-
-
 };
 
 
