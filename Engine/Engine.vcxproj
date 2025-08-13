@@ -347,6 +347,8 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\Contents\Scripts\Camera\CamInstance.h" />
+    <ClInclude Include="Components\Camera\CameraManager.h" />
     <ClInclude Include="Components\Rendering\AnimatedChainEffect.h" />
     <ClInclude Include="Components\Rendering\ChainDrawerComponent.h" />
     <ClInclude Include="Components\Rendering\PatternDrawerComponent.h" />
@@ -383,7 +385,6 @@
     <ClInclude Include="Components\Collision\AABBCollider.h" />
     <ClInclude Include="Components\Collision\CollisionComponent.h" />
     <ClInclude Include="Components\Collision\ICollider.h" />
-    <ClInclude Include="Components\Camera\CameraManager.h" />
     <ClInclude Include="Components\Logic\FSMInstance.h" />
     <ClInclude Include="Components\Physics\PhysicComponent.h" />
     <ClInclude Include="Datas\AnimationControllerDatas.h" />
@@ -435,6 +436,8 @@
     <ClInclude Include="Components\Rendering\VignetteEffect.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Contents\Scripts\Camera\CamInstance.cpp" />
+    <ClCompile Include="Components\Camera\CameraManager.cpp" />
     <ClCompile Include="Components\Rendering\AnimatedChainEffect.cpp" />
     <ClCompile Include="Components\Rendering\ChainDrawerComponent.cpp" />
     <ClCompile Include="Components\Rendering\PatternDrawerComponent.cpp" />
@@ -462,7 +465,6 @@
     <ClCompile Include="Systems\CollisionSystem.cpp" />
     <ClCompile Include="Components\Collision\AABBCollider.cpp" />
     <ClCompile Include="Components\Collision\CollisionComponent.cpp" />
-    <ClCompile Include="Components\Camera\CameraManager.cpp" />
     <ClCompile Include="Components\Logic\FSMInstance.cpp" />
     <ClCompile Include="Systems\PhysicSystem.cpp" />
     <ClCompile Include="Resources\Loaders\AnimationControllerLoader.cpp" />

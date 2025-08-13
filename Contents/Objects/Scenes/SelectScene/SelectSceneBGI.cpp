@@ -10,7 +10,7 @@ void SelectSceneBGI::OnStart()
 
 	bitmapRenderer = owner->AddComponent<BitmapRenderer>();
 	bitmapRenderer->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\stage3_background.png"); // NOTE : 임시 배경화면
-	bitmapRenderer->SetOrderInLayer(-10);
+	bitmapRenderer->SetOrderInLayer(-200);
 
 	size = bitmapRenderer->GetResource()->GetBitmap()->GetSize();
 	owner->GetTransform().SetOffset(-size.width / 2, size.height / 2);

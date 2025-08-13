@@ -4,7 +4,9 @@
 
 void StageBGI3::OnCreate()
 {
+	owner->SetRenderLayer(EngineData::RenderLayer::None);
 	backGround = owner->AddComponent<BitmapRenderer>();
+	backGround->SetOrderInLayer(-200);
 	backGround->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\stage3_background.png");
 }
 

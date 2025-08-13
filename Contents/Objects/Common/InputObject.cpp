@@ -1,11 +1,11 @@
 ﻿#include "InputObject.h"
 #include "Components/Base/GameObject.h"
 #include "Scene/SceneManager.h"
-#include "../Engine/Components/Logic/InputSystem.h"
+
 
 void InputObject::OnStart()
 {
-	owner->AddComponent<InputSystem>();
+	inputs = owner->AddComponent<InputSystem>();
 
 
 	GameObject* camI = new GameObject;
@@ -16,6 +16,10 @@ void InputObject::OnStart()
 
 void InputObject::OnUpdate()
 {
+	if (inputs->IsKeyPressed('0')) {
+		auto camIns = owner->GetQuery()->FindByName("CAM");
+		if (camIns) { camIns->GetComponent<CamInstance>()->Start(5.0f, 10.0f, 10.0f, ShakeType::X); }
+	}
 
 }
 

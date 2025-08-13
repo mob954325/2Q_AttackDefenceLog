@@ -12,7 +12,7 @@ void StageBGI::OnStart()
 
 	bitmapRenderer = owner->AddComponent<BitmapRenderer>();
 	bitmapRenderer->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\arena-1.png");
-	bitmapRenderer->SetOrderInLayer(-10);
+	bitmapRenderer->SetOrderInLayer(-200);
 
 	vignette = owner->AddComponent<VignetteEffect>();
 	vignette->SetBitmap(bitmapRenderer->GetResource()->GetBitmap().Get());

@@ -289,7 +289,7 @@ void PatternControlObject::OnStart()
 		auto queueBack = readyQueueForEnemyGuide.back()->AddComponent<ChainDrawerComponent>();
 		queueBack->SetBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Mouse\\TestArrow_2.png");
 		queueBack->SetFillBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Mouse\\TestArrow_1.png");
-		queueBack->SetOrderInLayer(0);
+		queueBack->SetOrderInLayer(3);
 
 		readyQueueForEnemyGuide.back()->SetName("EnemyGuideline." + std::to_string(i));
 		queueBack->SetupNodes(m_nodes[4]->GetTransform().GetPosition(), n); // 스타트에서 하기
@@ -366,8 +366,10 @@ void PatternControlObject::OnStart()
 	// 공격 가이드 초기 세팅 - 아마 테스트 용으로 추정
 
 	auto PCA = playerGuidelineA->GetComponent<ChainDrawerComponent>();
+	PCA->SetOrderInLayer(2);
 	PCA->SetupNodes(m_nodes[4]->GetTransform().GetPosition(), n);
 	auto PCB = playerGuidelineB->GetComponent<ChainDrawerComponent>();
+	PCB->SetOrderInLayer(1);
 	PCB->SetupNodes(m_nodes[4]->GetTransform().GetPosition(), n);
 }
 

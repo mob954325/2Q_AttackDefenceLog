@@ -35,7 +35,7 @@ void Stage2::OnEnterImpl()
 
 	SoundStageTwo = new GameObject();
 	SoundStageTwo->AddComponent<SoundPlayScene>();
-	AddGameObject(SoundStageTwo, "SOUNDSTAGE");
+	AddGameObject(SoundStageTwo, "SOUNDSTAGE"); // SOUNDSTAGE << 이름 유지해주세요
 
 	PCO = new GameObject();
 	auto comp = PCO->AddComponent<PatternControlObject>();
