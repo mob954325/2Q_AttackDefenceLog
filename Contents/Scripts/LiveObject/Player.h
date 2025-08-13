@@ -5,6 +5,7 @@
 #include "../CsvData/DataClass/AllNodePattenClass.h"
 #include "Components/Rendering/BitmapRenderer.h"
 #include "../Engine/Utils/EventDelegate.h"
+#include "../Engine/Math/GameRandom.h"
 /* 25.08.01
 	 플레이어의 데이터 불러오기 -> 일관성 없음?
 		- 스탯 : hp 같은 스탯들은 변해야 함으로 저장공간을 만들어 데이터를 인가하는 형태로 진행
@@ -110,4 +111,5 @@ private:
 	float maxTimer = 1.0f;
 	bool isCreatedResult = false;
 	void ChecKChnageScene();	// 씬 교체를 해야하는지 확인하는 함수
+	
 };

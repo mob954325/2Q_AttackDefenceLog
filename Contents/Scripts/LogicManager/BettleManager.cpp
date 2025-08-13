@@ -83,6 +83,7 @@ void BettleManager::OnUpdate()
 	else {
 		if (m_Enemy->GetIsGroggy()) {  // 적이 그로기 상태일때
 			SetStateFormPatternEnemyGroggy();
+			//여기 개수대로 이팩트 출력!!
 			SetAnimationAtOtherGroggy();
 			ChangeFinalStateEnemyGroggy();
 
@@ -94,6 +95,7 @@ void BettleManager::OnUpdate()
 		}
 		else if (m_Player->GetIsGroggy()) { // 플레이어가 그로기 상태일 때
 			SetStateFormPatternPlayerGroggy();
+
 			ChangeFinalStatePlayerGroggy();
 
 

@@ -148,6 +148,13 @@ private:
 
 	std::vector<int> tmpAttackNode;             // 플레이어가 연격 후 임시 저장 할 int 벡터
 	bool isPlayingAni = false; // 연격이 끝나고 sprite가 나오는 시간인지?
+
+	float PlayerMaxX = 0.0f;
+	D2D1_RECT_F HiteffectPlayer = { 170.0f, 680.0f , 370.0f, 1010.0f };
+	D2D1_RECT_F HiteffectEnemy = { 1540.0f, 180.0f , 1620.0f, 310.0f };
+	float RandomHitPos_x(D2D1_RECT_F tmp) { return GameRandom::RandomRange(tmp.left, tmp.right); }
+	float RandomHitPos_y(D2D1_RECT_F tmp) { return GameRandom::RandomRange(tmp.bottom, tmp.top); }
+	float RandomHitPos_Angle() { return GameRandom::RandomRange(0, 360); }
 };
 
 

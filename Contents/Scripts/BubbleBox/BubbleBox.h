@@ -19,7 +19,7 @@ private:
 	BitmapRenderer* Text_03{};
 	InputSystem* input{};
 
-	float delaytime = 2.0f;
+	float delaytime = 0.2f;
 	size_t count = 0;
 
 	bool StartCheck = true;
