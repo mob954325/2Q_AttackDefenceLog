@@ -364,6 +364,7 @@
     <ClCompile Include="Objects\Sound\SoundEnd.cpp" />
     <ClCompile Include="Objects\Sound\SoundPlayScene.cpp" />
     <ClCompile Include="Objects\Sound\SoundTittle.cpp" />
+    <ClCompile Include="Scripts\Camera\CamInstance.cpp" />
     <ClCompile Include="Scripts\Effect\EffectMonoB.cpp" />
     <ClCompile Include="Scripts\Effect\EnemyAttackEffect.cpp" />
     <ClCompile Include="Scripts\Effect\Finaleffect.cpp" />
@@ -438,6 +439,7 @@
     <ClInclude Include="Objects\Sound\SoundEnd.h" />
     <ClInclude Include="Objects\Sound\SoundPlayScene.h" />
     <ClInclude Include="Objects\Sound\SoundTittle.h" />
+    <ClInclude Include="Scripts\Camera\CamInstance.h" />
     <ClInclude Include="Scripts\Effect\EffectMonoB.h" />
     <ClInclude Include="Scripts\Effect\EnemyAttackEffect.h" />
     <ClInclude Include="Scripts\Effect\Finaleffect.h" />
