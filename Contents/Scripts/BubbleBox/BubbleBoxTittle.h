@@ -3,6 +3,7 @@
 #include "../Engine/Components/Rendering/BitmapRenderer.h"
 #include "../Engine/Components/Logic/InputSystem.h"
 
+
 class BubbleBoxTittle : public MonoBehavior
 {
 public:
@@ -14,7 +15,11 @@ public:
 
 private:
 
+	float tttt = 0.0f;
+
+
 	std::vector<BitmapRenderer*> texts;
+
 
 	InputSystem* input{};
 

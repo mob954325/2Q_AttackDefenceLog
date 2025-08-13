@@ -5,6 +5,7 @@
 #include "../Engine/Utils/GameTime.h"
 #include "scripts/GameManager.h"
 #include "../Engine/Systems/AudioSystem.h"
+#include "../Contents/Objects/Scenes/Stage/CloudManager.h"
 
 void BubbleBoxTittle::OnUpdate()
 {
@@ -47,6 +48,7 @@ void BubbleBoxTittle::OnStart()
 {
 	/*Singleton<GameManager>::GetInstance().SetGameState(Pause);*/
 	/*Singleton<AudioSystem>::GetInstance().PauseSound();*/
+	tttt = 0.0f;
 }
 
 void BubbleBoxTittle::OnDestroy()
@@ -77,13 +79,25 @@ void BubbleBoxTittle::CheckInput()
 
 				texts[count]->SetActive(true); // 마지막 텍스트 활성화
 				count++;
+
+	
+			
 			}
 
 			if (count == 11) // 11번째 클릭에선 씬 전환
 			{
+
+				auto cld = owner->GetQuery()->FindByName("CloudManagerTitle");
+				if (cld) { cld->GetComponent<CloudManager>()->Start(); }
+
 				StartCheck = false;
+				tttt += Singleton<GameTime>::GetInstance().GetDeltaTime();
+				if (tttt > 3.0f) {
+					Singleton<SceneManager>::GetInstance().LoadScene(SceneCount::MENU); // MenuScene으로 이동
+				}
+	
 				/*Singleton<AudioSystem>::GetInstance().AgainstSound();*/
-				Singleton<SceneManager>::GetInstance().LoadScene(SceneCount::MENU); // MenuScene으로 이동
+			
 			}
 		}
 	}
