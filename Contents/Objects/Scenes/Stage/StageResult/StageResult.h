@@ -24,4 +24,7 @@ private:
 
 	BitmapRenderer* defeatPanel;
 	BitmapRenderer* defeatMark;
+
+	float timer = 0.0f;
+
 };

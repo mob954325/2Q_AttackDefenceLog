@@ -1,5 +1,7 @@
 ﻿#include "VignetteEffect.h"
 #include "Platform/D2DRenderManager.h"
+#include "Datas/EngineData.h"
+#include "Components/Base/GameObject.h"
 
 void VignetteEffect::OnCreate()
 {
@@ -19,7 +21,12 @@ void VignetteEffect::Render(D2DRenderManager* manager)
 	vignetteEffect->SetValue(D2D1_VIGNETTE_PROP_COLOR, color); // ??
 	vignetteEffect->SetValue(D2D1_VIGNETTE_PROP_TRANSITION_SIZE, effectSize); // 효과 크기
 	vignetteEffect->SetValue(D2D1_VIGNETTE_PROP_STRENGTH, strength); // 강도 
-	manager->DrawImage(vignetteEffect.Get()); // vignette 효과 출력
+	// manager->DrawImage(vignetteEffect.Get()); // vignette 효과 출력
+	D2D1_MATRIX_3X2_F mat = owner->GetTransform().GetFinalMatrix();
+	manager->SetRenderTransform(mat);
+
+	manager->DrawImage(vignetteEffect.Get());
+
 }
 
 void VignetteEffect::SetBitmap(ID2D1Bitmap1* pBitmap)

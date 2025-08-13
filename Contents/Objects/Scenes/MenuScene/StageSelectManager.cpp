@@ -94,14 +94,16 @@ void StageSelectManager::ChangeImageByClearState()
 	}
 	else
 	{
-		// objs[0]->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\TestClear\\TestClear.png");
 		objs[0]->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\enemySelect\\robby_select_ui_mountain_front.png");
-
 		objs[0]->SetSliceable(false);
+
 		GameObject* sealObject = new GameObject();
 		auto sealComp = sealObject->AddComponent<SelectSeal>();
+		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(sealObject);
+
 		Vector2 objPos = objs[0]->owner->GetTransform().GetPosition();
-		sealObject->GetTransform().SetPosition(objPos.x, objPos.y);
+		D2D1_SIZE_F size = sealComp->owner->GetComponent<BitmapRenderer>()->GetResource()->GetBitmap()->GetSize();
+		sealObject->GetTransform().SetPosition(objPos.x - size.width * 0.15f, objPos.y + size.width * 0.1f);
 	}
 
 	if (!Singleton<GameManager>::GetInstance().IsStage2Clear())
@@ -111,8 +113,15 @@ void StageSelectManager::ChangeImageByClearState()
 	else
 	{
 		objs[1]->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\enemySelect\\robby_select_ui_mountain_peak.png");
-		// objs[1]->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\TestClear\\TestClear.png");
 		objs[1]->SetSliceable(false);
+
+		GameObject* sealObject = new GameObject();
+		auto sealComp = sealObject->AddComponent<SelectSeal>();
+		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(sealObject);
+
+		Vector2 objPos = objs[1]->owner->GetTransform().GetPosition();
+		D2D1_SIZE_F size = sealComp->owner->GetComponent<BitmapRenderer>()->GetResource()->GetBitmap()->GetSize();
+		sealObject->GetTransform().SetPosition(objPos.x - size.width * 0.15f, objPos.y + size.width * 0.1f);
 	}
 
 	if (!Singleton<GameManager>::GetInstance().IsStage3Clear())
@@ -122,7 +131,14 @@ void StageSelectManager::ChangeImageByClearState()
 	else
 	{
 		objs[2]->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\enemySelect\\robby_select_ui_namgung.png");
-		// objs[2]->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\TestClear\\TestClear.png");
 		objs[2]->SetSliceable(false);
+
+		GameObject* sealObject = new GameObject();
+		auto sealComp = sealObject->AddComponent<SelectSeal>();
+		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(sealObject);
+
+		Vector2 objPos = objs[2]->owner->GetTransform().GetPosition();
+		D2D1_SIZE_F size = sealComp->owner->GetComponent<BitmapRenderer>()->GetResource()->GetBitmap()->GetSize();
+		sealObject->GetTransform().SetPosition(objPos.x - size.width * 0.15f, objPos.y + size.width * 0.1f);
 	}
 }

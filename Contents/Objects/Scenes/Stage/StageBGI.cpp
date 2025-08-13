@@ -14,13 +14,6 @@ void StageBGI::OnStart()
 	bitmapRenderer->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\arena-1.png");
 	bitmapRenderer->SetOrderInLayer(-200);
 
-	vignette = owner->AddComponent<VignetteEffect>();
-	vignette->SetBitmap(bitmapRenderer->GetResource()->GetBitmap().Get());
-	vignette->SetColor({ 0.0f, 0.0f,0.0f,1.0f }); // 검정색
-	vignette->SetEffectSize(1.0f); // 몰?루 사이즈	
-	vignette->SetOrderInLayer(-9); //무조건 원본보다 높게
-	vignette->SetStrength(0.0f); //이거로 조정함
-
 	size = bitmapRenderer->GetResource()->GetBitmap()->GetSize();
 	owner->GetTransform().SetOffset(-size.width / 2, size.height / 2);
 }
@@ -42,8 +35,6 @@ void StageBGI::OnUpdate()
 	}
 
 	progress = clampf(progress, 0.0f, 1.0f);
-
-	vignette->SetStrength(progress); //이거로 조정함
 }
 
 void StageBGI::OnDestroy()

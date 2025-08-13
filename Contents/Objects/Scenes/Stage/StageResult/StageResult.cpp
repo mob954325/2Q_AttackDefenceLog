@@ -4,6 +4,8 @@
 #include "Datas/EngineData.h"
 #include "Application/AppPaths.h"
 #include "Platform/Input.h"
+#include "Math/EasingFunction.h"
+#include "Utils/GameTime.h"
 
 void StageResult::OnCreate()
 {
@@ -70,6 +72,21 @@ void StageResult::OnStart()
 
 void StageResult::OnUpdate()
 {
+	if (timer < 1.5f) 
+	{
+		timer += Singleton<GameTime>::GetInstance().GetDeltaTime();
+	}	
+	else
+	{
+		if (winPanel->IsActiveSelf())
+		{
+			winMark->SetActive(true);
+		}
+		else
+		{
+			defeatMark->SetActive(true);
+		}
+	}
 }
 
 void StageResult::SetPanelState(ResultPanelState state)
@@ -85,7 +102,7 @@ void StageResult::SetPanelState(ResultPanelState state)
 		break;
 	case Win:
 		winPanel->SetActive(true);
-		winMark->SetActive(true);
+		winMark->SetActive(false);
 		defeatPanel->SetActive(false);
 		defeatMark->SetActive(false);
 		break;
@@ -93,7 +110,7 @@ void StageResult::SetPanelState(ResultPanelState state)
 		winPanel->SetActive(false);
 		winMark->SetActive(false);
 		defeatPanel->SetActive(true);
-		defeatMark->SetActive(true);
+		defeatMark->SetActive(false);
 		break;
 	}
 }
