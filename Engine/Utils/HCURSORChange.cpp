@@ -22,6 +22,9 @@ HCURSOR HCURSORChange::LoadPngCursor(LPCWSTR pngPath, int xHotspot, int yHotspot
 	if (!bitmap || bitmap->GetLastStatus() != Ok)
 		return nullptr;
 
+	UINT width = bitmap->GetWidth();
+	UINT height = bitmap->GetHeight();
+
 	HBITMAP hBitmap = nullptr;
 	bitmap->GetHBITMAP(Color(0, 0, 0, 0), &hBitmap); // 알파 채널 포함 HBITMAP 생성
 	delete bitmap;
@@ -34,12 +37,13 @@ HCURSOR HCURSORChange::LoadPngCursor(LPCWSTR pngPath, int xHotspot, int yHotspot
 	iconInfo.xHotspot = xHotspot;       // 클릭 지점 x
 	iconInfo.yHotspot = yHotspot;       // 클릭 지점 y
 	/*iconInfo.hbmMask = NULL;*/
-	iconInfo.hbmMask = CreateBitmap(32, 32, 1, 1, NULL);;
+	iconInfo.hbmMask = CreateBitmap(width, height, 1, 1, NULL);
 	iconInfo.hbmColor = hBitmap;        // 컬러 비트맵 지정
 
 	HCURSOR hCursor = CreateIconIndirect(&iconInfo);
 
 	// iconInfo 구조체에 복사된 비트맵 핸들 해제
+	DeleteObject(iconInfo.hbmMask);
 	DeleteObject(hBitmap);
 
 	return hCursor;
