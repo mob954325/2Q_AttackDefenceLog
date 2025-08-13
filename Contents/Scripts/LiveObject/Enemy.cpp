@@ -195,7 +195,6 @@ void Enemy::SetStatData(std::string tmp)
 	enemy_GuardPath = enemy_CommonPath + nowEnemyData->enemySprite[2] + L"_fin.png";
 	enemy_DamagedPath = enemy_CommonPath + nowEnemyData->enemySprite[3] + L"_fin.png";
 
-
 	eSpriteDamage_Second = nowEnemyData->Enemy_spriteDamage_Second;
 }
 
@@ -521,9 +520,11 @@ void Enemy::ChecKChnageScene()
 	if (!isCreatedResult)
 	{
 		GameObject* obj = new GameObject();
+		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(obj);
 		obj->SetRenderLayer(EngineData::RenderLayer::UI);
 		auto comp = obj->AddComponent<StageResult>();
 		comp->SetPanelState(ResultPanelState::Win);
+
 		isCreatedResult = true;
 	}
 

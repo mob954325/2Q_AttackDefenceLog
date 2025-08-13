@@ -18,6 +18,7 @@
 #include "Math/GameRandom.h"
 
 
+
 #include "Objects/Scenes/Stage/StageResult/StageResult.h"
 
 // 각 값은 해당 함수가 출력 중일때, 각 플레그 변화
@@ -559,6 +560,7 @@ void Player::ChecKChnageScene()
 	if (!isCreatedResult)
 	{
 		GameObject* obj = new GameObject();
+		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(obj);
 		obj->SetRenderLayer(EngineData::RenderLayer::UI);
 		auto comp = obj->AddComponent<StageResult>();
 		comp->SetPanelState(ResultPanelState::Defeat);

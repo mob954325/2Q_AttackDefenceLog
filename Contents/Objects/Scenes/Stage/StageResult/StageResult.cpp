@@ -1,4 +1,4 @@
-﻿#include "StageResult.h"
+癤#include "StageResult.h"
 #include "Components/Base/GameObject.h"
 #include "Scene/SceneManager.h"
 #include "Datas/EngineData.h"
@@ -6,9 +6,12 @@
 #include "Platform/Input.h"
 #include "Math/EasingFunction.h"
 #include "Utils/GameTime.h"
+#include "Objects/Sound/SoundPlayScene.h"
 
 void StageResult::OnCreate()
 {
+	// winPanel 珥湲고
+	isSoundPlay = false;
 	// winPanel 초기화
 	GameObject* winPanelObject = new GameObject();
 	winPanelObject->GetTransform().SetUnityCoords(false);
@@ -18,11 +21,10 @@ void StageResult::OnCreate()
 	winPanel = winPanelObject->AddComponent<BitmapRenderer>();
 	winPanel->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\Result\\victory_ui_1.png");
 
-
 	winPanelObject->GetTransform().SetPosition(93.5f, 159.0f);
 	winPanel->SetOrderInLayer(1001);
 
-	// winMark 초기화
+	// winMark 珥湲고
 	GameObject* winMarkObject = new GameObject();
 	winMarkObject->GetTransform().SetUnityCoords(false);
 	winMarkObject->SetRenderLayer(EngineData::RenderLayer::UI);
@@ -30,12 +32,11 @@ void StageResult::OnCreate()
 	
 	winMark = winMarkObject->AddComponent<BitmapRenderer>();
 	winMark->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\Result\\victory_ui_b2.png");
-
 	
 	winMarkObject->GetTransform().SetPosition(93.5f, 159.0f);
 	winMark->SetOrderInLayer(1002);
 
-	// defeatPanel 초기화
+	// defeatPanel 珥湲고
 
 	GameObject* defeatPanelObject = new GameObject();
 	defeatPanelObject->SetRenderLayer(EngineData::RenderLayer::UI);
@@ -48,7 +49,7 @@ void StageResult::OnCreate()
 	defeatPanelObject->GetTransform().SetPosition(93.5f, 159.0f);
 	defeatPanel->SetOrderInLayer(1001);
 
-	// defeatMark 초기화
+	// defeatMark 珥湲고
 	GameObject* defeatMarkObject = new GameObject();
 	defeatMarkObject->SetRenderLayer(EngineData::RenderLayer::UI);
 	defeatMarkObject->GetTransform().SetUnityCoords(false);
@@ -78,13 +79,34 @@ void StageResult::OnUpdate()
 	}	
 	else
 	{
+		// 도장
 		if (winPanel->IsActiveSelf())
 		{
 			winMark->SetActive(true);
+
+			if (!isSoundPlay)
+			{
+				auto SoundCom = owner->GetQuery()->FindByName("SOUNDSTAGE");
+				if (SoundCom) {
+					SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Stamp");
+					SoundCom->GetComponent<SoundPlayScene>()->PlaySound();
+				}
+				isSoundPlay = true;
+			}
 		}
 		else
 		{
 			defeatMark->SetActive(true);
+
+			if (!isSoundPlay)
+			{
+				auto SoundCom = owner->GetQuery()->FindByName("SOUNDSTAGE");
+				if (SoundCom) {
+					SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Stamp");
+					SoundCom->GetComponent<SoundPlayScene>()->PlaySound();
+				}
+				isSoundPlay = true;
+			}
 		}
 	}
 }
