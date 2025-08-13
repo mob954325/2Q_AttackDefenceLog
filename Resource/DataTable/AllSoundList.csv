@@ -19,6 +19,7 @@ P_Parry03,\..\Resource\sounds\parry\parry_3.mp3,FMOD_DEFAULT | FMOD_LOOP_OFF
 P_Hit01,\..\Resource\sounds\hit\hit.wav,FMOD_DEFAULT | FMOD_LOOP_OFF
 P_Dodge01,\..\Resource\sounds\dodge\dodge_1.mp3,FMOD_DEFAULT | FMOD_LOOP_OFF
 P_Dodge02,\..\Resource\sounds\dodge\dodge_2.mp3,FMOD_DEFAULT | FMOD_LOOP_OFF
+M_Stamp,\..\Resource\sounds\ui\Text_Stamp.mp3,FMOD_DEFAULT | FMOD_LOOP_OFF
 M_Stage01,\..\Resource\sounds\stage_1.mp3,FMOD_CREATESTREAM | FMOD_LOOP_NORMAL
 M_Stage02,\..\Resource\sounds\stage_2.mp3,FMOD_CREATESTREAM | FMOD_LOOP_NORMAL
 M_Stage03,\..\Resource\sounds\stage_3_2.mp3,FMOD_CREATESTREAM | FMOD_LOOP_NORMAL

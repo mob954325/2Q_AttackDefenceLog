@@ -23,6 +23,7 @@
 
 void Stage3::OnEnterImpl()
 {
+	Singleton<AudioSystem>::GetInstance().ReSetChannel();
 	std::cout << "스테이지3 진입" << std::endl;
 	inputObj = new GameObject();
 	inputObj->AddComponent<InputObject>();
@@ -38,8 +39,6 @@ void Stage3::OnEnterImpl()
 	SoundStageThree->AddComponent<SoundPlayScene>();
 	AddGameObject(SoundStageThree, "SOUNDSTAGE"); // SOUNDSTAGE << 이름 유지해주세요
 
-	SoundStageThree->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Stage03");
-	SoundStageThree->GetComponent<SoundPlayScene>()->PlaySound();
 
 	GameObject* continueBtn = new GameObject();
 	continueBtn->SetRenderLayer(EngineData::UI);
@@ -97,6 +96,7 @@ void Stage3::OnEnterImpl()
 void Stage3::OnExitImpl()
 {
 	std::cout << "스테이지3 이탈" << std::endl;
+	Singleton<AudioSystem>::GetInstance().ReSetChannel();
 }
 
 void Stage3::UpdateImpl()

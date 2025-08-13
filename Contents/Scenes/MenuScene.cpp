@@ -27,7 +27,7 @@ void MenuScene::OnEnterImpl()
 	AddGameObject(cloudManager, "CloudManagerMenu");
 
 	inputObj = new GameObject();
-	inputObj -> AddComponent<InputObject>();
+	inputObj->AddComponent<InputObject>();
 	AddGameObject(inputObj);
 
 	trail = new GameObject();
@@ -45,6 +45,8 @@ void MenuScene::OnEnterImpl()
 	SoundMenuObj = new GameObject();
 	SoundMenuObj->AddComponent<SoundTittle>();
 	AddGameObject(SoundMenuObj, "SOUNDMENU"); // SOUNDMENU << 이름 유지해주세요
+
+	isFirst = true;
 }
 
 void MenuScene::OnExitImpl()
@@ -52,19 +54,28 @@ void MenuScene::OnExitImpl()
 	std::cout << "메뉴씬 이탈" << std::endl;
 }
 
+
 void MenuScene::UpdateImpl()
 {
+	if (isFirst) {
+		selectEffectManager->GetComponent<SelectEffectManager>()->Start();
+		cloudManager->GetComponent<CloudManager>()->ReverseStart();
+		isFirst = false;
+	}
+
+
+
 	auto input = inputObj->GetComponent<InputSystem>();
 	if (input->IsKeyPressed('1')) {
 		Singleton<SceneManager>::GetInstance().LoadScene(STAGE1);
 	}
-	
+
 	if (input->IsKeyPressed('2')) {
 		selectEffectManager->GetComponent<SelectEffectManager>()->Start();
 		cloudManager->GetComponent<CloudManager>()->ReverseStart();
 	}
 
-	if (input->IsKeyPressed('B')) 
+	if (input->IsKeyPressed('B'))
 	{
 		Singleton<GameManager>::GetInstance().SetStageClear(1);
 	}
