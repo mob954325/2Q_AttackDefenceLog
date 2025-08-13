@@ -15,4 +15,7 @@ private:
 	GameObject* bgObj;
 
 	GameObject* PCO;
+
+	//bubblebox
+	GameObject* Textbox;
 };

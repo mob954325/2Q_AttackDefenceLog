@@ -12,6 +12,7 @@
 #include "Scripts/LiveObject/Enemy.h"
 #include "Scripts/GameManager.h"
 #include "Objects/Scenes/Stage/Stage3/StageBGI3.h"
+#include "Scripts/BubbleBox/BubbleBox3.h"
 
 void Stage3::OnEnterImpl()
 {
@@ -59,6 +60,10 @@ void Stage3::OnEnterImpl()
 	auto comp = PCO->AddComponent<PatternControlObject>();
 	AddGameObject(PCO, "PatternControlObject");
 	comp->GetEnemy()->SetNameDiff("Stage3", Singleton<GameManager>::GetInstance().GetDifficultyString());
+
+	Textbox = new GameObject();
+	Textbox->AddComponent<BubbleBox3>();
+	AddGameObject(Textbox, "Textbox");
 }
 
 void Stage3::OnExitImpl()
