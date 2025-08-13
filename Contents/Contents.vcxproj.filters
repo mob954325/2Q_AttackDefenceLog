@@ -82,6 +82,9 @@
     <Filter Include="Scripts\BubbleBox">
       <UniqueIdentifier>{fb6091c3-ba89-487d-a275-041e5bedb90b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scripts\Camera">
+      <UniqueIdentifier>{5a65e77f-3fe9-4d56-bb8c-e6de0a6c5b20}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\Game.cpp">
@@ -268,7 +271,7 @@
     </ClCompile>
     <ClCompile Include="Scripts\Effect\HitEffect.cpp">
       <Filter>Scripts\Effect</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="Scripts\BubbleBox\BubbleBox.cpp">
       <Filter>Scripts\BubbleBox</Filter>
     </ClCompile>
@@ -285,6 +288,9 @@
     </ClCompile>
     <ClCompile Include="Objects\Scenes\Stage\StagePlayerProfile.cpp">
       <Filter>Objects\SceneObject\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Camera\CamInstance.cpp">
+      <Filter>Scripts\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -475,8 +481,8 @@
     </ClInclude>
     <ClInclude Include="Scripts\Effect\HitEffect.h">
       <Filter>Scripts\Effect</Filter>
-	</ClInclude>
-	<ClInclude Include="Scripts\BubbleBox\BubbleBox2.h">
+    </ClInclude>
+    <ClInclude Include="Scripts\BubbleBox\BubbleBox2.h">
       <Filter>Scripts\BubbleBox</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\BubbleBox\BubbleBox.h">
@@ -492,6 +498,9 @@
     </ClInclude>
     <ClInclude Include="Objects\Scenes\Stage\StageEnemyProfile.h">
       <Filter>Objects\SceneObject\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Camera\CamInstance.h">
+      <Filter>Scripts\Camera</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
