@@ -24,7 +24,7 @@ public:
 
 private:
 	//플레이어 고정 공격패턴
-	std::string attackPlayerPatternIDFix = "PI_040";  //안쓰면 PI 붙이기 말기!!,  ex) "PI_040"
+	std::string attackPlayerPatternIDFix = "";  //안쓰면 PI 붙이기 말기!!,  ex) "PI_040"
 
 	//기세가 0이 되었을때 그 시간이 유지되는 시간
 	float totalGroggyTime = 3.0f;
@@ -63,6 +63,13 @@ public:
 	AllNodePattenClass* tmpNode2 = nullptr;  // 출력용 변수
 
 
+	bool isOtherGroggyEnd = false; // 아군의 연격이  끝났다는 불변수
+	bool IsOtherGroggy = false;
+	bool restoredThisCycle = false; // 복구 되었는가를 체크하는 플래그
+	bool OtherGroggyTimeStop = false; // 연격 타이밍 때, 플레이어의 이미지가 연속해서 출력되도록 시간을 잠시 멈춤
+	void AttackAniSelect(int count); // 애니메이션 출력용 함수
+
+
 	EventDelegate<> onTimeOut; // 8.12추가, 그로기 타이머가 플레이어에 있어서 델리게이트 연결함
 private:
 	void AttackStateSelect(bool AttackActive); // 공격 패턴 3가지 중 랜덤으로 1개 선택해서 설정함
@@ -95,4 +102,9 @@ private:
 	// Debug
 	void SetCursorPosition(int x, int y);         // 플레이어 출력함수
 	void PrintConsole();
+
+	float timer = 0.0f;
+	float maxTimer = 1.0f;
+	bool isCreatedResult = false;
+	void ChecKChnageScene();	// 씬 교체를 해야하는지 확인하는 함수
 };

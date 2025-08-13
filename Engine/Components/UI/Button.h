@@ -19,6 +19,7 @@ enum ButtonState
 class Button : public UIComponent
 {
 public:
+	void OnCreate() override;
 	void OnStart() override;
 	void Update() override;
 
@@ -30,6 +31,9 @@ public:
 	BitmapRenderer* GetPressedImage();
 
 	void SetRect(float width, float height);
+
+	void UseCustomRect(bool value);
+	void SetCustomRect(D2D1_RECT_F rect);
 
 	/// <summary>
 	/// 버튼 클릭이벤트 등록함수
@@ -50,7 +54,10 @@ private:
 	BitmapRenderer* pressed{};
 
 	D2D1_RECT_F screenRect{};
+	D2D1_RECT_F customRect{};
 
 	EventDelegate<> onClickEvent; // void()형만 받는 클릭 이벤트 
+
+	bool useCustomRect = false;
 };
 

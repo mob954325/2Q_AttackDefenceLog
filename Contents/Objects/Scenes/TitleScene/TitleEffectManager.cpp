@@ -3,6 +3,8 @@
 #include "Scene/SceneManager.h"
 #include "Application/AppPaths.h"
 #include "../Engine/Utils/GameTime.h"
+#include "Platform/Input.h"
+#include "Scripts/SceneCore.h"
 
 void TitleEffectManager::OnStart()
 {
@@ -68,6 +70,14 @@ void TitleEffectManager::OnUpdate()
 		}
 
 		if (progress >= 1.0f) isPlay = false;
+	}
+	
+	if((progress >= 1.0f) && !isPlay)// 이벤트가 종료되면 마우스 클릭으로 씬 넘어갈 수 있게 추가 : 작성자 - 이성호
+	{
+		if (Input::leftButtonDown)
+		{
+			Singleton<SceneManager>::GetInstance().LoadScene(SceneCount::MENU); // MenuScene으로 이동
+		}
 	}
 }
 

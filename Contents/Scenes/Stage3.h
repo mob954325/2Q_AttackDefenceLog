@@ -10,5 +10,8 @@ protected:
 
 private:
 	GameObject* inputObj;
+	GameObject* escPanel;
 	GameObject* SoundStageThree;
+
+	GameObject* PCO;
 };

@@ -13,37 +13,38 @@ void LevelSelectManager::OnStart()
 {
 	CreateMenuObjects();
 
-	objs[0]->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\MenuUI\\esc_menu_ui_continue.png");
-	objs[1]->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\MenuUI\\esc_menu_ui_exit.png");
-	objs[2]->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\MenuUI\\esc_menu_ui_sound.png");
+	objs[0]->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\diffcult\\easy_ui.png");
+	objs[1]->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\diffcult\\nomal_ui.png");
+	objs[2]->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\diffcult\\difficult_ui.png");
 
-	objs[0]->owner->GetTransform().SetPosition(-400, 200);
+	objs[0]->owner->GetTransform().SetPosition(-400, 0);
 	objs[1]->owner->GetTransform().SetPosition(0, 0);
-	objs[2]->owner->GetTransform().SetPosition(400, 400);
+	objs[2]->owner->GetTransform().SetPosition(400, 0);
 
 	objs[0]->AddEvent([this]()
 		{
 			if (!isSceneChange)
 			{
+				Singleton<GameManager>::GetInstance().SetDifficulty("easy");
 				isSceneChange = true; // NOTE : 나중에 난이도 세팅하기
 			}
 		});
-	// objs[1]->AddEvent([this]() 
-	// 	{ 
-	// 		if (!isSceneChange)
-	// 		{
-	// 			Singleton<SceneManager>::GetInstance().LoadScene(SceneCount::STAGE2);
-	// 			isSceneChange = true;
-	// 		}
-	// 	});
-	// objs[2]->AddEvent([this]() 
-	// 	{ 
-	// 		if (!isSceneChange)
-	// 		{
-	// 			Singleton<SceneManager>::GetInstance().LoadScene(SceneCount::STAGE3);
-	// 			isSceneChange = true;
-	// 		}
-	// 	});
+	objs[1]->AddEvent([this]() 
+		{ 
+			if (!isSceneChange)
+			{
+				Singleton<GameManager>::GetInstance().SetDifficulty("normal");
+				isSceneChange = true;
+			}
+		});
+	objs[2]->AddEvent([this]() 
+		{ 
+			if (!isSceneChange)
+			{
+				Singleton<GameManager>::GetInstance().SetDifficulty("hard");
+				isSceneChange = true;
+			}
+		});
 }
 
 void LevelSelectManager::OnUpdate()

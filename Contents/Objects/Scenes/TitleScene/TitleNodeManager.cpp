@@ -12,7 +12,7 @@ void TitleNodeManager::OnCreate()
 	owner->GetTransform().SetUnityCoords(false);
 	owner->SetRenderLayer(EngineData::RenderLayer::UI);
 	patternDrawer = owner->AddComponent<PatternDrawerComponent>();	
-	patternDrawer->SetBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprite\\Mushroom.png");
+	patternDrawer->SetBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Mouse\\test1.png");
 	patternDrawer->SetOrderInLayer(100);
 
 	for (int i = 0; i < 2; i++)

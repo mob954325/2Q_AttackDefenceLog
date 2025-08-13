@@ -356,6 +356,7 @@
     <ClCompile Include="Scripts\BubbleBox\BubbleBox.cpp" />
     <ClCompile Include="Objects\Scenes\SelectScene\LevelSelectManager.cpp" />
     <ClCompile Include="Objects\Scenes\SelectScene\SelectEffectManager.cpp" />
+    <ClCompile Include="Objects\Scenes\Stage\BackboardObject.cpp" />
     <ClCompile Include="Objects\Scenes\Stage\CloudManager.cpp" />
     <ClCompile Include="Objects\Sound\SoundEnd.cpp" />
     <ClCompile Include="Objects\Sound\SoundPlayScene.cpp" />
@@ -408,12 +409,16 @@
     <ClCompile Include="Objects\SliceObject\SlicedObject.cpp" />
     <ClCompile Include="Objects\Scenes\Stage\EscMenu\StageESCPanel.cpp" />
     <ClCompile Include="Scripts\Slider\GiseGauge.cpp" />
+    <ClCompile Include="Objects\Scenes\Stage\EscMenu\SoundMutePanel.cpp" />
+    <ClCompile Include="Objects\Scenes\Stage\StageResult\StageResult.cpp" />
+    <ClCompile Include="Objects\Scenes\Stage\Stage2\StageBGI2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameApp.h" />
     <ClInclude Include="Scripts\BubbleBox\BubbleBox.h" />
     <ClInclude Include="Objects\Scenes\SelectScene\LevelSelectManager.h" />
     <ClInclude Include="Objects\Scenes\SelectScene\SelectEffectManager.h" />
+    <ClInclude Include="Objects\Scenes\Stage\BackboardObject.h" />
     <ClInclude Include="Objects\Scenes\Stage\CloudManager.h" />
     <ClInclude Include="Objects\Scenes\TitleScene\EffectProgress.h" />
     <ClInclude Include="Objects\Sound\SoundEnd.h" />
@@ -468,6 +473,9 @@
     <ClInclude Include="Objects\SliceObject\SlicedObject.h" />
     <ClInclude Include="Objects\Scenes\Stage\EscMenu\StageESCPanel.h" />
     <ClInclude Include="Scripts\Slider\GiseGauge.h" />
+    <ClInclude Include="Objects\Scenes\Stage\EscMenu\SoundMutePanel.h" />
+    <ClInclude Include="Objects\Scenes\Stage\StageResult\StageResult.h" />
+    <ClInclude Include="Objects\Scenes\Stage\Stage2\StageBGI2.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

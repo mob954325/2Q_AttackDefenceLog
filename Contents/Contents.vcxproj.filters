@@ -70,6 +70,9 @@
     <Filter Include="Objects\SceneObject\Stage\EscMenu">
       <UniqueIdentifier>{18408eb4-7ef4-4c7b-86f6-c544076e2588}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Objects\SceneObject\Stage\StageResult">
+      <UniqueIdentifier>{18e439a1-1c82-4ced-a601-c586fbef8e47}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\Game.cpp">
@@ -221,6 +224,9 @@
       <Filter>Objects\SceneObject\SelectScene</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\HpBar\HpGauge.cpp" />
+    <ClCompile Include="Objects\Scenes\Stage\EscMenu\SoundMutePanel.cpp">
+      <Filter>Objects\SceneObject\Stage\EscMenu</Filter>
+    </ClCompile>
     <ClCompile Include="Objects\Scenes\SelectScene\SelectEffectManager.cpp">
       <Filter>Objects\SceneObject\SelectScene</Filter>
     </ClCompile>
@@ -231,6 +237,12 @@
     <ClCompile Include="Objects\Sound\SoundPlayScene.cpp" />
     <ClCompile Include="Objects\Sound\SoundTittle.cpp" />
     <ClCompile Include="Scripts\BubbleBox\BubbleBox.cpp" />
+<ClCompile Include="Objects\Scenes\Stage\StageResult\StageResult.cpp">
+  <Filter>Objects\SceneObject\Stage\StageResult</Filter>
+</ClCompile>
+    <ClCompile Include="Objects\Scenes\Stage\BackboardObject.cpp">
+      <Filter>Objects\SceneObject\Stage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameApp.h">
@@ -382,6 +394,9 @@
       <Filter>Objects\SceneObject\SelectScene</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\HpBar\HpGauge.h" />
+    <ClInclude Include="Objects\Scenes\Stage\EscMenu\SoundMutePanel.h">
+      <Filter>Objects\SceneObject\Stage\EscMenu</Filter>
+    </ClInclude>
     <ClInclude Include="Objects\Scenes\TitleScene\EffectProgress.h">
       <Filter>Objects\SceneObject\TitleScene</Filter>
     </ClInclude>
@@ -395,5 +410,11 @@
     <ClInclude Include="Objects\Sound\SoundPlayScene.h" />
     <ClInclude Include="Objects\Sound\SoundTittle.h" />
     <ClInclude Include="Scripts\BubbleBox\BubbleBox.h" />
+    <ClInclude Include="Objects\Scenes\Stage\StageResult\StageResult.h">
+      <Filter>Objects\SceneObject\Stage\StageResult</Filter>
+	</ClInclude>
+    <ClInclude Include="Objects\Scenes\Stage\BackboardObject.h">
+      <Filter>Objects\SceneObject\Stage</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

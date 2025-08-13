@@ -12,6 +12,7 @@
 
 #include "Application/AppPaths.h"
 #include "Scripts/GameManager.h"
+#include "Objects/Scenes/Stage/StageResult/StageResult.h"
 
 
 // 각 값은 해당 함수가 출력 중일때, 각 플레그 변화
@@ -26,7 +27,7 @@ void Enemy::OnStart()
 	m_State = owner->GetComponent<StateController>();
 	m_PattenManager = owner->GetQuery()->FindByName("AttackPattenManager")->GetComponent<AttackPatternManager>();
 
-	SetStatData("EI_001");				// 객체 데이터 불러오기
+	SetStatData(Enemy_ID);				// 객체 데이터 불러오기
 	OnCreateState();					// 상태들 구성
 	m_State->SetState("Enemy_Idle");	// 초기 상태로 초기화
 
@@ -41,7 +42,6 @@ void Enemy::OnStart()
 // 업데이트에서 시간 받기???? -> 필요없음, 수정하기!!!
 void Enemy::OnUpdate() 
 {
-
 	// Game 상태가 Pause면 모든 Update 무시
 	if (Singleton<GameManager>::GetInstance().GetGameState() == GameState::Pause)
 	{
@@ -53,29 +53,31 @@ void Enemy::OnUpdate()
 	{
 		CalSpiritTime();		// 1초마다 기세게이지 증가
 		AddPattenLoop();		// 
-		StateAct();            //  
+		
 	}
-
+	StateAct();            //  
 	DiffState();            // 이전 상태와 현재 상태를 비교
-	PrintConsole();
+	// PrintConsole();
 
 	if (nowStateName == "Enemy_Dead") // 적 사망 시 -> 씬 이동
 	{
-		Singleton<SceneManager>::GetInstance().LoadScene(0); // 나중에 딜레이 올려줘야함
+		ChecKChnageScene();
 	}
+
+	//SetNameDiff("Stage1", "easy");
 }
 
 
 // onChangePatten에 TransitionTime 변경하기!!!
 
-//하드코딩함, 이걸 할려고 하면 자료 구조의 키값을 뜯어 고쳐야함!!!
-void SetNameDiff(std::string name, std::string difficulty) {
+//밖에서 미리 값을 입력해서 ID를 입력할 수 있게 함
+void Enemy::SetNameDiff(std::string Stage, std::string difficulty) {
 	int indexID = 0;
 	int diffindex = 0;
 	int nameindex = 0;
-	if (name == "도적") { nameindex = 0; }
-	else if (name == "남궁서") { nameindex = 1; }
-	else if (name == "강림") { nameindex = 2; }
+	if (Stage == "Stage1") { nameindex = 0; }
+	else if (Stage == "Stage2") { nameindex = 1; }
+	else if (Stage == "Stage3") { nameindex = 2; }
 	else { nameindex = 100; }
 
 	if (difficulty == "easy") { diffindex = 1; }
@@ -84,9 +86,9 @@ void SetNameDiff(std::string name, std::string difficulty) {
 	else { diffindex = 100; }
 
 	indexID = nameindex * 3 + diffindex;
-	if (nameindex != 100 || diffindex != 100) return;
+	if (nameindex == 100 || diffindex == 100) return;
 
-	std::string EnemyName = "EI_00" + std::to_string(indexID);
+	Enemy_ID = "EI_00" + std::to_string(indexID);
 }
 
 
@@ -140,7 +142,7 @@ void Enemy::SetStatData(std::string tmp)
 	Object_Attack = nowEnemyData->enemyDamage;			   // 공격력
 	Object_SpiritAttack = nowEnemyData->enemySpiritdamage; // 기세 공격력
 	Object_DefenseRate = nowEnemyData->enemyGuardRate;	   // 방어율
-	Object_SpiritAmount = 5.0f;//nowEnemyData->enemySpiritamount; // 기세
+	Object_SpiritAmount = nowEnemyData->enemySpiritamount; // 기세
 	Object_NowSpiritAmount = Object_SpiritAmount / 2.0f;   // 현재 기세 설정
 	Difficulty = nowEnemyData->enemyDifficulty;			   // 난이도 -> 아마 필요없을듯?
 
@@ -187,19 +189,16 @@ void Enemy::SetBitmap()
 
 
 	enemy_Damaged = owner->AddComponent<BitmapRenderer>();
-	enemy_Damaged->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + enemy_GuardPath);
+	enemy_Damaged->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + enemy_DamagedPath);
 
 	enemy_Guard = owner->AddComponent<BitmapRenderer>();
-	enemy_Guard->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + enemy_DamagedPath);
+	enemy_Guard->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + enemy_GuardPath);
 
 	D2D1_SIZE_F size = enemy_Idle->GetResource()->GetBitmap()->GetSize(); // 크기 같음으로 그냥 해도 될듯?
 	owner->GetTransform().SetOffset(-size.width / 2, size.height / 2);
-	owner->GetTransform().SetScale(0.4f, 0.4f); //  크기 맞추기
-	owner->GetTransform().SetPosition(550.0f, 200.0f);
+	owner->GetTransform().SetScale(1.0f, 1.0f); //  크기 맞추기
+	owner->GetTransform().SetPosition(580.0f, 150.0f);
 }
-
-
-
 
 // 플래그를 정하는 함수
 void Enemy::AddPattenLoop() 
@@ -227,12 +226,23 @@ void Enemy::AddPattenLoop()
 
 void Enemy::RestoreGroggy()
 {
+	if (!isGroggy) return;          // 그로기 아니면 무시
+	if (restoredThisCycle) return;  // 이번 사이클에서 이미 복구했으면 무시
+	restoredThisCycle = true;
+
+	// === 즉시 복구 처리 (재진입 방지) ===
+	isGroggy = false;               // 바로 그로기 해제
+	ResetSpiritAmount();           
+
+	// 부가 플래그/타이머 정리
 	groggyTime = 0.0f;
-	IsOtherEndGroggy = false;
-	isGroggy = false;
-	isRestore = true; // 베틀매니저에서 읽는데, true가 있다면 << 플레이어와 적의 기세를 초기화시키는 플레그
-	
-	ReserEnemy();
+	OtherGroggyTime = 0.0f;
+	IsOtherGroggy = false;
+
+	// 베틀매니저 공통 회복 루틴용 플래그(멱등)
+	isRestore = true;
+
+	ResetEnemy();
 }
 
 // 배틀 매니저에서 사용될 함수
@@ -270,7 +280,6 @@ void Enemy::SelectPattern() //각 객체가 사용할 패턴을 고름
 		{
 			SetAttackPattenData(enemyAttackPatternFix);
 		}
-
 	}
 }
 
@@ -314,17 +323,16 @@ void Enemy::SetCoolTime()
 {
 	if (nowEnemyPattenData->eComboCoolDown == 0) 
 	{
-		Object_nowCoolTime = (1 - ((Object_NowSpiritAmount - Object_SpiritAmount / 2.0f) / Object_SpiritAmount) / 2.0f)
-			* Object_CoolTime + nowEnemyPattenData->eAtkCoolDown;
+		Object_nowCoolTime = (1.25f - Object_NowSpiritAmount  / Object_SpiritAmount / 2.0f) * Object_CoolTime + nowEnemyPattenData->eAtkCoolDown;
 	}
 	else 
     {
 		Object_nowCoolTime = nowEnemyPattenData->eComboCoolDown;
 	}
 
-	if (IsOtherEndGroggy)
+	if (IsOtherGroggy)
     {
-		Object_nowCoolTime = nowEnemyPattenData->eAtkCoolDown;
+		Object_nowCoolTime = Object_nowCoolTime / 2.0f;
 	}
 	// 현재 공격중인 시간
 	Object_nowTotalCoolTime = Object_nowCoolTime;
@@ -332,56 +340,73 @@ void Enemy::SetCoolTime()
 
 void Enemy::CalSpiritTime() 
 {
-	if (Object_OverTimeSpirit >= 1) 
-	{
-		Object_NowSpiritAmount += 0.3f;									 //초당 0.3씩 감소
-		Object_OverTimeSpirit = std::fmod(Object_OverTimeSpirit, 1.0f);  //실수형 나머지 연산자
-	}
+	if ( (!isGroggy ) && (!IsOtherGroggy) ) {
+		if (Object_OverTimeSpirit >= 1)
+		{
+			Object_NowSpiritAmount += 0.3f;									 //초당 0.3씩 감소
+			Object_OverTimeSpirit = std::fmod(Object_OverTimeSpirit, 1.0f);  //실수형 나머지 연산자
+		}
 
-	Object_OverTimeSpirit += GameTime::GetInstance().GetDeltaTime();
+		Object_OverTimeSpirit += GameTime::GetInstance().GetDeltaTime();
+	}
 }
 
 
 void Enemy::DiffState() 
 {
-	if (m_State->GetNowName() != nowStateName) 
+	if (m_State->GetNowName() != nowStateName)
 	{
 		preStateName = nowStateName;
 		nowStateName = m_State->GetNowName();
 	}
 
-	if (IsOtherEndGroggy && isFirstSpiriteDown) 
+	// 상대(플레이어)가 그로기일 때 재는 타이머
+	if (IsOtherGroggy)
 	{
-		SelectPattern(); // 패턴 정하기!!
-		SetCoolTime();
-		isFirstSpiriteDown = false;
+		OtherGroggyTime += GameTime::GetInstance().GetDeltaTime();
 	}
 
-	// 그로기 시간!!!
-	// 플레이어가 그로기 상태에서, 적에게 공격을 맞으면, 초기화 한다
-	if ((IsOtherEndGroggy && Object_nowCoolTime <= 0.0f)) 
-    {
-		RestoreGroggy();
-		isEnemyGroggyAttack = true;
+	// 상대 그로기 10초 타임아웃: '신호'만 세우고, 내 Restore는 호출하지 않음
+	if (OtherGroggyTime >= 10.0f)
+	{
+		IsOtherEndGroggy = true;   // 표시만
+		OtherGroggyTime = 0.0f;   // 소진
+		// RestoreGroggy();        
 	}
 
+	// === 내 그로기 판정 ===
 
-	// 기세 게이지가 벗어나지 않게 고정!!!
-	if (Object_NowSpiritAmount <= 0.0f) 
-    {
+	if (isRestore)
+	{
+		isGroggy = false;
+	}
+	else if (Object_NowSpiritAmount <= 0.0f)
+	{
+		isGroggy = true;
+		restoredThisCycle = false;   // 새 사이클 시작
 		Object_NowSpiritAmount = 0.0f;
+		// SetState("Enemy_Groggy"); // 상태 전환은 네 로직에 맞게
 	}
-	if (Object_NowSpiritAmount >= Object_SpiritAmount) 
-    {
+	else
+	{
+		isGroggy = false;
+	}
+
+	// 상한 클램프
+	if (Object_NowSpiritAmount >= Object_SpiritAmount)
+	{
 		Object_NowSpiritAmount = Object_SpiritAmount;
 	}
 }
 
-void Enemy::ReserEnemy() {
+
+
+void Enemy::ResetEnemy() {
+	OtherGroggyTime = 0.0f;
 	SelectPattern(); // 공격을 했으면 다른 패턴 세팅
 	SetCoolTime();
 	isPattenCooldown = true;
-	SetState("Player_Idle");
+	SetState("Enemy_Idle"); // 이거 플레이어 아니라 적으로 교체하기
 }
 
 
@@ -462,7 +487,21 @@ void Enemy::PrintConsole()
 
 }
 
+void Enemy::ChecKChnageScene()
+{
+	timer += Singleton<GameTime>::GetInstance().GetDeltaTime();
 
+	if (!isCreatedResult)
+	{
+		GameObject* obj = new GameObject();
+		obj->SetRenderLayer(EngineData::RenderLayer::UI);
+		auto comp = obj->AddComponent<StageResult>();
+		comp->SetPanelState(ResultPanelState::Win);
+		isCreatedResult = true;
+	}
 
-
-
+	if (timer >= maxTimer)
+	{
+		Singleton<SceneManager>::GetInstance().LoadScene(SceneCount::MENU);
+	}
+}

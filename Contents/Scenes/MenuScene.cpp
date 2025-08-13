@@ -10,6 +10,8 @@
 #include "Objects/Scenes/Stage/CloudManager.h"
 #include "Objects/Sound/SoundTittle.h"
 
+#include "Scripts/GameManager.h"
+
 void MenuScene::OnEnterImpl()
 {
 	std::cout << "메뉴씬 진입" << std::endl;
@@ -65,5 +67,20 @@ void MenuScene::UpdateImpl()
 	if (input->IsKeyPressed('2')) {
 		selectEffectManager->GetComponent<SelectEffectManager>()->Start();
 		cloudManager->GetComponent<CloudManager>()->ReverseStart();
+	}
+
+	if (input->IsKeyPressed('B')) 
+	{
+		Singleton<GameManager>::GetInstance().SetStageClear(1);
+	}
+
+	if (input->IsKeyPressed('N'))
+	{
+		Singleton<GameManager>::GetInstance().SetStageClear(2);
+	}
+
+	if (input->IsKeyPressed('M'))
+	{
+		Singleton<GameManager>::GetInstance().SetStageClear(3);
 	}
 }

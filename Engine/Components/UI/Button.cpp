@@ -4,12 +4,15 @@
 #include "Datas/EngineData.h"
 #include "Application/AppPaths.h"
 
-void Button::OnStart()
+void Button::OnCreate()
 {
 	normal = owner->AddComponent<BitmapRenderer>();
 	hover = owner->AddComponent<BitmapRenderer>();
 	pressed = owner->AddComponent<BitmapRenderer>();
+}
 
+void Button::OnStart()
+{
 	normal->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\Test_Button\\button_square.png");
 	normal->SetActive(true);
 
@@ -32,7 +35,7 @@ void Button::Update()
 		HandleButtonImage(ButtonState::Hover);
 
 		// 마우스 3버튼 아무거나 클릭하면 이벤트 실행
-		if (Input::leftButtonDown || Input::middleButtonDown || Input::rightButtonDown)
+		if (Input::leftButtonDown /*|| Input::middleButtonDown || Input::rightButtonDown*/)
 		{
 			HandleButtonImage(ButtonState::Pressed);
 			onClickEvent.Invoke();
@@ -92,6 +95,16 @@ void Button::SetRect(float width, float height)
 	}
 }
 
+void Button::UseCustomRect(bool value)
+{
+	useCustomRect = value;
+}
+
+void Button::SetCustomRect(D2D1_RECT_F rect)
+{
+	customRect = rect;
+}
+
 size_t Button::AddOnClickEvent(std::function<void()> fn)
 {
 	int id = onClickEvent.Add(fn); 
@@ -106,11 +119,23 @@ void Button::RemoveOnClickEventById(size_t id)
 
 bool Button::IsMouseOver(const Vector2& mousePos) const
 {
-	return mousePos.x >= screenRect.left && // 왼쪽
-		mousePos.x <= screenRect.right &&	// 오른쪽 
-		mousePos.y >= screenRect.top &&		// 위
-		mousePos.y <= screenRect.bottom;	// 아래
+	if (useCustomRect)
+	{
+		return mousePos.x >= customRect.left && // 왼쪽
+			mousePos.x <= customRect.right &&	// 오른쪽 
+			mousePos.y >= customRect.top &&		// 위
+			mousePos.y <= customRect.bottom;	// 아래
+	}
+	else
+	{
+		return mousePos.x >= screenRect.left && // 왼쪽
+			mousePos.x <= screenRect.right &&	// 오른쪽 
+			mousePos.y >= screenRect.top &&		// 위
+			mousePos.y <= screenRect.bottom;	// 아래
+	}
 }
+
+
 
 void Button::DisableBitmaps()
 {

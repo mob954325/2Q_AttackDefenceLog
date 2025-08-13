@@ -43,9 +43,9 @@ void SliceableObject::HandleOverlap()
 	D2D1_MATRIX_3X2_F mat = owner->GetTransform().GetFinalMatrix();	// Unity 좌표계를 고려해 매트릭스 값 가져오기
 	Vector2 currentPosition = { mat.dx , mat.dy }; // 위치 값을 Vector2로 변경
 
-	if (IsOverlap(Input::MouseX, Input::MouseY))
+	if (IsOverlap(Input::MouseX, Input::MouseY) )
 	{
-		if (state == OverlapState::Notyet) // 충돌 전
+		if (state == OverlapState::Notyet && Input::leftButtonDown) // 충돌 전
 		{
 			state = OverlapState::Processing;	// 상태 변경 -> 충돌 중
 			startVec = { Input::MouseX, Input::MouseY };
@@ -57,7 +57,7 @@ void SliceableObject::HandleOverlap()
 	}
 	else
 	{
-		if (state == OverlapState::Processing) // 충돌 중일 때 충돌이 종료됨
+		if (state == OverlapState::Processing && Input::leftButtonDown) // 충돌 중일 때 충돌이 종료됨
 		{
 			state = OverlapState::End;	// 상태 변경 -> 충돌 종료
 			endVec = { Input::MouseX, Input::MouseY };

@@ -6,6 +6,7 @@
 #include "Scene/SceneManager.h"
 #include "Utils/EventDelegate.h"
 #include "Objects/Manager/ChargedSlashManager.h"
+#include "Scripts/LiveObject/Enemy.h"
 
 #include "Scripts/Effect/EffectInstance.h" // 이펙트 정현씨꺼
 
@@ -21,6 +22,7 @@ public:
 	void OnDestroy() override;
 
 	PatternManager PM;					// 패턴 매니저
+	Enemy* GetEnemy();
 
 protected:
 	ListenerID lid_OnPatternCancel = 0;
@@ -48,6 +50,8 @@ protected:
 	std::vector<EffectInstance*> effectInstances;		// 이펙트 여러개 -> 이 오브젝트와 개별 오브젝트
 
 private:
+	bool isSkipped = false; // 이거 켜지면, 노드 관련 행동 스킵함
+
 	std::vector<int> cachedVecA;
 
 	std::vector<int> cachedVecB;
