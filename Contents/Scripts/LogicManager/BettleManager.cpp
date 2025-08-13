@@ -221,6 +221,15 @@ void BettleManager::SetStateFormPatternIdle()
 			{
 				m_Player->SetState("Player_Hit");   			// 플레이어 상태 변경 -> 플레이어 피격
 				m_Player->GetDamage(ConvertHPDamageToPos(pair.second->lastPosition, m_Enemy->GetAttack())); // 상중하 적용한 데미지
+				////////////////////////////////여기////////////////////////////////////////////////////
+				if (HitAnimeCount2 < 9)
+				{
+					Vector2 randomP = { RandomHitPos_x(HiteffectPlayer), RandomHitPos_y(HiteffectPlayer) };
+					float RandomRotate = RandomHitPos_Angle();
+					m_Player->CallPlayerHit(HitAnimeCount2, randomP, RandomRotate);
+					++HitAnimeCount2;
+				}
+				if (HitAnimeCount2 = 10) HitAnimeCount2 = 0;
 			}
 
 			// 기세 계산
@@ -330,6 +339,15 @@ void BettleManager::SetStateFormPatternIdle()
 				{
 					m_Player->SetState("Player_Hit");   			// 플레이어 상태 변경 -> 플레이어 피격됨 
 					m_Player->GetDamage(ConvertHPDamageToPos(tmpPatten->lastPosition, m_Enemy->GetAttack()));
+
+					if (HitAnimeCount2 < 9)
+					{
+						Vector2 randomP = { RandomHitPos_x(HiteffectPlayer), RandomHitPos_y(HiteffectPlayer) };
+						float RandomRotate = RandomHitPos_Angle();
+						m_Player->CallPlayerHit(HitAnimeCount2, randomP, RandomRotate);
+						++HitAnimeCount2;
+					}
+					if (HitAnimeCount2 = 10) HitAnimeCount2 = 0;
 				}
 
 				// 기세 계산		Object_SpiritAttack	7.00000000	float

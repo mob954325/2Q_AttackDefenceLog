@@ -27,6 +27,11 @@
 //
 
 
+void Player::OnCreate()
+{
+	/*PlayerHit = owner->AddComponent<EffectMonoB>();*/
+}
+
 void Player::OnStart()
 {
 	m_State = owner->GetComponent<StateController>();
@@ -45,6 +50,8 @@ void Player::OnStart()
 	player_Damaged->SetActive(false);
 	player_Guard->SetActive(false);
 
+	PlayerHit = owner->AddComponent<EffectMonoB>();
+	/*PlayerHit = owner->GetComponent<EffectMonoB>();*/
 
 
 
@@ -422,6 +429,11 @@ void Player::StateAct()
 	}
 }
 
+
+void Player::CallPlayerHit(int num, Vector2 position, float rotate)
+{
+	PlayerHit->CallAnime(num, position, rotate);
+}
 
 void Player::AttackStateSelect(bool AttackActive)
 {

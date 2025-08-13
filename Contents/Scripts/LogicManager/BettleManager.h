@@ -153,8 +153,11 @@ private:
 	D2D1_RECT_F HiteffectPlayer = { 170.0f, 680.0f , 370.0f, 1010.0f };
 	D2D1_RECT_F HiteffectEnemy = { 1540.0f, 180.0f , 1620.0f, 310.0f };
 	float RandomHitPos_x(D2D1_RECT_F tmp) { return GameRandom::RandomRange(tmp.left, tmp.right); }
-	float RandomHitPos_y(D2D1_RECT_F tmp) { return GameRandom::RandomRange(tmp.bottom, tmp.top); }
+	float RandomHitPos_y(D2D1_RECT_F tmp) { return GameRandom::RandomRange(tmp.top, tmp.bottom); }
 	float RandomHitPos_Angle() { return GameRandom::RandomRange(0, 360); }
+
+	int HitAnimeCount = 0;
+	int HitAnimeCount2 = 0;
 };
 
 

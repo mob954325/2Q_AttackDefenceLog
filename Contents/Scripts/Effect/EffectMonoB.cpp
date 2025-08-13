@@ -61,31 +61,28 @@ void EffectMonoB::OnDestroy()
 {
 }
 
-void EffectMonoB::SetAnimePosition(const Vector2& vector)
+void EffectMonoB::SetAnimePosition(int num, const Vector2& vector)
 {
-	for (size_t i = 0; i < 9; i++)
-	{
-		AnimeList[i]->GetTransform().SetPosition(vector.x, vector.y);
-	}
+	AnimeList[num]->GetTransform().SetPosition(vector.x, vector.y);
 }
 
-void EffectMonoB::CallAnime(int num , const std::vector<float>& rotationValue)
+void EffectMonoB::CallAnime(int num , Vector2 vector, float rotationValue)
 {
+	size_t Animesize = AnimeList.size();
+	int a = 0;
+
 	if (num >= AnimeList.size()) return;
-	for (int i = 0; i < num; i++)
-	{
-		auto* r = AnimeList[i]->GetComponent<AnimationRenderer>();
-		r->SetActive(true);
-		auto* p = r->GetAnimationPlayer();
-		p->Play();
+	auto* r = AnimeList[num]->GetComponent<AnimationRenderer>();
+	r->SetActive(true);
+	auto* p = r->GetAnimationPlayer();	
+	p->Play();
+	SetAnimePosition(num, vector);
+	AnimeList[num]->GetTransform().SetRotation(rotationValue);
 
-		AnimeList[i]->GetTransform().SetRotation(rotationValue[i]);
-
-		auto& s = AnimeStates[i];
-		s.playing = true;
-		s.t = 0.0f;
-		s.duration = Animeduration; // 슬롯마다 다르게 가능
-	}
+	auto& s = AnimeStates[num];
+	s.playing = true;
+	s.t = 0.0f;
+	s.duration = Animeduration; // 슬롯마다 다르게 가능
 }
 
 void EffectMonoB::StopAnime(int num)

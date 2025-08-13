@@ -6,6 +6,7 @@
 #include "Components/Rendering/BitmapRenderer.h"
 #include "../Engine/Utils/EventDelegate.h"
 #include "../Engine/Math/GameRandom.h"
+#include "Scripts/Effect/EffectMonoB.h"
 /* 25.08.01
 	 플레이어의 데이터 불러오기 -> 일관성 없음?
 		- 스탯 : hp 같은 스탯들은 변해야 함으로 저장공간을 만들어 데이터를 인가하는 형태로 진행
@@ -75,6 +76,11 @@ public:
 
 	float enemyGroggyTime = 0.0f;		// 그로기 시간?
 	EventDelegate<> onTimeOut; // 8.12추가, 그로기 타이머가 플레이어에 있어서 델리게이트 연결함
+
+	//피격모션 호출 함수
+	void CallPlayerHit(int num , Vector2 position , float rotate);
+
+	void OnCreate() override;
 private:
 	void AttackStateSelect(bool AttackActive); // 공격 패턴 3가지 중 랜덤으로 1개 선택해서 설정함
 	void ResetPlayer(); // 플레이어의 상태 재설정
@@ -111,5 +117,8 @@ private:
 	float maxTimer = 1.0f;
 	bool isCreatedResult = false;
 	void ChecKChnageScene();	// 씬 교체를 해야하는지 확인하는 함수
+
+	//맞는 이펙트 변수들
+	EffectMonoB* PlayerHit{};
 	
 };
