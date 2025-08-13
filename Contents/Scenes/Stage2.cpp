@@ -19,6 +19,7 @@
 #include "Scripts/BubbleBox/BubbleBox2.h"
 
 #include "Components/Logic/InputSystem.h"
+#include "Objects/Scenes/Stage/BackboardObject.h"
 #include "Vignette.h"
 
 void Stage2::OnEnterImpl()
@@ -29,6 +30,10 @@ void Stage2::OnEnterImpl()
 	AddGameObject(inputObj);
 
 	Singleton<AudioSystem>::GetInstance().ReSetChannel();
+
+	GameObject* nodePanel = new GameObject();
+	nodePanel->AddComponent<BackboardObject>();
+	AddGameObject(nodePanel);
 
 	bgObj = new GameObject();
 	bgObj->AddComponent<StageBGI2>();

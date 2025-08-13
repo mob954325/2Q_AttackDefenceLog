@@ -13,6 +13,7 @@
 #include "Objects/Scenes/Stage/StageTopUI.h"
 #include "Objects/Scenes/Stage/StagePlayerProfile.h"
 #include "Objects/Scenes/Stage/StageEnemyProfile.h"
+#include "Objects/Scenes/Stage/BackboardObject.h"
 
 #include "Scripts/LiveObject/Enemy.h"
 #include "Scripts/GameManager.h"
@@ -23,6 +24,11 @@
 
 void Stage3::OnEnterImpl()
 {
+
+	GameObject* nodePanel = new GameObject();
+	nodePanel->AddComponent<BackboardObject>();
+	AddGameObject(nodePanel);
+
 	Singleton<AudioSystem>::GetInstance().ReSetChannel();
 	std::cout << "스테이지3 진입" << std::endl;
 	inputObj = new GameObject();
