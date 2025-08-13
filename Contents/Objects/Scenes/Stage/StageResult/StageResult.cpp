@@ -1,4 +1,4 @@
-#include "StageResult.h"
+ç™¤#include "StageResult.h"
 #include "Components/Base/GameObject.h"
 #include "Scene/SceneManager.h"
 #include "Datas/EngineData.h"
@@ -11,7 +11,17 @@
 void StageResult::OnCreate()
 {
 	isSoundPlay = false;
-	// winMark ÃÊ±âÈ­
+	GameObject* winPanelObject = new GameObject();
+	winPanelObject->GetTransform().SetUnityCoords(false);
+	winPanelObject->SetRenderLayer(EngineData::RenderLayer::UI);
+	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(winPanelObject);
+	
+	winPanel = winPanelObject->AddComponent<BitmapRenderer>();
+	winPanel->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\Result\\victory_ui_1.png");
+
+	winPanelObject->GetTransform().SetPosition(93.5f, 159.0f);
+	winPanel->SetOrderInLayer(1001);
+
 	GameObject* winMarkObject = new GameObject();
 	winMarkObject->GetTransform().SetUnityCoords(false);
 	winMarkObject->SetRenderLayer(EngineData::RenderLayer::UI);
@@ -19,25 +29,10 @@ void StageResult::OnCreate()
 	
 	winMark = winMarkObject->AddComponent<BitmapRenderer>();
 	winMark->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\Result\\victory_ui_b2.png");
-	winMark->SetOrderInLayer(25000);
-
-	winMarkObject->GetTransform().SetPosition(93.5f, 159.0f);
 	
+	winMarkObject->GetTransform().SetPosition(93.5f, 159.0f);
+	winMark->SetOrderInLayer(1002);
 
-	// winPanel ÃÊ±âÈ­
-	GameObject* winPanelObject = new GameObject();
-	winPanelObject->GetTransform().SetUnityCoords(false);
-	winPanelObject->SetRenderLayer(EngineData::RenderLayer::UI);
-	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(winPanelObject);
-
-	winPanel = winPanelObject->AddComponent<BitmapRenderer>();
-	winPanel->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\Result\\victory_ui_1.png");
-	winPanel->SetOrderInLayer(20000);
-
-	winPanelObject->GetTransform().SetPosition(93.5f, 159.0f);
-
-
-	// defeatPanel ÃÊ±âÈ­
 
 	GameObject* defeatPanelObject = new GameObject();
 	defeatPanelObject->SetRenderLayer(EngineData::RenderLayer::UI);
@@ -45,22 +40,20 @@ void StageResult::OnCreate()
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(defeatPanelObject);
 	defeatPanel = defeatPanelObject->AddComponent<BitmapRenderer>();
 	defeatPanel->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\Result\\defeat_ui_1.png");
-	defeatPanel->SetOrderInLayer(20000);
-
 
 	defeatPanelObject->GetTransform().SetPosition(93.5f, 159.0f);
+	defeatPanel->SetOrderInLayer(1001);
 
-	// defeatMark ÃÊ±âÈ­
 	GameObject* defeatMarkObject = new GameObject();
 	defeatMarkObject->SetRenderLayer(EngineData::RenderLayer::UI);
 	defeatMarkObject->GetTransform().SetUnityCoords(false);
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(defeatMarkObject);
 	defeatMark = defeatMarkObject->AddComponent<BitmapRenderer>();
 	defeatMark->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\Result\\defeat_ui_b2.png");
-	defeatMark->SetOrderInLayer(25000);
-
-	
+  
 	defeatMarkObject->GetTransform().SetPosition(93.5f, 159.0f);
+	defeatMark->SetOrderInLayer(1002);
+
 
 	winPanel->SetActive(false);
 	winMark->SetActive(false);
@@ -82,7 +75,6 @@ void StageResult::OnUpdate()
 	}	
 	else
 	{
-		// µµÀå
 		if (winPanel->IsActiveSelf())
 		{
 			winMark->SetActive(true);

@@ -1,4 +1,4 @@
-#include "BubbleEnd.h"
+ï»¿#include "BubbleEnd.h"
 #include "Components/Base/GameObject.h"
 #include "Scene/SceneManager.h"
 #include "Application/AppPaths.h"
@@ -54,25 +54,25 @@ void BubbleEnd::OnDestroy()
 void BubbleEnd::CheckInput()
 {
 	timer += Singleton<GameTime>::GetInstance().GetDeltaTime();
-	if (timer > delaytime) // ½Ã°£ÀÌ ´Ù Áö³µÀ¸¸é
+	if (timer > delaytime) // ì‹œê°„ì´ ë‹¤ ì§€ë‚¬ìœ¼ë©´
 	{
-		if (Input::leftButtonDown) // ¿ŞÂÊ Å¬¸¯ ÇßÀ¸¸é
+		if (Input::leftButtonDown) // ì™¼ìª½ í´ë¦­ í–ˆìœ¼ë©´
 		{
-			if (count < 9) // 0 ~ 9Àº ÇÏ³ª¾¿ ÃâÇöÇÏ±â
+			if (count < 9) // 0 ~ 9ì€ í•˜ë‚˜ì”© ì¶œí˜„í•˜ê¸°
 			{
 				texts[count]->SetActive(true);
 				count++;
 				timer = 0.0f;
 			}
 
-			if (count == 9) // 10Àº ³ª¸ÓÁö ´Ù ºñÈ°¼ºÈ­ÇÏ°í È¥ÀÚ Ãâ·Â
+			if (count == 9) // 10ì€ ë‚˜ë¨¸ì§€ ë‹¤ ë¹„í™œì„±í™”í•˜ê³  í˜¼ì ì¶œë ¥
 			{
-				Singleton<SceneManager>::GetInstance().LoadScene(SceneCount::TITLE); // MenuSceneÀ¸·Î ÀÌµ¿
+				Singleton<SceneManager>::GetInstance().LoadScene(SceneCount::TITLE); // MenuSceneìœ¼ë¡œ ì´ë™
 			}
 		}
 	}
 
-	if (count < 9 && texts[count]->IsActiveSelf() && timer < delaytime) // À§¿¡¼­ ¹ØÀ¸·Î Ãâ·ÂÇÏ±â
+	if (count < 9 && texts[count]->IsActiveSelf() && timer < delaytime) // ìœ„ì—ì„œ ë°‘ìœ¼ë¡œ ì¶œë ¥í•˜ê¸°
 	{
 		rectY = texts[count]->GetResource()->GetBitmap()->GetSize().height * timer / delaytime;
 		std::cout << rectY << std::endl;
