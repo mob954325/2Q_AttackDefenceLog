@@ -60,6 +60,16 @@ void AudioSystem::ClearSFXChannels()
 	}
 }
 
+void AudioSystem::Update()
+{
+	if (fmodSystem)
+	{
+		fmodSystem->update();
+	}
+	// 2. 상태가 갱신된 후, 재생이 끝난 채널들을 제거합니다.
+	UpdateSFXChannels();
+}
+
 void AudioSystem::PauseSound()
 {
 	if (masterGroup)
@@ -118,9 +128,18 @@ void AudioSystem::PlaySound2(const std::wstring& id)
 {
 	if (!sounds.count(id)) return;
 
+	// SFX 채널 정리
+	UpdateSFXChannels(); // 종료된 채널 제거
+
+	const int maxSFXChannels = 128; // 최대 SFX 채널 수
+	if (activeSFXChannels.size() >= maxSFXChannels) {
+		// 꽉 찼으면 재생하지 않음
+		return;
+	}
+
+	FMOD::Channel* channel = nullptr;
 	CheckError(fmodSystem->playSound(sounds[id].sound, masterGroup, false, &channel));
 
-	// loop 아닌 사운드면 SFX 채널 벡터에 추가
 	if (!sounds[id].isLoop && channel) {
 		activeSFXChannels.push_back(channel);
 	}
@@ -140,8 +159,7 @@ void AudioSystem::UnRegister()
 
 void AudioSystem::UpdateSFXChannels()
 {
-	for (auto it = activeSFXChannels.begin(); it != activeSFXChannels.end(); )
-	{
+	for (auto it = activeSFXChannels.begin(); it != activeSFXChannels.end(); ) {
 		bool isPlaying = false;
 		(*it)->isPlaying(&isPlaying);
 		if (!isPlaying) {
@@ -152,6 +170,7 @@ void AudioSystem::UpdateSFXChannels()
 		}
 	}
 }
+
 
 void AudioSystem::ReSetChannel()
 {
