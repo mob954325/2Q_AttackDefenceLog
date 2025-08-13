@@ -1,4 +1,4 @@
-#include "Vignette.h"
+Ôªø#include "Vignette.h"
 #include "Components/Base/GameObject.h"
 #include "Scene/SceneManager.h"
 #include "Application/AppPaths.h"
@@ -6,61 +6,68 @@
 
 void Vignette::OnCreate()
 {
-    owner->SetRenderLayer(EngineData::RenderLayer::None);
-    owner->GetTransform().SetUnityCoords(true);
-    owner->GetTransform().SetScale(0.85f, 0.85f);
-    bitmapRenderer = owner->AddComponent<BitmapRenderer>();
-    bitmapRenderer->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Stage\\side_darkness.png");
+	owner->SetRenderLayer(EngineData::RenderLayer::None);
+	owner->GetTransform().SetUnityCoords(true);
+	owner->GetTransform().SetScale(0.85f, 0.85f);
+	bitmapRenderer = owner->AddComponent<BitmapRenderer>();
+	bitmapRenderer->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Stage\\side_darkness.png");
+
+	brrr = owner->AddComponent<BitmapRenderer>();
+	brrr->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\image.png");
+
+
 }
 
 void Vignette::OnStart()
 {
-    bitmapRenderer->SetOrderInLayer(1200);
+	bitmapRenderer->SetOrderInLayer(1200);
+	brrr->SetOrderInLayer(1201);
 
-    size = bitmapRenderer->GetResource()->GetBitmap()->GetSize();
-    owner->GetTransform().SetOffset(-size.width / 2, size.height / 2);
+	size = bitmapRenderer->GetResource()->GetBitmap()->GetSize();
+	owner->GetTransform().SetOffset(-size.width / 2, size.height / 2);
 
-    End();
+	End();
 }
 
 void Vignette::OnUpdate()
 {
-    if (!isPlay) return;
+	if (!isPlay) return;
 
-    float delta = Singleton<GameTime>::GetInstance().GetDeltaTime();
+	float delta = Singleton<GameTime>::GetInstance().GetDeltaTime();
 
-    if (isGoingFillUp) { // ¬˜ø¿∏ß
-        progress += 0.5f * delta;
-        if (progress >= 1.0f) isPlay = false;
-    }
-    else // ∞®º“«‘
-    {
-        progress -= 0.7f * delta;
-        if (progress <= 0.0f) isPlay = false;
-    }
+	if (isGoingFillUp) { // Ï∞®Ïò§Î¶Ñ
+		progress += 0.5f * delta;
+		if (progress >= 1.0f) isPlay = false;
+	}
+	else // Í∞êÏÜåÌï®
+	{
+		progress -= 0.7f * delta;
+		if (progress <= 0.0f) isPlay = false;
+	}
 
-    progress = clampf(progress, 0.0f, 1.0f);
+	progress = clampf(progress, 0.0f, 1.0f);
 
-    bitmapRenderer->SetCapacity(progress);
+	bitmapRenderer->SetCapacity(progress);
+	brrr->SetCapacity(progress);
 }
 
 D2D1_SIZE_F Vignette::GetSize()
 {
-    return size;
+	return size;
 }
 
 void Vignette::Start()
 {
-    isGoingFillUp = true;
-    progress = 0.0f;
-    isPlay = true;
+	isGoingFillUp = true;
+	progress = 0.0f;
+	isPlay = true;
 }
 
 void Vignette::End()
 {
-    if (!isGoingFillUp) return;
+	if (!isGoingFillUp) return;
 
-    isGoingFillUp = false;
-    progress = 1.0f;
-    isPlay = true;
+	isGoingFillUp = false;
+	progress = 1.0f;
+	isPlay = true;
 }
