@@ -44,10 +44,45 @@ void GameApp::Initialize()
 	AudioSystem::GetInstance().Initialize(128);
 	AudioSystem::GetInstance().Register(soundList);
 
+
+
+
+	hCursorDefault = mouse.LoadPngCursor((Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\Mouse\\mouse_cursor_1.png").c_str());
+	hCursorClicked = mouse.LoadPngCursor((Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\Mouse\\mouse_cursor_2.png").c_str());
+
+	MessageBoxW(NULL, (Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\Mouse\\mouse_cursor_1.png").c_str(), L"Cursor Path", MB_OK);
+
+	if (!hCursorDefault)
+		MessageBox(0, L"기본 커서 로딩 실패", L"Error", MB_OK);
+	if (!hCursorClicked)
+		MessageBox(0, L"click 커서 로딩 실패", L"Error", MB_OK);
+
 	Singleton<SceneManager>::GetInstance().Init();
 }
 
 void GameApp::Uninitialize()
 {
+	AudioSystem::GetInstance().UnRegister();
 	__super::Uninitialize();
+}
+
+void GameApp::MessageProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+	Application::MessageProc(hWnd, msg, wParam, lParam); // 부모 호출
+
+	switch (msg)
+	{
+	case WM_LBUTTONDOWN:
+		isMousePressed = true;
+		SetCursor(hCursorClicked);
+		break;
+	case WM_LBUTTONUP:
+		isMousePressed = false;
+		SetCursor(hCursorDefault);
+		break;
+	case WM_SETCURSOR:
+		SetCursor(isMousePressed ? hCursorClicked : hCursorDefault);
+	default:
+		break;
+	}
 }
