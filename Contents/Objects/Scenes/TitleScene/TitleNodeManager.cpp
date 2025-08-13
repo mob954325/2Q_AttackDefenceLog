@@ -6,6 +6,7 @@
 #include "Utils/GameTime.h"
 #include "Scripts/SceneCore.h"
 #include "Application/AppPaths.h"
+#include "../Contents/Objects/Sound/SoundTittle.h"
 
 void TitleNodeManager::OnCreate()
 {
@@ -111,6 +112,12 @@ void TitleNodeManager::HandleSliceNode()
 			whiteAnim->SetActive(true);
 			whiteAnim->GetAnimationPlayer()->Reset();
 			whiteAnim->GetAnimationPlayer()->Play();
+
+			auto SoundCom = owner->GetQuery()->FindByName("SOUNDMENU");
+			if (SoundCom) {
+				SoundCom->GetComponent<SoundTittle>()->SetKeyHandle(L"Attack01");
+				SoundCom->GetComponent<SoundTittle>()->PlaySound();;
+			}
 
 			isPlayAnim = true;
 		}

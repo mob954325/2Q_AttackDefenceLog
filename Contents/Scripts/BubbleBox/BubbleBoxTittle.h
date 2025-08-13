@@ -14,9 +14,7 @@ public:
 	void CheckInput();
 
 private:
-
-	float tttt = 0.0f;
-
+	bool flag = false;	
 
 	std::vector<BitmapRenderer*> texts;
 
