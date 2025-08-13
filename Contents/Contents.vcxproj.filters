@@ -73,6 +73,12 @@
     <Filter Include="Objects\SceneObject\Stage\StageResult">
       <UniqueIdentifier>{18e439a1-1c82-4ced-a601-c586fbef8e47}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Objects\SceneObject\Stage\Stage2">
+      <UniqueIdentifier>{44f1a606-bd17-4b24-90fa-08bd8b36971d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\SceneObject\Stage\Stage3">
+      <UniqueIdentifier>{6c96ab10-fb52-438a-b88a-3709cf49f265}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\Game.cpp">
@@ -242,6 +248,12 @@
     </ClCompile>
     <ClCompile Include="Objects\Scenes\Stage\BackboardObject.cpp">
       <Filter>Objects\SceneObject\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Scenes\Stage\Stage2\StageBGI2.cpp">
+      <Filter>Objects\SceneObject\Stage\Stage2</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Scenes\Stage\Stage3\StageBGI3.cpp">
+      <Filter>Objects\SceneObject\Stage\Stage3</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -415,6 +427,12 @@
     </ClInclude>
     <ClInclude Include="Objects\Scenes\Stage\BackboardObject.h">
       <Filter>Objects\SceneObject\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Scenes\Stage\Stage2\StageBGI2.h">
+      <Filter>Objects\SceneObject\Stage\Stage2</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Scenes\Stage\Stage3\StageBGI3.h">
+      <Filter>Objects\SceneObject\Stage\Stage3</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
