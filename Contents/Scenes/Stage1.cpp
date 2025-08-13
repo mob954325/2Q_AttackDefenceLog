@@ -118,7 +118,14 @@ void Stage1::OnExitImpl()
 }
 
 void Stage1::UpdateImpl()
-{					
+{
+	const int maxSFXChannels = 128; // 최대 허용 SFX 채널 수
+
+	if (Singleton<AudioSystem>::GetInstance().IsSFXChannelFull(maxSFXChannels))
+	{
+		Singleton<AudioSystem>::GetInstance().ClearSFXChannels();
+	}
+
 	auto input = inputObj->GetComponent<InputSystem>();
 	if (input->IsKeyPressed('2')) {
 		Singleton<SceneManager>::GetInstance().LoadScene(END);

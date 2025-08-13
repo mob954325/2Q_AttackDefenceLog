@@ -47,17 +47,12 @@ public:
 	void PlaySound2(const std::wstring& id);
 	void UnRegister();
 
-	void PauseSound();
 
-	void AgainstSound();
 
 	void ReSetChannel();
 
 	//채널 개별 사운드 조절은 함수 추가하면됨
 
-	void Setvolume(float state);
-
-	void Getvolume(float& num);
 
 	static void CheckError(FMOD_RESULT result) {
 		if (result != FMOD_OK) {
@@ -70,12 +65,40 @@ public:
 	bool FileExists(const std::wstring& path);
 
 
+
+	//전체 사운드 제어
+	void PauseSound();
+
+	void AgainstSound();
+
+	void Setvolume(float state);
+
+	void Getvolume(float& num);
+
+	//채널 갯수체크
+	bool IsSFXChannelFull(int maxCount);
+
+	// SFX 채널 초기화 (비우기)
+	void ClearSFXChannels();
+
+
 private:
+	struct SoundData {
+		FMOD::Sound* sound;
+		bool isLoop;
+	};
+
 	FMOD::System* fmodSystem = nullptr;
 	FMOD::Channel* channel = nullptr;
-	std::unordered_map<std::wstring, FMOD::Sound*> sounds;
+	/*std::unordered_map<std::wstring, FMOD::Sound*> sounds;*/
+	std::unordered_map<std::wstring, SoundData> sounds;
 	std::unordered_map<std::wstring, FMOD::Channel*> Channels;
-	FMOD::ChannelGroup* muteGroup;
+	
+	FMOD::ChannelGroup* bgmGroup = nullptr;
+	FMOD::ChannelGroup* sfxGroup = nullptr;
+	FMOD::ChannelGroup* masterGroup = nullptr;
+
+	/*FMOD::ChannelGroup* muteGroup;*/
 
 };
 
