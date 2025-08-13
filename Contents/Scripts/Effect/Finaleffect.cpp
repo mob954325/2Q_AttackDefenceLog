@@ -29,7 +29,10 @@ void Finaleffect::OnUpdate()
 void Finaleffect::OnCreate()
 {
 	GameObject* obj = new GameObject();
-	obj->AddComponent<AnimationRenderer>();
+	obj->SetRenderLayer(EngineData::RenderLayer::UI);
+	auto am = obj->AddComponent<AnimationRenderer>();
+	am->SetOrderInLayer(1000);
+
 	obj->SetName(std::string("FinalAttack"));
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(obj);
 	obj->GetComponent<AnimationRenderer>()->SetActive(false);

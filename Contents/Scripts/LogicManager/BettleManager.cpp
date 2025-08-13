@@ -251,7 +251,7 @@ void BettleManager::SetStateFormPatternIdle()
 				std::vector<int> tmp = tmpCorPatten->NodePatten;	// 플레이어 입력한 노드
 				tmp.erase(std::remove(tmp.begin(), tmp.end(), 0), tmp.end());
 
-				onParry.Invoke(tmp.front());		// 패링 이벤트 델리게이트 호출
+				onParry.Invoke(tmp.back());		// 패링 이벤트 델리게이트 호출
 
 				m_Player->SetState("Player_Perry"); // 플레이어 상태 변경 -> 플레이어 패링 상태
 
@@ -260,15 +260,12 @@ void BettleManager::SetStateFormPatternIdle()
 					m_Player->RestoreSpiritDamage(ConvertSpiritDamageToPos(tmpCorPatten->lastPosition, m_Enemy->GetSpiritAttack()));
 					m_Enemy->GetSpiritdamage(ConvertSpiritDamageToPos(tmpCorPatten->lastPosition, m_Enemy->GetSpiritAttack()));
 				}
-
-
-
 			}
 			else // 플레이어 패링 실패
 			{
 				std::vector<int> tmp = tmpCorPatten->NodePatten;
 				tmp.erase(std::remove(tmp.begin(), tmp.end(), 0), tmp.end());
-				onGuard.Invoke(tmp.front());
+				onGuard.Invoke(tmp.back());
 
 				m_Player->SetState("Player_Guard");		// 플레이어 상태 변경 -> 플레이어 방어
 
