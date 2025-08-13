@@ -507,7 +507,7 @@ void BettleManager::SetGroggyState()
 		isOncePatternAttack = false;
 		m_Player->isOtherGroggyEnd = false;
 		m_Player->IsOtherGroggy = false;
-		m_Player->SetState("Player_Idle");
+		//m_Player->SetState("Player_Idle");
 		onTimeout.Invoke(); // 외부에 그로기 지속 시간이 끝났다는걸 알림
 	}
 
