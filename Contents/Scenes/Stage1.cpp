@@ -68,7 +68,7 @@ void Stage1::OnEnterImpl()
 
 	SoundStageOne = new GameObject();
 	SoundStageOne->AddComponent<SoundPlayScene>();
-	AddGameObject(SoundStageOne, "SoundMenu1");
+	AddGameObject(SoundStageOne, "SOUNDSTAGE"); 
 
 	SoundStageOne->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Stage01");
 	SoundStageOne->GetComponent<SoundPlayScene>()->PlaySound();

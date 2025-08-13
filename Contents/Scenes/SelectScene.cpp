@@ -38,7 +38,7 @@ void SelectScene::OnEnterImpl()
 
 	SoundSeletObj = new GameObject();
 	SoundSeletObj->AddComponent<SoundTittle>();
-	AddGameObject(SoundSeletObj, "SoundSelect");
+	AddGameObject(SoundSeletObj, "SOUNDMENU"); // SOUNDMENU << 이름 유지해주세요
 }
 
 void SelectScene::OnExitImpl()
