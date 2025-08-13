@@ -117,7 +117,7 @@ void PatternControlObject::OnCreate()
 		m_nodes[i]->GetComponent<NodeObject>()->SetRadius(r);
 		nodePositions.push_back({ x, y });
 	}
-
+	PM.padding = 150.0f;
 	PM.SetNodes(m_nodes, r);
 
 	// effect 9
@@ -185,7 +185,7 @@ void PatternControlObject::OnCreate()
 
 	// OnFinalBlow 이벤트 추가
 	bettletmp->onFinalBlow.Add([this]()
-		{ // 한붓그리기 완료되는 시점에, 랜덤으로 Start 호출됨
+		{ // 한붓그리기 완료되는 시점에, 랜덤으로 Start 호출됨			
 			auto bgi = owner->GetQuery()->FindByName("StageBGI1");
 			if (bgi) { bgi->GetComponent<StageBGI>()->End(); }
 			
@@ -215,6 +215,8 @@ void PatternControlObject::OnCreate()
 	// OntimeOut 이벤트 추가 - slash가 시간 경과시 캔슬됨
 	bettletmp->onTimeout.Add([this]()
 		{		
+			chargedSlashManager->owner->GetComponent<EffectInstance>()->EndEffects();
+
 			auto bgi = owner->GetQuery()->FindByName("StageBGI1");
 			if (bgi) { bgi->GetComponent<StageBGI>()->End(); }
 

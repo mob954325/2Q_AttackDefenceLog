@@ -361,6 +361,10 @@
     <ClCompile Include="Objects\Sound\SoundEnd.cpp" />
     <ClCompile Include="Objects\Sound\SoundPlayScene.cpp" />
     <ClCompile Include="Objects\Sound\SoundTittle.cpp" />
+    <ClCompile Include="Scripts\Effect\EffectMonoB.cpp" />
+    <ClCompile Include="Scripts\Effect\EnemyAttackEffect.cpp" />
+    <ClCompile Include="Scripts\Effect\Finaleffect.cpp" />
+    <ClCompile Include="Scripts\Effect\HitEffect.cpp" />
     <ClCompile Include="Scripts\GameManager.cpp" />
     <ClCompile Include="Objects\Manager\ChargedSlashManager.cpp" />
     <ClCompile Include="Objects\Scenes\Stage\EscMenu\EscContinueButton.cpp" />
@@ -425,6 +429,10 @@
     <ClInclude Include="Objects\Sound\SoundEnd.h" />
     <ClInclude Include="Objects\Sound\SoundPlayScene.h" />
     <ClInclude Include="Objects\Sound\SoundTittle.h" />
+    <ClInclude Include="Scripts\Effect\EffectMonoB.h" />
+    <ClInclude Include="Scripts\Effect\EnemyAttackEffect.h" />
+    <ClInclude Include="Scripts\Effect\Finaleffect.h" />
+    <ClInclude Include="Scripts\Effect\HitEffect.h" />
     <ClInclude Include="Scripts\GameManager.h" />
     <ClInclude Include="Objects\Manager\ChargedSlashManager.h" />
     <ClInclude Include="Objects\Scenes\Stage\EscMenu\EscContinueButton.h" />

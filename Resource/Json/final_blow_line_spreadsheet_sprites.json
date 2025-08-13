@@ -9,8 +9,8 @@
             "y": 500.0,
             "width": 1000.0,
             "height": 500.0,
-            "pivotX": 0.18008564412593842,
-            "pivotY": 0.5581660866737366
+            "pivotX": 0.5,
+            "pivotY": 0.5581655502319336
         },
         {
             "name": "final_blow_line_spreadsheet_1",
@@ -18,8 +18,8 @@
             "y": 500.0,
             "width": 1000.0,
             "height": 500.0,
-            "pivotX": 0.18008559942245484,
-            "pivotY": 0.5581660866737366
+            "pivotX": 0.5,
+            "pivotY": 0.5581656098365784
         },
         {
             "name": "final_blow_line_spreadsheet_2",
@@ -27,8 +27,8 @@
             "y": 500.0,
             "width": 1000.0,
             "height": 500.0,
-            "pivotX": 0.18008559942245484,
-            "pivotY": 0.5581660866737366
+            "pivotX": 0.5,
+            "pivotY": 0.5581656098365784
         },
         {
             "name": "final_blow_line_spreadsheet_3",
@@ -36,8 +36,8 @@
             "y": 500.0,
             "width": 1000.0,
             "height": 500.0,
-            "pivotX": 0.18008559942245484,
-            "pivotY": 0.5581660866737366
+            "pivotX": 0.5,
+            "pivotY": 0.5581656098365784
         },
         {
             "name": "final_blow_line_spreadsheet_4",
@@ -45,8 +45,8 @@
             "y": 500.0,
             "width": 1000.0,
             "height": 500.0,
-            "pivotX": 0.18008559942245484,
-            "pivotY": 0.5581660866737366
+            "pivotX": 0.5,
+            "pivotY": 0.5581656098365784
         },
         {
             "name": "final_blow_line_spreadsheet_5",
@@ -54,26 +54,26 @@
             "y": 500.0,
             "width": 1000.0,
             "height": 500.0,
-            "pivotX": 0.18008559942245484,
-            "pivotY": 0.5581660866737366
+            "pivotX": 0.5,
+            "pivotY": 0.5581656098365784
         },
         {
             "name": "final_blow_line_spreadsheet_6",
-            "x": 6000.0,
+            "x": 6017.0,
             "y": 500.0,
             "width": 1000.0,
             "height": 500.0,
-            "pivotX": 0.18008559942245484,
-            "pivotY": 0.5581660866737366
+            "pivotX": 0.5,
+            "pivotY": 0.5581656098365784
         },
         {
             "name": "final_blow_line_spreadsheet_7",
-            "x": 7008.0,
+            "x": 7000.0,
             "y": 500.0,
             "width": 1000.0,
             "height": 500.0,
-            "pivotX": 0.18008559942245484,
-            "pivotY": 0.5581660866737366
+            "pivotX": 0.5,
+            "pivotY": 0.5581656098365784
         },
         {
             "name": "final_blow_line_spreadsheet_8",
@@ -81,8 +81,8 @@
             "y": 500.0,
             "width": 1000.0,
             "height": 500.0,
-            "pivotX": 0.18008559942245484,
-            "pivotY": 0.5581660866737366
+            "pivotX": 0.5,
+            "pivotY": 0.5581656098365784
         },
         {
             "name": "final_blow_line_spreadsheet_9",
@@ -90,8 +90,8 @@
             "y": 500.0,
             "width": 1000.0,
             "height": 500.0,
-            "pivotX": 0.18008559942245484,
-            "pivotY": 0.5581660866737366
+            "pivotX": 0.5,
+            "pivotY": 0.5581656098365784
         },
         {
             "name": "final_blow_line_spreadsheet_10",
@@ -99,8 +99,8 @@
             "y": 500.0,
             "width": 1000.0,
             "height": 500.0,
-            "pivotX": 0.18008559942245484,
-            "pivotY": 0.5581660866737366
+            "pivotX": 0.5,
+            "pivotY": 0.5581656098365784
         },
         {
             "name": "final_blow_line_spreadsheet_11",
@@ -108,8 +108,8 @@
             "y": 500.0,
             "width": 1000.0,
             "height": 500.0,
-            "pivotX": 0.18008559942245484,
-            "pivotY": 0.5581660866737366
+            "pivotX": 0.5,
+            "pivotY": 0.5581656098365784
         },
         {
             "name": "final_blow_line_spreadsheet_12",
@@ -117,8 +117,8 @@
             "y": 500.0,
             "width": 1000.0,
             "height": 500.0,
-            "pivotX": 0.18008559942245484,
-            "pivotY": 0.5581660866737366
+            "pivotX": 0.5,
+            "pivotY": 0.5581656098365784
         }
     ]
 }

@@ -3,6 +3,8 @@
 #include "Components/Rendering/BitmapRenderer.h"
 #include "../Engine/Utils/EventDelegate.h"
 #include "../Engine/Components/Logic/InputSystem.h"
+#include "../Contents/Scripts/Effect/EffectInstance.h"
+#include "../Contents/Scripts/Effect/Finaleffect.h"
 
 /* 8.11. 한승규
 * 차징과 슬레쉬를 구현한 매니저
@@ -60,7 +62,12 @@ public:
 	bool isMoveDone = false; // 다 옮김? 이라는 플래그
 	float filterDuration = 2.0f; // 2초동안 페이드 인 - 아웃함
 	void HideOrRevealFilter(float dt); // 필터 움직여주는 함수, 업데이트에서 돌림
-protected:
+
+
+protected:	
+	EffectInstance* eff;
+	Finaleffect* fff; // FinaleFFect
+
 	float radius = 50.0f; //차징 범위
 	float timer = 0.0f; // 타이머(측정용)	
 	float mouseTimer = 0.0f;
@@ -82,6 +89,7 @@ protected:
 private:
 	Vector2 nowNormalVec = { 0,0 };
 	Vector2 nowPos = { 0,0 };
+	Vector2 centerPos;
 
 	bool isInside = false; // 마우스가 차징범위 내부에 있는지를 판단하는 플래그
 	bool isCharged = false; // 차징 조건을 충족했는지
