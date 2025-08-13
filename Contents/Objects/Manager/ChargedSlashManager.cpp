@@ -11,7 +11,7 @@ void ChargedSlashManager::OnStart()
 {
 
 	auto camIns = owner->GetQuery()->FindByName("CAM");
-	if (camIns) { camIns->GetComponent<CamInstance>()->(1, 1, 1, ShakeType::X); }
+	// if (camIns) { camIns->GetComponent<CamInstance>()->(1, 1, 1, ShakeType::X); }
 
 	owner->SetRenderLayer(EngineData::RenderLayer::UI);
 	inputSys = owner->AddComponent<InputSystem>();
