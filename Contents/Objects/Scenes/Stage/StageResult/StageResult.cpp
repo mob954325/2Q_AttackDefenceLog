@@ -1,4 +1,4 @@
-﻿#include "StageResult.h"
+癤#include "StageResult.h"
 #include "Components/Base/GameObject.h"
 #include "Scene/SceneManager.h"
 #include "Datas/EngineData.h"
@@ -10,9 +10,7 @@
 
 void StageResult::OnCreate()
 {
-	// winPanel 珥湲고
 	isSoundPlay = false;
-	// winPanel 초기화
 	GameObject* winPanelObject = new GameObject();
 	winPanelObject->GetTransform().SetUnityCoords(false);
 	winPanelObject->SetRenderLayer(EngineData::RenderLayer::UI);
@@ -24,7 +22,6 @@ void StageResult::OnCreate()
 	winPanelObject->GetTransform().SetPosition(93.5f, 159.0f);
 	winPanel->SetOrderInLayer(1001);
 
-	// winMark 珥湲고
 	GameObject* winMarkObject = new GameObject();
 	winMarkObject->GetTransform().SetUnityCoords(false);
 	winMarkObject->SetRenderLayer(EngineData::RenderLayer::UI);
@@ -36,7 +33,6 @@ void StageResult::OnCreate()
 	winMarkObject->GetTransform().SetPosition(93.5f, 159.0f);
 	winMark->SetOrderInLayer(1002);
 
-	// defeatPanel 珥湲고
 
 	GameObject* defeatPanelObject = new GameObject();
 	defeatPanelObject->SetRenderLayer(EngineData::RenderLayer::UI);
@@ -45,30 +41,30 @@ void StageResult::OnCreate()
 	defeatPanel = defeatPanelObject->AddComponent<BitmapRenderer>();
 	defeatPanel->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\Result\\defeat_ui_1.png");
 
-
 	defeatPanelObject->GetTransform().SetPosition(93.5f, 159.0f);
 	defeatPanel->SetOrderInLayer(1001);
 
-	// defeatMark 珥湲고
 	GameObject* defeatMarkObject = new GameObject();
 	defeatMarkObject->SetRenderLayer(EngineData::RenderLayer::UI);
 	defeatMarkObject->GetTransform().SetUnityCoords(false);
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(defeatMarkObject);
 	defeatMark = defeatMarkObject->AddComponent<BitmapRenderer>();
 	defeatMark->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\Result\\defeat_ui_b2.png");
-
-	
+  
 	defeatMarkObject->GetTransform().SetPosition(93.5f, 159.0f);
 	defeatMark->SetOrderInLayer(1002);
-}
 
-void StageResult::OnStart()
-{
+
 	winPanel->SetActive(false);
 	winMark->SetActive(false);
 
 	defeatPanel->SetActive(false);
 	defeatMark->SetActive(false);
+}
+
+void StageResult::OnStart()
+{
+
 }
 
 void StageResult::OnUpdate()
@@ -79,7 +75,6 @@ void StageResult::OnUpdate()
 	}	
 	else
 	{
-		// 도장
 		if (winPanel->IsActiveSelf())
 		{
 			winMark->SetActive(true);

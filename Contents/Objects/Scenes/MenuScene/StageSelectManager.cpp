@@ -90,11 +90,11 @@ void StageSelectManager::ChangeImageByClearState()
 {
 	if (!Singleton<GameManager>::GetInstance().IsStage1Clear())
 	{
-		objs[0]->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\enemySelect\\robby_select_ui_mountain_front.png");
+		objs[0]->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\enemySelect\\robby_select_ui_namgung.png");
 	}
 	else
 	{
-		objs[0]->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\enemySelect\\robby_select_ui_mountain_front.png");
+		objs[0]->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\enemySelect\\robby_select_ui_namgung.png");
 		objs[0]->SetSliceable(false);
 
 		GameObject* sealObject = new GameObject();
@@ -108,11 +108,11 @@ void StageSelectManager::ChangeImageByClearState()
 
 	if (!Singleton<GameManager>::GetInstance().IsStage2Clear())
 	{
-		objs[1]->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\enemySelect\\robby_select_ui_mountain_peak.png");
+		objs[1]->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\enemySelect\\robby_select_ui_mountain_front.png");
 	}
 	else
 	{
-		objs[1]->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\enemySelect\\robby_select_ui_mountain_peak.png");
+		objs[1]->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\enemySelect\\robby_select_ui_mountain_front.png");
 		objs[1]->SetSliceable(false);
 
 		GameObject* sealObject = new GameObject();
@@ -126,11 +126,11 @@ void StageSelectManager::ChangeImageByClearState()
 
 	if (!Singleton<GameManager>::GetInstance().IsStage3Clear())
 	{
-		objs[2]->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\enemySelect\\robby_select_ui_namgung.png");
+		objs[2]->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\enemySelect\\robby_select_ui_mountain_peak.png");
 	}
 	else
 	{
-		objs[2]->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\enemySelect\\robby_select_ui_namgung.png");
+		objs[2]->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\enemySelect\\robby_select_ui_mountain_peak.png");
 		objs[2]->SetSliceable(false);
 
 		GameObject* sealObject = new GameObject();

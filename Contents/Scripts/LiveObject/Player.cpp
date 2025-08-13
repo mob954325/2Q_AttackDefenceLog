@@ -560,8 +560,8 @@ void Player::ChecKChnageScene()
 	if (!isCreatedResult)
 	{
 		GameObject* obj = new GameObject();
-		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(obj);
 		obj->SetRenderLayer(EngineData::RenderLayer::UI);
+		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(obj);
 		auto comp = obj->AddComponent<StageResult>();
 		comp->SetPanelState(ResultPanelState::Defeat);
 		isCreatedResult = true;
