@@ -12,6 +12,8 @@ private:
 	GameObject* PCO;
 	GameObject* inputObj;
 	GameObject* stageBGI;
+	
+	GameObject* randomBox;
 
 
 	GameObject* escPanel;

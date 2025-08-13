@@ -17,6 +17,7 @@
 
 #include "Scripts/GameManager.h"
 #include "Scripts/BubbleBox/BubbleBox.h"
+#include "../Engine/Components/Rendering/BoxRenderer.h"
 
 void Stage1::OnEnterImpl()
 {
@@ -91,6 +92,21 @@ void Stage1::OnEnterImpl()
 	enemyProfileComp->SetProfileImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\ProfileUI\\enemy3_ui.png");
 	enemyProfileComp->owner->GetTransform().SetPosition(EngineData::SceenWidth * 0.95f, 1);
 	AddGameObject(enemyProfileUIObj, "enemyProfileUIObj");
+
+
+	randomBox = new GameObject();
+	randomBox->AddComponent<BoxRenderer>();
+	AddGameObject(randomBox, "randombox");
+	randomBox->GetTransform().SetUnityCoords(false);
+	randomBox->GetComponent<BoxRenderer>()->SetOrderInLayer(90000);
+	
+	D2D1_RECT_F A{};
+	A.left = 1540.0f;
+	A.right = 1620.0f;
+	A.top = 180.0f;
+	A.bottom = 310.0f;
+
+	randomBox->GetComponent<BoxRenderer>()->SetRect(A);
 }
 
 void Stage1::OnExitImpl()
