@@ -151,7 +151,10 @@ private:
 	float PlayerMaxX = 0.0f;
 	D2D1_RECT_F HiteffectPlayer = { 170.0f, 680.0f , 370.0f, 1010.0f };
 	D2D1_RECT_F HiteffectEnemy = { 1540.0f, 180.0f , 1620.0f, 310.0f };
-	D2D1_RECT_F defenceEffectPlayer = { 570.0f,  680.0f , 970.0f,  810.0f };
+	D2D1_RECT_F GuardPlayer = { 120.0f,  570.0f , 690.0f,  850.0f };
+	D2D1_RECT_F PerryRect01 = { 120.0f,  570.0f , 430.0f,  850.0f };
+	D2D1_RECT_F PerryRect02 = { 430.0f,  570.0f , 740.0f,  850.0f };
+	D2D1_RECT_F PerryRect03 = { 740.0f,  570.0f , 1050.0f,  850.0f };
 
 	float RandomHitPos_x(D2D1_RECT_F tmp) { return GameRandom::RandomRange(tmp.left, tmp.right); }
 	float RandomHitPos_y(D2D1_RECT_F tmp) { return GameRandom::RandomRange(tmp.top, tmp.bottom); }
