@@ -11,7 +11,6 @@
 #include "Objects/Sound/SoundTittle.h"
 
 #include "Scripts/GameManager.h"
-#include "Vignette.h"
 
 void MenuScene::OnEnterImpl()
 {
@@ -46,10 +45,6 @@ void MenuScene::OnEnterImpl()
 	SoundMenuObj = new GameObject();
 	SoundMenuObj->AddComponent<SoundTittle>();
 	AddGameObject(SoundMenuObj, "SOUNDMENU"); // SOUNDMENU << 이름 유지해주세요
-
-	GameObject* obj = new GameObject();
-	auto vi = obj->AddComponent<Vignette>();
-	AddGameObject(obj, "selectManager");
 }
 
 void MenuScene::OnExitImpl()

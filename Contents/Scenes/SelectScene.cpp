@@ -60,3 +60,5 @@ void SelectScene::UpdateImpl()
 	}
 
 }
+
+// select에서 스테이지 클리어 검사해서 만족하면 바로 엔딩씬으로 가기

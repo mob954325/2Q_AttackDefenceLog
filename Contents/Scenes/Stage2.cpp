@@ -19,6 +19,7 @@
 #include "Scripts/BubbleBox/BubbleBox2.h"
 
 #include "Components/Logic/InputSystem.h"
+#include "Vignette.h"
 
 void Stage2::OnEnterImpl()
 {
@@ -87,6 +88,10 @@ void Stage2::OnEnterImpl()
 	enemyProfileComp->SetProfileImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\ProfileUI\\enemy1_ui.png");
 	enemyProfileComp->owner->GetTransform().SetPosition(EngineData::SceenWidth * 0.95f, 1);
 	AddGameObject(enemyProfileUIObj, "enemyProfileUIObj");
+
+	GameObject* obj = new GameObject();
+	auto vi = obj->AddComponent<Vignette>();
+	AddGameObject(obj, "Vignette");
 }
 
 void Stage2::OnExitImpl()

@@ -8,7 +8,7 @@ void Vignette::OnCreate()
 {
     owner->SetRenderLayer(EngineData::RenderLayer::None);
     owner->GetTransform().SetUnityCoords(true);
-
+    owner->GetTransform().SetScale(0.85f, 0.85f);
     bitmapRenderer = owner->AddComponent<BitmapRenderer>();
     bitmapRenderer->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Stage\\side_darkness.png");
 }
@@ -19,6 +19,8 @@ void Vignette::OnStart()
 
     size = bitmapRenderer->GetResource()->GetBitmap()->GetSize();
     owner->GetTransform().SetOffset(-size.width / 2, size.height / 2);
+
+    End();
 }
 
 void Vignette::OnUpdate()
