@@ -68,8 +68,9 @@ void Stage2::OnEnterImpl()
 	esc->SetButtonsPosition();
 
 	Textbox = new GameObject();
-	Textbox->AddComponent<BubbleBox2>();
+	auto bb = Textbox->AddComponent<BubbleBox2>();
 	AddGameObject(Textbox, "Textbox");
+	bb->SetEscPanel(esc);
 
 	GameObject* topUIObj = new GameObject();
 	auto topUIComp = topUIObj->AddComponent<StageTopUI>();

@@ -74,8 +74,9 @@ void Stage1::OnEnterImpl()
 	SoundStageOne->GetComponent<SoundPlayScene>()->PlaySound();*/
 	
 	Textbox = new GameObject();
-	Textbox->AddComponent<BubbleBox>();
+	auto bb = Textbox->AddComponent<BubbleBox>();
 	AddGameObject(Textbox, "Textbox");
+	bb->SetEscPanel(esc);
 
 	GameObject* topUIObj = new GameObject();
 	auto topUIComp = topUIObj->AddComponent<StageTopUI>();

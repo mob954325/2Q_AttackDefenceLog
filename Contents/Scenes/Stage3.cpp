@@ -68,8 +68,9 @@ void Stage3::OnEnterImpl()
 	comp->GetEnemy()->SetNameDiff("Stage3", Singleton<GameManager>::GetInstance().GetDifficultyString());
 
 	Textbox = new GameObject();
-	Textbox->AddComponent<BubbleBox3>();
+	auto bb = Textbox->AddComponent<BubbleBox3>();
 	AddGameObject(Textbox, "Textbox");
+	bb->SetEscPanel(esc);
 
 	GameObject* topUIObj = new GameObject();
 	auto topUIComp = topUIObj->AddComponent<StageTopUI>();

@@ -51,6 +51,8 @@ void BubbleBox3::OnCreate()
 
 	count = 0;
 	StartCheck = true;
+
+	Singleton<GameManager>::GetInstance().SetGameState(Pause);
 }
 
 void BubbleBox3::OnStart()
@@ -114,8 +116,16 @@ void BubbleBox3::CheckInput()
 				SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Stage01");
 				SoundCom->GetComponent<SoundPlayScene>()->PlaySound();;
 			}
+
+			escPanel->SetInputEnable(true);
+
 			break;
 		}
 		++count;
 	}
+}
+
+void BubbleBox3::SetEscPanel(StageESCPanel* pPanel)
+{
+	escPanel = pPanel;
 }
