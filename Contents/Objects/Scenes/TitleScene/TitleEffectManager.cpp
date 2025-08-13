@@ -6,6 +6,9 @@
 #include "Platform/Input.h"
 #include "Scripts/SceneCore.h"
 
+#include "Scripts/BubbleBox/BubbleBoxTittle.h"
+
+
 void TitleEffectManager::OnStart()
 {
 	owner->SetRenderLayer(EngineData::RenderLayer::None);
@@ -74,9 +77,16 @@ void TitleEffectManager::OnUpdate()
 	
 	if((progress >= 1.0f) && !isPlay)// 이벤트가 종료되면 마우스 클릭으로 씬 넘어갈 수 있게 추가 : 작성자 - 이성호
 	{
-		if (Input::leftButtonDown)
+		if (!isTextCreated && Input::leftButtonDown)
 		{
-			Singleton<SceneManager>::GetInstance().LoadScene(SceneCount::MENU); // MenuScene으로 이동
+			// title 오브젝트 제거
+			effectProgress[7].bitmapRenderer->SetCapacity(0.0f);
+
+			// title 텍스트 객체 추가
+			GameObject* titleBubbleObj = new GameObject();
+			auto BBTComp = titleBubbleObj->AddComponent<BubbleBoxTittle>();
+			Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(titleBubbleObj, "TItleEffectManager");
+			isTextCreated = true;
 		}
 	}
 }

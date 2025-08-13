@@ -23,6 +23,8 @@ protected:
 	bool isPlay = false;
 
 	float progress = 0.0f; // 0~1 정규화 값, 이거 기반으로 애니메이션 + 연출 돌아감
+
+	bool isTextCreated = false;
 private:
 
 	inline float clampf(float v, float minVal, float maxVal) { // 나만의 작은 클램프 함수 C++14를 고집하는 자의 의지
