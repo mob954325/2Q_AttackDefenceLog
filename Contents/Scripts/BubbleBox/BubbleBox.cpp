@@ -15,8 +15,9 @@ void BubbleBox::OnUpdate()
 
 void BubbleBox::OnCreate()
 {
-	Singleton<GameManager>::GetInstance().SetGameState(Pause);
-	Singleton<AudioSystem>::GetInstance().PauseSound();
+	owner->SetRenderLayer(EngineData::UI);
+	owner->GetTransform().SetPosition(-200.0f, 100.0f);
+
 
 	input = owner->AddComponent<InputSystem>();
 
@@ -36,6 +37,9 @@ void BubbleBox::OnCreate()
 	Text_02->SetActive(false);
 	Text_03->SetActive(false);
 	
+	Text_01->SetOrderInLayer(19000);
+	Text_02->SetOrderInLayer(19000);
+	Text_03->SetOrderInLayer(19000);
 	
 
 	count = 0;
@@ -45,7 +49,8 @@ void BubbleBox::OnCreate()
 
 void BubbleBox::OnStart()
 {
-
+	Singleton<GameManager>::GetInstance().SetGameState(Pause);
+	Singleton<AudioSystem>::GetInstance().PauseSound();
 }
 
 void BubbleBox::OnDestroy()

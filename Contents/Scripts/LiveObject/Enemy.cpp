@@ -37,6 +37,12 @@ void Enemy::OnStart()
 
 	isPatternLive = true;
 	groggyTime = 0.0f;
+
+	enemy_Attack->SetActive(false);
+	enemy_Damaged->SetActive(false);
+	enemy_Guard->SetActive(false);
+
+
 }
 
 // 업데이트에서 시간 받기???? -> 필요없음, 수정하기!!!

@@ -42,11 +42,18 @@ void StageESCPanel::OnUpdate()
 			}
 
 		}
-		else
+		else // esc 처리
 		{
-			DisablePanel();
+			bool isActive = barBitmap->IsActiveSelf();
+			if (isActive)
+			{
+				DisablePanel();
+			}
+			else
+			{
+				EnablePanel();
+			}
 		}
-
 	}
 }
 
@@ -62,6 +69,7 @@ void StageESCPanel::SetButtons(const std::vector<GameObject*> buttons)
 			if(!this->buttons[2]->GetComponent<EscMuteButton>()->GetSoundMutePanel()->IsOpen())
 			{
 				DisablePanel(); 
+				Singleton<GameManager>::GetInstance().SetGameState(GameState::Play);
 			}
 		});
 
@@ -71,6 +79,7 @@ void StageESCPanel::SetButtons(const std::vector<GameObject*> buttons)
 			if (!this->buttons[2]->GetComponent<EscMuteButton>()->GetSoundMutePanel()->IsOpen())
 			{
 				Singleton<SceneManager>::GetInstance().LoadScene(1);
+				Singleton<GameManager>::GetInstance().SetGameState(GameState::Pause);
 			}
 		});
 
@@ -113,11 +122,23 @@ void StageESCPanel::DisablePanel()
 	{
 		auto comp = buttons[i]->GetComponent<Button>();
 		comp->DisableBitmaps();
-		comp->SetActive((comp->IsActiveSelf() ? false : true));
+		comp->SetActive(false);
 	}
 
 	bool isActive = barBitmap->IsActiveSelf();
-	barBitmap->SetActive(isActive ? false : true);
+	barBitmap->SetActive(false);
+}
 
-	Singleton<GameManager>::GetInstance().SetGameState(isActive ? GameState::Play : GameState::Pause);
+void StageESCPanel::EnablePanel()
+{
+	int size = buttons.size();
+	for (int i = 0; i < size; i++)
+	{
+		auto comp = buttons[i]->GetComponent<Button>();
+		comp->DisableBitmaps();
+		comp->SetActive(true);
+	}
+
+	bool isActive = barBitmap->IsActiveSelf();
+	barBitmap->SetActive(true);
 }
