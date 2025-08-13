@@ -1,0 +1,34 @@
+{
+    "texture": "bubbleboxtext.png",
+    "textureWidth": 6912,
+    "textureHeight": 1296,
+    "sprites": [
+        {
+            "name": "bubbleboxtext_text_0",
+            "x": 0.0,
+            "y": 1296.0,
+            "width": 2304.0,
+            "height": 1296.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "bubbleboxtext_text_1",
+            "x": 2304.0,
+            "y": 1296.0,
+            "width": 2304.0,
+            "height": 1296.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        },
+        {
+            "name": "bubbleboxtext_text_2",
+            "x": 4608.0,
+            "y": 1296.0,
+            "width": 2304.0,
+            "height": 1296.0,
+            "pivotX": 0.5,
+            "pivotY": 0.5
+        }
+    ]
+}
