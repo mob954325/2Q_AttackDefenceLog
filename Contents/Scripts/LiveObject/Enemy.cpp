@@ -362,7 +362,7 @@ void Enemy::CalSpiritTime()
 	if ( (!isGroggy ) && (!IsOtherGroggy) ) {
 		if (Object_OverTimeSpirit >= 1)
 		{
-			Object_NowSpiritAmount += 0.3f;									 //초당 0.3씩 감소
+			Object_NowSpiritAmount += eSpriteDamage_Second;									 //초당 0.3씩 감소
 			Object_OverTimeSpirit = std::fmod(Object_OverTimeSpirit, 1.0f);  //실수형 나머지 연산자
 		}
 

@@ -21,6 +21,7 @@ void EnemyData::SetData(std::vector<std::wstring> tmp) {
 	for (int i = 0; i < 4; i++) {
 		enemySprite.push_back(tmp[i + 25]);
 	}
+	Enemy_spriteDamage_Second = std::stof(tmp[31].c_str());
 } 
 
 

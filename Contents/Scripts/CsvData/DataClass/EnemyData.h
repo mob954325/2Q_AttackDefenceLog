@@ -21,7 +21,7 @@ public:
 	float enemyGuardRate;         // 적의 방어율을 저장
 	std::vector<std::string> enemyPattern;    //적의 패턴을 저장
 	std::vector<std::wstring> enemySprite;  // 적의 스프라이트를 저장
-
+	float Enemy_spriteDamage_Second;   // 기세 초당 감소량
 
 	void SetData(std::vector<std::wstring> tmp) override ; // 데이터 설정 함수
 	void PrintMap() override ; // 콘솔창에 데이터 출력
