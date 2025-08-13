@@ -38,6 +38,7 @@ void Stage3::OnEnterImpl()
 	Singleton<AudioSystem>::GetInstance().ReSetChannel();
 
 	bgObj = new GameObject();
+	bgObj->SetRenderLayer(EngineData::RenderLayer::None);
 	bgObj->AddComponent<StageBGI3>();
 	AddGameObject(bgObj, "StageBGI3");
 

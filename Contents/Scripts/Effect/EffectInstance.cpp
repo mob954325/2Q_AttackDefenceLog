@@ -263,7 +263,7 @@ float EffectInstance::GetValue(size_t type)
 	case 0:
 	{
 		float circle_outer = EasingList[EasingEffect::OutExpo](counttime);
-		return circle_outer * 189;
+		return circle_outer * 283;
 	}
 	case 1:
 	{

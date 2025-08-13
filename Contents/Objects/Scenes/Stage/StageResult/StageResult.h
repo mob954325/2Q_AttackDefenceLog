@@ -25,6 +25,8 @@ private:
 	BitmapRenderer* defeatPanel;
 	BitmapRenderer* defeatMark;
 
+	bool isSoundPlay = false;
+	
 	float timer = 0.0f;
 
 };

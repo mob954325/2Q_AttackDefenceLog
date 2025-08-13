@@ -5,10 +5,9 @@
 void StageBGI2::OnCreate()
 {
 	owner->SetRenderLayer(EngineData::RenderLayer::None);
-	backGround = owner->AddComponent<BitmapRenderer>();
-	backGround->SetOrderInLayer(-200);
+	backGround = owner->AddComponent<BitmapRenderer>();	
 	backGround->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\stage2_background.png");
-
+	backGround->SetOrderInLayer(-200);
 }
 
 void StageBGI2::OnStart()
