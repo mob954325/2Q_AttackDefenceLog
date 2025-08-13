@@ -12,6 +12,7 @@
 #include "Scripts/LiveObject/Enemy.h"
 #include "Scripts/GameManager.h"
 #include "Objects/Scenes/Stage/Stage2/StageBGI2.h"
+#include "Scripts/BubbleBox/BubbleBox2.h"
 
 void Stage2::OnEnterImpl()
 {
@@ -59,6 +60,10 @@ void Stage2::OnEnterImpl()
 	AddGameObject(escPanel, "escPanel");
 	esc->SetButtons({ continueBtn, exitBtn, muteBtn });
 	esc->SetButtonsPosition();
+
+	Textbox = new GameObject();
+	Textbox->AddComponent<BubbleBox2>();
+	AddGameObject(Textbox, "Textbox");
 }
 
 void Stage2::OnExitImpl()
