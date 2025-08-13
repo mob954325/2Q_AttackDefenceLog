@@ -34,6 +34,8 @@ void BubbleBoxTittle::OnCreate()
 		texts[i]->SetUseCustomRect(true);
 	}
 
+	texts[10]->SetUseCustomRect(false);
+
 	count = 0;
 	texts[count]->SetActive(true);
 	timer = 0.0f;
@@ -70,7 +72,7 @@ void BubbleBoxTittle::CheckInput()
 				// 기존에 출력 되었던 텍스트 모두 비활성화
 				for (int i = 0; i < 10; i++)
 				{
-					texts[count]->SetActive(false);
+					texts[i]->SetActive(false);
 				}
 
 				texts[count]->SetActive(true); // 마지막 텍스트 활성화
@@ -86,11 +88,15 @@ void BubbleBoxTittle::CheckInput()
 		}
 	}
 
-	if (texts[count]->IsActiveSelf() && timer < delaytime) // 위에서 밑으로 출력하기
+	if (count < 11 && texts[count]->IsActiveSelf() && timer < delaytime) // 위에서 밑으로 출력하기
 	{
 		rectY = texts[count]->GetResource()->GetBitmap()->GetSize().height * timer / delaytime;
 		std::cout << rectY << std::endl;
 	}
-	texts[count]->SetDestRect({ 0, 0, texts[count]->GetResource()->GetBitmap()->GetSize().width, rectY });
-	texts[count]->SetSrcRect({ 0, 0, texts[count]->GetResource()->GetBitmap()->GetSize().width, rectY });
+
+	if (count < 11)
+	{
+		texts[count]->SetDestRect({ 0, 0, texts[count]->GetResource()->GetBitmap()->GetSize().width, rectY });
+		texts[count]->SetSrcRect({ 0, 0, texts[count]->GetResource()->GetBitmap()->GetSize().width, rectY });
+	}
 }
