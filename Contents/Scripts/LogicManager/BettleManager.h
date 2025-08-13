@@ -160,7 +160,12 @@ private:
 	float RandomHitPos_y(D2D1_RECT_F tmp) { return GameRandom::RandomRange(tmp.top, tmp.bottom); }
 	float RandomHitPos_Angle() { return GameRandom::RandomRange(0, 360); }
 
+	//음악 랜덤 변수
+	float RandomSound() { return GameRandom::RandomRange(0.0f, 2.0f); }
+	float RandomSound2() { return GameRandom::RandomRange(0.0f, 3.0f); }
+	int IndexNum = 0;
 
+	
 
 	std::vector<int> tmpAttackNode;             // 플레이어가 연격 후 임시 저장 할 int 벡터
 	bool isPlayingAni = false; // 연격이 끝나고 sprite가 나오는 시간인지?
@@ -171,6 +176,9 @@ private:
 
 	//가드이펙트
 	int GuardEffCount = 0;
+
+	//test
+	int A = 0;
 };
 
 
