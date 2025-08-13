@@ -100,7 +100,6 @@ void BettleManager::OnUpdate()
 		}	
 	}
 
-	HpObj->SetHpUiPosition(Player2, Enemy2);
 	HpObj->CalculatePlayerValue(m_Player->GetHp());
 	HpObj->CalculateEnemyValue(m_Enemy->GetHp());
     
@@ -127,7 +126,14 @@ void BettleManager::InitHpGauge()
 	HpObj->SetPlayerMaxGague(m_Player->GetTotalHp());
 	HpObj->SetEnemyMaxGague(m_Enemy->GetTotalHp());
 
-	HpObj->SetHpUiPosition({200,200}, { 1449 ,0}); // NOTE : hp바 위치 바꾸기
+	float playerOffsetX = EngineData::SceenWidth * 0.048f;
+	float playerOffsetY = 0;
+
+	float enemyOffsetX = EngineData::SceenWidth * 0.705f;
+	float enemyOffsetY = 0;
+	
+	
+	HpObj->SetHpUiPosition({ playerOffsetX, playerOffsetY }, { enemyOffsetX, enemyOffsetY });
 }
 
 float BettleManager::ConvertHPDamageToPos(AttackPosition lastPos, float HpDamage)
