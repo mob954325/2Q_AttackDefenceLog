@@ -11,6 +11,7 @@
 #include "Objects/Common/PatternControlObject.h"
 #include "Scripts/LiveObject/Enemy.h"
 #include "Scripts/GameManager.h"
+#include "Objects/Scenes/Stage/Stage2/StageBGI2.h"
 
 void Stage2::OnEnterImpl()
 {
@@ -21,10 +22,13 @@ void Stage2::OnEnterImpl()
 
 	Singleton<AudioSystem>::GetInstance().ReSetChannel();
 
+	bgObj = new GameObject();
+	bgObj->AddComponent<StageBGI2>();
+	AddGameObject(bgObj, "StageBGI2");
+
 	SoundStageTwo = new GameObject();
 	SoundStageTwo->AddComponent<SoundPlayScene>();
 	AddGameObject(SoundStageTwo, "SoundMenu2");
-
 
 	PCO = new GameObject();
 	auto comp = PCO->AddComponent<PatternControlObject>();
