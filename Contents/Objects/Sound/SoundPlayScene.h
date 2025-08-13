@@ -45,6 +45,7 @@ private:
 			{L"Hit01" ,L"P_Hit01"},
 			{L"Dodge01" ,L"P_Dodge01"},
 			{L"Dodge02" ,L"P_Dodge02"},
+			{L"Stamp" ,L"M_Stamp"},
 			{L"Stage01" ,L"M_Stage01"},
 			{L"Stage02" ,L"M_Stage02"},
 			{L"Stage03" ,L"M_Stage03"},

@@ -42,8 +42,6 @@ void Stage2::OnEnterImpl()
 	AddGameObject(PCO, "PatternControlObject");
 	comp->GetEnemy()->SetNameDiff("Stage2", Singleton<GameManager>::GetInstance().GetDifficultyString());
 
-	SoundStageTwo->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Stage02");
-	SoundStageTwo->GetComponent<SoundPlayScene>()->PlaySound();
 
 	GameObject* continueBtn = new GameObject();
 	continueBtn->SetRenderLayer(EngineData::UI);
@@ -92,6 +90,7 @@ void Stage2::OnEnterImpl()
 void Stage2::OnExitImpl()
 {
 	std::cout << "스테이지2 이탈" << std::endl;
+	Singleton<AudioSystem>::GetInstance().ReSetChannel();
 }
 
 void Stage2::UpdateImpl()
