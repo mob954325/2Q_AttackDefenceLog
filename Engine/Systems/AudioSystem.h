@@ -47,7 +47,7 @@ public:
 	void PlaySound2(const std::wstring& id);
 	void UnRegister();
 
-
+	void UpdateSFXChannels();
 
 	void ReSetChannel();
 
