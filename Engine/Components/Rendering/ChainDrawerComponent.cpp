@@ -194,7 +194,7 @@ void ChainDrawerComponent::StartByType(std::vector<int> pattern) {
 	timer = 0.0f;
 	progress = 0.0f;
 	isPlay = true;
-	type = static_cast<GuideType>((pattern.front() - 1) / 3); // 0(상) 1(중) 2(하)
+	type = static_cast<GuideType>((pattern.front() - 1) / 3); // 0(상) 1(중) 2(하) << 뒤집혔음
 
 	SliceRect(pattern);
 }
