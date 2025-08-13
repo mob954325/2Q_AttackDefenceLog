@@ -279,7 +279,6 @@ void BettleManager::SetStateFormPatternIdle()
 				onGuard.Invoke(tmp.back());
 
 				m_Player->SetState("Player_Guard");		// 플레이어 상태 변경 -> 플레이어 방어
-
 				// 패링 실패에 따른 기세값 변경
 				if (m_Player->GetIsGroggy()) {
 					m_Player->GetDamage(ConvertSpiritDamageToPos(tmpCorPatten->lastPosition, m_Enemy->GetSpiritAttack()));
@@ -289,6 +288,11 @@ void BettleManager::SetStateFormPatternIdle()
 					m_Player->GetSpiritdamage(ConvertSpiritDamageToPos(tmpCorPatten->lastPosition, m_Enemy->GetSpiritAttack()));
 				}
 			}
+
+			/////// 플레이어 방어
+
+
+
 
 			m_PattenManager->SubPattern(tmpCorPatten->PattenID, "Enemy"); // 적 패턴 제거
 		}
@@ -301,11 +305,27 @@ void BettleManager::SetStateFormPatternIdle()
 			if (m_Enemy->GetDefenseRate() >= GameRandom::RandomRange(1, 101) && tmpCorPatten->lastPosition != MiddleNode)
 			{
 				m_Enemy->SetState("Enemy_Defence");	// 적 상태 변경 -> 적 회피
+
+
+				////////////////////////////////
+
+
+
 			}
 			else // 적 회피 실패
 			{
 				m_Enemy->SetState("Enemy_Hit");		// 적 상태 변경 -> 적 피격
 				m_Enemy->GetDamage(ConvertHPDamageToPos(tmpCorPatten->lastPosition, m_Player->GetAttack())); // 적 체력 감소
+
+				if (HitAnimeCount < 9)
+				{
+					Vector2 randomP = { RandomHitPos_x(HiteffectEnemy), RandomHitPos_y(HiteffectEnemy) };
+					float RandomRotate = RandomHitPos_Angle();
+					m_Enemy->CallPlayerHit(HitAnimeCount, randomP, RandomRotate);
+					++HitAnimeCount;
+				}
+				if (HitAnimeCount = 10) HitAnimeCount = 0;
+
 			}
 
 			// 플레이어 공격에 따른 기세 값 변경
@@ -530,6 +550,14 @@ void BettleManager::FinalAttackToEnemy() // 델리게이트로 외부에서 연�
 	{
 		m_Enemy->GetDamage((m_Player->GetAttack() * allDistancePercent * 10.0f));  /// 나중에 적 hp 배율 따로 빼기!!!!
 		m_Enemy->SetState("Enemy_Hit");				// 적 상태 변경 -> 적 피격
+		if (HitAnimeCount < 9)
+		{
+			Vector2 randomP = { RandomHitPos_x(HiteffectEnemy), RandomHitPos_y(HiteffectEnemy) };
+			float RandomRotate = RandomHitPos_Angle();
+			m_Enemy->CallPlayerHit(HitAnimeCount, randomP, RandomRotate);
+			++HitAnimeCount;
+		}
+		if (HitAnimeCount = 10) HitAnimeCount = 0;
 		m_Player->isOtherGroggyEnd = false;		// 적 그로기 상태 해제
 		m_Player->SetState("Player_AttackSuccess");	// 플레이어 상태 변경 -> 공격 성공
 		m_Enemy->SetIsRestore(true);

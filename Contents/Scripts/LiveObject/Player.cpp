@@ -27,11 +27,6 @@
 //
 
 
-void Player::OnCreate()
-{
-	/*PlayerHit = owner->AddComponent<EffectMonoB>();*/
-}
-
 void Player::OnStart()
 {
 	m_State = owner->GetComponent<StateController>();
