@@ -64,7 +64,7 @@ void BubbleBox2::OnDestroy()
 
 void BubbleBox2::CheckInput()
 {
-	if (Input::leftButtonDown && delaytime > 3.0f && count < 5)
+	if (Input::leftButtonDown && delaytime > 0.5f && count < 5)
 	{
 		delaytime = 0.0f;
 		switch (count)

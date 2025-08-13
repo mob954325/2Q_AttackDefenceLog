@@ -13,20 +13,15 @@ public:
 	void CheckInput();
 
 private:
-	BitmapRenderer* Text_01{};
-	BitmapRenderer* Text_02{};
-	BitmapRenderer* Text_03{};
-	BitmapRenderer* Text_04{};
-	BitmapRenderer* Text_05{};
-	BitmapRenderer* Text_06{};
-	BitmapRenderer* Text_07{};
-	BitmapRenderer* Text_08{};
-	BitmapRenderer* Text_09{};
-	BitmapRenderer* Text_10{};
-	BitmapRenderer* Text_11{};
+
+	std::vector<BitmapRenderer*> texts;
+
 	InputSystem* input{};
 
+	float timer = 0.0f;
 	float delaytime = 0.5f;
+	float rectY = 0.0f;
+
 	size_t count = 0;
 
 	bool StartCheck = true;
