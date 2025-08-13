@@ -9,6 +9,8 @@
 #include "Objects/Scenes/Stage/EscMenu/EscMuteButton.h"
 #include "Objects/Sound/SoundPlayScene.h"
 #include "../Engine/Systems/AudioSystem.h"
+#include "Application/AppPaths.h"
+#include "Scripts/BubbleBox/BubbleBox.h"
 
 void Stage1::OnEnterImpl()
 {
@@ -56,6 +58,12 @@ void Stage1::OnEnterImpl()
 
 	SoundStageOne->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Stage01");
 	SoundStageOne->GetComponent<SoundPlayScene>()->PlaySound();
+	
+	Textbox = new GameObject();
+	Textbox->AddComponent<BubbleBox>();
+	AddGameObject(Textbox, "Textbox");
+
+
 }
 
 void Stage1::OnExitImpl()

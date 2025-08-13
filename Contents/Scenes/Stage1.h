@@ -15,5 +15,9 @@ private:
 
 	GameObject* escPanel;
 
+
+	//SoundObj
 	GameObject* SoundStageOne;
+	//bubblebox
+	GameObject* Textbox;
 };

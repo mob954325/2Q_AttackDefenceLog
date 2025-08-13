@@ -230,6 +230,7 @@
     <ClCompile Include="Objects\Sound\SoundEnd.cpp" />
     <ClCompile Include="Objects\Sound\SoundPlayScene.cpp" />
     <ClCompile Include="Objects\Sound\SoundTittle.cpp" />
+    <ClCompile Include="Scripts\BubbleBox\BubbleBox.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameApp.h">
@@ -393,5 +394,6 @@
     <ClInclude Include="Objects\Sound\SoundEnd.h" />
     <ClInclude Include="Objects\Sound\SoundPlayScene.h" />
     <ClInclude Include="Objects\Sound\SoundTittle.h" />
+    <ClInclude Include="Scripts\BubbleBox\BubbleBox.h" />
   </ItemGroup>
 </Project>

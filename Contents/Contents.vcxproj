@@ -353,6 +353,7 @@
   <ItemGroup>
     <ClCompile Include="Application\Game.cpp" />
     <ClCompile Include="Application\GameApp.cpp" />
+    <ClCompile Include="Scripts\BubbleBox\BubbleBox.cpp" />
     <ClCompile Include="Objects\Scenes\SelectScene\LevelSelectManager.cpp" />
     <ClCompile Include="Objects\Scenes\SelectScene\SelectEffectManager.cpp" />
     <ClCompile Include="Objects\Scenes\Stage\CloudManager.cpp" />
@@ -410,6 +411,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameApp.h" />
+    <ClInclude Include="Scripts\BubbleBox\BubbleBox.h" />
     <ClInclude Include="Objects\Scenes\SelectScene\LevelSelectManager.h" />
     <ClInclude Include="Objects\Scenes\SelectScene\SelectEffectManager.h" />
     <ClInclude Include="Objects\Scenes\Stage\CloudManager.h" />
