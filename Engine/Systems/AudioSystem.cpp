@@ -27,12 +27,13 @@ void AudioSystem::Getvolume(float& volume)
 // 채널풀 체크함수
 bool AudioSystem::IsSFXChannelFull(int maxCount)
 {
-	if (!sfxGroup) return false;
+	//if (!sfxGroup) return false;
 
-	int numChannels = 0;
-	sfxGroup->getNumChannels(&numChannels);
+	//int numChannels = 0;
+	//sfxGroup->getNumChannels(&numChannels);
 
-	return numChannels >= maxCount;
+	//return numChannels >= maxCount;
+	return activeSFXChannels.size() >= maxCount;
 }
 
 //채널 초기화 함수
@@ -135,6 +136,21 @@ void AudioSystem::UnRegister()
 		}
 	}
 	sounds.clear();
+}
+
+void AudioSystem::UpdateSFXChannels()
+{
+	for (auto it = activeSFXChannels.begin(); it != activeSFXChannels.end(); )
+	{
+		bool isPlaying = false;
+		(*it)->isPlaying(&isPlaying);
+		if (!isPlaying) {
+			it = activeSFXChannels.erase(it);
+		}
+		else {
+			++it;
+		}
+	}
 }
 
 void AudioSystem::ReSetChannel()
