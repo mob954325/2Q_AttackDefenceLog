@@ -22,6 +22,8 @@ void SliceableObject::OnStart()
 
 void SliceableObject::OnUpdate()
 {
+	if (!isSliceable) return; 
+
 	if (sliceComp->GetOriginal())
 	{
 		HandleOverlap(); // 겹침 확인 함수
@@ -36,6 +38,11 @@ void SliceableObject::SetImage(std::wstring path)
 void SliceableObject::AddEvent(std::function<void()> f)
 {
 	OnSlice.Add(f);
+}
+
+void SliceableObject::SetSliceable(bool value)
+{
+	isSliceable = value;
 }
 
 void SliceableObject::HandleOverlap()

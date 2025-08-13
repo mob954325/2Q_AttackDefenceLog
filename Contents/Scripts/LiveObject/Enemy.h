@@ -140,6 +140,9 @@ private:
 
 	//적 히트 이펙트
 	HitEffect* Hiteff{};
+
+	// stage 구별용
+	int nameIndex = -1; // 0 : 1스테이지, 1 : 2스테이지, 2 : 3스테이지
 };
 
 
