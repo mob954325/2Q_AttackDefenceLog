@@ -54,7 +54,6 @@ void Player::OnStart()
 	/*PlayerHit = owner->GetComponent<EffectMonoB>();*/
 
 
-
 }
 
 void Player::ResetPlayer()
