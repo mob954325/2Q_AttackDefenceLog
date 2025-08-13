@@ -65,7 +65,7 @@ void Enemy::OnUpdate()
 	}
 	StateAct();            //  
 	DiffState();            // 이전 상태와 현재 상태를 비교
-	// PrintConsole();
+	PrintConsole();
 
 	if (nowStateName == "Enemy_Dead") // 적 사망 시 -> 씬 이동
 	{
@@ -194,6 +194,9 @@ void Enemy::SetStatData(std::string tmp)
 	enemy_AttackPath = enemy_CommonPath + nowEnemyData->enemySprite[1] + L"_fin.png";
 	enemy_GuardPath = enemy_CommonPath + nowEnemyData->enemySprite[2] + L"_fin.png";
 	enemy_DamagedPath = enemy_CommonPath + nowEnemyData->enemySprite[3] + L"_fin.png";
+
+
+	eSpriteDamage_Second = nowEnemyData->Enemy_spriteDamage_Second;
 }
 
 
