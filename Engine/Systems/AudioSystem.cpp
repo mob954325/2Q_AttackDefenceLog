@@ -117,22 +117,17 @@ void AudioSystem::PlaySound2(const std::wstring& id)
 {
 	if (!sounds.count(id)) return;
 
-	FMOD::ChannelGroup* targetGroup = sounds[id].isLoop ? bgmGroup : sfxGroup;
-	CheckError(fmodSystem->playSound(sounds[id].sound, targetGroup, false, &channel));
+	CheckError(fmodSystem->playSound(sounds[id].sound, masterGroup, false, &channel));
 
-	/*CheckError(fmodSystem->playSound(sounds[id], muteGroup, false, &channel));*/
+	// loop 아닌 사운드면 SFX 채널 벡터에 추가
+	if (!sounds[id].isLoop && channel) {
+		activeSFXChannels.push_back(channel);
+	}
 }
 
 
 void AudioSystem::UnRegister()
 {
-	//for (auto& it : sounds) {
-	//	it.second->release();
-	//	it.second = nullptr;
-	//}
-	////Fmod는 release로 해제해야함 , delete 사용시 Fmod 내부 리소스 손상 위험존재
-	//sounds.clear();
-
 	for (auto& it : sounds) {
 		if (it.second.sound) {
 			it.second.sound->release();
@@ -141,18 +136,6 @@ void AudioSystem::UnRegister()
 	}
 	sounds.clear();
 }
-
-//void AudioSystem::PauseSound()
-//{
-//	std::cout << "멈춤 호출" << std::endl;
-//	muteGroup->setPaused(true);
-//}
-//
-//void AudioSystem::AgainstSound()
-//{
-//	std::cout << "재시작 호출" << std::endl;
-//	muteGroup->setPaused(false);
-//}
 
 void AudioSystem::ReSetChannel()
 {
