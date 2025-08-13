@@ -21,6 +21,8 @@ public:
 	void SetImage(std::wstring path);
 	void AddEvent(std::function<void()> f);
 
+	void SetSliceable(bool value);
+
 private:
 	/// <summary>
 	/// 오브젝트와 마우스 겹침 다루는 함수 - 간단한 충돌이므로 Collision 사용 안함
@@ -50,5 +52,6 @@ private:
 
 	EventDelegate<> OnSlice;
 	bool isSliced = false;
+	bool isSliceable = true;
 };
 

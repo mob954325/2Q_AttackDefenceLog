@@ -60,6 +60,7 @@ enum class ShakeCalcu
 class Camera : public Component
 {
 public:
+	void OnCreate() override;
 	void OnStart() override;	// 임시		
 	void OnDestroy() override;
 

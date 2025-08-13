@@ -69,6 +69,18 @@ void Enemy::OnUpdate()
 
 	if (nowStateName == "Enemy_Dead") // 적 사망 시 -> 씬 이동
 	{
+		switch (nameIndex)
+		{
+		case 0:
+			Singleton<GameManager>::GetInstance().SetStageClear(1);
+			break;
+		case 1:
+			Singleton<GameManager>::GetInstance().SetStageClear(2);
+			break;
+		case 2:
+			Singleton<GameManager>::GetInstance().SetStageClear(3);
+			break;
+		}
 		ChecKChnageScene();
 	}
 
@@ -82,19 +94,18 @@ void Enemy::OnUpdate()
 void Enemy::SetNameDiff(std::string Stage, std::string difficulty) {
 	int indexID = 0;
 	int diffindex = 0;
-	int nameindex = 0;
-	if (Stage == "Stage1") { nameindex = 0; }
-	else if (Stage == "Stage2") { nameindex = 1; }
-	else if (Stage == "Stage3") { nameindex = 2; }
-	else { nameindex = 100; }
+	if (Stage == "Stage1") { nameIndex = 0; }
+	else if (Stage == "Stage2") { nameIndex = 1; }
+	else if (Stage == "Stage3") { nameIndex = 2; }
+	else { nameIndex = 100; }
 
 	if (difficulty == "easy") { diffindex = 1; }
 	else if (difficulty == "normal") { diffindex = 2; }
 	else if (difficulty == "hard") { diffindex = 3; }
 	else { diffindex = 100; }
 
-	indexID = nameindex * 3 + diffindex;
-	if (nameindex == 100 || diffindex == 100) return;
+	indexID = nameIndex * 3 + diffindex;
+	if (nameIndex == 100 || diffindex == 100) return;
 
 	Enemy_ID = "EI_00" + std::to_string(indexID);
 }

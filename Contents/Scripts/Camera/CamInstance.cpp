@@ -1,8 +1,7 @@
 ﻿#include "CamInstance.h"
-#include "Components/Base/GameObject.h"
-#include <iostream>
-#include "Components/Camera/CameraManager.h"
-#include "Math/Vector2.h" 
+#include  "../Engine/Components/Base/GameObject.h"
+#include "../Engine/Components/Camera/CameraManager.h"
+#include "../Engine/Utils/GameTime.h"
 
 
 void CamInstance::OnUpdate()
@@ -20,18 +19,18 @@ void CamInstance::OnUpdate()
 			break;
 		case ShakeType::XY:
 			Came->SetX_YValue(false);
-			Came->ShakeCamera(counttime, counttime , shakecalcutype , maxtimer);
+			Came->ShakeCamera(counttime, counttime, shakecalcutype, maxtimer);
 			break;
 		case ShakeType::X_Y:
 			Came->SetX_YValue(true);
-			Came->ShakeCamera(counttime, counttime , shakecalcutype , maxtimer);
+			Came->ShakeCamera(counttime, counttime, shakecalcutype, maxtimer);
 			break;
 		}
 	}
 	else if (shakeType != ShakeType::None && counttime >= maxtimer)
 	{
 		Came->SetShakeActive(false);
-		Came->ShakeCamera(0, 0 , shakecalcutype, maxtimer);
+		Came->ShakeCamera(0, 0, shakecalcutype, maxtimer);
 		SetReset();
 	}
 }
@@ -52,10 +51,11 @@ void CamInstance::OnDestroy()
 
 }
 
-void CamInstance::start(float MaxTime, float Period, float Amplitude, ShakeType type)
+void CamInstance::Start(float MaxTime, float Period, float Amplitude, ShakeType type, ShakeCalcu type2)
 {
 	SetWaveValue(MaxTime, Period, Amplitude);
 	CallCamShake(type);
+	shakecalcutype = type2;
 }
 
 void CamInstance::SetWaveValue(float MaxTime, float Period, float Amplitude, float MaxX, float MaxY)

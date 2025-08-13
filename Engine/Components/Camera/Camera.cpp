@@ -8,9 +8,13 @@
 #include "Math/EasingFunction.h"
 
 
-void Camera::OnStart()
+void Camera::OnCreate()
 {
 	localTransform = new Transform();
+}
+
+void Camera::OnStart()
+{
 }
 
 void Camera::OnDestroy()

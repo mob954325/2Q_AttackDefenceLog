@@ -10,11 +10,11 @@
 void ChargedSlashManager::OnStart()
 {
 
-	auto camIns = owner->GetQuery()->FindByName("CAM");
-	if (camIns) { camIns->GetComponent<CamInstance>()->(1, 1, 1, ShakeType::X); }
+// 	auto camIns = owner->GetQuery()->FindByName("CAM");
+// 	if (camIns) { camIns->GetComponent<CamInstance>()->(1, 1, 1, ShakeType::X); }
 
 	owner->SetRenderLayer(EngineData::RenderLayer::UI);
-	inputSys = owner->AddComponent<InputSystem>();
+	inputSys = owner->AddComponent<InputSystem>(); 
 	bitmapRenderer = owner->AddComponent<BitmapRenderer>();
 	bitmapRenderer->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Mouse\\ui01.png");
 	bitmapRenderer->SetOrderInLayer(100);

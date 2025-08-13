@@ -4,6 +4,7 @@
 #include "Application/AppPaths.h"
 #include "Utils/GameTime.h"
 #include "Scripts/GameManager.h"
+#include "Scripts/SelectSeal/SelectSeal.h"
 
 void StageSelectManager::OnCreate()
 {
@@ -12,11 +13,12 @@ void StageSelectManager::OnCreate()
 void StageSelectManager::OnStart()
 {
 	CreateMenuObjects();
-	ChangeImageByClearState();
 
 	objs[0]->owner->GetTransform().SetPosition(-400, 200);
 	objs[1]->owner->GetTransform().SetPosition(0, 0);
 	objs[2]->owner->GetTransform().SetPosition(400, 400);
+
+	ChangeImageByClearState();
 	  
 	objs[0]->AddEvent([this]() 
 		{
@@ -48,6 +50,7 @@ void StageSelectManager::OnStart()
 				isSceneChange = true;
 			}
 		});
+
 }
 
 void StageSelectManager::OnUpdate()
@@ -91,7 +94,14 @@ void StageSelectManager::ChangeImageByClearState()
 	}
 	else
 	{
-		objs[0]->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\TestClear\\TestClear.png");
+		// objs[0]->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\TestClear\\TestClear.png");
+		objs[0]->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\enemySelect\\robby_select_ui_mountain_front.png");
+
+		objs[0]->SetSliceable(false);
+		GameObject* sealObject = new GameObject();
+		auto sealComp = sealObject->AddComponent<SelectSeal>();
+		Vector2 objPos = objs[0]->owner->GetTransform().GetPosition();
+		sealObject->GetTransform().SetPosition(objPos.x, objPos.y);
 	}
 
 	if (!Singleton<GameManager>::GetInstance().IsStage2Clear())
@@ -100,7 +110,9 @@ void StageSelectManager::ChangeImageByClearState()
 	}
 	else
 	{
-		objs[1]->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\TestClear\\TestClear.png");
+		objs[1]->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\enemySelect\\robby_select_ui_mountain_peak.png");
+		// objs[1]->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\TestClear\\TestClear.png");
+		objs[1]->SetSliceable(false);
 	}
 
 	if (!Singleton<GameManager>::GetInstance().IsStage3Clear())
@@ -109,6 +121,8 @@ void StageSelectManager::ChangeImageByClearState()
 	}
 	else
 	{
-		objs[2]->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\TestClear\\TestClear.png");
+		objs[2]->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\enemySelect\\robby_select_ui_namgung.png");
+		// objs[2]->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\TestClear\\TestClear.png");
+		objs[2]->SetSliceable(false);
 	}
 }

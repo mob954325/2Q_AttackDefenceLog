@@ -195,9 +195,6 @@
     <ClInclude Include="Components\Base\BaseObject.h">
       <Filter>Components\Base</Filter>
     </ClInclude>
-    <ClInclude Include="Components\Camera\CameraManager.h">
-      <Filter>Components\Camera</Filter>
-    </ClInclude>
     <ClInclude Include="Components\Collision\CollisionComponent.h">
       <Filter>Components\Collider</Filter>
     </ClInclude>
@@ -317,6 +314,8 @@
     <ClInclude Include="Components\Rendering\VignetteEffect.h">
       <Filter>Components\Rendering</Filter>
     </ClInclude>
+    <ClInclude Include="..\Contents\Scripts\Camera\CamInstance.h" />
+    <ClInclude Include="Components\Camera\CameraManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\Application.cpp">
@@ -408,9 +407,6 @@
     </ClCompile>
     <ClCompile Include="Components\Base\BaseObject.cpp">
       <Filter>Components\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="Components\Camera\CameraManager.cpp">
-      <Filter>Components\Camera</Filter>
     </ClCompile>
     <ClCompile Include="Components\Collision\CollisionComponent.cpp">
       <Filter>Components\Collider</Filter>
@@ -504,6 +500,8 @@
     <ClCompile Include="Components\Rendering\VignetteEffect.cpp">
       <Filter>Components\Rendering</Filter>
     </ClCompile>
+    <ClCompile Include="..\Contents\Scripts\Camera\CamInstance.cpp" />
+    <ClCompile Include="Components\Camera\CameraManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />

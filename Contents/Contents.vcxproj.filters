@@ -292,6 +292,7 @@
     <ClCompile Include="Scripts\Camera\CamInstance.cpp">
       <Filter>Scripts\Camera</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\SelectSeal\SelectSeal.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameApp.h">
@@ -502,5 +503,6 @@
     <ClInclude Include="Scripts\Camera\CamInstance.h">
       <Filter>Scripts\Camera</Filter>
     </ClInclude>
+    <ClInclude Include="Scripts\SelectSeal\SelectSeal.h" />
   </ItemGroup>
 </Project>
