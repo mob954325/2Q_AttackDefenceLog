@@ -36,6 +36,7 @@ void Stage2::OnEnterImpl()
 	AddGameObject(nodePanel);
 
 	bgObj = new GameObject();
+	bgObj->SetRenderLayer(EngineData::RenderLayer::None);
 	bgObj->AddComponent<StageBGI2>();
 	AddGameObject(bgObj, "StageBGI2");
 
