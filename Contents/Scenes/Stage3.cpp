@@ -11,6 +11,7 @@
 #include "Objects/Common/PatternControlObject.h"
 #include "Scripts/LiveObject/Enemy.h"
 #include "Scripts/GameManager.h"
+#include "Objects/Scenes/Stage/Stage3/StageBGI3.h"
 
 void Stage3::OnEnterImpl()
 {
@@ -20,6 +21,10 @@ void Stage3::OnEnterImpl()
 	AddGameObject(inputObj);
 
 	Singleton<AudioSystem>::GetInstance().ReSetChannel();
+
+	bgObj = new GameObject();
+	bgObj->AddComponent<StageBGI3>();
+	AddGameObject(bgObj, "StageBGI3");
 
 	SoundStageThree = new GameObject();
 	SoundStageThree->AddComponent<SoundPlayScene>();

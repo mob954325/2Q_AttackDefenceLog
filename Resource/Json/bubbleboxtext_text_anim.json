@@ -1,0 +1,21 @@
+{
+    "clipName": "bubbleboxtext_text",
+    "loop": false,
+    "texturePath": "Assets/Character/Sprites/bubbleboxtext.png",
+    "duration": 3.0833332538604738,
+    "frames": [
+        {
+            "sprite": "bubbleboxtext_text_0",
+            "time": 0.0
+        },
+        {
+            "sprite": "bubbleboxtext_text_1",
+            "time": 1.5
+        },
+        {
+            "sprite": "bubbleboxtext_text_2",
+            "time": 3.0
+        }
+    ],
+    "events": []
+}
