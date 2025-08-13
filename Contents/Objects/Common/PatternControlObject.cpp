@@ -21,7 +21,7 @@
 #include "Scripts/GameManager.h"
 
 void PatternControlObject::OnCreate()
-{
+{ 
 	//===================================================================================================
 	// 1. 트레일 + 노드 오브젝트 생성
 	trail = new GameObject();
@@ -104,7 +104,7 @@ void PatternControlObject::OnCreate()
 	// 5. 노드 오브젝트 추가
 
 	float n = 200.0f; // 노드간의 간격
-	float r = 45.0f; // 반경
+	float r = 70.0f; // 반경
 	for (int i = 0; i < 9; ++i)
 	{
 		int col = i % 3 - 1; // -1 0 1
@@ -263,16 +263,16 @@ void PatternControlObject::OnCreate()
 
 void PatternControlObject::OnStart()
 {
-	owner->SetRenderLayer(EngineData::RenderLayer::UI);
+	owner->SetRenderLayer(EngineData::RenderLayer::None);
 	auto patternDrawerComp = owner->AddComponent<PatternDrawerComponent>();
-	patternDrawerComp->SetOrderInLayer(80);
+	patternDrawerComp->SetOrderInLayer(-8);
 	patternDrawerComp->SetBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Mouse\\test5.png");
 
 	//===================================================================================================
 	// PatternControlObject에 effInstance 추가
 
 	float n = 200.0f;	// 노드간의 간격 -> 바로 위에서 보기 위해 일부로 OnCreate와 OnStart에 지역변수 중복 선언
-	float r = 45.0f;	// 반경
+	float r = 65.0f;	// 반경
 
 	effInstance = owner->AddComponent<EffectInstance>();
 	effInstance->SetAnimePosition(nodePositions);
