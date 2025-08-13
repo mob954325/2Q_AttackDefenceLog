@@ -8,6 +8,8 @@
 #include "Components/Base/MonoBehavior.h"
 #include "Scripts/GameManager.h"
 #include "Math/GameRandom.h"
+#include "Objects/Sound/SoundPlayScene.h"
+#include "../Contents/Scripts/Camera/CamInstance.h"
 
 
 /// 상태 정리
@@ -219,6 +221,26 @@ void BettleManager::SetStateFormPatternIdle()
 				Vector2 PlayerPerryP = { RandomHitPos_x(GuardPlayer), RandomHitPos_y(GuardPlayer) };
 				m_Player->CallGuardEffect(0, PlayerPerryP);
 
+				//방어 사운드
+				auto SoundCom = owner->GetQuery()->FindByName("SOUNDSTAGE");
+				IndexNum = static_cast<int>(RandomSound());
+				switch(IndexNum)
+				{
+				case 0:
+					if (SoundCom) {
+						SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Dodge01");
+						SoundCom->GetComponent<SoundPlayScene>()->PlaySound();;
+					}
+					break;
+				case 1:
+					if (SoundCom) {
+						SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Dodge02");
+						SoundCom->GetComponent<SoundPlayScene>()->PlaySound();;
+					}
+					break;
+				}
+
+				
 			}
 			else // 회피 실패
 			{
@@ -233,6 +255,13 @@ void BettleManager::SetStateFormPatternIdle()
 					++HitAnimeCount2;
 				}
 				if (HitAnimeCount2 = 10) HitAnimeCount2 = 0;
+
+				//피격 사운드
+				auto SoundCom = owner->GetQuery()->FindByName("SOUNDSTAGE");
+				if (SoundCom) {
+					SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Hit01");
+					SoundCom->GetComponent<SoundPlayScene>()->PlaySound();;
+				}
 			}
 
 			// 기세 계산
@@ -269,12 +298,36 @@ void BettleManager::SetStateFormPatternIdle()
 
 				m_Player->SetState("Player_Perry"); // 플레이어 상태 변경 -> 플레이어 패링 상태
 				
+				
 				std::vector<Vector2> PlayerPerry = { { RandomHitPos_x(PerryRect01), RandomHitPos_y(PerryRect01) } ,
 					{ RandomHitPos_x(PerryRect02), RandomHitPos_y(PerryRect02) },
 				{ RandomHitPos_x(PerryRect03), RandomHitPos_y(PerryRect03) } };
 				m_Player->CallPerryEffect(PlayerPerry);
 
-
+				//패리사운드
+				IndexNum = static_cast<int>(RandomSound2());
+				auto SoundCom = owner->GetQuery()->FindByName("SOUNDSTAGE");
+				switch(IndexNum)
+				{
+				case 0:
+					if (SoundCom) {
+						SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Parry01");
+						SoundCom->GetComponent<SoundPlayScene>()->PlaySound();;
+					}
+					break;
+				case 1:
+					if (SoundCom) {
+						SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Parry02");
+						SoundCom->GetComponent<SoundPlayScene>()->PlaySound();;
+					}
+					break;
+				case 2:
+					if (SoundCom) {
+						SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Parry03");
+						SoundCom->GetComponent<SoundPlayScene>()->PlaySound();;
+					}
+					break;
+				}
 
 				// 패링에 따른 기세값 반영
 				if (!m_Player->GetIsGroggy()) {
@@ -290,6 +343,25 @@ void BettleManager::SetStateFormPatternIdle()
 
 				m_Player->SetState("Player_Guard");		// 플레이어 상태 변경 -> 플레이어 방어
 				
+				//가드사운드
+				IndexNum = static_cast<int>(RandomSound());
+				auto SoundCom = owner->GetQuery()->FindByName("SOUNDSTAGE");
+				switch (IndexNum)
+				{
+				case 0:
+					if (SoundCom) {
+						SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Guard01");
+						SoundCom->GetComponent<SoundPlayScene>()->PlaySound();;
+					}
+					break;
+				case 1:
+					if (SoundCom) {
+						SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Guard02");
+						SoundCom->GetComponent<SoundPlayScene>()->PlaySound();;
+					}
+					break;
+				}
+
 				Vector2 PlayerPerryP = { RandomHitPos_x(GuardPlayer), RandomHitPos_y(GuardPlayer) };
 				m_Player->CallGuardEffect(0 , PlayerPerryP);
 
@@ -316,6 +388,30 @@ void BettleManager::SetStateFormPatternIdle()
 		{
 			m_Player->SetState("Player_AttackSuccess");	// 플레이어 상태 변경 -> 플레이어 공격 성공
 			m_Player->SetEndAttack();					// isAttackingPattern = true 
+			//공격성공사운드
+			IndexNum = static_cast<int>(RandomSound2());
+			auto SoundCom = owner->GetQuery()->FindByName("SOUNDSTAGE");
+			switch (IndexNum)
+			{
+			case 0:
+				if (SoundCom) {
+					SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Attack01");
+					SoundCom->GetComponent<SoundPlayScene>()->PlaySound();;
+				}
+				break;
+			case 1:
+				if (SoundCom) {
+					SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Attack02");
+					SoundCom->GetComponent<SoundPlayScene>()->PlaySound();;
+				}
+				break;
+			case 2:
+				if (SoundCom) {
+					SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Attack03");
+					SoundCom->GetComponent<SoundPlayScene>()->PlaySound();;
+				}
+				break;
+			}
 
 			// 마지막 노드가 중앙이 아니라면 적이 일정 확률로 회피 
 			if (m_Enemy->GetDefenseRate() >= GameRandom::RandomRange(1, 101) && tmpCorPatten->lastPosition != MiddleNode)
@@ -375,6 +471,25 @@ void BettleManager::SetStateFormPatternIdle()
 				{
 					m_Player->SetState("Player_Defence");			// 플레이어 상태 변경 -> 플레이어 회피
 					////////////////////////// 아군의 방어 //////////////////
+					//방어 사운드
+					auto SoundCom = owner->GetQuery()->FindByName("SOUNDSTAGE");
+					IndexNum = static_cast<int>(RandomSound());
+					switch (IndexNum)
+					{
+					case 0:
+						if (SoundCom) {
+							SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Dodge01");
+							SoundCom->GetComponent<SoundPlayScene>()->PlaySound();;
+						}
+						break;
+					case 1:
+						if (SoundCom) {
+							SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Dodge02");
+							SoundCom->GetComponent<SoundPlayScene>()->PlaySound();;
+						}
+						break;
+					}
+
 					Vector2 PlayerPerryP = { RandomHitPos_x(GuardPlayer), RandomHitPos_y(GuardPlayer) };
 					m_Player->CallGuardEffect(0, PlayerPerryP);
 
@@ -383,8 +498,12 @@ void BettleManager::SetStateFormPatternIdle()
 				{
 					m_Player->SetState("Player_Hit");   			// 플레이어 상태 변경 -> 플레이어 피격됨 
 					m_Player->GetDamage(ConvertHPDamageToPos(tmpPatten->lastPosition, m_Enemy->GetAttack()));
-
-
+					//피격사운드
+					auto SoundCom = owner->GetQuery()->FindByName("SOUNDSTAGE");
+					if (SoundCom) {
+						SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Hit01");
+						SoundCom->GetComponent<SoundPlayScene>()->PlaySound();;
+					}
 
 
 					if (HitAnimeCount2 < 9)
@@ -474,7 +593,71 @@ void BettleManager::SetAnimationAtOtherGroggy() {
 		// 스텝이 바뀌었을 때만 이미지 교체
 		if (curStep != stepIdx) {
 			stepIdx = curStep;
-			m_Player->AttackAniSelect(stepIdx % 4); // 필요하면 다른 매핑으로 변경
+			int randindex = stepIdx % 4;
+			m_Player->AttackAniSelect(randindex); // 필요하면 다른 매핑으로 변경
+
+
+			// 0 : 좌우,   1 : 상하,  2. 좌상 ,  3. 가드 : 우상
+			switch (randindex) {
+			case 0:
+			{
+				auto camIns = owner->GetQuery()->FindByName("CAM");
+				if (camIns) { camIns->GetComponent<CamInstance>()->Start(1.0f, 10.0f, 10.0f, ShakeType::X);
+				camIns->GetComponent<CamInstance>()->SetFastToSlow();
+				}
+				break;
+			}
+			case 1:
+			{
+				auto camIns = owner->GetQuery()->FindByName("CAM");
+				if (camIns) { camIns->GetComponent<CamInstance>()->Start(1.0f, 10.0f, 10.0f, ShakeType::Y);
+				camIns->GetComponent<CamInstance>()->SetFastToSlow();
+				}
+				break;
+			}
+			case 2:
+			{
+				auto camIns = owner->GetQuery()->FindByName("CAM");
+				if (camIns) { camIns->GetComponent<CamInstance>()->Start(1.0f, 10.0f, 10.0f, ShakeType::XY);
+				camIns->GetComponent<CamInstance>()->SetFastToSlow();
+				}
+				break;
+			}
+			case 3:
+			{
+				auto camIns = owner->GetQuery()->FindByName("CAM");
+				if (camIns) { camIns->GetComponent<CamInstance>()->Start(1.0f, 10.0f, 10.0f, ShakeType::X_Y);
+				camIns->GetComponent<CamInstance>()->SetFastToSlow();
+				}
+				break;
+			}
+			}
+
+			//연격사운드
+			auto SoundCom = owner->GetQuery()->FindByName("SOUNDSTAGE");
+			IndexNum = static_cast<int>(RandomSound2());
+			switch (IndexNum)
+			{
+			case 0:
+				if (SoundCom) {
+					SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Attack01");
+					SoundCom->GetComponent<SoundPlayScene>()->PlaySound();;
+				}
+				break;
+			case 1:
+				if (SoundCom) {
+					SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Attack02");
+					SoundCom->GetComponent<SoundPlayScene>()->PlaySound();;
+				}
+				break;
+			case 2:
+				if (SoundCom) {
+					SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Attack03");
+					SoundCom->GetComponent<SoundPlayScene>()->PlaySound();;
+				}
+				break;
+			}
+
 		}
 	}
 	else {
@@ -517,6 +700,12 @@ void BettleManager::ChangeCommonFinalState()
 	if (m_Player->GetHp() <= 0.0f)
 	{
 		m_Player->SetState("Player_Dead");
+		//사망모션사운드
+		auto SoundCom = owner->GetQuery()->FindByName("SOUNDSTAGE");
+		if (SoundCom) {
+			SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Down");
+			SoundCom->GetComponent<SoundPlayScene>()->PlaySound();;
+		}
 	}
 
 	// 적 사망 확인
@@ -544,6 +733,12 @@ void BettleManager::SetSpiritGauge()
 			//연출 << 반짝 넣어주면 됨
 			giseObj->BlinkBlack();
 			isEffectOnce = true;
+			//그로기 사운드
+			auto SoundCom = owner->GetQuery()->FindByName("SOUNDSTAGE");
+			if (SoundCom) {
+				SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Break01");
+				SoundCom->GetComponent<SoundPlayScene>()->PlaySound();;
+			}
 		}
 		giseObj->SetMaxGague(20.0f);
 		//std::cout << m_Player->enemyGroggyTime << "끼얏끼얏호우!!!!" << std::endl; // 왜인지 모르지만 20초임, 오른쪽에서 왼쪽, 즉 1 -> 0이 되야함
@@ -555,6 +750,12 @@ void BettleManager::SetSpiritGauge()
 		if (!isEffectOnce) {
 			//연출 << 반짝 넣어주면 됨
 			giseObj->BlinkWhite();
+			//그로기 사운드
+			auto SoundCom = owner->GetQuery()->FindByName("SOUNDSTAGE");
+			if (SoundCom) {
+				SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Break01");
+				SoundCom->GetComponent<SoundPlayScene>()->PlaySound();;
+			}
 			isEffectOnce = true;
 		}
 		giseObj->SetMaxGague(10.0f);
@@ -630,6 +831,15 @@ void BettleManager::SetGroggyState()
 
 
 	preManagerState = nowManagerState;
+
+	//if (preManagerState != nowManagerState && nowManagerState == playerGroggy)
+	//{
+	//	auto SoundCom = owner->GetQuery()->FindByName("SOUNDSTAGE");
+	//	if (SoundCom) {
+	//		SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Break01");
+	//		SoundCom->GetComponent<SoundPlayScene>()->PlaySound();;
+	//	}
+	//}
 }
 
 void BettleManager::ResetState()
