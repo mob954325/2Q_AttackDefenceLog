@@ -115,7 +115,7 @@ private:
 	void PrintConsole();
 
 	float timer = 0.0f;
-	float maxTimer = 1.0f;
+	float maxTimer = 2.0f;
 	bool isCreatedResult = false;
 	void ChecKChnageScene();	// 씬 교체를 해야하는지 확인하는 함수
 

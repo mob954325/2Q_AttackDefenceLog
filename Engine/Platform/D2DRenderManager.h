@@ -22,6 +22,7 @@ public:
 	void DrawBitmap(ComPtr<ID2D1Bitmap1> bitmap, D2D1_RECT_F& destRect, D2D1_RECT_F& srcRect);
 	void DrawBitmap(ComPtr<ID2D1Bitmap1> bitmap, D2D1_RECT_F& destRect, D2D1_RECT_F& srcRect, float capacity);
 	void DrawImage(ComPtr<ID2D1Effect> effect);
+	void DrawImage(ID2D1Effect* effect);
 
 	void CreateBrush(const D2D1::ColorF& color, ID2D1SolidColorBrush** pBrush);
 	void DrawRectangle(D2D1_RECT_F& rect, ID2D1Brush* brush, FLOAT width = 1.0f, ID2D1StrokeStyle* strokeStyle = (ID2D1StrokeStyle*)0);

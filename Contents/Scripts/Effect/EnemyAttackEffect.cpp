@@ -42,7 +42,7 @@ void EnemyAttackEffect::OnCreate()
 		obj->GetComponent<AnimationRenderer>()->SetSpriteSheet(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Json\\defence_player_enemy_spreadsheet_sprites.json");
 		obj->GetComponent<AnimationRenderer>()->SetAnimationClip(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Json\\defence_player_enemy_spreadsheet_anim.json");
 		obj->GetComponent<AnimationRenderer>()->GetAnimationPlayer()->Pause();
-		/*obj->GetComponent<AnimationRenderer>()->SetOrderInLayer(-50);*/
+		obj->GetComponent<AnimationRenderer>()->SetOrderInLayer(-50);
 		obj->GetTransform().SetUnityCoords(false);
 		AnimeList.push_back(obj);
 	}
