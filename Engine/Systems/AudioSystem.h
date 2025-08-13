@@ -49,6 +49,8 @@ public:
 
 	void UpdateSFXChannels();
 
+
+
 	void ReSetChannel();
 
 	//채널 개별 사운드 조절은 함수 추가하면됨
@@ -81,6 +83,7 @@ public:
 	// SFX 채널 초기화 (비우기)
 	void ClearSFXChannels();
 
+	void Update();
 
 private:
 	struct SoundData {
