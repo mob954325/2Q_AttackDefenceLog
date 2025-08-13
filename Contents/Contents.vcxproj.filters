@@ -292,6 +292,9 @@
     <ClCompile Include="Scripts\Camera\CamInstance.cpp">
       <Filter>Scripts\Camera</Filter>
     </ClCompile>
+    <ClCompile Include="Objects\Common\SignBoard.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
     <ClCompile Include="Scripts\SelectSeal\SelectSeal.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -502,6 +505,9 @@
     </ClInclude>
     <ClInclude Include="Scripts\Camera\CamInstance.h">
       <Filter>Scripts\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Common\SignBoard.h">
+      <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\SelectSeal\SelectSeal.h" />
   </ItemGroup>

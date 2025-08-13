@@ -353,6 +353,7 @@
   <ItemGroup>
     <ClCompile Include="Application\Game.cpp" />
     <ClCompile Include="Application\GameApp.cpp" />
+    <ClCompile Include="Objects\Common\SignBoard.cpp" />
     <ClCompile Include="Scripts\BubbleBox\BubbleBoxTittle.cpp" />
     <ClCompile Include="Scripts\BubbleBox\BubbleBox3.cpp" />
     <ClCompile Include="Scripts\BubbleBox\BubbleBox2.cpp" />
@@ -428,6 +429,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameApp.h" />
+    <ClInclude Include="Objects\Common\SignBoard.h" />
     <ClInclude Include="Scripts\BubbleBox\BubbleBoxTittle.h" />
     <ClInclude Include="Scripts\BubbleBox\BubbleBox3.h" />
     <ClInclude Include="Scripts\BubbleBox\BubbleBox2.h" />
