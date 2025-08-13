@@ -31,7 +31,7 @@ void EnemyAttackEffect::OnUpdate()
 
 void EnemyAttackEffect::OnCreate()
 {
-	for (size_t i = 0; i < 9; i++)
+	for (size_t i = 0; i < 3; i++)
 	{
 		GameObject* obj = new GameObject();
 		obj->AddComponent<AnimationRenderer>();
@@ -61,27 +61,29 @@ void EnemyAttackEffect::OnDestroy()
 {
 }
 
-void EnemyAttackEffect::SetAnimePosition(const std::vector<Vector2>& vectorList)
+void EnemyAttackEffect::SetAnimePosition(int num, const Vector2& vector)
 {
-	if (vectorList.size() != 9) return;
-	for (size_t i = 0; i < 9; i++)
-	{
-		AnimeList[i]->GetTransform().SetPosition(vectorList[i].x, vectorList[i].y);
-	}
+	AnimeList[num]->GetTransform().SetPosition(vector.x, vector.y);
 }
 
-void EnemyAttackEffect::CallAnime(int num)
+void EnemyAttackEffect::CallAnime(int num, Vector2 vector, float rotationValue)
 {
+	size_t Animesize = AnimeList.size();
+	int a = 0;
+
 	if (num >= AnimeList.size()) return;
 	auto* r = AnimeList[num]->GetComponent<AnimationRenderer>();
 	r->SetActive(true);
 	auto* p = r->GetAnimationPlayer();
 	p->Play();
+	SetAnimePosition(num, vector);
+	AnimeList[num]->GetTransform().SetRotation(rotationValue);
 
 	auto& s = AnimeStates[num];
 	s.playing = true;
 	s.t = 0.0f;
 	s.duration = Animeduration; // 슬롯마다 다르게 가능
+
 }
 
 void EnemyAttackEffect::StopAnime(int num)

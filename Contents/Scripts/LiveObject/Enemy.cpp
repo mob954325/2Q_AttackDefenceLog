@@ -42,6 +42,7 @@ void Enemy::OnStart()
 	enemy_Damaged->SetActive(false);
 	enemy_Guard->SetActive(false);
 
+	Hiteff = owner->AddComponent<HitEffect>();
 
 }
 
@@ -413,6 +414,11 @@ void Enemy::ResetEnemy() {
 	SetCoolTime();
 	isPattenCooldown = true;
 	SetState("Enemy_Idle"); // 이거 플레이어 아니라 적으로 교체하기
+}
+
+void Enemy::CallPlayerHit(int num, Vector2 position, float rotate)
+{
+	Hiteff->CallAnime(num, position, rotate);
 }
 
 

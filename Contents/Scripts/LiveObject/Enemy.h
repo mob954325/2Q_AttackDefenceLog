@@ -5,6 +5,7 @@
 #include "../Component/StateController.h"
 #include "../CsvData/DataClass/AllNodePattenClass.h"
 #include "Components/Rendering/BitmapRenderer.h"
+#include "Scripts/Effect/HitEffect.h"
 
 
 class LiveObject;
@@ -98,7 +99,10 @@ private:
 	AttackPatternManager* m_PattenManager = nullptr; // 패턴 매니저를  참조로 받아  사용할 변수
 	void ResetEnemy();
 	
-	
+public:
+	//이펙트호출함수
+	void CallPlayerHit(int num, Vector2 position, float rotate);
+
 private:
 	std::string Difficulty;					// 적의 난이도 k
 	EnemyData* nowEnemyData = nullptr;		// 현재 적의 데이터 클래스를 담을 변수
@@ -133,6 +137,9 @@ private:
 	float maxTimer = 1.0f;
 	bool isCreatedResult = false;
 	void ChecKChnageScene();	// 씬 교체를 해야하는지 확인하는 함수
+
+	//적 히트 이펙트
+	HitEffect* Hiteff{};
 };
 
 

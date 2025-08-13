@@ -16,9 +16,9 @@ public:
 	void OnStart() override;
 	void OnDestroy() override;
 
-	void SetAnimePosition(const Vector2& position);
+	void SetAnimePosition(int num, const Vector2& vector);
 
-	void CallAnime(int num, const Vector2& position);
+	void CallAnime(int num, Vector2 vector, float rotationValue);
 	void StopAnime(int num);
 	void StopAllAnime();
 private:
