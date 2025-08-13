@@ -236,9 +236,9 @@
     <ClCompile Include="Objects\Sound\SoundEnd.cpp" />
     <ClCompile Include="Objects\Sound\SoundPlayScene.cpp" />
     <ClCompile Include="Objects\Sound\SoundTittle.cpp" />
-<ClCompile Include="Objects\Scenes\Stage\StageResult\StageResult.cpp">
-  <Filter>Objects\SceneObject\Stage\StageResult</Filter>
-</ClCompile>
+    <ClCompile Include="Objects\Scenes\Stage\StageResult\StageResult.cpp">
+      <Filter>Objects\SceneObject\Stage\StageResult</Filter>
+    </ClCompile>
     <ClCompile Include="Objects\Scenes\Stage\BackboardObject.cpp">
       <Filter>Objects\SceneObject\Stage</Filter>
     </ClCompile>
@@ -410,7 +410,7 @@
     <ClInclude Include="Objects\Sound\SoundTittle.h" />
     <ClInclude Include="Objects\Scenes\Stage\StageResult\StageResult.h">
       <Filter>Objects\SceneObject\Stage\StageResult</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="Objects\Scenes\Stage\BackboardObject.h">
       <Filter>Objects\SceneObject\Stage</Filter>
     </ClInclude>
