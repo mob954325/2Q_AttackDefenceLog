@@ -28,6 +28,7 @@ private:
 
 	GameObject* whiteEffect{};
 	AnimationRenderer* whiteAnim{};
+	BitmapRenderer* bbbb;
 
 	float gap = 300;	// 두 노드 사이의 간격
 
