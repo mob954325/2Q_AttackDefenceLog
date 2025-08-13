@@ -135,7 +135,7 @@ private:
 	void SetBitmap();  // 비트맵 설정하는 함수	
 
 	float timer = 0.0f;
-	float maxTimer = 2.0f;
+	float maxTimer = 3.0f;
 	bool isCreatedResult = false;
 	void ChecKChnageScene();	// 씬 교체를 해야하는지 확인하는 함수
 
