@@ -13,6 +13,12 @@ void TitleScene::OnEnterImpl()
 {
 	std::cout << "타이틀씬 진입" << std::endl;
 
+	// test
+	GameObject* obj = new GameObject();
+	auto comp = obj->AddComponent<StageResult>();
+	comp->SetPanelState(ResultPanelState::Win);
+
+
 	titleEffectManager = new GameObject();
 	auto tem = titleEffectManager->AddComponent<TitleEffectManager>();
 	AddGameObject(titleEffectManager, "TItleEffectManager");
