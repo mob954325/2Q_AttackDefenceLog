@@ -40,6 +40,10 @@ void ChargedSlashManager::OnStart()
 
 		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(filter[i], "filter." + i);
 	}
+
+	eff = owner->AddComponent<EffectInstance>();	
+	fff = owner->AddComponent<Finaleffect>();		
+	fff->SetAnimePosition(centerPos);
 }
 
 void ChargedSlashManager::OnUpdate() {
@@ -48,19 +52,21 @@ void ChargedSlashManager::OnUpdate() {
 
 	if (nowPos == Vector2::Zero() || nowNormalVec == Vector2::Zero()) return;
 
-
-
 	if (!isPlay) return; // 어차피 여기서 isPlay로 걸러주긴 함
 
 	if (Input::leftButtonDown) {
 
 		if (CheckMouseInside()) {		// [1] 좌클릭을 누른 상태 + 차징 범위 내부에 있으면 델타 증가
+			if(timer == 0.0f)
+				eff->CallEffect(EffectType::ChargeEffect, nowPos); // 아무튼 한번만 호출되죠?
+
 			timer += delta;
-			mouseTimer = 0.0f;
+			mouseTimer = 0.0f;			
 
 			//차징하고 있으면 여기옴, 나중에 델리게이트 연결해주면 될듯? <<<<<<<<<<<<<<<<<<<<<<<< 끼뺫!
 		}
 		else { // [2] 좌클릭 유지한상태로 밖으로 나감
+			eff->EndEffects(); // 모든 이펙트 끔
 			if (isCharged)  // 차징이 된 상태에서 나간건, 측정 시작을 의미함
 				mouseTimer += delta;
 			else {
@@ -72,6 +78,7 @@ void ChargedSlashManager::OnUpdate() {
 	}
 	else // [3] 좌클릭을 놔버리면, 타이머 초기화
 	{
+		eff->EndEffects(); // 모든 이펙트 끔
 		timer = 0.0f;
 		if (isCharged)  //차징이 된 상황에서 마우스를 놓았다 = Slash의 마지막 지점임
 			Slashing({ Input::MouseX, Input::MouseY }, mouseTimer); // 마지막 놓인 좌표 + 타이머 전달
@@ -98,7 +105,7 @@ void ChargedSlashManager::SetUpNodePos(const std::vector<Vector2>& vec)
 {
 	if (vec.size() < 9) return; // 9개짜리 들어와야함
 
-	Vector2 centerPos = vec[4]; // 중앙노드(4번)	
+	centerPos = vec[4]; // 중앙노드(4번)	
 
 	slashCache.clear();// 지워잇
 
@@ -184,8 +191,13 @@ bool ChargedSlashManager::isSuccess(Vector2 pos, float t)
 
 void ChargedSlashManager::Slashing(Vector2 pos, float time)
 {
+	
+
 	if (isSuccess(pos, time)) { // 성공
+		//fff->CallAnime(std::atan2(nowPos.y, nowPos.x) * 2 * PI );
+		fff->CallAnime(std::atan2(nowNormalVec.y, nowNormalVec.x) * (180.0f / PI));
 		onFinisherSuccess.Invoke(); // 성공했다고 외부에 알려줌 << 인자 뭐 넣어줘야 할지도 모르겠네
+
 		std::cout << "슬래시 성공!!!!!" << nowPos << nowNormalVec << std::endl;
 		Cancel();
 	}

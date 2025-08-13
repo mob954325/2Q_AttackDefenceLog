@@ -16,7 +16,8 @@ void EffectInstance::OnUpdate()
 	{
 		AnimeCount += Singleton<GameTime>::GetInstance().GetDeltaTime();
 	}
-	else if (CheckPlayAnime && AnimeCount >= Animeduration)
+	else if (CheckPlayAnime && AnimeCount >=
+)
 	{
 		CheckPlayAnime = false;
 		AnimeList[AnimeNum]->GetComponent<AnimationRenderer>()->SetActive(false);
@@ -117,7 +118,7 @@ void EffectInstance::OnCreate()
 	Emanager->GetParticleComponent(0)->SetOrderInLayer(235);
 	Emanager->GetParticleComponent(0)->SetLoop(false);
 	Emanager->GetParticleComponent(0)->SetMinSpeed(1.3f);
-	Emanager->GetParticleComponent(0)->SetMaxSpeed(3.0f); 
+	Emanager->GetParticleComponent(0)->SetMaxSpeed(3.0f);
 	Emanager->GetParticleComponent(0)->SetDuration(0.8f);
 	Emanager->GetParticleComponent(0)->SetFadeOutTime(0.7f);
 	Emanager->GetParticleComponent(0)->SetAmount(20);
@@ -159,9 +160,9 @@ void EffectInstance::OnDestroy()
 }
 
 // 8.09 추가, 외부에서 쓰기 쉽게 랩핑함
-void EffectInstance::DoParry(int n) 
+void EffectInstance::DoParry(int n)
 {
-	CallEffect(EffectType::ParryEffect, nodePos[n]); 
+	CallEffect(EffectType::ParryEffect, nodePos[n]);
 }
 void EffectInstance::DoGuard(int n) { CallEffect(EffectType::GuardEffect, nodePos[n]); }
 
@@ -170,7 +171,7 @@ void EffectInstance::CallEffect(EffectType type, const Vector2& info)
 {
 	effecttype = type;
 	Emanager->SetEffectPosition(info.x, info.y);
-	counttime = 0;
+	counttime = 0.0f;
 
 	std::cout << "u info : " << info << std::endl;
 	std::cout << "position : " << owner->GetTransform().GetPosition() << std::endl;
@@ -214,7 +215,7 @@ void EffectInstance::GuardEffect()
 	}
 }
 
-void EffectInstance::ChargeEffect()
+void EffectInstance::ChargeEffect() // 3초
 {
 	if (counttime < maxtime2) {
 		Emanager->SetEffectValue(5, 378 - GetValue(4), 378 - GetValue(4), 1/* - GetValue(5)*/, true);
@@ -223,12 +224,12 @@ void EffectInstance::ChargeEffect()
 	}
 	else
 	{
-		EndEffects();
-		/*HoldEffect();*/
+		//EndEffects();
+		HoldEffect();
 	}
 }
 
-void EffectInstance::HoldEffect()
+void EffectInstance::HoldEffect() // 차징완료
 {
 	CountMathTime += Singleton<GameTime>::GetInstance().GetDeltaTime();
 	capacapacityWave >= 3.5f ? capacapacityWave = 5.0f : capacapacityWave += Singleton<GameTime>::GetInstance().GetDeltaTime() * 0.5f;

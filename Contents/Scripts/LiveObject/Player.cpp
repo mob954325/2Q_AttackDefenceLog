@@ -17,6 +17,7 @@
 #include "Scripts/GameManager.h"
 #include "Math/GameRandom.h"
 
+
 #include "Objects/Scenes/Stage/StageResult/StageResult.h"
 
 // 각 값은 해당 함수가 출력 중일때, 각 플레그 변화
@@ -38,17 +39,15 @@ void Player::OnStart()
 	m_State->SetState("Player_Idle");	// 플레이어 상태 변경 -> idle
 
 	isAttackingPattern = true;
-
 	player_Attack1->SetActive(false);
-	
 	player_Attack2->SetActive(false);
-	
 	player_Attack3->SetActive(false);
-	
-
 	player_Damaged->SetActive(false);
-	
 	player_Guard->SetActive(false);
+
+
+
+
 }
 
 void Player::ResetPlayer()
@@ -263,7 +262,6 @@ void Player::ResetSpiritAmount()
 
 void Player::SetCoolTime()
 {
-
 		// 공격 주기 * (1.25 - 0.5 * (현재 기세 / 기세 게이지))
 		Object_nowCoolTime = (1.25f - Object_NowSpiritAmount / Object_SpiritAmount / 2.0f) * Object_CoolTime;
 }
@@ -302,7 +300,7 @@ void Player::DiffState()
 
 	// 그로기 시간!!!
 	// 10초가 지나거나
-	if (enemyGroggyTime >= 10.0f)
+	if (enemyGroggyTime >= 20.0f)
 	{
 		isOtherGroggyEnd = true;  // 아군의 연격 시간이 끝났다는 것을 표시
 		RestoreGroggy();
@@ -473,13 +471,13 @@ void Player::AttackAniSelect(int count) {
 
 	// 2) 필요한 것만 켜기 (원하는 매핑대로)
 	switch (count){
-	case 0: // 1프레임
+	case 0: // 공격1
 		player_Attack1->SetActive(true);
 		break;
-	case 1: // 2프레임
+	case 1: // 공격2
 		player_Attack2->SetActive(true);
 		break;
-	case 2: // 3프레임
+	case 2: // 공격3
 		player_Attack3->SetActive(true);
 		break;
 	case 3: //(가드 등)

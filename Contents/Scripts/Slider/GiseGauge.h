@@ -18,6 +18,10 @@ public:
 
 	void CalculateValue(float endvalue);
 
+
+	inline void BlinkBlack() { blackAlpha = 1.0f; }  // 외부에서 호출해주면 깜빡스
+	inline void BlinkWhite() { whiteAlpha = 1.0f; }
+
 private:
 	GameObject* ButtonAnime{};
 	Slider* sliderobj{};
@@ -35,12 +39,17 @@ private:
 
 	//게이지와 이미지의 max수치를 맞추기 위한 변수
 	float gaugeToPixel = 0.0f;
-	
+
 	//변화율
 	float X_Value = 0.0f;
 
 	//
 	float coverX = 0.0f;
 	GameObject* ButtonCover{};
+
+	BitmapRenderer* whiteEffect; //기세 게이지바 위에 반짝할려고 만듬
+	BitmapRenderer* blackEffect;
+	float blackAlpha = 0.0f; // 응애
+	float whiteAlpha = 0.0f; // 알파값임
 };
 

@@ -63,7 +63,7 @@ private:
 	float counttime = 0.0f;
 	float maxtime = 1.0f;
 
-	float maxtime2 = 3.0f;
+	float maxtime2 = 3.0f; // 차징시간
 
 	float mydeltatime;
 

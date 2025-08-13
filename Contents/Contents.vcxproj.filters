@@ -257,6 +257,18 @@
     <ClCompile Include="Objects\Scenes\Stage\Stage3\StageBGI3.cpp">
       <Filter>Objects\SceneObject\Stage\Stage3</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\Effect\EffectMonoB.cpp">
+      <Filter>Scripts\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Effect\EnemyAttackEffect.cpp">
+      <Filter>Scripts\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Effect\Finaleffect.cpp">
+      <Filter>Scripts\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Effect\HitEffect.cpp">
+      <Filter>Scripts\Effect</Filter>
+	</ClCompile>
     <ClCompile Include="Scripts\BubbleBox\BubbleBox.cpp">
       <Filter>Scripts\BubbleBox</Filter>
     </ClCompile>
@@ -452,7 +464,19 @@
     <ClInclude Include="Objects\Scenes\Stage\Stage3\StageBGI3.h">
       <Filter>Objects\SceneObject\Stage\Stage3</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\BubbleBox\BubbleBox2.h">
+    <ClInclude Include="Scripts\Effect\EffectMonoB.h">
+      <Filter>Scripts\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Effect\EnemyAttackEffect.h">
+      <Filter>Scripts\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Effect\Finaleffect.h">
+      <Filter>Scripts\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Effect\HitEffect.h">
+      <Filter>Scripts\Effect</Filter>
+	</ClInclude>
+	<ClInclude Include="Scripts\BubbleBox\BubbleBox2.h">
       <Filter>Scripts\BubbleBox</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\BubbleBox\BubbleBox.h">
