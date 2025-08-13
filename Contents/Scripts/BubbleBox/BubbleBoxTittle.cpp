@@ -45,8 +45,8 @@ void BubbleBoxTittle::OnCreate()
 
 void BubbleBoxTittle::OnStart()
 {
-	Singleton<GameManager>::GetInstance().SetGameState(Pause);
-	Singleton<AudioSystem>::GetInstance().PauseSound();
+	/*Singleton<GameManager>::GetInstance().SetGameState(Pause);*/
+	/*Singleton<AudioSystem>::GetInstance().PauseSound();*/
 }
 
 void BubbleBoxTittle::OnDestroy()
@@ -82,7 +82,7 @@ void BubbleBoxTittle::CheckInput()
 			if (count == 11) // 11번째 클릭에선 씬 전환
 			{
 				StartCheck = false;
-				Singleton<AudioSystem>::GetInstance().AgainstSound();
+				/*Singleton<AudioSystem>::GetInstance().AgainstSound();*/
 				Singleton<SceneManager>::GetInstance().LoadScene(SceneCount::MENU); // MenuScene으로 이동
 			}
 		}

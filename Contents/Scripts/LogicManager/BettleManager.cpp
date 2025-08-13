@@ -216,7 +216,7 @@ void BettleManager::SetStateFormPatternIdle()
 			if (m_Player->GetDefenseRate() >= GameRandom::RandomRange(1, 101) && pair.second->lastPosition != MiddleNode)
 			{
 				m_Player->SetState("Player_Defence");			 // 플레이어 상태 변경 -> 플레이어 회피
-				Vector2 PlayerPerryP = { RandomHitPos_x(defenceEffectPlayer), RandomHitPos_y(defenceEffectPlayer) };
+				Vector2 PlayerPerryP = { RandomHitPos_x(GuardPlayer), RandomHitPos_y(GuardPlayer) };
 				m_Player->CallGuardEffect(0, PlayerPerryP);
 
 			}
@@ -268,8 +268,11 @@ void BettleManager::SetStateFormPatternIdle()
 				onParry.Invoke(tmp.back());		// 패링 이벤트 델리게이트 호출
 
 				m_Player->SetState("Player_Perry"); // 플레이어 상태 변경 -> 플레이어 패링 상태
-
-
+				
+				std::vector<Vector2> PlayerPerry = { { RandomHitPos_x(PerryRect01), RandomHitPos_y(PerryRect01) } ,
+					{ RandomHitPos_x(PerryRect02), RandomHitPos_y(PerryRect02) },
+				{ RandomHitPos_x(PerryRect03), RandomHitPos_y(PerryRect03) } };
+				m_Player->CallPerryEffect(PlayerPerry);
 
 
 
@@ -287,7 +290,7 @@ void BettleManager::SetStateFormPatternIdle()
 
 				m_Player->SetState("Player_Guard");		// 플레이어 상태 변경 -> 플레이어 방어
 				
-				Vector2 PlayerPerryP = { RandomHitPos_x(defenceEffectPlayer), RandomHitPos_y(defenceEffectPlayer) };
+				Vector2 PlayerPerryP = { RandomHitPos_x(GuardPlayer), RandomHitPos_y(GuardPlayer) };
 				m_Player->CallGuardEffect(0 , PlayerPerryP);
 
 
@@ -372,7 +375,7 @@ void BettleManager::SetStateFormPatternIdle()
 				{
 					m_Player->SetState("Player_Defence");			// 플레이어 상태 변경 -> 플레이어 회피
 					////////////////////////// 아군의 방어 //////////////////
-					Vector2 PlayerPerryP = { RandomHitPos_x(defenceEffectPlayer), RandomHitPos_y(defenceEffectPlayer) };
+					Vector2 PlayerPerryP = { RandomHitPos_x(GuardPlayer), RandomHitPos_y(GuardPlayer) };
 					m_Player->CallGuardEffect(0, PlayerPerryP);
 
 				}

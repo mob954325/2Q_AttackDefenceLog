@@ -5,6 +5,7 @@
 #include "../Engine/Utils/GameTime.h"
 #include "scripts/GameManager.h"
 #include "../Engine/Systems/AudioSystem.h"
+#include "Objects/Sound/SoundPlayScene.h"
 
 void BubbleBox3::OnUpdate()
 {
@@ -54,8 +55,8 @@ void BubbleBox3::OnCreate()
 
 void BubbleBox3::OnStart()
 {
-	Singleton<GameManager>::GetInstance().SetGameState(Pause);
-	Singleton<AudioSystem>::GetInstance().PauseSound();
+	//Singleton<GameManager>::GetInstance().SetGameState(Pause);
+	//Singleton<AudioSystem>::GetInstance().PauseSound();
 }
 
 void BubbleBox3::OnDestroy()
@@ -107,7 +108,12 @@ void BubbleBox3::CheckInput()
 
 			StartCheck = false;
 			Singleton<GameManager>::GetInstance().SetGameState(Play);
-			Singleton<AudioSystem>::GetInstance().AgainstSound();
+			/*Singleton<AudioSystem>::GetInstance().AgainstSound();*/
+			auto SoundCom = owner->GetQuery()->FindByName("SOUNDSTAGE");
+			if (SoundCom) {
+				SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Stage01");
+				SoundCom->GetComponent<SoundPlayScene>()->PlaySound();;
+			}
 			break;
 		}
 		++count;
