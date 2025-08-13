@@ -1,18 +1,24 @@
 ﻿#include "Stage2.h"
-#include "Components/Logic/InputSystem.h"
-#include "Objects/Common/InputObject.h"
-#include "Objects/Sound/SoundPlayScene.h"
+#include "Application/AppPaths.h"
 #include "../Engine/Systems/AudioSystem.h"
 
+#include "Objects/Common/InputObject.h"
+#include "Objects/Sound/SoundPlayScene.h"
 #include "Objects/Scenes/Stage/EscMenu/StageESCPanel.h"
 #include "Objects/Scenes/Stage/EscMenu/EscContinueButton.h"
 #include "Objects/Scenes/Stage/EscMenu/EscExitButton.h"
 #include "Objects/Scenes/Stage/EscMenu/EscMuteButton.h"
 #include "Objects/Common/PatternControlObject.h"
+#include "Objects/Scenes/Stage/Stage2/StageBGI2.h"
+#include "Objects/Scenes/Stage/StageTopUI.h"
+#include "Objects/Scenes/Stage/StagePlayerProfile.h"
+#include "Objects/Scenes/Stage/StageEnemyProfile.h"
+
 #include "Scripts/LiveObject/Enemy.h"
 #include "Scripts/GameManager.h"
-#include "Objects/Scenes/Stage/Stage2/StageBGI2.h"
 #include "Scripts/BubbleBox/BubbleBox2.h"
+
+#include "Components/Logic/InputSystem.h"
 
 void Stage2::OnEnterImpl()
 {
@@ -64,6 +70,22 @@ void Stage2::OnEnterImpl()
 	Textbox = new GameObject();
 	Textbox->AddComponent<BubbleBox2>();
 	AddGameObject(Textbox, "Textbox");
+
+	GameObject* topUIObj = new GameObject();
+	auto topUIComp = topUIObj->AddComponent<StageTopUI>();
+	topUIComp->owner->GetTransform().SetPosition(-EngineData::SceenWidth * 0.1f, -EngineData::SceenHeight * 0.025f);
+	AddGameObject(topUIObj, "topUIObj");
+
+	GameObject* playerProfileUIObj = new GameObject();
+	auto playerProfileComp = playerProfileUIObj->AddComponent<StagePlayerProfile>();
+	playerProfileComp->owner->GetTransform().SetPosition(-EngineData::SceenWidth * 0.022f, 3);
+	AddGameObject(playerProfileUIObj, "playerProfileUIObj");
+
+	GameObject* enemyProfileUIObj = new GameObject();
+	auto enemyProfileComp = enemyProfileUIObj->AddComponent<StageEnemyProfile>();
+	enemyProfileComp->SetProfileImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\ProfileUI\\enemy1_ui.png");
+	enemyProfileComp->owner->GetTransform().SetPosition(EngineData::SceenWidth * 0.95f, 1);
+	AddGameObject(enemyProfileUIObj, "enemyProfileUIObj");
 }
 
 void Stage2::OnExitImpl()

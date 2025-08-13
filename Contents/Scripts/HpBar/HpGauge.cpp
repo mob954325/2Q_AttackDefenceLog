@@ -27,22 +27,21 @@ void HpGauge::OnCreate()
 	EnemyHP = obj2;
 	Enemyslider = EnemyHP->GetComponent<Slider>();
 	EnemyHP->GetTransform().SetUnityCoords(false);
-}
 
-void HpGauge::OnStart()
-{
 	Playerslider->SetGaugeBackgroundImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\HP\\hp_ui_background.png");
 	Playerslider->SetGaugeBarImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\HP\\hp_ui_left.png");
 
 	Enemyslider->SetGaugeBackgroundImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\HP\\hp_ui_background.png");
 	Enemyslider->SetGaugeBarImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\HP\\hp_ui_right.png");
 
+	ImageMaxwidth = Playerslider->GetGaugeBarImage()->GetResource()->GetBitmap()->GetSize().width;
+}
 
+void HpGauge::OnStart()
+{
 	Playerslider->ButtonShow(false);
 	Enemyslider->ButtonShow(false);
 	Enemyslider->SetPivotSide(false);
-
-	ImageMaxwidth = Playerslider->GetGaugeBarImage()->GetResource()->GetBitmap()->GetSize().width;
 }
 
 void HpGauge::OnDestroy()

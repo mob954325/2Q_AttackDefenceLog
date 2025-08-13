@@ -353,6 +353,7 @@
   <ItemGroup>
     <ClCompile Include="Application\Game.cpp" />
     <ClCompile Include="Application\GameApp.cpp" />
+    <ClCompile Include="Scripts\BubbleBox\BubbleBoxTittle.cpp" />
     <ClCompile Include="Scripts\BubbleBox\BubbleBox3.cpp" />
     <ClCompile Include="Scripts\BubbleBox\BubbleBox2.cpp" />
     <ClCompile Include="Scripts\BubbleBox\BubbleBox.cpp" />
@@ -415,9 +416,13 @@
     <ClCompile Include="Objects\Scenes\Stage\StageResult\StageResult.cpp" />
     <ClCompile Include="Objects\Scenes\Stage\Stage2\StageBGI2.cpp" />
     <ClCompile Include="Objects\Scenes\Stage\Stage3\StageBGI3.cpp" />
+    <ClCompile Include="Objects\Scenes\Stage\StageTopUI.cpp" />
+    <ClCompile Include="Objects\Scenes\Stage\StageEnemyProfile.cpp" />
+    <ClCompile Include="Objects\Scenes\Stage\StagePlayerProfile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameApp.h" />
+    <ClInclude Include="Scripts\BubbleBox\BubbleBoxTittle.h" />
     <ClInclude Include="Scripts\BubbleBox\BubbleBox3.h" />
     <ClInclude Include="Scripts\BubbleBox\BubbleBox2.h" />
     <ClInclude Include="Scripts\BubbleBox\BubbleBox.h" />
@@ -482,6 +487,9 @@
     <ClInclude Include="Objects\Scenes\Stage\StageResult\StageResult.h" />
     <ClInclude Include="Objects\Scenes\Stage\Stage2\StageBGI2.h" />
     <ClInclude Include="Objects\Scenes\Stage\Stage3\StageBGI3.h" />
+    <ClInclude Include="Objects\Scenes\Stage\StageTopUI.h" />
+    <ClInclude Include="Objects\Scenes\Stage\StageEnemyProfile.h" />
+    <ClInclude Include="Objects\Scenes\Stage\StagePlayerProfile.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

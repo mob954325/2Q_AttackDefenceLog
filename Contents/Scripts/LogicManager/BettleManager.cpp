@@ -43,6 +43,10 @@
 /// 
 /// m_State->CreateState("Player_Dead");   // 죽음
 
+void BettleManager::OnCreate()
+{
+
+}
 
 void BettleManager::OnStart() 
 {
@@ -62,14 +66,8 @@ void BettleManager::OnStart()
 	giseTotalValue = m_Player->GetSpiritAmount();
 	//giseObj->SetMaxGague(m_Player->GetTotalHp());
 
-	HpObj = owner->AddComponent<HpGauge>();
-	//HP 최대치 설정 플레이어, 적
-	HpObj->SetPlayerMaxGague(m_Player->GetTotalHp());
-	HpObj->SetEnemyMaxGague(m_Enemy->GetTotalHp());
+	InitHpGauge();
 
-
-
-	/*HpObj->SetHpUiPosition(Player, Enemy);*/
 }
 
 void BettleManager::OnUpdate() 
@@ -102,7 +100,6 @@ void BettleManager::OnUpdate()
 		}	
 	}
 
-	HpObj->SetHpUiPosition(Player2, Enemy2);
 	HpObj->CalculatePlayerValue(m_Player->GetHp());
 	HpObj->CalculateEnemyValue(m_Enemy->GetHp());
     
@@ -121,9 +118,23 @@ void BettleManager::OnUpdate()
 	ResetState(); 			// state가 다를 경우 초기화 하기!!!
 }
 
+void BettleManager::InitHpGauge()
+{
+	HpObj = owner->AddComponent<HpGauge>();
 
+	//HP 최대치 설정 플레이어, 적
+	HpObj->SetPlayerMaxGague(m_Player->GetTotalHp());
+	HpObj->SetEnemyMaxGague(m_Enemy->GetTotalHp());
 
+	float playerOffsetX = EngineData::SceenWidth * 0.048f;
+	float playerOffsetY = 0;
 
+	float enemyOffsetX = EngineData::SceenWidth * 0.705f;
+	float enemyOffsetY = 0;
+	
+	
+	HpObj->SetHpUiPosition({ playerOffsetX, playerOffsetY }, { enemyOffsetX, enemyOffsetY });
+}
 
 float BettleManager::ConvertHPDamageToPos(AttackPosition lastPos, float HpDamage)
 {
