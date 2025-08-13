@@ -19,6 +19,7 @@
 #include "Scripts/BubbleBox/BubbleBox3.h"
 
 #include "Components/Logic/InputSystem.h"
+#include "Vignette.h"
 
 void Stage3::OnEnterImpl()
 {
@@ -86,6 +87,10 @@ void Stage3::OnEnterImpl()
 	enemyProfileComp->SetProfileImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\ProfileUI\\enemy2_ui.png");
 	enemyProfileComp->owner->GetTransform().SetPosition(EngineData::SceenWidth * 0.95f, 1);
 	AddGameObject(enemyProfileUIObj, "enemyProfileUIObj");
+
+	GameObject* obj = new GameObject();
+	auto vi = obj->AddComponent<Vignette>();
+	AddGameObject(obj, "Vignette");
 }
 
 void Stage3::OnExitImpl()
@@ -96,4 +101,10 @@ void Stage3::OnExitImpl()
 
 void Stage3::UpdateImpl()
 {
+	const int maxSFXChannels = 128; // 최대 허용 SFX 채널 수
+
+	if (Singleton<AudioSystem>::GetInstance().IsSFXChannelFull(maxSFXChannels))
+	{
+		Singleton<AudioSystem>::GetInstance().ClearSFXChannels();
+	}
 }

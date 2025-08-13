@@ -700,12 +700,6 @@ void BettleManager::ChangeCommonFinalState()
 	if (m_Player->GetHp() <= 0.0f)
 	{
 		m_Player->SetState("Player_Dead");
-		//사망모션사운드
-		auto SoundCom = owner->GetQuery()->FindByName("SOUNDSTAGE");
-		if (SoundCom) {
-			SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Down");
-			SoundCom->GetComponent<SoundPlayScene>()->PlaySound();;
-		}
 	}
 
 	// 적 사망 확인
@@ -778,7 +772,7 @@ void BettleManager::FinalAttackToEnemy() // 델리게이트로 외부에서 연�
 	// 적이 그로기 상태일 때
 	if (m_Enemy->GetIsGroggy())
 	{
-		m_Enemy->GetDamage((m_Player->GetAttack() * allDistancePercent * 20.0f));  /// 나중에 적 hp 배율 따로 빼기!!!!
+		m_Enemy->GetDamage((m_Player->GetAttack() * allDistancePercent * 20.0f) + 100.0f);  /// 나중에 적 hp 배율 따로 빼기!!!!
 		m_Enemy->SetState("Enemy_Hit");				// 적 상태 변경 -> 적 피격
 		if (HitAnimeCount < 9)
 		{

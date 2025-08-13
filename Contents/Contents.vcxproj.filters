@@ -296,6 +296,7 @@
       <Filter>Objects</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\SelectSeal\SelectSeal.cpp" />
+    <ClCompile Include="Vignette.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameApp.h">
@@ -510,5 +511,6 @@
       <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\SelectSeal\SelectSeal.h" />
+    <ClInclude Include="Vignette.h" />
   </ItemGroup>
 </Project>
