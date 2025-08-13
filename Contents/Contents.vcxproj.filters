@@ -266,6 +266,13 @@
     <ClCompile Include="Scripts\BubbleBox\BubbleBox3.cpp">
       <Filter>Scripts\BubbleBox</Filter>
     </ClCompile>
+    <ClCompile Include="Objects\Scenes\Stage\StageTopUI.cpp" />
+    <ClCompile Include="Objects\Scenes\Stage\StageEnemyProfile.cpp">
+      <Filter>Objects\SceneObject\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Scenes\Stage\StagePlayerProfile.cpp">
+      <Filter>Objects\SceneObject\Stage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameApp.h">
@@ -452,6 +459,13 @@
     </ClInclude>
     <ClInclude Include="Scripts\BubbleBox\BubbleBox3.h">
       <Filter>Scripts\BubbleBox</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Scenes\Stage\StageTopUI.h" />
+    <ClInclude Include="Objects\Scenes\Stage\StagePlayerProfile.h">
+      <Filter>Objects\SceneObject\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Scenes\Stage\StageEnemyProfile.h">
+      <Filter>Objects\SceneObject\Stage</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
