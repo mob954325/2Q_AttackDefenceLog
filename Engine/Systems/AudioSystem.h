@@ -98,6 +98,8 @@ private:
 	FMOD::ChannelGroup* sfxGroup = nullptr;
 	FMOD::ChannelGroup* masterGroup = nullptr;
 
+	std::vector<FMOD::Channel*> activeSFXChannels;
+
 	/*FMOD::ChannelGroup* muteGroup;*/
 
 };
