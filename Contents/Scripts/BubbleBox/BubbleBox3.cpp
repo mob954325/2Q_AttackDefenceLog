@@ -113,7 +113,7 @@ void BubbleBox3::CheckInput()
 			/*Singleton<AudioSystem>::GetInstance().AgainstSound();*/
 			auto SoundCom = owner->GetQuery()->FindByName("SOUNDSTAGE");
 			if (SoundCom) {
-				SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Stage01");
+				SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Stage03");
 				SoundCom->GetComponent<SoundPlayScene>()->PlaySound();;
 			}
 

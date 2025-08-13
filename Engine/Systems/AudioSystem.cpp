@@ -69,7 +69,20 @@ void AudioSystem::AgainstSound()
 void AudioSystem::ReSetChannel()
 {
 	std::cout << "채널삭제 호출" << std::endl;
-	muteGroup->stop();
+	/*muteGroup->stop();*/
+	int numChannels = 0;
+	muteGroup->getNumChannels(&numChannels);
+
+	for (int i = numChannels - 1; i >= 0; --i)  // 뒤에서부터 제거
+	{
+		FMOD::Channel* channel = nullptr;
+		muteGroup->getChannel(i, &channel);
+		if (channel)
+		{
+			channel->stop();   // 채널 재생 멈춤
+			// channel 포인터는 FMOD가 관리, 더 이상 참조하지 않으면 안전
+		}
+	}
 }
 
 void AudioSystem::Setvolume(float state)

@@ -770,7 +770,6 @@ void BettleManager::SetSpiritGauge()
 		giseChangeValue = m_Player->GetNowSpiritAmount();
 		giseObj->CalculateValue(giseChangeValue);
 	}
-
 }
 
 /// 아군 홀드 공격 완료!!!
