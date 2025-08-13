@@ -268,6 +268,7 @@
     </ClCompile>
     <ClCompile Include="Scripts\Effect\HitEffect.cpp">
       <Filter>Scripts\Effect</Filter>
+	</ClCompile>
     <ClCompile Include="Scripts\BubbleBox\BubbleBox.cpp">
       <Filter>Scripts\BubbleBox</Filter>
     </ClCompile>
@@ -474,7 +475,8 @@
     </ClInclude>
     <ClInclude Include="Scripts\Effect\HitEffect.h">
       <Filter>Scripts\Effect</Filter>
-    <ClInclude Include="Scripts\BubbleBox\BubbleBox2.h">
+	</ClInclude>
+	<ClInclude Include="Scripts\BubbleBox\BubbleBox2.h">
       <Filter>Scripts\BubbleBox</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\BubbleBox\BubbleBox.h">
