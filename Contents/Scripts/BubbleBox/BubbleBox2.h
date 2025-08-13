@@ -2,6 +2,7 @@
 #include "Components/Base/MonoBehavior.h"
 #include "../Engine/Components/Rendering/BitmapRenderer.h"
 #include "../Engine/Components/Logic/InputSystem.h"
+#include "Objects/Scenes/Stage/EscMenu/StageESCPanel.h"
 
 class BubbleBox2 : public MonoBehavior
 {
@@ -11,6 +12,7 @@ public:
 	void OnStart() override;
 	void OnDestroy() override;
 	void CheckInput();
+	void SetEscPanel(StageESCPanel* pPanel);
 
 private:
 	BitmapRenderer* TextBox{};
@@ -20,6 +22,7 @@ private:
 	BitmapRenderer* Text_04{};
 	BitmapRenderer* Text_05{};
 	InputSystem* input{};
+	StageESCPanel* escPanel{};
 
 	float delaytime = 0.0f;
 	size_t count = 0;

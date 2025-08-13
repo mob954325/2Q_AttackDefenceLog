@@ -21,11 +21,14 @@ public:
 	void DisablePanel();
 	void EnablePanel();
 
+	void SetInputEnable(bool value);
+
 private:
 
 	BitmapRenderer* barBitmap{};
 	InputSystem* input;
 
 	std::vector<GameObject*> buttons; // 순서대로 continue, exit, mute
+	bool isInputEnable = false;
 };
 
