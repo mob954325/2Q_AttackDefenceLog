@@ -1,0 +1,27 @@
+﻿#pragma once
+#include "Components/Base/MonoBehavior.h"
+#include "../Engine/Components/Rendering/BitmapRenderer.h"
+#include "../Engine/Components/Logic/InputSystem.h"
+
+class BubbleBox : public MonoBehavior
+{
+public:
+	void OnUpdate() override;
+	void OnCreate() override;
+	void OnStart() override;
+	void OnDestroy() override;
+	void CheckInput();
+
+private:
+	BitmapRenderer* TextBox{};
+	BitmapRenderer* Text_01{};
+	BitmapRenderer* Text_02{};
+	BitmapRenderer* Text_03{};
+	InputSystem* input{};
+
+	float delaytime = 2.0f;
+	size_t count = 0;
+
+	bool StartCheck = true;
+};
+
