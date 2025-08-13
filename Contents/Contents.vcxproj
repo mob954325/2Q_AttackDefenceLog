@@ -426,6 +426,7 @@
     <ClCompile Include="Objects\Scenes\Stage\StageEnemyProfile.cpp" />
     <ClCompile Include="Objects\Scenes\Stage\StagePlayerProfile.cpp" />
     <ClCompile Include="Scripts\SelectSeal\SelectSeal.cpp" />
+    <ClCompile Include="Vignette.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameApp.h" />
@@ -504,6 +505,7 @@
     <ClInclude Include="Objects\Scenes\Stage\StageEnemyProfile.h" />
     <ClInclude Include="Objects\Scenes\Stage\StagePlayerProfile.h" />
     <ClInclude Include="Scripts\SelectSeal\SelectSeal.h" />
+    <ClInclude Include="Vignette.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
