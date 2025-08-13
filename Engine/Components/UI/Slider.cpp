@@ -17,8 +17,6 @@ void Slider::OnCreate()
 	GaugeBarRect.right = size.width;
 
 
-
-
 	GaugeBackground = owner->AddComponent<BitmapRenderer>();
 	GaugeBackground->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\TestGauge\\backgroundBar.png");
 	GaugeBackground->SetUseCustomRect(true);
