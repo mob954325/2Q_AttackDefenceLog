@@ -41,7 +41,7 @@ void GameApp::Initialize()
 
 
 	LoadCSV<SoundResource>::SetCSV(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\DataTable\\AllSoundList.csv", soundList);
-	AudioSystem::GetInstance().Initialize(128);
+	AudioSystem::GetInstance().Initialize(4090);
 	AudioSystem::GetInstance().Register(soundList);
 
 

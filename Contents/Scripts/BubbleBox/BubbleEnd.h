@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Components/Base/MonoBehavior.h"
 #include "../Engine/Components/Rendering/BitmapRenderer.h"
 #include "../Engine/Components/Logic/InputSystem.h"
