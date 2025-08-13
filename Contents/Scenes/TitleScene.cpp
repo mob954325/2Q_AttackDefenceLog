@@ -72,6 +72,12 @@ void TitleScene::UpdateImpl()
 	}
 	if (input->IsKeyPressed('2')) {
 		titleEffectManager->GetComponent<TitleEffectManager>()->Start();
-
+		
+	}
+// 	if (input->IsKeyDown('3')) {
+// 		cloudManager->GetComponent<CloudManager >()->ReverseStart();
+// 	}
+	if (input->IsKeyDown('3')) {
+		cloudManager->GetComponent<CloudManager >()->Start();
 	}
 }
