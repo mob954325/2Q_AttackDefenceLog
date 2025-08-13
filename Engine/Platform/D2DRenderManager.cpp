@@ -99,6 +99,11 @@ void D2DRenderManager::DrawImage(Microsoft::WRL::ComPtr<ID2D1Effect> effect)
 	m_d2dDeviceContext->DrawImage(effect.Get());
 }
 
+void D2DRenderManager::DrawImage(ID2D1Effect* effect)
+{
+	m_d2dDeviceContext->DrawImage(effect);
+}
+
 void D2DRenderManager::CreateBrush(const D2D1::ColorF& color, ID2D1SolidColorBrush** pBrush)
 {
 	m_d2dDeviceContext->CreateSolidColorBrush(color, pBrush);
