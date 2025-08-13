@@ -50,7 +50,7 @@ void GameApp::Initialize()
 	hCursorDefault = mouse.LoadPngCursor((Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\Mouse\\mouse_cursor_1.png").c_str());
 	hCursorClicked = mouse.LoadPngCursor((Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\Mouse\\mouse_cursor_2.png").c_str());
 
-	MessageBoxW(NULL, (Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\Mouse\\mouse_cursor_1.png").c_str(), L"Cursor Path", MB_OK);
+	// MessageBoxW(NULL, (Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\Mouse\\mouse_cursor_1.png").c_str(), L"Cursor Path", MB_OK);
 
 	if (!hCursorDefault)
 		MessageBox(0, L"기본 커서 로딩 실패", L"Error", MB_OK);
