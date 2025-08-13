@@ -46,7 +46,6 @@ void TitleEffectManager::OnStart()
 			effectProgress[i].bitmapRenderer->SetDestRect({ 0.0f, 0.0f, rect.width / 1.5f, rect.height / 1.5f });
 			effectProgress[i].bitmapRenderer->SetSrcRect({ 0.0f, 0.0f, rect.width, rect.height });
 		}
-
 	}
 }
 
