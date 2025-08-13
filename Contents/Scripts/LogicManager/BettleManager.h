@@ -119,7 +119,7 @@ public:
 	/// <summary>
 	/// 기세 게이지  세팅하는 함수
 	/// </summary>
-	void SetSpiritGauge();		
+	//void SetSpiritGauge();		
 
 	/// <summary>
 	/// 현재 확인하는 노드 내용 ( 패턴 index 값 )
