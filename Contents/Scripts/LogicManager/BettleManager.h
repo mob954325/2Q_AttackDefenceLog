@@ -5,7 +5,7 @@
 #include "../Engine/Utils/EventDelegate.h"
 #include "Scripts/Slider/GiseGauge.h"
 #include "Scripts/HPBar/HpGauge.h"
-#include "Scripts/Effect/EnemyAttackEffect.h"
+
 //#include ""
 class State;
 
@@ -167,7 +167,7 @@ private:
 	int HitAnimeCount2 = 0;
 
 	//가드이펙트
-	EnemyAttackEffect* GuardEff{};
+	int GuardEffCount = 0;
 };
 
 

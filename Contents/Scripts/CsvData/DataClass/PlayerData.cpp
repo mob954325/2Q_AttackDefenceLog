@@ -8,6 +8,7 @@
 ///
 void PlayerData::SetData(std::vector<std::wstring> tmp)
 {
+	if (tmp[0] == L"") return;
 	Character_ID = StringConvert::WstringToString(tmp[0]);
 	Character_name = tmp[0]; 
 	Character_helath = (tmp[2] == L"null" ? 0 : std::stof(tmp[2].c_str()));

@@ -43,6 +43,7 @@ void Enemy::OnStart()
 	enemy_Guard->SetActive(false);
 
 	Hiteff = owner->AddComponent<HitEffect>();
+	GuardEff = owner->AddComponent<EnemyAttackEffect>();
 
 }
 
@@ -516,4 +517,9 @@ void Enemy::ChecKChnageScene()
 	{
 		Singleton<SceneManager>::GetInstance().LoadScene(SceneCount::MENU);
 	}
+}
+
+void Enemy::CallGuardEffect(int num, Vector2 vector)
+{
+	GuardEff->CallAnime(num, vector);
 }

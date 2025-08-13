@@ -216,12 +216,15 @@ void BettleManager::SetStateFormPatternIdle()
 			if (m_Player->GetDefenseRate() >= GameRandom::RandomRange(1, 101) && pair.second->lastPosition != MiddleNode)
 			{
 				m_Player->SetState("Player_Defence");			 // 플레이어 상태 변경 -> 플레이어 회피
+				Vector2 PlayerPerryP = { RandomHitPos_x(defenceEffectPlayer), RandomHitPos_y(defenceEffectPlayer) };
+				m_Player->CallGuardEffect(0, PlayerPerryP);
+
 			}
 			else // 회피 실패
 			{
 				m_Player->SetState("Player_Hit");   			// 플레이어 상태 변경 -> 플레이어 피격
 				m_Player->GetDamage(ConvertHPDamageToPos(pair.second->lastPosition, m_Enemy->GetAttack())); // 상중하 적용한 데미지
-				////////////////////////////////여기////////////////////////////////////////////////////
+
 				if (HitAnimeCount2 < 9)
 				{
 					Vector2 randomP = { RandomHitPos_x(HiteffectPlayer), RandomHitPos_y(HiteffectPlayer) };
@@ -257,7 +260,7 @@ void BettleManager::SetStateFormPatternIdle()
 		if (tmpCorPatten->PattenID.substr(0, 2) == "EP") // 적 노드일 때
 		{
 			m_Enemy->SetState("Enemy_AttackSuccess");				// 적 상태 변경 -> 적 공격 성공
-			if ((tmpCorPatten->PlayingAttackTime) <= 0.5f)			// 플레이어가 0.5초 이내에 가드시 -> 패링
+			if ((tmpCorPatten->PlayingAttackTime) <= 0.7f)			// 플레이어가 0.5초 이내에 가드시 -> 패링
 			{
 				std::vector<int> tmp = tmpCorPatten->NodePatten;	// 플레이어 입력한 노드
 				tmp.erase(std::remove(tmp.begin(), tmp.end(), 0), tmp.end());
@@ -265,6 +268,10 @@ void BettleManager::SetStateFormPatternIdle()
 				onParry.Invoke(tmp.back());		// 패링 이벤트 델리게이트 호출
 
 				m_Player->SetState("Player_Perry"); // 플레이어 상태 변경 -> 플레이어 패링 상태
+
+
+
+
 
 				// 패링에 따른 기세값 반영
 				if (!m_Player->GetIsGroggy()) {
@@ -279,6 +286,11 @@ void BettleManager::SetStateFormPatternIdle()
 				onGuard.Invoke(tmp.back());
 
 				m_Player->SetState("Player_Guard");		// 플레이어 상태 변경 -> 플레이어 방어
+				
+				Vector2 PlayerPerryP = { RandomHitPos_x(defenceEffectPlayer), RandomHitPos_y(defenceEffectPlayer) };
+				m_Player->CallGuardEffect(0 , PlayerPerryP);
+
+
 				// 패링 실패에 따른 기세값 변경
 				if (m_Player->GetIsGroggy()) {
 					m_Player->GetDamage(ConvertSpiritDamageToPos(tmpCorPatten->lastPosition, m_Enemy->GetSpiritAttack()));
@@ -287,9 +299,10 @@ void BettleManager::SetStateFormPatternIdle()
 					m_Enemy->RestoreSpiritDamage(ConvertSpiritDamageToPos(tmpCorPatten->lastPosition, m_Enemy->GetSpiritAttack()));
 					m_Player->GetSpiritdamage(ConvertSpiritDamageToPos(tmpCorPatten->lastPosition, m_Enemy->GetSpiritAttack()));
 				}
+
 			}
 
-			/////// 플레이어 방어
+			
 
 
 
@@ -304,18 +317,25 @@ void BettleManager::SetStateFormPatternIdle()
 			// 마지막 노드가 중앙이 아니라면 적이 일정 확률로 회피 
 			if (m_Enemy->GetDefenseRate() >= GameRandom::RandomRange(1, 101) && tmpCorPatten->lastPosition != MiddleNode)
 			{
+				////////////////////////// 적의 방어 //////////////////////
 				m_Enemy->SetState("Enemy_Defence");	// 적 상태 변경 -> 적 회피
-
-
-				////////////////////////////////
+				Vector2 EnemyPerryEff = { RandomHitPos_x(HiteffectEnemy), RandomHitPos_y(HiteffectEnemy) };
+				m_Player->CallGuardEffect(0, EnemyPerryEff);
+				
 
 
 
 			}
 			else // 적 회피 실패
 			{
+
+				////////////////////////// 적 피격 //////////////////
 				m_Enemy->SetState("Enemy_Hit");		// 적 상태 변경 -> 적 피격
 				m_Enemy->GetDamage(ConvertHPDamageToPos(tmpCorPatten->lastPosition, m_Player->GetAttack())); // 적 체력 감소
+				
+
+
+
 
 				if (HitAnimeCount < 9)
 				{
@@ -351,11 +371,18 @@ void BettleManager::SetStateFormPatternIdle()
 				if (m_Player->GetDefenseRate() >= GameRandom::RandomRange(1, 101))
 				{
 					m_Player->SetState("Player_Defence");			// 플레이어 상태 변경 -> 플레이어 회피
+					////////////////////////// 아군의 방어 //////////////////
+					Vector2 PlayerPerryP = { RandomHitPos_x(defenceEffectPlayer), RandomHitPos_y(defenceEffectPlayer) };
+					m_Player->CallGuardEffect(0, PlayerPerryP);
+
 				}
 				else
 				{
 					m_Player->SetState("Player_Hit");   			// 플레이어 상태 변경 -> 플레이어 피격됨 
 					m_Player->GetDamage(ConvertHPDamageToPos(tmpPatten->lastPosition, m_Enemy->GetAttack()));
+
+
+
 
 					if (HitAnimeCount2 < 9)
 					{

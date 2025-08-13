@@ -6,6 +6,7 @@
 #include "../CsvData/DataClass/AllNodePattenClass.h"
 #include "Components/Rendering/BitmapRenderer.h"
 #include "Scripts/Effect/HitEffect.h"
+#include "Scripts/Effect/EnemyAttackEffect.h"
 
 
 class LiveObject;
@@ -140,6 +141,10 @@ private:
 
 	//적 히트 이펙트
 	HitEffect* Hiteff{};
+
+	EnemyAttackEffect* GuardEff{};
+public:
+	void CallGuardEffect(int num , Vector2 vector);
 };
 
 

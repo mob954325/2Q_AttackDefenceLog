@@ -6,6 +6,7 @@
 //BaseData 클래스의 함수에 오버라이드 하여 사용하는 함수
 //해당 자료형의 데이터를 저장하는 함수
 void AllNodePattenClass::SetData(std::vector<std::wstring> tmp) {
+	if (tmp[0] == L"") return;
 	Node_pattern_ID = StringConvert::WstringToString(tmp[0].c_str());
 	for (int i = 1; i < 10; i++) { //후에 이상한 값들이 들어오는 경우도 있음으로 9개로 제한(하드코딩)
 
