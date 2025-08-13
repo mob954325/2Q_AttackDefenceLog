@@ -35,6 +35,7 @@ struct SlashCache {
 class ChargedSlashManager : public MonoBehavior
 {
 public:
+	void OnCreate() override;
 	void OnStart() override;
 	void OnUpdate() override;
 	void OnDestroy() override;
@@ -79,6 +80,9 @@ protected:
 
 	InputSystem* inputSys; // 쓰기 편하게 빼둠
 	BitmapRenderer* bitmapRenderer; // 마찬가지
+
+	BitmapRenderer* aa; // 마찬가지
+	BitmapRenderer* cc; // 마찬가지
 
 	D2D1_SIZE_F size;
 

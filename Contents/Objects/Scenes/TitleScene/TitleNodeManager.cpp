@@ -51,6 +51,9 @@ void TitleNodeManager::OnStart()
 {
 	D2D1_SIZE_F size = nodes[0]->owner->GetComponent<BitmapRenderer>()->GetResource()->GetBitmap()->GetSize();
 	owner->GetTransform().SetPosition(EngineData::SceenWidth / 2 - gap / 2 - size.width / 2, EngineData::SceenHeight / 2);
+
+
+
 }
 
 void TitleNodeManager::OnUpdate()

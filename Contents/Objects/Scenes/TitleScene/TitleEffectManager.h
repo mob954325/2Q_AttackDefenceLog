@@ -17,6 +17,7 @@ public:
 protected:
 	D2D1_SIZE_F size;
 	BitmapRenderer* bitmapRenderer;
+	BitmapRenderer* bbbb;
 
 	std::vector<EffectProgress> effectProgress;
 

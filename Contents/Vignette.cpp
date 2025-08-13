@@ -27,6 +27,7 @@ void Vignette::OnStart()
 	owner->GetTransform().SetOffset(-size.width / 2, size.height / 2);
 
 	End();
+	progress = 0.0f;
 }
 
 void Vignette::OnUpdate()
