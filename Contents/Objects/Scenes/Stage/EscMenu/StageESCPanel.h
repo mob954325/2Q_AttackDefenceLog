@@ -1,12 +1,12 @@
-#pragma once
+ï»¿#pragma once
 #include "Components/Base/MonoBehavior.h"
 #include "Components/UI/Button.h"
 #include "Components/Rendering/BitmapRenderer.h"
 #include "Components/Logic/InputSystem.h"
 
-/* 25.08.09 | ÀÛ¼ºÀÚ: ÀÌ¼ºÈ£
-*  esc¸Ş´ºÀÇ ¸ğµç ¹öÆ° °ü¸® ½ºÅ©¸³Æ® 
-	¾À¿¡¼­ ¹İµå½Ã SetButtons¿Í SetButtonsPositionÀ» ÅëÇØ µî·Ï ¹× À§Ä¡ ÁöÁ¤À» ÇØÁÙ °Í
+/* 25.08.09 | ì‘ì„±ì: ì´ì„±í˜¸
+*  escë©”ë‰´ì˜ ëª¨ë“  ë²„íŠ¼ ê´€ë¦¬ ìŠ¤í¬ë¦½íŠ¸ 
+	ì”¬ì—ì„œ ë°˜ë“œì‹œ SetButtonsì™€ SetButtonsPositionì„ í†µí•´ ë“±ë¡ ë° ìœ„ì¹˜ ì§€ì •ì„ í•´ì¤„ ê²ƒ
 */
 
 class StageESCPanel : public MonoBehavior
@@ -19,12 +19,13 @@ public:
 	void SetButtons(const std::vector<GameObject*> buttons);
 	void SetButtonsPosition();
 	void DisablePanel();
+	void EnablePanel();
 
 private:
 
 	BitmapRenderer* barBitmap{};
 	InputSystem* input;
 
-	std::vector<GameObject*> buttons; // ¼ø¼­´ë·Î continue, exit, mute
+	std::vector<GameObject*> buttons; // ìˆœì„œëŒ€ë¡œ continue, exit, mute
 };
 

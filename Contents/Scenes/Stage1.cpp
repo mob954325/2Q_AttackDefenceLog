@@ -16,6 +16,8 @@
 
 void Stage1::OnEnterImpl()
 {
+
+
 	std::cout << "스테이지1 진입" << std::endl;
 
 	inputObj = new GameObject();
@@ -69,7 +71,6 @@ void Stage1::OnEnterImpl()
 	Textbox = new GameObject();
 	Textbox->AddComponent<BubbleBox>();
 	AddGameObject(Textbox, "Textbox");
-
 
 }
 

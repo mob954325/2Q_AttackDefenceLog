@@ -38,6 +38,17 @@ void Player::OnStart()
 	m_State->SetState("Player_Idle");	// 플레이어 상태 변경 -> idle
 
 	isAttackingPattern = true;
+
+	player_Attack1->SetActive(false);
+	
+	player_Attack2->SetActive(false);
+	
+	player_Attack3->SetActive(false);
+	
+
+	player_Damaged->SetActive(false);
+	
+	player_Guard->SetActive(false);
 }
 
 void Player::ResetPlayer()
