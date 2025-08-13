@@ -16,8 +16,8 @@ enum class ShakeType
 	None,
 	X,
 	Y,
-	XY,
-	X_Y
+	XY, // 오른쪽 위 << 플레어와 적 방향으로 움직임
+	X_Y // 어쩔티비
 };
 
 class CamInstance : public MonoBehavior
@@ -28,8 +28,10 @@ public:
 	void OnStart() override;
 	void OnDestroy() override;
 
+	void start(float MaxTime, float Period, float Amplitude, ShakeType type);
+
 	//수치 설정및 type 설정
-	void SetWaveValue(float MaxTime, float Period, float Amplitude, float MaxX , float MaxY);
+	void SetWaveValue(float MaxTime, float Period, float Amplitude, float MaxX = 192.0f * 2.0f, float MaxY = 108.0f * 2.0f);
 	void CallCamShake(ShakeType type);
 	
 

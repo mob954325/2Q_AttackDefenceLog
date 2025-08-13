@@ -1,5 +1,6 @@
 ﻿#include "CamInstance.h"
 #include "Components/Base/GameObject.h"
+#include <iostream>
 #include "Components/Camera/CameraManager.h"
 #include "Math/Vector2.h" 
 
@@ -49,6 +50,12 @@ void CamInstance::OnStart()
 void CamInstance::OnDestroy()
 {
 
+}
+
+void CamInstance::start(float MaxTime, float Period, float Amplitude, ShakeType type)
+{
+	SetWaveValue(MaxTime, Period, Amplitude);
+	CallCamShake(type);
 }
 
 void CamInstance::SetWaveValue(float MaxTime, float Period, float Amplitude, float MaxX, float MaxY)
