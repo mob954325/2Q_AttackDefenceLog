@@ -47,7 +47,7 @@ void TitleScene::OnEnterImpl()
 	//사운드 추가
 	SoundTittleObj = new GameObject();
 	SoundTittleObj->AddComponent<SoundTittle>();
-	AddGameObject(SoundTittleObj, "SoundTittle");
+	AddGameObject(SoundTittleObj, "SOUNDMENU"); // SOUNDMENU << 이름 유지해주세요
 
 	SoundTittleObj->GetComponent<SoundTittle>()->SetKeyHandle(L"Lobby");
 	SoundTittleObj->GetComponent<SoundTittle>()->PlaySound();

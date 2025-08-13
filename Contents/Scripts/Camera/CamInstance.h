@@ -1,6 +1,6 @@
 ﻿#pragma once
-#include "Components/Base/MonoBehavior.h"
-#include "Components/Camera/Camera.h"
+#include  "../Engine/Components/Base/MonoBehavior.h"
+#include "../Engine/Components/Camera/Camera.h"
 #include "Utils/GameTime.h"
 
 /*
@@ -28,12 +28,11 @@ public:
 	void OnUpdate() override;
 	void OnDestroy() override;
 
-	void start(float MaxTime, float Period, float Amplitude, ShakeType type);
+	void Start(float MaxTime, float Period, float Amplitude, ShakeType type, ShakeCalcu type2 = ShakeCalcu::FastToSlow);
 
 	//수치 설정및 type 설정
 	void SetWaveValue(float MaxTime, float Period, float Amplitude, float MaxX = 192.0f * 2.0f, float MaxY = 108.0f * 2.0f);
-	void CallCamShake(ShakeType type);
-	
+	void CallCamShake(ShakeType type);	
 
 	void SetReset();
 
@@ -41,9 +40,6 @@ public:
 	void SetSlowToFast();
 	void SetFastToSlow();
 	void SetSlowFastSlow();
-
-
-
 private:
 	Camera* Came{};
 
