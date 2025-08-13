@@ -38,7 +38,7 @@ void SelectEffectManager::OnUpdate()
 
 	if (isPlay) {
 		float delta = Singleton<GameTime>::GetInstance().GetDeltaTime();
-		progress += 0.15f * delta;
+		progress += 0.25f * delta;
 
 		for (int i = 0; i < effectProgress.size(); ++i) {
 			float posProgress = clampf((progress - effectProgress[i].startTimingPos) * (1.0f / (effectProgress[i].targetTimingPos - effectProgress[i].startTimingPos)), 0.0f, 1.0f);

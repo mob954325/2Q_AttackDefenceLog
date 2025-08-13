@@ -34,6 +34,7 @@ void EnemyAttackEffect::OnCreate()
 	for (size_t i = 0; i < 9; i++)
 	{
 		GameObject* obj = new GameObject();
+		//obj->SetRenderLayer(EngineData::RenderLayer::GameObject);
 		obj->AddComponent<AnimationRenderer>();
 		obj->SetName(std::string("EnemyAttackEffect") + std::to_string(i));
 		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(obj);
