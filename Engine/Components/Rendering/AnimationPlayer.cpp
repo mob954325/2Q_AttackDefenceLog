@@ -134,4 +134,5 @@ void AnimationPlayer::Pause()
 void AnimationPlayer::Reset()
 {
 	currentFrameIndex = 0;
+	timer = 0.0f;
 }

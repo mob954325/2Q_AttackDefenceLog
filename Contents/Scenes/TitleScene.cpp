@@ -58,7 +58,7 @@ void TitleScene::OnEnterImpl()
 	// result->AddComponent<StageResult>();
 	// AddGameObject(result, "result");
 
-	Singleton<GameManager>::GetInstance().Reset();
+	// Singleton<GameManager>::GetInstance().Reset();
 }
 
 void TitleScene::OnExitImpl()
@@ -69,16 +69,22 @@ void TitleScene::OnExitImpl()
 void TitleScene::UpdateImpl()
 {
 	auto input = inputObj->GetComponent<InputSystem>();
-	if (input->IsKeyPressed('1')) {
+
+	// 1 : menu 씬 진입
+	if (input->IsKeyPressed('1')) 
+	{
 		Singleton<SceneManager>::GetInstance().LoadScene(MENU);
 	}
-	if (input->IsKeyPressed('2')) {
+
+	// 2 : 타이틀 이펙트 시작
+	if (input->IsKeyPressed('2')) 
+	{
 		titleEffectManager->GetComponent<TitleEffectManager>()->Start();
 	}
-// 	if (input->IsKeyDown('3')) {
-// 		cloudManager->GetComponent<CloudManager >()->ReverseStart();
-// 	}
-	if (input->IsKeyDown('3')) {
-		cloudManager->GetComponent<CloudManager >()->Start();
+
+	// 3 : 구름 애니메이션
+	if (input->IsKeyDown('3')) 
+	{
+		cloudManager->GetComponent<CloudManager>()->Start();
 	}
 }

@@ -8,7 +8,7 @@
 
 void DummyCircleCollider::OnCreate()
 {
-	owner->GetTransform().SetUnityCoords(false);
+	owner->GetTransform().SetUnityCoords(true);
 
 	circle = owner->AddComponent<CircleCollider>();
 
@@ -24,16 +24,16 @@ void DummyCircleCollider::OnStart()
 	circle->SetRadius(20.0f);
 
 	particle->SetBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Particles\\Test\\Arrow.png");
-	particle->SetMinSpeed(0.3f);
-	particle->SetMaxSpeed(0.7f);
-	particle->SetDuration(0.8f);
-	particle->SetFadeOutTime(0.7f);
+	particle->SetMinSpeed(0.6f);
+	particle->SetMaxSpeed(1.0f);
+	particle->SetDuration(1.0f);
+	particle->SetFadeOutTime(1.2f);
 	particle->SetAmount(25);
 	particle->SetAnimPlayer(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Particles\\SparkSheet.png",
 		Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Json\\SparkSheet\\SparkSheet_sprites.json",
 		Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Json\\SparkSheet\\Red_Spark_anim.json");
 	particle->SetShowType(ParticleShowType::RandomSingle);
-	particle->SetGravity(false);
+	particle->SetGravity(true);
 	particle->SetSeeDirection(true);
 	particle->SetDecreasing(true);
 	particle->Reset();

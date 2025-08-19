@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "Components/Base/MonoBehavior.h"
 #include "Components/Rendering/BitmapRenderer.h"
 
@@ -15,7 +15,7 @@ public:
 
 protected:
     float clampf(float v, float minVal, float maxVal)
-    { // ³ª¸¸ÀÇ ÀÛÀº Å¬·¥ÇÁ ÇÔ¼ö C++14¸¦ °íÁıÇÏ´Â ÀÚÀÇ ÀÇÁö
+    { // ë‚˜ë§Œì˜ ì‘ì€ í´ë¨í”„ í•¨ìˆ˜ C++14ë¥¼ ê³ ì§‘í•˜ëŠ” ìì˜ ì˜ì§€
         return (v < minVal) ? minVal : (v > maxVal ? maxVal : v);
     }
 
@@ -26,4 +26,5 @@ private:
 
     D2D1_SIZE_F size;
     BitmapRenderer* bitmapRenderer{};
+    BitmapRenderer* brrr{};
 };

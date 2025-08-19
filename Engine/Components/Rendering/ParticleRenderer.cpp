@@ -46,15 +46,18 @@ void ParticleRenderer::Render(D2DRenderManager* manager)
 		spriteBatch->Clear();
 		manager->SetAntialiasMode();
 
+		manager->SetRenderTransform(mat);
+
 		if (isDecreasing)
 		{
 			// Easing을 이용해 크기 설정
 			float scale = EasingList[EasingEffect::OutSine](decreasingTimer / duration);
 			mat.m11 = baseScaleX * scale;
 			mat.m22 = baseScaleY * scale;
-		}
 
-		manager->SetRenderTransform(mat);
+			std::cout << baseScaleX * scale << std::endl;
+			std::cout << baseScaleY * scale << std::endl;
+		}
 
 		for (int i = 0; i < particleAmount; i++)
 		{			

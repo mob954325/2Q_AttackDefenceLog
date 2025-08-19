@@ -9,6 +9,7 @@
 #include "Scripts/BubbleBox/BubbleBoxTittle.h"
 
 
+
 void TitleEffectManager::OnStart()
 {
 	owner->SetRenderLayer(EngineData::RenderLayer::None);
@@ -38,7 +39,7 @@ void TitleEffectManager::OnStart()
 		effectProgress[i].bitmapRenderer->owner->GetTransform().SetOffset(-rect.width / 2, rect.height / 2);
 		effectProgress[i].bitmapRenderer->SetCapacity(0.0f);
 
-		if(i == 8 || i ==9)
+		if (i == 8 || i == 9)
 			effectProgress[i].bitmapRenderer->SetCapacity(1.0f);
 
 		if (i == 7) {
@@ -47,16 +48,32 @@ void TitleEffectManager::OnStart()
 			effectProgress[i].bitmapRenderer->SetSrcRect({ 0.0f, 0.0f, rect.width, rect.height });
 		}
 	}
+
+
+	GameObject* b = new GameObject();
+	b->SetRenderLayer(EngineData::RenderLayer::UI);
+	b->GetTransform().SetPosition(+-192.0f, -108.0f);
+	b->GetTransform().SetUnityCoords(false);
+	guideMessageImage = b->AddComponent<BitmapRenderer>();
+	guideMessageImage->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\drawing_line_start_text.png");
+	guideMessageImage->SetOrderInLayer(100000000);
+	guideMessageImage->SetCapacity(1.0f);
+
+	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(b, "bbbbbbbbbb.");
+
+
 }
 
 void TitleEffectManager::OnUpdate()
 {
 
-	if (isPlay) {
+	if (isPlay) 
+	{
 		float delta = Singleton<GameTime>::GetInstance().GetDeltaTime();
 		progress += 0.15f * delta;
 
-		for (int i = 0; i < effectProgress.size(); ++i) {
+		for (int i = 0; i < effectProgress.size(); ++i) 
+		{
 			//날 선형보간의 신이라고 불러라 2트
 			float posProgress = clampf((progress - effectProgress[i].startTimingPos) * (1.0f / (effectProgress[i].targetTimingPos - effectProgress[i].startTimingPos)), 0.0f, 1.0f);
 			float currentX = effectProgress[i].startPos.x + (effectProgress[i].targetPos.x - effectProgress[i].startPos.x) * posProgress;
@@ -68,13 +85,14 @@ void TitleEffectManager::OnUpdate()
 			effectProgress[i].bitmapRenderer->SetCapacity(effectProgress[i].alpha);
 
 
+			guideMessageImage->SetCapacity(1.0f - progress * 10.0f);
 			//식 설명은 effectProgress 구조체에 써있음
 		}
 
 		if (progress >= 1.0f) isPlay = false;
 	}
-	
-	if((progress >= 1.0f) && !isPlay)// 이벤트가 종료되면 마우스 클릭으로 씬 넘어갈 수 있게 추가 : 작성자 - 이성호
+
+	if ((progress >= 1.0f) && !isPlay)// 이벤트가 종료되면 마우스 클릭으로 씬 넘어갈 수 있게 추가 : 작성자 - 이성호
 	{
 		if (!isTextCreated && Input::leftButtonDown)
 		{
@@ -87,6 +105,8 @@ void TitleEffectManager::OnUpdate()
 			Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(titleBubbleObj, "TItleEffectManager");
 			isTextCreated = true;
 		}
+
+
 	}
 }
 
@@ -101,6 +121,7 @@ void TitleEffectManager::Start()
 	Reset();
 	isPlay = true;
 }
+
 
 void TitleEffectManager::Reset()
 {
