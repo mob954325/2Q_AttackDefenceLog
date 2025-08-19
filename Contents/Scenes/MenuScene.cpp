@@ -52,6 +52,9 @@ void MenuScene::OnEnterImpl()
 	}
 
 	isFirst = true;
+
+	SoundMenuObj->GetComponent<SoundTittle>()->SetKeyHandle(L"Lobby");
+	SoundMenuObj->GetComponent<SoundTittle>()->PlaySound();
 }
 
 void MenuScene::OnExitImpl()
