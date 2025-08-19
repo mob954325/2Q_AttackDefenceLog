@@ -8,20 +8,20 @@
 
 void TestCollider::CircleColliderScene::OnEnterImpl()
 {
-	// GameObject* vignetteObject = new GameObject();
-	// vignetteObject->SetName("vignette effect");
-	// vignetteObject->AddComponent<TestVignetteObject>();
-	// AddGameObject(vignetteObject);
+	GameObject* vignetteObject = new GameObject();
+	vignetteObject->SetName("vignette effect");
+	vignetteObject->AddComponent<TestVignetteObject>();
+	AddGameObject(vignetteObject);
 
-	GameObject* dummyCircle = new GameObject();
-	dummyCircle->SetName("DummyEffectAnimation");
-	dummyCircle->AddComponent<DummyEffectAnimation>();
-	AddGameObject(dummyCircle);
+	// GameObject* dummyCircle = new GameObject();
+	// dummyCircle->SetName("DummyEffectAnimation");
+	// dummyCircle->AddComponent<DummyEffectAnimation>();
+	// AddGameObject(dummyCircle);
 
-	GameObject* dummyCircleCollider = new GameObject();
-	dummyCircleCollider->SetName("DummyCircleCollider");
-	dummyCircleCollider->AddComponent<DummyCircleCollider>();
-	AddGameObject(dummyCircleCollider);
+	// GameObject* dummyCircleCollider = new GameObject();
+	// dummyCircleCollider->SetName("DummyCircleCollider");
+	// dummyCircleCollider->AddComponent<DummyCircleCollider>();
+	// AddGameObject(dummyCircleCollider);
 }
 
 void TestCollider::CircleColliderScene::OnExitImpl()
