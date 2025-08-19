@@ -54,10 +54,10 @@ void TitleEffectManager::OnStart()
 	b->SetRenderLayer(EngineData::RenderLayer::UI);
 	b->GetTransform().SetPosition(+-192.0f, -108.0f);
 	b->GetTransform().SetUnityCoords(false);
-	bbbb = b->AddComponent<BitmapRenderer>();
-	bbbb->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\drawing_line_start_text.png");
-	bbbb->SetOrderInLayer(100000000);
-	bbbb->SetCapacity(1.0f);
+	guideMessageImage = b->AddComponent<BitmapRenderer>();
+	guideMessageImage->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\drawing_line_start_text.png");
+	guideMessageImage->SetOrderInLayer(100000000);
+	guideMessageImage->SetCapacity(1.0f);
 
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(b, "bbbbbbbbbb.");
 
@@ -67,11 +67,13 @@ void TitleEffectManager::OnStart()
 void TitleEffectManager::OnUpdate()
 {
 
-	if (isPlay) {
+	if (isPlay) 
+	{
 		float delta = Singleton<GameTime>::GetInstance().GetDeltaTime();
 		progress += 0.15f * delta;
 
-		for (int i = 0; i < effectProgress.size(); ++i) {
+		for (int i = 0; i < effectProgress.size(); ++i) 
+		{
 			//날 선형보간의 신이라고 불러라 2트
 			float posProgress = clampf((progress - effectProgress[i].startTimingPos) * (1.0f / (effectProgress[i].targetTimingPos - effectProgress[i].startTimingPos)), 0.0f, 1.0f);
 			float currentX = effectProgress[i].startPos.x + (effectProgress[i].targetPos.x - effectProgress[i].startPos.x) * posProgress;
@@ -83,7 +85,7 @@ void TitleEffectManager::OnUpdate()
 			effectProgress[i].bitmapRenderer->SetCapacity(effectProgress[i].alpha);
 
 
-			bbbb->SetCapacity(1.0f - progress * 10.0f);
+			guideMessageImage->SetCapacity(1.0f - progress * 10.0f);
 			//식 설명은 effectProgress 구조체에 써있음
 		}
 
