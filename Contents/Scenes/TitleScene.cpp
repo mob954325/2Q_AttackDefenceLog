@@ -58,7 +58,7 @@ void TitleScene::OnEnterImpl()
 	// result->AddComponent<StageResult>();
 	// AddGameObject(result, "result");
 
-	Singleton<GameManager>::GetInstance().Reset();
+	// Singleton<GameManager>::GetInstance().Reset();
 }
 
 void TitleScene::OnExitImpl()

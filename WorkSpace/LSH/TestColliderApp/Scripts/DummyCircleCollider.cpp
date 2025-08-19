@@ -8,7 +8,7 @@
 
 void DummyCircleCollider::OnCreate()
 {
-	owner->GetTransform().SetUnityCoords(false);
+	owner->GetTransform().SetUnityCoords(true);
 
 	circle = owner->AddComponent<CircleCollider>();
 

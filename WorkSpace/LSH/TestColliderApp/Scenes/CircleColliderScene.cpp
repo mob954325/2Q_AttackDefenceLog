@@ -8,15 +8,15 @@
 
 void TestCollider::CircleColliderScene::OnEnterImpl()
 {
-	GameObject* vignetteObject = new GameObject();
-	vignetteObject->SetName("vignette effect");
-	vignetteObject->AddComponent<TestVignetteObject>();
-	AddGameObject(vignetteObject);
+	// GameObject* vignetteObject = new GameObject();
+	// vignetteObject->SetName("vignette effect");
+	// vignetteObject->AddComponent<TestVignetteObject>();
+	// AddGameObject(vignetteObject);
 
-	// GameObject* aa = new GameObject();
-	// aa->SetName("DummyCircleCollider");
-	// aa->AddComponent<DummyCircleCollider>();
-	// AddGameObject(aa);
+	GameObject* dummyCircle = new GameObject();
+	dummyCircle->SetName("DummyCircleCollider");
+	dummyCircle->AddComponent<DummyEffectAnimation>();
+	AddGameObject(dummyCircle);
 }
 
 void TestCollider::CircleColliderScene::OnExitImpl()
