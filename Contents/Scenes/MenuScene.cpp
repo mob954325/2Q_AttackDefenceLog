@@ -68,18 +68,22 @@ void MenuScene::UpdateImpl()
 		isFirst = false;
 	}
 
-
-
 	auto input = inputObj->GetComponent<InputSystem>();
-	if (input->IsKeyPressed('1')) {
+
+	// 1 : 스테이지 1로 진입
+	if (input->IsKeyPressed('1')) 
+	{
 		Singleton<SceneManager>::GetInstance().LoadScene(STAGE1);
 	}
 
-	if (input->IsKeyPressed('2')) {
+	// 배경 디버그 코드
+	if (input->IsKeyPressed('2')) 
+	{
 		selectEffectManager->GetComponent<SelectEffectManager>()->Start();
 		cloudManager->GetComponent<CloudManager>()->ReverseStart();
 	}
 
+	// 스테이지 클리어 치트 코드 | B : 1, N : 2, M : 3
 	if (input->IsKeyPressed('B'))
 	{
 		Singleton<GameManager>::GetInstance().SetStageClear(1);

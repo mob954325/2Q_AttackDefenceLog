@@ -14,9 +14,14 @@ void TestCollider::CircleColliderScene::OnEnterImpl()
 	// AddGameObject(vignetteObject);
 
 	GameObject* dummyCircle = new GameObject();
-	dummyCircle->SetName("DummyCircleCollider");
+	dummyCircle->SetName("DummyEffectAnimation");
 	dummyCircle->AddComponent<DummyEffectAnimation>();
 	AddGameObject(dummyCircle);
+
+	GameObject* dummyCircleCollider = new GameObject();
+	dummyCircleCollider->SetName("DummyCircleCollider");
+	dummyCircleCollider->AddComponent<DummyCircleCollider>();
+	AddGameObject(dummyCircleCollider);
 }
 
 void TestCollider::CircleColliderScene::OnExitImpl()
