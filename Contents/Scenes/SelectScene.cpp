@@ -14,7 +14,7 @@
 
 void SelectScene::OnEnterImpl()
 {
-	Singleton<AudioSystem>::GetInstance().ReSetChannel();
+	/*Singleton<AudioSystem>::GetInstance().ReSetChannel();*/
 
 	std::cout << "선택씬 진입" << std::endl;
 
@@ -43,8 +43,7 @@ void SelectScene::OnEnterImpl()
 	SoundSeletObj->AddComponent<SoundTittle>();
 	AddGameObject(SoundSeletObj, "SOUNDMENU"); // SOUNDMENU << 이름 유지해주세요
 
-	SoundSeletObj->GetComponent<SoundTittle>()->SetKeyHandle(L"Lobby");
-	SoundSeletObj->GetComponent<SoundTittle>()->PlaySound();
+	
 }
 
 void SelectScene::OnExitImpl()
