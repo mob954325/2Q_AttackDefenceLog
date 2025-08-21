@@ -13,7 +13,7 @@
 #include "Application/AppPaths.h"
 #include "Scripts/GameManager.h"
 #include "Objects/Scenes/Stage/StageResult/StageResult.h"
-
+#include "Math/EasingFunction.h"
 
 // 각 값은 해당 함수가 출력 중일때, 각 플레그 변화
 //														     
@@ -65,10 +65,11 @@ void Enemy::OnUpdate()
 	}
 	StateAct();            //  
 	DiffState();            // 이전 상태와 현재 상태를 비교
-	PrintConsole();
+	// PrintConsole();
 
 	if (nowStateName == "Enemy_Dead") // 적 사망 시 -> 씬 이동
 	{
+		// 특정 씬 클리어 플래그 활성화
 		switch (nameIndex)
 		{
 		case 0:
@@ -81,7 +82,16 @@ void Enemy::OnUpdate()
 			Singleton<GameManager>::GetInstance().SetStageClear(3);
 			break;
 		}
-		ChecKChnageScene();
+
+		// 사망 연출 및 씬 교체
+		if (deadTimer < deadMaxTimer)
+		{
+			UpdateDeadAnimation();
+		}
+		else
+		{
+			CheckChangeScene();
+		}
 	}
 
 	//SetNameDiff("Stage1", "easy");
@@ -205,12 +215,20 @@ void Enemy::SetBitmap()
 	enemy_Idle = owner->AddComponent<BitmapRenderer>();
 	enemy_Idle->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + enemy_IdlePath);
 
+
 	enemy_Attack = owner->AddComponent<BitmapRenderer>();
 	enemy_Attack->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + enemy_AttackPath);
 
 
 	enemy_Damaged = owner->AddComponent<BitmapRenderer>();
 	enemy_Damaged->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + enemy_DamagedPath);
+	enemy_Damaged->SetClipingPosition
+	({
+		{EngineData::SceenWidth / 2 - 100.0f, 0.0f},
+		{EngineData::SceenWidth / 2 - 100.0f, EngineData::SceenHeight / 2 + 130.0f},
+		{(float)EngineData::SceenWidth, EngineData::SceenHeight / 2 + 130.0f},
+		{(float)EngineData::SceenWidth, 0.0f}
+	}); // 08.21 | 작성자 : 이성호 유니티 좌표계의 중심을 기준으로 우측상단의 화면의 약 1/4 크기의 클리핑 영역 만들기 -> 사망 시 피격 그림으로 사망함
 
 	enemy_Guard = owner->AddComponent<BitmapRenderer>();
 	enemy_Guard->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + enemy_GuardPath);
@@ -513,9 +531,27 @@ void Enemy::PrintConsole()
 
 }
 
-void Enemy::ChecKChnageScene()
+void Enemy::UpdateDeadAnimation()
 {
-	timer += Singleton<GameTime>::GetInstance().GetDeltaTime();
+	deadTimer += Singleton<GameTime>::GetInstance().GetDeltaTime();
+
+	if (deadTimer < 1.5f)
+	{
+		const float pi = 3.1415926535f;
+		float t = (deadTimer / (deadMaxTimer * 0.5f)) * 2.0f * pi;
+		float rotateValue = 10.0f;
+		owner->GetTransform().SetRotation(rotateValue * sin(t));
+	}
+
+	if (deadTimer > 1.0f)
+	{
+		owner->GetTransform().Translate({ 0.0f, -EasingList[EasingEffect::InExpo](deadTimer / deadMaxTimer) * 10.0f});
+	}
+}
+
+void Enemy::CheckChangeScene()
+{
+	sceneExittimer += Singleton<GameTime>::GetInstance().GetDeltaTime();
 
 	if (!isCreatedResult)
 	{
@@ -528,7 +564,7 @@ void Enemy::ChecKChnageScene()
 		isCreatedResult = true;
 	}
 
-	if (timer >= maxTimer)
+	if (sceneExittimer >= sceneExitMaxTimer)
 	{
 		Singleton<SceneManager>::GetInstance().LoadScene(SceneCount::MENU);
 	}

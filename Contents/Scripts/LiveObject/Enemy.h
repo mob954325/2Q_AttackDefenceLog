@@ -134,10 +134,15 @@ private:
 
 	void SetBitmap();  // 비트맵 설정하는 함수	
 
-	float timer = 0.0f;
-	float maxTimer = 3.0f;
+	float deadTimer = 0.0f;
+	float deadMaxTimer = 3.0f;
+	bool isDeadAnimationEnd = false;
+	void UpdateDeadAnimation();
+
+	float sceneExittimer = 0.0f;
+	float sceneExitMaxTimer = 3.0f;
 	bool isCreatedResult = false;
-	void ChecKChnageScene();	// 씬 교체를 해야하는지 확인하는 함수
+	void CheckChangeScene();	// 씬 교체를 해야하는지 확인하는 함수
 
 	//적 히트 이펙트
 	HitEffect* Hiteff{};
