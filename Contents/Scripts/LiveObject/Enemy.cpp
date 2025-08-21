@@ -535,18 +535,8 @@ void Enemy::UpdateDeadAnimation()
 {
 	deadTimer += Singleton<GameTime>::GetInstance().GetDeltaTime();
 
-	if (deadTimer < 1.5f)
-	{
-		const float pi = 3.1415926535f;
-		float t = (deadTimer / (deadMaxTimer * 0.5f)) * 2.0f * pi;
-		float rotateValue = 10.0f;
-		owner->GetTransform().SetRotation(rotateValue * sin(t));
-	}
-
-	if (deadTimer > 1.0f)
-	{
-		owner->GetTransform().Translate({ 0.0f, -EasingList[EasingEffect::InExpo](deadTimer / deadMaxTimer) * 10.0f});
-	}
+	enemy_Damaged->SetCapacity(1 - deadTimer / deadMaxTimer);
+	owner->GetTransform().Translate({ 0.0f, -EasingList[EasingEffect::InExpo](deadTimer / deadMaxTimer) * 10.0f });
 }
 
 void Enemy::CheckChangeScene()

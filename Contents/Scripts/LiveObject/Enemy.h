@@ -135,7 +135,7 @@ private:
 	void SetBitmap();  // 비트맵 설정하는 함수	
 
 	float deadTimer = 0.0f;
-	float deadMaxTimer = 3.0f;
+	float deadMaxTimer = 1.5f;
 	bool isDeadAnimationEnd = false;
 	void UpdateDeadAnimation();
 
