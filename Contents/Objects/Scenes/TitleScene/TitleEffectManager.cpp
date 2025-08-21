@@ -59,7 +59,7 @@ void TitleEffectManager::OnStart()
 	guideMessageImage->SetOrderInLayer(100000000);
 	guideMessageImage->SetCapacity(1.0f);
 
-	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(b, "bbbbbbbbbb.");
+	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(b, "guideMessageImage.");
 
 
 }
