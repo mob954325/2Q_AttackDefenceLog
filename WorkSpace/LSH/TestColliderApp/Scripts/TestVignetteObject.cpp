@@ -20,7 +20,7 @@ void TestVignetteObject::OnCreate()
 void TestVignetteObject::OnStart()
 {
 	bitmap->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Mouse\\testB.png");
-
+	bitmap->SetActive(false);
 	float offsetX = 30.0f;
 	float offsetY = 30.0f;
 
