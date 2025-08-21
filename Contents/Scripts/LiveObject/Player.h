@@ -117,10 +117,15 @@ private:
 	void SetCursorPosition(int x, int y);         // 플레이어 출력함수
 	void PrintConsole();
 
+	float deadTimer = 0.0f;
+	float deadMaxTimer = 3.0f;
+	bool isDeadAnimationEnd = false;
+	void UpdateDeadAnimation();
+
 	float timer = 0.0f;
-	float maxTimer = 3.0f;
+	float maxTimer = 1.5f;
 	bool isCreatedResult = false;
-	void ChecKChnageScene();	// 씬 교체를 해야하는지 확인하는 함수
+	void CheckChangeScene();	// 씬 교체를 해야하는지 확인하는 함수
 
 	//맞는 이펙트 변수들
 	EffectMonoB* PlayerHit{};

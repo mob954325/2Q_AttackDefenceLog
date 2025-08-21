@@ -36,7 +36,7 @@ void TestCircleCollider::OnFixedUpdate()
 
 void TestCircleCollider::OnUpdate()
 {
-	// std::cout << "timer : " << timer << std::endl;
+	// std::cout << "sceneExittimer : " << sceneExittimer << std::endl;
 }
 
 void TestCircleCollider::OnDestroy()

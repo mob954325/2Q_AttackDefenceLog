@@ -24,7 +24,7 @@ public:
 	void SetInputEnable(bool value);
 
 private:
-
+	BitmapRenderer* backgroundBitmap{};
 	BitmapRenderer* barBitmap{};
 	InputSystem* input;
 

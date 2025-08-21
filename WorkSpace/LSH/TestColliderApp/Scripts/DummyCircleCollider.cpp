@@ -24,11 +24,11 @@ void DummyCircleCollider::OnStart()
 	circle->SetRadius(20.0f);
 
 	particle->SetBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Particles\\Test\\Arrow.png");
-	particle->SetMinSpeed(0.6f);
-	particle->SetMaxSpeed(1.0f);
-	particle->SetDuration(1.0f);
-	particle->SetFadeOutTime(1.2f);
-	particle->SetAmount(25);
+	particle->SetMinSpeed(1.4f);
+	particle->SetMaxSpeed(2.0f);
+	particle->SetDuration(3.8f);
+	particle->SetFadeOutTime(10.8f);
+	particle->SetAmount(32);
 	particle->SetAnimPlayer(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Particles\\SparkSheet.png",
 		Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Json\\SparkSheet\\SparkSheet_sprites.json",
 		Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Json\\SparkSheet\\Red_Spark_anim.json");

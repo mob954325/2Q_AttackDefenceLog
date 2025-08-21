@@ -150,7 +150,7 @@ void ChargedSlashManager::OnUpdate() {
 		std::cout << "차징 완료!!!!!" << std::endl;
 	}
 
-	//std::cout << timer << std::endl;
+	//std::cout << sceneExittimer << std::endl;
 }
 
 void ChargedSlashManager::OnDestroy() {

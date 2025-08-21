@@ -19,4 +19,8 @@ void EscExitButton::OnStart()
 
 	D2D1_SIZE_F size = toTitleButton->GetNormalImage()->GetResource()->GetBitmap()->GetSize();
 	toTitleButton->SetRect(size.width, size.height);
+
+	toTitleButton->GetNormalImage()->SetOrderInLayer(2200);
+	toTitleButton->GetHoverImage()->SetOrderInLayer(2200);
+	toTitleButton->GetPressedImage()->SetOrderInLayer(2200);
 }
