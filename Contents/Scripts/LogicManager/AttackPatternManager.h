@@ -46,8 +46,14 @@ public:
 	void SubPattern(std::string ID, std::string StorageType);
 
 	// 패턴 검사 로직
-	pattern* CorrectPattern(std::vector<int> PatternID);
+	pattern* CorrectPattern(std::vector<int> PatternID);      // 아마 안쓸듯? 이식 성공시 삭제 예정
+	pattern* CheckDefencePattern(std::vector<int> PatternID); // 적의 패턴을 방어할 패턴을 검사하는 함수
+	pattern* CheckAttackPattern(std::vector<int> PatternID);  // 공격 패턴을 검사하는 함수
+
 	pattern* failPattern(std::vector<int> PatternID);
+
+	void SetDefenceIsfailControl(bool isFail); // 적 storage에 있는 pattern의 isfail에 값을 전부 조절하는 함수 
+
 	float OnceAllNodePatternDistance(std::vector<int> PatternID);  // 노드를 받고 그 거리를 계산함
 
 	/// <summary>

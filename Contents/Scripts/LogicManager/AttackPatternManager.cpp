@@ -28,12 +28,7 @@ void AttackPatternManager::AddPattern(std::string ID, float PlayingAttackTime, s
 	tmpPattern->PlayingAttackTime = PlayingAttackTime;
 	tmpPattern->TotalPlayingAttackTime = PlayingAttackTime;
 	tmpPattern->NodePatten = PatternID;
-	for (int i = 0; i < PatternID.size(); ++i) {
-		if (PatternID[i] == 0 && i > 0) {
-			tmpPattern->lastPosition = ConvertEndNodeToPosition(PatternID[i - 1]);
-			break;
-		}
-	}
+	tmpPattern->lastPosition = ConvertEndNodeToPosition(PatternID[PatternID.size() - 1]);
 
 	if (tmpPattern->PattenID.substr(0, 2) == "PI") {
 		NowPlayerStorage[ID] = tmpPattern;
@@ -96,6 +91,7 @@ void AttackPatternManager::OnUpdate() {
 //각 string에 따라 다른 저장소에서 해당 패턴의 ID를 찾아 제거!
 void AttackPatternManager::SubPattern(std::string ID, std::string StorageType) {
 	if (StorageType == "Time") {
+		OnPatternCancel.Invoke(ID); // 시간이 지났을 때, 적의 패턴 캔슬된거 알림 		
 		auto it = timeOutPattern.find(ID);
 		if (it != timeOutPattern.end()) {
 			delete it->second;
@@ -117,6 +113,81 @@ void AttackPatternManager::SubPattern(std::string ID, std::string StorageType) {
 		}
 	}
 };
+
+pattern* AttackPatternManager::CheckAttackPattern(std::vector<int> PatternID) {  //공격 패턴을 검사할 함수
+	for (const auto& pair : NowPlayerStorage) {
+
+		if (PatternID.size() != pair.second->NodePatten.size()) { //입력 노드와 0을 제외한 적 공격 노드의 개수가 같지 않다면
+			pair.second->isFail = true; // 공격 실패판정
+			break;
+		}
+		int countNum = 0; // 맞은 개수 검사 
+		for (int i = 0; i < PatternID.size(); i++) {
+			for (int j = 0; j < pair.second->NodePatten.size(); j++)
+			{
+				if (PatternID[i] == pair.second->NodePatten[j])
+				{
+					countNum++; // 체크 // 플레이어 패턴과 인풋이 겹친 갯수
+				}
+			}
+		}
+		if (countNum >= pair.second->NodePatten.size()) {
+			return pair.second;
+		}
+	}
+
+	return nullptr;
+}
+
+
+
+pattern* AttackPatternManager::CheckDefencePattern(std::vector<int> PatternID) {//적의 공격을 방어할 패턴을 검사할 함수
+	int EnemyZero = 0;
+	for (const auto& pair : NowEnemyStorage) { // 적 패턴 
+		int countNum = 0; // 맞은 개수 검사 
+		for (int i = 0; i < PatternID.size(); i++) {
+			for (int j = 0; j < pair.second->NodePatten.size(); j++)
+			{
+				if (PatternID[i] == pair.second->NodePatten[j])
+				{
+					countNum++; // 체크 // 적 패턴과 인풋이 겹친 갯수
+				}
+			}
+		}
+		// 적 패턴이 2 이상이면 방어 패턴으로 처리
+		if (countNum >= 2) {
+
+
+			if (PatternID.size() != pair.second->NodePatten.size() - EnemyZero)
+			{ //입력 노드와 0을 제외한 적 공격 노드의 개수가 같지 않다면
+				pair.second->isFail = true; // 방어 실패
+				continue;
+			}
+
+
+			for (int i = 0; i < PatternID.size(); i++) {	// 현재 그은 패턴 검사
+				if (PatternID[i] != pair.second->NodePatten[PatternID.size() - 1 - i])
+				{ // 그은 패턴과 적 패턴이 맞지 않음
+					pair.second->isFail = true; // 방어 실패
+					break;
+				}
+				if (i == PatternID.size() - 1) {
+					OnPatternCancel.Invoke(pair.second->PattenID); // 방어 패턴 캔슬된거 알림 
+					return pair.second; // 성공
+				}
+			}
+		}
+
+	}
+	return nullptr;
+}
+
+void AttackPatternManager::SetDefenceIsfailControl(bool isFail) { // 적의 공격 패턴에 isfail를 전부 해당 bool값으로 바꾸는 함수
+	for (const auto& pair : NowEnemyStorage) {
+		pair.second->isFail = isFail;
+	}
+
+}
 
 
 pattern* AttackPatternManager::CorrectPattern(std::vector<int> PatternID) {  //해당 패턴의 성공여부
@@ -244,6 +315,7 @@ float AttackPatternManager::OnceAllNodePatternDistance(std::vector<int> PatternI
 pattern* AttackPatternManager::failPattern(std::vector<int> PatternID) { // 공격 , 방어 실패여부!
 	for (const auto& pair : NowEnemyStorage) {
 		if (pair.second->isFail == true) {
+			OnPatternCancel.Invoke(pair.first); // 시간이 지났을 때, 적의 패턴 캔슬된거 알림 		
 			return pair.second;
 		}
 	}
