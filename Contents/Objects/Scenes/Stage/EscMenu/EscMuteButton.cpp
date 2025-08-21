@@ -23,6 +23,10 @@ void EscMuteButton::OnStart()
 
 	D2D1_SIZE_F size = muteButton->GetNormalImage()->GetResource()->GetBitmap()->GetSize();
 	muteButton->SetRect(size.width, size.height);
+
+	muteButton->GetNormalImage()->SetOrderInLayer(2200);
+	muteButton->GetHoverImage()->SetOrderInLayer(2200);
+	muteButton->GetPressedImage()->SetOrderInLayer(2200);
 }
 
 SoundMutePanel* EscMuteButton::GetSoundMutePanel()

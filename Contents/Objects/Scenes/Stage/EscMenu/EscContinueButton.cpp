@@ -19,4 +19,8 @@ void EscContinueButton::OnStart()
 
 	D2D1_SIZE_F size = continueButton->GetNormalImage()->GetResource()->GetBitmap()->GetSize();
 	continueButton->SetRect(size.width, size.height);
+
+	continueButton->GetNormalImage()->SetOrderInLayer(2200);
+	continueButton->GetHoverImage()->SetOrderInLayer(2200);
+	continueButton->GetPressedImage()->SetOrderInLayer(2200);
 }

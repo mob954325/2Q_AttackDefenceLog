@@ -15,10 +15,25 @@ void StageESCPanel::OnCreate()
 	input = owner->AddComponent<InputSystem>();
 
 	owner->GetTransform().SetPosition(0, EngineData::SceenHeight * 0.3f);
+
+	backgroundBitmap = owner->AddComponent<BitmapRenderer>();
 }
 
 void StageESCPanel::OnStart()
 {
+	backgroundBitmap->SetOrderInLayer(2000);
+	barBitmap->SetOrderInLayer(2100);
+
+	backgroundBitmap->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\MenuUI\\esc_menu_ui_back.png");
+	backgroundBitmap->SetCapacity(0.5f);
+	backgroundBitmap->SetUseCustomRect(true);
+
+	D2D1_RECT_F destRect = { 0.0f, -EngineData::SceenHeight * 0.3f, EngineData::SceenWidth, EngineData::SceenHeight - EngineData::SceenHeight * 0.3f };
+	backgroundBitmap->SetDestRect(destRect);
+	D2D1_SIZE_F backgroundSize = backgroundBitmap->GetResource()->GetBitmap()->GetSize();
+	D2D1_RECT_F srcRect = { 0.0f, 0.0f, backgroundSize.width, backgroundSize.height};
+	backgroundBitmap->SetSrcRect(srcRect);
+
 	barBitmap->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\MenuUI\\esc_menu_ui_bar.png");
 	int size = buttons.size();
 	for (int i = 0; i < size; i++)
@@ -29,6 +44,7 @@ void StageESCPanel::OnStart()
 	}
 
 	barBitmap->SetActive(false);
+	backgroundBitmap->SetActive(false);
 }
 
 void StageESCPanel::OnUpdate()
@@ -135,6 +151,7 @@ void StageESCPanel::DisablePanel()
 
 	Singleton<GameManager>::GetInstance().SetGameState(GameState::Play);
 	barBitmap->SetActive(false);
+	backgroundBitmap->SetActive(false);
 }
 
 void StageESCPanel::EnablePanel()
@@ -149,6 +166,7 @@ void StageESCPanel::EnablePanel()
 
 	Singleton<GameManager>::GetInstance().SetGameState(GameState::Pause);
 	barBitmap->SetActive(true);
+	backgroundBitmap->SetActive(true);
 }
 
 void StageESCPanel::SetInputEnable(bool value)
