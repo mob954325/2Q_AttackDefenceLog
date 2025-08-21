@@ -3,7 +3,8 @@
 #include "Scripts/GameManager.h"
 
 struct pattern;
-Pointxy Map(int node);
+Vector2 NodeConvertMap(int node);
+
 
 void AttackPatternManager::OnStart() {
 	if (NowPlayerStorage.size() != 0) {
@@ -292,24 +293,27 @@ pattern* AttackPatternManager::CorrectPattern(std::vector<int> PatternID) {  //�
 // 적 연격시 검사할 패턴
 // 전부 저장소 clear 하고 사용하기
 // 이동거리는 기본적으로 1
-float AttackPatternManager::OnceAllNodePatternDistance(std::vector<int> PatternID) {
-	int distanceNodeSqr = 0;
+float AttackPatternManager::NodePatternDistance(std::vector<int> PatternID, bool isNormal) {
+	float distanceNodeSqr = 0;
 	float distancePercent = 0.0f;
 	//if (PatternID.size() < 2) return distancePercent; // 연결 되면 안됨
 
 	for (int i = 0; i < PatternID.size() - 1; i++) {
-		Pointxy tmpNode1 = Map(PatternID[i]);
-		Pointxy tmpNode2 = Map(PatternID[i + 1]);
-		Pointxy tmp = { tmpNode1.x - tmpNode2.x, tmpNode1.y - tmpNode2.y };
-
-		int tmpDistance = tmp.x * tmp.x + tmp.y * tmp.y;
+		int tmpDistance = CalDistance(PatternID[i], PatternID[i + 1]);
 		distanceNodeSqr += tmpDistance;
 	}
 
-	//bool isOnceAllNode = true;
-	distancePercent = distanceNodeSqr / 41.0f; //
-	return distancePercent;
+	if (!isNormal) {
+		distancePercent = distanceNodeSqr / 17.77927f; //
+		return distancePercent;
+	}
+	else {
+		distancePercent = distanceNodeSqr / 3.65028f; //
+		return distancePercent;
+	}
+	
 }
+
 
 
 pattern* AttackPatternManager::failPattern(std::vector<int> PatternID) { // 공격 , 방어 실패여부!
@@ -405,18 +409,16 @@ void AttackPatternManager::DoneTimeOutPatten() {
 
 
 
-int CalDistance(int node1, int node2) {
-	Pointxy tmpNode1 = Map(node1);
-	Pointxy tmpNode2 = Map(node2);
-	int tmpDistance = (tmpNode1.x - tmpNode2.x) * (tmpNode1.x - tmpNode2.x)
-		+ (tmpNode1.y - tmpNode2.y) * (tmpNode1.y - tmpNode2.y);
+float AttackPatternManager::CalDistance(int node1, int node2) {
+	Vector2 tmpNode1 = NodeConvertMap(node1);
+	Vector2 tmpNode2 = NodeConvertMap(node2);
+	tmpNode1 = tmpNode1 - tmpNode2;
+	float tmpDistance = tmpNode1.Magnitude();
 	return  tmpDistance;
 }
 
-Pointxy Map(int node) {
-	Pointxy tmp;
-	tmp.y = (node - 1) / 3;
-	tmp.x = (node - 1) % 3;
+Vector2 NodeConvertMap(int node) {
+	Vector2 tmp = { tmp.x = (node - 1) % 3 ,tmp.y = (node - 1) / 3 };
 	return tmp;
 }
 

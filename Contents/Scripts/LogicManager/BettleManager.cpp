@@ -199,7 +199,7 @@ void BettleManager::SetStateFormPatternEnemyGroggy()// 적 그로기 상태에 �
 	{
 		// 연격 패턴 이벤트 호출
 		onFinalBlow.Invoke(); // 외부에 공격 준비를 알림(총알이 장전된거임)
-		allDistancePercent = m_PattenManager->OnceAllNodePatternDistance(nowNode); // 연격 길이 퍼센트 반환
+		allDistancePercent = m_PattenManager->NodePatternDistance(nowNode, false); // 연격 길이 퍼센트 반환
 	}
 
 	tmpAttackNode = nowNode;   //연격을 임시 벡터에 저장!!
@@ -430,7 +430,8 @@ void BettleManager::SetStateFormPatternIdle()
 
 			////////////////////////// 적 피격 //////////////////
 			m_Enemy->SetState("Enemy_Hit");		// 적 상태 변경 -> 적 피격
-			m_Enemy->GetDamage(ConvertHPDamageToPos(AtkCorPatten->lastPosition, m_Player->GetAttack())); // 적 체력 감소
+			float tmpDamage = m_PattenManager->NodePatternDistance(nowNode, true);
+			m_Enemy->GetDamage(ConvertHPDamageToPos(AtkCorPatten->lastPosition, m_Player->GetAttack() * tmpDamage)); // 적 체력 감소
 
 
 			if (HitAnimeCount < 9)
