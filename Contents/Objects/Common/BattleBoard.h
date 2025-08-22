@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "Components/Base/MonoBehavior.h"
 #include "Components/Rendering/BitmapRenderer.h"
+#include "Objects/Scenes/TitleScene/EffectProgress.h" // calmpf
 
 /* 8.22. 한승규
 * 플레이어와 적의 상호작용을 시각화 해서 보여주는 기능
@@ -15,17 +16,6 @@
 class BattleBoard : public MonoBehavior
 {
 public:
-	void OnStart() override;
-	void OnUpdate() override;
-	void OnDestroy() override;
-
-protected:
-	float progress = 0.0f;
-
-	bool isPlay = false;
-
-	std::vector<BitmapRenderer*> battleSignBitmaps;
-
 	enum SignType { // Vector 인덱스랑 동일하게 사용함
 		HighAttackSign = 0,
 		MiddleAttackSign = 1,
@@ -37,7 +27,35 @@ protected:
 		EnemyAttackSign = 7
 	};
 
-	SignType type = GuardSign;
+	void OnStart() override;
+	void OnUpdate() override;
+
+
+	//공용
+	void Hit(SignType attackType, bool isFlip = false); // 맞는쪽은 피격 고정
+	void Guard(SignType attackType, bool isFlip = false); // 맞는쪽은 방어 고정	
+
+	void Parry(); //플레이어 전용, 방향 -> 고정 + 공격&반격 고정
+	void Evasion(SignType attackType); //적 전용, 방향 <- 고정, 회피 고정	
+
+	void ClearAll();
+	//void OnDestroy() override;
+
+
+
+protected:
+	float progress = 0.0f;
+
+	bool isPlay = false;
+
+	//std::vector<BitmapRenderer*> battleSignBitmaps;
+	std::vector<EffectProgress> progressVec; // 알파값에 대해서는 사용X
+
+	SignType from = EnemyAttackSign;
+	SignType to = GuardSign;
+
+	Vector2 leftPoint;
+	Vector2 rightPoint;
 };
 
 

@@ -1,40 +1,65 @@
-#pragma once;
+ï»¿#pragma once;
 
 #include "Components/Base/MonoBehavior.h"
 #include "Components/Rendering/BitmapRenderer.h"
 
-
-//±×³É ±¸Á¶Ã¼ ÀÌ°÷Àú°÷¿¡¼­ ¾²°í½Í¾î¼­ ¸¸µë
-//ÀÀ¾Ö
+//ê·¸ëƒ¥ êµ¬ì¡°ì²´ ì´ê³³ì €ê³³ì—ì„œ ì“°ê³ ì‹¶ì–´ì„œ ë§Œë“¬
+// + í´ë¨í”„ staticìœ¼ë¡œ ì§€ì›í•´ì¤Œ(í¸í•¨)
+// ì‚¬ì‹¤ ëŸ¬í”„ë„ ë§Œë“¤ì–´ë„ ë˜ê¸´ í•˜ëŠ”ë° í .
+//ì‘ì• 
 
 struct EffectProgress {
-	BitmapRenderer* bitmapRenderer;
+	BitmapRenderer* bitmapRenderer = nullptr;
 
-	float alpha = 0.0f; // << ÀÌ°Íµµ progress 1 ½ÃÁ¡¿¡¼­ ¾ËÆÄ 1ÀÌ º¸ÀåµÇ¾ßÇÔ
-	// ±×·¯³ª, °¢°¢ÀÇ ¿ä¼Ò°¡ ¾ËÆÄ 1·Î ÁøÀÔÇÏ´Â ½ÃÁ¡ÀÌ ´Ş¶ó¾ßÇÔ
-	// ÀÀ¾Ö
-
+	float alpha = 0.0f;
 	float startTimingAlpha = 0.0f;
-	float targetTimingAlpha = 1.0f; // progressÀÇ ÁøÇàµµ¿Í ÀÏÄ¡ÇÏ´Â ½ÃÁ¡ÀÌ 1ÀÎ°ÅÀÓ
+	float targetTimingAlpha = 1.0f;
 
-	//±×·¯¸é?
-	//¿ª¼ö¸¦ °öÇØÁÖ´Â°ÅÀÓ
-	//½ÃÀÛÇÏ´Â ÁöÁ¡µµ °ñ¶óÁÙ ¼ö ÀÖ°Ú³×
-	//¸¸¾à Æ¯Á¤ ÁöÁ¡ A¿¡¼­ ½ÃÀÛÇÏ°í ½ÍÀ» ¼ö ÀÖ°Ú³×?
-
-	// 0.3¿¡¼­ ½ÃÀÛÇÏ°í ½Í´Ù¸é
-	// (progress - 0.3f) * (1.0f / (1.0f - 0.3f))
-	// Á¤¸®ÇÏ¸é	
-	// (progress - startAlpha) * (1.0f / (1.0f - startAlpha))
-	// (progress - startAlpha) * (1.0f / (targetAlpha - startAlpha)) << ÀÌ·¯¸é, progress = StartAlpha ~ targetAlpha°¡ µÊ
-
-	Vector2 startPos = { 0,0 }; // ÃÊ±âÈ­ À§Ä¡
-	Vector2 targetPos = { 0,0 }; // progress 1 ÀÏ¶§ À§Ä¡
+	Vector2 startPos = { 0.0f, 0.0f };
+	Vector2 targetPos = { 0.0f, 0.0f };
 
 	float startTimingPos = 0.0f;
 	float targetTimingPos = 1.0f;
-	//º¸°£½ÄÀº, startPos + (targetPos - startPos) * progress
-	//ÀÌ·±½ÄÀ¸·Î »ç¿ëÇÔ
 
-	//³¯ ¼±Çüº¸°£ÀÇ ½ÅÀÌ¶ó°í ºÒ·¯¶ó
+	static float clampf(float v, float minVal, float maxVal) { // ë‚˜ë§Œì˜ ì‘ì€ í´ë¨í”„ í•¨ìˆ˜ C++14ë¥¼ ê³ ì§‘í•˜ëŠ” ìì˜ ì˜ì§€
+		return (v < minVal) ? minVal : (v > maxVal ? maxVal : v);
+	}
 };
+
+/*
+
+struct EffectProgress {
+	BitmapRenderer* bitmapRenderer = nullptr;
+
+	float alpha = 0.0f; // << ì´ê²ƒë„ progress 1 ì‹œì ì—ì„œ ì•ŒíŒŒ 1ì´ ë³´ì¥ë˜ì•¼í•¨
+	// ê·¸ëŸ¬ë‚˜, ê°ê°ì˜ ìš”ì†Œê°€ ì•ŒíŒŒ 1ë¡œ ì§„ì…í•˜ëŠ” ì‹œì ì´ ë‹¬ë¼ì•¼í•¨
+	// ì‘ì• 
+
+	float startTimingAlpha = 0.0f;
+	float targetTimingAlpha = 1.0f; // progressì˜ ì§„í–‰ë„ì™€ ì¼ì¹˜í•˜ëŠ” ì‹œì ì´ 1ì¸ê±°ì„
+
+	//ê·¸ëŸ¬ë©´?
+	//ì—­ìˆ˜ë¥¼ ê³±í•´ì£¼ëŠ”ê±°ì„
+	//ì‹œì‘í•˜ëŠ” ì§€ì ë„ ê³¨ë¼ì¤„ ìˆ˜ ìˆê² ë„¤
+	//ë§Œì•½ íŠ¹ì • ì§€ì  Aì—ì„œ ì‹œì‘í•˜ê³  ì‹¶ì„ ìˆ˜ ìˆê² ë„¤?
+
+	// 0.3ì—ì„œ ì‹œì‘í•˜ê³  ì‹¶ë‹¤ë©´
+	// (progress - 0.3f) * (1.0f / (1.0f - 0.3f))
+	// ì •ë¦¬í•˜ë©´
+	// (progress - startAlpha) * (1.0f / (1.0f - startAlpha))
+	// (progress - startAlpha) * (1.0f / (targetAlpha - startAlpha)) << ì´ëŸ¬ë©´, progress = StartAlpha ~ targetAlphaê°€ ë¨
+
+	Vector2 startPos = { 0,0 }; // ì´ˆê¸°í™” ìœ„ì¹˜
+	Vector2 targetPos = { 0,0 }; // progress 1 ì¼ë•Œ ìœ„ì¹˜
+
+	float startTimingPos = 0.0f;
+	float targetTimingPos = 1.0f;
+	//ë³´ê°„ì‹ì€, startPos + (targetPos - startPos) * progress
+	//ì´ëŸ°ì‹ìœ¼ë¡œ ì‚¬ìš©í•¨
+
+	//ë‚  ì„ í˜•ë³´ê°„ì˜ ì‹ ì´ë¼ê³  ë¶ˆëŸ¬ë¼
+
+	static float clampf(float v, float minVal, float maxVal) { // ë‚˜ë§Œì˜ ì‘ì€ í´ë¨í”„ í•¨ìˆ˜ C++14ë¥¼ ê³ ì§‘í•˜ëŠ” ìì˜ ì˜ì§€
+		return (v < minVal) ? minVal : (v > maxVal ? maxVal : v);
+	}
+};*/
