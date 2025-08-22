@@ -3,7 +3,7 @@
 #include "Application/AppPaths.h"
 #include "../Engine/Utils/GameTime.h"
 
-constexpr float EPSILON = 1e-6f;
+
 
 
 void BattleBoard::OnStart()
