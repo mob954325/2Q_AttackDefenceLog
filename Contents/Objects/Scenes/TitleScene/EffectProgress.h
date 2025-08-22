@@ -32,6 +32,19 @@ struct EffectProgress {
 		return t < 0.0f ? 0.0f : (t > 1.0f ? 1.0f : t);
 	}
 
+	// 기본 progress를 기준으로 정규화 해주는 함수임
+	// 전체 흐름인 0.0 ~ 1.0 중, 0.3 ~ 0.5 구간을 0.0 ~ 1.0 으로 치환해서 반환해주는 기능임
+	// 즉, 0.0 0.0 0.2 0.5 0.5 1.0 1.0 1.0 1.0... 이런느낌
+	// 그 유명한 부분과 전체라는거임(아님)
+	static float NormalizeProgress(float base, float start, float end) {	
+		float fromDenom = end - start;
+
+		if (fabsf(fromDenom) < EPSILON)  // float 절대값으로 바꿔서, 엡실론과 비교
+			return	 1.0f; // 이동시간이 0, 즉시 이동 완료임
+		else
+			return clamp01((base - start) * (1.0f / (fromDenom)));
+	}
+
 	// [1] 선형 보간
 	static Vector2 Lerp(Vector2 start, Vector2 end, float progress) {
 		progress = clamp01(progress);

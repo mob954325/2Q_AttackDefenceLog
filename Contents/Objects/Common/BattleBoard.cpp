@@ -72,35 +72,31 @@ void BattleBoard::OnUpdate()
 
 	float delta = Singleton<GameTime>::GetInstance().GetDeltaTime();
 
-	progress +=  1.5f * delta;
+	progress += 1.5f * delta;
 
 	// 선형보간 들어가는 부분
 	////////////////////////////////
 	// From << 공격에 해당함. 대부분 직선적인 움직임임
 	auto& fv = progressVec[from];
-	float fromProgress;
-	float fromDenom = fv.targetTimingPos - fv.startTimingPos;
 
-	if (fabsf(fromDenom) < EPSILON)  // float 절대값으로 바꿔서, 엡실론과 비교
-		fromProgress = 1.0f; // 이동시간이 0, 즉시 이동 완료임
-	else
-		fromProgress = EffectProgress::clampf((progress - fv.startTimingPos) * (1.0f / (fromDenom)), 0.0f, 1.0f);
-
-	Vector2 fromPos = fv.startPos + (fv.targetPos - fv.startPos) * fromProgress;
+	float fromProgress = EffectProgress::NormalizeProgress(progress, fv.startTimingPos, fv.targetTimingPos);
+	//Vector2 fromPos = EffectProgress::Lerp(fv.startPos, fv.targetPos, fromProgress);
+	Vector2 control1 = {  (fv.targetPos.x + fv.startPos.x) / 3.0f, 0.0f };
+	Vector2 control2 = { 2.0f * (fv.targetPos.x + fv.startPos.x) / 3.0f, 300.0f };
+	//Vector2 fromPos = EffectProgress::BezierCubic(fv.startPos, fv.targetPos, control1, control2, fromProgress);
+	Vector2 fromPos = EffectProgress::BezierQuadratic(fv.startPos, fv.startPos, control1, fromProgress);
+	//Vector2 fromPos = EffectProgress::DampedSine(fv.startPos,fv.targetPos, 100.0f, 3.0f, 3.0f, 0.0f, fromProgress);
 	fv.bitmapRenderer->owner->GetTransform().SetPosition(fromPos.x, fromPos.y);
 
 	////////////////////////////////
 	// To << 공격받는쪽에 해당함, 회피 패링 방어 피격을 나타냄
 	auto& tv = progressVec[to];
-	float toProgress;
-	float toDenom = tv.targetTimingPos - tv.startTimingPos;
 
-	if (fabsf(toDenom) < EPSILON)  // float 절대값으로 바꿔서, 엡실론과 비교
-		toProgress = 1.0f; // 이동시간이 0, 즉시 이동 완료임
-	else
-		toProgress = EffectProgress::clampf((progress - tv.startTimingPos) * (1.0f / (toDenom)), 0.0f, 1.0f);
+	float toProgress = EffectProgress::NormalizeProgress(progress, tv.startTimingPos, tv.targetTimingPos);
+	//Vector2 toPos = EffectProgress::Lerp(tv.startPos, tv.targetPos, toProgress);
+	Vector2 toPos = EffectProgress::BezierQuadratic(tv.startPos, tv.targetPos, (tv.targetPos + tv.startPos) / 2.0f, toProgress);
 
-	Vector2 toPos = tv.startPos + (tv.targetPos - tv.startPos) * toProgress;
+
 	tv.bitmapRenderer->owner->GetTransform().SetPosition(toPos.x, toPos.y);
 
 	////////////////////////////////
