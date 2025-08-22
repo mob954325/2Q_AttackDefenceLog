@@ -2,8 +2,6 @@
 #include "Components/Base/MonoBehavior.h"
 #include "Components/Rendering/BitmapRenderer.h"
 
-
-
 /* 8.22. 한승규
 * 플레이어와 적의 상호작용을 시각화 해서 보여주는 기능
 * 플레이어의 공격과, 적의 대응 + 적의 공격과 플레이어의 대응을

@@ -61,7 +61,6 @@ void BattleBoard::OnStart()
 void BattleBoard::OnUpdate()
 {
 
-
 }
 
 void BattleBoard::OnDestroy() {}

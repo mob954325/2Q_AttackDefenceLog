@@ -30,6 +30,10 @@ void Stage1::OnEnterImpl()
 	inputObj->AddComponent<InputObject>();
 	AddGameObject(inputObj, "InputStage1");
 
+	GameObject* nodePanel = new GameObject();
+	nodePanel->AddComponent<BackboardObject>();
+	AddGameObject(nodePanel);
+
 	PCO = new GameObject();
 	auto comp = PCO->AddComponent<PatternControlObject>();
 	AddGameObject(PCO , "PatternControlObject");
@@ -38,10 +42,6 @@ void Stage1::OnEnterImpl()
 	stageBGI = new GameObject();
 	stageBGI->AddComponent<StageBGI>();
 	AddGameObject(stageBGI, "StageBGI1");
-
-	GameObject* nodePanel = new GameObject();
-	nodePanel->AddComponent<BackboardObject>();
-	AddGameObject(nodePanel);
 
 	GameObject* continueBtn = new GameObject();
 	continueBtn->SetRenderLayer(EngineData::UI);
