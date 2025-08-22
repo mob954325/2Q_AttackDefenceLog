@@ -4,8 +4,6 @@
 #include "../Engine/Utils/GameTime.h"
 
 
-
-
 void BattleBoard::OnStart()
 {
 	std::wstring path = Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\Sign\\";
@@ -54,14 +52,15 @@ void BattleBoard::OnStart()
 		// 패널 크기는 660 * 660 정사각형임(중요)				
 
 		render->SetActive(false);
-		progressVec.push_back({ render });
+		battleSignBitmaps.push_back( render );
 		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(bm, "SignBoard." + i);
 	}
 
-	auto zeroIndexPos = progressVec[0].bitmapRenderer->owner->GetTransform().GetPosition();
+	auto zeroIndexPos = battleSignBitmaps[0]->owner->GetTransform().GetPosition();
 
 	leftPoint = { zeroIndexPos.x - 300.0f, zeroIndexPos.y };
 	rightPoint = { zeroIndexPos.x + 300.0f, zeroIndexPos.y };
+	halfPoint = zeroIndexPos;
 
 	ClearAll();
 }
@@ -74,30 +73,7 @@ void BattleBoard::OnUpdate()
 
 	progress += 1.5f * delta;
 
-	// 선형보간 들어가는 부분
-	////////////////////////////////
-	// From << 공격에 해당함. 대부분 직선적인 움직임임
-	auto& fv = progressVec[from];
-
-	float fromProgress = EffectProgress::NormalizeProgress(progress, fv.startTimingPos, fv.targetTimingPos);
-	//Vector2 fromPos = EffectProgress::Lerp(fv.startPos, fv.targetPos, fromProgress);
-	Vector2 control1 = {  (fv.targetPos.x + fv.startPos.x) / 3.0f, 0.0f };
-	Vector2 control2 = { 2.0f * (fv.targetPos.x + fv.startPos.x) / 3.0f, 300.0f };
-	//Vector2 fromPos = EffectProgress::BezierCubic(fv.startPos, fv.targetPos, control1, control2, fromProgress);
-	Vector2 fromPos = EffectProgress::BezierQuadratic(fv.startPos, fv.startPos, control1, fromProgress);
-	//Vector2 fromPos = EffectProgress::DampedSine(fv.startPos,fv.targetPos, 100.0f, 3.0f, 3.0f, 0.0f, fromProgress);
-	fv.bitmapRenderer->owner->GetTransform().SetPosition(fromPos.x, fromPos.y);
-
-	////////////////////////////////
-	// To << 공격받는쪽에 해당함, 회피 패링 방어 피격을 나타냄
-	auto& tv = progressVec[to];
-
-	float toProgress = EffectProgress::NormalizeProgress(progress, tv.startTimingPos, tv.targetTimingPos);
-	//Vector2 toPos = EffectProgress::Lerp(tv.startPos, tv.targetPos, toProgress);
-	Vector2 toPos = EffectProgress::BezierQuadratic(tv.startPos, tv.targetPos, (tv.targetPos + tv.startPos) / 2.0f, toProgress);
-
-
-	tv.bitmapRenderer->owner->GetTransform().SetPosition(toPos.x, toPos.y);
+	Curve(); // 좌표 이동 + 연출
 
 	////////////////////////////////
 
@@ -109,11 +85,17 @@ void BattleBoard::OnUpdate()
 }
 
 //=========================================================
+// HIT ////////////////////////////////////////////////////
+//=========================================================
 
-void BattleBoard::Hit(SignType attackType, bool isFlip)
+void BattleBoard::Hit(SignType attackType, bool isFlip) 
 {
 	progress = 0.0f;
 	isPlay = true;
+	from = attackType;
+	to = HitSign;
+	curve = HitCurve;
+
 	// ->
 	Vector2 start = leftPoint;
 	Vector2 end = rightPoint;
@@ -125,19 +107,21 @@ void BattleBoard::Hit(SignType attackType, bool isFlip)
 
 	////////////////////////////////
 
-
-
-
-
-
-
+	battleSignBitmaps[from]->SetActive(true);	
+	battleSignBitmaps[to]->SetActive(true);
 }
+
+//=========================================================
+// GUARD //////////////////////////////////////////////////
+//=========================================================
 
 void BattleBoard::Guard(SignType attackType, bool isFlip)
 {
 	progress = 0.0f;
 	isPlay = true;
-
+	from = attackType;
+	to = GuardSign;
+	curve = GuardCurve;
 	// ->
 	Vector2 start = leftPoint;
 	Vector2 end = rightPoint;
@@ -149,91 +133,122 @@ void BattleBoard::Guard(SignType attackType, bool isFlip)
 
 	////////////////////////////////
 
-
-
-
-
-
-
+	battleSignBitmaps[from]->SetActive(true);
+	battleSignBitmaps[to]->SetActive(true);
 }
 
 //=========================================================
+// PARRY //////////////////////////////////////////////////
+//=========================================================
+
 
 void BattleBoard::Parry()
 {
 	progress = 0.0f;
 	isPlay = true;
-
-	//<-
+	from = EnemyAttackSign;
+	to = ParrySign;
+	curve = ParryCurve;
+	// <-
 	Vector2 start = rightPoint;
 	Vector2 end = leftPoint;
 
-	from = EnemyAttackSign;
-	to = ParrySign;
+	////////////////////////////////
 
-	progressVec[from] = {
-			progressVec[from].bitmapRenderer,
-			1.0f, //alpha
-			0.0f, // startTime(alpha)
-			0.0f, // targetTime
-
-			start, // startPos
-			end , // targetPos
-			0.0f, // startTime(pos)
-			1.0f // targetTime
-	};
-	progressVec[from].bitmapRenderer->SetActive(true);
-
-	progressVec[to] = {
-			progressVec[to].bitmapRenderer,
-			1.0f, //alpha
-			0.0f, // startTime(alpha)
-			0.0f, // targetTime
-
-			end, // startPos
-			start, // targetPos
-			0.0f, // startTime(pos)
-			1.0f // targetTime
-	};
-	progressVec[to].bitmapRenderer->SetActive(true);
+	battleSignBitmaps[from]->SetActive(true);
+	battleSignBitmaps[to]->SetActive(true);
 }
+
+//=========================================================
+// EVASION ////////////////////////////////////////////////
+//=========================================================
 
 void BattleBoard::Evasion(SignType attackType)
 {
 	progress = 0.0f;
 	isPlay = true;
+	from = attackType;
+	to = EvasionSign;
+	curve = EvasionCurve;
 
-	//->
+	// ->
 	Vector2 start = leftPoint;
 	Vector2 end = rightPoint;
+
+	////////////////////////////////
+
+	battleSignBitmaps[from]->SetActive(true);
+	battleSignBitmaps[to]->SetActive(true);
 }
 
 //=========================================================
 
 void BattleBoard::ClearAll()
 {
-	for (int i = 0; i < progressVec.size(); ++i) {
-		auto& pv = progressVec[i];
-		pv.bitmapRenderer->SetActive(false);
-		pv.bitmapRenderer->owner->GetTransform().SetPosition(leftPoint.x, leftPoint.y);
-		pv = {
-			pv.bitmapRenderer,
-			1.0f, //alpha
-			0.0f, // startTime(alpha)
-			0.0f, // targetTime
-
-			leftPoint, // startPos
-			rightPoint, // targetPos
-			0.0f, // startTime(pos)
-			1.0f // targetTime
-		};
+	for (int i = 0; i < battleSignBitmaps.size(); ++i) {
+		auto& pv = battleSignBitmaps[i];
+		pv->SetActive(false);
+		pv->owner->GetTransform().SetPosition(leftPoint.x, leftPoint.y);
 	}
-
-	//progressVec.clear();
-	//progressVec.resize(battleSignBitmaps.size());
-	//progressVec.assign(battleSignBitmaps.size(), EffectProgress{});
 }
 
+void BattleBoard::Curve()
+{
+	auto& fv = battleSignBitmaps[from];
+	auto& tv = battleSignBitmaps[to];
+
+	//float fromProgress = EffectProgress::NormalizeProgress(progress, fv.startTimingPos, fv.targetTimingPos);
+	//Vector2 fromPos = EffectProgress::Lerp(leftPoint, rightPoint, fromProgress);
+	//Vector2 control1 = { (fv.targetPos.x + fv.startPos.x) / 3.0f, 0.0f };
+	//Vector2 control2 = { 2.0f * (fv.targetPos.x + fv.startPos.x) / 3.0f, 300.0f };
+	//Vector2 fromPos = EffectProgress::BezierCubic(fv.startPos, fv.targetPos, control1, control2, fromProgress);
+	//Vector2 fromPos = EffectProgress::BezierQuadratic(fv.startPos, fv.startPos, control1, fromProgress);
+	//Vector2 fromPos = EffectProgress::DampedSine(fv.startPos,fv.targetPos, 100.0f, 3.0f, 3.0f, 0.0f, fromProgress);
+
+
+	////////////////////////////////
+	// To << 공격받는쪽에 해당함, 회피 패링 방어 피격을 나타냄
 
 
 
+	//Vector2 toPos = EffectProgress::Lerp(tv.startPos, tv.targetPos, toProgress);
+	//float toProgress = EffectProgress::NormalizeProgress(progress, tv.startTimingPos, tv.targetTimingPos);
+	//Vector2 toPos = EffectProgress::BezierQuadratic(tv.startPos, tv.targetPos, (tv.targetPos + tv.startPos) / 2.0f, toProgress);
+
+
+
+	switch (curve) {
+	case HitCurve:
+
+
+
+
+
+		break;
+	case GuardCurve:
+
+
+
+
+
+		break;
+	case EvasionCurve:
+
+
+
+
+
+		break;
+	case ParryCurve:
+
+
+
+
+
+		break;
+	default: break;
+	};
+
+	//fv->owner->GetTransform().SetPosition(fromPos.x, fromPos.y);
+	//tv->owner->GetTransform().SetPosition(toPos.x, toPos.y);
+}

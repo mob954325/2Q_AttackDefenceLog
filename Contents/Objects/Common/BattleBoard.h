@@ -27,16 +27,25 @@ public:
 		EnemyAttackSign = 7
 	};
 
+	// 연출에 대한 값, switch 돌릴꺼임
+	enum CurveType {
+		HitCurve = 0,
+		GuardCurve = 1,
+		EvasionCurve = 2,
+		ParryCurve = 3
+	};
+
 	void OnStart() override;
 	void OnUpdate() override;
 
 
 	//공용
 	void Hit(SignType attackType, bool isFlip = false); // 맞는쪽은 피격 고정
-	void Guard(SignType attackType, bool isFlip = false); // 맞는쪽은 방어 고정	
-
-	void Parry(); //플레이어 전용, 방향 -> 고정 + 공격&반격 고정
+	void Guard(SignType attackType, bool isFlip = false); // 맞는쪽은 방어 고정		
 	void Evasion(SignType attackType); //적 전용, 방향 <- 고정, 회피 고정	
+	void Parry(); //플레이어 전용, 방향 -> 고정 + 공격&반격 고정
+
+	void Curve(); //Update 길어져서 빼놓은거임
 
 	void ClearAll();
 	//void OnDestroy() override;
@@ -48,14 +57,17 @@ protected:
 
 	bool isPlay = false;
 
-	//std::vector<BitmapRenderer*> battleSignBitmaps;
-	std::vector<EffectProgress> progressVec; // 알파값에 대해서는 사용X
+	std::vector<BitmapRenderer*> battleSignBitmaps;
+	//std::vector<EffectProgress> progressVec; // 알파값에 대해서는 사용X
 
 	SignType from = EnemyAttackSign;
 	SignType to = GuardSign;
 
+	CurveType curve = HitCurve;
+
 	Vector2 leftPoint;
 	Vector2 rightPoint;
+	Vector2 halfPoint;
 };
 
 

@@ -24,6 +24,9 @@ struct EffectProgress {
 	float startTimingPos = 0.0f;
 	float targetTimingPos = 1.0f;
 
+	Vector2 controlA = { 0.0f, 0.0f }; // 필요하면 쓸려고
+	Vector2 controlB = { 0.0f, 0.0f }; // 놔둔거
+
 	static float clampf(float v, float minVal, float maxVal) { // 나만의 작은 클램프 함수 C++14를 고집하는 자의 의지
 		return (v < minVal) ? minVal : (v > maxVal ? maxVal : v);
 	}
@@ -36,7 +39,7 @@ struct EffectProgress {
 	// 전체 흐름인 0.0 ~ 1.0 중, 0.3 ~ 0.5 구간을 0.0 ~ 1.0 으로 치환해서 반환해주는 기능임
 	// 즉, 0.0 0.0 0.2 0.5 0.5 1.0 1.0 1.0 1.0... 이런느낌
 	// 그 유명한 부분과 전체라는거임(아님)
-	static float NormalizeProgress(float base, float start, float end) {	
+	static float NormalizeProgress(float base, float start, float end) {
 		float fromDenom = end - start;
 
 		if (fabsf(fromDenom) < EPSILON)  // float 절대값으로 바꿔서, 엡실론과 비교
