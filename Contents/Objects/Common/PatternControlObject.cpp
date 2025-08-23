@@ -421,7 +421,11 @@ void PatternControlObject::OnUpdate() // 업데이트
 
 
 		//테스트 코드, 이후 삭제해야함
-		battleBoard->Parry();
+		//battleBoard->Parry();
+		//battleBoard->Guard(BattleBoard::HighAttackSign);
+		//battleBoard->Guard(BattleBoard::EnemyAttackSign);
+		//battleBoard->Evasion(BattleBoard::HighAttackSign);
+		battleBoard->Hit(BattleBoard::HighAttackSign);
 
 		//테스트 코드, 이후 삭제해야함
 	}
