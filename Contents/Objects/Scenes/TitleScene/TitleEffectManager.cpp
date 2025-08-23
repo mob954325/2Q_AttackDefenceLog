@@ -27,7 +27,7 @@ void TitleEffectManager::OnStart()
 		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(obj, "TitleImage." + i);
 	}
 
-	auto basePath = Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\start\\";
+	auto basePath = Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\BackGround\\start\\";
 	std::wstring files[] =
 	{ L"2sky.png", L"3.png", L"4.png", L"5.png", L"6.png", L"7boat.png", L"8human.png", L"title.png", L"top_and_bottom_filter_black1.png", L"top_and_bottom_filter_black2.png" };
 
@@ -55,7 +55,7 @@ void TitleEffectManager::OnStart()
 	b->GetTransform().SetPosition(+-192.0f, -108.0f);
 	b->GetTransform().SetUnityCoords(false);
 	guideMessageImage = b->AddComponent<BitmapRenderer>();
-	guideMessageImage->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\drawing_line_start_text.png");
+	guideMessageImage->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\BattlePanel\\GuideText\\drawing_line_start_text.png");
 	guideMessageImage->SetOrderInLayer(100000000);
 	guideMessageImage->SetCapacity(1.0f);
 

@@ -10,10 +10,10 @@ void Vignette::OnCreate()
 	owner->GetTransform().SetUnityCoords(true);
 	owner->GetTransform().SetScale(0.85f, 0.85f);
 	bitmapRenderer = owner->AddComponent<BitmapRenderer>();
-	bitmapRenderer->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Stage\\side_darkness.png");
+	bitmapRenderer->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\BackGround\\side_darkness.png");
 
 	brrr = owner->AddComponent<BitmapRenderer>();
-	brrr->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\connect_all_the_dots_at_once.png");
+	brrr->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\BattlePanel\\GuideText\\connect_all_the_dots_at_once.png");
 
 
 }

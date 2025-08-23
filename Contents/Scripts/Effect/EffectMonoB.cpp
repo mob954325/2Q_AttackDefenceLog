@@ -38,9 +38,9 @@ void EffectMonoB::OnCreate()
 		obj->SetName(std::string("PlayerAttack") + std::to_string(i));
 		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(obj);
 		obj->GetComponent<AnimationRenderer>()->SetActive(false);
-		obj->GetComponent<AnimationRenderer>()->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Particles\\PlayerAttack\\enemy_attack_line_spreadsheet.png");
-		obj->GetComponent<AnimationRenderer>()->SetSpriteSheet(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Json\\enemy_attack_line_spreadsheet_sprites.json");
-		obj->GetComponent<AnimationRenderer>()->SetAnimationClip(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Json\\enemy_attack_line_spreadsheet_anim.json");
+		obj->GetComponent<AnimationRenderer>()->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\Effect\\PlayerAttack\\enemy_attack_line_spreadsheet.png");
+		obj->GetComponent<AnimationRenderer>()->SetSpriteSheet(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Json\\attack\\enemy_attack_line_spreadsheet_sprites.json");
+		obj->GetComponent<AnimationRenderer>()->SetAnimationClip(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Json\\attack\\enemy_attack_line_spreadsheet_anim.json");
 		obj->GetComponent<AnimationRenderer>()->GetAnimationPlayer()->Pause();
 		obj->GetTransform().SetUnityCoords(false);
 		AnimeList.push_back(obj);

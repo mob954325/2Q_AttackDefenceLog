@@ -21,7 +21,7 @@ void SelectEffectManager::OnStart()
 		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(obj, "SelectImage." + i);
 	}
 
-	auto basePath = Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\robby\\";
+	auto basePath = Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\BackGround\\lobby\\";
 	std::wstring files[] =
 	{ L"2sky.png", L"3.png", L"4.png", L"5.png", L"6.png", L"robby_text.png"};
 

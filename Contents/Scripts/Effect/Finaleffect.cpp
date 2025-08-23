@@ -36,9 +36,9 @@ void Finaleffect::OnCreate()
 	obj->SetName(std::string("FinalAttack"));
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(obj);
 	obj->GetComponent<AnimationRenderer>()->SetActive(false);
-	obj->GetComponent<AnimationRenderer>()->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Particles\\Final\\final_blow_line_spreadsheet.png");
-	obj->GetComponent<AnimationRenderer>()->SetSpriteSheet(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Json\\final_blow_line_spreadsheet_sprites.json");
-	obj->GetComponent<AnimationRenderer>()->SetAnimationClip(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Json\\final_blow_line_spreadsheet_anim.json");
+	obj->GetComponent<AnimationRenderer>()->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\Effect\\FinalBlow\\final_blow_line_spreadsheet.png");
+	obj->GetComponent<AnimationRenderer>()->SetSpriteSheet(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Json\\attack\\final_blow_line_spreadsheet_sprites.json");
+	obj->GetComponent<AnimationRenderer>()->SetAnimationClip(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Json\\attack\\final_blow_line_spreadsheet_anim.json");
 	obj->GetComponent<AnimationRenderer>()->GetAnimationPlayer()->Pause();
 	obj->GetComponent<AnimationRenderer>()->GetAnimationPlayer()->SetLoop(false);
 	obj->GetTransform().SetUnityCoords(false);

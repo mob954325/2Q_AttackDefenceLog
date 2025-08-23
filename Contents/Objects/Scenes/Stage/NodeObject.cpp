@@ -19,7 +19,7 @@ void NodeObject::OnCreate() {
 
 	bitmapRenderer = owner->AddComponent<BitmapRenderer>(); // L"\\..\\Resource\\Sprite\\Mushroom.png"
 	//"C:\Users\A\Documents\GitHub\Kyu\Resource\ContentsResource\node_ui.png"
-	bitmapRenderer->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\node_ui.png");
+	bitmapRenderer->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\BattlePanel\\node_ui.png");
 	bitmapRenderer->SetOrderInLayer(-1);
 
 	size = bitmapRenderer->GetResource()->GetBitmap()->GetSize();

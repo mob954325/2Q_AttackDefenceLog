@@ -24,7 +24,7 @@ void BubbleEnd::OnCreate()
 	{
 		texts.push_back(owner->AddComponent<BitmapRenderer>());
 
-		std::wstring path = L"\\..\\Resource\\Oh\\Ha\\background\\ending\\ending_text\\";
+		std::wstring path = L"\\..\\Resource\\Sprites\\UI\\BoxText\\ending\\";
 		std::wstring numStr = std::to_wstring(i + 1) + L".png";
 		path += numStr;
 

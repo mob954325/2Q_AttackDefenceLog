@@ -9,7 +9,7 @@ void BackboardObject::OnCreate() {
 	owner->GetTransform().SetUnityCoords(true); // 이건 유니티좌표계 하면 안댐
 
 	bitmapRenderer = owner->AddComponent<BitmapRenderer>();
-	bitmapRenderer->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\node_panel3.png");
+	bitmapRenderer->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\BattlePanel\\node_panel3.png");
 	bitmapRenderer->SetOrderInLayer(-8); //뒷배경이 -10이던데
 
 	size = bitmapRenderer->GetResource()->GetBitmap()->GetSize();

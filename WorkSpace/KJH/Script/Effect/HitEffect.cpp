@@ -38,9 +38,9 @@ void HitEffect::OnCreate()
 		obj->SetName(std::string("HitEffect"));
 		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(obj);
 		obj->GetComponent<AnimationRenderer>()->SetActive(false);
-		obj->GetComponent<AnimationRenderer>()->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Particles\\hit\\hit_spreadsheet.png");
-		obj->GetComponent<AnimationRenderer>()->SetSpriteSheet(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Json\\hit_spreadsheet_sprites.json");
-		obj->GetComponent<AnimationRenderer>()->SetAnimationClip(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Json\\hit_spreadsheet_anim.json");
+		obj->GetComponent<AnimationRenderer>()->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Sprites\\Effect\\Hit\\hit_spreadsheet.png");
+		obj->GetComponent<AnimationRenderer>()->SetSpriteSheet(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Json\\hit\\hit_spreadsheet_sprites.json");
+		obj->GetComponent<AnimationRenderer>()->SetAnimationClip(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Json\\hit\\hit_spreadsheet_anim.json");
 		obj->GetComponent<AnimationRenderer>()->GetAnimationPlayer()->Pause();
 		obj->GetComponent<AnimationRenderer>()->GetAnimationPlayer()->SetLoop(false);
 		obj->GetTransform().SetUnityCoords(false);

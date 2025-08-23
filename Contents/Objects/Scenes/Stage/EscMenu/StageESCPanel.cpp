@@ -24,7 +24,7 @@ void StageESCPanel::OnStart()
 	backgroundBitmap->SetOrderInLayer(2000);
 	barBitmap->SetOrderInLayer(2100);
 
-	backgroundBitmap->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\MenuUI\\esc_menu_ui_back.png");
+	backgroundBitmap->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\EscUI\\esc_menu_ui_back.png");
 	backgroundBitmap->SetCapacity(0.5f);
 	backgroundBitmap->SetUseCustomRect(true);
 
@@ -34,7 +34,7 @@ void StageESCPanel::OnStart()
 	D2D1_RECT_F srcRect = { 0.0f, 0.0f, backgroundSize.width, backgroundSize.height};
 	backgroundBitmap->SetSrcRect(srcRect);
 
-	barBitmap->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\MenuUI\\esc_menu_ui_bar.png");
+	barBitmap->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\EscUI\\esc_menu_ui_bar.png");
 	int size = buttons.size();
 	for (int i = 0; i < size; i++)
 	{

@@ -15,11 +15,11 @@ void SoundMutePanel::OnCreate()
 	owner->GetTransform().SetUnityCoords(false);
 	owner->GetTransform().Translate({ offsetX, offsetY });
 
-	offUIImagePath = L"\\..\\Resource\\UI\\Sound\\sound_ui_off.png";
-	onUIImagePath = L"\\..\\Resource\\UI\\Sound\\sound_ui_on.png";
+	offUIImagePath = L"\\..\\Resource\\Sprites\\UI\\SoundControl\\sound_ui_off.png";
+	onUIImagePath = L"\\..\\Resource\\Sprites\\UI\\SoundControl\\sound_ui_on.png";
 
 	panelBitmap = owner->AddComponent<BitmapRenderer>();
-	panelBitmap->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\Sound\\sound_ui_pad.png");
+	panelBitmap->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\SoundControl\\sound_ui_pad.png");
 	panelBitmap->SetOrderInLayer(10);
 
 	D2D1_SIZE_F size = panelBitmap->GetResource()->GetBitmap()->GetSize();
@@ -40,7 +40,7 @@ void SoundMutePanel::OnCreate()
 	sliderButton->GetTransform().SetUnityCoords(false);
 
 	sliderButtonBitmap = sliderButton->AddComponent<BitmapRenderer>();
-	sliderButtonBitmap->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\Sound\\sound_volumn_ui.png");
+	sliderButtonBitmap->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\SoundControl\\sound_volumn_ui.png");
 	sliderButtonBitmap->SetOrderInLayer(15);
 
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(sliderButton);

@@ -34,7 +34,7 @@ void BubbleBoxTittle::OnCreate()
 	{
 		texts.push_back(owner->AddComponent<BitmapRenderer>());
 
-		std::wstring path = L"\\..\\Resource\\UI\\BoxText\\tittle\\";
+		std::wstring path = L"\\..\\Resource\\Sprites\\UI\\BoxText\\title\\";
 		std::wstring numStr = std::to_wstring(i + 1) + L".png";
 		path += numStr;
 

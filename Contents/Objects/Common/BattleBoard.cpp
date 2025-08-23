@@ -6,7 +6,7 @@
 
 void BattleBoard::OnStart()
 {
-	std::wstring path = Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\Sign\\";
+	std::wstring path = Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\Sign\\";
 	std::wstring files[] =
 	{ L"top_text.png",		L"mid_text.png",
 	  L"bottom_text.png",	L"defence_text.png",

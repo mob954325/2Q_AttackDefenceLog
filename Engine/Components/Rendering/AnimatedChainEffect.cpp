@@ -48,8 +48,8 @@ void AnimatedChainEffect::Render(D2DRenderManager* manager)
 
 void AnimatedChainEffect::OnCreate() {
 	//"C:\Users\User\Documents\GitHub\Kyu1\Resource\ContentsResource\attack_line_spreadsheet.png"
-	SetAtlasStrip(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\attack_line_spreadsheet.png", 9); // 경로 + 프레임 수
-	flashBitmap = resourceManager->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\attack_line_circle.png");
+	SetAtlasStrip(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\Effect\\AttackLine\\attack_line_spreadsheet.png", 9); // 경로 + 프레임 수
+	flashBitmap = resourceManager->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\Effect\\AttackLine\\attack_line_circle.png");
 	flashSize = flashBitmap->GetBitmap()->GetSize();
 }
 

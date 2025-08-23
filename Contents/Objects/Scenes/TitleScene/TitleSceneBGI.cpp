@@ -9,7 +9,7 @@ void TitleSceneBGI::OnStart()
 	owner->GetTransform().SetUnityCoords(true);
 
 	bitmapRenderer = owner->AddComponent<BitmapRenderer>();
-	bitmapRenderer->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\start\\1base color.png");
+	bitmapRenderer->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\BackGround\\start\\1base color.png");
 	//bitmapRenderer->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\start\\whiteTest.png");
 	bitmapRenderer->SetOrderInLayer(-200);	 		
 	
