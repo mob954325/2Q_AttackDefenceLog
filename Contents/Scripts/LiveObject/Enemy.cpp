@@ -345,6 +345,9 @@ void Enemy::SetNowPattern()
 		// tmpNode가 유효할 때만 벡터에 값을 추가
 		tmp = tmpNode->Node_Number;
 
+		// tmpNode에서 0의 값을 제거!
+		tmp.erase(std::remove(tmp.begin(), tmp.end(), 0), tmp.end());
+
 		// AddPattern 함수 호출
 		m_PattenManager->AddPattern(nowEnemyPattenData->ePatternID, nowEnemyPattenData->eAtkCoolDown, tmp); // 
 	}

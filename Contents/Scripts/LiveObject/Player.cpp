@@ -243,6 +243,7 @@ void Player::SetNowPattern()
 	if (tmpNode != nullptr)
 	{
 		tmp = tmpNode->Node_Number;
+		tmp.erase(std::remove(tmp.begin(), tmp.end(), 0), tmp.end());
 	}
 
 	// 두 번째 패턴 데이터 가져오기
@@ -250,6 +251,7 @@ void Player::SetNowPattern()
 	if (tmpNode2 != nullptr)
 	{
 		tmp2 = tmpNode2->Node_Number;
+		tmp2.erase(std::remove(tmp2.begin(), tmp2.end(), 0), tmp2.end());
 	}
 
 	// 원래 100 자리에 공격 패턴이 떠있는 시간이 들어가나 플레이어는 없음으로 임의의 큰 숫자 100 을 넣음
