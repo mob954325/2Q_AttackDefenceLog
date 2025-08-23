@@ -177,7 +177,7 @@ void PatternControlObject::OnCreate()
 	bettletmp->onParry.Add([this](int nodeIndex)
 		{
 			this->effectInstances[nodeIndex - 1]->DoParry(nodeIndex - 1);
-			signBoard->ShowParrySign();
+			signBoard->ShowParrySign();			
 		});
 
 	// OnGuard 이벤트 추가
@@ -263,6 +263,7 @@ void PatternControlObject::OnCreate()
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(csm, "ChargedSlashManager");
 
 	signBoard = owner->AddComponent<SignBoard>();	
+	battleBoard = owner->AddComponent<BattleBoard>();
 }
 
 //===================================================================================================
@@ -416,8 +417,13 @@ void PatternControlObject::OnUpdate() // 업데이트
 		std::reverse(pttt.begin(), pttt.end()); // 뒤집어서 집어넣음
 		bt->SetInputNode(pttt);
 
-
 		std::cout << std::endl << std::endl;
+
+
+		//테스트 코드, 이후 삭제해야함
+		battleBoard->Parry();
+
+		//테스트 코드, 이후 삭제해야함
 	}
 
 	//===================================================================================================

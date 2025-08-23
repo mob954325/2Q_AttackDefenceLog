@@ -199,7 +199,7 @@ void BettleManager::SetStateFormPatternEnemyGroggy()// 적 그로기 상태에 �
 	{
 		// 연격 패턴 이벤트 호출
 		onFinalBlow.Invoke(); // 외부에 공격 준비를 알림(총알이 장전된거임)
-		allDistancePercent = m_PattenManager->OnceAllNodePatternDistance(nowNode); // 연격 길이 퍼센트 반환
+		allDistancePercent = m_PattenManager->NodePatternDistance(nowNode, false); // 연격 길이 퍼센트 반환
 	}
 
 	tmpAttackNode = nowNode;   //연격을 임시 벡터에 저장!!
@@ -251,7 +251,7 @@ void BettleManager::SetStateFormPatternIdle()
 			else // 회피 실패
 			{
 				m_Player->SetState("Player_Hit");   			// 플레이어 상태 변경 -> 플레이어 피격
-				m_Player->GetDamage(ConvertHPDamageToPos(pair.second->lastPosition, m_Enemy->GetAttack())); // 상중하 적용한 데미지
+				m_Player->GetDamage( m_Enemy->GetAttack()); // 상중하 적용한 데미지
 
 				if (HitAnimeCount2 < 9)
 				{
@@ -273,11 +273,11 @@ void BettleManager::SetStateFormPatternIdle()
 			// 기세 계산
 
 			if (m_Player->GetIsGroggy()) {
-				m_Player->GetDamage(ConvertSpiritDamageToPos(pair.second->lastPosition, m_Enemy->GetSpiritAttack()));		// 플레이어는 데미지 받음
+				m_Player->GetDamage((pair.second->lastPosition, m_Enemy->GetSpiritAttack()));		// 플레이어는 데미지 받음
 			}
 			else {
-				m_Enemy->RestoreSpiritDamage(ConvertSpiritDamageToPos(pair.second->lastPosition, m_Enemy->GetSpiritAttack()));	// 적은기세를 회복
-				m_Player->GetSpiritdamage(ConvertSpiritDamageToPos(pair.second->lastPosition, m_Enemy->GetSpiritAttack()));		// 플레이어는 기세를 잃음
+				m_Enemy->RestoreSpiritDamage(m_Enemy->GetSpiritAttack());	// 적은기세를 회복
+				m_Player->GetSpiritdamage( m_Enemy->GetSpiritAttack());		// 플레이어는 기세를 잃음
 			}
 
 
@@ -287,184 +287,177 @@ void BettleManager::SetStateFormPatternIdle()
 
 	if (nowNode.size() < 1) return; // 플레이어가 입력한 노드가 없으면 무시
 
-	pattern* tmpCorPatten = m_PattenManager->CorrectPattern(nowNode); // 현재 들어온 노드 index들
+	//pattern* tmpCorPatten = m_PattenManager->CorrectPattern(nowNode); // 현재 들어온 노드 index들
+	pattern* DefCorPatten = m_PattenManager->CheckDefencePattern(nowNode); // 현재 들어온 노드랑 적 공격이랑 패턴이 맞았는지
+	pattern* AtkCorPatten = m_PattenManager->CheckAttackPattern(nowNode); // 현재 들어온 노드랑 플레이어의 공격이 알맞는지
 
-	// 입력이 적, 플레이어의 패턴과 맞을 경우
-	if (tmpCorPatten != nullptr)
-	{
-		if (tmpCorPatten->PattenID.substr(0, 2) == "EP") // 적 노드일 때
+	if (DefCorPatten != nullptr) {
+		//방어 성공 처리
+		m_Enemy->SetState("Enemy_AttackSuccess");				// 적 상태 변경 -> 적 공격 성공
+		if ((DefCorPatten->PlayingAttackTime) <= 0.7f)			// 플레이어가 0.5초 이내에 가드시 -> 패링
 		{
-			m_Enemy->SetState("Enemy_AttackSuccess");				// 적 상태 변경 -> 적 공격 성공
-			if ((tmpCorPatten->PlayingAttackTime) <= 0.7f)			// 플레이어가 0.5초 이내에 가드시 -> 패링
-			{
-				std::vector<int> tmp = tmpCorPatten->NodePatten;	// 플레이어 입력한 노드
-				tmp.erase(std::remove(tmp.begin(), tmp.end(), 0), tmp.end());
+			std::vector<int> tmp = DefCorPatten->NodePatten;	// 플레이어 입력한 노드
+			tmp.erase(std::remove(tmp.begin(), tmp.end(), 0), tmp.end());
 
-				onParry.Invoke(tmp.back());		// 패링 이벤트 델리게이트 호출
+			onParry.Invoke(tmp.back());		// 패링 이벤트 델리게이트 호출
 
-				m_Player->SetState("Player_Perry"); // 플레이어 상태 변경 -> 플레이어 패링 상태
-				
-				
-				std::vector<Vector2> PlayerPerry = { { RandomHitPos_x(PerryRect01), RandomHitPos_y(PerryRect01) } ,
-					{ RandomHitPos_x(PerryRect02), RandomHitPos_y(PerryRect02) },
-				{ RandomHitPos_x(PerryRect03), RandomHitPos_y(PerryRect03) } };
-				m_Player->CallPerryEffect(PlayerPerry);
-
-				//패리사운드
-				IndexNum = static_cast<int>(RandomSound2());
-				auto SoundCom = owner->GetQuery()->FindByName("SOUNDSTAGE");
-				switch(IndexNum)
-				{
-				case 0:
-					if (SoundCom) {
-						SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Parry01");
-						SoundCom->GetComponent<SoundPlayScene>()->PlaySound();;
-					}
-					break;
-				case 1:
-					if (SoundCom) {
-						SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Parry02");
-						SoundCom->GetComponent<SoundPlayScene>()->PlaySound();;
-					}
-					break;
-				case 2:
-					if (SoundCom) {
-						SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Parry03");
-						SoundCom->GetComponent<SoundPlayScene>()->PlaySound();;
-					}
-					break;
-				}
-
-				// 패링에 따른 기세값 반영
-				if (!m_Player->GetIsGroggy()) {
-					m_Player->RestoreSpiritDamage(ConvertSpiritDamageToPos(tmpCorPatten->lastPosition, m_Enemy->GetSpiritAttack()));
-					m_Enemy->GetSpiritdamage(ConvertSpiritDamageToPos(tmpCorPatten->lastPosition, m_Enemy->GetSpiritAttack()));
-				}
-			}
-			else // 플레이어 패링 실패
-			{
-				std::vector<int> tmp = tmpCorPatten->NodePatten;
-				tmp.erase(std::remove(tmp.begin(), tmp.end(), 0), tmp.end());
-				onGuard.Invoke(tmp.back());
-
-				m_Player->SetState("Player_Guard");		// 플레이어 상태 변경 -> 플레이어 방어
-				
-				//가드사운드
-				IndexNum = static_cast<int>(RandomSound());
-				auto SoundCom = owner->GetQuery()->FindByName("SOUNDSTAGE");
-				switch (IndexNum)
-				{
-				case 0:
-					if (SoundCom) {
-						SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Guard01");
-						SoundCom->GetComponent<SoundPlayScene>()->PlaySound();;
-					}
-					break;
-				case 1:
-					if (SoundCom) {
-						SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Guard02");
-						SoundCom->GetComponent<SoundPlayScene>()->PlaySound();;
-					}
-					break;
-				}
-
-				Vector2 PlayerPerryP = { RandomHitPos_x(GuardPlayer), RandomHitPos_y(GuardPlayer) };
-				m_Player->CallGuardEffect(0 , PlayerPerryP);
+			m_Player->SetState("Player_Perry"); // 플레이어 상태 변경 -> 플레이어 패링 상태
 
 
-				// 패링 실패에 따른 기세값 변경
-				if (m_Player->GetIsGroggy()) {
-					m_Player->GetDamage(ConvertSpiritDamageToPos(tmpCorPatten->lastPosition, m_Enemy->GetSpiritAttack()));
-				}
-				else {
-					m_Enemy->RestoreSpiritDamage(ConvertSpiritDamageToPos(tmpCorPatten->lastPosition, m_Enemy->GetSpiritAttack()));
-					m_Player->GetSpiritdamage(ConvertSpiritDamageToPos(tmpCorPatten->lastPosition, m_Enemy->GetSpiritAttack()));
-				}
+			std::vector<Vector2> PlayerPerry = { { RandomHitPos_x(PerryRect01), RandomHitPos_y(PerryRect01) } ,
+				{ RandomHitPos_x(PerryRect02), RandomHitPos_y(PerryRect02) },
+			{ RandomHitPos_x(PerryRect03), RandomHitPos_y(PerryRect03) } };
+			m_Player->CallPerryEffect(PlayerPerry);
 
-			}
-
-			
-
-
-
-
-			m_PattenManager->SubPattern(tmpCorPatten->PattenID, "Enemy"); // 적 패턴 제거
-		}
-		else // 플레이어 공격 노드 - 패턴 이름이 PI_ 일 때
-		{
-			m_Player->SetState("Player_AttackSuccess");	// 플레이어 상태 변경 -> 플레이어 공격 성공
-			m_Player->SetEndAttack();					// isAttackingPattern = true 
-			//공격성공사운드
+			//패리사운드
 			IndexNum = static_cast<int>(RandomSound2());
 			auto SoundCom = owner->GetQuery()->FindByName("SOUNDSTAGE");
 			switch (IndexNum)
 			{
 			case 0:
 				if (SoundCom) {
-					SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Attack01");
+					SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Parry01");
 					SoundCom->GetComponent<SoundPlayScene>()->PlaySound();;
 				}
 				break;
 			case 1:
 				if (SoundCom) {
-					SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Attack02");
+					SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Parry02");
 					SoundCom->GetComponent<SoundPlayScene>()->PlaySound();;
 				}
 				break;
 			case 2:
 				if (SoundCom) {
-					SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Attack03");
+					SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Parry03");
 					SoundCom->GetComponent<SoundPlayScene>()->PlaySound();;
 				}
 				break;
 			}
 
-			// 마지막 노드가 중앙이 아니라면 적이 일정 확률로 회피 
-			if (m_Enemy->GetDefenseRate() >= GameRandom::RandomRange(1, 101) && tmpCorPatten->lastPosition != MiddleNode)
-			{
-				////////////////////////// 적의 방어 //////////////////////
-				m_Enemy->SetState("Enemy_Defence");	// 적 상태 변경 -> 적 회피
-				Vector2 EnemyPerryEff = { RandomHitPos_x(HiteffectEnemy), RandomHitPos_y(HiteffectEnemy) };
-				m_Player->CallGuardEffect(0, EnemyPerryEff);
-				
-
-
-
+			// 패링에 따른 기세값 반영
+			if (!m_Player->GetIsGroggy()) {
+				m_Player->RestoreSpiritDamage(ConvertSpiritDamageToPos(DefCorPatten->lastPosition, m_Enemy->GetSpiritAttack()));
+				m_Enemy->GetSpiritdamage(ConvertSpiritDamageToPos(DefCorPatten->lastPosition, m_Enemy->GetSpiritAttack()));
 			}
-			else // 적 회피 실패
-			{
-
-				////////////////////////// 적 피격 //////////////////
-				m_Enemy->SetState("Enemy_Hit");		// 적 상태 변경 -> 적 피격
-				m_Enemy->GetDamage(ConvertHPDamageToPos(tmpCorPatten->lastPosition, m_Player->GetAttack())); // 적 체력 감소
-				
-
-
-
-
-				if (HitAnimeCount < 9)
-				{
-					Vector2 randomP = { RandomHitPos_x(HiteffectEnemy), RandomHitPos_y(HiteffectEnemy) };
-					float RandomRotate = RandomHitPos_Angle();
-					m_Enemy->CallPlayerHit(HitAnimeCount, randomP, RandomRotate);
-					++HitAnimeCount;
-				}
-				if (HitAnimeCount = 10) HitAnimeCount = 0;
-
-			}
-
-			// 플레이어 공격에 따른 기세 값 변경
-			m_Player->RestoreSpiritDamage(ConvertSpiritDamageToPos(tmpCorPatten->lastPosition, m_Player->GetSpiritAttack()));
-			m_Enemy->GetSpiritdamage(ConvertSpiritDamageToPos(tmpCorPatten->lastPosition, m_Player->GetSpiritAttack()));
-
-			// 플레이어 공격 가이드 패턴 ( A, B ) 파괴 - 점선 화살표 이미지
-			//m_PattenManager->SearchAndDestroyCouple(tmpCorPatten->PattenID);
-			//m_PattenManager->SubPattern(tmpCorPatten->PattenID, "Player");
-			m_PattenManager->PlayerPatternAllClear(); // 저장소에 패턴이 삭제가 안되는 경우도 있음으로 그냥 전부 삭제!!!
 		}
+		else // 플레이어 패링 실패
+		{
+			std::vector<int> tmp = DefCorPatten->NodePatten;
+			tmp.erase(std::remove(tmp.begin(), tmp.end(), 0), tmp.end());
+			onGuard.Invoke(tmp.back());
+
+			m_Player->SetState("Player_Guard");		// 플레이어 상태 변경 -> 플레이어 방어
+
+			//가드사운드
+			IndexNum = static_cast<int>(RandomSound());
+			auto SoundCom = owner->GetQuery()->FindByName("SOUNDSTAGE");
+			switch (IndexNum)
+			{
+			case 0:
+				if (SoundCom) {
+					SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Guard01");
+					SoundCom->GetComponent<SoundPlayScene>()->PlaySound();;
+				}
+				break;
+			case 1:
+				if (SoundCom) {
+					SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Guard02");
+					SoundCom->GetComponent<SoundPlayScene>()->PlaySound();;
+				}
+				break;
+			}
+
+			Vector2 PlayerPerryP = { RandomHitPos_x(GuardPlayer), RandomHitPos_y(GuardPlayer) };
+			m_Player->CallGuardEffect(0, PlayerPerryP);
+
+
+			// 패링 실패에 따른 기세값 변경
+			if (m_Player->GetIsGroggy()) {
+				m_Player->GetDamage(ConvertSpiritDamageToPos(DefCorPatten->lastPosition, m_Enemy->GetSpiritAttack()));
+			}
+			else {
+				m_Enemy->RestoreSpiritDamage( m_Enemy->GetSpiritAttack());
+				m_Player->GetSpiritdamage( m_Enemy->GetSpiritAttack());
+			}
+
+		}
+
+
+		m_PattenManager->SubPattern(DefCorPatten->PattenID, "Enemy"); // 적 패턴 제거
+
 	}
-	else // 입력이 생성된 가이드라인 또는 적 공격과 다른 경우 
-	{
+	else if (DefCorPatten == nullptr && AtkCorPatten != nullptr) {
+		//공격 성공
+		m_Player->SetState("Player_AttackSuccess");	// 플레이어 상태 변경 -> 플레이어 공격 성공
+		m_Player->SetEndAttack();					// isAttackingPattern = true 
+		//공격성공사운드
+		IndexNum = static_cast<int>(RandomSound2());
+		auto SoundCom = owner->GetQuery()->FindByName("SOUNDSTAGE");
+		switch (IndexNum)
+		{
+		case 0:
+			if (SoundCom) {
+				SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Attack01");
+				SoundCom->GetComponent<SoundPlayScene>()->PlaySound();;
+			}
+			break;
+		case 1:
+			if (SoundCom) {
+				SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Attack02");
+				SoundCom->GetComponent<SoundPlayScene>()->PlaySound();;
+			}
+			break;
+		case 2:
+			if (SoundCom) {
+				SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Attack03");
+				SoundCom->GetComponent<SoundPlayScene>()->PlaySound();;
+			}
+			break;
+		}
+
+		// 마지막 노드가 중앙이 아니라면 적이 일정 확률로 회피 
+		if (m_Enemy->GetDefenseRate() >= GameRandom::RandomRange(1, 101) && AtkCorPatten->lastPosition != MiddleNode)
+		{
+			////////////////////////// 적의 방어 //////////////////////
+			m_Enemy->SetState("Enemy_Defence");	// 적 상태 변경 -> 적 회피
+			Vector2 EnemyPerryEff = { RandomHitPos_x(HiteffectEnemy), RandomHitPos_y(HiteffectEnemy) };
+			m_Player->CallGuardEffect(0, EnemyPerryEff);
+
+
+		}
+		else // 적 회피 실패
+		{
+
+			////////////////////////// 적 피격 //////////////////
+			m_Enemy->SetState("Enemy_Hit");		// 적 상태 변경 -> 적 피격
+			float tmpDamage = m_PattenManager->NodePatternDistance(nowNode, true);
+			m_Enemy->GetDamage(ConvertHPDamageToPos(AtkCorPatten->lastPosition, m_Player->GetAttack() * tmpDamage)); // 적 체력 감소
+
+
+			if (HitAnimeCount < 9)
+			{
+				Vector2 randomP = { RandomHitPos_x(HiteffectEnemy), RandomHitPos_y(HiteffectEnemy) };
+				float RandomRotate = RandomHitPos_Angle();
+				m_Enemy->CallPlayerHit(HitAnimeCount, randomP, RandomRotate);
+				++HitAnimeCount;
+			}
+			if (HitAnimeCount = 10) HitAnimeCount = 0;
+
+		}
+
+		// 플레이어 공격에 따른 기세 값 변경
+		m_Player->RestoreSpiritDamage(ConvertSpiritDamageToPos(AtkCorPatten->lastPosition, m_Player->GetSpiritAttack()));
+		m_Enemy->GetSpiritdamage(ConvertSpiritDamageToPos(AtkCorPatten->lastPosition, m_Player->GetSpiritAttack()));
+
+		m_PattenManager->PlayerPatternAllClear(); // 저장소에 패턴이 삭제가 안되는 경우도 있음으로 그냥 전부 삭제!!!
+
+
+		m_PattenManager->SetDefenceIsfailControl(false); //공격 성공했음으로 실패처리를 안함!!
+
+	}
+
+	else if (DefCorPatten == nullptr && AtkCorPatten == nullptr) {
+		//실패 처리
 		pattern* tmpPatten = m_PattenManager->failPattern(nowNode);	// 입력한 플레이어 노드 인덱스 목록
 		if (tmpPatten != nullptr) // 실패한 패턴이 있는 경우
 		{
@@ -543,7 +536,9 @@ void BettleManager::SetStateFormPatternIdle()
 				m_PattenManager->SubPattern(tmpPatten->PattenID, "Player");
 			}
 		}
+
 	}
+
 	nowNode.clear(); // 플레이어 입력 노드 초기화
 }
 

@@ -33,19 +33,20 @@ void SignBoard::OnStart()
 		render->SetUseCustomRect(true);
 		render->SetDestRect(dest);
 		render->SetSrcRect(src);
-
-		bm->GetTransform().SetPosition((EngineData::SceenWidth / 2.0f) - size.width / 6.0f, 150.0f);
+				
+		bm->GetTransform().SetOffset(-size.width / 6.0f, size.height / 6.0f);		
+		bm->GetTransform().SetPosition((EngineData::SceenWidth / 2.0f), 200.0f);
 
 		render->SetActive(false);
 		signBitmaps.push_back(render);
 		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(bm);
-	}	
+	}
 }
 
 void SignBoard::OnUpdate()
 {
 	if (!isPlay) return;
-	
+
 
 	float delta = Singleton<GameTime>::GetInstance().GetDeltaTime();
 
@@ -58,7 +59,7 @@ void SignBoard::OnUpdate()
 		progress = 0.0f;
 		ClearAllSigns();
 	}
-	
+
 
 }
 
@@ -72,7 +73,7 @@ void SignBoard::ShowHighSign()
 	isPlay = true;
 	progress = 1.0f;
 	type = HighAttackSign;
-	signBitmaps[type]->SetActive(true);	
+	signBitmaps[type]->SetActive(true);
 }
 
 void SignBoard::ShowMiddleSign()
@@ -81,7 +82,7 @@ void SignBoard::ShowMiddleSign()
 	isPlay = true;
 	progress = 1.0f;
 	type = MiddleAttackSign;
-	signBitmaps[type]->SetActive(true);	
+	signBitmaps[type]->SetActive(true);
 }
 
 void SignBoard::ShowLowSign()
@@ -101,7 +102,7 @@ void SignBoard::ShowParrySign()
 	isPlay = true;
 	progress = 1.0f;
 	type = ParrySign;
-	signBitmaps[type]->SetActive(true);	
+	signBitmaps[type]->SetActive(true);
 }
 
 void SignBoard::ShowGuardSign()
@@ -119,7 +120,7 @@ void SignBoard::ClearAllSigns()
 {
 	for (int i = 0; i < signBitmaps.size(); ++i) {
 		signBitmaps[i]->SetActive(false);
-	}	
+	}
 }
 
 

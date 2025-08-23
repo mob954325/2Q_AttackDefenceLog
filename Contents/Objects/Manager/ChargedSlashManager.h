@@ -81,8 +81,10 @@ protected:
 	InputSystem* inputSys; // 쓰기 편하게 빼둠
 	BitmapRenderer* bitmapRenderer; // 마찬가지
 
-	BitmapRenderer* aa; // 마찬가지
-	BitmapRenderer* cc; // 마찬가지
+	//BitmapRenderer* aa; // 마찬가지
+	BitmapRenderer* pressDotInfo;
+	BitmapRenderer* slashLineInfo;
+//	BitmapRenderer* cc; // 마찬가지
 
 	D2D1_SIZE_F size;
 

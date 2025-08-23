@@ -292,13 +292,16 @@
     <ClCompile Include="Scripts\Camera\CamInstance.cpp">
       <Filter>Scripts\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="Objects\Common\SignBoard.cpp">
-      <Filter>Objects</Filter>
-    </ClCompile>
     <ClCompile Include="Scripts\SelectSeal\SelectSeal.cpp" />
     <ClCompile Include="Vignette.cpp" />
     <ClCompile Include="Scripts\End\EndBackground.cpp" />
     <ClCompile Include="Scripts\BubbleBox\BubbleEnd.cpp" />
+    <ClCompile Include="Objects\Common\SignBoard.cpp">
+      <Filter>Objects\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Common\BattleBoard.cpp">
+      <Filter>Objects\Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameApp.h">
@@ -509,12 +512,15 @@
     <ClInclude Include="Scripts\Camera\CamInstance.h">
       <Filter>Scripts\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\Common\SignBoard.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\SelectSeal\SelectSeal.h" />
     <ClInclude Include="Vignette.h" />
     <ClInclude Include="Scripts\End\EndBackground.h" />
     <ClInclude Include="Scripts\BubbleBox\BubbleEnd.h" />
+    <ClInclude Include="Objects\Common\SignBoard.h">
+      <Filter>Objects\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Common\BattleBoard.h">
+      <Filter>Objects\Common</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

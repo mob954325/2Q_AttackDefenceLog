@@ -46,9 +46,15 @@ public:
 	void SubPattern(std::string ID, std::string StorageType);
 
 	// 패턴 검사 로직
-	pattern* CorrectPattern(std::vector<int> PatternID);
+	pattern* CorrectPattern(std::vector<int> PatternID);      // 아마 안쓸듯? 이식 성공시 삭제 예정
+	pattern* CheckDefencePattern(std::vector<int> PatternID); // 적의 패턴을 방어할 패턴을 검사하는 함수
+	pattern* CheckAttackPattern(std::vector<int> PatternID);  // 공격 패턴을 검사하는 함수
+
 	pattern* failPattern(std::vector<int> PatternID);
-	float OnceAllNodePatternDistance(std::vector<int> PatternID);  // 노드를 받고 그 거리를 계산함
+
+	void SetDefenceIsfailControl(bool isFail); // 적 storage에 있는 pattern의 isfail에 값을 전부 조절하는 함수 
+
+	float NodePatternDistance(std::vector<int> PatternID, bool isNormal);  // 노드를 받고 그 거리를 계산함
 
 	/// <summary>
 	/// 패턴 시간 종료시 종료된 패턴 내용을 반환하는 함수
@@ -94,11 +100,8 @@ private:
 	std::unordered_map<std::string, pattern*> tmpTimeOutPattern;
 	std::unordered_map<std::string, pattern*> timeOutPattern;
 	AttackPosition ConvertEndNodeToPosition(int endNode); // 끝의 노드를 enum (상, 중, 하) 로 바꿔주는 함수!
-	
+	float CalDistance(int node1, int node2); // 거리계산함수
+	//Vector2 NodeConvertMap(int node);        // 노드를 좌표로 바꿔주는 함수
 
 };
 
-struct Pointxy {
-	int x = 0;
-	int y = 0;
-};

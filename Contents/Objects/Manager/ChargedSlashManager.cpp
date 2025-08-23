@@ -12,18 +12,18 @@ void ChargedSlashManager::OnCreate()
 {
 	GameObject* c = new GameObject();
 	c->SetRenderLayer(EngineData::RenderLayer::UI);
-	cc = c->AddComponent<BitmapRenderer>();
-	cc->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\press_dot_stage_text.png");
-	cc->SetOrderInLayer(1001);
-	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(c, "ccccccccc.");
+	pressDotInfo = c->AddComponent<BitmapRenderer>();
+	pressDotInfo->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\press_dot_stage_text.png");
+	pressDotInfo->SetOrderInLayer(1001);
+	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(c, "pressDotInfo.");
 
 
 	GameObject* a = new GameObject();
 	a->SetRenderLayer(EngineData::RenderLayer::UI);
-	aa = a->AddComponent<BitmapRenderer>();
-	aa->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\aaaaa.png"); // 선을 그어라
-	aa->SetOrderInLayer(1002);
-	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(a, "aaaaaaaa.");
+	slashLineInfo = a->AddComponent<BitmapRenderer>();
+	slashLineInfo->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\drawing_line_stage_text.png"); // 선을 그어라
+	slashLineInfo->SetOrderInLayer(1002);
+	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(a, "slashLineInfo.");
 
 }
 
@@ -48,13 +48,13 @@ void ChargedSlashManager::OnStart()
 
 
 
-	cc->owner->GetTransform().SetUnityCoords(false); // 노드가 D2D좌표계임
-	cc->owner->GetTransform().SetOffset(-192.0f, 108.0f  );
-	cc->SetActive(false);
+	pressDotInfo->owner->GetTransform().SetUnityCoords(false); // 노드가 D2D좌표계임
+	pressDotInfo->owner->GetTransform().SetOffset(-192.0f, 108.0f  );
+	pressDotInfo->SetActive(false);
 	
-	aa->owner->GetTransform().SetUnityCoords(false); // 노드가 D2D좌표계임
-	aa->owner->GetTransform().SetOffset(-192.0f, 108.0f);
-	aa->SetActive(false);
+	slashLineInfo->owner->GetTransform().SetUnityCoords(false); // 노드가 D2D좌표계임
+	slashLineInfo->owner->GetTransform().SetOffset(-192.0f, 108.0f);
+	slashLineInfo->SetActive(false);
 
 
 
@@ -100,7 +100,7 @@ void ChargedSlashManager::OnUpdate() {
 
 
 	if (Input::leftButtonDown) {
-		cc->SetActive(false);
+		pressDotInfo->SetActive(false);
 		if (CheckMouseInside()) {		// [1] 좌클릭을 누른 상태 + 차징 범위 내부에 있으면 델타 증가
 			if(timer == 0.0f)
 				eff->CallEffect(EffectType::ChargeEffect, nowPos); // 아무튼 한번만 호출되죠?
@@ -146,7 +146,7 @@ void ChargedSlashManager::OnUpdate() {
 
 	if (!isCharged && timer >= chargeTimeRequired) {
 		isCharged = true;
-		aa->SetActive(true);
+		slashLineInfo->SetActive(true);
 		std::cout << "차징 완료!!!!!" << std::endl;
 	}
 
@@ -180,7 +180,7 @@ void ChargedSlashManager::Start(int n) { // 1~9의 값이 들어옴
 	owner->GetTransform().SetPosition(nowPos.x, nowPos.y); // 노드의 좌표로 오너를 옮김
 
 	bitmapRenderer->SetActive(true);
-	cc->SetActive(true);
+	pressDotInfo->SetActive(true);
 	isPlay = true;
 
 
@@ -226,8 +226,8 @@ void ChargedSlashManager::Cancel() {
 	nowNormalVec = { 0,0 };
 	nowPos = { 0, 0 };
 	bitmapRenderer->SetActive(false);
-	cc->SetActive(false);
-	aa->SetActive(false);
+	pressDotInfo->SetActive(false);
+	slashLineInfo->SetActive(false);
 	isPlay = false;
 	isHide = true;
 	isMoveDone = false;
@@ -256,8 +256,8 @@ void ChargedSlashManager::Slashing(Vector2 pos, float time)
 		//fff->CallAnime(std::atan2(nowPos.y, nowPos.x) * 2 * PI );
 		fff->CallAnime(std::atan2(nowNormalVec.y, nowNormalVec.x) * (180.0f / PI));
 		onFinisherSuccess.Invoke(); // 성공했다고 외부에 알려줌 << 인자 뭐 넣어줘야 할지도 모르겠네
-		aa->SetActive(false);
-		cc->SetActive(false);
+		slashLineInfo->SetActive(false);
+		pressDotInfo->SetActive(false);
 		auto camIns = owner->GetQuery()->FindByName("CAM");
 		if (camIns) {
 			camIns->GetComponent<CamInstance>()->Start(2.0f, 10.0f, 30.0f, ShakeType::X_Y);
@@ -293,8 +293,8 @@ void ChargedSlashManager::Reset() // 차징을 실패한다거나, 마우스가 
 	mouseTimer = 0.0f;
 	timer = 0.0f;
 	isCharged = false;
-	cc->SetActive(true); // 실패하면 다시 뜸
-	aa->SetActive(false);
+	pressDotInfo->SetActive(true); // 실패하면 다시 뜸
+	slashLineInfo->SetActive(false);
 }
 
 void ChargedSlashManager::HideOrRevealFilter(float dt) // 델타를 받음
