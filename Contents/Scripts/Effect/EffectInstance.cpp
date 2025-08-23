@@ -122,7 +122,8 @@ void EffectInstance::OnCreate()
 	Emanager->GetParticleComponent(0)->SetDuration(0.8f);
 	Emanager->GetParticleComponent(0)->SetFadeOutTime(0.7f);
 	Emanager->GetParticleComponent(0)->SetAmount(20);
-	Emanager->GetParticleComponent(0)->SetAnimPlayer(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Particles\\SparkSheet.png",
+	//C:\Users\A\Documents\GitHub\Kyu\Resource\Sprites\Effect\Parry
+	Emanager->GetParticleComponent(0)->SetAnimPlayer(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\Effect\\Parry\\SparkSheet.png",
 		Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Json\\spark\\SparkSheet_sprites.json",
 		Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Json\\spark\\Red_Spark_anim.json");
 	Emanager->GetParticleComponent(0)->SetShowType(ParticleShowType::RandomSingle);
