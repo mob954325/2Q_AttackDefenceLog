@@ -13,7 +13,7 @@ void ChargedSlashManager::OnCreate()
 	GameObject* c = new GameObject();
 	c->SetRenderLayer(EngineData::RenderLayer::UI);
 	pressDotInfo = c->AddComponent<BitmapRenderer>();
-	pressDotInfo->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\press_dot_stage_text.png");
+	pressDotInfo->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\BattlePanel\\GuideText\\press_dot_stage_text.png");
 	pressDotInfo->SetOrderInLayer(1001);
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(c, "pressDotInfo.");
 
@@ -21,7 +21,7 @@ void ChargedSlashManager::OnCreate()
 	GameObject* a = new GameObject();
 	a->SetRenderLayer(EngineData::RenderLayer::UI);
 	slashLineInfo = a->AddComponent<BitmapRenderer>();
-	slashLineInfo->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\drawing_line_stage_text.png"); // 선을 그어라
+	slashLineInfo->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\BattlePanel\\GuideText\\drawing_line_stage_text.png"); // 선을 그어라
 	slashLineInfo->SetOrderInLayer(1002);
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(a, "slashLineInfo.");
 
@@ -39,7 +39,7 @@ void ChargedSlashManager::OnStart()
 	owner->SetRenderLayer(EngineData::RenderLayer::UI);
 	inputSys = owner->AddComponent<InputSystem>(); 
 	bitmapRenderer = owner->AddComponent<BitmapRenderer>();
-	bitmapRenderer->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Mouse\\ui01.png");
+	bitmapRenderer->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\Mouse\\ui01.png");
 	bitmapRenderer->SetOrderInLayer(100);
 	size = bitmapRenderer->GetResource()->GetBitmap()->GetSize();
 	owner->GetTransform().SetUnityCoords(false); // 노드가 D2D좌표계임
@@ -61,7 +61,7 @@ void ChargedSlashManager::OnStart()
 
 
 	//그거임 좌우 상단에 필터 설정해주는 부분
-	auto basePath = Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\filter\\";
+	auto basePath = Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\BackGround\\filter\\";
 	std::wstring files[] = { L"left_filter_black.png", L"left_filter_gradient.png", L"right_filter_black.png" , L"right_filter_gradient.png" };
 
 	filter.clear();

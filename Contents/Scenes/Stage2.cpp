@@ -89,7 +89,7 @@ void Stage2::OnEnterImpl()
 
 	GameObject* enemyProfileUIObj = new GameObject();
 	auto enemyProfileComp = enemyProfileUIObj->AddComponent<StageEnemyProfile>();
-	enemyProfileComp->SetProfileImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\ProfileUI\\enemy1_ui.png");
+	enemyProfileComp->SetProfileImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\StageTop\\ProfileUI\\enemy1_ui.png");
 	enemyProfileComp->owner->GetTransform().SetPosition(EngineData::SceenWidth * 0.95f, 1);
 	AddGameObject(enemyProfileUIObj, "enemyProfileUIObj");
 

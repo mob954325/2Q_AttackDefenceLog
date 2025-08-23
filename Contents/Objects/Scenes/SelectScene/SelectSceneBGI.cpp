@@ -9,7 +9,7 @@ void SelectSceneBGI::OnStart()
 	owner->GetTransform().SetUnityCoords(true);
 
 	bitmapRenderer = owner->AddComponent<BitmapRenderer>();
-	bitmapRenderer->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\stage3_background.png"); // NOTE : 임시 배경화면
+	bitmapRenderer->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\BackGround\\stage3_background.png");
 	bitmapRenderer->SetOrderInLayer(-200);
 
 	size = bitmapRenderer->GetResource()->GetBitmap()->GetSize();

@@ -8,7 +8,7 @@ void StageTopUI::OnCreate()
 	owner->SetRenderLayer(EngineData::UI);
 	owner->GetTransform().SetUnityCoords(false);
 	topUI = owner->AddComponent<BitmapRenderer>();
-	topUI->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\HP\\ui_frame.png");
+	topUI->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\StageTop\\ui_frame.png");
 }
 
 void StageTopUI::OnStart()

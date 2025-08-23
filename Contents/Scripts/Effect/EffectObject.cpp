@@ -12,7 +12,7 @@ void EffectObject::OnCreate()
 {
 	Effect = owner->AddComponent<BitmapRenderer>();	
 	Effect->SetUseCustomRect(true);
-	Effect->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Particles\\circle_outer.png");
+	Effect->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\Effect\\Parry\\circle_outer.png");
 	Effectsize = Effect->GetResource()->GetBitmap()->GetSize();
 }
 

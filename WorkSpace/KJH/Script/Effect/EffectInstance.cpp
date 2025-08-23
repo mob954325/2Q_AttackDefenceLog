@@ -80,14 +80,14 @@ void EffectInstance::OnStart()
 	Emanager->CreateEffectObject(7);
 	Emanager->CreateParticleObject(2);
 	//패리
-	Emanager->SetEffectImage(0, Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Particles\\circle_outer.png");
-	Emanager->SetEffectImage(1, Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Particles\\circle_inner.png");
-	Emanager->SetEffectImage(2, Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Particles\\line_horizon.png");
+	Emanager->SetEffectImage(0, Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Sprites\\Effect\\Parry\\circle_outer.png");
+	Emanager->SetEffectImage(1, Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Sprites\\Effect\\Parry\\circle_inner.png");
+	Emanager->SetEffectImage(2, Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Sprites\\Effect\\Parry\\line_horizon.png");
 	//방어
-	Emanager->SetEffectImage(3, Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Particles\\defend\\circle_inner.png");
-	Emanager->SetEffectImage(4, Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Particles\\defend\\horizon_line.png");
-	Emanager->SetEffectImage(5, Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Particles\\nomal\\combo_node_outer_circle.png");
-	Emanager->SetEffectImage(6, Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Particles\\nomal\\combo_node_inner_circle.png");
+	Emanager->SetEffectImage(3, Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Sprites\\Effect\\Guard\\circle_inner.png");
+	Emanager->SetEffectImage(4, Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Sprites\\Effect\\Guard\\horizon_line.png");
+	Emanager->SetEffectImage(5, Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Sprites\\Effect\\Combo\\combo_node_outer_circle.png");
+	Emanager->SetEffectImage(6, Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Sprites\\Effect\\Combo\\combo_node_inner_circle.png");
 
 
 
@@ -109,8 +109,8 @@ void EffectInstance::OnStart()
 	Emanager->GetParticleComponent(0)->SetFadeOutTime(0.7f);
 	Emanager->GetParticleComponent(0)->SetAmount(50);
 	Emanager->GetParticleComponent(0)->SetAnimPlayer(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Particles\\SparkSheet.png",
-		Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Json\\SparkSheet\\SparkSheet_sprites.json",
-		Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Json\\SparkSheet\\Red_Spark_anim.json");
+		Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Json\\spark\\SparkSheet_sprites.json",
+		Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Json\\spark\\Red_Spark_anim.json");
 	Emanager->GetParticleComponent(0)->SetShowType(ParticleShowType::RandomSingle);
 	Emanager->GetParticleComponent(0)->SetGravity(false);
 	Emanager->GetParticleComponent(0)->SetSeeDirection(true);
@@ -123,9 +123,9 @@ void EffectInstance::OnStart()
 	Emanager->GetParticleComponent(1)->SetDuration(0.8f);
 	Emanager->GetParticleComponent(1)->SetFadeOutTime(0.7f);
 	Emanager->GetParticleComponent(1)->SetAmount(25);
-	Emanager->GetParticleComponent(1)->SetAnimPlayer(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Particles\\defend\\ParticleGuard.png",
-		Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Json\\SparkSheet\\ParticleGuard_sprites.json",
-		Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Json\\SparkSheet\\ParticleGuard_Guard_anim.json");
+	Emanager->GetParticleComponent(1)->SetAnimPlayer(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Sprites\\Effect\\Guard\\ParticleGuard.png",
+		Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Json\\spark\\ParticleGuard_sprites.json",
+		Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Json\\spark\\ParticleGuard_Guard_anim.json");
 	Emanager->GetParticleComponent(1)->SetShowType(ParticleShowType::RandomSingle);
 	Emanager->GetParticleComponent(1)->SetGravity(false);
 	Emanager->GetParticleComponent(1)->SetSeeDirection(true);
@@ -140,8 +140,8 @@ void EffectInstance::OnStart()
 		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(obj);
 		obj->GetComponent<AnimationRenderer>()->SetActive(false);
 		obj->GetComponent<AnimationRenderer>()->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Particles\\attack_circle_spreadsheet.png");
-		obj->GetComponent<AnimationRenderer>()->SetSpriteSheet(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Json\\attack_circle_sprites.json");
-		obj->GetComponent<AnimationRenderer>()->SetAnimationClip(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Json\\attack_circle_anim.json");
+		obj->GetComponent<AnimationRenderer>()->SetSpriteSheet(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Json\\attack\\attack_circle_sprites.json");
+		obj->GetComponent<AnimationRenderer>()->SetAnimationClip(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Json\\attack\\attack_circle_anim.json");
 		obj->GetComponent<AnimationRenderer>()->GetAnimationPlayer()->Pause();
 		AnimeList.push_back(obj);
 	}

@@ -11,12 +11,12 @@ void SelectSeal::OnCreate()
 	// owner->GetTransform().SetUnityCoords(false);
 
 	left = owner->AddComponent<BitmapRenderer>();
-	left->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\Seal\\seal_breaking_02.png");
+	left->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\Seal\\seal_breaking_02.png");
 	left->SetUseCustomRect(true);
 	left->SetOrderInLayer(1000);
 	
 	right = owner->AddComponent<BitmapRenderer>();
-	right->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\Seal\\seal_breaking_01.png");
+	right->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\Seal\\seal_breaking_01.png");
 	right->SetUseCustomRect(true);
 	right->SetOrderInLayer(1000);
 }

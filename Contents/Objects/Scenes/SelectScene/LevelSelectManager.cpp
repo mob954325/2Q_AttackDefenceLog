@@ -13,9 +13,9 @@ void LevelSelectManager::OnStart()
 {
 	CreateMenuObjects();
 
-	objs[0]->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\diffcult\\easy_ui.png");
-	objs[1]->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\diffcult\\nomal_ui.png");
-	objs[2]->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\diffcult\\difficult_ui.png");
+	objs[0]->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\diffcult\\easy_ui.png");
+	objs[1]->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\diffcult\\nomal_ui.png");
+	objs[2]->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\diffcult\\difficult_ui.png");
 
 	objs[0]->owner->GetTransform().SetPosition(-400, 0);
 	objs[1]->owner->GetTransform().SetPosition(0, 0);

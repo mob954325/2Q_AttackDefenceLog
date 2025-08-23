@@ -1,0 +1,7 @@
+json - .json 파일 집합소
+
+sounds - 소리 관련 파일 집합소
+
+sprites - contents, engine에서 사용하는 모든 이미지 파일 모음
+
+DataTable - 이전 데이터 테이블 모음

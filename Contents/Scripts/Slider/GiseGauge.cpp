@@ -39,8 +39,8 @@ void GiseGauge::OnStart()
 
 	sliderobj = owner->GetComponent<Slider>();
 	sliderobj->ButtonShow(false);
-	sliderobj->SetGaugeBackgroundImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\Slider\\gise_ui_white.png");
-	sliderobj->SetGaugeBarImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\Slider\\gise_ui_black.png");
+	sliderobj->SetGaugeBackgroundImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\Slider\\gise_ui_white.png");
+	sliderobj->SetGaugeBarImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\Slider\\gise_ui_black.png");
 
 
 	currentgague = sliderobj->GetGaugeBarImage()->GetResource()->GetBitmap()->GetSize().width;
@@ -52,9 +52,9 @@ void GiseGauge::OnStart()
 	obj->SetName(std::string("Button"));
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(obj);
 
-	obj->GetComponent<AnimationRenderer>()->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\Slider\\force_clash_spreadsheet.png");
-	obj->GetComponent<AnimationRenderer>()->SetSpriteSheet(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Json\\force_clash_spreadsheet_sprites.json");
-	obj->GetComponent<AnimationRenderer>()->SetAnimationClip(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Json\\force_clash_spreadsheet_anim.json");
+	obj->GetComponent<AnimationRenderer>()->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\Slider\\force_clash_spreadsheet.png");
+	obj->GetComponent<AnimationRenderer>()->SetSpriteSheet(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Json\\attack\\force_clash_spreadsheet_sprites.json");
+	obj->GetComponent<AnimationRenderer>()->SetAnimationClip(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Json\\attack\\force_clash_spreadsheet_anim.json");
 	obj->GetComponent<AnimationRenderer>()->SetOrderInLayer(500);
 	obj->GetTransform().SetUnityCoords(false);
 	ButtonAnime = obj;
@@ -65,7 +65,7 @@ void GiseGauge::OnStart()
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(obj2);
 	obj2->GetTransform().SetUnityCoords(false);
 	ButtonCover = obj2;
-	ButtonCover->GetComponent<BitmapRenderer>()->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\Slider\\gise_ui_cover.png");
+	ButtonCover->GetComponent<BitmapRenderer>()->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\Slider\\gise_ui_cover.png");
 	ButtonCover->GetComponent<BitmapRenderer>()->SetOrderInLayer(600);
 	coverX = ButtonCover->GetComponent<BitmapRenderer>()->GetResource()->GetBitmap()->GetSize().width;
 
@@ -95,7 +95,7 @@ void GiseGauge::OnStart()
 
 	blackEffect = blackEff->AddComponent<BitmapRenderer>();
 	blackEffect->SetOrderInLayer(1000);
-	blackEffect->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\Slider\\force_destroy_black.png");
+	blackEffect->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\Slider\\force_destroy_black.png");
 	blackEffect->SetCapacity(0.0f);
 
 
@@ -109,7 +109,7 @@ void GiseGauge::OnStart()
 
 	whiteEffect = whiteEff->AddComponent<BitmapRenderer>();
 	whiteEffect->SetOrderInLayer(1000);
-	whiteEffect->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\Slider\\force_destroy_white.png");
+	whiteEffect->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\Slider\\force_destroy_white.png");
 	whiteEffect->SetCapacity(0.0f);
 
 	auto wSize = whiteEffect->GetResource()->GetBitmap()->GetSize();

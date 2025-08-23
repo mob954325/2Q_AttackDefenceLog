@@ -197,7 +197,7 @@ void Enemy::SetStatData(std::string tmp)
 	Object_PlayingAttackTime = 0.0f;					   // 패턴의 입력 대기 시간
 	Object_nowPlayingAttackTime = 0.0f;					   // 현재 패턴의 입력 대기 시간
 
-	std::wstring enemy_CommonPath = L"\\..\\Resource\\ContentsResource\\";	// 적의 공통 이미지 경로
+	std::wstring enemy_CommonPath = L"\\..\\Resource\\Sprites\\Enemy\\";	// 적의 공통 이미지 경로
 
 	// 적의 이미지 이름 받기
 	enemy_IdlePath = enemy_CommonPath + nowEnemyData->enemySprite[0] + L"_fin.png";        

@@ -43,16 +43,16 @@ void PatternControlObject::OnCreate()
 	playerGuidelineA = new GameObject();
 	playerGuidelineA->SetRenderLayer(EngineData::RenderLayer::None);
 	auto cb = playerGuidelineA->AddComponent<ChainDrawerComponent>(); // 빨강(상단) 초록(중단) 하단(파랑)
-	cb->SetBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\player_guide_line 1.png");
-	cb->SetTypeBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\player_guide_line 3.png", Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\player_guide_line 2.png");
+	cb->SetBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\BattlePanel\\GuideLine\\player_guide_line 1.png");
+	cb->SetTypeBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\BattlePanel\\GuideLine\\player_guide_line 3.png", Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\BattlePanel\\GuideLine\\player_guide_line 2.png");
 	cb->SetOrderInLayer(0);
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(playerGuidelineA);
 
 	playerGuidelineB = new GameObject();
 	playerGuidelineB->SetRenderLayer(EngineData::RenderLayer::None);
 	auto cc = playerGuidelineB->AddComponent<ChainDrawerComponent>();
-	cc->SetBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\player_guide_line 1.png");
-	cc->SetTypeBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\player_guide_line 3.png", Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource/player_guide_line 2.png");
+	cc->SetBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\BattlePanel\\GuideLine\\player_guide_line 1.png");
+	cc->SetTypeBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\BattlePanel\\GuideLine\\player_guide_line 3.png", Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\BattlePanel\\GuideLine\\player_guide_line 2.png");
 	cc->SetOrderInLayer(0);
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(playerGuidelineB);
 
@@ -275,7 +275,7 @@ void PatternControlObject::OnStart()
 	owner->SetRenderLayer(EngineData::RenderLayer::None);
 	auto patternDrawerComp = owner->AddComponent<PatternDrawerComponent>();
 	patternDrawerComp->SetOrderInLayer(-8);
-	patternDrawerComp->SetBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Mouse\\test5.png");
+	patternDrawerComp->SetBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\Mouse\\test5.png");
 
 	//===================================================================================================
 	// PatternControlObject에 effInstance 추가
@@ -294,8 +294,8 @@ void PatternControlObject::OnStart()
 		readyQueueForEnemyGuide.push(new GameObject());
 
 		auto queueBack = readyQueueForEnemyGuide.back()->AddComponent<ChainDrawerComponent>();
-		queueBack->SetBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Mouse\\TestArrow_2.png");
-		queueBack->SetFillBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Mouse\\TestArrow_1.png");
+		queueBack->SetBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\Mouse\\TestArrow_2.png");
+		queueBack->SetFillBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\Mouse\\TestArrow_1.png");
 		queueBack->SetOrderInLayer(3);
 
 		readyQueueForEnemyGuide.back()->SetName("EnemyGuideline." + std::to_string(i));

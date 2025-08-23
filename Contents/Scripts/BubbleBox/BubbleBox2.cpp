@@ -29,12 +29,12 @@ void BubbleBox2::OnCreate()
 	Text_04 = owner->AddComponent<BitmapRenderer>();
 	Text_05 = owner->AddComponent<BitmapRenderer>();
 
-	TextBox->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\bubbleBox\\textbox.png");
-	Text_01->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\BoxText\\2stage\\01.png");
-	Text_02->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\BoxText\\2stage\\02.png");
-	Text_03->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\BoxText\\2stage\\03.png");
-	Text_04->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\BoxText\\2stage\\05.png");
-	Text_05->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\BoxText\\2stage\\05.png");
+	TextBox->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\bubbleBox\\textbox.png");
+	Text_01->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\BoxText\\2stage\\01.png");
+	Text_02->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\BoxText\\2stage\\02.png");
+	Text_03->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\BoxText\\2stage\\03.png");
+	Text_04->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\BoxText\\2stage\\05.png");
+	Text_05->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\BoxText\\2stage\\05.png");
 
 	TextBox->SetActive(true);
 	Text_01->SetActive(true);

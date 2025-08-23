@@ -28,11 +28,11 @@ void HpGauge::OnCreate()
 	Enemyslider = EnemyHP->GetComponent<Slider>();
 	EnemyHP->GetTransform().SetUnityCoords(false);
 
-	Playerslider->SetGaugeBackgroundImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\HP\\hp_ui_background.png");
-	Playerslider->SetGaugeBarImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\HP\\hp_ui_left.png");
+	Playerslider->SetGaugeBackgroundImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\StageTop\\hp_ui_background.png");
+	Playerslider->SetGaugeBarImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\StageTop\\hp_ui_left.png");
 
-	Enemyslider->SetGaugeBackgroundImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\HP\\hp_ui_background.png");
-	Enemyslider->SetGaugeBarImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\HP\\hp_ui_right.png");
+	Enemyslider->SetGaugeBackgroundImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\StageTop\\hp_ui_background.png");
+	Enemyslider->SetGaugeBarImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\StageTop\\hp_ui_right.png");
 
 	ImageMaxwidth = Playerslider->GetGaugeBarImage()->GetResource()->GetBitmap()->GetSize().width;
 }

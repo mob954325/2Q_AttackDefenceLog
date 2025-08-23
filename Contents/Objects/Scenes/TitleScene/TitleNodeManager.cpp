@@ -13,7 +13,7 @@ void TitleNodeManager::OnCreate()
 	owner->GetTransform().SetUnityCoords(false);
 	owner->SetRenderLayer(EngineData::RenderLayer::UI);
 	patternDrawer = owner->AddComponent<PatternDrawerComponent>();	
-	patternDrawer->SetBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Mouse\\test1.png");
+	patternDrawer->SetBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\Mouse\\test1.png");
 	patternDrawer->SetOrderInLayer(100);
 
 	for (int i = 0; i < 2; i++)
@@ -37,9 +37,9 @@ void TitleNodeManager::OnCreate()
 
 	whiteAnim = animObj->AddComponent<AnimationRenderer>();
 	whiteAnim->SetOrderInLayer(111100);
-	whiteAnim->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Particles\\attack_line_spreadsheet.png");
-	whiteAnim->SetSpriteSheet(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Json\\WhiteAttack\\attack_line_spreadsheet_sprites.json");
-	whiteAnim->SetAnimationClip(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Json\\WhiteAttack\\attack_line_anim.json");
+	whiteAnim->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\Effect\\AttackLine\\attack_line_spreadsheet.png");
+	whiteAnim->SetSpriteSheet(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Json\\attack\\attack_line_spreadsheet_sprites.json");
+	whiteAnim->SetAnimationClip(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Json\\attack\\attack_line_anim.json");
 	whiteAnim->SetActive(false);
 	whiteAnim->GetAnimationPlayer()->Pause();
 	whiteAnim->GetAnimationPlayer()->SetLoop(false);

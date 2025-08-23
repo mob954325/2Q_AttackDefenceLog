@@ -166,23 +166,23 @@ void Player::OnCreateState()
 void Player::SetBitmap()
 {
 	player_Idle = owner->AddComponent<BitmapRenderer>();
-	player_Idle->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\player_standing_fin.png");
+	player_Idle->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\Player\\player_standing_fin.png");
 
 	player_Attack1 = owner->AddComponent<BitmapRenderer>();
-	player_Attack1->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\player_attack1_fin.png");
+	player_Attack1->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\Player\\player_attack1_fin.png");
 
 	player_Attack2 = owner->AddComponent<BitmapRenderer>();
-	player_Attack2->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\player_attack2_fin.png");
+	player_Attack2->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\Player\\player_attack2_fin.png");
 
 	player_Attack3 = owner->AddComponent<BitmapRenderer>();
-	player_Attack3->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\player_attack3_fin.png");
+	player_Attack3->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\Player\\player_attack3_fin.png");
 
 
 	player_Damaged = owner->AddComponent<BitmapRenderer>();
-	player_Damaged->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\player_demaged_fin.png");
+	player_Damaged->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\Player\\player_demaged_fin.png");
 
 	player_Guard = owner->AddComponent<BitmapRenderer>();
-	player_Guard->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\player_guard_fin.png");
+	player_Guard->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\Player\\player_guard_fin.png");
 
 
 	D2D1_SIZE_F size = player_Idle->GetResource()->GetBitmap()->GetSize(); // 크기 같음으로 그냥 해도 될듯?

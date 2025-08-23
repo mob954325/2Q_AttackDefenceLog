@@ -40,8 +40,8 @@ void EnemyAttackEffect::OnCreate()
 		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(obj);
 		obj->GetComponent<AnimationRenderer>()->SetActive(false);
 		obj->GetComponent<AnimationRenderer>()->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Particles\\defenceplayer\\defence_player_enemy_spreadsheet.png");
-		obj->GetComponent<AnimationRenderer>()->SetSpriteSheet(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Json\\defence_player_enemy_spreadsheet_sprites.json");
-		obj->GetComponent<AnimationRenderer>()->SetAnimationClip(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Json\\defence_player_enemy_spreadsheet_anim.json");
+		obj->GetComponent<AnimationRenderer>()->SetSpriteSheet(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Json\\defence\\defence_player_enemy_spreadsheet_sprites.json");
+		obj->GetComponent<AnimationRenderer>()->SetAnimationClip(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Json\\defence\\defence_player_enemy_spreadsheet_anim.json");
 		obj->GetComponent<AnimationRenderer>()->GetAnimationPlayer()->Pause();
 		obj->GetTransform().SetUnityCoords(false);
 		obj->GetComponent<AnimationRenderer>()->SetOrderInLayer(-9);

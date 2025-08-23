@@ -148,8 +148,8 @@ void TestObject::OnStart()
 
 	////obj->GetComponent<AnimationRenderer>()->SetActive(false);
 	//obj->GetComponent<AnimationRenderer>()->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\UI\\Slider\\force_clash_spreadsheet.png");
-	//obj->GetComponent<AnimationRenderer>()->SetSpriteSheet(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Json\\force_clash_spreadsheet_sprites.json");
-	//obj->GetComponent<AnimationRenderer>()->SetAnimationClip(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Json\\force_clash_anim.json");
+	//obj->GetComponent<AnimationRenderer>()->SetSpriteSheet(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Json\\attack\\force_clash_spreadsheet_sprites.json");
+	//obj->GetComponent<AnimationRenderer>()->SetAnimationClip(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\..\\Resource\\Json\\attack\\force_clash_anim.json");
 	///*obj->GetComponent<AnimationRenderer>()->GetAnimationPlayer()->Pause();*/
 	//obj->GetComponent<AnimationRenderer>()->SetOrderInLayer(500);
 	//obj->GetTransform().SetUnityCoords(false);
@@ -185,8 +185,8 @@ void TestObject::OnStart()
 	//Emanager->GetParticleComponent(0)->SetFadeOutTime(0.7f);
 	//Emanager->GetParticleComponent(0)->SetAmount(25);
 	//Emanager->GetParticleComponent(0)->SetAnimPlayer(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/Particles/SparkSheet.png",
-	//	Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/Json/SparkSheet/SparkSheet_sprites.json",
-	//	Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/Json/SparkSheet/Red_Spark_anim.json");
+	//	Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/Json/spark/SparkSheet_sprites.json",
+	//	Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/Json/spark/Red_Spark_anim.json");
 	//Emanager->GetParticleComponent(0)->SetShowType(ParticleShowType::RandomSingle);
 	//Emanager->GetParticleComponent(0)->SetGravity(false);
 	//Emanager->GetParticleComponent(0)->SetSeeDirection(true);
@@ -200,8 +200,8 @@ void TestObject::OnStart()
 	//Emanager->GetParticleComponent(1)->SetFadeOutTime(0.7f);
 	//Emanager->GetParticleComponent(1)->SetAmount(25);
 	//Emanager->GetParticleComponent(1)->SetAnimPlayer(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/Particles/defend/ParticleGuard.png",
-	//	Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/Json/SparkSheet/ParticleGuard_sprites.json",
-	//	Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/Json/SparkSheet/ParticleGuard_Guard_anim.json");
+	//	Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/Json/spark/ParticleGuard_sprites.json",
+	//	Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"/../Resource/Json/spark/ParticleGuard_Guard_anim.json");
 	//Emanager->GetParticleComponent(1)->SetShowType(ParticleShowType::RandomSingle);
 	//Emanager->GetParticleComponent(1)->SetGravity(false);
 	//Emanager->GetParticleComponent(1)->SetSeeDirection(true);

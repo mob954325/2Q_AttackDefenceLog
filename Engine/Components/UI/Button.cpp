@@ -13,13 +13,13 @@ void Button::OnCreate()
 
 void Button::OnStart()
 {
-	normal->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\Test_Button\\button_square.png");
+	normal->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\Test\\Test_Button\\button_square.png");
 	normal->SetActive(true);
 
-	hover->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\Test_Button\\button_square_hover.png");
+	hover->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\Test\\Test_Button\\button_square_hover.png");
 	hover->SetActive(false);
 
-	pressed->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\Test_Button\\button_square_pressed.png");
+	pressed->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\Test\\Test_Button\\button_square_pressed.png");
 	pressed->SetActive(false);
 }
 

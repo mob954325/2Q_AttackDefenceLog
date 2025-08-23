@@ -11,7 +11,7 @@ void StageBGI::OnStart()
 	owner->GetTransform().SetUnityCoords(true);
 
 	bitmapRenderer = owner->AddComponent<BitmapRenderer>();
-	bitmapRenderer->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\arena-1.png");
+	bitmapRenderer->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\BackGround\\arena-1.png");
 	bitmapRenderer->SetOrderInLayer(-200);
 
 	size = bitmapRenderer->GetResource()->GetBitmap()->GetSize();

@@ -7,6 +7,6 @@ void StagePlayerProfile::OnCreate()
 	owner->SetRenderLayer(EngineData::UI);
 	owner->GetTransform().SetUnityCoords(false);
 	playerProfile = owner->AddComponent<BitmapRenderer>();
-	playerProfile->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\ProfileUI\\player_ui.png"); 
+	playerProfile->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\StageTop\\ProfileUI\\player_ui.png"); 
 	playerProfile->SetOrderInLayer(20);
 }

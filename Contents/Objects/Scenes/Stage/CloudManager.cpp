@@ -21,7 +21,7 @@ void CloudManager::OnStart()
 		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(obj, "CloudImage." + i);
 	}
 
-	auto basePath = Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\ContentsResource\\cloud\\";
+	auto basePath = Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\BackGround\\cloud\\";
 	std::wstring files[] =
 	{ L"1background.png",L"cloud1.png", L"cloud2.png", L"cloud3.png", L"cloud4.png" };
 

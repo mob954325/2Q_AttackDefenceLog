@@ -18,7 +18,7 @@ void StageResult::OnCreate()
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(winPanelObject);
 	
 	winPanel = winPanelObject->AddComponent<BitmapRenderer>();
-	winPanel->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\Result\\victory_ui_1.png");
+	winPanel->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\StageResult\\victory_ui_1.png");
 
 	winPanelObject->GetTransform().SetPosition(93.5f, 159.0f);
 	winPanel->SetOrderInLayer(1001);
@@ -29,8 +29,8 @@ void StageResult::OnCreate()
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(winMarkObject);
 	
 	winMark = winMarkObject->AddComponent<BitmapRenderer>();
-	winMark->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\Result\\victory_ui_b2.png");
-	
+	winMark->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\StageResult\\victory_ui_b2.png");
+
 	winMarkObject->GetTransform().SetPosition(93.5f, 159.0f);
 	winMark->SetOrderInLayer(1002);
 
@@ -40,7 +40,7 @@ void StageResult::OnCreate()
 	defeatPanelObject->GetTransform().SetUnityCoords(false);
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(defeatPanelObject);
 	defeatPanel = defeatPanelObject->AddComponent<BitmapRenderer>();
-	defeatPanel->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\Result\\defeat_ui_1.png");
+	defeatPanel->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\StageResult\\defeat_ui_1.png");
 
 	defeatPanelObject->GetTransform().SetPosition(93.5f, 159.0f);
 	defeatPanel->SetOrderInLayer(1001);
@@ -50,7 +50,7 @@ void StageResult::OnCreate()
 	defeatMarkObject->GetTransform().SetUnityCoords(false);
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(defeatMarkObject);
 	defeatMark = defeatMarkObject->AddComponent<BitmapRenderer>();
-	defeatMark->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\UI\\Result\\defeat_ui_b2.png");
+	defeatMark->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\StageResult\\defeat_ui_b2.png");
   
 	defeatMarkObject->GetTransform().SetPosition(93.5f, 159.0f);
 	defeatMark->SetOrderInLayer(1002);
