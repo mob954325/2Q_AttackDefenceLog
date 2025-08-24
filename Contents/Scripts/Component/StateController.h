@@ -1,8 +1,10 @@
 ﻿#pragma once
 #include <unordered_map>
 #include <string>
+#include  <functional>
 #include "Components/Base/MonoBehavior.h"
 #include "Utils/GameTime.h"
+
 class State {
 public:
 	State() {};
@@ -13,9 +15,9 @@ public:
 		isNextState = false;
 	};
 
-	void OnExit() {
+	std::function<void()> OnEnter = nullptr;
 
-	};
+	std::function<void()> OnExit = nullptr;
 
 	void Update(float deltaTime) {
 		if (existTransition && nowTimer < ToNextTimer)
@@ -30,6 +32,17 @@ public:
 		existTransition = true;
 	}
 
+	// enter 함수 포인터로 연결
+	void SetOnEnter(std::function<void()> func)
+	{
+		OnEnter = func;
+	}
+
+	// Exit 함수 포인터로 연결
+	void SetOnExit(std::function<void()> func)
+	{
+		OnExit = func;
+	}
 
 	State* nextState = nullptr;
 	std::string stateName;
@@ -67,6 +80,9 @@ public:
 		if (it != StateStorage.end()) {
 			nowState = it->second;
 			nowState->OnStart();  // 사용하기전, 초기화
+			if (nowState->OnEnter) { // 
+				nowState->OnEnter();
+			}
 		}
 	}
 
@@ -80,7 +96,7 @@ public:
 
 		auto it2 = StateStorage.find(NextstateName);
 		if (it2 != StateStorage.end()) {
-			if (tmpState) { // 정신 똑바로 차리세요 성빈씨
+			if (tmpState) { 
 				tmpState->nextState = it2->second;
 			}
 		}
@@ -95,24 +111,51 @@ public:
 		}
 	}
 
+	// 함수 포인터로 OnEnter 연결!
+	void SetOnEnter(std::string stateName, std::function<void()> func){
+		auto it = StateStorage.find(stateName);
+		if (it != StateStorage.end()) {
+			it->second->SetOnEnter(func);
+		}
+	}
+
+	// 함수 포인터로 OnExit 연결!
+	void SetOnExit(std::string stateName, std::function<void()> func) {
+		auto it = StateStorage.find(stateName);
+		if (it != StateStorage.end()) {
+			it->second->SetOnExit(func);
+		}
+	}
+
 	// 내부에서 transition에 따라서 State 를 결정 할 함수
+	// 변경될 때, 전의 state에 exit 함수가 있으면 실행하고 없으면 넘어감
+	// 변경될 때, 변경된 state에 enter 함수가 있으면 실행하고 없으면 넘어감
 	void GoNextState() {
 		if (nowState->nextState != nullptr && nowState->isNextState)
 		{
+			if (nowState->OnExit) {
+				nowState->OnExit();
+			}
 			nowState = nowState->nextState;
+			if (nowState->OnEnter) {
+				nowState->OnEnter();
+			}
 		}
+		
 	}
+
+	
 
 	// 현재 state의 이름을 return
 	std::string GetNowName() {
 		return nowState->stateName;
-	}
+	};
 
 
 	void Update()override {
 		nowState->Update(GameTime::GetInstance().GetDeltaTime());
 		GoNextState();
-	}
+	};
 
 	//delete 함수 만들기!!!
 };
