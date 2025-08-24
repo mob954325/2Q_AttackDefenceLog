@@ -10,6 +10,7 @@
 #include "Scripts/LiveObject/Enemy.h"
 #include "Objects/Common/BattleBoard.h" // 보드 위에서 뚜씨뚜씨 하는거임
 
+#include "Objects/Manager/ThinkingPatternManager.h"
 
 #include "Scripts/Effect/EffectInstance.h" // 이펙트 정현씨꺼
 
@@ -63,6 +64,9 @@ private:
 	std::vector<int> cachedVecB;
 
 	std::vector<Vector2> nodePositions;
+
+	ThinkingPatternManager TM; // 테스트코드
+
 };
 
 
