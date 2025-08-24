@@ -59,104 +59,101 @@ private:
 // 역할 state 결정 담당
 class StateController : public ScriptComponent {
 public:
-	StateController() {};
-	~StateController() {};
+    StateController() {};
+    ~StateController() {};
 
 private:
-	std::unordered_map<std::string, State*>  StateStorage;
-	State* nowState = nullptr;
+    std::unordered_map<std::string, State*>  StateStorage;
+    State* nowState = nullptr;
 
 public:
-	//state를 생성함
-	void CreateState(std::string stateName) {
-		State* tmpState = new State();
-		StateStorage[stateName] = tmpState;
-		tmpState->stateName = stateName;
-	}
+    // 상태를 설정
+    void SetState(std::string stateName) {
+        auto it = StateStorage.find(stateName);
+        if (it != StateStorage.end()) {
+            nowState = it->second;
+            nowState->OnStart();  // 상태 초기화
+            if (nowState->OnEnter) { // 상태가 존재하면 OnEnter 호출
+                nowState->OnEnter();
+            }
+        }
+    }
 
-	//외부에서 state 설정할 함수
-	void SetState(std::string stateName) {
-		auto it = StateStorage.find(stateName);
-		if (it != StateStorage.end()) {
-			nowState = it->second;
-			nowState->OnStart();  // 사용하기전, 초기화
-			if (nowState->OnEnter) { // 
-				nowState->OnEnter();
-			}
-		}
-	}
+    // 상태 변경: nextState로 이동
+    void GoNextState() {
+        if (nowState->nextState != nullptr && nowState->isNextState)
+        {
+            // 이전 상태의 OnExit이 있으면 호출
+            if (nowState->OnExit) {
+                nowState->OnExit();
+            }
 
-	// 다음 State 설정
-	void SetNextState(std::string stateName, std::string NextstateName) {
-		State* tmpState = nullptr;
-		auto it1 = StateStorage.find(stateName);
-		if (it1 != StateStorage.end()) {
-			tmpState = it1->second;
-		}
+            // 상태 변경
+            nowState = nowState->nextState;
 
-		auto it2 = StateStorage.find(NextstateName);
-		if (it2 != StateStorage.end()) {
-			if (tmpState) { 
-				tmpState->nextState = it2->second;
-			}
-		}
-	}
+            // 새로운 상태의 OnEnter를 호출
+            if (nowState->OnEnter) {
+                nowState->OnEnter();
+            }
+        }
+    }
 
+    // 상태의 이름을 반환
+    std::string GetNowName() {
+        return nowState->stateName;
+    }
 
-	//nextState로 이동할 Transition 조건
-	void SetTransitionTime(std::string stateName, int tmpTime) {
-		auto it = StateStorage.find(stateName);
-		if (it != StateStorage.end()) {
-			it->second->SetTransitionTime(tmpTime);
-		}
-	}
+    // 상태 업데이트
+    void Update() override {
+        if (nowState) {
+            nowState->Update(GameTime::GetInstance().GetDeltaTime());
+            GoNextState(); // 상태 변경 처리
+        }
+    }
 
-	// 함수 포인터로 OnEnter 연결!
-	void SetOnEnter(std::string stateName, std::function<void()> func){
-		auto it = StateStorage.find(stateName);
-		if (it != StateStorage.end()) {
-			it->second->SetOnEnter(func);
-		}
-	}
+    // 상태 추가 및 설정
+    void CreateState(std::string stateName) {
+        State* tmpState = new State();
+        StateStorage[stateName] = tmpState;
+        tmpState->stateName = stateName;
+    }
 
-	// 함수 포인터로 OnExit 연결!
-	void SetOnExit(std::string stateName, std::function<void()> func) {
-		auto it = StateStorage.find(stateName);
-		if (it != StateStorage.end()) {
-			it->second->SetOnExit(func);
-		}
-	}
+    void SetNextState(std::string stateName, std::string NextstateName) {
+        State* tmpState = nullptr;
+        auto it1 = StateStorage.find(stateName);
+        if (it1 != StateStorage.end()) {
+            tmpState = it1->second;
+        }
 
-	// 내부에서 transition에 따라서 State 를 결정 할 함수
-	// 변경될 때, 전의 state에 exit 함수가 있으면 실행하고 없으면 넘어감
-	// 변경될 때, 변경된 state에 enter 함수가 있으면 실행하고 없으면 넘어감
-	void GoNextState() {
-		if (nowState->nextState != nullptr && nowState->isNextState)
-		{
-			if (nowState->OnExit) {
-				nowState->OnExit();
-			}
-			nowState = nowState->nextState;
-			if (nowState->OnEnter) {
-				nowState->OnEnter();
-			}
-		}
-		
-	}
+        auto it2 = StateStorage.find(NextstateName);
+        if (it2 != StateStorage.end()) {
+            if (tmpState) {
+                tmpState->nextState = it2->second;
+            }
+        }
+    }
 
-	
+    void SetTransitionTime(std::string stateName, int tmpTime) {
+        auto it = StateStorage.find(stateName);
+        if (it != StateStorage.end()) {
+            it->second->SetTransitionTime(tmpTime);
+        }
+    }
 
-	// 현재 state의 이름을 return
-	std::string GetNowName() {
-		return nowState->stateName;
-	};
+    // 함수 포인터로 OnEnter 연결!
+    void SetOnEnter(std::string stateName, std::function<void()> func) {
+        auto it = StateStorage.find(stateName);
+        if (it != StateStorage.end()) {
+            it->second->SetOnEnter(func);
+        }
+    }
 
-
-	void Update()override {
-		nowState->Update(GameTime::GetInstance().GetDeltaTime());
-		GoNextState();
-	};
-
-	//delete 함수 만들기!!!
+    // 함수 포인터로 OnExit 연결!
+    void SetOnExit(std::string stateName, std::function<void()> func) {
+        auto it = StateStorage.find(stateName);
+        if (it != StateStorage.end()) {
+            it->second->SetOnExit(func);
+        }
+    }
 };
 

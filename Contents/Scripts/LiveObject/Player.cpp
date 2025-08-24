@@ -18,7 +18,7 @@
 #include "Math/GameRandom.h"
 #include "Math/EasingFunction.h"
 
-
+#include "Objects/Scenes/TitleScene/EffectProgress.h" // 보간 +
 #include "Objects/Scenes/Stage/StageResult/StageResult.h"
 
 // 각 값은 해당 함수가 출력 중일때, 각 플레그 변화
@@ -122,35 +122,128 @@ void Player::SetState(std::string setStateName)
 	}
 }
 
+
+// 적 state에 따른 enter, exit 함수들
+void Player::AtkSucEnter()
+{
+	Vector2 tmpVect = { 60.0f, - 20.0f };
+	limitStateMoveTimer = 0.3f;
+	nowStateMoveTimer = 0.0f;
+	fromPos = IdlePos;
+	toPosX = IdlePos + tmpVect; // 분할 할 필요가 없으면 x에 몰빵
+}
+
+void Player::DefEnter()
+{
+	limitStateMoveTimer = 0.8f;
+	nowStateMoveTimer = 0.0f;
+	fromPos = IdlePos;
+	toPosX = GetRandomPointOnShrinkingCircle(maxRadius, nowStateMoveTimer, limitStateMoveTimer, IdlePos);
+	StatefreqTime = 6.0f;
+}
+
+void Player::HitEnter()
+{
+	limitStateMoveTimer = 0.8f;
+	nowStateMoveTimer = 0.0f;
+	fromPos = IdlePos;
+	toPosX = GetRandomPointOnShrinkingCircle(maxRadius, nowStateMoveTimer, limitStateMoveTimer, IdlePos);
+	StatefreqTime = 6.0f;
+}
+
+void Player::AtkSucExit()
+{
+	StateProgress = 0.0f;
+	StatefreqTime = 0.0f;
+	nowStatefreqTime = 0.0f;
+	limitStateMoveTimer = 0.0f;
+	nowStateMoveTimer = 0.0f;
+	fromPos = { 0.0f, 0.0f };
+	toPosX = { 0.0f, 0.0f };
+	toPosY = { 0.0f, 0.0f };
+	owner->GetTransform().SetPosition(IdlePos.x, IdlePos.y);
+}
+void Player::DefExit() {
+	StateProgress = 0.0f;
+	StatefreqTime = 0.0f;
+	nowStatefreqTime = 0.0f;
+	limitStateMoveTimer = 0.0f;
+	nowStateMoveTimer = 0.0f;
+	fromPos = { 0.0f, 0.0f };
+	toPosX = { 0.0f, 0.0f };
+	toPosY = { 0.0f, 0.0f };
+	StatefreqTime = 0.0f;
+	owner->GetTransform().SetPosition(IdlePos.x, IdlePos.y);
+}
+void Player::HitExit() {
+	StateProgress = 0.0f;
+	StatefreqTime = 0.0f;	
+	nowStatefreqTime = 0.0f;
+	limitStateMoveTimer = 0.0f;
+	nowStateMoveTimer = 0.0f;
+	fromPos = { 0.0f, 0.0f };
+	toPosX = { 0.0f, 0.0f };
+	toPosY = { 0.0f, 0.0f };
+	StatefreqTime = 0.0f;
+	owner->GetTransform().SetPosition(IdlePos.x, IdlePos.y);
+}
+
+void Player::IdleExit() {
+	owner->GetTransform().SetPosition(IdlePos.x, IdlePos.y);
+}
+
+
 //state 생성
 //평소에 줄여놓기!
 void Player::OnCreateState()
 {
 	m_State->CreateState("Player_Idle");							// 평소 상태 - Default State
+	m_State->SetOnExit("Player_Idle", std::bind(&Player::IdleExit, this));
 
 	m_State->CreateState("Player_AttackSuccess");					// 공격 성공
 	m_State->SetNextState("Player_AttackSuccess", "Player_Idle");	// Player_AttackSuccess -> Player_Idle
 	m_State->SetTransitionTime("Player_AttackSuccess", 1.0f);		// 1.0f 뒤 변경
+	//  함수 포인터로 해당 state의 Enter, exit 연결
+	m_State->SetOnEnter("Player_AttackSuccess", std::bind(&Player::AtkSucEnter, this));
+	m_State->SetOnExit("Player_AttackSuccess", std::bind(&Player::AtkSucExit, this));
+
 
 	m_State->CreateState("Player_AttackFail");						// 공격 실패
 	m_State->SetNextState("Player_AttackFail", "Player_Idle");		// Player_AttackFail -> Player_Idle
 	m_State->SetTransitionTime("Player_AttackFail", 1.0f);			// 1.0f 뒤 변경
+	m_State->SetOnEnter("Player_AttackFail", std::bind(&Player::AtkSucEnter, this));
+	m_State->SetOnExit("Player_AttackFail", std::bind(&Player::AtkSucExit, this));
+
 
 	m_State->CreateState("Player_Hit");								// 패턴 파회 X, 맞음
 	m_State->SetNextState("Player_Hit", "Player_Idle");				// Player_Hit -> Player_Idle
 	m_State->SetTransitionTime("Player_Hit", 1.0f);					// 1.0f 뒤 변경
+	//  함수 포인터로 해당 state의 Enter, exit 연결
+	m_State->SetOnEnter("Player_Hit", std::bind(&Player::HitEnter, this));
+	m_State->SetOnExit("Player_Hit", std::bind(&Player::HitExit, this));
+
 
 	m_State->CreateState("Player_Defence");							// 패턴 파회 X, 막음
 	m_State->SetNextState("Player_Defence", "Player_Idle");			// Player_Defence -> Player_Idle
 	m_State->SetTransitionTime("Player_Defence", 1.0f);				// 1.0f 뒤 변경
+	//  함수 포인터로 해당 state의 Enter, exit 연결
+	m_State->SetOnEnter("Player_Defence", std::bind(&Player::DefEnter, this));
+	m_State->SetOnExit("Player_Defence", std::bind(&Player::DefExit, this));
+
 
 	m_State->CreateState("Player_Guard");							// 패턴 파회 O
 	m_State->SetNextState("Player_Guard", "Player_Idle");			// Player_Guard -> Player_Idle
 	m_State->SetTransitionTime("Player_Guard", 1.0f);				// 1.0f 뒤 변경
+	m_State->SetOnEnter("Player_Guard", std::bind(&Player::DefEnter, this));
+	m_State->SetOnExit("Player_Guard", std::bind(&Player::DefExit, this));
+
 
 	m_State->CreateState("Player_Perry");							// 패턴 파회 O + 특정 시간 안에
 	m_State->SetNextState("Player_Perry", "Player_Idle");			// Player_Perry -> Player_Idle
 	m_State->SetTransitionTime("Player_Perry", 1.0f);				// 1.0f 뒤 변경
+	m_State->SetOnEnter("Player_Perry", std::bind(&Player::DefEnter, this));
+	m_State->SetOnExit("Player_Perry", std::bind(&Player::DefExit, this));
+
 
 	m_State->CreateState("Player_Groggy");							// 패턴 파회 O + 특정 시간 안에
 	m_State->SetNextState("Player_Groggy", "Player_Idle");			// Player_Groggy -> Player_Idle
@@ -188,7 +281,8 @@ void Player::SetBitmap()
 	D2D1_SIZE_F size = player_Idle->GetResource()->GetBitmap()->GetSize(); // 크기 같음으로 그냥 해도 될듯?
 	owner->GetTransform().SetOffset(-size.width / 2, size.height / 2);
 	//owner->GetTransform().SetScale(0.9f, 0.9f); //  크기 맞추기
-	owner->GetTransform().SetPosition(-450.0f, 50.0f);
+	IdlePos = { -450.0f,  50.0f };
+	owner->GetTransform().SetPosition(IdlePos.x, IdlePos.y);
 }
 
 
@@ -408,7 +502,18 @@ void Player::RestoreGroggy()
 
 //일단 임시로 스테이트마다 스프라이트 설정
 void Player::StateAct()
-{
+{ 
+	// 현재 transform 시간이 정해진 transform 시간보다 작다면, 현재 시간에 ++
+	if (limitStateMoveTimer >= nowStateMoveTimer)
+	{
+		nowStateMoveTimer += Singleton<GameTime>::GetInstance().GetDeltaTime();
+		StateProgress = nowStateMoveTimer / limitStateMoveTimer;  // 현재시간 / 정해진 시간 -> 0.0f ~ 1.0f 로 정규화
+	}
+	// 현재 시간이 정해진 시간 이상이라면 전부 한계치에서 고정
+	if (limitStateMoveTimer < nowStateMoveTimer) {
+		nowStateMoveTimer = limitStateMoveTimer;
+		StateProgress = 1.0f;
+	}
 	if (!OtherGroggyTimeStop) {
 		if (nowStateName == "Player_Idle")
 		{    // 평소 상태     
@@ -417,27 +522,97 @@ void Player::StateAct()
 			player_Damaged->SetActive(false);
 			player_Guard->SetActive(false);
 		}
-		else if (nowStateName == "Player_AttackSuccess" || nowStateName == "Player_AttackFail") // 공격 성공, 공격 실패
-		{
-			player_Idle->SetActive(false);
-			AttackStateSelect(true);
-			player_Damaged->SetActive(false);
-			player_Guard->SetActive(false);
-		}
+
 		else if (nowStateName == "Player_Hit") //피격 + 그로기
 		{
 			player_Idle->SetActive(false);
 			AttackStateSelect(false);
 			player_Damaged->SetActive(true);
 			player_Guard->SetActive(false);
+
+			float fromProgress = EffectProgress::NormalizeProgress(StateProgress, 0.0f, 1.0f);
+			Vector2 nowPos = owner->GetTransform().GetPosition();
+
+			// 상태 주파수 시간에 맞춰 보간값 계산 
+			if (nowStatefreqTime < limitStateMoveTimer / StatefreqTime) {
+				// 상태 변화 비율에 맞춰 보간을 진행
+				nowStatefreqTime += Singleton<GameTime>::GetInstance().GetDeltaTime();
+
+				// 보간의 구간을 0.0f에서 1.0f로 조정
+				float fromProgress = EffectProgress::NormalizeProgress(nowStatefreqTime, 0.0f, limitStateMoveTimer / StatefreqTime);
+
+				// 이전 위치에서 목표 위치로 보간
+				nowPos = EffectProgress::Lerp(nowPos, toPosX, fromProgress);
+			}
+			else {
+				// 시간이 지나면 원 위의 랜덤 점을 새로 계산
+				nowStatefreqTime = fmod(nowStatefreqTime, limitStateMoveTimer / StatefreqTime);
+
+				// 원의 반지름이 줄어들며 랜덤한 점을 계산
+				toPosX = GetRandomPointOnShrinkingCircle(maxRadius, StateProgress, 1.0f, IdlePos);
+			}
+
+			// 제자리에서 떨림을 적용, 'nowPos'는 현재 위치, 떨림만 적용하여 결과 계산
+			owner->GetTransform().SetPosition(nowPos.x, nowPos.y); // 두 떨림 합
+
 		}
+
+
 		else if (nowStateName == "Player_Guard" || nowStateName == "Player_Defence" || nowStateName == "Player_Perry") // 가드 + defence + 패링
 		{
 			player_Idle->SetActive(false);
 			AttackStateSelect(false);
 			player_Damaged->SetActive(false);
 			player_Guard->SetActive(true);
+
+
+			float fromProgress = EffectProgress::NormalizeProgress(StateProgress, 0.0f, 1.0f);
+			Vector2 nowPos = owner->GetTransform().GetPosition();
+
+			// 상태 주파수 시간에 맞춰 보간값 계산 
+			if (nowStatefreqTime < limitStateMoveTimer / StatefreqTime) {
+				// 상태 변화 비율에 맞춰 보간을 진행
+				nowStatefreqTime += Singleton<GameTime>::GetInstance().GetDeltaTime();
+
+				// 보간의 구간을 0.0f에서 1.0f로 조정
+				float fromProgress = EffectProgress::NormalizeProgress(nowStatefreqTime, 0.0f, limitStateMoveTimer / StatefreqTime);
+
+				// 이전 위치에서 목표 위치로 보간
+				nowPos = EffectProgress::Lerp(nowPos, toPosX, fromProgress);
+			}
+			else {
+				// 시간이 지나면 원 위의 랜덤 점을 새로 계산
+				nowStatefreqTime = fmod(nowStatefreqTime, limitStateMoveTimer / StatefreqTime);
+
+				// 원의 반지름이 줄어들며 랜덤한 점을 계산
+				toPosX = GetRandomPointOnShrinkingCircle(maxRadius, StateProgress, 1.0f, IdlePos);
+			}
+
+			// 제자리에서 떨림을 적용, 'nowPos'는 현재 위치, 떨림만 적용하여 결과 계산
+			owner->GetTransform().SetPosition(nowPos.x, nowPos.y); // 두 떨림 합
 		}
+
+		else if (nowStateName == "Player_AttackSuccess" || nowStateName == "Player_AttackFail") // 공격 성공, 공격 실패
+		{
+			player_Idle->SetActive(false);
+			AttackStateSelect(true);
+			player_Damaged->SetActive(false);
+			player_Guard->SetActive(false);
+
+			Vector2 nowPos = IdlePos;
+			if (StateProgress <= 0.5f) {
+				float fromProgress = EffectProgress::NormalizeProgress(StateProgress, 0.0f, 0.5f);
+				nowPos = EffectProgress::Lerp(IdlePos, toPosX, fromProgress);
+			}
+			else {
+				float fromProgress = EffectProgress::NormalizeProgress(StateProgress, 0.5f, 1.0f);
+				nowPos = EffectProgress::Lerp(toPosX, IdlePos, fromProgress);
+			}
+			owner->GetTransform().SetPosition(nowPos.x, nowPos.y); // 두 떨림 합
+		}
+
+
+		
 		else if (nowStateName == "Player_Dead") // 죽음
 		{
 			player_Idle->SetActive(false);
@@ -499,6 +674,7 @@ void Player::AttackAniSelect(int count) {
 	player_Attack3->SetActive(false);
 	player_Guard->SetActive(false);
 	player_Damaged->SetActive(false);
+
 
 	// 2) 필요한 것만 켜기 (원하는 매핑대로)
 	switch (count){
@@ -600,4 +776,31 @@ void Player::CallPerryEffect(const std::vector<Vector2>& list)
 {
 	CheckPlayPerry = true;
 	ParryPosition = list;
+}
+
+
+
+
+
+
+
+// 시간에 따라 반지름을 줄이고 total 시간이 되면 반지름이 0이 되는 함수
+Vector2 Player::GetRandomPointOnShrinkingCircle(float maxRadius, float currentTime, float totalTime, Vector2 middlePos) {
+	// 시간에 따른 반지름 변화
+	float radius = maxRadius * (1 - currentTime / totalTime);
+
+	// 반지름이 0인 경우에는 원의 중앙에 위치하도록 처리
+	if (radius <= 0.0f) {
+		return middlePos; // 반지름이 0이면, 원의 중앙 위치 반환
+	}
+
+	// 랜덤 각도 (0 ~ 2파이)
+	float angle = GameRandom::RandomRange(0.0f, 2 * 3.141592f); // 0에서 2π 사이의 각도
+
+	// 원 위의 점을 구합니다 (극 좌표 -> 직교 좌표)
+	float x = radius * cos(angle);
+	float y = radius * sin(angle);
+
+	// 중간 위치(middlePos)를 기준으로 원 위의 점을 반환
+	return Vector2(middlePos.x + x, middlePos.y + y);
 }
