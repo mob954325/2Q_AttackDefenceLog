@@ -82,7 +82,7 @@ void BettleManager::OnUpdate()
 {
 	SetSpiritGauge();		  // 기세 게이지 업데이트
 	SetGroggyState();         // 그로기 스테이트 업데이트
-	ChangeCommonFinalState(); // 
+	
 	if (!m_Player->GetIsGroggy() && !m_Enemy->GetIsGroggy()) {
 		SetStateFormPatternIdle();
 		ChangeFinalStateIdle();
@@ -129,6 +129,8 @@ void BettleManager::OnUpdate()
 	//SetStateFormPattern();	// 각 상태별 공격 방어 처리 어
 
 	ResetState(); 			// state가 다를 경우 초기화 하기!!!
+
+	ChangeCommonFinalState(); // 
 }
 
 void BettleManager::InitHpGauge()
@@ -189,18 +191,28 @@ void BettleManager::SetStateFormPatternPlayerGroggy() // 플레이어 그로기 
 	m_PattenManager->EnemyPatternAllClear();
 	m_PattenManager->PlayerPatternAllClear();
 	m_PattenManager->DoneTimeOutPatten();
+	
+	if (m_PattenManager->AtPlayerGroggyEnemyStorage.size() < 1)  return;
 	if (nowNode.size() < 1) return; // 플레이어가 입력을 안하면  return
-
+	float countDamagePercent = 0.0f;
 	// 적 연격이 끝났다는 델리게이트
 	onEnemyFinalBlow.Invoke();
-
-	// 적이 플레이어에게 주는 데미지 계산
-	float countDamagePercent = m_PattenManager->CountDamageAtPlayerGroggy(nowNode);
+	if (nowNode.size() == 1) {
+		countDamagePercent = 1.0f;
+	}
+	else {
+		// 적이 플레이어에게 주는 데미지 계산
+		countDamagePercent = m_PattenManager->CountDamageAtPlayerGroggy(nowNode);
+	}
+	
 	m_Player->GetDamage( m_Enemy->GetAttack() * EnemyAtkMulAtPlayerGroggy * (1 - countDamagePercent));
 	m_Player->SetState("Player_Hit");						// 플레이어 상태 변경 -> 공격 실패
 	m_Enemy->SetState("Enemy_AttackSuccess");				// 적 상태 변경 -> 적 공격
 	m_Enemy->IsOtherEndGroggy = false;		// 적 그로기 상태 해제
-	m_Player->SetIsRestore(true);
+	m_Player->RestoreGroggy();
+	m_Enemy->IsOtherEndGroggy = true;  // 끝났다고 알림
+	m_Enemy->OtherGroggyTime = 0.0f;
+	nowNode.clear();
 }
 
 
@@ -844,6 +856,13 @@ void BettleManager::SetGroggyState()
 		m_Player->SetState("Player_AttackSuccess");
 		m_Enemy->SetState("Enemy_Hit");
 		onTimeout.Invoke(); // 외부에 그로기 지속 시간이 끝났다는걸 알림
+	}
+
+	if (preManagerState != nowManagerState && preManagerState == playerGroggy)
+	{
+		isOncePatternAttack = false;
+		m_Player->isOtherGroggyEnd = false;
+		m_Player->IsOtherGroggy = false;
 	}
 
 

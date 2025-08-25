@@ -386,47 +386,39 @@ void Player::CalSpiritTime()
 
 void Player::DiffState()
 {
-	if (m_State->GetNowName() != nowStateName) // 값이 항상 다름
-	{
+	if (m_State->GetNowName() != nowStateName) {
 		preStateName = nowStateName;
 		nowStateName = m_State->GetNowName();
 	}
 
-	if (IsOtherGroggy) // 적과 나 둘중 1명이 그로기
-	{
+	if (IsOtherGroggy) {
 		if (!OtherGroggyTimeStop)
 			enemyGroggyTime += GameTime::GetInstance().GetDeltaTime();
-
 		std::cout << enemyGroggyTime << std::endl;
 	}
 
-	// 그로기 시간!!!
-	// 10초가 지나거나
-	if (enemyGroggyTime >= 20.0f)
-	{
-		isOtherGroggyEnd = true;  // 아군의 연격 시간이 끝났다는 것을 표시
-		RestoreGroggy();
+	// 그로기 타임아웃 (예: 20초) → 여기서 Restore 호출
+	if (enemyGroggyTime >= 20.0f) {
+		isOtherGroggyEnd = true;   // 연격 끝 표식
+		RestoreGroggy();           // 실제 복구 시점
 	}
 
-	// 기세 게이지가 벗어나지 않게 고정!!!
-	// 현재 플레이어의 기세 게이지가 0.0f
-	// 한 번의 그로기에 restore 2번 되는 현상방지 
+	// ----- 핵심 수정: isRestore는 '한 프레임만' 효력 -----
 	if (isRestore) {
-		isGroggy = false;
+		isGroggy = false;   // 회복 프레임
+		isRestore = false;   // 소비! (다음 프레임부터는 영향 X)
 	}
-	else if (Object_NowSpiritAmount <= 0.0f) // 기세 게이지
-	{
+	else if (Object_NowSpiritAmount <= 0.0f) {
 		isGroggy = true;
+		restoredThisCycle = false;   // 
 		Object_NowSpiritAmount = 0.0f;
-
 	}
-	else // 0.0f 초과면 false
-	{
+	else {
 		isGroggy = false;
 	}
-	// 
-	if (Object_NowSpiritAmount >= Object_SpiritAmount)
-	{
+
+	// 상한 클램프
+	if (Object_NowSpiritAmount >= Object_SpiritAmount) {
 		Object_NowSpiritAmount = Object_SpiritAmount;
 	}
 }
@@ -468,6 +460,10 @@ void Player::AddPattenLoop()
 
 void Player::RestoreGroggy()
 {
+	if (!isGroggy) return;          // 그로기 아니면 무시
+	if (restoredThisCycle) return;  // 이번 사이클에서 이미 복구했으면 무시
+	restoredThisCycle = true;
+
 	enemyGroggyTime = 0.0f;
 	IsOtherGroggy = false;
 
