@@ -104,9 +104,9 @@ void BettleManager::OnUpdate()
 		else if (m_Player->GetIsGroggy()) { // 플레이어가 그로기 상태일 때
 			SetStateFormPatternPlayerGroggy();
 			ChangeFinalStatePlayerGroggy();
+
 			if (!usedStartBlow) {
-
-
+				onStartEnemyBlow.Invoke();
 				usedStartBlow = true;
 			}
 
@@ -405,6 +405,10 @@ void BettleManager::SetStateFormPatternIdle()
 
 	}
 	else if (DefCorPatten == nullptr && AtkCorPatten != nullptr) {
+
+		//std::cout << "끼얏호우!!!!!!!!" << std::endl;//테스트코드
+		// //한번만 잘 작동함
+		
 		//공격 성공
 		m_Player->SetState("Player_AttackSuccess");	// 플레이어 상태 변경 -> 플레이어 공격 성공
 		m_Player->SetEndAttack();					// isAttackingPattern = true 
@@ -433,6 +437,8 @@ void BettleManager::SetStateFormPatternIdle()
 			break;
 		}
 
+		bool isHit = false;
+
 		// 마지막 노드가 중앙이 아니라면 적이 일정 확률로 회피 
 		if (m_Enemy->GetDefenseRate() >= GameRandom::RandomRange(1, 101) && AtkCorPatten->lastPosition != MiddleNode)
 		{
@@ -441,7 +447,8 @@ void BettleManager::SetStateFormPatternIdle()
 			Vector2 EnemyPerryEff = { RandomHitPos_x(HiteffectEnemy), RandomHitPos_y(HiteffectEnemy) };
 			m_Player->CallGuardEffect(0, EnemyPerryEff);
 
-
+		
+			isHit = false; // 가드
 		}
 		else // 적 회피 실패
 		{
@@ -450,7 +457,6 @@ void BettleManager::SetStateFormPatternIdle()
 			m_Enemy->SetState("Enemy_Hit");		// 적 상태 변경 -> 적 피격
 			float tmpDamage = m_PattenManager->NodePatternDistance(nowNode, true);
 			m_Enemy->GetDamage(ConvertHPDamageToPos(AtkCorPatten->lastPosition, m_Player->GetAttack() * tmpDamage)); // 적 체력 감소
-
 
 			if (HitAnimeCount < 9)
 			{
@@ -461,14 +467,16 @@ void BettleManager::SetStateFormPatternIdle()
 			}
 			if (HitAnimeCount = 10) HitAnimeCount = 0;
 
+			isHit = true; // 쳐맞음
 		}
+
+		onEnemyHit.Invoke(nowNode, isHit); // 외부에 피격발생 알림
 
 		// 플레이어 공격에 따른 기세 값 변경
 		m_Player->RestoreSpiritDamage(ConvertSpiritDamageToPos(AtkCorPatten->lastPosition, m_Player->GetSpiritAttack()));
 		m_Enemy->GetSpiritdamage(ConvertSpiritDamageToPos(AtkCorPatten->lastPosition, m_Player->GetSpiritAttack()));
 
 		m_PattenManager->PlayerPatternAllClear(); // 저장소에 패턴이 삭제가 안되는 경우도 있음으로 그냥 전부 삭제!!!
-
 
 		m_PattenManager->SetDefenceIsfailControl(false); //공격 성공했음으로 실패처리를 안함!!
 
@@ -584,10 +592,8 @@ void BettleManager::ChangeFinalStateEnemyGroggy()  // 적의 그로기 상태에
 
 
 	if (m_Player->isOtherGroggyEnd) {
-		m_Player->isOtherGroggyEnd = false;
+		m_Player->isOtherGroggyEnd = false;		
 	}
-
-
 }
 
 

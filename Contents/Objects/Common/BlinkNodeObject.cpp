@@ -19,11 +19,11 @@ void BlinkNodeObject::OnCreate()
 		auto bitmaps = obj->AddComponent<BitmapRenderer>();
 
 		if (i < 9) { // 0 ~ 8 << 내꺼(플레이어 번쩍이는거)
-			bitmaps->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\Effect\\Combo\\combo_node_outer_circle.png");
+			bitmaps->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\Effect\\AttackNode\\attack_node_yellow.png");
 			playerBlinkBitmaps.push_back(bitmaps);
 		}
 		else { // 9 ~ 17 적꺼(연격때, 적의 공격)
-			bitmaps->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\Effect\\Combo\\combo_node_inner_circle.png");
+			bitmaps->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\Effect\\AttackNode\\attack_node_dark_red.png");
 			enemyBlinkBitmaps.push_back(bitmaps); // 0~8, push_back 가능함
 		}
 

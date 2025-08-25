@@ -35,8 +35,8 @@ protected:
 	std::array<GameObject*, 9> m_nodes;	// 노드 오브젝트 9개
 
 	GameObject* trail;					// 마우스 트레일
-	GameObject* playerGuidelineA;		// 플레이어 공격 가이드 A
-	GameObject* playerGuidelineB;		// 플레이어 공격 가이드 B
+	//GameObject* playerGuidelineA;		// 플레이어 공격 가이드 A
+	//GameObject* playerGuidelineB;		// 플레이어 공격 가이드 B
 
 	std::queue<GameObject*> readyQueueForEnemyGuide;	// 준비 된 적 공격 가이드 -> 패링 이미지
 	std::vector<GameObject*> enemyGuidelines;			// 셋업된 공격 가이드 라인
@@ -54,16 +54,14 @@ protected:
 	EffectInstance* effInstance;						// 단일 이펙트 -> 이 오브젝트가 소유하고 있음
 	std::vector<EffectInstance*> effectInstances;		// 이펙트 여러개 -> 이 오브젝트와 개별 오브젝트
 
-	SignBoard* signBoard;
+	//SignBoard* signBoard;
 	BattleBoard* battleBoard;	
 	BlinkNodeObject* blinkNodeObject;
 
 private:
 	bool isSkipped = false; // 이거 켜지면, 노드 관련 행동 스킵함
 
-	std::vector<int> cachedVecA;
-
-	std::vector<int> cachedVecB;
+	std::vector<int> cachedVec;
 
 	std::vector<Vector2> nodePositions;
 

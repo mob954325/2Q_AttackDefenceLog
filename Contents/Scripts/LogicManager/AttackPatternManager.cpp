@@ -20,6 +20,7 @@ void AttackPatternManager::OnStart() {
 		}
 	}
 	NowEnemyStorage.clear();
+
 }
 
 //패턴을 추가하는 함수 적과 플레이어의 패턴의 저장소가 다름
@@ -444,7 +445,8 @@ AttackPosition AttackPatternManager::ConvertEndNodeToPosition(int endNode) {
 
 ///////////// 플레이어 그로기시 사용 함수들  ////////////////
 
-void AttackPatternManager::ResisterEnemyAtkAtPlayerGroggy(std::vector<int> enemyAtk) {
+void AttackPatternManager::ResisterEnemyAtkAtPlayerGroggy(std::vector<int> enemyAtk) {	
+	AtPlayerGroggyEnemyStorage.clear();
 	for (int i = 0; i < enemyAtk.size() -1 ; i++) {
 		AtPlayerGroggyEnemyStorage.push_back(enemyAtk[i] * 10 + enemyAtk[i+1]);
 	}

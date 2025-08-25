@@ -11,7 +11,7 @@ public:
 	void OnCreate() override;
 	void OnUpdate() override;	
 
-	void Start(std::vector<int> pattern, bool isE = true);
+	void Start(std::vector<int> pattern, bool isE = false);
 
 	void Stop(); 
 	void SetupNodes(Vector2 node, float interval); // 중앙의 노드 좌표와 간격을 넣어주세오
