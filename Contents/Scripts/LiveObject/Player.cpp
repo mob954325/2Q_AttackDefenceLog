@@ -60,7 +60,6 @@ void Player::ResetPlayer()
 
 	SelectPattern();				// 공격을 했으면 다른 패턴 세팅 - 
 	SetNowPattern();
-	SetState("Player_Idle");	// 플레이어 상태 변경 - idle
 }
 
 void Player::OnUpdate() {
@@ -400,7 +399,7 @@ void Player::DiffState()
 	// 그로기 타임아웃 (예: 20초) → 여기서 Restore 호출
 	if (enemyGroggyTime >= 20.0f) {
 		isOtherGroggyEnd = true;   // 연격 끝 표식
-		RestoreGroggy();           // 실제 복구 시점
+		enemyGroggyTime = 0.0f;    // 중복 트리거 방지
 	}
 
 	// ----- 핵심 수정: isRestore는 '한 프레임만' 효력 -----

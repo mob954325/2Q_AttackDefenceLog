@@ -14,6 +14,7 @@
 #include "Scripts/GameManager.h"
 #include "Objects/Scenes/Stage/StageResult/StageResult.h"
 #include "Math/EasingFunction.h"
+#include "Math/GameRandom.h"
 
 // 각 값은 해당 함수가 출력 중일때, 각 플레그 변화
 //														     
@@ -143,16 +144,22 @@ void Enemy::AtkSucEnter()
 
 void Enemy::DefEnter()
 {    
-	limitStateMoveTimer = 0.8f; 
+	limitStateMoveTimer = 0.6f; 
 	nowStateMoveTimer = 0.0f;
-	fromPos = IdlePos; 
+	fromPos = IdlePos;
+	toPosX = GetRandomPointOnShrinkingCircle(maxRadius, nowStateMoveTimer, limitStateMoveTimer, IdlePos);
+	StatefreqTime = 12.0f;
+	nowStatefreqTime = 0.0f;
 }
 
 void Enemy::HitEnter()
 {    
-	limitStateMoveTimer = 0.8f; 
+	limitStateMoveTimer = 0.6f; 
 	nowStateMoveTimer = 0.0f;
 	fromPos = IdlePos;
+	toPosX = GetRandomPointOnShrinkingCircle(maxRadius, nowStateMoveTimer, limitStateMoveTimer, IdlePos);
+	StatefreqTime = 12.0f;
+	nowStatefreqTime = 0.0f;
 }
 
 void Enemy::AtkSucExit()
@@ -169,6 +176,11 @@ void Enemy::DefExit(){
 	fromPos = { 0.0f, 0.0f };
 	toPosX = { 0.0f, 0.0f };
 	toPosY = { 0.0f, 0.0f };
+	StateProgress = 0.0f;
+	StatefreqTime = 0.0f;
+	nowStatefreqTime = 0.0f;
+	StatefreqTime = 0.0f;
+	owner->GetTransform().SetPosition(IdlePos.x, IdlePos.y);
 }
 void Enemy::HitExit(){
 	limitStateMoveTimer = 0.0f; 
@@ -176,6 +188,11 @@ void Enemy::HitExit(){
 	fromPos = { 0.0f, 0.0f };
 	toPosX = { 0.0f, 0.0f };
 	toPosY = { 0.0f, 0.0f };
+	StateProgress = 0.0f;
+	StatefreqTime = 0.0f;
+	nowStatefreqTime = 0.0f;
+	StatefreqTime = 0.0f;
+	owner->GetTransform().SetPosition(IdlePos.x, IdlePos.y);
 }
 
 
@@ -188,7 +205,7 @@ void Enemy::OnCreateState()
 	m_State->SetTransitionTime("Enemy_AttackSuccess", 1.0f);	// 1.0f 뒤 변경
 	//  함수 포인터로 해당 state의 Enter, exit 연결
 	m_State->SetOnEnter("Enemy_AttackSuccess", std::bind(&Enemy::AtkSucEnter, this));
-	m_State->SetOnExit("Enemy_AttackSuccess", std::bind(&Enemy::AtkSucEnter, this));
+	m_State->SetOnExit("Enemy_AttackSuccess", std::bind(&Enemy::AtkSucExit, this));
 
 
 	//m_State->CreateState("Enemy_AttackFail");					// 공격 실패 
@@ -572,10 +589,28 @@ void Enemy::StateAct()
 		//if (StateProgress <= 0.5f) {
 		float fromProgress = EffectProgress::NormalizeProgress(StateProgress, 0.0f, 1.0f);
 		Vector2 nowPos = owner->GetTransform().GetPosition();
-		Vector2 pX = EffectProgress::DampedSine(IdlePos, IdlePos, 20.0f, 8.0f, 2.0f, 0.0f, StateProgress); // 좌우 떨림
-		Vector2 pY = EffectProgress::DampedSine(IdlePos, IdlePos, 5.0f, 4.0f, 2.0f, 0.0f, StateProgress); // 상하 떨림
+
+		// 상태 주파수 시간에 맞춰 보간값 계산 
+		if (nowStatefreqTime < limitStateMoveTimer / StatefreqTime) {
+			// 상태 변화 비율에 맞춰 보간을 진행
+			nowStatefreqTime += Singleton<GameTime>::GetInstance().GetDeltaTime();
+
+			// 보간의 구간을 0.0f에서 1.0f로 조정
+			float fromProgress = EffectProgress::NormalizeProgress(nowStatefreqTime, 0.0f, limitStateMoveTimer / StatefreqTime);
+
+			// 이전 위치에서 목표 위치로 보간
+			nowPos = EffectProgress::Lerp(nowPos, toPosX, fromProgress);
+		}
+		else {
+			// 시간이 지나면 원 위의 랜덤 점을 새로 계산
+			nowStatefreqTime = fmod(nowStatefreqTime, limitStateMoveTimer / StatefreqTime);
+
+			// 원의 반지름이 줄어들며 랜덤한 점을 계산
+			toPosX = GetRandomPointOnShrinkingCircle(maxRadius, StateProgress, 1.0f, IdlePos);
+		}
+
 		// 제자리에서 떨림을 적용, 'nowPos'는 현재 위치, 떨림만 적용하여 결과 계산
-		owner->GetTransform().SetPosition(IdlePos.x + (pX.x - IdlePos.x), IdlePos.y + (pY.y - IdlePos.y)); // 두 떨림 합
+		owner->GetTransform().SetPosition(nowPos.x, nowPos.y); // 두 떨림 합
 		//}
 	}
 	else if (nowStateName == "Enemy_Defence") // 패턴 파회 X, 막음
@@ -586,9 +621,28 @@ void Enemy::StateAct()
 		enemy_Guard->SetActive(true);
 		float fromProgress = EffectProgress::NormalizeProgress(StateProgress, 0.0f, 1.0f);
 		Vector2 nowPos = owner->GetTransform().GetPosition();
-		Vector2 pX = EffectProgress::DampedSine(IdlePos, IdlePos, 20.0f, 8.0f, 2.0f, 0.0f, StateProgress); // 좌우 떨림
-		Vector2 pY = EffectProgress::DampedSine(IdlePos, IdlePos, 5.0f, 4.0f, 2.0f, 0.0f, StateProgress); // 상하 떨림
-		owner->GetTransform().SetPosition(IdlePos.x + (pX.x - IdlePos.x), IdlePos.y + (pY.y - IdlePos.y)); // 두 떨림 합
+
+		// 상태 주파수 시간에 맞춰 보간값 계산 
+		if (nowStatefreqTime < limitStateMoveTimer / StatefreqTime) {
+			// 상태 변화 비율에 맞춰 보간을 진행
+			nowStatefreqTime += Singleton<GameTime>::GetInstance().GetDeltaTime();
+
+			// 보간의 구간을 0.0f에서 1.0f로 조정
+			float fromProgress = EffectProgress::NormalizeProgress(nowStatefreqTime, 0.0f, limitStateMoveTimer / StatefreqTime);
+
+			// 이전 위치에서 목표 위치로 보간
+			nowPos = EffectProgress::Lerp(nowPos, toPosX, fromProgress);
+		}
+		else {
+			// 시간이 지나면 원 위의 랜덤 점을 새로 계산
+			nowStatefreqTime = fmod(nowStatefreqTime, limitStateMoveTimer / StatefreqTime);
+
+			// 원의 반지름이 줄어들며 랜덤한 점을 계산
+			toPosX = GetRandomPointOnShrinkingCircle(maxRadius, StateProgress, 1.0f, IdlePos);
+		}
+
+		// 제자리에서 떨림을 적용, 'nowPos'는 현재 위치, 떨림만 적용하여 결과 계산
+		owner->GetTransform().SetPosition(nowPos.x, nowPos.y); // 두 떨림 합
 	}
 	else if (nowStateName == "Enemy_Dead")	// 적 사망 시 
 	{
@@ -666,4 +720,26 @@ void Enemy::CheckChangeScene()
 void Enemy::CallGuardEffect(int num, Vector2 vector)
 {
 	GuardEff->CallAnime(num, vector);
+}
+
+
+// 시간에 따라 반지름을 줄이고 total 시간이 되면 반지름이 0이 되는 함수
+Vector2 Enemy::GetRandomPointOnShrinkingCircle(float maxRadius, float currentTime, float totalTime, Vector2 middlePos) {
+	// 시간에 따른 반지름 변화
+	float radius = maxRadius * (1 - currentTime / totalTime);
+
+	// 반지름이 0인 경우에는 원의 중앙에 위치하도록 처리
+	if (radius <= 0.0f) {
+		return middlePos; // 반지름이 0이면, 원의 중앙 위치 반환
+	}
+
+	// 랜덤 각도 (0 ~ 2파이)
+	float angle = GameRandom::RandomRange(0.0f, 2 * 3.141592f); // 0에서 2π 사이의 각도
+
+	// 원 위의 점을 구합니다 (극 좌표 -> 직교 좌표)
+	float x = radius * cos(angle);
+	float y = radius * sin(angle);
+
+	// 중간 위치(middlePos)를 기준으로 원 위의 점을 반환
+	return Vector2(middlePos.x + x, middlePos.y + y);
 }
