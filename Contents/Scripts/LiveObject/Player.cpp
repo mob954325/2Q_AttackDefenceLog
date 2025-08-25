@@ -322,42 +322,17 @@ void Player::SetAttackPattenData(std::string PattID)
 // 플레이어의 가이드 패턴2개를 패턴매니저에 등록
 void Player::SetNowPattern()
 {
-	std::vector<int> tmp;
-	std::vector<int> tmp2;
-
-	tmp.clear();	
-	tmp2.clear();
-
-	std::string modifiedID1 = nowPlayerPattenData->Player_pattern_ID;
-	std::string modifiedID2 = nowPlayerPattenData->Player_pattern_ID;
-
-	modifiedID1.push_back('A');
-	modifiedID2.push_back('B');
-
-	// 첫 번째 패턴 데이터 가져오기
-	tmpNode = CsvDataManager::GetInstance().getDataImpl(tmpNode, nowPlayerPattenData->Node_pattern01);
-	if (tmpNode != nullptr)
-	{
-		tmp = tmpNode->Node_Number;
-		tmp.erase(std::remove(tmp.begin(), tmp.end(), 0), tmp.end());
-	}
-
-	// 두 번째 패턴 데이터 가져오기
-	tmpNode2 = CsvDataManager::GetInstance().getDataImpl(tmpNode2, nowPlayerPattenData->Node_pattern02);
-	if (tmpNode2 != nullptr)
-	{
-		tmp2 = tmpNode2->Node_Number;
-		tmp2.erase(std::remove(tmp2.begin(), tmp2.end(), 0), tmp2.end());
-	}
-
-	// 원래 100 자리에 공격 패턴이 떠있는 시간이 들어가나 플레이어는 없음으로 임의의 큰 숫자 100 을 넣음
-	m_PattenManager->AddPattern(modifiedID1, 100.0f, tmp);
-	m_PattenManager->AddPattern(modifiedID2, 100.0f, tmp2);
-
 	//
 	std::vector<int> dump = TM.MakeTour(3); // 규칙성을 안에서 랜덤한 노드(길이)만큼 반환해줌
 	//
 
+	std::string modifiedNum = "_001";
+
+	std::string modifiedID = "PI" + modifiedNum;
+
+
+	// 원래 100 자리에 공격 패턴이 떠있는 시간이 들어가나 플레이어는 없음으로 임의의 큰 숫자 100 을 넣음
+	m_PattenManager->AddPattern(modifiedID, 100.0f, dump);
 };
 
 
