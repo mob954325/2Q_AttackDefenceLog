@@ -52,7 +52,7 @@ void BattleBoard::OnStart()
 		// 패널 크기는 660 * 660 정사각형임(중요)				
 
 		render->SetActive(false);
-		battleSignBitmaps.push_back( render );
+		battleSignBitmaps.push_back(render);
 		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(bm, "SignBoard." + i);
 	}
 
@@ -70,7 +70,6 @@ void BattleBoard::OnUpdate()
 	if (!isPlay) return;
 
 	float delta = Singleton<GameTime>::GetInstance().GetDeltaTime();
-
 	progress += 1.5f * delta;
 
 	Curve(); // 좌표 이동 + 연출
@@ -88,26 +87,16 @@ void BattleBoard::OnUpdate()
 // HIT ////////////////////////////////////////////////////
 //=========================================================
 
-void BattleBoard::Hit(SignType attackType, bool isFlip) 
+void BattleBoard::Hit(SignType attackType)
 {
+	ClearAll();
 	progress = 0.0f;
 	isPlay = true;
 	from = attackType;
 	to = HitSign;
 	curve = HitCurve;
 
-	// ->
-	Vector2 start = leftPoint;
-	Vector2 end = rightPoint;
-
-	if (isFlip) { // <-
-		Vector2 start = rightPoint;
-		Vector2 end = leftPoint;
-	}
-
-	////////////////////////////////
-
-	battleSignBitmaps[from]->SetActive(true);	
+	battleSignBitmaps[from]->SetActive(true);
 	battleSignBitmaps[to]->SetActive(true);
 }
 
@@ -115,23 +104,14 @@ void BattleBoard::Hit(SignType attackType, bool isFlip)
 // GUARD //////////////////////////////////////////////////
 //=========================================================
 
-void BattleBoard::Guard(SignType attackType, bool isFlip)
+void BattleBoard::Guard(SignType attackType)
 {
+	ClearAll();
 	progress = 0.0f;
 	isPlay = true;
 	from = attackType;
 	to = GuardSign;
 	curve = GuardCurve;
-	// ->
-	Vector2 start = leftPoint;
-	Vector2 end = rightPoint;
-
-	if (isFlip) {// <-
-		start = rightPoint;
-		end = leftPoint;
-	}
-
-	////////////////////////////////
 
 	battleSignBitmaps[from]->SetActive(true);
 	battleSignBitmaps[to]->SetActive(true);
@@ -144,16 +124,12 @@ void BattleBoard::Guard(SignType attackType, bool isFlip)
 
 void BattleBoard::Parry()
 {
+	ClearAll();
 	progress = 0.0f;
 	isPlay = true;
 	from = EnemyAttackSign;
 	to = ParrySign;
 	curve = ParryCurve;
-	// <-
-	Vector2 start = rightPoint;
-	Vector2 end = leftPoint;
-
-	////////////////////////////////
 
 	battleSignBitmaps[from]->SetActive(true);
 	battleSignBitmaps[to]->SetActive(true);
@@ -165,17 +141,12 @@ void BattleBoard::Parry()
 
 void BattleBoard::Evasion(SignType attackType)
 {
+	ClearAll();
 	progress = 0.0f;
 	isPlay = true;
 	from = attackType;
 	to = EvasionSign;
 	curve = EvasionCurve;
-
-	// ->
-	Vector2 start = leftPoint;
-	Vector2 end = rightPoint;
-
-	////////////////////////////////
 
 	battleSignBitmaps[from]->SetActive(true);
 	battleSignBitmaps[to]->SetActive(true);
@@ -183,72 +154,112 @@ void BattleBoard::Evasion(SignType attackType)
 
 //=========================================================
 
-void BattleBoard::ClearAll()
+void BattleBoard::ClearAll() // 나중에 진행되고 있는걸 지우는거 말고, 알파값을 낮춘다거나. 방식을 좀 찾아야할거 같음
 {
-	for (int i = 0; i < battleSignBitmaps.size(); ++i) {
-		auto& pv = battleSignBitmaps[i];
+	for (const auto& pv : battleSignBitmaps) {
 		pv->SetActive(false);
 		pv->owner->GetTransform().SetPosition(leftPoint.x, leftPoint.y);
 	}
 }
+
+//=========================================================
 
 void BattleBoard::Curve()
 {
 	auto& fv = battleSignBitmaps[from];
 	auto& tv = battleSignBitmaps[to];
 
-	//float fromProgress = EffectProgress::NormalizeProgress(progress, fv.startTimingPos, fv.targetTimingPos);
-	//Vector2 fromPos = EffectProgress::Lerp(leftPoint, rightPoint, fromProgress);
-	//Vector2 control1 = { (fv.targetPos.x + fv.startPos.x) / 3.0f, 0.0f };
-	//Vector2 control2 = { 2.0f * (fv.targetPos.x + fv.startPos.x) / 3.0f, 300.0f };
-	//Vector2 fromPos = EffectProgress::BezierCubic(fv.startPos, fv.targetPos, control1, control2, fromProgress);
-	//Vector2 fromPos = EffectProgress::BezierQuadratic(fv.startPos, fv.startPos, control1, fromProgress);
-	//Vector2 fromPos = EffectProgress::DampedSine(fv.startPos,fv.targetPos, 100.0f, 3.0f, 3.0f, 0.0f, fromProgress);
+	Vector2 fromPos = leftPoint;
+	Vector2 toPos = rightPoint;
+
+	float fromProgress = progress;
+	float toProgress = progress;
+
+	float fromAlpha = 1.0f;
+	float toAlpha = 1.0f;
 
 
-	////////////////////////////////
-	// To << 공격받는쪽에 해당함, 회피 패링 방어 피격을 나타냄
+	if (from == EnemyAttackSign) {
+		// 플레이어의 방어, <-
+		std::swap(fromPos, toPos);
+	}
 
+	Vector2 fromStart = fromPos;
+	Vector2 toStart = toPos;
 
-
-	//Vector2 toPos = EffectProgress::Lerp(tv.startPos, tv.targetPos, toProgress);
-	//float toProgress = EffectProgress::NormalizeProgress(progress, tv.startTimingPos, tv.targetTimingPos);
-	//Vector2 toPos = EffectProgress::BezierQuadratic(tv.startPos, tv.targetPos, (tv.targetPos + tv.startPos) / 2.0f, toProgress);
-
-
+	//=========================================================
 
 	switch (curve) {
 	case HitCurve:
+		if (progress <= 0.5f) {
+			fromProgress = EffectProgress::NormalizeProgress(progress, 0.0f, 0.5f);
+			fromPos = EffectProgress::Lerp(fromPos, toPos, fromProgress);
+		}
+		else {
+			fromProgress = toProgress = EffectProgress::NormalizeProgress(progress, 0.4f, 1.0f);
+			toAlpha = fromAlpha = EffectProgress::clamp01(1.0f - fromProgress);
 
-
-
-
-
+			fromPos = EffectProgress::Lerp(toPos, { (halfPoint.x + toPos.x) / 2.0f, fromPos.y }, fromProgress);
+			//toPos = EffectProgress::Lerp(toPos, toPos + (fromPos - halfPoint) / 2.0f, toProgress);
+			toPos = EffectProgress::DampedSine(toPos, toPos + (toStart - halfPoint) / 1.5f, 100.0f, 4.0f, 2.0f, 0.0f, fromProgress);
+		}
 		break;
+
+		//=========================================================
+
 	case GuardCurve:
+		if (progress <= 0.5f) {
+			fromProgress = EffectProgress::NormalizeProgress(progress, 0.0f, 0.5f);
+			fromPos = EffectProgress::Lerp(fromPos, toPos, fromProgress);
+		}
+		else {
+			fromProgress = toProgress = EffectProgress::NormalizeProgress(progress, 0.4f, 1.0f);
+			toAlpha = fromAlpha = EffectProgress::clamp01(1.0f - fromProgress);
 
-
-
-
-
+			fromPos = EffectProgress::Lerp(toPos, { (halfPoint.x + toPos.x) / 2.0f, fromPos.y }, fromProgress);
+			toPos = EffectProgress::Lerp(toPos, toPos + (fromPos - halfPoint) / 2.0f, toProgress);
+		}
 		break;
+
+		//=========================================================
+
 	case EvasionCurve:
+		toProgress = EffectProgress::NormalizeProgress(progress, 0.2f, 0.5f);
+		fromProgress = EffectProgress::NormalizeProgress(progress, 0.0f, 0.5f);
 
+		fromPos = EffectProgress::Lerp(fromStart, toStart, fromProgress);		
+		toPos = EffectProgress::BezierQuadratic(toStart, halfPoint, { halfPoint.x , fromStart.y + 150.0f }, toProgress);
 
-
-
-
+		if (progress > 0.5f) {
+			toAlpha = fromAlpha = EffectProgress::clamp01(1.0f - progress);
+		}
 		break;
+
+		//=========================================================
+
 	case ParryCurve:
-
-
-
-
-
+		if (progress <= 0.4f) {
+			toProgress = EffectProgress::NormalizeProgress(progress, 0.3f, 0.5f);
+			fromProgress = EffectProgress::NormalizeProgress(progress, 0.0f, 0.5f);
+			fromPos = EffectProgress::Lerp(fromPos, { (halfPoint.x + toPos.x) / 2.0f, fromPos.y }, fromProgress);
+			toPos = EffectProgress::Lerp(toPos, { (halfPoint.x + toPos.x) / 2.0f, fromPos.y }, toProgress);
+		}
+		else {
+			fromProgress = toProgress = EffectProgress::NormalizeProgress(progress, 0.4f, 1.0f);
+			fromPos = EffectProgress::BezierQuadratic({ (halfPoint.x + toPos.x) / 2.0f, fromPos.y }, fromPos, { fromPos.x, 0.0f }, fromProgress);
+			toAlpha = fromAlpha = EffectProgress::clamp01(1.0f - fromProgress);
+			toPos = EffectProgress::BezierQuadratic({ (halfPoint.x + toPos.x) / 2.0f, fromPos.y }, toPos, { toPos.x, 0.0f }, toProgress);
+		}
 		break;
+
+		//=========================================================
+
 	default: break;
 	};
 
-	//fv->owner->GetTransform().SetPosition(fromPos.x, fromPos.y);
-	//tv->owner->GetTransform().SetPosition(toPos.x, toPos.y);
+	fv->owner->GetTransform().SetPosition(fromPos.x, fromPos.y);
+	fv->SetCapacity(fromAlpha);
+
+	tv->owner->GetTransform().SetPosition(toPos.x, toPos.y);
+	tv->SetCapacity(toAlpha);
 }

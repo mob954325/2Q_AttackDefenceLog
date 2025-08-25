@@ -11,6 +11,8 @@
 #include "Objects/Scenes/Stage/StageBGI.h"
 
 
+
+
 //성빈씨꺼
 #include "Scripts/LogicManager/BettleManager.h"
 #include "Scripts/LogicManager/AttackPatternManager.h" 
@@ -378,6 +380,8 @@ void PatternControlObject::OnStart()
 	auto PCB = playerGuidelineB->GetComponent<ChainDrawerComponent>();
 	PCB->SetOrderInLayer(1);
 	PCB->SetupNodes(m_nodes[4]->GetTransform().GetPosition(), n);
+
+	TM.SetUp();//테스트코드
 }
 
 //===================================================================================================
@@ -400,6 +404,12 @@ void PatternControlObject::OnUpdate() // 업데이트
 
 	if (t->isNewCached && !isSkipped) // 새로운 노드 발생하면	+ 스킵 상태가 아니라며
 	{
+	
+		TM.MakeTour(9);
+		
+		
+
+
 		PM.CheckTrails(t->CheckingCachedTrails());		// trail 찍힌 위치들을 확인하고 저장함
 		const auto& vec = PM.GetPatternPathPositions(); // 여기에 담김!!! 1 3 2 4 이런거 <<<<< (연결지점)
 
@@ -421,7 +431,11 @@ void PatternControlObject::OnUpdate() // 업데이트
 
 
 		//테스트 코드, 이후 삭제해야함
-		battleBoard->Parry();
+		//battleBoard->Parry();
+		//battleBoard->Guard(BattleBoard::HighAttackSign);
+		//battleBoard->Guard(BattleBoard::EnemyAttackSign);
+		//battleBoard->Evasion(BattleBoard::HighAttackSign);
+		battleBoard->Hit(BattleBoard::HighAttackSign);
 
 		//테스트 코드, 이후 삭제해야함
 	}

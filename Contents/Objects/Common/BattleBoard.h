@@ -38,10 +38,9 @@ public:
 	void OnStart() override;
 	void OnUpdate() override;
 
-
 	//공용
-	void Hit(SignType attackType, bool isFlip = false); // 맞는쪽은 피격 고정
-	void Guard(SignType attackType, bool isFlip = false); // 맞는쪽은 방어 고정		
+	void Hit(SignType attackType); // 맞는쪽은 피격 고정
+	void Guard(SignType attackType); // 맞는쪽은 방어 고정		
 	void Evasion(SignType attackType); //적 전용, 방향 <- 고정, 회피 고정	
 	void Parry(); //플레이어 전용, 방향 -> 고정 + 공격&반격 고정
 
@@ -50,15 +49,12 @@ public:
 	void ClearAll();
 	//void OnDestroy() override;
 
-
-
 protected:
 	float progress = 0.0f;
 
 	bool isPlay = false;
 
-	std::vector<BitmapRenderer*> battleSignBitmaps;
-	//std::vector<EffectProgress> progressVec; // 알파값에 대해서는 사용X
+	std::vector<BitmapRenderer*> battleSignBitmaps;	
 
 	SignType from = EnemyAttackSign;
 	SignType to = GuardSign;
