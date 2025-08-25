@@ -170,6 +170,7 @@ private:
 	Vector2	fromPos = { 0.0f, 0.0f };
 	Vector2 IdlePos = { 0.0f, 0.0f };
 
+	ThinkingPatternManager TM; // 알고리즘으로 백터 반환해줌
 	
 public:
 	void CallGuardEffect(int num, Vector2 vector);

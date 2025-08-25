@@ -21,6 +21,8 @@
 #include "Objects/Scenes/TitleScene/EffectProgress.h" // 보간 +
 #include "Objects/Scenes/Stage/StageResult/StageResult.h"
 
+#include "Objects/Manager/ThinkingPatternManager.h"
+
 // 각 값은 해당 함수가 출력 중일때, 각 플레그 변화
 //														     
 //                    IonStartI 다음 루프ㅣ 공격 노드추가ㅣ			    I
@@ -49,7 +51,7 @@ void Player::OnStart()
 	PlayerHit = owner->AddComponent<EffectMonoB>();
 	GuardEff = owner->AddComponent<EnemyAttackEffect>();
 
-
+	TM.SetUp();//알고리즘 내부 초기화, 안해줘도 자동으로 되긴 함
 }
 
 void Player::ResetPlayer()
@@ -323,7 +325,7 @@ void Player::SetNowPattern()
 	std::vector<int> tmp;
 	std::vector<int> tmp2;
 
-	tmp.clear();
+	tmp.clear();	
 	tmp2.clear();
 
 	std::string modifiedID1 = nowPlayerPattenData->Player_pattern_ID;
@@ -351,6 +353,11 @@ void Player::SetNowPattern()
 	// 원래 100 자리에 공격 패턴이 떠있는 시간이 들어가나 플레이어는 없음으로 임의의 큰 숫자 100 을 넣음
 	m_PattenManager->AddPattern(modifiedID1, 100.0f, tmp);
 	m_PattenManager->AddPattern(modifiedID2, 100.0f, tmp2);
+
+	//
+	std::vector<int> dump = TM.MakeTour(3); // 규칙성을 안에서 랜덤한 노드(길이)만큼 반환해줌
+	//
+
 };
 
 
