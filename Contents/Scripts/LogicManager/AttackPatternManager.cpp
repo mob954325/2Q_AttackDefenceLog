@@ -116,34 +116,44 @@ void AttackPatternManager::SubPattern(std::string ID, std::string StorageType) {
 	}
 };
 
-pattern* AttackPatternManager::CheckAttackPattern(std::vector<int> PatternID) {  //공격 패턴을 검사할 함수
-	for (const auto& pair : NowPlayerStorage) {
+pattern* AttackPatternManager::CheckAttackPattern(std::vector<int> PatternID) {
+	if (NowPlayerStorage.empty()) return nullptr;
 
-		if (PatternID.size() != pair.second->NodePatten.size()) { //입력 노드와 0을 제외한 적 공격 노드의 개수가 같지 않다면
-			pair.second->isFail = true; // 공격 실패판정
-			break;
+	for (const auto& pair : NowPlayerStorage) {
+		std::vector<int> tmpPatternID = PatternID;
+		const auto& target = pair.second->NodePatten;
+
+		if (tmpPatternID.size() != target.size()) {
+			pair.second->isFail = true;
+			continue;
 		}
-		int countNum = 0; // 맞은 개수 검사 
-		for (int i = 0; i < PatternID.size(); i++) {
-			for (int j = 0; j < pair.second->NodePatten.size(); j++)
-			{
-				if (PatternID[i] == pair.second->NodePatten[j])
-				{
-					countNum++; // 체크 // 플레이어 패턴과 인풋이 겹친 갯수
+
+		int countNum = 0;
+		for (int i = 0; i < (int)tmpPatternID.size(); ++i) {
+			for (int j = 0; j < (int)target.size(); ++j) {
+				if (tmpPatternID[i] == target[j]) {
+					++countNum;
+					tmpPatternID.erase(tmpPatternID.begin() + i);
+					--i;            // ★ 인덱스 보정 (다음 원소가 i로 들어왔으니 i 유지)
+					break;          // ★ 같은 i로 더 비교 금지 (지웠으니 끝)
 				}
 			}
 		}
-		if (countNum >= pair.second->NodePatten.size()) {
+
+		if (countNum == (int)target.size()) {
 			return pair.second;
 		}
+		else {
+			pair.second->isFail = true;
+		}
 	}
-
 	return nullptr;
 }
 
 
 
 pattern* AttackPatternManager::CheckDefencePattern(std::vector<int> PatternID) {//적의 공격을 방어할 패턴을 검사할 함수
+	if (NowEnemyStorage.size() < 1) return nullptr;
 	int EnemyZero = 0;
 	for (const auto& pair : NowEnemyStorage) { // 적 패턴 
 		int countNum = 0; // 맞은 개수 검사 
@@ -454,6 +464,8 @@ void AttackPatternManager::ResisterEnemyAtkAtPlayerGroggy(std::vector<int> enemy
 
 
 float AttackPatternManager::CountDamageAtPlayerGroggy(std::vector<int> playerDef) {
+	if( playerDef.size() < 2 ) {return 1.0f;}
+	
 	float countRightPattern = 0.0f;
 	float MaxEnemyPattern = AtPlayerGroggyEnemyStorage.size();
 	// 플레이어 패턴 정리
@@ -466,7 +478,7 @@ float AttackPatternManager::CountDamageAtPlayerGroggy(std::vector<int> playerDef
 	for (int i = 0; i < tmpPlayerDef.size(); i++) {
 		for (int j = 0; j < AtPlayerGroggyEnemyStorage.size(); j++)
 		{
-			if (AtPlayerGroggyEnemyStorage[i] == tmpPlayerDef[j])
+			if (AtPlayerGroggyEnemyStorage[j] == tmpPlayerDef[i])
 			{
 				countRightPattern++;
 			}

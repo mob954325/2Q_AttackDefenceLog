@@ -27,6 +27,10 @@ private:
 	std::string  enemyAttackPatternFix = " ";   //<=== 해당 ID의 적 공격 ID, 안쓰면  " " 안에 EP쓰지말기  
 	//ex) "EP_013"
 
+	// 적 움직임 반경
+	float maxRadius = 10.0f;
+
+
 public:
 	// 플레이어의 상태를 초기화하는 함수
 	void ResetPlayerState() {};
@@ -174,11 +178,16 @@ private:
 	float limitStateMoveTimer = 0.0f; // 각 상태에 따라 움직일 시간
 	float nowStateMoveTimer = 0.0f;   // 각 상태에 따라 움직이는 현재 시간
 	float StateProgress = 0.0f;		  // 각 상태에 따라 전체 transform시간을 정규화 하여 입력
+	float StatefreqTime = 2.0f;		  // 상태당 진동할 진동수 
+	float nowStatefreqTime = 0.0f;    // 다음 진동할 시간까지 비교할 현재 시간
 
 	Vector2 toPosX   = { 0.0f, 0.0f };
 	Vector2 toPosY  = { 0.0f, 0.0f };
 	Vector2	fromPos = { 0.0f, 0.0f };
 	Vector2 IdlePos = { 0.0f, 0.0f };
+
+	Vector2 GetRandomPointOnShrinkingCircle(float maxRadius, float currentTime, float totalTime, Vector2 middlePos);
+
 
 public:
 	void CallGuardEffect(int num , Vector2 vector);

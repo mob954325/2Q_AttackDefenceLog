@@ -75,6 +75,10 @@ public:
 	EventDelegate<> onEnemyFinalBlow; // 적의연격 종료 이벤트
 	
 private:
+	void EndEnemyGroggyCleanup(bool byTimeout);  
+	void EndPlayerGroggyCleanup(bool byTimeout);
+
+
 
 	AttackPatternManager* m_PattenManager;
 	float m_DeltaTime = 0.0f;
