@@ -103,9 +103,12 @@ void BettleManager::OnUpdate()
 		}
 		else if (m_Player->GetIsGroggy()) { // 플레이어가 그로기 상태일 때
 			SetStateFormPatternPlayerGroggy();
-
 			ChangeFinalStatePlayerGroggy();
+			if (!usedStartBlow) {
 
+
+				usedStartBlow = true;
+			}
 
 		}
 	}
@@ -183,9 +186,20 @@ void BettleManager::SetInputNode(std::vector<int> InputNode)
 
 void BettleManager::SetStateFormPatternPlayerGroggy() // 플레이어 그로기 상태에 패턴 검색
 {
+	m_PattenManager->EnemyPatternAllClear();
 	m_PattenManager->PlayerPatternAllClear();
-	SetStateFormPatternIdle();
+	m_PattenManager->DoneTimeOutPatten();
+	if (nowNode.size() < 1) return; // 플레이어가 입력을 안하면  return
+
+	// 적 연격이 끝났다는 델리게이트
+	onEnemyFinalBlow.Invoke();
+
+	// 적이 플레이어에게 주는 데미지 계산
+	float countDamagePercent = m_PattenManager->CountDamageAtPlayerGroggy(nowNode);
+	m_Player->GetDamage( m_Enemy->GetAttack() * EnemyAtkMulAtPlayerGroggy * (1 - countDamagePercent));
 }
+
+
 
 void BettleManager::SetStateFormPatternEnemyGroggy()// 적 그로기 상태에 패턴 검색
 {
@@ -673,6 +687,7 @@ void BettleManager::SetAnimationAtOtherGroggy() {
 }
 
 
+// 이거 없애도 될듯함???
 void BettleManager::ChangeFinalStatePlayerGroggy() // 아군의  그로기 상태에서 적과 플레이어의 상태를 변하게 하는 함수 
 {
 	if (m_Player->GetIsGroggy() && !m_Enemy->IsOtherEndGroggy)

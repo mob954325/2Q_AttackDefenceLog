@@ -491,7 +491,7 @@ void Enemy::DiffState()
 		isGroggy = true;
 		restoredThisCycle = false;   // 새 사이클 시작
 		Object_NowSpiritAmount = 0.0f;
-		// SetState("Enemy_Groggy"); // 상태 전환은 네 로직에 맞게
+		
 	}
 	else
 	{

@@ -343,7 +343,6 @@ std::unordered_map<std::string, pattern*>  AttackPatternManager::TimeOutPatten()
 
 
 
-
 void AttackPatternManager::GetPlayerPatten(std::vector<int>& P1, std::vector<int>& P2) // 갱신 1초
 {
 	P1 = playerPatternA;
@@ -441,3 +440,41 @@ AttackPosition AttackPatternManager::ConvertEndNodeToPosition(int endNode) {
 	default: return NonePos;
 	}
 }
+
+
+///////////// 플레이어 그로기시 사용 함수들  ////////////////
+
+void AttackPatternManager::ResisterEnemyAtkAtPlayerGroggy(std::vector<int> enemyAtk) {
+	for (int i = 0; i < enemyAtk.size() -1 ; i++) {
+		AtPlayerGroggyEnemyStorage.push_back(enemyAtk[i] * 10 + enemyAtk[i+1]);
+	}
+}
+
+
+float AttackPatternManager::CountDamageAtPlayerGroggy(std::vector<int> playerDef) {
+	float countRightPattern = 0.0f;
+	float MaxEnemyPattern = AtPlayerGroggyEnemyStorage.size();
+	// 플레이어 패턴 정리
+	std::vector<int> tmpPlayerDef;
+	for (int i = 0; i < playerDef.size() - 1; i++) {
+		tmpPlayerDef.push_back(playerDef[i] * 10 + playerDef[i + 1]);
+	}
+
+	// 순서가 맞는 패턴이 있을 경우 count++
+	for (int i = 0; i < tmpPlayerDef.size(); i++) {
+		for (int j = 0; j < AtPlayerGroggyEnemyStorage.size(); j++)
+		{
+			if (AtPlayerGroggyEnemyStorage[i] == tmpPlayerDef[j])
+			{
+				countRightPattern++;
+			}
+		}
+	}
+	// 저장소 초기화
+	AtPlayerGroggyEnemyStorage.clear(); 
+	tmpPlayerDef.clear();
+
+
+	return countRightPattern / MaxEnemyPattern;
+}
+

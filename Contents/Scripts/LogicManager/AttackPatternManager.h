@@ -34,8 +34,9 @@ public:
 	AttackPatternManager() {};
 	~AttackPatternManager() {};
 
-	std::unordered_map<std::string, pattern*> NowPlayerStorage;
-	std::unordered_map<std::string, pattern*> NowEnemyStorage;
+	std::unordered_map<std::string, pattern*> NowPlayerStorage; //플레이어 공격 저장소
+	std::unordered_map<std::string, pattern*> NowEnemyStorage;  // 적 공격 저장소
+	std::vector<int> AtPlayerGroggyEnemyStorage;                // 플레이어 그로기시 적 공격 저장소
 	//std::queue<pattern*>  nowEnemy
 
 
@@ -73,6 +74,13 @@ public:
 
 	//플레이어 커플 패턴 찾고 지우기
 	void SearchAndDestroyCouple(std::string ID);
+
+	///////////////    플레이어가 그로기 상태일 때 사용되는 함수   //////////////
+	// 적의 공격을 등록하는 함수
+	void ResisterEnemyAtkAtPlayerGroggy(std::vector<int>);
+
+	// 플레이어의 패턴과 적의 공격을 비교하는 함수
+	float CountDamageAtPlayerGroggy(std::vector<int>);
 
 
 	bool isNewPattern = false; // 외부에서 확인하는 용도
