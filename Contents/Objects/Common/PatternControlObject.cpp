@@ -11,8 +11,6 @@
 #include "Objects/Scenes/Stage/StageBGI.h"
 
 
-
-
 //성빈씨꺼
 #include "Scripts/LogicManager/BettleManager.h"
 #include "Scripts/LogicManager/AttackPatternManager.h" 
@@ -42,22 +40,7 @@ void PatternControlObject::OnCreate()
 
 	//===================================================================================================
 	// 2. 가이드라인 A B 생성
-	playerGuidelineA = new GameObject();
-	playerGuidelineA->SetRenderLayer(EngineData::RenderLayer::None);
-	auto cb = playerGuidelineA->AddComponent<ChainDrawerComponent>(); // 빨강(상단) 초록(중단) 하단(파랑)
-	cb->SetBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\BattlePanel\\GuideLine\\player_guide_line 1.png");
-	cb->SetTypeBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\BattlePanel\\GuideLine\\player_guide_line 3.png", Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\BattlePanel\\GuideLine\\player_guide_line 2.png");
-	cb->SetOrderInLayer(0);
-	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(playerGuidelineA);
-
-	playerGuidelineB = new GameObject();
-	playerGuidelineB->SetRenderLayer(EngineData::RenderLayer::None);
-	auto cc = playerGuidelineB->AddComponent<ChainDrawerComponent>();
-	cc->SetBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\BattlePanel\\GuideLine\\player_guide_line 1.png");
-	cc->SetTypeBitmap(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\BattlePanel\\GuideLine\\player_guide_line 3.png", Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\BattlePanel\\GuideLine\\player_guide_line 2.png");
-	cc->SetOrderInLayer(0);
-	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(playerGuidelineB);
-
+	// 로직 변경됨. 더이상 ChainDraw로 가이드라인을 표현하지 않음
 	//===================================================================================================
 	// 3. 데이터 읽어오는거
 
@@ -173,20 +156,23 @@ void PatternControlObject::OnCreate()
 	bettletmp->onStartBlow.Add([this]() { // 비네트 ON
 		auto bgi = owner->GetQuery()->FindByName("Vignette");
 		if (bgi) { bgi->GetComponent<Vignette>()->Start(); }
+
+		blinkNodeObject->Stop(); // 공격 가이드라인 중지
+
 		});
 
 	// OnParry 이벤트 추가
 	bettletmp->onParry.Add([this](int nodeIndex)
 		{
 			this->effectInstances[nodeIndex - 1]->DoParry(nodeIndex - 1);
-			signBoard->ShowParrySign();			
+			//signBoard->ShowParrySign();
 		});
 
 	// OnGuard 이벤트 추가
 	bettletmp->onGuard.Add([this](int nodeIndex)
 		{
 			this->effectInstances[nodeIndex - 1]->DoGuard(nodeIndex - 1);
-			signBoard->ShowGuardSign();
+			//signBoard->ShowGuardSign();
 		});
 
 	// OnFinalBlow 이벤트 추가
@@ -218,6 +204,25 @@ void PatternControlObject::OnCreate()
 
 		});
 
+	bettletmp->onStartEnemyBlow.Add([this]() {
+		std::vector<int> tmp;
+
+		std::wstring nowEnemy = enemy->GetComponent<Enemy>()->GetName();
+		if (nowEnemy == L"도적") // 1Stage
+			tmp = player->GetComponent<Player>()->TM.MakeTour(3);
+		else if (nowEnemy == L"남궁서")  // 2Stage
+			tmp = player->GetComponent<Player>()->TM.MakeTour(4);
+		else if (nowEnemy == L"강림")  // 3Stage
+			tmp = player->GetComponent<Player>()->TM.MakeTour(5);
+		else
+			std::cout << "비상!!!!비상!!!쵸비상!!!" << std::endl;
+
+		auto atp = attackPattenManager->GetComponent<AttackPatternManager>();
+		atp->ResisterEnemyAtkAtPlayerGroggy(tmp);
+
+		blinkNodeObject->Start(tmp, true);
+		});
+
 	// OntimeOut 이벤트 추가 - slash가 시간 경과시 캔슬됨
 	bettletmp->onTimeout.Add([this]()
 		{
@@ -238,10 +243,38 @@ void PatternControlObject::OnCreate()
 			}
 		});
 
+	bettletmp->onEnemyHit.Add([this](std::vector<int> pattern, bool isHit) {
+
+		//공격 애니메이션 실행
+		if (!readyQueueForAttackLine.empty())
+		{
+			attackLineEffects.push_back(readyQueueForAttackLine.front());
+			readyQueueForAttackLine.pop();
+			auto ac = attackLineEffects.back()->GetComponent<AnimatedChainEffect>();
+
+			std::reverse(pattern.begin(), pattern.end());
+			ac->PlayOnce(pattern);
+		}
+
+
+		if (isHit) {
+			//쳐맞음
+		}
+		else {
+			//가드함
+		}
+
+
+		});
+
+
+
 	// onEnemyFinalBlow 이벤트 추가
 	bettletmp->onEnemyFinalBlow.Add([this]()
 		{
+			// 적의 연격이 끝나는 시점
 
+			blinkNodeObject->Stop();
 		});
 
 
@@ -272,7 +305,7 @@ void PatternControlObject::OnCreate()
 
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(csm, "ChargedSlashManager");
 
-	signBoard = owner->AddComponent<SignBoard>();	
+	//signBoard = owner->AddComponent<SignBoard>();
 	battleBoard = owner->AddComponent<BattleBoard>();
 }
 
@@ -380,15 +413,6 @@ void PatternControlObject::OnStart()
 	}
 
 	//===================================================================================================
-	// 공격 가이드 초기 세팅 - 아마 테스트 용으로 추정
-
-	auto PCA = playerGuidelineA->GetComponent<ChainDrawerComponent>();
-	PCA->SetOrderInLayer(2);
-	PCA->SetupNodes(m_nodes[4]->GetTransform().GetPosition(), n);
-
-	auto PCB = playerGuidelineB->GetComponent<ChainDrawerComponent>();
-	PCB->SetOrderInLayer(1);
-	PCB->SetupNodes(m_nodes[4]->GetTransform().GetPosition(), n);
 
 	blinkNodeObject = owner->AddComponent<BlinkNodeObject>();
 	blinkNodeObject->SetupNodes(m_nodes[4]->GetTransform().GetPosition(), n);
@@ -415,10 +439,8 @@ void PatternControlObject::OnUpdate() // 업데이트
 	// [1] 입력 발생하면
 
 	if (t->isNewCached && !isSkipped) // 새로운 노드 발생하면	+ 스킵 상태가 아니라며
-	{	
-
-		TM.MakeTour(9); // 테스트 코드	
-
+	{
+		//TM.MakeTour(9); // 테스트 코드	
 
 		PM.CheckTrails(t->CheckingCachedTrails());		// trail 찍힌 위치들을 확인하고 저장함
 		const auto& vec = PM.GetPatternPathPositions(); // 여기에 담김!!! 1 3 2 4 이런거 <<<<< (연결지점)
@@ -434,7 +456,7 @@ void PatternControlObject::OnUpdate() // 업데이트
 		auto bt = bettleManager->GetComponent<BettleManager>();
 		std::vector<int> pttt = PM.GetPattern();
 
-		blinkNodeObject->Start(pttt, false); // 테스트 코드
+		//blinkNodeObject->Start(pttt, false); // 테스트 코드
 
 		for (int value : pttt) { std::cout << value << "-"; } // Debug
 		std::reverse(pttt.begin(), pttt.end()); // 뒤집어서 집어넣음
@@ -456,28 +478,15 @@ void PatternControlObject::OnUpdate() // 업데이트
 	//===================================================================================================
 	// [2] 가이드라인 갱신되면
 
-	std::vector<int> pca;
-	std::vector<int> pcb;
+	std::vector<int> useVec;
+	std::vector<int> notUseVec;
 
 	auto apm = attackPattenManager->GetComponent<AttackPatternManager>();
-	apm->GetPlayerPatten(pca, pcb);
+	apm->GetPlayerPatten(useVec, notUseVec);
 
-	if (pca != cachedVecA)
-	{
-		cachedVecA = pca;
-		pca.erase(std::remove(pca.begin(), pca.end(), 0), pca.end());
-		//std::reverse(pca.begin(), pca.end());
-		auto PCA = playerGuidelineA->GetComponent<ChainDrawerComponent>();
-		PCA->StartByType(pca);
-	}
-
-	if (pcb != cachedVecB)
-	{
-		cachedVecB = pcb;
-		pcb.erase(std::remove(pcb.begin(), pcb.end(), 0), pcb.end());
-		//std::reverse(pcb.begin(), pcb.end());
-		auto PCB = playerGuidelineB->GetComponent<ChainDrawerComponent>();
-		PCB->StartByType(pcb);
+	if (useVec != cachedVec && useVec.size() > 1) {
+		cachedVec = useVec;
+		blinkNodeObject->Start(useVec);
 	}
 
 	//===================================================================================================
@@ -506,31 +515,37 @@ void PatternControlObject::OnUpdate() // 업데이트
 	//===================================================================================================
 	// [4] 공격이 성공한 경우 - 이펙트 출력용
 
-	if (apm->isAttack)
+	if (apm->isAttack) // 공격 성공
 	{
-		if (!readyQueueForAttackLine.empty())
-		{
-			attackLineEffects.push_back(readyQueueForAttackLine.front());
-			readyQueueForAttackLine.pop();
-			auto ac = attackLineEffects.back()->GetComponent<AnimatedChainEffect>();
-			std::vector<int> appp = apm->CheckIsAttck();
-			std::reverse(appp.begin(), appp.end());
-			ac->PlayOnce(appp);
-			if (!appp.empty()) {
-				switch ((appp.back() - 1) / 3) {
-				case 0: // 1 2 3 상단
-					signBoard->ShowHighSign();
-					break;
-				case 1: // 4 5 6 중단
-					signBoard->ShowMiddleSign();
-					break;
-				case 2: // 7 8 9 하단
-					signBoard->ShowLowSign();
-					break;
-				}
-			}
-		}
+
+		//델리게이트로 연결함, 상단 확인
+
+		//if (!readyQueueForAttackLine.empty())
+		//{
+		//	attackLineEffects.push_back(readyQueueForAttackLine.front());
+		//	readyQueueForAttackLine.pop();
+		//	auto ac = attackLineEffects.back()->GetComponent<AnimatedChainEffect>();
+
+		//	std::vector<int> appp = apm->CheckIsAttck();
+
+		//	std::reverse(appp.begin(), appp.end());
+		//	ac->PlayOnce(appp);
+
+			//if (!appp.empty()) {
+			//	switch ((appp.back() - 1) / 3) {
+			//	case 0: // 1 2 3 상단
+			//		signBoard->ShowHighSign();
+			//		break;
+			//	case 1: // 4 5 6 중단
+			//		signBoard->ShowMiddleSign();
+			//		break;
+			//	case 2: // 7 8 9 하단
+			//		signBoard->ShowLowSign();
+			//		break;
+			//	}
+			//}
 	}
+
 
 	auto bt = bettleManager->GetComponent<BettleManager>();
 }

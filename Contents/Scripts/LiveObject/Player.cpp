@@ -64,7 +64,7 @@ void Player::ResetPlayer()
 }
 
 void Player::OnUpdate() {
-	
+
 	TimeDelta += Singleton<GameTime>::GetInstance().GetDeltaTime();
 
 	if (TimeDelta >= delays[currentStep] && CheckPlayPerry)
@@ -128,7 +128,7 @@ void Player::SetState(std::string setStateName)
 // 적 state에 따른 enter, exit 함수들
 void Player::AtkSucEnter()
 {
-	Vector2 tmpVect = { 60.0f, - 20.0f };
+	Vector2 tmpVect = { 60.0f, -20.0f };
 	limitStateMoveTimer = 0.3f;
 	nowStateMoveTimer = 0.0f;
 	fromPos = IdlePos;
@@ -179,7 +179,7 @@ void Player::DefExit() {
 }
 void Player::HitExit() {
 	StateProgress = 0.0f;
-	StatefreqTime = 0.0f;	
+	StatefreqTime = 0.0f;
 	nowStatefreqTime = 0.0f;
 	limitStateMoveTimer = 0.0f;
 	nowStateMoveTimer = 0.0f;
@@ -323,7 +323,7 @@ void Player::SetAttackPattenData(std::string PattID)
 void Player::SetNowPattern()
 {
 	//
-	std::vector<int> dump = TM.MakeTour(3); // 규칙성을 안에서 랜덤한 노드(길이)만큼 반환해줌
+	std::vector<int> dump = TM.MakeTour(3); // 규칙성을 안에서 랜덤한 노드(길이)만큼 반환해줌		
 	//
 
 	std::string modifiedNum = "_001";
@@ -364,8 +364,8 @@ void Player::ResetSpiritAmount()
 
 void Player::SetCoolTime()
 {
-		// 공격 주기 * (1.25 - 0.5 * (현재 기세 / 기세 게이지))
-		Object_nowCoolTime = (1.25f - Object_NowSpiritAmount / Object_SpiritAmount / 2.0f) * Object_CoolTime;
+	// 공격 주기 * (1.25 - 0.5 * (현재 기세 / 기세 게이지))
+	Object_nowCoolTime = (1.25f - Object_NowSpiritAmount / Object_SpiritAmount / 2.0f) * Object_CoolTime;
 }
 
 
@@ -394,8 +394,8 @@ void Player::DiffState()
 
 	if (IsOtherGroggy) // 적과 나 둘중 1명이 그로기
 	{
-		if(!OtherGroggyTimeStop)
-		enemyGroggyTime += GameTime::GetInstance().GetDeltaTime();
+		if (!OtherGroggyTimeStop)
+			enemyGroggyTime += GameTime::GetInstance().GetDeltaTime();
 
 		std::cout << enemyGroggyTime << std::endl;
 	}
@@ -418,7 +418,7 @@ void Player::DiffState()
 	{
 		isGroggy = true;
 		Object_NowSpiritAmount = 0.0f;
-		
+
 	}
 	else // 0.0f 초과면 false
 	{
@@ -473,7 +473,7 @@ void Player::RestoreGroggy()
 
 	// 복구 직후 다음 프레임에 다시 그로기 재진입을 막기 위한 처리
 	isGroggy = false;          // 지금 당장 그로기 해제
-	ResetSpiritAmount();       
+	ResetSpiritAmount();
 
 	isRestore = true;          // 베틀매니저에서 공통 회복 흐름에 쓰는 플래그 (유지)
 
@@ -484,7 +484,7 @@ void Player::RestoreGroggy()
 
 //일단 임시로 스테이트마다 스프라이트 설정
 void Player::StateAct()
-{ 
+{
 	// 현재 transform 시간이 정해진 transform 시간보다 작다면, 현재 시간에 ++
 	if (limitStateMoveTimer >= nowStateMoveTimer)
 	{
@@ -594,7 +594,7 @@ void Player::StateAct()
 		}
 
 
-		
+
 		else if (nowStateName == "Player_Dead") // 죽음
 		{
 			player_Idle->SetActive(false);
@@ -659,7 +659,7 @@ void Player::AttackAniSelect(int count) {
 
 
 	// 2) 필요한 것만 켜기 (원하는 매핑대로)
-	switch (count){
+	switch (count) {
 	case 0: // 공격1
 		player_Attack1->SetActive(true);
 		break;

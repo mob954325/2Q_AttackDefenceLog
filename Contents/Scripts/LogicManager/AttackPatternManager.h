@@ -6,6 +6,8 @@
 #include "../Engine/Utils/EventDelegate.h"
 
 
+
+
 //상중하 판별 용도, 추가되면 가이드라인 추가에 넣어주기
 enum AttackPosition { UpNode = 0, MiddleNode, LowNode, NonePos };
 
@@ -98,6 +100,9 @@ public:
 	bool isSpiritDamage = false;
 	/*GetisSpiritDamage() {
 		return isSpiritDamage}*/
+	
+
+
 
 
 

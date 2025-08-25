@@ -60,15 +60,20 @@ public:
 
 	EventDelegate<int> onParry;		// 패링 이벤트 - 밖에 int << 마지막노드
 	EventDelegate<int> onGuard;		// 회피 이벤트
+	
+	EventDelegate<std::vector<int>, bool> onEnemyHit;		// 적 피격
 
 	EventDelegate<> onStartBlow;    // 한붓그리기 시작 이벤트
+	EventDelegate<> onStartEnemyBlow; // 적의 연격 시작
+	
 	bool usedStartBlow = false;		// 델리게이트 한번만 호출할려는 플래그임
 
 	EventDelegate<> onFinalBlow;	// 연격 이벤트
 	EventDelegate<>	onTimeout;		// 패턴 종료 이벤트
 
-	EventDelegate<> onEnemyFinalBlow; // 적의연격 종료 이벤트
 
+	EventDelegate<> onEnemyFinalBlow; // 적의연격 종료 이벤트
+	
 private:
 
 	AttackPatternManager* m_PattenManager;

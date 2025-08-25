@@ -9,12 +9,12 @@
 #include "Scripts/Effect/EffectMonoB.h"
 #include "Scripts/Effect/EnemyAttackEffect.h"
 #include "Objects/Manager/ThinkingPatternManager.h"
+
 /* 25.08.01
 	 플레이어의 데이터 불러오기 -> 일관성 없음?
 		- 스탯 : hp 같은 스탯들은 변해야 함으로 저장공간을 만들어 데이터를 인가하는 형태로 진행
 		- 패턴 : 패턴은 게임 진행상에 변하지 않음으로 포인터로 가리키게 만들어 사용할 예정
 */
-#include "Objects/Manager/ThinkingPatternManager.h"
 
 class LiveObject;
 class Player : public LiveObject
@@ -98,6 +98,7 @@ public:
 	float maxRadius = 20.0f; // 초기 반지름
 	
 
+	ThinkingPatternManager TM; // 알고리즘으로 백터 반환해줌
 
 private:
 	void AttackStateSelect(bool AttackActive); // 공격 패턴 3가지 중 랜덤으로 1개 선택해서 설정함
@@ -167,7 +168,6 @@ private:
 	Vector2	fromPos = { 0.0f, 0.0f };
 	Vector2 IdlePos = { 0.0f, 0.0f };
 
-	ThinkingPatternManager TM; // 알고리즘으로 백터 반환해줌
 	
 public:
 	void CallGuardEffect(int num, Vector2 vector);
