@@ -57,10 +57,6 @@ void Enemy::OnCreateState() {
 	m_State->SetNextState("Enemy_AttackSuccess", "Enemy_Idle");
 	m_State->SetTransitionTime("Enemy_AttackSuccess", 1.0f);
 
-	m_State->CreateState("Enemy_AttackFail"); // 공격 성공
-	m_State->SetNextState("Enemy_AttackFail", "Enemy_Idle");
-	m_State->SetTransitionTime("Enemy_AttackFail", 1.0f);
-
 	m_State->CreateState("Enemy_Hit");     //패턴 파회 X, 맞음
 	m_State->SetNextState("Enemy_Hit", "Enemy_Idle");
 	m_State->SetTransitionTime("Enemy_Hit", 1.0f);

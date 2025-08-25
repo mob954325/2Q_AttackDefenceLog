@@ -9,7 +9,7 @@
 #include "Utils/GameTime.h"
 
 #include "../Engine/Scene/SceneManager.h" // 테스트 씬 전환용 8.09 추가
-
+#include "Objects/Scenes/TitleScene/EffectProgress.h" // 보간 + 
 #include "Application/AppPaths.h"
 #include "Scripts/GameManager.h"
 #include "Objects/Scenes/Stage/StageResult/StageResult.h"
@@ -28,12 +28,14 @@ void Enemy::OnStart()
 	m_PattenManager = owner->GetQuery()->FindByName("AttackPattenManager")->GetComponent<AttackPatternManager>();
 
 	SetStatData(Enemy_ID);				// 객체 데이터 불러오기
-	OnCreateState();					// 상태들 구성
-	m_State->SetState("Enemy_Idle");	// 초기 상태로 초기화
+	
 
 	SelectPattern(); //  패턴 세팅
 	SetCoolTime();	
 	SetBitmap();
+
+	OnCreateState();					// 상태들 구성
+	m_State->SetState("Enemy_Idle");	// 초기 상태로 초기화
 
 	isPatternLive = true;
 	groggyTime = 0.0f;
@@ -63,7 +65,7 @@ void Enemy::OnUpdate()
 		AddPattenLoop();		// 
 		
 	}
-	StateAct();            //  
+	StateAct();            // 상태 변화시 sprite, transform 변화
 	DiffState();            // 이전 상태와 현재 상태를 비교
 	// PrintConsole();
 
@@ -129,25 +131,86 @@ void Enemy::SetState(std::string setStateName) {
 	}
 }
 
+// 적 state에 따른 enter, exit 함수들
+void Enemy::AtkSucEnter() 
+{ 
+	Vector2 tmpVect = { -20.0f, 10.0f };
+	limitStateMoveTimer = 0.2f; 
+	nowStateMoveTimer = 0.0f;
+	fromPos = IdlePos;
+	toPosX = IdlePos + tmpVect; // 분할 할 필요가 없으면 x에 몰빵
+}
+
+void Enemy::DefEnter()
+{    
+	limitStateMoveTimer = 0.8f; 
+	nowStateMoveTimer = 0.0f;
+	fromPos = IdlePos; 
+}
+
+void Enemy::HitEnter()
+{    
+	limitStateMoveTimer = 0.8f; 
+	nowStateMoveTimer = 0.0f;
+	fromPos = IdlePos;
+}
+
+void Enemy::AtkSucExit()
+{
+	limitStateMoveTimer = 0.0f;
+	nowStateMoveTimer = 0.0f;
+	fromPos = {0.0f, 0.0f};
+	toPosX = { 0.0f, 0.0f };
+	toPosY = { 0.0f, 0.0f };
+ }
+void Enemy::DefExit(){
+	limitStateMoveTimer = 0.0f;
+	nowStateMoveTimer = 0.0f; 
+	fromPos = { 0.0f, 0.0f };
+	toPosX = { 0.0f, 0.0f };
+	toPosY = { 0.0f, 0.0f };
+}
+void Enemy::HitExit(){
+	limitStateMoveTimer = 0.0f; 
+	nowStateMoveTimer = 0.0f; 
+	fromPos = { 0.0f, 0.0f };
+	toPosX = { 0.0f, 0.0f };
+	toPosY = { 0.0f, 0.0f };
+}
+
+
 void Enemy::OnCreateState() 
 {
-	m_State->CreateState("Enemy_Idle");							// 평소 상태 - Default State  
-
+	m_State->CreateState("Enemy_Idle");		
+	// 평소 상태 - Default State  
 	m_State->CreateState("Enemy_AttackSuccess");				// 공격 성공
 	m_State->SetNextState("Enemy_AttackSuccess", "Enemy_Idle");	// Enemy_AttackSuccess -> Enemy_Idle
 	m_State->SetTransitionTime("Enemy_AttackSuccess", 1.0f);	// 1.0f 뒤 변경
+	//  함수 포인터로 해당 state의 Enter, exit 연결
+	m_State->SetOnEnter("Enemy_AttackSuccess", std::bind(&Enemy::AtkSucEnter, this));
+	m_State->SetOnExit("Enemy_AttackSuccess", std::bind(&Enemy::AtkSucEnter, this));
 
-	m_State->CreateState("Enemy_AttackFail");					// 공격 실패 
-	m_State->SetNextState("Enemy_AttackFail", "Enemy_Idle");	// Enemy_AttackFail -> Enemy_Idle
-	m_State->SetTransitionTime("Enemy_AttackFail", 1.0f);		// 1.0f 뒤 변경
+
+	//m_State->CreateState("Enemy_AttackFail");					// 공격 실패 
+	//m_State->SetNextState("Enemy_AttackFail", "Enemy_Idle");	// Enemy_AttackFail -> Enemy_Idle
+	//m_State->SetTransitionTime("Enemy_AttackFail", 1.0f);		// 1.0f 뒤 변경
+
 
 	m_State->CreateState("Enemy_Hit");							// 패턴 파회 X, 맞음
 	m_State->SetNextState("Enemy_Hit", "Enemy_Idle");			// Enemy_Hit -> Enemy_Idle
 	m_State->SetTransitionTime("Enemy_Hit", 1.0f);				// 1.0f 뒤 변경
+	//  함수 포인터로 해당 state의 Enter, exit 연결
+	m_State->SetOnEnter("Enemy_Hit", std::bind(&Enemy::HitEnter, this));
+	m_State->SetOnExit("Enemy_Hit", std::bind(&Enemy::HitExit, this));
+
 
 	m_State->CreateState("Enemy_Defence");						// 패턴 파회 X, 막음
 	m_State->SetNextState("Enemy_Defence", "Enemy_Idle");		// Enemy_Defence -> Enemy_Idle
 	m_State->SetTransitionTime("Enemy_Defence", 1.0f);			// 1.0f 뒤 변경
+	//  함수 포인터로 해당 state의 Enter, exit 연결
+	m_State->SetOnEnter("Enemy_Defence", std::bind(&Enemy::DefEnter, this));
+	m_State->SetOnExit("Enemy_Defence", std::bind(&Enemy::DefExit, this));
+
 
 	m_State->CreateState("Enemy_Groggy");						// 패턴 파회 X, 막음
 	m_State->SetNextState("Enemy_Groggy", "Enemy_Idle");		// Enemy_Groggy -> Enemy_Idle
@@ -209,7 +272,7 @@ void Enemy::SetStatData(std::string tmp)
 }
 
 
-void Enemy::SetBitmap() 
+void Enemy::SetBitmap()
 {
 
 	enemy_Idle = owner->AddComponent<BitmapRenderer>();
@@ -228,7 +291,7 @@ void Enemy::SetBitmap()
 		{EngineData::SceenWidth / 2 - 100.0f, EngineData::SceenHeight / 2 + 130.0f},
 		{(float)EngineData::SceenWidth, EngineData::SceenHeight / 2 + 130.0f},
 		{(float)EngineData::SceenWidth, 0.0f}
-	}); // 08.21 | 작성자 : 이성호 유니티 좌표계의 중심을 기준으로 우측상단의 화면의 약 1/4 크기의 클리핑 영역 만들기 -> 사망 시 피격 그림으로 사망함
+		}); // 08.21 | 작성자 : 이성호 유니티 좌표계의 중심을 기준으로 우측상단의 화면의 약 1/4 크기의 클리핑 영역 만들기 -> 사망 시 피격 그림으로 사망함
 
 	enemy_Guard = owner->AddComponent<BitmapRenderer>();
 	enemy_Guard->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + enemy_GuardPath);
@@ -236,7 +299,8 @@ void Enemy::SetBitmap()
 	D2D1_SIZE_F size = enemy_Idle->GetResource()->GetBitmap()->GetSize(); // 크기 같음으로 그냥 해도 될듯?
 	owner->GetTransform().SetOffset(-size.width / 2, size.height / 2);
 	owner->GetTransform().SetScale(1.0f, 1.0f); //  크기 맞추기
-	owner->GetTransform().SetPosition(580.0f, 150.0f);
+	IdlePos = { 580.0f, 150.0f };
+	owner->GetTransform().SetPosition(IdlePos.x, IdlePos.y);
 }
 
 // 플래그를 정하는 함수
@@ -385,7 +449,7 @@ void Enemy::CalSpiritTime()
 	if ( (!isGroggy ) && (!IsOtherGroggy) ) {
 		if (Object_OverTimeSpirit >= 1)
 		{
-			Object_NowSpiritAmount += eSpriteDamage_Second;									 //초당 0.3씩 감소
+			Object_NowSpiritAmount += eSpriteDamage_Second;					 //초당 0.3씩 감소
 			Object_OverTimeSpirit = std::fmod(Object_OverTimeSpirit, 1.0f);  //실수형 나머지 연산자
 		}
 
@@ -459,10 +523,24 @@ void Enemy::CallPlayerHit(int num, Vector2 position, float rotate)
 
 
 //일단 임시로 스테이트마다 스프라이트 설정
+//Transform도 같이 설정
 void Enemy::StateAct() 
 {
+	
+	// 현재 transform 시간이 정해진 transform 시간보다 작다면, 현재 시간에 ++
+	if (limitStateMoveTimer >= nowStateMoveTimer)
+	{
+		nowStateMoveTimer += GameTime::GetInstance().GetDeltaTime();
+		StateProgress = nowStateMoveTimer / limitStateMoveTimer;  // 현재시간 / 정해진 시간 -> 0.0f ~ 1.0f 로 정규화
+	}
+	// 현재 시간이 정해진 시간 이상이라면 전부 한계치에서 고정
+	if(limitStateMoveTimer < nowStateMoveTimer){
+		nowStateMoveTimer = limitStateMoveTimer;
+		StateProgress = 1.0f;
+	}
+
 	if (nowStateName == "Enemy_Idle") // idle
-	{        
+	{
 		enemy_Idle->SetActive(true);
 		enemy_Attack->SetActive(false);
 		enemy_Damaged->SetActive(false);
@@ -474,6 +552,16 @@ void Enemy::StateAct()
 		enemy_Attack->SetActive(true);
 		enemy_Damaged->SetActive(false);
 		enemy_Guard->SetActive(false);
+		Vector2 nowPos = IdlePos;
+		if (StateProgress <= 0.5f) {
+			float fromProgress = EffectProgress::NormalizeProgress(StateProgress, 0.0f, 0.5f);
+			nowPos = EffectProgress::Lerp(IdlePos, toPosX, fromProgress);
+		}
+		else {
+			float fromProgress = EffectProgress::NormalizeProgress(StateProgress, 0.5f, 1.0f);
+			nowPos = EffectProgress::Lerp(toPosX ,IdlePos, fromProgress);
+		}
+		owner->GetTransform().SetPosition(nowPos.x, nowPos.y); // 두 떨림 합
 	}
 	else if (nowStateName == "Enemy_Hit" || nowStateName == "Enemy_Groggy") // 적 피격이나 그로기 시
 	{
@@ -481,7 +569,14 @@ void Enemy::StateAct()
 		enemy_Attack->SetActive(false);
 		enemy_Damaged->SetActive(true);
 		enemy_Guard->SetActive(false);
-
+		//if (StateProgress <= 0.5f) {
+		float fromProgress = EffectProgress::NormalizeProgress(StateProgress, 0.0f, 1.0f);
+		Vector2 nowPos = owner->GetTransform().GetPosition();
+		Vector2 pX = EffectProgress::DampedSine(IdlePos, IdlePos, 20.0f, 8.0f, 2.0f, 0.0f, StateProgress); // 좌우 떨림
+		Vector2 pY = EffectProgress::DampedSine(IdlePos, IdlePos, 5.0f, 4.0f, 2.0f, 0.0f, StateProgress); // 상하 떨림
+		// 제자리에서 떨림을 적용, 'nowPos'는 현재 위치, 떨림만 적용하여 결과 계산
+		owner->GetTransform().SetPosition(IdlePos.x + (pX.x - IdlePos.x), IdlePos.y + (pY.y - IdlePos.y)); // 두 떨림 합
+		//}
 	}
 	else if (nowStateName == "Enemy_Defence") // 패턴 파회 X, 막음
 	{ 
@@ -489,6 +584,11 @@ void Enemy::StateAct()
 		enemy_Attack->SetActive(false);
 		enemy_Damaged->SetActive(false);
 		enemy_Guard->SetActive(true);
+		float fromProgress = EffectProgress::NormalizeProgress(StateProgress, 0.0f, 1.0f);
+		Vector2 nowPos = owner->GetTransform().GetPosition();
+		Vector2 pX = EffectProgress::DampedSine(IdlePos, IdlePos, 20.0f, 8.0f, 2.0f, 0.0f, StateProgress); // 좌우 떨림
+		Vector2 pY = EffectProgress::DampedSine(IdlePos, IdlePos, 5.0f, 4.0f, 2.0f, 0.0f, StateProgress); // 상하 떨림
+		owner->GetTransform().SetPosition(IdlePos.x + (pX.x - IdlePos.x), IdlePos.y + (pY.y - IdlePos.y)); // 두 떨림 합
 	}
 	else if (nowStateName == "Enemy_Dead")	// 적 사망 시 
 	{
