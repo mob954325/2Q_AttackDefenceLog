@@ -532,7 +532,7 @@ void BettleManager::SetStateFormPatternIdle()
 				m_Player->SetEndAttack();					// isAttackingPattern = true -> ??
 
 				// 플레이어 가이드 패턴 파괴
-				m_PattenManager->SearchAndDestroyCouple(tmpPatten->PattenID);
+				
 				m_PattenManager->SubPattern(tmpPatten->PattenID, "Player");
 			}
 		}
