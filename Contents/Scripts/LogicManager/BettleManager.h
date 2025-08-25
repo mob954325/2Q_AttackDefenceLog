@@ -50,6 +50,9 @@ private:
 
 	Vector2 Player2{ 400.0f , 200.0f }; // ???
 	Vector2 Enemy2{ 800.0f , 200.0f };
+
+
+	float EnemyAtkMulAtPlayerGroggy = 1.5f; // 플레이어가 그로기일때, 적의공격 배율!!!
     
 public:
 	Player* m_Player = nullptr;
@@ -63,6 +66,8 @@ public:
 
 	EventDelegate<> onFinalBlow;	// 연격 이벤트
 	EventDelegate<>	onTimeout;		// 패턴 종료 이벤트
+
+	EventDelegate<> onEnemyFinalBlow; // 적의연격 종료 이벤트
 
 private:
 
