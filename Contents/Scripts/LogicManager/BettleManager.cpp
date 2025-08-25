@@ -197,6 +197,10 @@ void BettleManager::SetStateFormPatternPlayerGroggy() // 플레이어 그로기 
 	// 적이 플레이어에게 주는 데미지 계산
 	float countDamagePercent = m_PattenManager->CountDamageAtPlayerGroggy(nowNode);
 	m_Player->GetDamage( m_Enemy->GetAttack() * EnemyAtkMulAtPlayerGroggy * (1 - countDamagePercent));
+	m_Player->SetState("Player_Hit");						// 플레이어 상태 변경 -> 공격 실패
+	m_Enemy->SetState("Enemy_AttackSuccess");				// 적 상태 변경 -> 적 공격
+	m_Enemy->IsOtherEndGroggy = false;		// 적 그로기 상태 해제
+	m_Player->SetIsRestore(true);
 }
 
 
