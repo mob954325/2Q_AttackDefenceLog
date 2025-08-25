@@ -21,7 +21,7 @@
 #include "Objects/Scenes/TitleScene/EffectProgress.h" // 보간 +
 #include "Objects/Scenes/Stage/StageResult/StageResult.h"
 
-#include "Objects/Manager/ThinkingPatternManager.h"
+
 
 // 각 값은 해당 함수가 출력 중일때, 각 플레그 변화
 //														     
