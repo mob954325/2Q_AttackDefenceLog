@@ -14,7 +14,7 @@
 		- 스탯 : hp 같은 스탯들은 변해야 함으로 저장공간을 만들어 데이터를 인가하는 형태로 진행
 		- 패턴 : 패턴은 게임 진행상에 변하지 않음으로 포인터로 가리키게 만들어 사용할 예정
 */
-
+#include "Objects/Manager/ThinkingPatternManager.h"
 
 class LiveObject;
 class Player : public LiveObject
