@@ -11,6 +11,7 @@
 #include "Objects/Common/BattleBoard.h" // 보드 위에서 뚜씨뚜씨 하는거임
 
 #include "Objects/Manager/ThinkingPatternManager.h"
+#include "Objects/Common/BlinkNodeObject.h"
 
 #include "Scripts/Effect/EffectInstance.h" // 이펙트 정현씨꺼
 
@@ -54,7 +55,8 @@ protected:
 	std::vector<EffectInstance*> effectInstances;		// 이펙트 여러개 -> 이 오브젝트와 개별 오브젝트
 
 	SignBoard* signBoard;
-	BattleBoard* battleBoard;
+	BattleBoard* battleBoard;	
+	BlinkNodeObject* blinkNodeObject;
 
 private:
 	bool isSkipped = false; // 이거 켜지면, 노드 관련 행동 스킵함

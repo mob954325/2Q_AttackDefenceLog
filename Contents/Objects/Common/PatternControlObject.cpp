@@ -377,9 +377,13 @@ void PatternControlObject::OnStart()
 	auto PCA = playerGuidelineA->GetComponent<ChainDrawerComponent>();
 	PCA->SetOrderInLayer(2);
 	PCA->SetupNodes(m_nodes[4]->GetTransform().GetPosition(), n);
+
 	auto PCB = playerGuidelineB->GetComponent<ChainDrawerComponent>();
 	PCB->SetOrderInLayer(1);
 	PCB->SetupNodes(m_nodes[4]->GetTransform().GetPosition(), n);
+
+	blinkNodeObject = owner->AddComponent<BlinkNodeObject>();
+	blinkNodeObject->SetupNodes(m_nodes[4]->GetTransform().GetPosition(), n);
 
 	TM.SetUp();//테스트코드
 }
@@ -403,11 +407,9 @@ void PatternControlObject::OnUpdate() // 업데이트
 	// [1] 입력 발생하면
 
 	if (t->isNewCached && !isSkipped) // 새로운 노드 발생하면	+ 스킵 상태가 아니라며
-	{
-	
-		TM.MakeTour(9);
-		
-		
+	{	
+
+		TM.MakeTour(9); // 테스트 코드	
 
 
 		PM.CheckTrails(t->CheckingCachedTrails());		// trail 찍힌 위치들을 확인하고 저장함
@@ -423,6 +425,9 @@ void PatternControlObject::OnUpdate() // 업데이트
 
 		auto bt = bettleManager->GetComponent<BettleManager>();
 		std::vector<int> pttt = PM.GetPattern();
+
+		blinkNodeObject->Start(pttt, false); // 테스트 코드
+
 		for (int value : pttt) { std::cout << value << "-"; } // Debug
 		std::reverse(pttt.begin(), pttt.end()); // 뒤집어서 집어넣음
 		bt->SetInputNode(pttt);
