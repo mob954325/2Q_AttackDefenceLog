@@ -65,13 +65,17 @@ protected:
 
 private:
 	bool isSkipped = false; // 이거 켜지면, 노드 관련 행동 스킵함
+	
+
+	bool waitOneSecond = false; // 이거 키면, 특정 시간동안 노드를 비활성화하고 다시 켜줌
+
+	
+
+	float waitTimer = 0.0f;
 
 	std::vector<int> cachedVec;
 
-	std::vector<Vector2> nodePositions;
-
-	ThinkingPatternManager TM; // 테스트코드
-
+	std::vector<Vector2> nodePositions;	
 };
 
 

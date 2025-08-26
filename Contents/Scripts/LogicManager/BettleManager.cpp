@@ -926,7 +926,7 @@ void BettleManager::EndEnemyGroggyCleanup(bool byTimeout)
 	isOncePatternAttack = false;
 	isPlayingAni = false;
 	AniTime = 0.0f;
-	usedStartBlow = false;
+	//usedStartBlow = false;
 	tmpAttackNode.clear();
 
 	//플레이어 측 표시/타이머 정리
@@ -953,7 +953,7 @@ void BettleManager::EndEnemyGroggyCleanup(bool byTimeout)
 void BettleManager::EndPlayerGroggyCleanup(bool byTimeout)
 {
 	//BettleManager 값 정리
-	usedStartBlow = false;
+	//usedStartBlow = false;
 
 	//적 측 표시/타이머 정리
 	m_Enemy->IsOtherGroggy = false;
