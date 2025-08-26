@@ -116,6 +116,7 @@ void BettleManager::OnUpdate()
 	HpObj->CalculatePlayerValue(m_Player->GetHp());
 	HpObj->CalculateEnemyValue(m_Enemy->GetHp());
 
+	ChangeCommonFinalState(); // 
 	// 게임 상태가 Pause면 모든 Update 내용 무시
 	if (Singleton<GameManager>::GetInstance().GetGameState() == GameState::Pause)
 	{
@@ -124,13 +125,12 @@ void BettleManager::OnUpdate()
 
 	// 이거 밑에 2개 정의안된듯?
 	//ChangeFinalState();		// 각 LiveObject의 사망 처리 Update - 유니티의 AnyState 유사
-	SetGroggyState();
 
 	//SetStateFormPattern();	// 각 상태별 공격 방어 처리 어
 
 	ResetState(); 			// state가 다를 경우 초기화 하기!!!
 
-	ChangeCommonFinalState(); // 
+	
 }
 
 void BettleManager::InitHpGauge()
@@ -593,6 +593,7 @@ void BettleManager::ChangeFinalStateEnemyGroggy()  // 적의 그로기 상태에
 {
 	if (!m_Player->IsOtherGroggy) {
 		m_Player->IsOtherGroggy = true;
+		m_Player->enemyGroggyTime = 0.0f;
 
 	}
 
@@ -609,7 +610,11 @@ void BettleManager::ChangeFinalStateEnemyGroggy()  // 적의 그로기 상태에
 
 
 void BettleManager::SetAnimationAtOtherGroggy() {
-	if (tmpAttackNode.size() < 2) return;
+	if (tmpAttackNode.size() < 2) {
+		isPlayingAni = false;
+		return;
+	}
+		
 
 	const float total = 1.5f;                                // 전체 재생 시간
 	const int   steps = static_cast<int>(tmpAttackNode.size() - 1); // 스텝 개수
@@ -710,8 +715,11 @@ void BettleManager::SetAnimationAtOtherGroggy() {
 
 void BettleManager::ChangeFinalStatePlayerGroggy() // 아군의  그로기 상태에서 적과 플레이어의 상태를 변하게 하는 함수 
 {
-	if (!m_Player->IsOtherGroggy) {
-		m_Player->IsOtherGroggy = true;
+
+	if (!m_Enemy->IsOtherGroggy) {
+		m_Enemy->IsOtherGroggy = true;
+		m_Enemy->OtherGroggyTime = 0.0f;
+		
 	}
 
 	if (isPlayingAni)  m_Player->OtherGroggyTimeStop = true;
@@ -853,6 +861,19 @@ void BettleManager::SetGroggyState()
 	else // 예외 처리
 	{
 		nowManagerState = noneGroggy;
+	}
+
+	//적 그로기로 진입하는 첫 프레임 , 플레이어가 재는 타이머를 0으로
+	if (preManagerState != nowManagerState && nowManagerState == enemyGroggy) {
+		m_Player->IsOtherGroggy = true;          // 표시도 함께 세팅
+		m_Player->enemyGroggyTime = 0.0f;        // 반드시 0부터 시작
+		
+	}
+	
+	 //플레이어 그로기로  진입하는 첫 프레임, 적이 재는 타이머를 0으로
+	if (preManagerState != nowManagerState && nowManagerState == playerGroggy) {
+		m_Enemy->IsOtherGroggy = true;           // 표시도 함께 세팅
+		m_Enemy->OtherGroggyTime = 0.0f;         // 반드시 0부터 시작
 	}
 
 	// 상태에 변경이 있고 이전 상태가 적 그로기 상태면 
