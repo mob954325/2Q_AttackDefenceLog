@@ -172,7 +172,7 @@ void PatternControlObject::OnCreate()
 	bettletmp->onParry.Add([this](int nodeIndex)
 		{
 			this->effectInstances[nodeIndex - 1]->DoParry(nodeIndex - 1);
-			
+
 			auto bbs = battleBoards.front();
 			battleBoards.pop();
 			bbs->Parry();
@@ -183,7 +183,7 @@ void PatternControlObject::OnCreate()
 	bettletmp->onGuard.Add([this](int nodeIndex)
 		{
 			this->effectInstances[nodeIndex - 1]->DoGuard(nodeIndex - 1);
-			
+
 			auto bbs = battleBoards.front();
 			battleBoards.pop();
 			bbs->Guard(BattleBoard::EnemyAttackSign);
@@ -192,7 +192,7 @@ void PatternControlObject::OnCreate()
 
 
 
-	bettletmp->onPlayerDodge.Add([this](std::vector<int> patten) {		
+	bettletmp->onPlayerDodge.Add([this](std::vector<int> patten) {
 		auto bbs = battleBoards.front();
 		battleBoards.pop();
 		bbs->Evasion();
@@ -205,7 +205,7 @@ void PatternControlObject::OnCreate()
 		enemyAttackChain.push(eac);
 		});
 
-	bettletmp->onPlayerHit.Add([this](std::vector<int> patten) {	
+	bettletmp->onPlayerHit.Add([this](std::vector<int> patten) {
 		auto bbs = battleBoards.front();
 		battleBoards.pop();
 		bbs->Hit(BattleBoard::EnemyAttackSign);
@@ -330,7 +330,7 @@ void PatternControlObject::OnCreate()
 
 		if (isHit) {
 			//쳐맞음
-	
+
 
 			auto bbs = battleBoards.front();
 			battleBoards.pop();
@@ -356,14 +356,36 @@ void PatternControlObject::OnCreate()
 			// 적의 연격이 끝나는 시점
 			blinkNodeObject->Stop();
 
+			std::vector<int> tmp;
 			for (auto& vec : fromToVec) { // 출발 * 10 + 도착임
 				int fromNum = vec / 10;
 				int toNum = vec - (fromNum * 10);
 
+				if (tmp.empty()) {
+					tmp.push_back(fromNum);
+					tmp.push_back(toNum);
+				}
+				else if (tmp.back() == fromNum && tmp.size() < 4) { // 마지막 값과 연결된다면 + 3 이하라면
+					tmp.push_back(toNum);
+				}
+				else { // 연결되지 않는다면?
+					auto eac = enemyAttackChain.front();
+					enemyAttackChain.pop();
+					eac->PlayOnce(tmp);					
+					enemyAttackChain.push(eac);
+					tmp.clear();
+
+					tmp.push_back(fromNum);
+					tmp.push_back(toNum);			
+				}				
+			}
+
+			if (!tmp.empty()) {
 				auto eac = enemyAttackChain.front();
 				enemyAttackChain.pop();
-				eac->PlayOnce({ fromNum ,toNum });
+				eac->PlayOnce(tmp);
 				enemyAttackChain.push(eac);
+				tmp.clear();
 			}
 		});
 
@@ -396,8 +418,8 @@ void PatternControlObject::OnCreate()
 	//signBoard = owner->AddComponent<SignBoard>();
 	//battleBoard = owner->AddComponent<BattleBoard>();
 	for (int i = 0; i < 9; ++i) {
-		GameObject* boardObj = new GameObject();		
-		auto boardtmp = boardObj->AddComponent<BattleBoard>();		
+		GameObject* boardObj = new GameObject();
+		auto boardtmp = boardObj->AddComponent<BattleBoard>();
 		battleBoards.push(boardtmp);
 		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(boardObj, "BattleBoard." + i);
 	}
