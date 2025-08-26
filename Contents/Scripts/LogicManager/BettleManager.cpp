@@ -728,8 +728,8 @@ void BettleManager::ChangeFinalStatePlayerGroggy() // 아군의  그로기 상�
 
 	if (m_Enemy->IsOtherEndGroggy) {
 		m_Enemy->IsOtherEndGroggy = false;
-		m_Enemy->IsOtherGroggy = false;
-		m_Player->GetDamage(m_Enemy->GetAttack() * 1.0f * spiritDamageMulToPlayer);
+		m_Enemy->IsOtherGroggy = false;		
+		m_Player->GetDamageAtGroggy(m_Enemy->GetAttack() * 1.0f * spiritDamageMulToPlayer); // 한승규 수정
 		m_Player->SetState("Player_Hit");
 		m_Enemy->SetState("Enemy_AttackSuccess"); 
 		auto SoundCom = owner->GetQuery()->FindByName("SOUNDSTAGE");
