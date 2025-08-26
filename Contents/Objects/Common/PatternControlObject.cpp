@@ -189,7 +189,7 @@ void PatternControlObject::OnCreate()
 
 		auto eac = enemyAttackChain.front();
 		enemyAttackChain.pop();
-		eac->PlayOnce(patten);		
+		eac->PlayOnce(patten);
 		enemyAttackChain.push(eac);
 		});
 
@@ -253,11 +253,11 @@ void PatternControlObject::OnCreate()
 		blinkNodeObject->AllActiveFalse();
 
 		isSkipped = true;
-		waitOneSecond = true;		
+		waitOneSecond = true;
 
 		for (int i = 0; i < m_nodes.size(); ++i) {
 			m_nodes[i]->GetComponent<BitmapRenderer>()->SetActive(false);
-		}		
+		}
 
 		//std::cout << "감-지됨======================================================" << std::endl;
 
@@ -327,15 +327,21 @@ void PatternControlObject::OnCreate()
 
 
 	// onEnemyFinalBlow 이벤트 추가
-	bettletmp->onEnemyFinalBlow.Add([this]()
+	bettletmp->onEnemyFinalBlow.Add([this](std::vector<int> fromToVec)
 		{
 			// 적의 연격이 끝나는 시점
-
 			blinkNodeObject->Stop();
+
+			for (auto& vec : fromToVec) { // 출발 * 10 + 도착임
+				int fromNum = vec / 10;
+				int toNum = vec - (fromNum * 10);
+
+				auto eac = enemyAttackChain.front();
+				enemyAttackChain.pop();
+				eac->PlayOnce({ fromNum ,toNum });
+				enemyAttackChain.push(eac);
+			}
 		});
-
-
-
 
 	// Manager의 Player와 Enemy 참조
 	bettletmp->m_Enemy = enemytmp;
@@ -627,7 +633,7 @@ void PatternControlObject::OnUpdate() // 업데이트
 
 			waitTimer = 0.0f; // 초기화, 플래그 꺼줌
 			blinkNodeObject->AllActiveTrue();
-			waitOneSecond = false;			
+			waitOneSecond = false;
 		}
 	}
 
