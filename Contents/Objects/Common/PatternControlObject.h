@@ -60,7 +60,9 @@ protected:
 	std::vector<EffectInstance*> effectInstances;		// 이펙트 여러개 -> 이 오브젝트와 개별 오브젝트
 
 	//SignBoard* signBoard;
-	BattleBoard* battleBoard;	
+	//BattleBoard* battleBoard;	
+	std::queue<BattleBoard*> battleBoards;
+
 	BlinkNodeObject* blinkNodeObject;
 
 private:

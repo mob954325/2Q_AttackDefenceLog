@@ -172,20 +172,32 @@ void PatternControlObject::OnCreate()
 	bettletmp->onParry.Add([this](int nodeIndex)
 		{
 			this->effectInstances[nodeIndex - 1]->DoParry(nodeIndex - 1);
-			battleBoard->Parry();
+			
+			auto bbs = battleBoards.front();
+			battleBoards.pop();
+			bbs->Parry();
+			battleBoards.push(bbs);
 		});
 
 	// OnGuard 이벤트 추가
 	bettletmp->onGuard.Add([this](int nodeIndex)
 		{
 			this->effectInstances[nodeIndex - 1]->DoGuard(nodeIndex - 1);
-			battleBoard->Guard(BattleBoard::EnemyAttackSign);
+			
+			auto bbs = battleBoards.front();
+			battleBoards.pop();
+			bbs->Guard(BattleBoard::EnemyAttackSign);
+			battleBoards.push(bbs);
 		});
 
 
 
-	bettletmp->onPlayerDodge.Add([this](std::vector<int> patten) {
-		battleBoard->Evasion();
+	bettletmp->onPlayerDodge.Add([this](std::vector<int> patten) {		
+		auto bbs = battleBoards.front();
+		battleBoards.pop();
+		bbs->Evasion();
+		battleBoards.push(bbs);
+
 
 		auto eac = enemyAttackChain.front();
 		enemyAttackChain.pop();
@@ -193,8 +205,11 @@ void PatternControlObject::OnCreate()
 		enemyAttackChain.push(eac);
 		});
 
-	bettletmp->onPlayerHit.Add([this](std::vector<int> patten) {
-		battleBoard->Hit(BattleBoard::EnemyAttackSign);
+	bettletmp->onPlayerHit.Add([this](std::vector<int> patten) {	
+		auto bbs = battleBoards.front();
+		battleBoards.pop();
+		bbs->Hit(BattleBoard::EnemyAttackSign);
+		battleBoards.push(bbs);
 
 		auto eac = enemyAttackChain.front();
 		enemyAttackChain.pop();
@@ -315,11 +330,20 @@ void PatternControlObject::OnCreate()
 
 		if (isHit) {
 			//쳐맞음
-			battleBoard->Hit(ty);
+	
+
+			auto bbs = battleBoards.front();
+			battleBoards.pop();
+			bbs->Hit(ty);
+			battleBoards.push(bbs);
+
 		}
 		else {
-			//가드함
-			battleBoard->Guard(ty);
+			//가드함			
+			auto bbs = battleBoards.front();
+			battleBoards.pop();
+			bbs->Guard(ty);
+			battleBoards.push(bbs);
 		}
 
 		});
@@ -370,7 +394,13 @@ void PatternControlObject::OnCreate()
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(csm, "ChargedSlashManager");
 
 	//signBoard = owner->AddComponent<SignBoard>();
-	battleBoard = owner->AddComponent<BattleBoard>();
+	//battleBoard = owner->AddComponent<BattleBoard>();
+	for (int i = 0; i < 9; ++i) {
+		GameObject* boardObj = new GameObject();		
+		auto boardtmp = boardObj->AddComponent<BattleBoard>();		
+		battleBoards.push(boardtmp);
+		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(boardObj, "BattleBoard." + i);
+	}
 }
 
 //===================================================================================================
