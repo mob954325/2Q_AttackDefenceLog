@@ -770,7 +770,7 @@ Vector2 Player::GetRandomPointOnShrinkingCircle(float maxRadius, float currentTi
 	if (radius <= 0.0f) {
 		return middlePos; // 반지름이 0이면, 원의 중앙 위치 반환
 	}
-
+	
 	// 랜덤 각도 (0 ~ 2파이)
 	float angle = GameRandom::RandomRange(0.0f, 2 * 3.141592f); // 0에서 2π 사이의 각도
 
