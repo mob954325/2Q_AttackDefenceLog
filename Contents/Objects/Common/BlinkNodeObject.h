@@ -6,16 +6,19 @@
 
 class BlinkNodeObject : public MonoBehavior
 {
-public:	
+public:
 	void OnStart() override;
 	void OnCreate() override;
-	void OnUpdate() override;	
+	void OnUpdate() override;
 
 	void Start(std::vector<int> pattern, bool isE = false);
 
-	void Stop(); 
+	void Stop();
 	void SetupNodes(Vector2 node, float interval); // 중앙의 노드 좌표와 간격을 넣어주세오
-	
+
+	void AllActiveFalse();	
+	void AllActiveTrue();
+
 private:
 	bool isPlay = false;
 	bool isEnemy = false;
@@ -24,7 +27,7 @@ private:
 
 	std::array<Vector2, 9> positions; // 좌표값들
 
-	std::vector<BitmapRenderer*> playerBlinkBitmaps;	
+	std::vector<BitmapRenderer*> playerBlinkBitmaps;
 	std::vector<BitmapRenderer*> enemyBlinkBitmaps;
 	std::vector<int> path;
 

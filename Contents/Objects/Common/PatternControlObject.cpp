@@ -159,6 +159,13 @@ void PatternControlObject::OnCreate()
 
 		blinkNodeObject->Stop(); // 공격 가이드라인 중지
 
+		isSkipped = true;
+		waitOneSecond = true;
+
+		for (int i = 0; i < m_nodes.size(); ++i) {
+			m_nodes[i]->GetComponent<BitmapRenderer>()->SetActive(false);
+		}
+
 		});
 
 	// OnParry 이벤트 추가
@@ -207,6 +214,7 @@ void PatternControlObject::OnCreate()
 			}
 
 			chargedSlashManager->Start(n);
+
 			isSkipped = true;
 
 			for (int i = 0; i < m_nodes.size(); ++i) {
@@ -232,6 +240,17 @@ void PatternControlObject::OnCreate()
 		atp->ResisterEnemyAtkAtPlayerGroggy(tmp);
 
 		blinkNodeObject->Start(tmp, true);
+		blinkNodeObject->AllActiveFalse();
+
+		isSkipped = true;
+		waitOneSecond = true;		
+
+		for (int i = 0; i < m_nodes.size(); ++i) {
+			m_nodes[i]->GetComponent<BitmapRenderer>()->SetActive(false);
+		}		
+
+		//std::cout << "감-지됨======================================================" << std::endl;
+
 		});
 
 	// OntimeOut 이벤트 추가 - slash가 시간 경과시 캔슬됨
@@ -462,8 +481,6 @@ void PatternControlObject::OnStart()
 
 	blinkNodeObject = owner->AddComponent<BlinkNodeObject>();
 	blinkNodeObject->SetupNodes(m_nodes[4]->GetTransform().GetPosition(), n);
-
-	TM.SetUp();//테스트코드
 }
 
 //===================================================================================================
@@ -472,6 +489,8 @@ void PatternControlObject::OnStart()
 
 void PatternControlObject::OnUpdate() // 업데이트
 {
+	float delta = Singleton<GameTime>::GetInstance().GetDeltaTime();
+
 	// 게임 상태가 Pause면 Update 중단
 	if (Singleton<GameManager>::GetInstance().GetGameState() == GameState::Pause)
 	{
@@ -582,8 +601,26 @@ void PatternControlObject::OnUpdate() // 업데이트
 			//}
 	}
 
+	//auto bt = bettleManager->GetComponent<BettleManager>();
 
-	auto bt = bettleManager->GetComponent<BettleManager>();
+	if (waitOneSecond) { // 플래그 켜지면
+		waitTimer += delta; // 델타 가산
+		if (waitTimer > 1.0f) { // 조건 달성시
+
+			isSkipped = false;
+			t->Clear();
+			t->cachedTrails.clear();
+
+			for (int i = 0; i < m_nodes.size(); ++i) {
+				m_nodes[i]->GetComponent<BitmapRenderer>()->SetActive(true);
+			}
+
+			waitTimer = 0.0f; // 초기화, 플래그 꺼줌
+			blinkNodeObject->AllActiveTrue();
+			waitOneSecond = false;			
+		}
+	}
+
 }
 
 //===================================================================================================

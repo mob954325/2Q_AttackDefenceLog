@@ -107,3 +107,19 @@ void BlinkNodeObject::SetupNodes(Vector2 node, float interval)
 		enemyBlinkBitmaps[i]->owner->GetTransform().SetPosition(pos.x, pos.y);
 	}
 }
+
+void BlinkNodeObject::AllActiveFalse()
+{
+	for (int i = 0; i < 9; ++i) {
+		playerBlinkBitmaps[i]->SetActive(false);
+		enemyBlinkBitmaps[i]->SetActive(false);
+	}
+}
+
+void BlinkNodeObject::AllActiveTrue()
+{
+	for (int i = 0; i < 9; ++i) {
+		playerBlinkBitmaps[i]->SetActive(true);
+		enemyBlinkBitmaps[i]->SetActive(true);
+	}
+}
