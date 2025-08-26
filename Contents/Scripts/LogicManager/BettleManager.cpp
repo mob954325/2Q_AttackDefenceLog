@@ -277,9 +277,9 @@ void BettleManager::SetStateFormPatternIdle()
 					break;
 				}
 
-				
+				onPlayerDodge.Invoke(); // 회피성공을 외부에 알림[1/2]			
 			}
-			else // 회피 실패
+			else // 회피 실패 
 			{
 				m_Player->SetState("Player_Hit");   			// 플레이어 상태 변경 -> 플레이어 피격
 				m_Player->GetDamage( m_Enemy->GetAttack()); // 상중하 적용한 데미지
@@ -299,6 +299,8 @@ void BettleManager::SetStateFormPatternIdle()
 					SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Hit01");
 					SoundCom->GetComponent<SoundPlayScene>()->PlaySound();;
 				}
+
+				onPlayerHit.Invoke(); // 플레이어 피격을 외부에 알림[1/2]
 			}
 
 			// 기세 계산
@@ -418,10 +420,7 @@ void BettleManager::SetStateFormPatternIdle()
 
 	}
 	else if (DefCorPatten == nullptr && AtkCorPatten != nullptr) {
-
-		//std::cout << "끼얏호우!!!!!!!!" << std::endl;//테스트코드
-		// //한번만 잘 작동함
-		
+				
 		//공격 성공
 		m_Player->SetState("Player_AttackSuccess");	// 플레이어 상태 변경 -> 플레이어 공격 성공
 		m_Player->SetEndAttack();					// isAttackingPattern = true 
@@ -531,6 +530,7 @@ void BettleManager::SetStateFormPatternIdle()
 					Vector2 PlayerPerryP = { RandomHitPos_x(GuardPlayer), RandomHitPos_y(GuardPlayer) };
 					m_Player->CallGuardEffect(0, PlayerPerryP);
 
+					onPlayerDodge.Invoke(); // 회피성공을 외부에 알림[2/2]
 				}
 				else
 				{
@@ -543,6 +543,7 @@ void BettleManager::SetStateFormPatternIdle()
 						SoundCom->GetComponent<SoundPlayScene>()->PlaySound();;
 					}
 
+					onPlayerHit.Invoke(); // 플레이어 피격을 외부에 알림[2/2]
 
 					if (HitAnimeCount2 < 9)
 					{

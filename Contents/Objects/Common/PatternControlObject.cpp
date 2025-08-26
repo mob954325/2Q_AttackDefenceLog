@@ -165,15 +165,26 @@ void PatternControlObject::OnCreate()
 	bettletmp->onParry.Add([this](int nodeIndex)
 		{
 			this->effectInstances[nodeIndex - 1]->DoParry(nodeIndex - 1);
-			//signBoard->ShowParrySign();
+			battleBoard->Parry();
 		});
 
 	// OnGuard 이벤트 추가
 	bettletmp->onGuard.Add([this](int nodeIndex)
 		{
-			this->effectInstances[nodeIndex - 1]->DoGuard(nodeIndex - 1);
-			//signBoard->ShowGuardSign();
+			this->effectInstances[nodeIndex - 1]->DoGuard(nodeIndex - 1);			
+			battleBoard->Guard(BattleBoard::EnemyAttackSign);
 		});
+
+
+
+	bettletmp->onPlayerDodge.Add([this]() {		
+		battleBoard->Evasion();
+		});
+
+	bettletmp->onPlayerHit.Add([this]() {
+		battleBoard->Hit(BattleBoard::EnemyAttackSign);
+		});
+
 
 	// OnFinalBlow 이벤트 추가
 	bettletmp->onFinalBlow.Add([this]()
@@ -244,7 +255,6 @@ void PatternControlObject::OnCreate()
 		});
 
 	bettletmp->onEnemyHit.Add([this](std::vector<int> pattern, bool isHit) {
-
 		//공격 애니메이션 실행
 		if (!readyQueueForAttackLine.empty())
 		{
@@ -256,14 +266,30 @@ void PatternControlObject::OnCreate()
 			ac->PlayOnce(pattern);
 		}
 
+		BattleBoard::SignType ty = BattleBoard::EnemyAttackSign;
+
+		if (!pattern.empty()) {
+			switch ((pattern.back() - 1) / 3) {
+			case 0: // 1 2 3 상단
+				ty = BattleBoard::HighAttackSign;
+				break;
+			case 1: // 4 5 6 중단
+				ty = BattleBoard::MiddleAttackSign;
+				break;
+			case 2: // 7 8 9 하단
+				ty = BattleBoard::LowAttackSign;
+				break;
+			}
+		}
 
 		if (isHit) {
 			//쳐맞음
+			battleBoard->Hit(ty);
 		}
 		else {
 			//가드함
+			battleBoard->Guard(ty);
 		}
-
 
 		});
 
@@ -276,6 +302,7 @@ void PatternControlObject::OnCreate()
 
 			blinkNodeObject->Stop();
 		});
+
 
 
 
@@ -463,16 +490,6 @@ void PatternControlObject::OnUpdate() // 업데이트
 		bt->SetInputNode(pttt);
 
 		std::cout << std::endl << std::endl;
-
-
-		//테스트 코드, 이후 삭제해야함
-		//battleBoard->Parry();
-		//battleBoard->Guard(BattleBoard::HighAttackSign);
-		//battleBoard->Guard(BattleBoard::EnemyAttackSign);
-		//battleBoard->Evasion(BattleBoard::HighAttackSign);
-		battleBoard->Hit(BattleBoard::HighAttackSign);
-
-		//테스트 코드, 이후 삭제해야함
 	}
 
 	//===================================================================================================
