@@ -60,6 +60,9 @@ public:
 
 	EventDelegate<int> onParry;		// 패링 이벤트 - 밖에 int << 마지막노드
 	EventDelegate<int> onGuard;		// 회피 이벤트
+
+	EventDelegate<> onPlayerHit;
+	EventDelegate<> onPlayerDodge;
 	
 	EventDelegate<std::vector<int>, bool> onEnemyHit;		// 적 피격
 

@@ -13,6 +13,8 @@
 #include "Objects/Manager/ThinkingPatternManager.h"
 #include "Objects/Common/BlinkNodeObject.h"
 
+
+#include "../Engine/Components/Rendering/AnimatedChainEffect.h" 
 #include "Scripts/Effect/EffectInstance.h" // 이펙트 정현씨꺼
 
 /// <summary>
@@ -43,6 +45,9 @@ protected:
 
 	std::queue<GameObject*> readyQueueForAttackLine;	// 준비된 플레이어 공격 가이드 -> 점선 화살표 이미지 2개
 	std::vector<GameObject*> attackLineEffects;			// 공격 라인 이펙트 오브젝트들
+
+
+	std::queue<AnimatedChainEffect*> enemyAttackChain; // 적 공격을 노드위에 표기하기 위한 뭐시깽임
 
 	GameObject* attackPattenManager;					// 공격 패턴 매니저
 	GameObject* bettleManager;							// 배틀 매니저

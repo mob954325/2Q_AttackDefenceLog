@@ -27,7 +27,7 @@ void AnimatedChainEffect::Render(D2DRenderManager* manager)
 	if (!isPlaying || !IsActiveSelf()) return;
 
 	timer += Singleton<GameTime>::GetInstance().GetDeltaTime();
-	
+
 	int safety = 4; // 세이프티 캡 - 4번이상 넘어가면 while 나가게
 	while (timer >= frameDur && safety-- > 0) {
 
@@ -51,6 +51,10 @@ void AnimatedChainEffect::OnCreate() {
 	SetAtlasStrip(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\Effect\\AttackLine\\attack_line_spreadsheet.png", 9); // 경로 + 프레임 수
 	flashBitmap = resourceManager->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\Effect\\AttackLine\\attack_line_circle.png");
 	flashSize = flashBitmap->GetBitmap()->GetSize();
+}
+
+void AnimatedChainEffect::ChangeEnemyAttack() {
+	SetAtlasStrip(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\Effect\\PlayerAttack\\enemy_attack_line_spreadsheet.png", 7); // 경로 + 프레임 수	
 }
 
 void AnimatedChainEffect::OnStart() {
@@ -84,7 +88,7 @@ void AnimatedChainEffect::PlayOnce(const std::vector<int>& pattern)
 	SliceRect(pattern);
 
 	if (addLastNode) {
-		activeNodes.resize(pieces.size() + 1);		
+		activeNodes.resize(pieces.size() + 1);
 	}
 	else {
 		activeNodes.resize(pieces.size());
@@ -187,13 +191,13 @@ void AnimatedChainEffect::Draw(D2DRenderManager* manager)
 
 		float alpha = 0.0f;
 		int point = currentFrame - maxNodeIndex[i].framePointIndex;
-		if ( point < 5 && point > -1)
+		if (point < 5 && point > -1)
 		{
 			alpha = 0.6f;
 			if (!maxNodeIndex[i].isCalled) {
 				OnNodeLightUp.Invoke(nodeIndex); // 1~ 9값이 외부로 반출됨
 				maxNodeIndex[i].isCalled = true;
-			}			
+			}
 		}
 
 		//=======================================================================

@@ -139,12 +139,12 @@ void BattleBoard::Parry()
 // EVASION ////////////////////////////////////////////////
 //=========================================================
 
-void BattleBoard::Evasion(SignType attackType)
+void BattleBoard::Evasion()
 {
 	ClearAll();
 	progress = 0.0f;
 	isPlay = true;
-	from = attackType;
+	from = EnemyAttackSign;
 	to = EvasionSign;
 	curve = EvasionCurve;
 
