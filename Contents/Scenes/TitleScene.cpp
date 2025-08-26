@@ -1,4 +1,5 @@
 ﻿#include "TitleScene.h"
+#include "../Engine/Systems/AudioSystem.h"
 #include "Components/Logic/InputSystem.h"
 #include "Objects/Common/InputObject.h"
 #include "Objects/Common/MouseTrailObject.h"
@@ -87,4 +88,6 @@ void TitleScene::UpdateImpl()
 	{
 		cloudManager->GetComponent<CloudManager>()->Start();
 	}
+
+	Singleton<AudioSystem>::GetInstance().Update();
 }

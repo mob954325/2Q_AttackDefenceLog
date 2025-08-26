@@ -53,5 +53,7 @@ private:
 	EventDelegate<> OnSlice;
 	bool isSliced = false;
 	bool isSliceable = true;
+
+	int IndexNum = 0;
 };
 

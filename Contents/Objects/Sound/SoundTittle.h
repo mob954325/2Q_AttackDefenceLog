@@ -29,7 +29,10 @@ private:
 		{L"Attack01" ,L"P_Attack01"},
 		{L"Attack02" ,L"P_Attack02"},
 		{L"Attack03" ,L"P_Attack03"},
-		{L"Lobby" ,L"M_Lobby"}
+		{L"Lobby" ,L"M_Lobby"},
+		{L"CutSound01" ,L"O_CutSound01"},
+		{L"CutSound02" ,L"O_CutSound02"},
+		{L"CutSound03" ,L"O_CutSound03"}
 	};
 };
 

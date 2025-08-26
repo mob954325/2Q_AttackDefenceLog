@@ -31,7 +31,7 @@ void EnemyAttackEffect::OnUpdate()
 
 void EnemyAttackEffect::OnCreate()
 {
-	for (size_t i = 0; i < 3; i++)
+	for (size_t i = 0; i < 20; i++)
 	{
 		GameObject* obj = new GameObject();
 		obj->SetRenderLayer(EngineData::RenderLayer::UI);
