@@ -184,12 +184,22 @@ void PatternControlObject::OnCreate()
 
 
 
-	bettletmp->onPlayerDodge.Add([this]() {
+	bettletmp->onPlayerDodge.Add([this](std::vector<int> patten) {
 		battleBoard->Evasion();
+
+		auto eac = enemyAttackChain.front();
+		enemyAttackChain.pop();
+		eac->PlayOnce(patten);		
+		enemyAttackChain.push(eac);
 		});
 
-	bettletmp->onPlayerHit.Add([this]() {
+	bettletmp->onPlayerHit.Add([this](std::vector<int> patten) {
 		battleBoard->Hit(BattleBoard::EnemyAttackSign);
+
+		auto eac = enemyAttackChain.front();
+		enemyAttackChain.pop();
+		eac->PlayOnce(patten);
+		enemyAttackChain.push(eac);
 		});
 
 

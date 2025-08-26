@@ -51,10 +51,12 @@ void AnimatedChainEffect::OnCreate() {
 	SetAtlasStrip(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\Effect\\AttackLine\\attack_line_spreadsheet.png", 9); // 경로 + 프레임 수
 	flashBitmap = resourceManager->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\Effect\\AttackLine\\attack_line_circle.png");
 	flashSize = flashBitmap->GetBitmap()->GetSize();
+	useNode = true;
 }
 
 void AnimatedChainEffect::ChangeEnemyAttack() {
 	SetAtlasStrip(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\Effect\\PlayerAttack\\enemy_attack_line_spreadsheet.png", 7); // 경로 + 프레임 수	
+	useNode = false;
 }
 
 void AnimatedChainEffect::OnStart() {
@@ -179,6 +181,8 @@ void AnimatedChainEffect::Draw(D2DRenderManager* manager)
 
 	auto identity = D2D1::Matrix3x2F::Identity();
 	manager->SetRenderTransform(identity);
+
+	if (!useNode) return; // 노드 사용 안하면 리턴
 
 	for (int i = 0; i < activeNodes.size(); ++i) {
 		if (i == 0) continue;
