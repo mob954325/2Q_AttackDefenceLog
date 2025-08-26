@@ -787,3 +787,12 @@ Vector2 Player::GetRandomPointOnShrinkingCircle(float maxRadius, float currentTi
 	// 중간 위치(middlePos)를 기준으로 원 위의 점을 반환
 	return Vector2(middlePos.x + x, middlePos.y + y);
 }
+
+// 적의 연격 패턴시 아군의 피가 무조건 1이상 남도록 하는 함수
+void Player::GetDamageAtGroggy(float hpDamage) {
+	Object_Hp -= hpDamage;
+	if (Object_Hp <= 0.0f)
+	{
+		Object_Hp = 1.0f;
+	}
+}

@@ -39,9 +39,11 @@ public:
 	void SetAttackPattenData(std::string PattID); //  패턴ID에 맞는 가이드라인 데이터를 불러옴
 	void ResetSpiritAmount();
 
+
 	// 배틀 매니저에서 사용될 함수
 	void SelectPattern() override;   //플레이어가 사용할 패턴을 고름
 	void SetNowPattern() override;   //플레이어의 현재 패턴의 노드를 반환함
+	void GetDamageAtGroggy(float Hpdamage);        //그로기 상태에서 데미지 계산시 사용할 함수!!
 
 
 	//업데이트에 들어갈 시간에 따라 변하는 함수들

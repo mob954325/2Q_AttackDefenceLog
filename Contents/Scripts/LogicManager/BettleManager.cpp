@@ -205,7 +205,7 @@ void BettleManager::SetStateFormPatternPlayerGroggy() // 플레이어 그로기 
 		countDamagePercent = m_PattenManager->CountDamageAtPlayerGroggy(nowNode);
 	}
 	
-	m_Player->GetDamage( m_Enemy->GetAttack() * EnemyAtkMulAtPlayerGroggy * (1 - countDamagePercent));
+	m_Player->GetDamageAtGroggy( m_Enemy->GetAttack() * EnemyAtkMulAtPlayerGroggy * (1 - countDamagePercent));
 	m_Player->SetState("Player_Hit");						// 플레이어 상태 변경 -> 공격 실패
 	m_Enemy->SetState("Enemy_AttackSuccess");				// 적 상태 변경 -> 적 공격
 	m_Enemy->IsOtherEndGroggy = false;		// 적 그로기 상태 해제
@@ -926,7 +926,7 @@ void BettleManager::EndEnemyGroggyCleanup(bool byTimeout)
 	isOncePatternAttack = false;
 	isPlayingAni = false;
 	AniTime = 0.0f;
-	usedStartBlow = false;
+	//usedStartBlow = false;
 	tmpAttackNode.clear();
 
 	//플레이어 측 표시/타이머 정리
@@ -953,7 +953,7 @@ void BettleManager::EndEnemyGroggyCleanup(bool byTimeout)
 void BettleManager::EndPlayerGroggyCleanup(bool byTimeout)
 {
 	//BettleManager 값 정리
-	usedStartBlow = false;
+	//usedStartBlow = false;
 
 	//적 측 표시/타이머 정리
 	m_Enemy->IsOtherGroggy = false;
