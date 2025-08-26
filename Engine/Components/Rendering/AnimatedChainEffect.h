@@ -34,6 +34,8 @@ public:
 	void SetupNodes(Vector2 center, float interval);
 	void PlayOnce(const std::vector<int>& pattern);
 
+	void ChangeEnemyAttack(); // 이거 호출해주면, 적 공격으로 바뀜
+
 	void SliceRect(const std::vector<int>& pattern);
 	void Draw(D2DRenderManager* manager);
 
@@ -48,7 +50,7 @@ public:
 private:
 	std::shared_ptr<BitmapResource> atlasBitmap;
 	std::shared_ptr<BitmapResource> flashBitmap;
-	
+
 	std::array<Vector2, 9> positions{};
 	std::vector<SliceEffectPiece> pieces;
 

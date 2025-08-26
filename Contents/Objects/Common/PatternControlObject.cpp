@@ -6,7 +6,7 @@
 #include "Objects/Common/MouseTrailObject.h"
 #include "../Engine/Components/Rendering/ChainDrawerComponent.h"
 #include "../Engine/Utils/GameTime.h"
-#include "../Engine/Components/Rendering/AnimatedChainEffect.h" 
+
 #include "../Engine/Math/GameRandom.h"
 #include "Objects/Scenes/Stage/StageBGI.h"
 
@@ -171,13 +171,13 @@ void PatternControlObject::OnCreate()
 	// OnGuard 이벤트 추가
 	bettletmp->onGuard.Add([this](int nodeIndex)
 		{
-			this->effectInstances[nodeIndex - 1]->DoGuard(nodeIndex - 1);			
+			this->effectInstances[nodeIndex - 1]->DoGuard(nodeIndex - 1);
 			battleBoard->Guard(BattleBoard::EnemyAttackSign);
 		});
 
 
 
-	bettletmp->onPlayerDodge.Add([this]() {		
+	bettletmp->onPlayerDodge.Add([this]() {
 		battleBoard->Evasion();
 		});
 
@@ -264,6 +264,8 @@ void PatternControlObject::OnCreate()
 
 			std::reverse(pattern.begin(), pattern.end());
 			ac->PlayOnce(pattern);
+
+			//enemyAttackChain.front()->PlayOnce(pattern);
 		}
 
 		BattleBoard::SignType ty = BattleBoard::EnemyAttackSign;
@@ -438,6 +440,23 @@ void PatternControlObject::OnStart()
 			});
 		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(readyQueueForAttackLine.back());
 	}
+
+
+	//적 공격 애니메이션
+	for (int i = 0; i < 10; ++i) {
+		GameObject* enemyObj = new GameObject();
+		enemyObj->SetRenderLayer(EngineData::RenderLayer::UI);
+		enemyObj->SetName("EnemyAttackEffectLine." + std::to_string(i));
+
+		auto enemyTmp = enemyObj->AddComponent<AnimatedChainEffect>();
+		enemyTmp->ChangeEnemyAttack();
+		enemyTmp->SetOrderInLayer(120);
+		enemyTmp->SetupNodes(m_nodes[4]->GetTransform().GetPosition(), n);
+
+		enemyAttackChain.push(enemyTmp);
+		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(enemyObj);
+	}
+
 
 	//===================================================================================================
 
