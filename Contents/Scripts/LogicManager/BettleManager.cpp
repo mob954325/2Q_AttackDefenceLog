@@ -198,7 +198,7 @@ void BettleManager::SetStateFormPatternPlayerGroggy() // 플레이어 그로기 
 	// 적 연격이 끝났다는 델리게이트
 	onEnemyFinalBlow.Invoke();
 	if (nowNode.size() == 1) {
-		countDamagePercent = 1.0f;
+		countDamagePercent = 0.0f; // 수식오류 수정
 	}
 	else {
 		// 적이 플레이어에게 주는 데미지 계산
@@ -277,7 +277,7 @@ void BettleManager::SetStateFormPatternIdle()
 					break;
 				}
 
-				onPlayerDodge.Invoke(); // 회피성공을 외부에 알림[1/2]			
+				onPlayerDodge.Invoke(pair.second->NodePatten); // 회피성공을 외부에 알림[1/2]			
 			}
 			else // 회피 실패 
 			{
@@ -300,7 +300,7 @@ void BettleManager::SetStateFormPatternIdle()
 					SoundCom->GetComponent<SoundPlayScene>()->PlaySound();;
 				}
 
-				onPlayerHit.Invoke(); // 플레이어 피격을 외부에 알림[1/2]
+				onPlayerHit.Invoke(pair.second->NodePatten); // 플레이어 피격을 외부에 알림[1/2]
 			}
 
 			// 기세 계산
@@ -530,7 +530,7 @@ void BettleManager::SetStateFormPatternIdle()
 					Vector2 PlayerPerryP = { RandomHitPos_x(GuardPlayer), RandomHitPos_y(GuardPlayer) };
 					m_Player->CallGuardEffect(0, PlayerPerryP);
 
-					onPlayerDodge.Invoke(); // 회피성공을 외부에 알림[2/2]
+					onPlayerDodge.Invoke(tmpPatten->NodePatten); // 회피성공을 외부에 알림[2/2]
 				}
 				else
 				{
@@ -543,7 +543,7 @@ void BettleManager::SetStateFormPatternIdle()
 						SoundCom->GetComponent<SoundPlayScene>()->PlaySound();;
 					}
 
-					onPlayerHit.Invoke(); // 플레이어 피격을 외부에 알림[2/2]
+					onPlayerHit.Invoke(tmpPatten->NodePatten); // 플레이어 피격을 외부에 알림[2/2]
 
 					if (HitAnimeCount2 < 9)
 					{
@@ -728,8 +728,8 @@ void BettleManager::ChangeFinalStatePlayerGroggy() // 아군의  그로기 상�
 
 	if (m_Enemy->IsOtherEndGroggy) {
 		m_Enemy->IsOtherEndGroggy = false;
-		m_Enemy->IsOtherGroggy = false;
-		m_Player->GetDamage(m_Enemy->GetAttack() * 1.0f * spiritDamageMulToPlayer);
+		m_Enemy->IsOtherGroggy = false;		
+		m_Player->GetDamageAtGroggy(m_Enemy->GetAttack() * 1.0f * spiritDamageMulToPlayer); // 한승규 수정
 		m_Player->SetState("Player_Hit");
 		m_Enemy->SetState("Enemy_AttackSuccess"); 
 		auto SoundCom = owner->GetQuery()->FindByName("SOUNDSTAGE");
