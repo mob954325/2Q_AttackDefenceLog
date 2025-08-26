@@ -453,10 +453,6 @@ void Enemy::SetCoolTime()
 		Object_nowCoolTime = nowEnemyPattenData->eComboCoolDown;
 	}
 
-	if (IsOtherGroggy)
-    {
-		Object_nowCoolTime = Object_nowCoolTime / 2.0f;
-	}
 	// 현재 공격중인 시간
 	Object_nowTotalCoolTime = Object_nowCoolTime;
 }
