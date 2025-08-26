@@ -75,7 +75,7 @@ public:
 	EventDelegate<>	onTimeout;		// 패턴 종료 이벤트
 
 
-	EventDelegate<> onEnemyFinalBlow; // 적의연격 종료 이벤트
+	EventDelegate<std::vector<int>> onEnemyFinalBlow; // 적의연격 종료 이벤트
 	
 private:
 	void EndEnemyGroggyCleanup(bool byTimeout);  

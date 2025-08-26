@@ -1,4 +1,4 @@
-#include "BettleManager.h"
+﻿#include "BettleManager.h"
 #include <cmath>
 #include "../LiveObject/Player.h"
 #include "../LiveObject/Enemy.h"
@@ -196,11 +196,12 @@ void BettleManager::SetStateFormPatternPlayerGroggy() // 플레이어 그로기 
 	if (nowNode.size() < 1) return; // 플레이어가 입력을 안하면  return
 	float countDamagePercent = 0.0f;
 	// 적 연격이 끝났다는 델리게이트
-	onEnemyFinalBlow.Invoke();
+
 
 	// 적이 플레이어에게 주는 데미지 계산
 	countDamagePercent = m_PattenManager->CountDamageAtPlayerGroggy(nowNode);
-	
+	onEnemyFinalBlow.Invoke(m_PattenManager->AtPlayerGroggyFailPetternStorage); //CountDamageAtPlayerGroggy에서 담긴 값 반환해줌
+
 	m_Player->GetDamageAtGroggy( m_Enemy->GetAttack() * EnemyAtkMulAtPlayerGroggy * (1 - countDamagePercent));
 
 	m_PattenManager->AtPlayerGroggyFailPetternStorage; // 플레이어 패턴 받을 준비
@@ -725,13 +726,13 @@ void BettleManager::ChangeFinalStatePlayerGroggy() // 아군의  그로기 상�
 	if (isPlayingAni)  m_Player->OtherGroggyTimeStop = true;
 	else               m_Player->OtherGroggyTimeStop = false;
 
-	if (m_Enemy->IsOtherEndGroggy) {
-		onEnemyFinalBlow.Invoke();
+	if (m_Enemy->IsOtherEndGroggy) {		
 		m_Enemy->IsOtherEndGroggy = false;
 
 		m_Enemy->IsOtherGroggy = false;
 		m_Player->GetDamageAtGroggy(m_Enemy->GetAttack() * 1.0f * EnemyAtkMulAtPlayerGroggy);
-		m_PattenManager->AtPlayerGroggyFailPetternStorage; // 플레이어 패턴 받을 준비
+		
+		onEnemyFinalBlow.Invoke(m_PattenManager->AtPlayerGroggyFailPetternStorage);
     
 		m_Player->SetState("Player_Hit");
 		m_Enemy->SetState("Enemy_AttackSuccess"); 
