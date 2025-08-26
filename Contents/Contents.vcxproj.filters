@@ -302,6 +302,12 @@
     <ClCompile Include="Objects\Common\BattleBoard.cpp">
       <Filter>Objects\Common</Filter>
     </ClCompile>
+    <ClCompile Include="Objects\Manager\ThinkingPatternManager.cpp">
+      <Filter>Objects\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Common\BlinkNodeObject.cpp">
+      <Filter>Objects\Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameApp.h">
@@ -520,6 +526,12 @@
       <Filter>Objects\Common</Filter>
     </ClInclude>
     <ClInclude Include="Objects\Common\BattleBoard.h">
+      <Filter>Objects\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Manager\ThinkingPatternManager.h">
+      <Filter>Objects\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Common\BlinkNodeObject.h">
       <Filter>Objects\Common</Filter>
     </ClInclude>
   </ItemGroup>

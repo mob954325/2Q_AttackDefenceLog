@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "LiveObject.h"
+#include <functional>
 #include "../CsvData/DataClass/EnemyData.h"
 #include "../CsvData/DataClass/EnemyAtkPattenData.h"
 #include "../Component/StateController.h"
@@ -7,6 +8,7 @@
 #include "Components/Rendering/BitmapRenderer.h"
 #include "Scripts/Effect/HitEffect.h"
 #include "Scripts/Effect/EnemyAttackEffect.h"
+#include "Utils/GameTime.h"
 
 
 class LiveObject;
@@ -24,6 +26,10 @@ private:
 	// 적 공격 패턴 고정
 	std::string  enemyAttackPatternFix = " ";   //<=== 해당 ID의 적 공격 ID, 안쓰면  " " 안에 EP쓰지말기  
 	//ex) "EP_013"
+
+	// 적 움직임 반경
+	float maxRadius = 10.0f;
+
 
 public:
 	// 플레이어의 상태를 초기화하는 함수
@@ -104,12 +110,22 @@ public:
 	//이펙트호출함수
 	void CallPlayerHit(int num, Vector2 position, float rotate);
 
+	// 적의 state 
+	//"Enemy_Idle"							// 평소 상태 - Default State  
+	//"Enemy_AttackSuccess"					// 공격 성공
+	//"Enemy_AttackFail"					// 공격 실패 
+	//"Enemy_Hit"							// 패턴 파회 X, 맞음
+	//"Enemy_Defence"						// 패턴 파회 X, 막음
+	//"Enemy_Groggy"						// 패턴 파회 X, 막음
+	//"Enemy_Dead"					        // 죽음
+	std::string nowStateName; //현재 상태의 이름, 이걸로 알아낼 수 있음!!
+
 private:
 	std::string Difficulty;					// 적의 난이도 k
 	EnemyData* nowEnemyData = nullptr;		// 현재 적의 데이터 클래스를 담을 변수
 	AllNodePattenClass* tmpNode = nullptr;
 	
-	std::string nowStateName;
+
 	std::string preStateName;
 	float groggyTime = 0.0f;
 	
@@ -148,6 +164,31 @@ private:
 	HitEffect* Hiteff{};
 
 	EnemyAttackEffect* GuardEff{};
+
+	// 적 state에 따른 enter, exit 함수들
+	void AtkSucEnter();
+	void DefEnter();
+	void HitEnter();
+
+	void AtkSucExit();
+	void DefExit();
+	void HitExit();
+
+	// 둘다 Exit에 초기화 하기!!!
+	float limitStateMoveTimer = 0.0f; // 각 상태에 따라 움직일 시간
+	float nowStateMoveTimer = 0.0f;   // 각 상태에 따라 움직이는 현재 시간
+	float StateProgress = 0.0f;		  // 각 상태에 따라 전체 transform시간을 정규화 하여 입력
+	float StatefreqTime = 2.0f;		  // 상태당 진동할 진동수 
+	float nowStatefreqTime = 0.0f;    // 다음 진동할 시간까지 비교할 현재 시간
+
+	Vector2 toPosX   = { 0.0f, 0.0f };
+	Vector2 toPosY  = { 0.0f, 0.0f };
+	Vector2	fromPos = { 0.0f, 0.0f };
+	Vector2 IdlePos = { 0.0f, 0.0f };
+
+	Vector2 GetRandomPointOnShrinkingCircle(float maxRadius, float currentTime, float totalTime, Vector2 middlePos);
+
+
 public:
 	void CallGuardEffect(int num , Vector2 vector);
 	// stage 구별용

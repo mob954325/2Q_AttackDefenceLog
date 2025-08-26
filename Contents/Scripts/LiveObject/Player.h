@@ -8,16 +8,13 @@
 #include "../Engine/Math/GameRandom.h"
 #include "Scripts/Effect/EffectMonoB.h"
 #include "Scripts/Effect/EnemyAttackEffect.h"
+#include "Objects/Manager/ThinkingPatternManager.h"
+
 /* 25.08.01
 	 플레이어의 데이터 불러오기 -> 일관성 없음?
 		- 스탯 : hp 같은 스탯들은 변해야 함으로 저장공간을 만들어 데이터를 인가하는 형태로 진행
 		- 패턴 : 패턴은 게임 진행상에 변하지 않음으로 포인터로 가리키게 만들어 사용할 예정
 */
-
-
-
-
-
 
 class LiveObject;
 class Player : public LiveObject
@@ -85,6 +82,24 @@ public:
 	float pSpriteDamage_Second = 0.0f;
 	void SetSpriteDamageSecond(float SpriteDamageSecond) {pSpriteDamage_Second = SpriteDamageSecond;}
 
+
+	// state OnEnter, Onexit 함수 모음
+	void AtkSucEnter();
+	void DefEnter();
+	void HitEnter();
+
+	void AtkSucExit();
+	void DefExit();
+	void HitExit();
+	void IdleExit();
+
+	// 시간에 따라 반지름을 줄이고 total 시간이 되면 반지름이 0이 되는 함수
+	Vector2 GetRandomPointOnShrinkingCircle(float maxRadius, float currentTime, float totalTime, Vector2 middePos);
+	float maxRadius = 20.0f; // 초기 반지름
+	
+
+	ThinkingPatternManager TM; // 알고리즘으로 백터 반환해줌
+
 private:
 	void AttackStateSelect(bool AttackActive); // 공격 패턴 3가지 중 랜덤으로 1개 선택해서 설정함
 	void ResetPlayer(); // 플레이어의 상태 재설정
@@ -141,6 +156,20 @@ private:
 	int EffectIndex = 0;
 	
 	std::vector<Vector2> ParryPosition{};
+
+	// state 관련 변수들
+	// 다 Exit에 초기화 하기!!!
+	float limitStateMoveTimer = 0.0f; // 각 상태에 따라 움직일 시간
+	float nowStateMoveTimer = 0.0f;   // 각 상태에 따라 움직이는 현재 시간
+	float StateProgress = 0.0f;		  // 각 상태에 따라 전체 transform시간을 정규화 하여 입력
+	float StatefreqTime = 0.0f;		  // 상태당 진동할 진동수 
+	float nowStatefreqTime = 0.0f;    // 다음 진동할 시간까지 비교할 현재 시간
+
+	Vector2 toPosX = { 0.0f, 0.0f };
+	Vector2 toPosY = { 0.0f, 0.0f };
+	Vector2	fromPos = { 0.0f, 0.0f };
+	Vector2 IdlePos = { 0.0f, 0.0f };
+
 	
 public:
 	void CallGuardEffect(int num, Vector2 vector);
