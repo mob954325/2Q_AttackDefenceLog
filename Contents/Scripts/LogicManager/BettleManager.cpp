@@ -191,21 +191,19 @@ void BettleManager::SetStateFormPatternPlayerGroggy() // 플레이어 그로기 
 	m_PattenManager->EnemyPatternAllClear();
 	m_PattenManager->PlayerPatternAllClear();
 	m_PattenManager->DoneTimeOutPatten();
-	
 	if (m_PattenManager->AtPlayerGroggyEnemyStorage.size() < 1)  return;
+	m_PattenManager->AtPlayerGroggyFailPetternStorage = m_PattenManager->AtPlayerGroggyEnemyStorage;
 	if (nowNode.size() < 1) return; // 플레이어가 입력을 안하면  return
 	float countDamagePercent = 0.0f;
 	// 적 연격이 끝났다는 델리게이트
 	onEnemyFinalBlow.Invoke();
-	if (nowNode.size() == 1) {
-		countDamagePercent = 1.0f;
-	}
-	else {
-		// 적이 플레이어에게 주는 데미지 계산
-		countDamagePercent = m_PattenManager->CountDamageAtPlayerGroggy(nowNode);
-	}
+
+	// 적이 플레이어에게 주는 데미지 계산
+	countDamagePercent = m_PattenManager->CountDamageAtPlayerGroggy(nowNode);
 	
 	m_Player->GetDamageAtGroggy( m_Enemy->GetAttack() * EnemyAtkMulAtPlayerGroggy * (1 - countDamagePercent));
+
+	m_PattenManager->AtPlayerGroggyFailPetternStorage; // 플레이어 패턴 받을 준비
 	m_Player->SetState("Player_Hit");						// 플레이어 상태 변경 -> 공격 실패
 	m_Enemy->SetState("Enemy_AttackSuccess");				// 적 상태 변경 -> 적 공격
 	m_Enemy->IsOtherEndGroggy = false;		// 적 그로기 상태 해제
@@ -214,6 +212,7 @@ void BettleManager::SetStateFormPatternPlayerGroggy() // 플레이어 그로기 
 	//m_Enemy->OtherGroggyTime = 0.0f;
 	EndPlayerGroggyCleanup(false);
 	nowNode.clear();
+	m_PattenManager->AtPlayerGroggyFailPetternStorage.clear();
 }
 
 
@@ -727,9 +726,11 @@ void BettleManager::ChangeFinalStatePlayerGroggy() // 아군의  그로기 상�
 	else               m_Player->OtherGroggyTimeStop = false;
 
 	if (m_Enemy->IsOtherEndGroggy) {
+		onEnemyFinalBlow.Invoke();
 		m_Enemy->IsOtherEndGroggy = false;
 		m_Enemy->IsOtherGroggy = false;
-		m_Player->GetDamage(m_Enemy->GetAttack() * 1.0f * spiritDamageMulToPlayer);
+		m_Player->GetDamageAtGroggy(m_Enemy->GetAttack() * 1.0f * EnemyAtkMulAtPlayerGroggy);
+		m_PattenManager->AtPlayerGroggyFailPetternStorage; // 플레이어 패턴 받을 준비
 		m_Player->SetState("Player_Hit");
 		m_Enemy->SetState("Enemy_AttackSuccess"); 
 		auto SoundCom = owner->GetQuery()->FindByName("SOUNDSTAGE");
@@ -739,6 +740,7 @@ void BettleManager::ChangeFinalStatePlayerGroggy() // 아군의  그로기 상�
 		}
 		m_Player->RestoreGroggy();
 		EndPlayerGroggyCleanup(true);
+		m_PattenManager->AtPlayerGroggyFailPetternStorage.clear();
 	}
 
 

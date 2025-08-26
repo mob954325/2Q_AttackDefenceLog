@@ -39,6 +39,7 @@ public:
 	std::unordered_map<std::string, pattern*> NowPlayerStorage; //플레이어 공격 저장소
 	std::unordered_map<std::string, pattern*> NowEnemyStorage;  // 적 공격 저장소
 	std::vector<int> AtPlayerGroggyEnemyStorage;                // 플레이어 그로기시 적 공격 저장소
+	std::vector<int> AtPlayerGroggyFailPetternStorage;          // 플레이어 그로기시 방어를 실패한 노드를 담는 저장소
 	//std::queue<pattern*>  nowEnemy
 
 
