@@ -482,15 +482,16 @@ float AttackPatternManager::CountDamageAtPlayerGroggy(std::vector<int> playerDef
 			if (AtPlayerGroggyEnemyStorage[j] == tmpPlayerDef[i])
 			{
 				countRightPattern++;
-				AtPlayerGroggyFailPetternStorage.push_back(tmpPlayerDef[i]);
+				AtPlayerGroggyFailPetternStorage.erase(
+					std::remove(AtPlayerGroggyFailPetternStorage.begin(),
+							    AtPlayerGroggyFailPetternStorage.end(), tmpPlayerDef[i]),
+								AtPlayerGroggyFailPetternStorage.end());
 			}
 		}
 	}
 	// 저장소 초기화
 	AtPlayerGroggyEnemyStorage.clear(); 
 	tmpPlayerDef.clear();
-
-
 	return countRightPattern / MaxEnemyPattern;
 }
 
