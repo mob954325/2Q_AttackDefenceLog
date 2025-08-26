@@ -67,6 +67,8 @@ private:
 	bool isPlaying = false;
 	bool addLastNode = true;
 
+	bool useNode = true;
+
 	D2D1_SIZE_F size;
 	D2D1_SIZE_F flashSize;
 };
