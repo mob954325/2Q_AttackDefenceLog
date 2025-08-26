@@ -137,6 +137,8 @@ private:
 	bool CheckPlayPerry = false;
 	int currentStep = 0;
 	float delays[3] = { 0.0f, 0.1f, 0.1f };
+
+	int EffectIndex = 0;
 	
 	std::vector<Vector2> ParryPosition{};
 	

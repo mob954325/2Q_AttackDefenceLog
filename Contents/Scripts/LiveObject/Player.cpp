@@ -67,14 +67,20 @@ void Player::OnUpdate() {
 
 	if (TimeDelta >= delays[currentStep] && CheckPlayPerry)
 	{
-		GuardEff->CallAnime(currentStep, ParryPosition[currentStep]);
-		TimeDelta = 0.0f;
+		GuardEff->CallAnime(EffectIndex, ParryPosition[currentStep]);
+
 		currentStep++;
+		EffectIndex++;
 
 		if (currentStep >= 3)
 		{
 			currentStep = 0;
 			CheckPlayPerry = false; // 반복 안 하려면 끔
+		}
+
+		if (EffectIndex >= 19)
+		{
+			EffectIndex = 0;
 		}
 	}
 	// 게임 상태가 Pause면 모든 Update 무시

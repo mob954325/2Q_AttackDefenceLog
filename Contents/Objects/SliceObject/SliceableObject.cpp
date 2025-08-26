@@ -2,6 +2,8 @@
 #include "Components/Base/GameObject.h"
 #include "Scene/SceneManager.h"
 #include "SlicedObject.h"
+#include "../Engine/Utils/RandomMusic.h"
+#include "Objects/Sound/SoundTittle.h"
 
 void SliceableObject::OnCreate()
 {
@@ -76,6 +78,31 @@ void SliceableObject::HandleOverlap()
 			GameObject* obj = sliceComp->Slice(startVec, endVec); // 갱신된 위치를 가지고 slice함수 실행
 
 			// 짤린 오브젝트가 생성되었음
+			auto SoundCom = owner->GetQuery()->FindByName("SOUNDMENU");
+			IndexNum = static_cast<int>(RandomMusic::RandomSound2());
+			switch (IndexNum)
+			{
+			case 0:
+				if (SoundCom) {
+					SoundCom->GetComponent<SoundTittle>()->SetKeyHandle(L"CutSound01");
+					SoundCom->GetComponent<SoundTittle>()->PlaySound();;
+				}
+				break;
+			case 1:
+				if (SoundCom) {
+					SoundCom->GetComponent<SoundTittle>()->SetKeyHandle(L"CutSound02");
+					SoundCom->GetComponent<SoundTittle>()->PlaySound();;
+				}
+				break;
+			case 2:
+				if (SoundCom) {
+					SoundCom->GetComponent<SoundTittle>()->SetKeyHandle(L"CutSound03");
+					SoundCom->GetComponent<SoundTittle>()->PlaySound();;
+				}
+				break;
+			}
+
+
 			if (obj != nullptr)
 			{
 				Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(obj); // 해당 오브젝트를 씬에 추가해서 실행

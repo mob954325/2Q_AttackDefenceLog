@@ -1,5 +1,6 @@
 ﻿#include "EndScene.h"
 #include "../Engine/Components/Logic/InputSystem.h"
+#include "../Engine/Systems/AudioSystem.h"
 
 #include "Objects/Common/InputObject.h"
 #include "Objects/Common/MouseTrailObject.h"
@@ -59,5 +60,7 @@ void EndScene::UpdateImpl()
 	if (input->IsKeyPressed('2')) {
 		Singleton<SceneManager>::GetInstance().LoadScene(MENU);
 	}
+
+	Singleton<AudioSystem>::GetInstance().Update();
 }
 

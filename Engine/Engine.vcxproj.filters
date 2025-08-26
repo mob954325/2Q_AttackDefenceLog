@@ -316,6 +316,7 @@
     </ClInclude>
     <ClInclude Include="..\Contents\Scripts\Camera\CamInstance.h" />
     <ClInclude Include="Components\Camera\CameraManager.h" />
+    <ClInclude Include="Utils\RandomMusic.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\Application.cpp">
@@ -502,6 +503,7 @@
     </ClCompile>
     <ClCompile Include="..\Contents\Scripts\Camera\CamInstance.cpp" />
     <ClCompile Include="Components\Camera\CameraManager.cpp" />
+    <ClCompile Include="Utils\RandomMusic.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />

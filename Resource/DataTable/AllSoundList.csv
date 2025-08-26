@@ -25,3 +25,6 @@ M_Stage02,\..\Resource\sounds\stage_2.mp3,FMOD_CREATESTREAM | FMOD_LOOP_NORMAL
 M_Stage03,\..\Resource\sounds\stage_3_2.mp3,FMOD_CREATESTREAM | FMOD_LOOP_NORMAL
 M_End,\..\Resource\sounds\End_bgm.mp3,FMOD_CREATESTREAM | FMOD_LOOP_NORMAL
 M_Lobby,\..\Resource\sounds\main_bgm.mp3,FMOD_CREATESTREAM | FMOD_LOOP_NORMAL
+O_CutSound01,\..\Resource\sounds\attack\attack_1.mp3,FMOD_DEFAULT | FMOD_LOOP_OFF
+O_CutSound02,\..\Resource\sounds\attack\attack_2.mp3,FMOD_DEFAULT | FMOD_LOOP_OFF
+O_CutSound03,\..\Resource\sounds\attack\attack_2.mp3,FMOD_DEFAULT | FMOD_LOOP_OFF

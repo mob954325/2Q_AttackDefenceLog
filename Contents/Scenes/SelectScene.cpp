@@ -1,4 +1,5 @@
 ﻿#include "SelectScene.h"
+#include "../Engine/Systems/AudioSystem.h"
 #include "Components/Logic/InputSystem.h"
 #include "Objects/Common/InputObject.h"
 #include "Objects/Common/TestObject.h"
@@ -64,6 +65,7 @@ void SelectScene::UpdateImpl()
 		cloudManager->GetComponent<CloudManager>()->ReverseStart();
 	}
 
+	Singleton<AudioSystem>::GetInstance().Update();
 }
 
 // select에서 스테이지 클리어 검사해서 만족하면 바로 엔딩씬으로 가기

@@ -1,6 +1,7 @@
 ﻿#include "MenuScene.h"
 #include "Components/Logic/InputSystem.h"
 #include "Objects/Common/InputObject.h"
+#include "../Engine/Systems/AudioSystem.h"
 
 #include "Objects/Common/TestObject.h"
 #include "Objects/Common/MouseTrailObject.h"
@@ -112,4 +113,6 @@ void MenuScene::UpdateImpl()
 			Singleton<SceneManager>::GetInstance().LoadScene(SceneCount::END); // endScene 호출
 		}
 	}
+
+	Singleton<AudioSystem>::GetInstance().Update();
 }
