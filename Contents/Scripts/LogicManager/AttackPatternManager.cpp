@@ -464,8 +464,9 @@ void AttackPatternManager::ResisterEnemyAtkAtPlayerGroggy(std::vector<int> enemy
 
 
 float AttackPatternManager::CountDamageAtPlayerGroggy(std::vector<int> playerDef) {
-	if( playerDef.size() < 2 ) {return 1.0f;}
-	
+	if( playerDef.size() < 2 ) {return 0.0f;}
+	AtPlayerGroggyFailPetternStorage.clear();
+	AtPlayerGroggyFailPetternStorage = AtPlayerGroggyEnemyStorage; // 실패 패턴에 적 공격을 모두 넣음
 	float countRightPattern = 0.0f;
 	float MaxEnemyPattern = AtPlayerGroggyEnemyStorage.size();
 	// 플레이어 패턴 정리
@@ -481,14 +482,16 @@ float AttackPatternManager::CountDamageAtPlayerGroggy(std::vector<int> playerDef
 			if (AtPlayerGroggyEnemyStorage[j] == tmpPlayerDef[i])
 			{
 				countRightPattern++;
+				AtPlayerGroggyFailPetternStorage.erase(
+					std::remove(AtPlayerGroggyFailPetternStorage.begin(),
+							    AtPlayerGroggyFailPetternStorage.end(), tmpPlayerDef[i]),
+								AtPlayerGroggyFailPetternStorage.end());
 			}
 		}
 	}
 	// 저장소 초기화
 	AtPlayerGroggyEnemyStorage.clear(); 
 	tmpPlayerDef.clear();
-
-
 	return countRightPattern / MaxEnemyPattern;
 }
 
