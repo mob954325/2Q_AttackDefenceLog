@@ -17,6 +17,9 @@ struct SliceEffectPiece {
 	float angle;
 	Vector2 pos;
 	float length;
+
+	// 평소에는 안씀, useNode = false인 경우에만 값 들어감
+	//float srcL = 0.0f, srcT = 0.0f, srcR = 0.0f, srcB = 0.0f;
 };
 
 struct MaxNodeIndex {

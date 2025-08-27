@@ -73,7 +73,7 @@ void AnimatedChainEffect::SetAtlasStrip(std::wstring path, int maxF)
 	maxFrame = maxF;
 
 	frameH = size.height;
-	frameW = size.width / maxFrame;  // 이거 부모가 int인데 되나? 확인해야함
+	frameW = size.width / static_cast<float>(maxFrame);  
 }
 
 //=======================================================================================
@@ -120,33 +120,66 @@ void AnimatedChainEffect::SliceRect(const std::vector<int>& pattern)
 		float dist = fromTo.Magnitude(); // 거리
 
 		float remain = frameW - currentX; // 요구사항 
+
 		if (remain <= 0.0f) break; // 요구사항 충족시 탈출
 
-		if (dist > remain) { // 
+		if (dist > remain) { // 요구사항보다, 남은 비트맵 여분이 없으면, 일부만 채워서 반환해줌, 즉 애매하게 꼬리가 남은 상황
 			Vector2 dir = fromTo.Normalize();
-			to = { from.x + dir.x * remain, from.y + dir.y * remain }; // dir = 방향백터
-			dist = remain;
-			addLastNode = false;
+			to = { from.x + dir.x * remain, from.y + dir.y * remain }; // dir = 방향백터, 방향벡터에 맞춰서 남은 양을 채워줌
+			dist = remain; // 남은만큼만 거리를 씀
+			addLastNode = false; // 마지막 노드에 도달하지 못했으므로 false
 		}
 
-		if (dist <= 0.0f) continue; // 더이상 남은 거리가 없으면 컨티뉴
+		if (dist <= 0.0f) continue; // 더이상 남은 거리가 없으면 컨티뉴, remain 0 이어도 걸러짐
 
 		// frame = (dist * maxFrame) / frameW, 
 		int maxPoint = static_cast<int>((dist + currentX) * (maxFrame - 2) / frameW); // 알파값이 최대가 되는 경우 +2는 프레임의 시작과 끝에 1프레임씩 더 있다고 가정 + 등속운동
 		maxNodeIndex.push_back({ maxPoint });
 
-		Vector2 mid = { (from.x + to.x) * 0.5f, (from.y + to.y) * 0.5f };
+		Vector2 mid = { (from.x + to.x) * 0.5f, (from.y + to.y) * 0.5f }; // from, to 사이의 중점
 		float angle = std::atan2(to.y - from.y, to.x - from.x);
 
-		D2D1_RECT_F localSrc = { currentX, 0.0f, currentX + dist, frameH };
+		D2D1_RECT_F localSrc = { currentX, 0.0f, currentX + dist, frameH }; // 세로 길이는 동일한 비트맵임
 
 		pieces.push_back({ localSrc, angle, mid, dist });
 
-		currentX += dist;
+		currentX += dist; // 누적
 
-		if (currentX >= frameW) break;
+		if (currentX >= frameW) break; // 사실상 같으면 잡아내는거임, 넘치면 큰일남
 		// frameW = 최대크기임 / 아틀라스가 아니라, 해당 프레임의 최대크기, 넘어가면 다음 프레임이 되어버림
 	}
+
+	if (!useNode) { // useNode = false << 적 공격, 납작하게 만들어야함 + (비트맵 크기 > 요구 길이)
+		// 여기서 해야하는거
+		// 재분배, 즉, for 내부에서 모든 비트맵을 소모하지 못했을때 재분배해줌, 그걸 어떻게 아느냐
+		// currectX << 이거가 누적되는데, 마지막에 누적된 수치 = 총 길이임.
+		// 즉, currentX < frawW 인 경우에, 아직 남은거임
+		if (currentX < frameW && currentX > 0.0f) { // 같으면 딱코인거임
+			addLastNode = false; // 사실 안쓰지만, 일단 마지막 노드에 도달했다고 생각하면 false가 맞음
+
+			float subX = 0.0f; // 여기에 길이 누적
+			float inv = frameW / currentX; // 이거 각 길이게 곱해주면 됨
+
+			// 전체 비트맵 크기 / 피스의 사이즈로, srcRect를 뜯어 고쳐야함
+			for (int i = 0; i < pieces.size(); ++i) {
+				D2D1_RECT_F rect = pieces[i].rect; // 원본 받아온 다음
+
+				float dist = rect.right - rect.left; // 너비 구하고
+
+				dist *= inv; // 곱해버림
+
+				pieces[i].rect = {
+					 subX,
+					 0.0f,
+					 subX + dist,
+					 frameH
+				};			
+
+				subX += dist;
+			}
+		}
+	}
+
 }
 
 //=======================================================================================
@@ -159,12 +192,10 @@ void AnimatedChainEffect::Draw(D2DRenderManager* manager)
 		float width = pi.rect.right - pi.rect.left;
 		float height = pi.rect.bottom - pi.rect.top;
 
-		D2D1_RECT_F dest = {
-			pi.pos.x - width * 0.5f,
-			pi.pos.y - height * 0.5f,
-			pi.pos.x + width * 0.5f,
-			pi.pos.y + height * 0.5f
-		};
+		D2D1_RECT_F dest = { pi.pos.x - pi.length * 0.5f, 
+			pi.pos.y - height * 0.5f, 
+			pi.pos.x + pi.length * 0.5f, 
+			pi.pos.y + height * 0.5f };
 
 		auto xf = D2D1::Matrix3x2F::Rotation(pi.angle * 180.0f / PI, { pi.pos.x, pi.pos.y });
 		manager->SetRenderTransform(xf);

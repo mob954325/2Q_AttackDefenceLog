@@ -55,8 +55,8 @@ void ParticleRenderer::Render(D2DRenderManager* manager)
 			mat.m11 = baseScaleX * scale;
 			mat.m22 = baseScaleY * scale;
 
-			std::cout << baseScaleX * scale << std::endl;
-			std::cout << baseScaleY * scale << std::endl;
+			//std::cout << baseScaleX * scale << std::endl; // 콱씨 이거때문에 안보이잖아
+			//std::cout << baseScaleY * scale << std::endl;
 		}
 
 		for (int i = 0; i < particleAmount; i++)

@@ -6,6 +6,7 @@
 #include "Objects/Common/MouseTrailObject.h"
 #include "../Engine/Components/Rendering/ChainDrawerComponent.h"
 #include "../Engine/Utils/GameTime.h"
+#include "Objects/Sound/SoundPlayScene.h"
 
 #include "../Engine/Math/GameRandom.h"
 #include "Objects/Scenes/Stage/StageBGI.h"
@@ -172,34 +173,52 @@ void PatternControlObject::OnCreate()
 	bettletmp->onParry.Add([this](int nodeIndex)
 		{
 			this->effectInstances[nodeIndex - 1]->DoParry(nodeIndex - 1);
-			battleBoard->Parry();
+
+			auto bbs = battleBoards.front();
+			battleBoards.pop();
+			bbs->Parry();
+			battleBoards.push(bbs);
 		});
 
 	// OnGuard 이벤트 추가
 	bettletmp->onGuard.Add([this](int nodeIndex)
 		{
 			this->effectInstances[nodeIndex - 1]->DoGuard(nodeIndex - 1);
-			battleBoard->Guard(BattleBoard::EnemyAttackSign);
+
+			auto bbs = battleBoards.front();
+			battleBoards.pop();
+			bbs->Guard(BattleBoard::EnemyAttackSign);
+			battleBoards.push(bbs);
 		});
 
 
 
 	bettletmp->onPlayerDodge.Add([this](std::vector<int> patten) {
-		battleBoard->Evasion();
+		auto bbs = battleBoards.front();
+		battleBoards.pop();
+		bbs->Evasion();
+		battleBoards.push(bbs);
 
-		auto eac = enemyAttackChain.front();
-		enemyAttackChain.pop();
-		eac->PlayOnce(patten);
-		enemyAttackChain.push(eac);
+		if (!enemyAttackChain.empty()) {
+			auto eac = enemyAttackChain.front();
+			enemyAttackChain.pop();
+			eac->PlayOnce(patten);
+			enemyAttackChain.push(eac);
+		}
 		});
 
 	bettletmp->onPlayerHit.Add([this](std::vector<int> patten) {
-		battleBoard->Hit(BattleBoard::EnemyAttackSign);
+		auto bbs = battleBoards.front();
+		battleBoards.pop();
+		bbs->Hit(BattleBoard::EnemyAttackSign);
+		battleBoards.push(bbs);
 
-		auto eac = enemyAttackChain.front();
-		enemyAttackChain.pop();
-		eac->PlayOnce(patten);
-		enemyAttackChain.push(eac);
+		if (!enemyAttackChain.empty()) {
+			auto eac = enemyAttackChain.front();
+			enemyAttackChain.pop();
+			eac->PlayOnce(patten);
+			enemyAttackChain.push(eac);
+		}
 		});
 
 
@@ -315,11 +334,20 @@ void PatternControlObject::OnCreate()
 
 		if (isHit) {
 			//쳐맞음
-			battleBoard->Hit(ty);
+
+
+			auto bbs = battleBoards.front();
+			battleBoards.pop();
+			bbs->Hit(ty);
+			battleBoards.push(bbs);
+
 		}
 		else {
-			//가드함
-			battleBoard->Guard(ty);
+			//가드함			
+			auto bbs = battleBoards.front();
+			battleBoards.pop();
+			bbs->Guard(ty);
+			battleBoards.push(bbs);
 		}
 
 		});
@@ -332,15 +360,10 @@ void PatternControlObject::OnCreate()
 			// 적의 연격이 끝나는 시점
 			blinkNodeObject->Stop();
 
-			for (auto& vec : fromToVec) { // 출발 * 10 + 도착임
-				int fromNum = vec / 10;
-				int toNum = vec - (fromNum * 10);
+			chainQueue.clear();
+			for (auto& i : fromToVec) { chainQueue.push_back(i); }
 
-				auto eac = enemyAttackChain.front();
-				enemyAttackChain.pop();
-				eac->PlayOnce({ fromNum ,toNum });
-				enemyAttackChain.push(eac);
-			}
+			chainPlayHelper();
 		});
 
 	// Manager의 Player와 Enemy 참조
@@ -370,7 +393,13 @@ void PatternControlObject::OnCreate()
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(csm, "ChargedSlashManager");
 
 	//signBoard = owner->AddComponent<SignBoard>();
-	battleBoard = owner->AddComponent<BattleBoard>();
+	//battleBoard = owner->AddComponent<BattleBoard>();
+	for (int i = 0; i < 9; ++i) {
+		GameObject* boardObj = new GameObject();
+		auto boardtmp = boardObj->AddComponent<BattleBoard>();
+		battleBoards.push(boardtmp);
+		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(boardObj, "BattleBoard." + i);
+	}
 }
 
 //===================================================================================================
@@ -478,7 +507,7 @@ void PatternControlObject::OnStart()
 
 
 	//적 공격 애니메이션
-	for (int i = 0; i < 10; ++i) {
+	for (int i = 0; i < 15; ++i) {
 		GameObject* enemyObj = new GameObject();
 		enemyObj->SetRenderLayer(EngineData::RenderLayer::UI);
 		enemyObj->SetName("EnemyAttackEffectLine." + std::to_string(i));
@@ -520,9 +549,7 @@ void PatternControlObject::OnUpdate() // 업데이트
 	// [1] 입력 발생하면
 
 	if (t->isNewCached && !isSkipped) // 새로운 노드 발생하면	+ 스킵 상태가 아니라며
-	{
-		//TM.MakeTour(9); // 테스트 코드	
-
+	{		
 		PM.CheckTrails(t->CheckingCachedTrails());		// trail 찍힌 위치들을 확인하고 저장함
 		const auto& vec = PM.GetPatternPathPositions(); // 여기에 담김!!! 1 3 2 4 이런거 <<<<< (연결지점)
 
@@ -536,9 +563,7 @@ void PatternControlObject::OnUpdate() // 업데이트
 
 		auto bt = bettleManager->GetComponent<BettleManager>();
 		std::vector<int> pttt = PM.GetPattern();
-
-		//blinkNodeObject->Start(pttt, false); // 테스트 코드
-
+		
 		for (int value : pttt) { std::cout << value << "-"; } // Debug
 		std::reverse(pttt.begin(), pttt.end()); // 뒤집어서 집어넣음
 		bt->SetInputNode(pttt);
@@ -586,7 +611,7 @@ void PatternControlObject::OnUpdate() // 업데이트
 	//===================================================================================================
 	// [4] 공격이 성공한 경우 - 이펙트 출력용
 
-	if (apm->isAttack) // 공격 성공
+	/*if (apm->isAttack) // 공격 성공
 	{
 
 		//델리게이트로 연결함, 상단 확인
@@ -615,10 +640,12 @@ void PatternControlObject::OnUpdate() // 업데이트
 			//		break;
 			//	}
 			//}
-	}
+	}*/
+	
+	//===================================================================================================
+	// [5] 이펙트 연출용
 
-	//auto bt = bettleManager->GetComponent<BettleManager>();
-
+	//노드 비활성화 쿨타임
 	if (waitOneSecond) { // 플래그 켜지면
 		waitTimer += delta; // 델타 가산
 		if (waitTimer > 1.0f) { // 조건 달성시
@@ -637,6 +664,69 @@ void PatternControlObject::OnUpdate() // 업데이트
 		}
 	}
 
+	// 연격 연출 연속으로 보여주기
+	if (playEnemyChainEffect) {
+		if (chainQueue.empty()) { playEnemyChainEffect = false; } // 비었으면 연출 종료
+		else {
+
+			chainEffectTimer += delta;
+
+			if (chainEffectTimer >= chainEffectDuration) {
+				chainEffectTimer -= chainEffectDuration; // 감산
+
+				int	tmp = chainQueue.front();
+				chainQueue.pop_front();
+
+				if (tmp > 9) { // 2자릿수에 해당함. 즉 공격임
+					//피격
+					int fr = tmp / 10;
+					int to = tmp - (fr * 10);
+
+					if (!enemyAttackChain.empty()) {
+						auto eac = enemyAttackChain.front();
+						enemyAttackChain.pop();
+						eac->PlayOnce({ fr, to });
+						enemyAttackChain.push(eac);
+					}
+
+					//플레이어 맞는 소리
+					auto SoundCom = owner->GetQuery()->FindByName("SOUNDSTAGE");
+					if (SoundCom) {
+						SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Hit01");
+						SoundCom->GetComponent<SoundPlayScene>()->PlaySound();
+					}
+				}
+				else { // 한자릿수에 해당함, 즉 가드(패링)임
+					//가드 성공
+					effectInstances[tmp - 1]->DoParry(tmp - 1);
+					//가드 소리
+					int soundIndex = static_cast<int>(GameRandom::RandomRange(0.0f, 3.0f));
+					auto SoundCom = owner->GetQuery()->FindByName("SOUNDSTAGE");
+					switch (soundIndex)
+					{
+					case 0:
+						if (SoundCom) {
+							SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Parry01");
+							SoundCom->GetComponent<SoundPlayScene>()->PlaySound();
+						}
+						break;
+					case 1:
+						if (SoundCom) {
+							SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Parry02");
+							SoundCom->GetComponent<SoundPlayScene>()->PlaySound();
+						}
+						break;
+					case 2:
+						if (SoundCom) {
+							SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Parry03");
+							SoundCom->GetComponent<SoundPlayScene>()->PlaySound();
+						}
+						break;
+					}
+				}
+			}
+		}
+	}
 }
 
 //===================================================================================================

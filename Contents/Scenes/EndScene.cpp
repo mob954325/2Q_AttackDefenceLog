@@ -23,9 +23,9 @@ void EndScene::OnEnterImpl()
 	trail->AddComponent<MouseTrailObject>();
 	AddGameObject(trail, "MouseTrail");
 
-	testObj = new GameObject();
-	testObj->AddComponent<TestObject>();
-	AddGameObject(testObj);
+	//testObj = new GameObject();
+	//testObj->AddComponent<TestObject>();
+	//AddGameObject(testObj);
 
 	Singleton<AudioSystem>::GetInstance().ReSetChannel();
 
