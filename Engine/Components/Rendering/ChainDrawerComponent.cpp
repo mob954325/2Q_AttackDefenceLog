@@ -1,6 +1,7 @@
 ﻿#include "ChainDrawerComponent.h"
 #include "Utils/GameTime.h"
 #include "Resources/ResourceManager.h"
+#include "../Contents/Scripts/GameManager.h"
 
 constexpr float PI = 3.141592654f; // 이건 진짜진짜 ㄹㅇ 유명한 파이임
 
@@ -59,7 +60,13 @@ void ChainDrawerComponent::OnCreate() {
 void ChainDrawerComponent::Render(D2DRenderManager* manager) // 사실상, trailComponent 내부에 보간식을 떼온거임
 {
 	if (isPlay) {
-		timer += Singleton<GameTime>::GetInstance().GetDeltaTime();
+
+		// 게임 상태가 Pause가 아니라면 델타 가산 
+		if (!Singleton<GameManager>::GetInstance().GetGameState() == GameState::Pause)
+		{
+			timer += Singleton<GameTime>::GetInstance().GetDeltaTime();
+		}
+
 
 		if (duration > 0.0f) {
 			progress = timer / duration;

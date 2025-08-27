@@ -549,9 +549,7 @@ void PatternControlObject::OnUpdate() // 업데이트
 	// [1] 입력 발생하면
 
 	if (t->isNewCached && !isSkipped) // 새로운 노드 발생하면	+ 스킵 상태가 아니라며
-	{
-		//TM.MakeTour(9); // 테스트 코드	
-
+	{		
 		PM.CheckTrails(t->CheckingCachedTrails());		// trail 찍힌 위치들을 확인하고 저장함
 		const auto& vec = PM.GetPatternPathPositions(); // 여기에 담김!!! 1 3 2 4 이런거 <<<<< (연결지점)
 
@@ -565,9 +563,7 @@ void PatternControlObject::OnUpdate() // 업데이트
 
 		auto bt = bettleManager->GetComponent<BettleManager>();
 		std::vector<int> pttt = PM.GetPattern();
-
-		//blinkNodeObject->Start(pttt, false); // 테스트 코드
-
+		
 		for (int value : pttt) { std::cout << value << "-"; } // Debug
 		std::reverse(pttt.begin(), pttt.end()); // 뒤집어서 집어넣음
 		bt->SetInputNode(pttt);
@@ -615,7 +611,7 @@ void PatternControlObject::OnUpdate() // 업데이트
 	//===================================================================================================
 	// [4] 공격이 성공한 경우 - 이펙트 출력용
 
-	if (apm->isAttack) // 공격 성공
+	/*if (apm->isAttack) // 공격 성공
 	{
 
 		//델리게이트로 연결함, 상단 확인
@@ -644,10 +640,8 @@ void PatternControlObject::OnUpdate() // 업데이트
 			//		break;
 			//	}
 			//}
-	}
-
-	//auto bt = bettleManager->GetComponent<BettleManager>();
-
+	}*/
+	
 	//===================================================================================================
 	// [5] 이펙트 연출용
 
