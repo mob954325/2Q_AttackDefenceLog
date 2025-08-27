@@ -140,7 +140,7 @@ private:
 	void UpdateDeadAnimation();
 
 	float timer = 0.0f;
-	float maxTimer = 1.5f;
+	float maxTimer = 3.0f;
 	bool isCreatedResult = false;
 	void CheckChangeScene();	// 씬 교체를 해야하는지 확인하는 함수
 

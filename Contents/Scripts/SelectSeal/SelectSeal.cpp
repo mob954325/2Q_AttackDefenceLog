@@ -14,7 +14,7 @@ void SelectSeal::OnCreate()
 	left->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\Seal\\seal_breaking_02.png");
 	left->SetUseCustomRect(true);
 	left->SetOrderInLayer(1000);
-	
+
 	right = owner->AddComponent<BitmapRenderer>();
 	right->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\Seal\\seal_breaking_01.png");
 	right->SetUseCustomRect(true);
@@ -27,6 +27,18 @@ void SelectSeal::OnStart()
 
 void SelectSeal::OnUpdate()
 {
+
+	if (!go) {
+		timer += Singleton<GameTime>::GetInstance().GetDeltaTime();
+
+		if (timer > readyTimer) {
+			go = true;
+			timer = 0.0f;
+		}
+		else
+			return;
+	}
+
 	if (!isRighDone)
 	{
 		if (timer < maxTimer)
