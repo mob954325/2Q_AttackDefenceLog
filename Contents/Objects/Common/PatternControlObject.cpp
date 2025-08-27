@@ -158,6 +158,8 @@ void PatternControlObject::OnCreate()
 		auto bgi = owner->GetQuery()->FindByName("Vignette");
 		if (bgi) { bgi->GetComponent<Vignette>()->Start(); }
 
+		signBoard->ShowOver();
+
 		blinkNodeObject->Stop(); // 공격 가이드라인 중지
 
 		isSkipped = true;
@@ -253,6 +255,9 @@ void PatternControlObject::OnCreate()
 		});
 
 	bettletmp->onStartEnemyBlow.Add([this]() {
+		
+		signBoard->ShowCorner();
+
 		std::vector<int> tmp;
 
 		std::wstring nowEnemy = enemy->GetComponent<Enemy>()->GetName();
@@ -392,7 +397,7 @@ void PatternControlObject::OnCreate()
 
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(csm, "ChargedSlashManager");
 
-	//signBoard = owner->AddComponent<SignBoard>();
+	signBoard = owner->AddComponent<SignBoard>();
 	//battleBoard = owner->AddComponent<BattleBoard>();
 	for (int i = 0; i < 9; ++i) {
 		GameObject* boardObj = new GameObject();

@@ -59,7 +59,7 @@ protected:
 	EffectInstance* effInstance;						// 단일 이펙트 -> 이 오브젝트가 소유하고 있음
 	std::vector<EffectInstance*> effectInstances;		// 이펙트 여러개 -> 이 오브젝트와 개별 오브젝트
 
-	//SignBoard* signBoard;
+	SignBoard* signBoard;
 	//BattleBoard* battleBoard;	
 	std::queue<BattleBoard*> battleBoards;
 
