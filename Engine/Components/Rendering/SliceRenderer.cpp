@@ -38,7 +38,7 @@ void SliceRenderer::Render(D2DRenderManager* manager)
 	D2D1_RECT_F srcRect = { 0, 0, size.width, size.height };
 
 	// 이미지 그리기
-	renderManager->DrawBitmap(originBitmap->GetBitmap(), destRect, srcRect);
+	renderManager->DrawBitmap(originBitmap->GetBitmap(), destRect, srcRect, cap);
 	renderManager->PopLayer(); // 사용한 레이어 제거
 
 	pLayer->Release();
