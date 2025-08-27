@@ -516,6 +516,7 @@ void Enemy::DiffState()
 	{
 		Object_NowSpiritAmount = Object_SpiritAmount;
 	}
+
 }
 
 
