@@ -412,8 +412,10 @@ void Player::DiffState()
 	if (isRestore) {
 		isGroggy = false;   // 회복 프레임
 		isRestore = false;   // 소비! (다음 프레임부터는 영향 X)
+		
 	}
 	else if (Object_NowSpiritAmount <= 0.0f) {
+		
 		isGroggy = true;
 		restoredThisCycle = false;   // 
 		Object_NowSpiritAmount = 0.0f;
@@ -426,6 +428,7 @@ void Player::DiffState()
 	if (Object_NowSpiritAmount >= Object_SpiritAmount) {
 		Object_NowSpiritAmount = Object_SpiritAmount;
 	}
+
 }
 
 

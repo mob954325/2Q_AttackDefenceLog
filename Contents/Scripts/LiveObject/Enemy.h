@@ -174,6 +174,9 @@ private:
 	void DefExit();
 	void HitExit();
 
+
+
+
 	// 둘다 Exit에 초기화 하기!!!
 	float limitStateMoveTimer = 0.0f; // 각 상태에 따라 움직일 시간
 	float nowStateMoveTimer = 0.0f;   // 각 상태에 따라 움직이는 현재 시간

@@ -159,6 +159,9 @@ private:
 	
 	std::vector<Vector2> ParryPosition{};
 
+
+
+
 	// state 관련 변수들
 	// 다 Exit에 초기화 하기!!!
 	float limitStateMoveTimer = 0.0f; // 각 상태에 따라 움직일 시간
