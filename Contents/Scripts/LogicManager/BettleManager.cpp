@@ -90,25 +90,29 @@ void BettleManager::OnUpdate()
 	}
 	else {
 		if (m_Enemy->GetIsGroggy()) {  // 적이 그로기 상태일때
+			if (!usedStartBlow) { // 상태에 처음 진입했을때만 켜짐
+				nowNode.clear();
+				onStartBlow.Invoke();
+				usedStartBlow = true;
+			}
 			SetStateFormPatternEnemyGroggy();
 			//여기 개수대로 이팩트 출력!!
 			SetAnimationAtOtherGroggy();
 			ChangeFinalStateEnemyGroggy();
 
-			if (!usedStartBlow) { // 상태에 처음 진입했을때만 켜짐
-				onStartBlow.Invoke();
-				usedStartBlow = true;
-			}
+			
 
 		}
 		else if (m_Player->GetIsGroggy()) { // 플레이어가 그로기 상태일 때
-			SetStateFormPatternPlayerGroggy();
-			ChangeFinalStatePlayerGroggy();
-
 			if (!usedStartBlow) {
+				nowNode.clear();
 				onStartEnemyBlow.Invoke();
 				usedStartBlow = true;
 			}
+			SetStateFormPatternPlayerGroggy();
+			ChangeFinalStatePlayerGroggy();
+
+			
 
 		}
 	}
@@ -756,6 +760,8 @@ void BettleManager::ChangeFinalStatePlayerGroggy() // 아군의  그로기 상�
 void BettleManager::ChangeCommonFinalState()
 {
 
+	
+
 	// 플레이어 사망 확인
 	if (m_Player->GetHp() <= 0.0f)
 	{
@@ -768,6 +774,8 @@ void BettleManager::ChangeCommonFinalState()
 		m_Enemy->SetState("Enemy_Dead");
 	}
 
+
+	if (nowManagerState != noneGroggy) return;
 
 	// 적과 아군 둘중 그로기가 끝나고 회복해야한다면
 	if (m_Enemy->GetIsRestore() || m_Player->GetIsRestore())
@@ -880,6 +888,7 @@ void BettleManager::SetGroggyState()
 	if (preManagerState != nowManagerState && nowManagerState == playerGroggy) {
 		m_Enemy->IsOtherGroggy = true;           // 표시도 함께 세팅
 		m_Enemy->OtherGroggyTime = 0.0f;         // 반드시 0부터 시작
+		m_Enemy->IsOtherEndGroggy = false;
 	}
 
 	// 상태에 변경이 있고 이전 상태가 적 그로기 상태면 
