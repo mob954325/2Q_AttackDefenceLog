@@ -97,7 +97,7 @@ public:
 
 	// 시간에 따라 반지름을 줄이고 total 시간이 되면 반지름이 0이 되는 함수
 	Vector2 GetRandomPointOnShrinkingCircle(float maxRadius, float currentTime, float totalTime, Vector2 middePos);
-	float maxRadius = 20.0f; // 초기 반지름
+	float maxRadius = 15.0f; // 초기 반지름  20 -> 15로 수정
 	
 
 	ThinkingPatternManager TM; // 알고리즘으로 백터 반환해줌

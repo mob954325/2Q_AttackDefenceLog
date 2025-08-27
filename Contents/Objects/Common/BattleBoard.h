@@ -2,6 +2,8 @@
 #include "Components/Base/MonoBehavior.h"
 #include "Components/Rendering/BitmapRenderer.h"
 #include "Objects/Scenes/TitleScene/EffectProgress.h" // calmpf
+//#include "Components/Rendering/ParticleRenderer.h"
+#include "../Contents/Scripts/Effect/EffectInstance.h"
 
 /* 8.22. 한승규
 * 플레이어와 적의 상호작용을 시각화 해서 보여주는 기능
@@ -36,6 +38,7 @@ public:
 	};
 
 	void OnStart() override;
+	void OnCreate() override;
 	void OnUpdate() override;
 
 	//공용
@@ -53,6 +56,7 @@ protected:
 	float progress = 0.0f;
 
 	bool isPlay = false;
+	bool wasPlayedOnce = false; 
 
 	std::vector<BitmapRenderer*> battleSignBitmaps;	
 
@@ -60,6 +64,9 @@ protected:
 	SignType to = GuardSign;
 
 	CurveType curve = HitCurve;
+
+	//ParticleRenderer* particle;
+	EffectInstance* eff;
 
 	Vector2 leftPoint;
 	Vector2 rightPoint;
