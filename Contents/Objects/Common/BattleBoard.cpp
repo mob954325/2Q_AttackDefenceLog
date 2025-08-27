@@ -208,17 +208,16 @@ void BattleBoard::Curve()
 			fromPos = EffectProgress::Lerp(fromPos, toPos, fromProgress);
 		}
 		else {
-			if (!wasPlayedOnce) {
-				//아무것도 없지롱
-				wasPlayedOnce = true;
-			}
-
 			fromProgress = toProgress = EffectProgress::NormalizeProgress(progress, 0.4f, 1.0f);
 			toAlpha = fromAlpha = EffectProgress::clamp01(1.0f - fromProgress);
 
 			fromPos = EffectProgress::Lerp(toPos, { (halfPoint.x + toPos.x) / 2.0f, fromPos.y }, fromProgress);
 			//toPos = EffectProgress::Lerp(toPos, toPos + (fromPos - halfPoint) / 2.0f, toProgress);
 			toPos = EffectProgress::DampedSine(toPos, toPos + (toStart - halfPoint) / 1.5f, 100.0f, 4.0f, 2.0f, 0.0f, fromProgress);
+			if (!wasPlayedOnce) {
+				//아무것도 없지롱
+				wasPlayedOnce = true;
+			}
 		}
 		break;
 
