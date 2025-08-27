@@ -206,11 +206,23 @@ void BettleManager::SetStateFormPatternPlayerGroggy() // 플레이어 그로기 
 	countDamagePercent = m_PattenManager->CountDamageAtPlayerGroggy(nowNode);
 	onEnemyFinalBlow.Invoke(m_PattenManager->AtPlayerGroggyFailPetternStorage); //CountDamageAtPlayerGroggy에서 담긴 값 반환해줌
 
-	m_Player->GetDamageAtGroggy( m_Enemy->GetAttack() * EnemyAtkMulAtPlayerGroggy * (1 - countDamagePercent));
+	m_Player->GetDamageAtGroggy( m_Enemy->GetAttack() * EnemyAtkMulAtPlayerGroggy * (1.0f - countDamagePercent));
 
-	m_PattenManager->AtPlayerGroggyFailPetternStorage; // 플레이어 패턴 받을 준비
-	m_Player->SetState("Player_Hit");						// 플레이어 상태 변경 -> 공격 실패
-	m_Enemy->SetState("Enemy_AttackSuccess");				// 적 상태 변경 -> 적 공격
+	if (countDamagePercent != 1.0f)
+	{
+		m_Player->SetState("Player_Hit");						// 플레이어 상태 변경 -> 공격 실패
+		m_Enemy->SetState("Enemy_AttackSuccess");				// 적 상태 변경 -> 적 공격
+	}
+	else
+	{
+		m_Player->SetState("Player_Defence");					// 플레이어 상태 변경 -> 공격 실패
+		m_Enemy->SetState("Enemy_AttackSuccess");				// 적 상태 변경 -> 적 공격
+
+		// 이펙트 연결
+		Vector2 PlayerPerryP = { RandomHitPos_x(GuardPlayer), RandomHitPos_y(GuardPlayer) };
+		m_Player->CallGuardEffect(0, PlayerPerryP);
+	}
+	
 	m_Enemy->IsOtherEndGroggy = false;		// 적 그로기 상태 해제
 	m_Player->RestoreGroggy();
 	//m_Enemy->IsOtherEndGroggy = true;  // 끝났다고 알림
@@ -840,6 +852,7 @@ void BettleManager::FinalAttackToEnemy() // 델리게이트로 외부에서 연�
 	// 적이 그로기 상태일 때
 	if (m_Enemy->GetIsGroggy())
 	{
+		IsFinalBlowAtEnemy = true;
 		m_Enemy->GetDamage((m_Player->GetAttack() * allDistancePercent * 20.0f) + 100.0f);  /// 나중에 적 hp 배율 따로 빼기!!!!
 		m_Enemy->SetState("Enemy_Hit");				// 적 상태 변경 -> 적 피격
 		if (HitAnimeCount < 9)
@@ -898,9 +911,17 @@ void BettleManager::SetGroggyState()
 		isOncePatternAttack = false;
 		m_Player->isOtherGroggyEnd = false;
 		m_Player->IsOtherGroggy = false;
-		m_Player->SetState("Player_AttackSuccess");
-		m_Enemy->SetState("Enemy_Hit");
-
+		if(IsFinalBlowAtEnemy)
+		{
+			m_Player->SetState("Player_AttackSuccess");
+			m_Enemy->SetState("Enemy_Hit");
+		}
+		else {
+			m_Player->SetState("Player_Idle");
+			m_Enemy->SetState("Enemy_Idle");
+		}
+		
+		IsFinalBlowAtEnemy = false;
 		onTimeout.Invoke(); // 외부에 그로기 지속 시간이 끝났다는걸 알림
 		EndEnemyGroggyCleanup(true);
 	}

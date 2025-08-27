@@ -163,6 +163,8 @@ private:
 
 	bool isOncePatternAttack = false; // 한붓그리기 공격 끝나는 bool 값
 
+	bool IsFinalBlowAtEnemy = false; // 한점 공격을 했다는 것을 알리는 불값
+
 	bool isEffectOnce = true;
 
 	float PlayerMaxX = 0.0f;
