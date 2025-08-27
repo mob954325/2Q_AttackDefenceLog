@@ -679,17 +679,11 @@ void PatternControlObject::OnUpdate() // 업데이트
 
 			if (chainEffectTimer >= chainEffectDuration) {
 				chainEffectTimer -= chainEffectDuration; // 감산
-				int tmp;
 
-				if (!chainQueue.empty()) {
-					tmp = chainQueue.front();
-					chainQueue.pop_front();
-				}
-				else {
-					std::cout << "비상!!!!비상!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << std::endl;
-				}
+				int	tmp = chainQueue.front();
+				chainQueue.pop_front();
 
-				if (tmp > 9) {
+				if (tmp > 9) { // 2자릿수에 해당함. 즉 공격임
 					//피격
 					int fr = tmp / 10;
 					int to = tmp - (fr * 10);
@@ -708,7 +702,7 @@ void PatternControlObject::OnUpdate() // 업데이트
 						SoundCom->GetComponent<SoundPlayScene>()->PlaySound();
 					}
 				}
-				else {
+				else { // 한자릿수에 해당함, 즉 가드(패링)임
 					//가드 성공
 					effectInstances[tmp - 1]->DoParry(tmp - 1);
 					//가드 소리
