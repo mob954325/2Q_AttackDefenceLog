@@ -2,7 +2,7 @@
 #include "Scene/SceneManager.h"
 #include "Application/AppPaths.h"
 #include "../Engine/Utils/GameTime.h"
-
+#include "../Contents/Scripts/GameManager.h"
 
 void BattleBoard::OnStart()
 {
@@ -68,6 +68,12 @@ void BattleBoard::OnStart()
 void BattleBoard::OnUpdate()
 {
 	if (!isPlay) return;
+	
+	// 게임 상태가 Pause면 Update 중단
+	if (Singleton<GameManager>::GetInstance().GetGameState() == GameState::Pause)
+	{
+		return;
+	}
 
 	float delta = Singleton<GameTime>::GetInstance().GetDeltaTime();
 	progress += 1.5f * delta;

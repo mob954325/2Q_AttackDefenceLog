@@ -60,22 +60,40 @@ protected:
 	std::vector<EffectInstance*> effectInstances;		// 이펙트 여러개 -> 이 오브젝트와 개별 오브젝트
 
 	//SignBoard* signBoard;
-	BattleBoard* battleBoard;	
+	//BattleBoard* battleBoard;	
+	std::queue<BattleBoard*> battleBoards;
+
 	BlinkNodeObject* blinkNodeObject;
 
 private:
 	bool isSkipped = false; // 이거 켜지면, 노드 관련 행동 스킵함
-	
+
+	//===============================
+	// 연격에서, 적의 공격을 다단히트 느낌으로 연출하기 위한 요소
+	bool playEnemyChainEffect = false;
+	float chainEffectDuration = 0.0f;
+	float chainEffectTimer = 0.0f;
+	//std::vector<int> chainVec; // 2자리 수 -> 공격, 1자리 수 -> 가드, 전부 가드시 패링으로 변경
+
+	std::deque<int> chainQueue;
+
+	void chainPlayHelper() { // 쓰기 편하라고, 핼퍼함수 만듬		
+		chainEffectDuration = 0.5f / static_cast<float>(chainQueue.size());;
+		playEnemyChainEffect = true;
+		chainEffectTimer = chainEffectDuration; // 한번 바로 재생해야함				
+	}
+
+	//===============================
 
 	bool waitOneSecond = false; // 이거 키면, 특정 시간동안 노드를 비활성화하고 다시 켜줌
 
-	
+
 
 	float waitTimer = 0.0f;
 
 	std::vector<int> cachedVec;
 
-	std::vector<Vector2> nodePositions;	
+	std::vector<Vector2> nodePositions;
 };
 
 

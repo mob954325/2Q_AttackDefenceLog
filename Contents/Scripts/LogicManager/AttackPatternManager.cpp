@@ -482,10 +482,12 @@ float AttackPatternManager::CountDamageAtPlayerGroggy(std::vector<int> playerDef
 			if (AtPlayerGroggyEnemyStorage[j] == tmpPlayerDef[i])
 			{
 				countRightPattern++;
-				AtPlayerGroggyFailPetternStorage.erase(
-					std::remove(AtPlayerGroggyFailPetternStorage.begin(),
-							    AtPlayerGroggyFailPetternStorage.end(), tmpPlayerDef[i]),
-								AtPlayerGroggyFailPetternStorage.end());
+				//AtPlayerGroggyFailPetternStorage.erase(
+				//	std::remove(AtPlayerGroggyFailPetternStorage.begin(),
+				//			    AtPlayerGroggyFailPetternStorage.end(), tmpPlayerDef[i]),
+				//				AtPlayerGroggyFailPetternStorage.end());
+				AtPlayerGroggyFailPetternStorage[j] = AtPlayerGroggyFailPetternStorage[j] % 10;
+				//form, to에서 from만 남김
 			}
 		}
 	}
