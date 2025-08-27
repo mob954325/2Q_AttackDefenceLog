@@ -256,6 +256,9 @@ void PatternControlObject::OnCreate()
 
 	bettletmp->onStartEnemyBlow.Add([this]() {
 		
+		auto bgi = owner->GetQuery()->FindByName("Vignette");
+		if (bgi) { bgi->GetComponent<Vignette>()->Start(false); }
+
 		signBoard->ShowCorner();
 
 		std::vector<int> tmp;
@@ -362,6 +365,9 @@ void PatternControlObject::OnCreate()
 	// onEnemyFinalBlow 이벤트 추가
 	bettletmp->onEnemyFinalBlow.Add([this](std::vector<int> fromToVec)
 		{
+			auto bgi = owner->GetQuery()->FindByName("Vignette");
+			if (bgi) { bgi->GetComponent<Vignette>()->End(false); }
+
 			// 적의 연격이 끝나는 시점
 			blinkNodeObject->Stop();
 
