@@ -67,7 +67,7 @@ void BattleBoard::OnStart()
 
 void BattleBoard::OnCreate()
 {
-	eff = owner->AddComponent<EffectInstance>();
+	eff = owner->AddComponent<EffectInstance2>();
 }
 
 void BattleBoard::OnUpdate()
@@ -215,7 +215,7 @@ void BattleBoard::Curve()
 			//toPos = EffectProgress::Lerp(toPos, toPos + (fromPos - halfPoint) / 2.0f, toProgress);
 			toPos = EffectProgress::DampedSine(toPos, toPos + (toStart - halfPoint) / 1.5f, 100.0f, 4.0f, 2.0f, 0.0f, fromProgress);
 			if (!wasPlayedOnce) {
-				//아무것도 없지롱
+				eff->CallAnimeH(toPos);
 				wasPlayedOnce = true;
 			}
 		}
@@ -235,7 +235,7 @@ void BattleBoard::Curve()
 			fromPos = EffectProgress::Lerp(toPos, { (halfPoint.x + toPos.x) / 2.0f, fromPos.y }, fromProgress);
 			toPos = EffectProgress::Lerp(toPos, toPos + (fromPos - halfPoint) / 2.0f, toProgress);
 			if (!wasPlayedOnce) {
-				eff->CallEffect(EffectType::GuardEffect, toPos);
+				eff->CallEffect(EffectType2::GuardEffect, toPos);
 				wasPlayedOnce = true;
 			}
 		}
@@ -270,7 +270,7 @@ void BattleBoard::Curve()
 			toAlpha = fromAlpha = EffectProgress::clamp01(1.0f - fromProgress);
 			toPos = EffectProgress::BezierQuadratic({ (halfPoint.x + toPos.x) / 2.0f, fromPos.y }, toPos, { toPos.x, 0.0f }, toProgress);
 			if (!wasPlayedOnce) {
-				eff->CallEffect(EffectType::ParryEffect, toPos);
+				eff->CallEffect(EffectType2::ParryEffect, toPos);
 				wasPlayedOnce = true;
 			}
 		}

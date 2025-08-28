@@ -33,6 +33,17 @@ private:
 	std::vector<AnimeState>  AnimeStates;
 	std::vector<GameObject*> AnimeList;
 
+	std::vector<AnimeState>  AnimeStatesE;
+	std::vector<GameObject*> AnimeListE;
+
 	float Animeduration = 0.0f;
+
+	float AnimedurationE = 0.0f;
+
+	//
+public:
+	void SetAnimePositionE(int num, const Vector2& vector);
+	void CallAnimeE(int num, Vector2 vector);
+	void StopAnimeE(int num);
 };
 

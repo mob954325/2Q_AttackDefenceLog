@@ -17,6 +17,7 @@ void MenuScene::OnEnterImpl()
 {
 	std::cout << "메뉴씬 진입" << std::endl;
 
+	Singleton<AudioSystem>::GetInstance().ReSetChannel();
 
 	selectEffectManager = new GameObject();
 	selectEffectManager->AddComponent<SelectEffectManager>(); // 이름 잘못지었음, 로비엿슴 아니? 사실 맞는거 같은데 몰루

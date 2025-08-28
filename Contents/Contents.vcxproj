@@ -359,10 +359,12 @@
   <ItemGroup>
     <ClCompile Include="Application\Game.cpp" />
     <ClCompile Include="Application\GameApp.cpp" />
+    <ClCompile Include="Scripts\Effect\EffectInstance2.cpp" />
     <ClCompile Include="Objects\Common\BattleBoard.cpp" />
     <ClCompile Include="Objects\Common\BlinkNodeObject.cpp" />
     <ClCompile Include="Objects\Manager\ThinkingPatternManager.cpp" />
     <ClCompile Include="Objects\Scenes\TutorialScene\TutorialControlObject.cpp" />
+    <ClCompile Include="Objects\Scenes\TutorialScene\TutorialEffectObject.cpp" />
     <ClCompile Include="Objects\Scenes\TutorialScene\TutorialPatternManager.cpp" />
     <ClCompile Include="Scenes\TutorialScene.cpp" />
     <ClCompile Include="Scripts\BubbleBox\BubbleEnd.cpp" />
@@ -444,10 +446,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameApp.h" />
+    <ClInclude Include="Scripts\Effect\EffectInstance2.h" />
     <ClInclude Include="Objects\Common\BattleBoard.h" />
     <ClInclude Include="Objects\Common\BlinkNodeObject.h" />
     <ClInclude Include="Objects\Manager\ThinkingPatternManager.h" />
     <ClInclude Include="Objects\Scenes\TutorialScene\TutorialControlObject.h" />
+    <ClInclude Include="Objects\Scenes\TutorialScene\TutorialEffectObject.h" />
     <ClInclude Include="Objects\Scenes\TutorialScene\TutorialPatternManager.h" />
     <ClInclude Include="Scenes\TutorialScene.h" />
     <ClInclude Include="Scripts\BubbleBox\BubbleEnd.h" />

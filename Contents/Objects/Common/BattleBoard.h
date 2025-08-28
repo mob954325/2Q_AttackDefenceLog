@@ -3,7 +3,7 @@
 #include "Components/Rendering/BitmapRenderer.h"
 #include "Objects/Scenes/TitleScene/EffectProgress.h" // calmpf
 //#include "Components/Rendering/ParticleRenderer.h"
-#include "../Contents/Scripts/Effect/EffectInstance.h"
+#include "../Contents/Scripts/Effect/EffectInstance2.h"
 
 /* 8.22. 한승규
 * 플레이어와 적의 상호작용을 시각화 해서 보여주는 기능
@@ -66,7 +66,7 @@ protected:
 	CurveType curve = HitCurve;
 
 	//ParticleRenderer* particle;
-	EffectInstance* eff;
+	EffectInstance2* eff;
 
 	Vector2 leftPoint;
 	Vector2 rightPoint;

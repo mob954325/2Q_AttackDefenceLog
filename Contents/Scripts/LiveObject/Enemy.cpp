@@ -723,7 +723,7 @@ void Enemy::CheckChangeScene()
 
 void Enemy::CallGuardEffect(int num, Vector2 vector)
 {
-	GuardEff->CallAnime(num, vector);
+	GuardEff->CallAnimeE(num, vector);
 }
 
 
