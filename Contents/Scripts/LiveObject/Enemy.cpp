@@ -72,19 +72,25 @@ void Enemy::OnUpdate()
 
 	if (nowStateName == "Enemy_Dead") // 적 사망 시 -> 씬 이동
 	{
-		// 특정 씬 클리어 플래그 활성화
-		switch (nameIndex)
+		if (!isDead)
 		{
-		case 0:
-			Singleton<GameManager>::GetInstance().SetStageClear(1);
-			break;
-		case 1:
-			Singleton<GameManager>::GetInstance().SetStageClear(2);
-			break;
-		case 2:
-			Singleton<GameManager>::GetInstance().SetStageClear(3);
-			break;
+			// 특정 씬 클리어 플래그 활성화
+			switch (nameIndex)
+			{
+			case 0:
+				Singleton<GameManager>::GetInstance().SetStageClear(1);
+				break;
+			case 1:
+				Singleton<GameManager>::GetInstance().SetStageClear(2);
+				break;
+			case 2:
+				Singleton<GameManager>::GetInstance().SetStageClear(3);
+				break;
+			}
+
+			isDead = true;
 		}
+
 
 		// 사망 연출 및 씬 교체
 		if (deadTimer < deadMaxTimer)
@@ -104,7 +110,8 @@ void Enemy::OnUpdate()
 // onChangePatten에 TransitionTime 변경하기!!!
 
 //밖에서 미리 값을 입력해서 ID를 입력할 수 있게 함
-void Enemy::SetNameDiff(std::string Stage, std::string difficulty) {
+void Enemy::SetNameDiff(std::string Stage, std::string difficulty) 
+{
 	int indexID = 0;
 	int diffindex = 0;
 	if (Stage == "Stage1") { nameIndex = 0; }

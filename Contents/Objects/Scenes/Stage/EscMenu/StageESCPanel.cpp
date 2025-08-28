@@ -4,6 +4,7 @@
 #include "Application/AppPaths.h"
 #include "Scripts/GameManager.h"
 #include "EscMuteButton.h"
+#include "Systems/AudioSystem.h"
 
 void StageESCPanel::OnCreate()
 {
@@ -103,6 +104,7 @@ void StageESCPanel::SetButtons(const std::vector<GameObject*> buttons)
 		{
 			if (!this->buttons[2]->GetComponent<EscMuteButton>()->GetSoundMutePanel()->IsOpen())
 			{
+				Singleton<AudioSystem>::GetInstance().AgainstSound();
 				Singleton<SceneManager>::GetInstance().LoadScene(1);
 			}
 		});
