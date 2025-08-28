@@ -1,4 +1,4 @@
-﻿#include "PatternControlObject.h"
+﻿#include "TutorialControlObject.h"
 #include "Components/Base/GameObject.h"
 #include "Scene/SceneManager.h"
 #include "Objects/Scenes/Stage/NodeObject.h"
@@ -23,7 +23,7 @@
 #include "Scripts/GameManager.h"
 #include "Vignette.h"
 
-void PatternControlObject::OnCreate()
+void TutorialControlObject::OnCreate()
 {
 	//===================================================================================================
 	// 1. 트레일 + 노드 오브젝트 생성
@@ -417,7 +417,7 @@ void PatternControlObject::OnCreate()
 // START ////////////////////////////////////////////////////////////////////////////////////////////
 //===================================================================================================
 
-void PatternControlObject::OnStart()
+void TutorialControlObject::OnStart()
 {
 	owner->SetRenderLayer(EngineData::RenderLayer::None);
 	auto patternDrawerComp = owner->AddComponent<PatternDrawerComponent>();
@@ -543,7 +543,7 @@ void PatternControlObject::OnStart()
 // UPDATE ///////////////////////////////////////////////////////////////////////////////////////////
 //===================================================================================================
 
-void PatternControlObject::OnUpdate() // 업데이트
+void TutorialControlObject::OnUpdate() // 업데이트
 {
 	float delta = Singleton<GameTime>::GetInstance().GetDeltaTime();
 
@@ -742,7 +742,7 @@ void PatternControlObject::OnUpdate() // 업데이트
 
 //===================================================================================================
 
-void PatternControlObject::OnDestroy()
+void TutorialControlObject::OnDestroy()
 {
 	if (auto* apm = attackPattenManager->GetComponent<AttackPatternManager>())
 	{
@@ -754,7 +754,7 @@ void PatternControlObject::OnDestroy()
 	}
 }
 
-Enemy* PatternControlObject::GetEnemy()
+Enemy* TutorialControlObject::GetEnemy()
 {
 	return enemy->GetComponent<Enemy>();
 }

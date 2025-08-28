@@ -10,7 +10,7 @@ void SignBoard::OnStart()
 	//"C:\Users\A\Documents\GitHub\Kyu\\..\\Resource\UI\Sign\bottom_text.png"
 	std::wstring path = Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\Sign\\";
 	std::wstring files[] =
-	{ L"top_text.png", L"mid_text.png", L"bottom_text.png", L"defence_text.png", L"parrying_text.png" };
+	{ L"top_text.png", L"mid_text.png", L"bottom_text.png", L"defence_text.png", L"parrying_text.png", L"overwhelmed_text.png", L"corner_text.png" };
 
 	/*	HighAttackSign = 0,
 		MiddleAttackSign = 1,
@@ -30,12 +30,13 @@ void SignBoard::OnStart()
 		D2D1_RECT_F dest = { 0,0,size.width / 3.0f,size.height / 3.0f };
 		D2D1_RECT_F src = { 0,0,size.width ,size.height };
 
-		render->SetUseCustomRect(true);
-		render->SetDestRect(dest);
-		render->SetSrcRect(src);
+		//render->SetUseCustomRect(true);
+		//render->SetDestRect(dest);
+		//render->SetSrcRect(src);
 				
-		bm->GetTransform().SetOffset(-size.width / 6.0f, size.height / 6.0f);		
-		bm->GetTransform().SetPosition((EngineData::SceenWidth / 2.0f), 200.0f);
+		//bm->GetTransform().SetOffset(-size.width / 6.0f, size.height / 6.0f);	
+		bm->GetTransform().SetOffset(-192.0f, 108.0f);			
+		//bm->GetTransform().SetPosition((EngineData::SceenWidth / 2.0f), 200.0f);
 
 		render->SetActive(false);
 		signBitmaps.push_back(render);
@@ -59,11 +60,28 @@ void SignBoard::OnUpdate()
 		progress = 0.0f;
 		ClearAllSigns();
 	}
-
-
 }
 
 void SignBoard::OnDestroy() {}
+//================================================
+// 사실상 이 2개만 사용함
+void SignBoard::ShowOver()
+{
+	ClearAllSigns();
+	isPlay = true;
+	progress = 1.0f;
+	type = Over;
+	signBitmaps[type]->SetActive(true);
+}
+void SignBoard::ShowCorner()
+{
+	ClearAllSigns();
+	isPlay = true;
+	progress = 1.0f;
+	type = Corner;
+	signBitmaps[type]->SetActive(true);
+}
+
 
 //================================================
 

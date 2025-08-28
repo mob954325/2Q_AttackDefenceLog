@@ -10,8 +10,8 @@ public:
     void OnStart() override;
     void OnUpdate() override;
     D2D1_SIZE_F GetSize();
-    void Start(); // 0 -> 1
-    void End(); // 1 -> 0
+    void Start(bool isPl = true); // 0 -> 1
+    void End(bool isPl = true); // 1 -> 0
 
 protected:
     float clampf(float v, float minVal, float maxVal)
@@ -24,7 +24,11 @@ private:
     bool isPlay = false;
     bool isGoingFillUp = true;
 
+    bool isPlayer = true;
+
     D2D1_SIZE_F size;
     BitmapRenderer* bitmapRenderer{};
-    BitmapRenderer* brrr{};
+    BitmapRenderer* player{};
+
+    BitmapRenderer* enemy{};
 };

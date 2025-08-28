@@ -1,0 +1,24 @@
+﻿#pragma once
+#include "Scripts/SceneCore.h"
+
+class TutorialScene : public Scene
+{
+protected:
+	void OnEnterImpl() override;
+	void OnExitImpl() override;
+	void UpdateImpl() override;
+
+private:
+	GameObject* PCO;
+	GameObject* inputObj;
+	GameObject* stageBGI;
+	
+	GameObject* randomBox;
+
+	GameObject* escPanel;
+
+	//SoundObj
+	GameObject* SoundStageOne;
+	//bubblebox
+	//GameObject* Textbox;
+};

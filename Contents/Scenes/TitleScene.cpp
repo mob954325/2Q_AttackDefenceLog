@@ -89,5 +89,11 @@ void TitleScene::UpdateImpl()
 		cloudManager->GetComponent<CloudManager>()->Start();
 	}
 
+	if (input->IsKeyPressed('0'))
+	{
+		Singleton<SceneManager>::GetInstance().LoadScene(TUTORIAL);
+	}
+
+
 	Singleton<AudioSystem>::GetInstance().Update();
 }

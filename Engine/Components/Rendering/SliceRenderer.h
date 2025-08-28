@@ -106,6 +106,8 @@ public:
 
 	D2D1_SIZE_F GetSize() const;
 
+	float cap = 1.0f; // 외부에서 투명도 조정할려고 추가함(8.27.한승규)
+
 private:
 	/// <summary>
 	/// cross product를 이용해 edge와 한 점

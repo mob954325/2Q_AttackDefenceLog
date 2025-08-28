@@ -6,12 +6,17 @@
 #include "Scripts/GameManager.h"
 #include "Scripts/SelectSeal/SelectSeal.h"
 
+#include "Objects/Scenes/TitleScene/EffectProgress.h"
+
 void StageSelectManager::OnCreate()
 {
 }
 
 void StageSelectManager::OnStart()
 {
+	progress = 0.0f; //8.27 추가
+	isDone = false; // 해당 값을 기반으로, Update에서 알파값을 올려줄꺼임
+
 	CreateMenuObjects();
 
 	objs[0]->owner->GetTransform().SetPosition(-400, 200);
@@ -19,8 +24,8 @@ void StageSelectManager::OnStart()
 	objs[2]->owner->GetTransform().SetPosition(400, 400);
 
 	ChangeImageByClearState();
-	  
-	objs[0]->AddEvent([this]() 
+
+	objs[0]->AddEvent([this]()
 		{
 			if (Singleton<GameManager>::GetInstance().IsStage1Clear()) return;
 
@@ -30,8 +35,8 @@ void StageSelectManager::OnStart()
 				isSceneChange = true;
 			}
 		});
-	objs[1]->AddEvent([this]() 
-		{ 
+	objs[1]->AddEvent([this]()
+		{
 			if (Singleton<GameManager>::GetInstance().IsStage2Clear()) return;
 
 			if (!isSceneChange)
@@ -40,8 +45,8 @@ void StageSelectManager::OnStart()
 				isSceneChange = true;
 			}
 		});
-	objs[2]->AddEvent([this]() 
-		{ 
+	objs[2]->AddEvent([this]()
+		{
 			if (Singleton<GameManager>::GetInstance().IsStage3Clear()) return;
 
 			if (!isSceneChange)
@@ -55,11 +60,35 @@ void StageSelectManager::OnStart()
 
 void StageSelectManager::OnUpdate()
 {
+	if (!isDone) {
+		progress += 0.2f * Singleton<GameTime>::GetInstance().GetDeltaTime();
+		if (progress >= 1.0f) {		
+			isDone = true;
+		}
+
+		float cap = EffectProgress::NormalizeProgress(progress, 0.8f, 0.9f);
+
+		if (cap == 0.0f) {
+			objs[0]->SetActive(false);
+			objs[1]->SetActive(false);
+			objs[2]->SetActive(false);
+		}
+		else {
+			objs[0]->SetActive(true);
+			objs[1]->SetActive(true);
+			objs[2]->SetActive(true);
+		}
+
+		objs[0]->SetOpacity(cap);
+		objs[1]->SetOpacity(cap);
+		objs[2]->SetOpacity(cap); // 상남자 코딩(8.27.)		
+	}
+
 	if (isSceneChange)
 	{
 		timer += Singleton<GameTime>::GetInstance().GetDeltaTime();
 
-		if(timer >= maxTimer)
+		if (timer >= maxTimer)
 		{
 			Singleton<SceneManager>::GetInstance().LoadScene(SceneCount::SELECT);
 		}
@@ -71,7 +100,7 @@ void StageSelectManager::OnDestroy()
 	objs.clear();
 }
 
-void StageSelectManager::CreateMenuObjects() 
+void StageSelectManager::CreateMenuObjects()
 {
 	for (int i = 0; i < 3; i++)
 	{
@@ -81,6 +110,7 @@ void StageSelectManager::CreateMenuObjects()
 
 		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(obj);
 		SliceableObject* comp = obj->AddComponent<SliceableObject>();
+		comp->SetOpacity(0.0f); //  8.27.추가, 0.0f 불투명도로 시작
 		objs.push_back(comp);
 	}
 

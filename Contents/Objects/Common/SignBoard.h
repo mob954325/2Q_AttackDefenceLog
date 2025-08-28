@@ -24,6 +24,10 @@ public:
 	void ShowHighSign();
 	void ShowMiddleSign();
 	void ShowLowSign();
+	
+	//이거 두개만 사용함, 사실 다른거도 쓰긴함
+	void ShowOver();
+	void ShowCorner();
 
 	//패링 가드
 	void ShowParrySign();
@@ -44,7 +48,10 @@ protected:
 		MiddleAttackSign = 1,
 		LowAttackSign = 2,
 		GuardSign = 3,
-		ParrySign = 4
+		ParrySign = 4,
+		Over = 5, //추가기능
+		Corner =6
+
 	};
 
 	SignType type = GuardSign;

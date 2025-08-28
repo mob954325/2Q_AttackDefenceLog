@@ -65,10 +65,15 @@ void BattleBoard::OnStart()
 	ClearAll();
 }
 
+void BattleBoard::OnCreate()
+{
+	eff = owner->AddComponent<EffectInstance>();
+}
+
 void BattleBoard::OnUpdate()
 {
 	if (!isPlay) return;
-	
+
 	// 게임 상태가 Pause면 Update 중단
 	if (Singleton<GameManager>::GetInstance().GetGameState() == GameState::Pause)
 	{
@@ -166,6 +171,7 @@ void BattleBoard::ClearAll() // 나중에 진행되고 있는걸 지우는거 �
 		pv->SetActive(false);
 		pv->owner->GetTransform().SetPosition(leftPoint.x, leftPoint.y);
 	}
+	wasPlayedOnce = false;
 }
 
 //=========================================================
@@ -208,6 +214,10 @@ void BattleBoard::Curve()
 			fromPos = EffectProgress::Lerp(toPos, { (halfPoint.x + toPos.x) / 2.0f, fromPos.y }, fromProgress);
 			//toPos = EffectProgress::Lerp(toPos, toPos + (fromPos - halfPoint) / 2.0f, toProgress);
 			toPos = EffectProgress::DampedSine(toPos, toPos + (toStart - halfPoint) / 1.5f, 100.0f, 4.0f, 2.0f, 0.0f, fromProgress);
+			if (!wasPlayedOnce) {
+				//아무것도 없지롱
+				wasPlayedOnce = true;
+			}
 		}
 		break;
 
@@ -218,12 +228,16 @@ void BattleBoard::Curve()
 			fromProgress = EffectProgress::NormalizeProgress(progress, 0.0f, 0.5f);
 			fromPos = EffectProgress::Lerp(fromPos, toPos, fromProgress);
 		}
-		else {
+		else {		
 			fromProgress = toProgress = EffectProgress::NormalizeProgress(progress, 0.4f, 1.0f);
 			toAlpha = fromAlpha = EffectProgress::clamp01(1.0f - fromProgress);
 
 			fromPos = EffectProgress::Lerp(toPos, { (halfPoint.x + toPos.x) / 2.0f, fromPos.y }, fromProgress);
 			toPos = EffectProgress::Lerp(toPos, toPos + (fromPos - halfPoint) / 2.0f, toProgress);
+			if (!wasPlayedOnce) {
+				eff->CallEffect(EffectType::GuardEffect, toPos);
+				wasPlayedOnce = true;
+			}
 		}
 		break;
 
@@ -233,7 +247,7 @@ void BattleBoard::Curve()
 		toProgress = EffectProgress::NormalizeProgress(progress, 0.2f, 0.5f);
 		fromProgress = EffectProgress::NormalizeProgress(progress, 0.0f, 0.5f);
 
-		fromPos = EffectProgress::Lerp(fromStart, toStart, fromProgress);		
+		fromPos = EffectProgress::Lerp(fromStart, toStart, fromProgress);
 		toPos = EffectProgress::BezierQuadratic(toStart, halfPoint, { halfPoint.x , fromStart.y + 150.0f }, toProgress);
 
 		if (progress > 0.5f) {
@@ -250,11 +264,15 @@ void BattleBoard::Curve()
 			fromPos = EffectProgress::Lerp(fromPos, { (halfPoint.x + toPos.x) / 2.0f, fromPos.y }, fromProgress);
 			toPos = EffectProgress::Lerp(toPos, { (halfPoint.x + toPos.x) / 2.0f, fromPos.y }, toProgress);
 		}
-		else {
+		else {		
 			fromProgress = toProgress = EffectProgress::NormalizeProgress(progress, 0.4f, 1.0f);
 			fromPos = EffectProgress::BezierQuadratic({ (halfPoint.x + toPos.x) / 2.0f, fromPos.y }, fromPos, { fromPos.x, 0.0f }, fromProgress);
 			toAlpha = fromAlpha = EffectProgress::clamp01(1.0f - fromProgress);
 			toPos = EffectProgress::BezierQuadratic({ (halfPoint.x + toPos.x) / 2.0f, fromPos.y }, toPos, { toPos.x, 0.0f }, toProgress);
+			if (!wasPlayedOnce) {
+				eff->CallEffect(EffectType::ParryEffect, toPos);
+				wasPlayedOnce = true;
+			}
 		}
 		break;
 

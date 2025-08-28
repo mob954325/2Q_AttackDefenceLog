@@ -9,25 +9,30 @@ void Vignette::OnCreate()
 	owner->SetRenderLayer(EngineData::RenderLayer::None);
 	owner->GetTransform().SetUnityCoords(true);
 	owner->GetTransform().SetScale(0.85f, 0.85f);
+		
 	bitmapRenderer = owner->AddComponent<BitmapRenderer>();
 	bitmapRenderer->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\BackGround\\side_darkness.png");
 
-	brrr = owner->AddComponent<BitmapRenderer>();
-	brrr->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\BattlePanel\\GuideText\\connect_all_the_dots_at_once.png");
+	player = owner->AddComponent<BitmapRenderer>();
+	player->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\BattlePanel\\GuideText\\connect_all_the_dots_at_once.png");
 
-
+	enemy = owner->AddComponent<BitmapRenderer>();
+	enemy->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\BattlePanel\\GuideText\\enemy_attack_text.png");	
 }
 
 void Vignette::OnStart()
 {
 	bitmapRenderer->SetOrderInLayer(1200);
-	brrr->SetOrderInLayer(1201);
+	player->SetOrderInLayer(1201);
+	enemy->SetOrderInLayer(1201);
 
 	size = bitmapRenderer->GetResource()->GetBitmap()->GetSize();
 	owner->GetTransform().SetOffset(-size.width / 2, size.height / 2);
 
 	End();
 	progress = 0.0f;
+	enemy->SetCapacity(progress);
+	player->SetCapacity(progress);
 }
 
 void Vignette::OnUpdate()
@@ -49,7 +54,12 @@ void Vignette::OnUpdate()
 	progress = clampf(progress, 0.0f, 1.0f);
 
 	bitmapRenderer->SetCapacity(progress);
-	brrr->SetCapacity(progress);
+	if (isPlayer) {
+		player->SetCapacity(progress);
+	}
+	else {
+		enemy->SetCapacity(progress);
+	}	
 }
 
 D2D1_SIZE_F Vignette::GetSize()
@@ -57,18 +67,20 @@ D2D1_SIZE_F Vignette::GetSize()
 	return size;
 }
 
-void Vignette::Start()
-{
+void Vignette::Start(bool isPl)
+{	
 	isGoingFillUp = true;
 	progress = 0.0f;
 	isPlay = true;
+	isPlayer = isPl;
 }
 
-void Vignette::End()
+void Vignette::End(bool isPl)
 {
 	if (!isGoingFillUp) return;
-
+	
 	isGoingFillUp = false;
 	progress = 1.0f;
 	isPlay = true;
+	isPlayer = isPl;
 }

@@ -23,6 +23,10 @@ public:
 
 	void SetSliceable(bool value);
 
+	void SetOpacity(float value) { // 외부에서 투명도 조정할려고 추가함(8.27. 한승규)
+		sliceComp->cap = value;
+	}
+
 private:
 	/// <summary>
 	/// 오브젝트와 마우스 겹침 다루는 함수 - 간단한 충돌이므로 Collision 사용 안함

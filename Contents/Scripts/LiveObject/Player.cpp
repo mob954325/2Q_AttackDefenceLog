@@ -142,21 +142,24 @@ void Player::AtkSucEnter()
 
 void Player::DefEnter()
 {
-	limitStateMoveTimer = 0.8f;
+	limitStateMoveTimer = 0.6f;   // 0.8 -> 0.6으로 수정
 	nowStateMoveTimer = 0.0f;
 	fromPos = IdlePos;
 	toPosX = GetRandomPointOnShrinkingCircle(maxRadius, nowStateMoveTimer, limitStateMoveTimer, IdlePos);
-	StatefreqTime = 6.0f;
+	StatefreqTime = 12.0f;            // 6.0 -> 12.0으로 수정
+
 }
 
 void Player::HitEnter()
 {
-	limitStateMoveTimer = 0.8f;
+	limitStateMoveTimer = 0.6f;   // 0.8 -> 0.6으로 수정
 	nowStateMoveTimer = 0.0f;
 	fromPos = IdlePos;
 	toPosX = GetRandomPointOnShrinkingCircle(maxRadius, nowStateMoveTimer, limitStateMoveTimer, IdlePos);
-	StatefreqTime = 6.0f;
+	StatefreqTime = 12.0f;           // 6.0 -> 12.0으로 수정
+
 }
+
 
 void Player::AtkSucExit()
 {

@@ -17,10 +17,17 @@
 #include "../Engine/Components/Rendering/AnimatedChainEffect.h" 
 #include "Scripts/Effect/EffectInstance.h" // 이펙트 정현씨꺼
 
+/* 8.28. 한승규
+* PatternControlObejct를 그대로 복붙한거긴 한데
+* 연결 방식을 변경하고, 조건을 추가함
+* 튜토리얼에서 사용하기 위해 개조함
+*/
+
+
 /// <summary>
 /// Stage에서 사용하는 적 패링 패턴과, 플레이어 공격 패턴 관리 클래스
 /// </summary>
-class PatternControlObject : public MonoBehavior
+class TutorialControlObject : public MonoBehavior
 {
 public:
 	void OnCreate() override;
