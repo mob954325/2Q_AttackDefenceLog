@@ -1,4 +1,4 @@
-#include "EffectInstance2.h"
+﻿#include "EffectInstance2.h"
 #include "Components/Base/GameObject.h"
 #include <iostream>
 #include "Systems/AudioSystem.h"
@@ -12,8 +12,24 @@
 //Update로 프레임마다 이펙트들 업데이트
 void EffectInstance2::OnUpdate()
 {
-
 	float dt = Singleton<GameTime>::GetInstance().GetDeltaTime();
+
+	auto& stateH = HitState;
+	if (stateH.playing)
+	{
+		stateH.t += dt;
+		if (stateH.t >= stateH.duration) {
+			stateH.playing = false;
+			stateH.t = 0.0f;
+
+			auto* r = HitEffect->GetComponent<AnimationRenderer>();
+			r->SetActive(false);
+			auto* p = r->GetAnimationPlayer();
+			p->Pause();
+			p->Reset();
+		}
+	}
+
 	for (size_t i = 0; i < AnimeList.size(); ++i) {
 		auto& state = AnimeStates[i];
 		if (!state.playing) continue;
@@ -31,22 +47,24 @@ void EffectInstance2::OnUpdate()
 		}
 	}
 
-	if (effecttype == EffectType::None) return;
+	if (effecttype == EffectType2::None) return;
 	else
 	{
 		counttime += Singleton<GameTime>::GetInstance().GetDeltaTime();
 
 		switch (effecttype)
 		{
-		case EffectType::ParryEffect:
+		case EffectType2::ParryEffect:
 			ParryEffect();
 			break;
 
-		case EffectType::GuardEffect:
+		case EffectType2::GuardEffect:
 			GuardEffect();
 			break;
 		}
 	}
+
+
 }
 
 //변수 초기화 및 Emanager 등록
@@ -154,12 +172,12 @@ void EffectInstance2::OnDestroy()
 // 8.09 추가, 외부에서 쓰기 쉽게 랩핑함
 void EffectInstance2::DoParry(int n)
 {
-	CallEffect(EffectType::ParryEffect, nodePos[n]);
+	CallEffect(EffectType2::ParryEffect, nodePos[n]);
 }
-void EffectInstance2::DoGuard(int n) { CallEffect(EffectType::GuardEffect, nodePos[n]); }
+void EffectInstance2::DoGuard(int n) { CallEffect(EffectType2::GuardEffect, nodePos[n]); }
 
 
-void EffectInstance2::CallEffect(EffectType type, const Vector2& info)
+void EffectInstance2::CallEffect(EffectType2 type, const Vector2& info)
 {
 	effecttype = type;
 	Emanager->SetEffectPosition(info.x, info.y);
@@ -170,12 +188,12 @@ void EffectInstance2::CallEffect(EffectType type, const Vector2& info)
 
 	switch (type)
 	{
-	case EffectType::ParryEffect:
+	case EffectType2::ParryEffect:
 		Emanager->GetParticleComponent(0)->Reset();
 		Emanager->GetParticleComponent(0)->Play();
 		break;
 
-	case EffectType::GuardEffect:
+	case EffectType2::GuardEffect:
 		Emanager->GetParticleComponent(1)->Reset();
 		Emanager->GetParticleComponent(1)->Play();
 		break;
@@ -185,9 +203,9 @@ void EffectInstance2::CallEffect(EffectType type, const Vector2& info)
 void EffectInstance2::ParryEffect()
 {
 	if (counttime < maxtime) {
-		Emanager->SetEffectValue(0, GetValue(0), GetValue(0), 1 - GetValue(3), true);
-		Emanager->SetEffectValue(1, GetValue(1), GetValue(1), 1 - GetValue(2), true);
-		Emanager->SetEffectValue(2, 343, 22, 1 - GetValue(3), true);
+		Emanager->SetEffectValue(0, GetValue(0), GetValue(0), 1 - GetValue(3) * 2.0f, true);
+		Emanager->SetEffectValue(1, GetValue(1), GetValue(1), 1 - GetValue(2) * 2.0f, true);
+		Emanager->SetEffectValue(2, 343, 22, 1 - GetValue(3) * 2.0f, true);
 	}
 	else
 	{
@@ -198,8 +216,8 @@ void EffectInstance2::ParryEffect()
 void EffectInstance2::GuardEffect()
 {
 	if (counttime < maxtime) {
-		Emanager->SetEffectValue(3, GetValue(1), GetValue(1), 1 - GetValue(2), true);
-		Emanager->SetEffectValue(4, 343, 22, 1 - GetValue(3), true);
+		Emanager->SetEffectValue(3, GetValue(1), GetValue(1), 1 - GetValue(2) * 2.0f, true);
+		Emanager->SetEffectValue(4, 343, 22, 1 - GetValue(3) * 2.0f, true);
 	}
 	else
 	{
@@ -210,7 +228,7 @@ void EffectInstance2::GuardEffect()
 void EffectInstance2::EndEffects()
 {
 	Emanager->SetOffEffect();
-	effecttype = EffectType::None;
+	effecttype = EffectType2::None;
 }
 
 void EffectInstance2::SetAnimePosition(const std::vector<Vector2>& vectorList)

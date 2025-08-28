@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Components/Base/MonoBehavior.h"
 #include "Datas/SoundDatas.h"
 #include "Components/Logic/InputSystem.h"
@@ -17,7 +17,7 @@
 미리 풀링으로 만들어둔 이펙트, 파티클들
 */
 
-enum class EffectType
+enum class EffectType2
 {
 	None,
 	ParryEffect,
@@ -32,7 +32,7 @@ public:
 	void OnStart() override;
 	void OnDestroy() override;
 
-	void CallEffect(EffectType type, const Vector2& info);
+	void CallEffect(EffectType2 type, const Vector2& info);
 
 	void ParryEffect();
 	void GuardEffect();
@@ -71,7 +71,7 @@ private:
 
 	float capacapacityWave = 0.0f;
 
-	EffectType effecttype = EffectType::None;
+	EffectType2 effecttype = EffectType2::None;
 
 	std::vector<GameObject*> AnimeList;
 
