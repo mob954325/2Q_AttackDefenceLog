@@ -160,6 +160,8 @@ private:
 	bool isCreatedResult = false;
 	void CheckChangeScene();	// 씬 교체를 해야하는지 확인하는 함수
 
+	bool isDead = false;
+
 	//적 히트 이펙트
 	HitEffect* Hiteff{};
 
