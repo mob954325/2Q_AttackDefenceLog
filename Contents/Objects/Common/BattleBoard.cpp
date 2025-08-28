@@ -215,7 +215,8 @@ void BattleBoard::Curve()
 			//toPos = EffectProgress::Lerp(toPos, toPos + (fromPos - halfPoint) / 2.0f, toProgress);
 			toPos = EffectProgress::DampedSine(toPos, toPos + (toStart - halfPoint) / 1.5f, 100.0f, 4.0f, 2.0f, 0.0f, fromProgress);
 			if (!wasPlayedOnce) {
-				eff->CallAnimeH(toPos);
+				//eff->CallAnimeH({ toPos.x, halfPoint.y});
+				// 정현씨가 열심히 만들었지만? 주석처리 ㅅㄱ(피터지는 이펙트가 생각보다 안어울림)
 				wasPlayedOnce = true;
 			}
 		}
@@ -228,7 +229,7 @@ void BattleBoard::Curve()
 			fromProgress = EffectProgress::NormalizeProgress(progress, 0.0f, 0.5f);
 			fromPos = EffectProgress::Lerp(fromPos, toPos, fromProgress);
 		}
-		else {		
+		else {
 			fromProgress = toProgress = EffectProgress::NormalizeProgress(progress, 0.4f, 1.0f);
 			toAlpha = fromAlpha = EffectProgress::clamp01(1.0f - fromProgress);
 
@@ -264,7 +265,7 @@ void BattleBoard::Curve()
 			fromPos = EffectProgress::Lerp(fromPos, { (halfPoint.x + toPos.x) / 2.0f, fromPos.y }, fromProgress);
 			toPos = EffectProgress::Lerp(toPos, { (halfPoint.x + toPos.x) / 2.0f, fromPos.y }, toProgress);
 		}
-		else {		
+		else {
 			fromProgress = toProgress = EffectProgress::NormalizeProgress(progress, 0.4f, 1.0f);
 			fromPos = EffectProgress::BezierQuadratic({ (halfPoint.x + toPos.x) / 2.0f, fromPos.y }, fromPos, { fromPos.x, 0.0f }, fromProgress);
 			toAlpha = fromAlpha = EffectProgress::clamp01(1.0f - fromProgress);
