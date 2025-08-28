@@ -20,7 +20,7 @@ void SoundMutePanel::OnCreate()
 
 	panelBitmap = owner->AddComponent<BitmapRenderer>();
 	panelBitmap->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\SoundControl\\sound_ui_pad.png");
-	panelBitmap->SetOrderInLayer(10);
+	panelBitmap->SetOrderInLayer(2300);
 
 	D2D1_SIZE_F size = panelBitmap->GetResource()->GetBitmap()->GetSize();
 	
@@ -41,7 +41,7 @@ void SoundMutePanel::OnCreate()
 
 	sliderButtonBitmap = sliderButton->AddComponent<BitmapRenderer>();
 	sliderButtonBitmap->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\SoundControl\\sound_volumn_ui.png");
-	sliderButtonBitmap->SetOrderInLayer(15);
+	sliderButtonBitmap->SetOrderInLayer(2400);
 
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(sliderButton);
 	sliderButton->GetTransform().Translate({ offsetX + size.width * 0.3f , offsetY + size.width * 0.125f });
@@ -73,9 +73,9 @@ void SoundMutePanel::OnStart()
 								ownerPosition.x + size.width * 0.5f + 230.0f,
 								ownerPosition.y + size.height * 0.5f + 130.0f });
 
-	muteButton->GetNormalImage()->SetOrderInLayer(15);
-	muteButton->GetHoverImage()->SetOrderInLayer(15);
-	muteButton->GetPressedImage()->SetOrderInLayer(15);
+	muteButton->GetNormalImage()->SetOrderInLayer(2400);
+	muteButton->GetHoverImage()->SetOrderInLayer(2400);
+	muteButton->GetPressedImage()->SetOrderInLayer(2400);
 
 	muteButton->GetNormalImage()->SetActive(false);
 	muteButton->GetHoverImage()->SetActive(false);
