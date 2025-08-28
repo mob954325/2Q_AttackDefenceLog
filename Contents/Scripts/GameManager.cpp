@@ -32,6 +32,8 @@ SceneCount GameManager::GetTargetBattleStage()
 
 void GameManager::SetStageClear(int stageNum)
 {
+    std::cout << "stage clear : " << stageNum << std::endl;
+
     if (stageNum == 1)
     {
         isStage1Clear = true;
