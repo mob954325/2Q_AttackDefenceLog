@@ -362,6 +362,9 @@
     <ClCompile Include="Objects\Common\BattleBoard.cpp" />
     <ClCompile Include="Objects\Common\BlinkNodeObject.cpp" />
     <ClCompile Include="Objects\Manager\ThinkingPatternManager.cpp" />
+    <ClCompile Include="Objects\Scenes\TutorialScene\TutorialControlObject.cpp" />
+    <ClCompile Include="Objects\Scenes\TutorialScene\TutorialManager.cpp" />
+    <ClCompile Include="Scenes\TutorialScene.cpp" />
     <ClCompile Include="Scripts\BubbleBox\BubbleEnd.cpp" />
     <ClCompile Include="Objects\Common\SignBoard.cpp" />
     <ClCompile Include="Scripts\BubbleBox\BubbleBoxTittle.cpp" />
@@ -444,6 +447,9 @@
     <ClInclude Include="Objects\Common\BattleBoard.h" />
     <ClInclude Include="Objects\Common\BlinkNodeObject.h" />
     <ClInclude Include="Objects\Manager\ThinkingPatternManager.h" />
+    <ClInclude Include="Objects\Scenes\TutorialScene\TutorialControlObject.h" />
+    <ClInclude Include="Objects\Scenes\TutorialScene\TutorialManager.h" />
+    <ClInclude Include="Scenes\TutorialScene.h" />
     <ClInclude Include="Scripts\BubbleBox\BubbleEnd.h" />
     <ClInclude Include="Objects\Common\SignBoard.h" />
     <ClInclude Include="Scripts\BubbleBox\BubbleBoxTittle.h" />

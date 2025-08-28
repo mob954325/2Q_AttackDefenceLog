@@ -85,6 +85,9 @@
     <Filter Include="Scripts\Camera">
       <UniqueIdentifier>{5a65e77f-3fe9-4d56-bb8c-e6de0a6c5b20}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Objects\SceneObject\TutorialScene">
+      <UniqueIdentifier>{588cb638-718e-4eb6-b6b6-1129de6c838c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\Game.cpp">
@@ -307,6 +310,15 @@
     </ClCompile>
     <ClCompile Include="Objects\Common\BlinkNodeObject.cpp">
       <Filter>Objects\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Scenes\TutorialScene.cpp">
+      <Filter>Scene\.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Scenes\TutorialScene\TutorialManager.cpp">
+      <Filter>Objects\SceneObject\TutorialScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Scenes\TutorialScene\TutorialControlObject.cpp">
+      <Filter>Objects\SceneObject\TutorialScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -533,6 +545,15 @@
     </ClInclude>
     <ClInclude Include="Objects\Common\BlinkNodeObject.h">
       <Filter>Objects\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes\TutorialScene.h">
+      <Filter>Scene\.h</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Scenes\TutorialScene\TutorialManager.h">
+      <Filter>Objects\SceneObject\TutorialScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Scenes\TutorialScene\TutorialControlObject.h">
+      <Filter>Objects\SceneObject\TutorialScene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
