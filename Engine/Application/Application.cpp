@@ -53,16 +53,32 @@ void Application::Initialize()
 	wc.lpszClassName = EngineData::WindowName.c_str();
 	RegisterClass(&wc);
 
-	SIZE clientSize = { (LONG)EngineData::SceenWidth,(LONG)EngineData::SceenHeight };
-	RECT clientRect = { 0, 0, clientSize.cx, clientSize.cy };
-	AdjustWindowRect(&clientRect, WS_OVERLAPPEDWINDOW, FALSE);
+	// 모니터 정보 가져오기 (주 모니터 기준)
+	HMONITOR hMonitor = MonitorFromWindow(GetDesktopWindow(), MONITOR_DEFAULTTONEAREST);
+	MONITORINFO mi = { sizeof(mi) };
+	GetMonitorInfo(hMonitor, &mi);
 
-	m_hwnd = CreateWindowEx(0, 
-		EngineData::WindowName.c_str(), EngineData::TitleName.c_str(),
-		WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT,
-		clientRect.right - clientRect.left, clientRect.bottom - clientRect.top,
+	// 원하는 해상도 (1920x1080 고정)
+	int targetWidth = 1920;
+	int targetHeight = 1080;
+
+	// 윈도우 생성 (일단 기본 스타일)
+	m_hwnd = CreateWindowEx(
+		0,
+		EngineData::WindowName.c_str(),
+		EngineData::TitleName.c_str(),
+		WS_POPUP | WS_VISIBLE, // 테두리 없는 창
+		0, 0, targetWidth, targetHeight,
 		nullptr, nullptr, m_hInstance, this);
-	ShowWindow(m_hwnd, SW_SHOW);
+
+	// 모니터 정중앙에 위치하도록 좌표 계산
+	int posX = (mi.rcMonitor.right - mi.rcMonitor.left - targetWidth) / 2;
+	int posY = (mi.rcMonitor.bottom - mi.rcMonitor.top - targetHeight) / 2;
+
+	// 창 위치와 크기 설정
+	SetWindowPos(m_hwnd, HWND_TOP,
+		posX, posY, targetWidth, targetHeight,
+		SWP_FRAMECHANGED | SWP_SHOWWINDOW);
 
 	// D3D11 디바이스 생성
 	D3D_FEATURE_LEVEL featureLevel;
@@ -167,28 +183,28 @@ void Application::MessageProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		break;
 	case WM_KEYDOWN:
 		break;
-	case WM_SIZE:
-	{
-		if (wParam == SIZE_MINIMIZED)
-			break; // 최소화는 무시
-		
-		UINT width = LOWORD(lParam); // 새 너비
-		UINT height = HIWORD(lParam); // 새 높이			
-		if (EngineData::SceenWidth != width || EngineData::SceenHeight != height)
-		{
-			EngineData::SceenWidth = width;
-			EngineData::SceenHeight = height;
-			m_resized = true;
-		}
-	}
-	break;
-	case WM_EXITSIZEMOVE:
-		if (m_resized)
-		{
-			ResizeSwapChainBuffers();
-			m_resized = false;
-		}
-		break;
+	// case WM_SIZE:
+	// {
+	// 	if (wParam == SIZE_MINIMIZED)
+	// 		break; // 최소화는 무시
+	// 	
+	// 	UINT width = LOWORD(lParam); // 새 너비
+	// 	UINT height = HIWORD(lParam); // 새 높이			
+	// 	if (EngineData::SceenWidth != width || EngineData::SceenHeight != height)
+	// 	{
+	// 		EngineData::SceenWidth = width;
+	// 		EngineData::SceenHeight = height;
+	// 		m_resized = true;
+	// 	}
+	// }
+	// break;
+	// case WM_EXITSIZEMOVE:
+	// 	if (m_resized)
+	// 	{
+	// 		ResizeSwapChainBuffers();
+	// 		m_resized = false;
+	// 	}
+	// 	break;
 	case WM_MOUSEMOVE:
 	case WM_LBUTTONDOWN:
 	case WM_LBUTTONUP:

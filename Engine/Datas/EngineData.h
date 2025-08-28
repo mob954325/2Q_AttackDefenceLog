@@ -4,7 +4,7 @@
 namespace EngineData
 {
 	const static std::wstring WindowName = L"WindowClass";
-	const static std::wstring TitleName = L"DirectX11 2D Physics Test";
+	const static std::wstring TitleName = L"DirectX11 AttackDefenceLog";
 
  	static int SceenHeight = 1080;
 	static int SceenWidth = 1920;
