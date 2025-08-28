@@ -17,9 +17,9 @@ void LevelSelectManager::OnStart()
 	objs[1]->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\diffcult\\nomal_ui.png");
 	objs[2]->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\diffcult\\difficult_ui.png");
 
-	objs[0]->owner->GetTransform().SetPosition(-400, 0);
-	objs[1]->owner->GetTransform().SetPosition(0, 0);
-	objs[2]->owner->GetTransform().SetPosition(400, 0);
+	objs[0]->owner->GetTransform().SetPosition(-450, 177);
+	objs[1]->owner->GetTransform().SetPosition(0, 177);
+	objs[2]->owner->GetTransform().SetPosition(450, 177);
 
 	objs[0]->AddEvent([this]()
 		{
