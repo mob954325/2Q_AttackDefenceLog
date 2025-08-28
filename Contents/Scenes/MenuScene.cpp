@@ -110,6 +110,7 @@ void MenuScene::UpdateImpl()
 
 		if (timer > maxTimer)
 		{
+			isDone = false;
 			Singleton<SceneManager>::GetInstance().LoadScene(SceneCount::END); // endScene 호출
 		}
 	}
