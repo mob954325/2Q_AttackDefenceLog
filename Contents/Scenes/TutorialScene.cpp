@@ -4,7 +4,7 @@
 
 #include "Objects/Common/InputObject.h"
 #include "Objects/Scenes/Stage/StageBGI.h"
-#include "Objects/Common/PatternControlObject.h"
+#include "Objects/Scenes/TutorialScene/TutorialControlObject.h"
 #include "Objects/Scenes/Stage/EscMenu/StageESCPanel.h"
 #include "Objects/Scenes/Stage/EscMenu/EscContinueButton.h"
 #include "Objects/Scenes/Stage/EscMenu/EscExitButton.h"
@@ -22,9 +22,7 @@
 
 void TutorialScene::OnEnterImpl()
 {
-
-
-	std::cout << "스테이지1 진입" << std::endl;
+	std::cout << "튜토리얼 진입" << std::endl;
 
 	inputObj = new GameObject();
 	inputObj->AddComponent<InputObject>();
@@ -35,9 +33,9 @@ void TutorialScene::OnEnterImpl()
 	AddGameObject(nodePanel);
 
 	PCO = new GameObject();
-	auto comp = PCO->AddComponent<PatternControlObject>();
+	auto comp = PCO->AddComponent<TutorialControlObject>();
 	AddGameObject(PCO , "PatternControlObject");
-	comp->GetEnemy()->SetNameDiff("Stage1", Singleton<GameManager>::GetInstance().GetDifficultyString());
+	comp->GetEnemy()->SetNameDiff("Tutorial", Singleton<GameManager>::GetInstance().GetDifficultyString());
 
 	stageBGI = new GameObject();
 	stageBGI->AddComponent<StageBGI>();
@@ -70,9 +68,6 @@ void TutorialScene::OnEnterImpl()
 	SoundStageOne = new GameObject();
 	SoundStageOne->AddComponent<SoundPlayScene>();
 	AddGameObject(SoundStageOne, "SOUNDSTAGE"); // SOUNDSTAGE << 이름 유지해주세요
-
-	/*SoundStageOne->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Stage01");
-	SoundStageOne->GetComponent<SoundPlayScene>()->PlaySound();*/
 	
 	Textbox = new GameObject();
 	auto bb = Textbox->AddComponent<BubbleBox>();
@@ -95,21 +90,6 @@ void TutorialScene::OnEnterImpl()
 	enemyProfileComp->owner->GetTransform().SetPosition(EngineData::SceenWidth * 0.95f, 1);
 	AddGameObject(enemyProfileUIObj, "enemyProfileUIObj");
 
-	//D2D1_RECT_F HiteffectPlayer = { 570.0f,  680.0f , 970.0f,  810.0f };
-	//randomBox = new GameObject();  // 97
-	//randomBox->AddComponent<BoxRenderer>();
-	//AddGameObject(randomBox, "randombox");
-	//randomBox->GetTransform().SetUnityCoords(false);
-	//randomBox->GetComponent<BoxRenderer>()->SetOrderInLayer(90000);
-
-	//D2D1_RECT_F A{};
-	//A.left = 570.0f;
-	//A.right = 970.0f;
-	//A.top = 680.0f;
-	//A.bottom = 810.0f;
-
-	//randomBox->GetComponent<BoxRenderer>()->SetRect(A);
-
 	GameObject* obj = new GameObject();
 	auto vi = obj->AddComponent<Vignette>();
 	AddGameObject(obj, "Vignette");
@@ -117,7 +97,7 @@ void TutorialScene::OnEnterImpl()
 
 void TutorialScene::OnExitImpl()
 {
-	std::cout << "스테이지1 이탈" << std::endl;
+	std::cout << "튜토리얼 이탈" << std::endl;
 	Singleton<AudioSystem>::GetInstance().ReSetChannel();
 }
 
@@ -126,7 +106,7 @@ void TutorialScene::UpdateImpl()
 	Singleton<AudioSystem>::GetInstance().Update();
 
 	auto input = inputObj->GetComponent<InputSystem>();
-	if (input->IsKeyPressed('2')) {
-		Singleton<SceneManager>::GetInstance().LoadScene(END);
+	if (input->IsKeyPressed('9')) {
+		Singleton<SceneManager>::GetInstance().LoadScene(TITLE);
 	}
 }

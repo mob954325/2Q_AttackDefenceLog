@@ -10,6 +10,8 @@
 #include "Scenes/Stage2.h"
 #include "Scenes/Stage3.h"
 
+#include "Scenes/TutorialScene.h"
+
 #include "Systems/AudioSystem.h"
 #include "Components/Logic/InputSystem.h"
 #include "Resources/Loaders/CsvLoader.h"
@@ -27,7 +29,8 @@ void GameApp::Initialize()
 	// 		END = 3,
 	// 		STAGE1 = 4,
 	// 		STAGE2 = 5,
-	// 		STAGE3 = 6
+	// 		STAGE3 = 6,
+	//		Tutorial = 7(8.28. 추가)
 	// 	};
 
 		// 여기에 씬 추가 및 Init 함수 추가
@@ -38,6 +41,8 @@ void GameApp::Initialize()
 	stage1 = new Stage1();				Singleton<SceneManager>::GetInstance().AddScene(stage1);
 	stage2 = new Stage2();				Singleton<SceneManager>::GetInstance().AddScene(stage2);
 	stage3 = new Stage3();				Singleton<SceneManager>::GetInstance().AddScene(stage3);
+
+	tutorial = new TutorialScene();		Singleton<SceneManager>::GetInstance().AddScene(tutorial); //8.28 추가
 
 
 	LoadCSV<SoundResource>::SetCSV(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\DataTable\\AllSoundList.csv", soundList);

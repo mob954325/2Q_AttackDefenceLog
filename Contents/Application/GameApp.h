@@ -1,5 +1,4 @@
 ﻿#pragma once
-#pragma once
 #include "Application/Application.h"
 #include "Scene/Scene.h"
 #include "Datas/SoundDatas.h"
@@ -25,6 +24,8 @@ private:
 	Scene* stage1;
 	Scene* stage2;
 	Scene* stage3;
+
+	Scene* tutorial; // 8.28. 추가
 
 	std::vector<SoundResource> soundList;
 

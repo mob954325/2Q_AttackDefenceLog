@@ -15,9 +15,7 @@ private:
 	
 	GameObject* randomBox;
 
-
 	GameObject* escPanel;
-
 
 	//SoundObj
 	GameObject* SoundStageOne;

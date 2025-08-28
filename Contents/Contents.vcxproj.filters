@@ -314,7 +314,7 @@
     <ClCompile Include="Scenes\TutorialScene.cpp">
       <Filter>Scene\.cpp</Filter>
     </ClCompile>
-    <ClCompile Include="Objects\Scenes\TutorialScene\TutorialManager.cpp">
+    <ClCompile Include="Objects\Scenes\TutorialScene\TutorialPatternManager.cpp">
       <Filter>Objects\SceneObject\TutorialScene</Filter>
     </ClCompile>
     <ClCompile Include="Objects\Scenes\TutorialScene\TutorialControlObject.cpp">
@@ -549,7 +549,7 @@
     <ClInclude Include="Scenes\TutorialScene.h">
       <Filter>Scene\.h</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\Scenes\TutorialScene\TutorialManager.h">
+    <ClInclude Include="Objects\Scenes\TutorialScene\TutorialPatternManager.h">
       <Filter>Objects\SceneObject\TutorialScene</Filter>
     </ClInclude>
     <ClInclude Include="Objects\Scenes\TutorialScene\TutorialControlObject.h">

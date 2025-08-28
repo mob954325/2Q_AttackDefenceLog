@@ -1,7 +1,7 @@
-#pragma once
+ï»¿#pragma once
 
-// ±×³É º¸±â ÆíÇÏ¶ó°í ¹­¾î³ùÀ½
-// °øÅëµÇ´Â ±â´É »©³õÀ½
+// ê·¸ëƒ¥ ë³´ê¸° í¸í•˜ë¼ê³  ë¬¶ì–´ë†¨ìŒ
+// ê³µí†µë˜ëŠ” ê¸°ëŠ¥ ë¹¼ë†“ìŒ
 
 #include "Scene/Scene.h"
 #include "Scene/SceneManager.h"
@@ -13,5 +13,6 @@ enum SceneCount {
 	END = 3,
 	STAGE1 = 4,
 	STAGE2 = 5,
-	STAGE3 = 6
+	STAGE3 = 6,
+	TUTORIAL = 7 //8.28 ì¶”ê°€
 };
