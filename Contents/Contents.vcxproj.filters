@@ -320,6 +320,9 @@
     <ClCompile Include="Objects\Scenes\TutorialScene\TutorialControlObject.cpp">
       <Filter>Objects\SceneObject\TutorialScene</Filter>
     </ClCompile>
+    <ClCompile Include="Objects\Scenes\TutorialScene\TutorialEffectObject.cpp">
+      <Filter>Objects\SceneObject\TutorialScene</Filter>
+    </ClCompile>
     <ClCompile Include="Scripts\Effect\EffectInstance2.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -554,6 +557,9 @@
       <Filter>Objects\SceneObject\TutorialScene</Filter>
     </ClInclude>
     <ClInclude Include="Objects\Scenes\TutorialScene\TutorialControlObject.h">
+      <Filter>Objects\SceneObject\TutorialScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Scenes\TutorialScene\TutorialEffectObject.h">
       <Filter>Objects\SceneObject\TutorialScene</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Effect\EffectInstance2.h" />
