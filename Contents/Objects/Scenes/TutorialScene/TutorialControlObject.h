@@ -13,7 +13,6 @@
 #include "Objects/Manager/ThinkingPatternManager.h"
 #include "Objects/Common/BlinkNodeObject.h"
 
-
 #include "../Engine/Components/Rendering/AnimatedChainEffect.h" 
 #include "Scripts/Effect/EffectInstance.h" // 이펙트 정현씨꺼
 
@@ -23,10 +22,10 @@
 * 튜토리얼에서 사용하기 위해 개조함
 */
 
-
 /// <summary>
 /// Stage에서 사용하는 적 패링 패턴과, 플레이어 공격 패턴 관리 클래스
 /// </summary>
+
 class TutorialControlObject : public MonoBehavior
 {
 public:
@@ -93,8 +92,6 @@ private:
 	//===============================
 
 	bool waitOneSecond = false; // 이거 키면, 특정 시간동안 노드를 비활성화하고 다시 켜줌
-
-
 
 	float waitTimer = 0.0f;
 
