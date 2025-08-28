@@ -203,9 +203,9 @@ void EffectInstance2::CallEffect(EffectType2 type, const Vector2& info)
 void EffectInstance2::ParryEffect()
 {
 	if (counttime < maxtime) {
-		Emanager->SetEffectValue(0, GetValue(0), GetValue(0), 1 - GetValue(3) * 2.0f, true);
-		Emanager->SetEffectValue(1, GetValue(1), GetValue(1), 1 - GetValue(2) * 2.0f, true);
-		Emanager->SetEffectValue(2, 343, 22, 1 - GetValue(3) * 2.0f, true);
+		Emanager->SetEffectValue(0, GetValue(0), GetValue(0), 1 - GetValue(3) * 7.0f, true);
+		Emanager->SetEffectValue(1, GetValue(1), GetValue(1), 1 - GetValue(2) * 7.0f, true);
+		Emanager->SetEffectValue(2, 343, 22, 1 - GetValue(3) * 7.0f, true);
 	}
 	else
 	{
@@ -216,8 +216,8 @@ void EffectInstance2::ParryEffect()
 void EffectInstance2::GuardEffect()
 {
 	if (counttime < maxtime) {
-		Emanager->SetEffectValue(3, GetValue(1), GetValue(1), 1 - GetValue(2) * 2.0f, true);
-		Emanager->SetEffectValue(4, 343, 22, 1 - GetValue(3) * 2.0f, true);
+		Emanager->SetEffectValue(3, GetValue(1), GetValue(1), 1 - GetValue(2) * 7.0f, true);
+		Emanager->SetEffectValue(4, 343, 22, 1 - GetValue(3) * 7.0f, true);
 	}
 	else
 	{
