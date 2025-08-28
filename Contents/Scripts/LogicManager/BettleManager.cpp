@@ -82,7 +82,7 @@ void BettleManager::OnUpdate()
 {
 	SetSpiritGauge();		  // 기세 게이지 업데이트
 	SetGroggyState();         // 그로기 스테이트 업데이트
-	
+
 	if (!m_Player->GetIsGroggy() && !m_Enemy->GetIsGroggy()) {
 		SetStateFormPatternIdle();
 		ChangeFinalStateIdle();
@@ -100,7 +100,7 @@ void BettleManager::OnUpdate()
 			SetAnimationAtOtherGroggy();
 			ChangeFinalStateEnemyGroggy();
 
-			
+
 
 		}
 		else if (m_Player->GetIsGroggy()) { // 플레이어가 그로기 상태일 때
@@ -112,7 +112,7 @@ void BettleManager::OnUpdate()
 			SetStateFormPatternPlayerGroggy();
 			ChangeFinalStatePlayerGroggy();
 
-			
+
 
 		}
 	}
@@ -134,7 +134,7 @@ void BettleManager::OnUpdate()
 
 	ResetState(); 			// state가 다를 경우 초기화 하기!!!
 
-	
+
 }
 
 void BettleManager::InitHpGauge()
@@ -206,7 +206,7 @@ void BettleManager::SetStateFormPatternPlayerGroggy() // 플레이어 그로기 
 	countDamagePercent = m_PattenManager->CountDamageAtPlayerGroggy(nowNode);
 	onEnemyFinalBlow.Invoke(m_PattenManager->AtPlayerGroggyFailPetternStorage); //CountDamageAtPlayerGroggy에서 담긴 값 반환해줌
 
-	m_Player->GetDamageAtGroggy( m_Enemy->GetAttack() * EnemyAtkMulAtPlayerGroggy * (1.0f - countDamagePercent));
+	m_Player->GetDamageAtGroggy(m_Enemy->GetAttack() * EnemyAtkMulAtPlayerGroggy * (1.0f - countDamagePercent));
 
 	if (countDamagePercent != 1.0f)
 	{
@@ -220,9 +220,11 @@ void BettleManager::SetStateFormPatternPlayerGroggy() // 플레이어 그로기 
 
 		// 이펙트 연결
 		Vector2 PlayerPerryP = { RandomHitPos_x(GuardPlayer), RandomHitPos_y(GuardPlayer) };
-		m_Player->CallGuardEffect(0, PlayerPerryP);
+		m_Player->CallGuardEffect(GuardEffCount, PlayerPerryP);		
+		if (++GuardEffCount > 20) GuardEffCount = 0;
+
 	}
-	
+
 	m_Enemy->IsOtherEndGroggy = false;		// 적 그로기 상태 해제
 	m_Player->RestoreGroggy();
 	//m_Enemy->IsOtherEndGroggy = true;  // 끝났다고 알림
@@ -272,12 +274,13 @@ void BettleManager::SetStateFormPatternIdle()
 			{
 				m_Player->SetState("Player_Defence");			 // 플레이어 상태 변경 -> 플레이어 회피
 				Vector2 PlayerPerryP = { RandomHitPos_x(GuardPlayer), RandomHitPos_y(GuardPlayer) };
-				m_Player->CallGuardEffect(0, PlayerPerryP);
+				m_Player->CallGuardEffect(GuardEffCount, PlayerPerryP);
+				if (++GuardEffCount > 20) GuardEffCount = 0;
 
 				//방어 사운드
 				auto SoundCom = owner->GetQuery()->FindByName("SOUNDSTAGE");
 				IndexNum = static_cast<int>(RandomSound());
-				switch(IndexNum)
+				switch (IndexNum)
 				{
 				case 0:
 					if (SoundCom) {
@@ -298,7 +301,7 @@ void BettleManager::SetStateFormPatternIdle()
 			else // 회피 실패 
 			{
 				m_Player->SetState("Player_Hit");   			// 플레이어 상태 변경 -> 플레이어 피격
-				m_Player->GetDamage( m_Enemy->GetAttack()); // 상중하 적용한 데미지
+				m_Player->GetDamage(m_Enemy->GetAttack()); // 상중하 적용한 데미지
 
 				if (HitAnimeCount2 < 9)
 				{
@@ -326,7 +329,7 @@ void BettleManager::SetStateFormPatternIdle()
 			}
 			else {
 				m_Enemy->RestoreSpiritDamage(m_Enemy->GetSpiritAttack());	// 적은기세를 회복
-				m_Player->GetSpiritdamage( m_Enemy->GetSpiritAttack());		// 플레이어는 기세를 잃음
+				m_Player->GetSpiritdamage(m_Enemy->GetSpiritAttack());		// 플레이어는 기세를 잃음
 			}
 
 
@@ -417,7 +420,9 @@ void BettleManager::SetStateFormPatternIdle()
 			}
 
 			Vector2 PlayerPerryP = { RandomHitPos_x(GuardPlayer), RandomHitPos_y(GuardPlayer) };
-			m_Player->CallGuardEffect(0, PlayerPerryP);
+			m_Player->CallGuardEffect(GuardEffCount, PlayerPerryP);
+			if (++GuardEffCount > 20) GuardEffCount = 0;
+
 
 
 			// 패링 실패에 따른 기세값 변경
@@ -425,8 +430,8 @@ void BettleManager::SetStateFormPatternIdle()
 				m_Player->GetDamage(ConvertSpiritDamageToPos(DefCorPatten->lastPosition, m_Enemy->GetSpiritAttack()));
 			}
 			else {
-				m_Enemy->RestoreSpiritDamage( m_Enemy->GetSpiritAttack());
-				m_Player->GetSpiritdamage( m_Enemy->GetSpiritAttack());
+				m_Enemy->RestoreSpiritDamage(m_Enemy->GetSpiritAttack());
+				m_Player->GetSpiritdamage(m_Enemy->GetSpiritAttack());
 			}
 
 		}
@@ -436,7 +441,7 @@ void BettleManager::SetStateFormPatternIdle()
 
 	}
 	else if (DefCorPatten == nullptr && AtkCorPatten != nullptr) {
-				
+
 		//공격 성공
 		m_Player->SetState("Player_AttackSuccess");	// 플레이어 상태 변경 -> 플레이어 공격 성공
 		m_Player->SetEndAttack();					// isAttackingPattern = true 
@@ -473,9 +478,10 @@ void BettleManager::SetStateFormPatternIdle()
 			////////////////////////// 적의 방어 //////////////////////
 			m_Enemy->SetState("Enemy_Defence");	// 적 상태 변경 -> 적 회피
 			Vector2 EnemyPerryEff = { RandomHitPos_x(HiteffectEnemy), RandomHitPos_y(HiteffectEnemy) };
-			m_Player->CallGuardEffect(0, EnemyPerryEff);
+			m_Player->CallGuardEffect(GuardEffCountE, EnemyPerryEff);
+			if (++GuardEffCountE > 10) GuardEffCountE = 0;
 
-		
+
 			isHit = false; // 가드
 		}
 		else // 적 회피 실패
@@ -544,7 +550,8 @@ void BettleManager::SetStateFormPatternIdle()
 					}
 
 					Vector2 PlayerPerryP = { RandomHitPos_x(GuardPlayer), RandomHitPos_y(GuardPlayer) };
-					m_Player->CallGuardEffect(0, PlayerPerryP);
+					m_Player->CallGuardEffect(GuardEffCount, PlayerPerryP);
+					if (++GuardEffCount > 20) GuardEffCount = 0;
 
 					onPlayerDodge.Invoke(tmpPatten->NodePatten); // 회피성공을 외부에 알림[2/2]
 				}
@@ -588,7 +595,7 @@ void BettleManager::SetStateFormPatternIdle()
 				m_Player->SetEndAttack();					// isAttackingPattern = true -> ??
 
 				// 플레이어 가이드 패턴 파괴
-				
+
 				m_PattenManager->SubPattern(tmpPatten->PattenID, "Player");
 			}
 		}
@@ -631,7 +638,7 @@ void BettleManager::SetAnimationAtOtherGroggy() {
 		isPlayingAni = false;
 		return;
 	}
-		
+
 
 	const float total = 1.5f;                                // 전체 재생 시간
 	const int   steps = static_cast<int>(tmpAttackNode.size() - 1); // 스텝 개수
@@ -660,32 +667,36 @@ void BettleManager::SetAnimationAtOtherGroggy() {
 			case 0:
 			{
 				auto camIns = owner->GetQuery()->FindByName("CAM");
-				if (camIns) { camIns->GetComponent<CamInstance>()->Start(1.0f, 10.0f, 10.0f, ShakeType::X);
-				camIns->GetComponent<CamInstance>()->SetFastToSlow();
+				if (camIns) {
+					camIns->GetComponent<CamInstance>()->Start(1.0f, 10.0f, 10.0f, ShakeType::X);
+					camIns->GetComponent<CamInstance>()->SetFastToSlow();
 				}
 				break;
 			}
 			case 1:
 			{
 				auto camIns = owner->GetQuery()->FindByName("CAM");
-				if (camIns) { camIns->GetComponent<CamInstance>()->Start(1.0f, 10.0f, 10.0f, ShakeType::Y);
-				camIns->GetComponent<CamInstance>()->SetFastToSlow();
+				if (camIns) {
+					camIns->GetComponent<CamInstance>()->Start(1.0f, 10.0f, 10.0f, ShakeType::Y);
+					camIns->GetComponent<CamInstance>()->SetFastToSlow();
 				}
 				break;
 			}
 			case 2:
 			{
 				auto camIns = owner->GetQuery()->FindByName("CAM");
-				if (camIns) { camIns->GetComponent<CamInstance>()->Start(1.0f, 10.0f, 10.0f, ShakeType::XY);
-				camIns->GetComponent<CamInstance>()->SetFastToSlow();
+				if (camIns) {
+					camIns->GetComponent<CamInstance>()->Start(1.0f, 10.0f, 10.0f, ShakeType::XY);
+					camIns->GetComponent<CamInstance>()->SetFastToSlow();
 				}
 				break;
 			}
 			case 3:
 			{
 				auto camIns = owner->GetQuery()->FindByName("CAM");
-				if (camIns) { camIns->GetComponent<CamInstance>()->Start(1.0f, 10.0f, 10.0f, ShakeType::X_Y);
-				camIns->GetComponent<CamInstance>()->SetFastToSlow();
+				if (camIns) {
+					camIns->GetComponent<CamInstance>()->Start(1.0f, 10.0f, 10.0f, ShakeType::X_Y);
+					camIns->GetComponent<CamInstance>()->SetFastToSlow();
 				}
 				break;
 			}
@@ -736,22 +747,22 @@ void BettleManager::ChangeFinalStatePlayerGroggy() // 아군의  그로기 상�
 	if (!m_Enemy->IsOtherGroggy) {
 		m_Enemy->IsOtherGroggy = true;
 		m_Enemy->OtherGroggyTime = 0.0f;
-		
+
 	}
 
 	if (isPlayingAni)  m_Player->OtherGroggyTimeStop = true;
 	else               m_Player->OtherGroggyTimeStop = false;
 
-	if (m_Enemy->IsOtherEndGroggy) {		
+	if (m_Enemy->IsOtherEndGroggy) {
 		m_Enemy->IsOtherEndGroggy = false;
 
 		m_Enemy->IsOtherGroggy = false;
 		m_Player->GetDamageAtGroggy(m_Enemy->GetAttack() * 1.0f * EnemyAtkMulAtPlayerGroggy);
-		
+
 		onEnemyFinalBlow.Invoke(m_PattenManager->AtPlayerGroggyFailPetternStorage);
-    
+
 		m_Player->SetState("Player_Hit");
-		m_Enemy->SetState("Enemy_AttackSuccess"); 
+		m_Enemy->SetState("Enemy_AttackSuccess");
 		auto SoundCom = owner->GetQuery()->FindByName("SOUNDSTAGE");
 		if (SoundCom) {
 			SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Hit01");
@@ -772,7 +783,7 @@ void BettleManager::ChangeFinalStatePlayerGroggy() // 아군의  그로기 상�
 void BettleManager::ChangeCommonFinalState()
 {
 
-	
+
 
 	// 플레이어 사망 확인
 	if (m_Player->GetHp() <= 0.0f)
@@ -894,10 +905,10 @@ void BettleManager::SetGroggyState()
 	if (preManagerState != nowManagerState && nowManagerState == enemyGroggy) {
 		m_Player->IsOtherGroggy = true;          // 표시도 함께 세팅
 		m_Player->enemyGroggyTime = 0.0f;        // 반드시 0부터 시작
-		
+
 	}
-	
-	 //플레이어 그로기로  진입하는 첫 프레임, 적이 재는 타이머를 0으로
+
+	//플레이어 그로기로  진입하는 첫 프레임, 적이 재는 타이머를 0으로
 	if (preManagerState != nowManagerState && nowManagerState == playerGroggy) {
 		m_Enemy->IsOtherGroggy = true;           // 표시도 함께 세팅
 		m_Enemy->OtherGroggyTime = 0.0f;         // 반드시 0부터 시작
@@ -911,7 +922,7 @@ void BettleManager::SetGroggyState()
 		isOncePatternAttack = false;
 		m_Player->isOtherGroggyEnd = false;
 		m_Player->IsOtherGroggy = false;
-		if(IsFinalBlowAtEnemy)
+		if (IsFinalBlowAtEnemy)
 		{
 			m_Player->SetState("Player_AttackSuccess");
 			m_Enemy->SetState("Enemy_Hit");
@@ -920,7 +931,7 @@ void BettleManager::SetGroggyState()
 			m_Player->SetState("Player_Idle");
 			m_Enemy->SetState("Enemy_Idle");
 		}
-		
+
 		IsFinalBlowAtEnemy = false;
 		onTimeout.Invoke(); // 외부에 그로기 지속 시간이 끝났다는걸 알림
 		EndEnemyGroggyCleanup(true);
@@ -999,7 +1010,7 @@ void BettleManager::EndPlayerGroggyCleanup(bool byTimeout)
 	m_Player->IsOtherGroggy = false;   // 상대 그로기 표시용
 	m_Player->isOtherGroggyEnd = false;
 
-	
+
 
 	// 타임아웃이면 공통 회복 루틴도 태우기
 	if (byTimeout) {

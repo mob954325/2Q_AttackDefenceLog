@@ -194,7 +194,8 @@ private:
 	int HitAnimeCount2 = 0;
 
 	//가드이펙트
-	int GuardEffCount = 0;
+	int GuardEffCount = 0; // 플레이어
+	int GuardEffCountE = 0; // 적
 
 	//test
 	int A = 0;
