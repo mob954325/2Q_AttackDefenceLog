@@ -20,5 +20,5 @@ private:
 	//SoundObj
 	GameObject* SoundStageOne;
 	//bubblebox
-	GameObject* Textbox;
+	//GameObject* Textbox;
 };

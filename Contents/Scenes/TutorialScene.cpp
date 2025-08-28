@@ -69,10 +69,10 @@ void TutorialScene::OnEnterImpl()
 	SoundStageOne->AddComponent<SoundPlayScene>();
 	AddGameObject(SoundStageOne, "SOUNDSTAGE"); // SOUNDSTAGE << 이름 유지해주세요
 	
-	Textbox = new GameObject();
-	auto bb = Textbox->AddComponent<BubbleBox>();
-	AddGameObject(Textbox, "Textbox");
-	bb->SetEscPanel(esc);
+	//Textbox = new GameObject();
+	//auto bb = Textbox->AddComponent<BubbleBox>();
+	//AddGameObject(Textbox, "Textbox");
+	//bb->SetEscPanel(esc);
 
 	GameObject* topUIObj = new GameObject();
 	auto topUIComp = topUIObj->AddComponent<StageTopUI>();
@@ -93,6 +93,7 @@ void TutorialScene::OnEnterImpl()
 	GameObject* obj = new GameObject();
 	auto vi = obj->AddComponent<Vignette>();
 	AddGameObject(obj, "Vignette");
+	
 }
 
 void TutorialScene::OnExitImpl()
