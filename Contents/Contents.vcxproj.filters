@@ -324,6 +324,9 @@
       <Filter>Objects\SceneObject\TutorialScene</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\Effect\EffectInstance2.cpp" />
+    <ClCompile Include="Objects\Scenes\TutorialScene\TutorialEnterObject.cpp">
+      <Filter>Objects\SceneObject\TutorialScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameApp.h">
@@ -563,5 +566,8 @@
       <Filter>Objects\SceneObject\TutorialScene</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Effect\EffectInstance2.h" />
+    <ClInclude Include="Objects\Scenes\TutorialScene\TutorialEnterObject.h">
+      <Filter>Objects\SceneObject\TutorialScene</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

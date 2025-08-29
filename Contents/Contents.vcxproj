@@ -359,6 +359,7 @@
   <ItemGroup>
     <ClCompile Include="Application\Game.cpp" />
     <ClCompile Include="Application\GameApp.cpp" />
+    <ClCompile Include="Objects\Scenes\TutorialScene\TutorialEnterObject.cpp" />
     <ClCompile Include="Scripts\Effect\EffectInstance2.cpp" />
     <ClCompile Include="Objects\Common\BattleBoard.cpp" />
     <ClCompile Include="Objects\Common\BlinkNodeObject.cpp" />
@@ -446,6 +447,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\GameApp.h" />
+    <ClInclude Include="Objects\Scenes\TutorialScene\TutorialEnterObject.h" />
     <ClInclude Include="Scripts\Effect\EffectInstance2.h" />
     <ClInclude Include="Objects\Common\BattleBoard.h" />
     <ClInclude Include="Objects\Common\BlinkNodeObject.h" />
