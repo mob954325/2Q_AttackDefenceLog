@@ -4,6 +4,7 @@
 #include "../Engine/Scene/SceneManager.h"
 #include "../Engine/Datas/EngineData.h"
 #include "Application/AppPaths.h"
+#include "Scripts/GameManager.h"
 
 void BlinkNodeObject::OnCreate()
 {
@@ -27,7 +28,7 @@ void BlinkNodeObject::OnCreate()
 			enemyBlinkBitmaps.push_back(bitmaps); // 0~8, push_back 가능함
 		}
 
-		bitmaps->SetOrderInLayer(1000); // 아무튼 위에 오셈
+		bitmaps->SetOrderInLayer(10); // 적당히 노드 위에만 있으면 됨
 
 		auto size = bitmaps->GetResource()->GetBitmap()->GetSize();
 		obj->GetTransform().SetOffset(-size.width / 2.0f, size.height / 2.0f);
@@ -44,6 +45,12 @@ void BlinkNodeObject::OnStart()
 void BlinkNodeObject::OnUpdate()
 {
 	if (!isPlay)  return;
+
+	// 게임 상태가 Pause면 Update 중단
+	if (Singleton<GameManager>::GetInstance().GetGameState() == GameState::Pause)
+	{
+		return;
+	}
 
 	float delta = Singleton<GameTime>::GetInstance().GetDeltaTime();
 	float n = 1.0f; // 배율

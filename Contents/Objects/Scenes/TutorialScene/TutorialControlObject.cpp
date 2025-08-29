@@ -23,6 +23,8 @@
 #include "Scripts/GameManager.h"
 #include "Vignette.h"
 
+
+
 void TutorialControlObject::OnCreate()
 {
 	//===================================================================================================
@@ -180,6 +182,8 @@ void TutorialControlObject::OnCreate()
 			battleBoards.pop();
 			bbs->Parry();
 			battleBoards.push(bbs);
+
+			tuto->CountUpParry();			
 		});
 
 	// OnGuard 이벤트 추가
@@ -191,6 +195,8 @@ void TutorialControlObject::OnCreate()
 			battleBoards.pop();
 			bbs->Guard(BattleBoard::EnemyAttackSign);
 			battleBoards.push(bbs);
+
+			tuto->CountUpGuard();
 		});
 
 
@@ -204,6 +210,7 @@ void TutorialControlObject::OnCreate()
 		if (!enemyAttackChain.empty()) {
 			auto eac = enemyAttackChain.front();
 			enemyAttackChain.pop();
+			std::reverse(patten.begin(), patten.end());
 			eac->PlayOnce(patten);
 			enemyAttackChain.push(eac);
 		}
@@ -218,6 +225,7 @@ void TutorialControlObject::OnCreate()
 		if (!enemyAttackChain.empty()) {
 			auto eac = enemyAttackChain.front();
 			enemyAttackChain.pop();
+			std::reverse(patten.begin(), patten.end());
 			eac->PlayOnce(patten);
 			enemyAttackChain.push(eac);
 		}
@@ -323,6 +331,8 @@ void TutorialControlObject::OnCreate()
 
 			//enemyAttackChain.front()->PlayOnce(pattern);
 		}
+
+		tuto->CountUpAttack();
 
 		BattleBoard::SignType ty = BattleBoard::EnemyAttackSign;
 
@@ -537,6 +547,10 @@ void TutorialControlObject::OnStart()
 
 	blinkNodeObject = owner->AddComponent<BlinkNodeObject>();
 	blinkNodeObject->SetupNodes(m_nodes[4]->GetTransform().GetPosition(), n);
+
+
+	tuto = owner->AddComponent<TutorialEffectObject>();
+
 }
 
 //===================================================================================================

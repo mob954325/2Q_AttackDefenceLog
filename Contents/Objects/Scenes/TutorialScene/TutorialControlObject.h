@@ -10,6 +10,8 @@
 #include "Scripts/LiveObject/Enemy.h"
 #include "Objects/Common/BattleBoard.h" // 보드 위에서 뚜씨뚜씨 하는거임
 
+#include "TutorialEffectObject.h"
+
 #include "Objects/Manager/ThinkingPatternManager.h"
 #include "Objects/Common/BlinkNodeObject.h"
 
@@ -70,6 +72,8 @@ protected:
 	std::queue<BattleBoard*> battleBoards;
 
 	BlinkNodeObject* blinkNodeObject;
+
+	TutorialEffectObject* tuto;
 
 private:
 	bool isSkipped = false; // 이거 켜지면, 노드 관련 행동 스킵함

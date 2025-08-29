@@ -15,6 +15,8 @@ public:
 
 	void SetEscPanel(StageESCPanel* pPanel);
 
+	bool isTutorial = false;
+
 private:
 	BitmapRenderer* TextBox{};
 	BitmapRenderer* Text_01{};

@@ -19,7 +19,7 @@ private:
 	GameObject* selectEffectManager;
 
 	GameObject* cloudManager;
-	GameObject* SoundMenuObj;
+	GameObject* SoundMenuObj;	
 
 
 	bool isDone = false;

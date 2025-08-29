@@ -19,6 +19,30 @@ void StageSelectManager::OnStart()
 
 	CreateMenuObjects();
 
+	GameObject* obj = new GameObject();
+	obj->SetName("tutorialEnterSlice");
+	obj->GetTransform().SetParent(&(this->owner->GetTransform()));
+
+	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(obj);
+	tutorial = obj->AddComponent<SliceableObject>();
+	tutorial->SetOpacity(0.0f);
+	obj->GetTransform().SetPosition(-800, -100);
+	tutorial->SetImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\enemySelect\\tutorial_ui.png");
+
+	tutorial->AddEvent([this]()
+		{
+			if (Singleton<GameManager>::GetInstance().IsStage1Clear()) return;
+			if (Singleton<GameManager>::GetInstance().IsStage2Clear()) return;
+			if (Singleton<GameManager>::GetInstance().IsStage3Clear()) return; // 상남자 코딩
+
+			if (!isSceneChange)
+			{
+				isSceneChange = true;
+				isTutorialEnter = true;
+			}
+		});
+
+
 	objs[0]->owner->GetTransform().SetPosition(-400, 200);
 	objs[1]->owner->GetTransform().SetPosition(0, 0);
 	objs[2]->owner->GetTransform().SetPosition(400, 400);
@@ -56,13 +80,23 @@ void StageSelectManager::OnStart()
 			}
 		});
 
+
+	objs[0]->SetActive(false);
+	objs[1]->SetActive(false);
+	objs[2]->SetActive(false);
 }
 
 void StageSelectManager::OnUpdate()
 {
+	// 게임 상태가 Pause면 Update 중단
+	if (Singleton<GameManager>::GetInstance().GetGameState() == GameState::Pause)
+	{
+		return;
+	}
+
 	if (!isDone) {
 		progress += 0.2f * Singleton<GameTime>::GetInstance().GetDeltaTime();
-		if (progress >= 1.0f) {		
+		if (progress >= 1.0f) {
 			isDone = true;
 		}
 
@@ -72,16 +106,19 @@ void StageSelectManager::OnUpdate()
 			objs[0]->SetActive(false);
 			objs[1]->SetActive(false);
 			objs[2]->SetActive(false);
+			tutorial->SetActive(false);
 		}
 		else {
 			objs[0]->SetActive(true);
 			objs[1]->SetActive(true);
 			objs[2]->SetActive(true);
+			tutorial->SetActive(true);
 		}
 
 		objs[0]->SetOpacity(cap);
 		objs[1]->SetOpacity(cap);
 		objs[2]->SetOpacity(cap); // 상남자 코딩(8.27.)		
+		tutorial->SetOpacity(cap);
 	}
 
 	if (isSceneChange)
@@ -90,7 +127,13 @@ void StageSelectManager::OnUpdate()
 
 		if (timer >= maxTimer)
 		{
-			Singleton<SceneManager>::GetInstance().LoadScene(SceneCount::SELECT);
+			if (isTutorialEnter) {
+				Singleton<SceneManager>::GetInstance().LoadScene(TUTORIAL);
+			}
+			else {
+				Singleton<SceneManager>::GetInstance().LoadScene(SceneCount::SELECT);
+			}
+
 		}
 	}
 }

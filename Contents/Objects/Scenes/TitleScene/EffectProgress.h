@@ -35,6 +35,10 @@ struct EffectProgress {
 		return t < 0.0f ? 0.0f : (t > 1.0f ? 1.0f : t);
 	}
 
+	static int clampi(int v, int minVal, int maxVal) { // 나만의 작은 클램프 함수 C++14를 고집하는 자의 의지
+		return (v < minVal) ? minVal : (v > maxVal ? maxVal : v);
+	}
+
 	// 기본 progress를 기준으로 정규화 해주는 함수임
 	// 전체 흐름인 0.0 ~ 1.0 중, 0.3 ~ 0.5 구간을 0.0 ~ 1.0 으로 치환해서 반환해주는 기능임
 	// 즉, 0.0 0.0 0.2 0.5 0.5 1.0 1.0 1.0 1.0... 이런느낌
