@@ -2,10 +2,9 @@
 #include "Components/Base/GameObject.h"
 #include "Application/AppPaths.h"
 #include "../Engine/Utils/GameTime.h"
-#include "Scene/SceneManager.h"
+//#include "Scene/SceneManager.h"
+#include "Scripts/SceneCore.h"
 #include "../Engine/Components/Logic/InputSystem.h"
-//#include "Objects/Scenes/TitleScene/EffectProgress.h"
-
 
 void TutorialEffectObject::OnCreate()
 {
@@ -54,10 +53,15 @@ void TutorialEffectObject::OnUpdate() // 업데이트
 		//====================================================================
 		if (index < slideImages.size()) { // 31 -> 32까지만 구현
 
-			if (index >= 1) slideImages[index - 1]->SetActive(false);	
+			if (index >= 1) slideImages[index - 1]->SetActive(false);
 			slideImages[index]->SetActive(true);
 			index++;
 		}
+		else {
+			Singleton<SceneManager>::GetInstance().LoadScene(MENU);
+			//씬 전환 일단 메뉴로 해둠, 나중에 난이도 선택으로 연결 가능
+		}
+
 		//====================================================================
 	}
 	cachedInputMouse = inputMouse;
