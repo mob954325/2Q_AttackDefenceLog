@@ -15,5 +15,13 @@ public:
 	void OnStart() override;
 	void OnUpdate() override;
 
-protected:	
+protected:
+	bool isPlay = false;
+
+	bool inputMouse = false;
+	bool cachedInputMouse = false;
+	
+
+	int index = 0;
+	std::vector<BitmapRenderer*> slideImages;
 };

@@ -23,6 +23,8 @@
 #include "Scripts/GameManager.h"
 #include "Vignette.h"
 
+#include "TutorialEffectObject.h"
+
 void TutorialControlObject::OnCreate()
 {
 	//===================================================================================================
@@ -537,6 +539,10 @@ void TutorialControlObject::OnStart()
 
 	blinkNodeObject = owner->AddComponent<BlinkNodeObject>();
 	blinkNodeObject->SetupNodes(m_nodes[4]->GetTransform().GetPosition(), n);
+
+
+	owner->AddComponent<TutorialEffectObject>();
+
 }
 
 //===================================================================================================
