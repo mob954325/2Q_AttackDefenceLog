@@ -10,6 +10,7 @@
 #include "Objects/Scenes/SelectScene/SelectEffectManager.h"
 #include "Objects/Scenes/Stage/CloudManager.h"
 #include "Objects/Sound/SoundTittle.h"
+#include "Objects/Scenes/TutorialScene/TutorialEnterObject.h"
 
 #include "Scripts/GameManager.h"
 
@@ -35,6 +36,10 @@ void MenuScene::OnEnterImpl()
 	trail = new GameObject();
 	trail->AddComponent<MouseTrailObject>();
 	AddGameObject(trail);
+
+	GameObject* tutorialEnter = new GameObject();
+	tutorialEnter->AddComponent<TutorialEnterObject>(); 
+	AddGameObject(tutorialEnter, "tutorialEnter");
 
 	backGroundImg = new GameObject();
 	backGroundImg->AddComponent<MenuSceneBGI>();

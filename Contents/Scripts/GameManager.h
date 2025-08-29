@@ -15,7 +15,7 @@ enum GameState
 class GameManager : public Singleton<GameManager>
 {
 public:
-	bool isFirstSelect = false; // 이거 읽어서 튜토리얼 띄워줄려고
+	bool wasSelected = false; // 이거 읽어서 튜토리얼 띄워줄려고
 
 	GameState GetGameState();
 	void SetGameState(GameState state);

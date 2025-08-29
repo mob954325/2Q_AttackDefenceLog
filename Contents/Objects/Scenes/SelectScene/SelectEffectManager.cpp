@@ -3,6 +3,7 @@
 #include "Scene/SceneManager.h"
 #include "Application/AppPaths.h"
 #include "../Engine/Utils/GameTime.h"
+#include "Scripts/GameManager.h"
 
 void SelectEffectManager::OnStart()
 {
@@ -35,6 +36,11 @@ void SelectEffectManager::OnStart()
 
 void SelectEffectManager::OnUpdate()
 {
+	// 게임 상태가 Pause면 Update 중단
+	if (Singleton<GameManager>::GetInstance().GetGameState() == GameState::Pause)
+	{
+		return;
+	}
 
 	if (isPlay) {
 		float delta = Singleton<GameTime>::GetInstance().GetDeltaTime();

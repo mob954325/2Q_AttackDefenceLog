@@ -79,6 +79,8 @@ void GameManager::Reset()
     isStage1Clear = false;
     isStage2Clear = false;
     isStage3Clear = false;
+
+    wasSelected = false; // 꼽껴서 넣음
 }
 
 void GameManager::SetDifficulty(std::string diffStr)

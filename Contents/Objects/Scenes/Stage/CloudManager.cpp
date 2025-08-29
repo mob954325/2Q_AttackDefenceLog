@@ -3,6 +3,7 @@
 #include "Scene/SceneManager.h"
 #include "Application/AppPaths.h"
 #include "../Engine/Utils/GameTime.h"
+#include "Scripts/GameManager.h"
 
 void CloudManager::OnStart()
 {
@@ -13,7 +14,7 @@ void CloudManager::OnStart()
 		GameObject* obj = new GameObject();
 		obj->GetTransform().SetUnityCoords(true);
 		obj->SetRenderLayer(EngineData::RenderLayer::UI);
-		auto br = obj->AddComponent<BitmapRenderer>();		
+		auto br = obj->AddComponent<BitmapRenderer>();
 		br->SetOrderInLayer(i + 100);
 
 		effectProgress.push_back({ br, 0.0f });
@@ -35,6 +36,11 @@ void CloudManager::OnStart()
 
 void CloudManager::OnUpdate()
 {
+	// 게임 상태가 Pause면 Update 중단
+	if (Singleton<GameManager>::GetInstance().GetGameState() == GameState::Pause)
+	{
+		return;
+	}
 
 	if (isPlay) {
 		float delta = Singleton<GameTime>::GetInstance().GetDeltaTime();
