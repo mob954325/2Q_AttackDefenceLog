@@ -15,6 +15,7 @@
 #include "Objects/Scenes/Stage/StageResult/StageResult.h"
 #include "Math/EasingFunction.h"
 #include "Math/GameRandom.h"
+#include "Objects/Manager/ThinkingPatternManager.h"
 
 // 각 값은 해당 함수가 출력 중일때, 각 플레그 변화
 //														     
@@ -110,13 +111,14 @@ void Enemy::OnUpdate()
 // onChangePatten에 TransitionTime 변경하기!!!
 
 //밖에서 미리 값을 입력해서 ID를 입력할 수 있게 함
-void Enemy::SetNameDiff(std::string Stage, std::string difficulty) 
+void Enemy::SetNameDiff(std::string Stage, std::string difficulty)
 {
 	int indexID = 0;
 	int diffindex = 0;
 	if (Stage == "Stage1") { nameIndex = 0; }
 	else if (Stage == "Stage2") { nameIndex = 1; }
 	else if (Stage == "Stage3") { nameIndex = 2; }
+	else if (Stage == "TutorialStage") { isTutorial = true; }
 	else { nameIndex = 100; }
 
 	if (difficulty == "easy") { diffindex = 1; }
@@ -124,10 +126,16 @@ void Enemy::SetNameDiff(std::string Stage, std::string difficulty)
 	else if (difficulty == "hard") { diffindex = 3; }
 	else { diffindex = 100; }
 
-	indexID = nameIndex * 3 + diffindex;
-	if (nameIndex == 100 || diffindex == 100) return;
+	//////////////////////////////////// 튜토리얼 스테이지 예외처리 ////////////////////////////////
+	if (isTutorial) {
+		Enemy_ID = "EI_100";
+	}
+	else {
+		indexID = nameIndex * 3 + diffindex;
+		if (nameIndex == 100 || diffindex == 100) return;
 
-	Enemy_ID = "EI_00" + std::to_string(indexID);
+		Enemy_ID = "EI_00" + std::to_string(indexID);
+	}
 }
 
 
@@ -249,50 +257,88 @@ void Enemy::OnCreateState()
 // 매개변수를 통해 데이터의 키값을 받아서 데이터를 찾고 데이터의 값을 적에게 전부 인가
 void Enemy::SetStatData(std::string tmp) 
 {
-	nowEnemyData = CsvDataManager::GetInstance().getDataImpl(nowEnemyData, tmp);
 
-	Object_ID = nowEnemyData->enemyID;					   // ID
-	Object_Name = nowEnemyData->enemyName;				   // 이름
-	Object_Hp = nowEnemyData->enemyHealth;		           // 체력
-	Object_TotalHp = Object_Hp;							  // 전체 체력
-	Object_Attack = nowEnemyData->enemyDamage;			   // 공격력
-	Object_SpiritAttack = nowEnemyData->enemySpiritdamage; // 기세 공격력
-	Object_DefenseRate = nowEnemyData->enemyGuardRate;	   // 방어율
-	Object_SpiritAmount = nowEnemyData->enemySpiritamount; // 기세
-	Object_NowSpiritAmount = Object_SpiritAmount / 2.0f;   // 현재 기세 설정
-	Difficulty = nowEnemyData->enemyDifficulty;			   // 난이도 -> 아마 필요없을듯?
+	///////////////////////////////////////////  튜토리얼 /////////////////////////////////////////////// 
 
-	PattenID = nowEnemyData->enemyPattern;				   // 적이 가지고 있는 벡터
-
-	TotalPatternID = CsvDataManager::GetInstance().GetIDData(nowEnemyPattenData);  // 적 공격 전체의 데이터
-
-	// 적이 가지고 있는 공격과 적 패턴 전체의 벡터를 매핑
-	for (int i = 0; i < nowEnemyData->enemyPattern.size(); i++) 
+	// 튜토리얼	스테이지일 경우, 적 데이터 불러오는 방식 변경
+	if (isTutorial)
 	{
-		int index = 0;
-		auto it = std::find(TotalPatternID.begin(), TotalPatternID.end(), nowEnemyData->enemyPattern[i]); // 
-		if (it != TotalPatternID.end()) 
+		Object_ID = "EI_100";								   // ID
+		Object_Name = L"목각인형";							   // 이름
+		Object_Hp =  99999.0f;							       // 체력
+		Object_TotalHp = 99999.0f;				   			   // 전체 체력
+		Object_Attack = 0.0f;				     			   // 공격력
+		Object_SpiritAttack = 0.0f;						       // 기세 공격력
+		Object_DefenseRate = 0.0f;							   // 방어율
+		Object_SpiritAmount = 10000.0f;					   // 기세
+		Object_NowSpiritAmount = Object_SpiritAmount / 2.0f;   // 현재 기세 설정
+		Difficulty = "Tutorial";							   // 난이도 -> 아마 필요없을듯?
+
+		PattenID = {" "};										   // 적이 가지고 있는 벡터
+		TotalPatternID = {" "};								   // 적 공격 전체의 데이터
+
+		Object_CoolTime = 1.0f;								   // 적의 쿨타임 가져오기;
+		Object_nowCoolTime = 1.0f;							   // 현재 적의 쿨타임
+		Object_PlayingAttackTime = 0.0f;					   // 패턴의 입력 대기 시간
+		Object_nowPlayingAttackTime = 0.0f;					   // 현재 패턴의 입력 대기 시간
+
+
+		// 적의 이미지 이름 받기
+		enemy_IdlePath = L"\\..\\Resource\\Sprites\\Enemy\\tuto_monster1.png";
+		enemy_AttackPath = L"\\..\\Resource\\Sprites\\Enemy\\tuto_monster2.png";
+		enemy_GuardPath = L"\\..\\Resource\\Sprites\\Enemy\\tuto_monster2.png";
+		enemy_DamagedPath = L"\\..\\Resource\\Sprites\\Enemy\\tuto_monster2.png";
+
+		eSpriteDamage_Second = 0.0f;						  // 튜토리얼에는 기세가 없음		
+
+	}
+	else {
+		nowEnemyData = CsvDataManager::GetInstance().getDataImpl(nowEnemyData, tmp);
+
+		Object_ID = nowEnemyData->enemyID;					   // ID
+		Object_Name = nowEnemyData->enemyName;				   // 이름
+		Object_Hp = nowEnemyData->enemyHealth;		           // 체력
+		Object_TotalHp = Object_Hp;							  // 전체 체력
+		Object_Attack = nowEnemyData->enemyDamage;			   // 공격력
+		Object_SpiritAttack = nowEnemyData->enemySpiritdamage; // 기세 공격력
+		Object_DefenseRate = nowEnemyData->enemyGuardRate;	   // 방어율
+		Object_SpiritAmount = nowEnemyData->enemySpiritamount; // 기세
+		Object_NowSpiritAmount = Object_SpiritAmount / 2.0f;   // 현재 기세 설정
+		Difficulty = nowEnemyData->enemyDifficulty;			   // 난이도 -> 아마 필요없을듯?
+
+		PattenID = nowEnemyData->enemyPattern;				   // 적이 가지고 있는 벡터
+
+		TotalPatternID = CsvDataManager::GetInstance().GetIDData(nowEnemyPattenData);  // 적 공격 전체의 데이터
+
+		// 적이 가지고 있는 공격과 적 패턴 전체의 벡터를 매핑
+		for (int i = 0; i < nowEnemyData->enemyPattern.size(); i++)
 		{
-			index = std::distance(TotalPatternID.begin(), it); // 인덱스 계산
+			int index = 0;
+			auto it = std::find(TotalPatternID.begin(), TotalPatternID.end(), nowEnemyData->enemyPattern[i]); // 
+			if (it != TotalPatternID.end())
+			{
+				index = std::distance(TotalPatternID.begin(), it); // 인덱스 계산
+			}
+
+			PattenMap[nowEnemyData->enemyPattern[i]] = index;      // 적의 패턴과 적의 전체 패턴을 매핑
 		}
 
-		PattenMap[nowEnemyData->enemyPattern[i]] = index;      // 적의 패턴과 적의 전체 패턴을 매핑
+		Object_CoolTime = nowEnemyData->enemyCooldown;         // 적의 쿨타임 가져오기;
+		Object_nowCoolTime = nowEnemyData->enemyCooldown;	   // 현재 적의 쿨타임
+		Object_PlayingAttackTime = 0.0f;					   // 패턴의 입력 대기 시간
+		Object_nowPlayingAttackTime = 0.0f;					   // 현재 패턴의 입력 대기 시간
+
+		std::wstring enemy_CommonPath = L"\\..\\Resource\\Sprites\\Enemy\\";	// 적의 공통 이미지 경로
+
+		// 적의 이미지 이름 받기
+		enemy_IdlePath = enemy_CommonPath + nowEnemyData->enemySprite[0] + L"_fin.png";
+		enemy_AttackPath = enemy_CommonPath + nowEnemyData->enemySprite[1] + L"_fin.png";
+		enemy_GuardPath = enemy_CommonPath + nowEnemyData->enemySprite[2] + L"_fin.png";
+		enemy_DamagedPath = enemy_CommonPath + nowEnemyData->enemySprite[3] + L"_fin.png";
+
+		eSpriteDamage_Second = nowEnemyData->Enemy_spriteDamage_Second;
 	}
-
-	Object_CoolTime = nowEnemyData->enemyCooldown;         // 적의 쿨타임 가져오기;
-	Object_nowCoolTime = nowEnemyData->enemyCooldown;	   // 현재 적의 쿨타임
-	Object_PlayingAttackTime = 0.0f;					   // 패턴의 입력 대기 시간
-	Object_nowPlayingAttackTime = 0.0f;					   // 현재 패턴의 입력 대기 시간
-
-	std::wstring enemy_CommonPath = L"\\..\\Resource\\Sprites\\Enemy\\";	// 적의 공통 이미지 경로
-
-	// 적의 이미지 이름 받기
-	enemy_IdlePath = enemy_CommonPath + nowEnemyData->enemySprite[0] + L"_fin.png";        
-	enemy_AttackPath = enemy_CommonPath + nowEnemyData->enemySprite[1] + L"_fin.png";
-	enemy_GuardPath = enemy_CommonPath + nowEnemyData->enemySprite[2] + L"_fin.png";
-	enemy_DamagedPath = enemy_CommonPath + nowEnemyData->enemySprite[3] + L"_fin.png";
-
-	eSpriteDamage_Second = nowEnemyData->Enemy_spriteDamage_Second;
+	
 }
 
 
@@ -388,34 +434,48 @@ void Enemy::SelectPattern() //각 객체가 사용할 패턴을 고름
 
 	else 
 	{
-		patternCount = 0;
-		if (enemyAttackPatternFix.substr(0, 2) != "EP") 
+		///////////////////////////////////////////  튜토리얼  ////////////////////////////////////////////
+		if (isTutorial)
 		{
-			std::random_device rd;
-			std::mt19937 gen(rd());
-			std::uniform_int_distribution<> dist(0, PattenID.size() - 1);
-			nowRandomValue = dist(gen);
-			SetAttackPattenData(PattenID[nowRandomValue]);
+			SetAttackPattenDataAtTutorial();
+		}
+		else
+		{
+			patternCount = 0;
+			if (enemyAttackPatternFix.substr(0, 2) != "EP")
+			{
+				std::random_device rd;
+				std::mt19937 gen(rd());
+				std::uniform_int_distribution<> dist(0, PattenID.size() - 1);
+				nowRandomValue = dist(gen);
+				SetAttackPattenData(PattenID[nowRandomValue]);
 
 
-			// 이전 패턴과 안겹치게 할때 사용하기!
-			//if (preEnemyPattenData != nowEnemyPattenData)
-			//	break;
-			//}
+				// 이전 패턴과 안겹치게 할때 사용하기!
+				//if (preEnemyPattenData != nowEnemyPattenData)
+				//	break;
+				//}
+			}
+			else
+			{
+				SetAttackPattenData(enemyAttackPatternFix);
+			}
 		}
-		else 
-		{
-			SetAttackPattenData(enemyAttackPatternFix);
-		}
+		
 	}
 }
 
 //패턴 ID에 맞는 데이터를 포인터로 가리킴
 void Enemy::SetAttackPattenData(std::string PattID) 
 {
-	nowEnemyPattenData = CsvDataManager::GetInstance().getDataImpl(nowEnemyPattenData, PattID);
-	Object_PlayingAttackTime = nowEnemyPattenData->eAtkCoolDown;
+		
+		nowEnemyPattenData = CsvDataManager::GetInstance().getDataImpl(nowEnemyPattenData, PattID);
+		Object_PlayingAttackTime = nowEnemyPattenData->eAtkCoolDown;
+}
 
+// 튜토리얼 스테이지에서 사용할 패턴을 가져오는 함수
+void  Enemy::SetAttackPattenDataAtTutorial() {
+	Object_PlayingAttackTime = 3.0f;    // 3초 고정
 }
 
 
@@ -425,20 +485,32 @@ void Enemy::SetNowPattern()
 {
 	std::vector<int> tmp; // 저장할 벡터 선언
 
-	tmpNode = CsvDataManager::GetInstance().getDataImpl(tmpNode, nowEnemyPattenData->eNodepattern);
+	////////////////////////////////////////////  튜토리얼  ////////////////////////////////////////////
 
-	// 널 포인터 체크: tmpNode가 유효한지 확인
-	if (tmpNode != nullptr) 
-	{
-		// tmpNode가 유효할 때만 벡터에 값을 추가
-		tmp = tmpNode->Node_Number;
-
-		// tmpNode에서 0의 값을 제거!
-		tmp.erase(std::remove(tmp.begin(), tmp.end(), 0), tmp.end());
+	if (isTutorial) {
+		// 튜토리얼 패턴 생성
+		tmp = m_ThinkingPatternManager.MakeTour(3);
 
 		// AddPattern 함수 호출
-		m_PattenManager->AddPattern(nowEnemyPattenData->ePatternID, nowEnemyPattenData->eAtkCoolDown, tmp); // 
+		m_PattenManager->AddPattern("EP_100", Object_PlayingAttackTime, tmp); 
 	}
+	else {
+		tmpNode = CsvDataManager::GetInstance().getDataImpl(tmpNode, nowEnemyPattenData->eNodepattern);
+
+		// 널 포인터 체크: tmpNode가 유효한지 확인
+		if (tmpNode != nullptr)
+		{
+			// tmpNode가 유효할 때만 벡터에 값을 추가
+			tmp = tmpNode->Node_Number;
+
+			// tmpNode에서 0의 값을 제거!
+			tmp.erase(std::remove(tmp.begin(), tmp.end(), 0), tmp.end());
+
+			// AddPattern 함수 호출
+			m_PattenManager->AddPattern(nowEnemyPattenData->ePatternID, nowEnemyPattenData->eAtkCoolDown, tmp); // 
+		}
+	}
+	
 }
 
 //처음에 받은 기세 게이지로 복구
@@ -451,14 +523,22 @@ void Enemy::ResetSpiritAmount()
 // 연격의 여부에 따라서 객체의 쿨타임이 변경됨
 void Enemy::SetCoolTime() 
 {
-	if (nowEnemyPattenData->eComboCoolDown == 0) 
-	{
-		Object_nowCoolTime = (1.25f - Object_NowSpiritAmount  / Object_SpiritAmount / 2.0f) * Object_CoolTime + nowEnemyPattenData->eAtkCoolDown;
+	////////////////////////////////////////////  튜토리얼  ////////////////////////////////////////////
+
+	if (isTutorial) {
+		Object_nowCoolTime = 1.0f + Object_PlayingAttackTime; // 쿨타임 고정
 	}
-	else 
-    {
-		Object_nowCoolTime = nowEnemyPattenData->eComboCoolDown;
+	else {
+		if (nowEnemyPattenData->eComboCoolDown == 0)
+		{
+			Object_nowCoolTime = (1.25f - Object_NowSpiritAmount / Object_SpiritAmount / 2.0f) * Object_CoolTime + nowEnemyPattenData->eAtkCoolDown;
+		}
+		else
+		{
+			Object_nowCoolTime = nowEnemyPattenData->eComboCoolDown;
+		}
 	}
+	
 
 	// 현재 공격중인 시간
 	Object_nowTotalCoolTime = Object_nowCoolTime;
@@ -466,7 +546,7 @@ void Enemy::SetCoolTime()
 
 void Enemy::CalSpiritTime() 
 {
-	if ( (!isGroggy ) && (!IsOtherGroggy) ) {
+	if ((!isTutorial) && (!isGroggy ) && (!IsOtherGroggy)) {
 		if (Object_OverTimeSpirit >= 1)
 		{
 			Object_NowSpiritAmount += eSpriteDamage_Second;					 //초당 0.3씩 감소

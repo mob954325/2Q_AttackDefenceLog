@@ -5,7 +5,7 @@
 #include "../Engine/Utils/EventDelegate.h"
 #include "Scripts/Slider/GiseGauge.h"
 #include "Scripts/HPBar/HpGauge.h"
-
+#include "Components/Logic/InputSystem.h"
 //#include ""
 class State;
 
@@ -36,6 +36,14 @@ public:
 	void InitHpGauge();
 
 public:
+	// GiseGauge 세팅
+	void SetSpiritNormallize(float Normalization);
+
+	// 기세게이지 세팅 테스트
+	void CountSetSpirit();
+
+
+
 	//상중하에 따라서 체력과 기세 데미지를 적용함, 플레이어와 적 ㄴ동일하게 적용
 	//상중하에 따라서 체력 데미지 리턴하는 함수
 	//   - 필요시 분리 가능!!
@@ -197,8 +205,9 @@ private:
 	int GuardEffCount = 0; // 플레이어
 	int GuardEffCountE = 0; // 적
 
-	//test
-	int A = 0;
+
+	InputSystem* m_input;
+	float elapsedTime = 0.0f;
 };
 
 

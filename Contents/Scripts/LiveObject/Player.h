@@ -102,6 +102,9 @@ public:
 
 	ThinkingPatternManager TM; // 알고리즘으로 백터 반환해줌
 
+	//튜토리얼용 변수
+	void SetISTutorial(bool tmpIsTutorial) { isTutorial = tmpIsTutorial; }
+
 private:
 	void AttackStateSelect(bool AttackActive); // 공격 패턴 3가지 중 랜덤으로 1개 선택해서 설정함
 	void ResetPlayer(); // 플레이어의 상태 재설정
@@ -159,6 +162,9 @@ private:
 	
 	std::vector<Vector2> ParryPosition{};
 
+
+	//튜토리얼용 변수
+	bool isTutorial = false;					// 튜토리얼 스테이지인지 구별하는 변수
 
 
 

@@ -8,6 +8,7 @@
 #include "Components/Rendering/BitmapRenderer.h"
 #include "Scripts/Effect/HitEffect.h"
 #include "Scripts/Effect/EnemyAttackEffect.h"
+#include "Objects/Manager/ThinkingPatternManager.h"
 #include "Utils/GameTime.h"
 
 
@@ -38,8 +39,11 @@ public:
 	float eSpriteDamage_Second = 0.0f; //  초당 줄어들 기세데미지
 	//패턴 ID에 맞는 데이터를 포인터로 가리킴
 	void SetAttackPattenData(std::string PattID); //  패턴ID에 맞는 가이드라인 데이터를 불러옴
+	void SetAttackPattenDataAtTutorial(); // 튜토리얼 스테이지에서 사용할 패턴을 가져오는 함수
+
 
 	void ResetSpiritAmount();
+	
 
 	// 배틀 매니저에서 사용될 함수
 	void SelectPattern() override;   //플레이어가 사용할 패턴을 고름
@@ -118,7 +122,14 @@ public:
 	//"Enemy_Defence"						// 패턴 파회 X, 막음
 	//"Enemy_Groggy"						// 패턴 파회 X, 막음
 	//"Enemy_Dead"					        // 죽음
-	std::string nowStateName; //현재 상태의 이름, 이걸로 알아낼 수 있음!!
+	std::string nowStateName;	//현재 상태의 이름, 이걸로 알아낼 수 있음!!
+
+
+	bool isTutorial = false;					// 튜토리얼 스테이지인지 구별하는 변수
+	bool GetIsTutorial() { return isTutorial; } // 튜토리얼 스테이지인지 반환하는 함수
+
+	ThinkingPatternManager m_ThinkingPatternManager ; // 패턴을 받아 올 매니저
+
 
 private:
 	std::string Difficulty;					// 적의 난이도 k
@@ -193,6 +204,7 @@ private:
 
 	Vector2 GetRandomPointOnShrinkingCircle(float maxRadius, float currentTime, float totalTime, Vector2 middlePos);
 
+	
 
 public:
 	void CallGuardEffect(int num , Vector2 vector);
