@@ -4,6 +4,7 @@
 #include "../Engine/Utils/GameTime.h"
 //#include "Scene/SceneManager.h"
 #include "Scripts/SceneCore.h"
+#include "Scripts/GameManager.h"
 #include "../Engine/Components/Logic/InputSystem.h"
 
 void TutorialEffectObject::OnCreate()
@@ -53,9 +54,19 @@ void TutorialEffectObject::OnUpdate() // 업데이트
 		//====================================================================
 		if (index < slideImages.size()) { // 31 -> 32까지만 구현
 
-			if (index >= 1) slideImages[index - 1]->SetActive(false);
-			slideImages[index]->SetActive(true);
-			index++;
+			if (!(index == 18)) {
+				if (index >= 1) slideImages[index - 1]->SetActive(false);
+				else 	Singleton<GameManager>::GetInstance().SetGameState(Pause);
+
+				slideImages[index]->SetActive(true);
+				index++;
+				if (index == 18) {
+					Singleton<GameManager>::GetInstance().SetGameState(Play);
+					// 3번 가드하시오 그런거 띄우면 됨
+					// 3번 공격하시오 이런거
+					// 여긴 한번만 호출되니까
+				}
+			}
 		}
 		else {
 			Singleton<SceneManager>::GetInstance().LoadScene(MENU);
@@ -65,4 +76,14 @@ void TutorialEffectObject::OnUpdate() // 업데이트
 		//====================================================================
 	}
 	cachedInputMouse = inputMouse;
+
+	if (isDone) { // 18 인덱스에 해당함
+		slideImages[index - 1]->SetActive(false);
+		slideImages[index]->SetActive(true);
+		index++;
+		isDone = false;
+		Singleton<GameManager>::GetInstance().SetGameState(Pause);
+		//isDone은 Check함수에서만 켜지는데, 인덱스 18일때만 작동함
+	}
+
 }
