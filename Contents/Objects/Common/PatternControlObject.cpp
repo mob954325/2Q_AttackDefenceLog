@@ -270,6 +270,8 @@ void PatternControlObject::OnCreate()
 			tmp = player->GetComponent<Player>()->TM.MakeTour(4);
 		else if (nowEnemy == L"강림")  // 3Stage
 			tmp = player->GetComponent<Player>()->TM.MakeTour(5);
+		else if (nowEnemy == L"목각인형")  //  08.30 안성빈 tutorialStage 추가!!!
+			tmp = player->GetComponent<Player>()->TM.MakeTour(3);
 		else
 			std::cout << "비상!!!!비상!!!쵸비상!!!" << std::endl;
 

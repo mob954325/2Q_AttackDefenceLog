@@ -379,7 +379,7 @@ void Player::SetCoolTime()
 
 void Player::CalSpiritTime()
 {
-	if ((!isGroggy) && (!IsOtherGroggy)) {  // 적이나 내가 그로기 상태라면
+	if ((!isTutorial) && (!isGroggy) && (!IsOtherGroggy)) {  // 적이나 내가 그로기 상태라면
 		if (Object_OverTimeSpirit >= 1)
 		{
 			Object_NowSpiritAmount -= pSpriteDamage_Second;									 //초당 0.3씩 감소

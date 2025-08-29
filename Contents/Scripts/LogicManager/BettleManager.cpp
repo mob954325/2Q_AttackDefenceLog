@@ -10,6 +10,7 @@
 #include "Math/GameRandom.h"
 #include "Objects/Sound/SoundPlayScene.h"
 #include "../Contents/Scripts/Camera/CamInstance.h"
+#include "Components/Logic/InputSystem.h"
 
 
 /// 상태 정리
@@ -47,7 +48,7 @@
 
 void BettleManager::OnCreate()
 {
-
+	m_input = owner->GetComponent<InputSystem>();
 }
 
 void BettleManager::OnStart()
@@ -56,7 +57,10 @@ void BettleManager::OnStart()
 	m_Player->SetSpiritData(m_Enemy->GetSpiritAmount());
 	// 플레이어 기세 감소 값 설정
 	m_Player->SetSpriteDamageSecond(m_Enemy->eSpriteDamage_Second);
+	// 현재 stage가 튜토리얼인지 설정
+	m_Player->SetISTutorial(m_Enemy->GetIsTutorial());
 
+	
 
 
 	// AttackPatternManager 찾기
@@ -80,6 +84,7 @@ void BettleManager::OnStart()
 
 void BettleManager::OnUpdate()
 {
+	CountSetSpirit();
 	SetSpiritGauge();		  // 기세 게이지 업데이트
 	SetGroggyState();         // 그로기 스테이트 업데이트
 
@@ -99,7 +104,6 @@ void BettleManager::OnUpdate()
 			//여기 개수대로 이팩트 출력!!
 			SetAnimationAtOtherGroggy();
 			ChangeFinalStateEnemyGroggy();
-
 
 
 		}
@@ -1020,4 +1024,28 @@ void BettleManager::EndPlayerGroggyCleanup(bool byTimeout)
 
 	// 플레이어 쪽 패턴 루프 재가동
 	m_Player->SetEndAttack();
+}
+
+
+void BettleManager::SetSpiritNormallize(float normalization) {
+	assert ( normalization <= 1.1f && normalization >= - 0.1f);						   // 0과 1사이가 아니라면 터지게하기!!!
+	m_Enemy->SetNowSpiritAmount(normalization * m_Enemy->GetSpiritAmount());           // 적 기세 게이지 설정
+	m_Player->SetNowSpiritAmount((1.0f - normalization) * m_Enemy->GetSpiritAmount());  // 아군 기세는 반대로 설정
+}
+
+//테스트용
+void BettleManager::CountSetSpirit() {
+
+	   // 누적된 시간 저장
+
+		// 매 프레임마다 경과 시간 누적
+		elapsedTime += GameTime::GetInstance().GetDeltaTime();
+
+		// 10초가 지났을 때 실행
+		if (elapsedTime >= 10.0f)
+		{
+			SetSpiritNormallize(1.0f);
+			elapsedTime = 0.0f;
+			// 반복 실행하려면 0으로 리셋
+		}
 }

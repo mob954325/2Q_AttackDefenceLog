@@ -59,6 +59,7 @@ public:
 	void SetHp(float hp) { Object_Hp = hp; }									     // 체력 설정
 	void SetAttack(float attack) { Object_Attack = attack; }						 // 공격력 설정
 	void SetSpiritAttack(float SpiritAttack) { Object_SpiritAttack = SpiritAttack; } // 기세 공격력 설정
+	void SetNowSpiritAmount(bool Spirit) { Object_NowSpiritAmount = Spirit; }
 	void SetDefenseRate(float defenseRate) { Object_DefenseRate = defenseRate; }     // 방어율 설정
 	void SetPlayingAttackTime(float time) { Object_PlayingAttackTime = time; }		 // 가이드라인이 떠있는 시간 설정
 	void SetIsGroggy(bool Setbool) { isGroggy = Setbool; }
