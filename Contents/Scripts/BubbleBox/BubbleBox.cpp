@@ -10,7 +10,25 @@
 
 void BubbleBox::OnUpdate()
 {
-	if(StartCheck) CheckInput();
+	if (isTutorial && StartCheck) {
+		TextBox->SetActive(false);
+		Text_01->SetActive(false);
+		Text_02->SetActive(false);
+		Text_03->SetActive(false);
+
+		StartCheck = false;
+		Singleton<GameManager>::GetInstance().SetGameState(Play);
+		auto SoundCom = owner->GetQuery()->FindByName("SOUNDSTAGE");
+		if (SoundCom) {
+			SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Stage01");
+			SoundCom->GetComponent<SoundPlayScene>()->PlaySound();;
+		}
+		escPanel->SetInputEnable(true);
+
+		return;
+	}
+
+	if (StartCheck) CheckInput();
 	delaytime += Singleton<GameTime>::GetInstance().GetDeltaTime();
 }
 
@@ -32,16 +50,16 @@ void BubbleBox::OnCreate()
 	Text_01->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\BoxText\\1stage\\01.png");
 	Text_02->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\BoxText\\1stage\\02.png");
 	Text_03->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\BoxText\\1stage\\03.png");
-	
+
 	TextBox->SetActive(true);
 	Text_01->SetActive(true);
 	Text_02->SetActive(false);
 	Text_03->SetActive(false);
-	
+
 	Text_01->SetOrderInLayer(19000);
 	Text_02->SetOrderInLayer(19000);
 	Text_03->SetOrderInLayer(19000);
-	
+
 
 	count = 0;
 	StartCheck = true;

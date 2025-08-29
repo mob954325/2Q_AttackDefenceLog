@@ -71,7 +71,8 @@ void TutorialScene::OnEnterImpl()
 	
 	Textbox = new GameObject();
 	auto bb = Textbox->AddComponent<BubbleBox>();
-	AddGameObject(Textbox, "Textbox");
+	bb->isTutorial = true;
+	AddGameObject(Textbox, "TutorialText");
 	bb->SetEscPanel(esc);
 
 	GameObject* topUIObj = new GameObject();
