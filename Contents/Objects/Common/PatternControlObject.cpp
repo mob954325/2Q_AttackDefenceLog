@@ -204,7 +204,8 @@ void PatternControlObject::OnCreate()
 		if (!enemyAttackChain.empty()) {
 			auto eac = enemyAttackChain.front();
 			enemyAttackChain.pop();
-			eac->PlayOnce(patten);
+			std::reverse(patten.begin(), patten.end());
+			eac->PlayOnce(patten);			
 			enemyAttackChain.push(eac);
 		}
 		});
@@ -218,6 +219,7 @@ void PatternControlObject::OnCreate()
 		if (!enemyAttackChain.empty()) {
 			auto eac = enemyAttackChain.front();
 			enemyAttackChain.pop();
+			std::reverse(patten.begin(), patten.end());
 			eac->PlayOnce(patten);
 			enemyAttackChain.push(eac);
 		}
