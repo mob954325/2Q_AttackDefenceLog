@@ -84,13 +84,21 @@ void TutorialEnterObject::OnStart()
 	}
 	else {
 		Singleton<GameManager>::GetInstance().SetGameState(Pause);
-	}
-		
+	}		
 }
 
 void TutorialEnterObject::OnUpdate() // 업데이트
 {
 	//쓸게없넹
+}
+
+void TutorialEnterObject::Show()
+{
+	panel->SetActive(true);
+	yesBtn->EnableBitmaps();
+	yesBtn->SetActive(true);
+	noBtn->EnableBitmaps();
+	noBtn->SetActive(true);
 }
 
 void TutorialEnterObject::Hide()

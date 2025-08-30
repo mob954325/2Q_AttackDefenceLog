@@ -7,6 +7,7 @@
 #include "Scripts/SelectSeal/SelectSeal.h"
 
 #include "Objects/Scenes/TitleScene/EffectProgress.h"
+#include "Objects/Scenes/TutorialScene/TutorialEnterObject.h"
 
 void StageSelectManager::OnCreate()
 {
@@ -128,7 +129,17 @@ void StageSelectManager::OnUpdate()
 		if (timer >= maxTimer)
 		{
 			if (isTutorialEnter) {
-				Singleton<SceneManager>::GetInstance().LoadScene(TUTORIAL);
+				//Singleton<SceneManager>::GetInstance().LoadScene(TUTORIAL);
+				
+				auto enter = owner->GetQuery()->FindByName("tutorialEnter");
+				if (enter) {
+					Singleton<GameManager>::GetInstance().SetGameState(Pause);
+					enter->GetComponent<TutorialEnterObject>()->Show();		
+				}
+
+				isSceneChange = false;
+				isTutorialEnter = false;
+				timer = 0.0f;
 			}
 			else {
 				Singleton<SceneManager>::GetInstance().LoadScene(SceneCount::SELECT);

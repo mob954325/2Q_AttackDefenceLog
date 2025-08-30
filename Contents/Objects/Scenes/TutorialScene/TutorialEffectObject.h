@@ -2,15 +2,23 @@
 #include "Components/Base/MonoBehavior.h"
 #include "Components/Rendering/BitmapRenderer.h"
 
+#include "Objects/Scenes/TutorialScene/TutorialNumObject.h"
+#include "../Engine/Utils/EventDelegate.h"
+#include "Objects/Scenes/Stage/EscMenu/StageESCPanel.h"
+
 /*8.28. 한승규
 * 해당 클래스를 기반으로, 연출을 재생함
 * GameManager Pause를 사용하면 안됨,
 * 다른 오브젝트가 Pause중일때, 혼자 작동하는게 컨셉임
 */
 
+
+
 class TutorialEffectObject : public MonoBehavior
 {
 public:
+	EventDelegate<> Clear;
+
 	void OnCreate() override;
 	void OnStart() override;
 	void OnUpdate() override;
@@ -18,19 +26,24 @@ public:
 	//외부에서 성공하면 호출해줄 함수들임
 	void CountUpParry() {
 		parryCount++;
+		if (parryCount <= 3)
+			nums[0]->Show(parryCount);
 		Check();
 	}
 
 	void CountUpAttack() {
 		attackCount++;
+		if (attackCount <= 3)
+			nums[2]->Show(attackCount);
 		Check();
 	}
 
 	void CountUpGuard() {
 		guardCount++;
+		if (guardCount <= 3)
+			nums[1]->Show(guardCount);
 		Check();
 	}
-
 
 protected:
 	bool isPlay = false;
@@ -45,6 +58,9 @@ protected:
 		if (attackCount < 3) return;
 
 		isDone = true;
+		for (auto& it : nums) {
+			it->Hide();
+		}
 	}
 
 	int parryCount = 0;
@@ -53,7 +69,11 @@ protected:
 
 	bool isDone = false;
 
+	StageESCPanel* escPanel;
 
 	int index = 0;
 	std::vector<BitmapRenderer*> slideImages;
+
+	std::vector<TutorialNumObject*> nums;
+	std::vector<BitmapRenderer*> numText;
 };
