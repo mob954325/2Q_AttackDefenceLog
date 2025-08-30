@@ -128,6 +128,7 @@ void TutorialControlObject::OnCreate()
 	auto enemytmp = enemy->AddComponent<Enemy>();
 	enemytmp->m_State = enemy->AddComponent<StateController>();
 	enemytmp->SetNameDiff("Stage1", "easy");
+	enemytmp->SetIsTutorial(true);
 	enemy->SetName("Enemytmp");
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(enemy);
 

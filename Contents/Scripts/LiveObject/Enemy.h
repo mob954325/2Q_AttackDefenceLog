@@ -127,6 +127,7 @@ public:
 
 	bool isTutorial = false;					// 튜토리얼 스테이지인지 구별하는 변수
 	bool GetIsTutorial() { return isTutorial; } // 튜토리얼 스테이지인지 반환하는 함수
+	void SetIsTutorial(bool tmpIsTutorial) { isTutorial = tmpIsTutorial; }
 
 	ThinkingPatternManager m_ThinkingPatternManager ; // 패턴을 받아 올 매니저
 
