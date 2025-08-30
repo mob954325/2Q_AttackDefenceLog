@@ -302,12 +302,24 @@ void Player::SetStatData(std::string tmp)
 {
 	nowPlayerData = CsvDataManager::GetInstance().getDataImpl(nowPlayerData, tmp);
 	Object_ID = nowPlayerData->Character_ID;					 // ID
-	Object_Name = nowPlayerData->Character_name;				 // 이름
-	Object_Hp = nowPlayerData->Character_helath;				 // 체력
-	Object_TotalHp = Object_Hp;									 // 전체 체력
-	Object_Attack = nowPlayerData->Character_damage;			 // 공격력
-	Object_SpiritAttack = nowPlayerData->Character_spritdamage;  // 기세 공격력
-	Object_DefenseRate = nowPlayerData->Character_guard_rate;	 // 방어율
+	Object_Name = nowPlayerData->Character_name;		
+	
+	////////////////////////////////////////// 튜토리얼 ////////////////////////////////////////////
+	if (isTutorial) {
+		Object_Hp = 99999.0f;							       // 체력
+		Object_TotalHp = 99999.0f;				   			   // 전체 체력
+		Object_Attack = 0.0f;				     			   // 공격력
+		Object_SpiritAttack = 0.0f;						       // 기세 공격력
+		Object_DefenseRate = 0.0f;							   // 방어율
+	}
+	else {
+		Object_Hp = nowPlayerData->Character_helath;				 // 체력
+		Object_TotalHp = Object_Hp;									 // 전체 체력
+		Object_Attack = nowPlayerData->Character_damage;			 // 공격력
+		Object_SpiritAttack = nowPlayerData->Character_spritdamage;  // 기세 공격력
+		Object_DefenseRate = nowPlayerData->Character_guard_rate;	 // 방어율
+	}
+	
 
 	PatternID = CsvDataManager::GetInstance().GetIDData(nowPlayerPattenData); // 패턴 데이터의 ID를 미리 받음
 
@@ -319,6 +331,16 @@ void Player::SetSpiritData(float enemy_SpiritAmount)
 {
 	Object_SpiritAmount = enemy_SpiritAmount;					 // 기세의 총량을 설정
 	Object_NowSpiritAmount = enemy_SpiritAmount / 2.0f;
+
+
+	////////////////////////////////////////// 튜토리얼 ////////////////////////////////////////////
+	if (isTutorial) {
+		Object_Hp = 99999.0f;							       // 체력
+		Object_TotalHp = 99999.0f;				   			   // 전체 체력
+		Object_Attack = 0.0f;				     			   // 공격력
+		Object_SpiritAttack = 0.0f;						       // 기세 공격력
+		Object_DefenseRate = 0.0f;							   // 방어율
+	}
 }
 
 //패턴 ID에 맞는 데이터를 포인터로 가리킴

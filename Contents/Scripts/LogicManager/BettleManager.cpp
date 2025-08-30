@@ -84,7 +84,7 @@ void BettleManager::OnStart()
 
 void BettleManager::OnUpdate()
 {
-	CountSetSpirit();
+	//CountSetSpirit();
 	SetSpiritGauge();		  // 기세 게이지 업데이트
 	SetGroggyState();         // 그로기 스테이트 업데이트
 
@@ -868,7 +868,10 @@ void BettleManager::FinalAttackToEnemy() // 델리게이트로 외부에서 연�
 	if (m_Enemy->GetIsGroggy())
 	{
 		IsFinalBlowAtEnemy = true;
-		m_Enemy->GetDamage((m_Player->GetAttack() * allDistancePercent * 20.0f) + 100.0f);  /// 나중에 적 hp 배율 따로 빼기!!!!
+		if (!m_Enemy->GetIsTutorial()) {
+			m_Enemy->GetDamage((m_Player->GetAttack() * allDistancePercent * 20.0f) + 100.0f);  /// 나중에 적 hp 배율 따로 빼기!!!!
+		}
+		
 		m_Enemy->SetState("Enemy_Hit");				// 적 상태 변경 -> 적 피격
 		if (HitAnimeCount < 9)
 		{
