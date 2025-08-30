@@ -332,8 +332,6 @@ void Player::SetSpiritData(float enemy_SpiritAmount)
 	Object_SpiritAmount = enemy_SpiritAmount;					 // 기세의 총량을 설정
 	Object_NowSpiritAmount = enemy_SpiritAmount / 2.0f;
 
-
-	////////////////////////////////////////// 튜토리얼 ////////////////////////////////////////////
 	if (isTutorial) {
 		Object_Hp = 99999.0f;							       // 체력
 		Object_TotalHp = 99999.0f;				   			   // 전체 체력
@@ -342,6 +340,8 @@ void Player::SetSpiritData(float enemy_SpiritAmount)
 		Object_DefenseRate = 0.0f;							   // 방어율
 	}
 }
+
+
 
 //패턴 ID에 맞는 데이터를 포인터로 가리킴
 void Player::SetAttackPattenData(std::string PattID)

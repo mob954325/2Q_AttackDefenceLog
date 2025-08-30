@@ -83,7 +83,7 @@ public:
 
 	float pSpriteDamage_Second = 0.0f;
 	void SetSpriteDamageSecond(float SpriteDamageSecond) {pSpriteDamage_Second = SpriteDamageSecond;}
-
+	
 
 	// state OnEnter, Onexit 함수 모음
 	void AtkSucEnter();
