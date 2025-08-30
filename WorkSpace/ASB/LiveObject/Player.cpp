@@ -176,7 +176,7 @@ void Player::ResetSpiritAmount() {
 void Player::SetCoolTime() {
 	if (prePlayerPattenData == nullptr) {  //이전 루프가 없을시
 		// ( 1 - (현재기세 - 전체기세/2) / 전체기세 /2) * 해당 패턴의 전체 쿨타임
-		Object_nowCoolTime = (1 - ((Object_NowSpiritAmount - Object_SpiritAmount / 2.0f) / Object_SpiritAmount) / 2.0f) * Object_CoolTime;
+		Object_nowCoolTime = (1.0f - ((Object_NowSpiritAmount - Object_SpiritAmount / 2.0f) / Object_SpiritAmount) / 2.0f) * Object_CoolTime;
 	}
 	
 }

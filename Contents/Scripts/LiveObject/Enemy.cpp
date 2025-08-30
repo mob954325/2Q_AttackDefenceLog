@@ -475,7 +475,7 @@ void Enemy::SetAttackPattenData(std::string PattID)
 
 // 튜토리얼 스테이지에서 사용할 패턴을 가져오는 함수
 void  Enemy::SetAttackPattenDataAtTutorial() {
-	Object_PlayingAttackTime = 3.0f;    // 3초 고정
+	Object_PlayingAttackTime = 2.5f;    // 2.5초 고정
 }
 
 
@@ -526,7 +526,7 @@ void Enemy::SetCoolTime()
 	////////////////////////////////////////////  튜토리얼  ////////////////////////////////////////////
 
 	if (isTutorial) {
-		Object_nowCoolTime = 1.0f + Object_PlayingAttackTime; // 쿨타임 고정
+		Object_nowCoolTime = 0.5f + Object_PlayingAttackTime; // 쿨타임 고정
 	}
 	else {
 		if (nowEnemyPattenData->eComboCoolDown == 0)
