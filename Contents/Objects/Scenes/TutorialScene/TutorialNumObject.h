@@ -17,9 +17,15 @@ public:
 	void OnStart() override;
 	void OnUpdate() override;
 
-	void Show();
+	void Show(int n);
 	void Hide();
 
+	void SetPos(Vector2 pos);
+
 protected:
-	BitmapRenderer* panel;
+	BitmapRenderer* baseNum;// 3
+	BitmapRenderer* slash; // /
+	std::vector<BitmapRenderer*> currentNum; // 0 ~ 3
+
+	int index = 0;
 };

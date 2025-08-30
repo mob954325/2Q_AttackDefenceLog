@@ -12,6 +12,7 @@
 #include "Objects/Scenes/Stage/StageBGI.h"
 
 
+
 //성빈씨꺼
 #include "Scripts/LogicManager/BettleManager.h"
 #include "Scripts/LogicManager/AttackPatternManager.h" 
@@ -184,7 +185,7 @@ void TutorialControlObject::OnCreate()
 			bbs->Parry();
 			battleBoards.push(bbs);
 
-			tuto->CountUpParry();			
+			tuto->CountUpParry();
 		});
 
 	// OnGuard 이벤트 추가
@@ -264,7 +265,7 @@ void TutorialControlObject::OnCreate()
 		});
 
 	bettletmp->onStartEnemyBlow.Add([this]() {
-		
+
 		auto bgi = owner->GetQuery()->FindByName("Vignette");
 		if (bgi) { bgi->GetComponent<Vignette>()->Start(false); }
 
@@ -551,6 +552,7 @@ void TutorialControlObject::OnStart()
 
 
 	tuto = owner->AddComponent<TutorialEffectObject>();
+//	num = owner->AddComponent<TutorialNumObject>(); // 튜토이펙트로 옮김
 
 }
 
@@ -575,7 +577,7 @@ void TutorialControlObject::OnUpdate() // 업데이트
 	// [1] 입력 발생하면
 
 	if (t->isNewCached && !isSkipped) // 새로운 노드 발생하면	+ 스킵 상태가 아니라며
-	{		
+	{
 		PM.CheckTrails(t->CheckingCachedTrails());		// trail 찍힌 위치들을 확인하고 저장함
 		const auto& vec = PM.GetPatternPathPositions(); // 여기에 담김!!! 1 3 2 4 이런거 <<<<< (연결지점)
 
@@ -589,7 +591,7 @@ void TutorialControlObject::OnUpdate() // 업데이트
 
 		auto bt = bettleManager->GetComponent<BettleManager>();
 		std::vector<int> pttt = PM.GetPattern();
-		
+
 		for (int value : pttt) { std::cout << value << "-"; } // Debug
 		std::reverse(pttt.begin(), pttt.end()); // 뒤집어서 집어넣음
 		bt->SetInputNode(pttt);
@@ -667,7 +669,7 @@ void TutorialControlObject::OnUpdate() // 업데이트
 			//	}
 			//}
 	}*/
-	
+
 	//===================================================================================================
 	// [5] 이펙트 연출용
 

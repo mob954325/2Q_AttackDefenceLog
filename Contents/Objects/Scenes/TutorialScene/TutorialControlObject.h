@@ -18,6 +18,8 @@
 #include "../Engine/Components/Rendering/AnimatedChainEffect.h" 
 #include "Scripts/Effect/EffectInstance.h" // 이펙트 정현씨꺼
 
+//#include "Objects/Scenes/TutorialScene/TutorialNumObject.h"
+
 /* 8.28. 한승규
 * PatternControlObejct를 그대로 복붙한거긴 한데
 * 연결 방식을 변경하고, 조건을 추가함
@@ -74,6 +76,7 @@ protected:
 	BlinkNodeObject* blinkNodeObject;
 
 	TutorialEffectObject* tuto;
+	//TutorialNumObject* num;
 
 private:
 	bool isSkipped = false; // 이거 켜지면, 노드 관련 행동 스킵함

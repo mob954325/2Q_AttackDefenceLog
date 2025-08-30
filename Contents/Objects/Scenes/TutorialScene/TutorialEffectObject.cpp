@@ -40,6 +40,37 @@ void TutorialEffectObject::OnStart()
 
 	index = 0;
 	isPlay = true;
+
+	float x = 800.0f;
+
+	float y = -260.0f;
+
+
+	std::wstring textPath = Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\Number\\";
+	std::wstring textFiles[] = {
+		L"attack_3times_text.png",
+		L"defence_3times_text.png",
+		L"parrying_3times_text.png"
+	};
+
+	for (int i = 0; i < 3; ++i) {
+		GameObject* obj = new GameObject();
+		obj->GetTransform().SetUnityCoords(false);
+		obj->SetRenderLayer(EngineData::RenderLayer::UI);
+		//obj->GetTransform().SetPosition(x, y);
+
+		auto br = obj->AddComponent<BitmapRenderer>();
+		br->CreateBitmapResource(textPath + textFiles[i]);
+		br->SetOrderInLayer(100);
+		br->SetActive(false); // 나중에 조정해주자
+		numText.push_back(br);
+
+		auto com = obj->AddComponent<TutorialNumObject>();
+		com->SetPos({ x, y + i * 60.0f }); // 간격 60		
+		nums.push_back(com);
+
+		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(obj, "tutorialNums." + i);
+	}
 }
 
 void TutorialEffectObject::OnUpdate() // 업데이트
@@ -62,6 +93,11 @@ void TutorialEffectObject::OnUpdate() // 업데이트
 				index++;
 				if (index == 18) {
 					Singleton<GameManager>::GetInstance().SetGameState(Play);
+					for (auto& it : nums) {
+						it->Show(0);
+					}
+
+
 					// 3번 가드하시오 그런거 띄우면 됨
 					// 3번 공격하시오 이런거
 					// 여긴 한번만 호출되니까
