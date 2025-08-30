@@ -3,6 +3,8 @@
 #include "Components/Rendering/BitmapRenderer.h"
 
 #include "Objects/Scenes/TutorialScene/TutorialNumObject.h"
+#include "../Engine/Utils/EventDelegate.h"
+#include "Objects/Scenes/Stage/EscMenu/StageESCPanel.h"
 
 /*8.28. 한승규
 * 해당 클래스를 기반으로, 연출을 재생함
@@ -15,6 +17,8 @@
 class TutorialEffectObject : public MonoBehavior
 {
 public:
+	EventDelegate<> Clear;
+
 	void OnCreate() override;
 	void OnStart() override;
 	void OnUpdate() override;
@@ -23,14 +27,14 @@ public:
 	void CountUpParry() {
 		parryCount++;
 		if (parryCount <= 3)
-			nums[2]->Show(parryCount);
+			nums[0]->Show(parryCount);
 		Check();
 	}
 
 	void CountUpAttack() {
 		attackCount++;
 		if (attackCount <= 3)
-			nums[0]->Show(attackCount);
+			nums[2]->Show(attackCount);
 		Check();
 	}
 
@@ -40,7 +44,6 @@ public:
 			nums[1]->Show(guardCount);
 		Check();
 	}
-
 
 protected:
 	bool isPlay = false;
@@ -66,6 +69,7 @@ protected:
 
 	bool isDone = false;
 
+	StageESCPanel* escPanel;
 
 	int index = 0;
 	std::vector<BitmapRenderer*> slideImages;

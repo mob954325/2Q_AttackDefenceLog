@@ -71,12 +71,25 @@ void TutorialEffectObject::OnStart()
 
 		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(obj, "tutorialNums." + i);
 	}
+
+	//escPanelForTutorial << 이름
+	auto esc = owner->GetQuery()->FindByName("escPanelForTutorial");
+	if (esc) {
+		escPanel = esc->GetComponent<StageESCPanel>();
+	}
+	else {
+		std::cout << "비상!!!!!!비상!!!!!!!" << std::endl;
+	}
 }
 
 void TutorialEffectObject::OnUpdate() // 업데이트
 {
 	if (!isPlay) return;
-	//여기에 pause 넣으면 안됨
+
+	if (Singleton<GameManager>::GetInstance().GetGameState() == GameState::Pause && index < 1)
+	{
+		return; // 처음에만 pause 허용
+	}
 
 	inputMouse = owner->GetComponent<InputSystem>()->IsMouseButtonDown(Left);
 
@@ -87,12 +100,20 @@ void TutorialEffectObject::OnUpdate() // 업데이트
 
 			if (!(index == 18)) {
 				if (index >= 1) slideImages[index - 1]->SetActive(false);
-				else 	Singleton<GameManager>::GetInstance().SetGameState(Pause);
+				else {
+					escPanel->SetInputEnable(false);
+					escPanel->DisablePanel();
+					Singleton<GameManager>::GetInstance().SetGameState(Pause);
+				}
 
 				slideImages[index]->SetActive(true);
 				index++;
 				if (index == 18) {
 					Singleton<GameManager>::GetInstance().SetGameState(Play);
+
+
+					escPanel->SetInputEnable(true);
+
 					for (auto& it : nums) {
 						it->Show(0);
 					}
@@ -118,8 +139,12 @@ void TutorialEffectObject::OnUpdate() // 업데이트
 		slideImages[index]->SetActive(true);
 		index++;
 		isDone = false;
+
+		escPanel->SetInputEnable(false);
+		escPanel->DisablePanel();
 		Singleton<GameManager>::GetInstance().SetGameState(Pause);
+
+		Clear.Invoke(); // 외부에 정리함수 호출
 		//isDone은 Check함수에서만 켜지는데, 인덱스 18일때만 작동함
 	}
-
 }

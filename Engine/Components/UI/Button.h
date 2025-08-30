@@ -45,6 +45,7 @@ public:
 	bool IsMouseOver(const Vector2& mousePos) const;
 
 	void DisableBitmaps();
+	void EnableBitmaps();
 	
 private:
 	void HandleButtonImage(ButtonState type);

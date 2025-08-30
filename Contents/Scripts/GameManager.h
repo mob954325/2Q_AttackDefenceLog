@@ -9,7 +9,7 @@
 enum GameState
 {
 	Play = 0,
-	Pause
+	Pause,
 };
 
 class GameManager : public Singleton<GameManager>

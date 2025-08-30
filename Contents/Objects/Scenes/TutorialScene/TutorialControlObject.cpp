@@ -552,7 +552,16 @@ void TutorialControlObject::OnStart()
 
 
 	tuto = owner->AddComponent<TutorialEffectObject>();
-//	num = owner->AddComponent<TutorialNumObject>(); // 튜토이펙트로 옮김
+	tuto->Clear.Add([this]() {
+		for (int i = 0; i < battleBoards.size(); ++i) {
+			auto it = battleBoards.front();
+			battleBoards.pop();
+			it->ClearAll();
+			battleBoards.push(it); // 큐 
+		}
+
+		});
+	//	num = owner->AddComponent<TutorialNumObject>(); // 튜토이펙트로 옮김
 
 }
 
