@@ -40,12 +40,56 @@ void TutorialEffectObject::OnStart()
 
 	index = 0;
 	isPlay = true;
+
+	float x = 800.0f;
+
+	float y = -260.0f;
+
+
+	std::wstring textPath = Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\Number\\";
+	std::wstring textFiles[] = {
+		L"attack_3times_text.png",
+		L"defence_3times_text.png",
+		L"parrying_3times_text.png"
+	};
+
+	for (int i = 0; i < 3; ++i) {
+		GameObject* obj = new GameObject();
+		obj->GetTransform().SetUnityCoords(false);
+		obj->SetRenderLayer(EngineData::RenderLayer::UI);
+		//obj->GetTransform().SetPosition(x, y);
+
+		auto br = obj->AddComponent<BitmapRenderer>();
+		br->CreateBitmapResource(textPath + textFiles[i]);
+		br->SetOrderInLayer(100);
+		br->SetActive(false); // 나중에 조정해주자
+		numText.push_back(br);
+
+		auto com = obj->AddComponent<TutorialNumObject>();
+		com->SetPos({ x, y + i * 60.0f }); // 간격 60		
+		nums.push_back(com);
+
+		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(obj, "tutorialNums." + i);
+	}
+
+	//escPanelForTutorial << 이름
+	auto esc = owner->GetQuery()->FindByName("escPanelForTutorial");
+	if (esc) {
+		escPanel = esc->GetComponent<StageESCPanel>();
+	}
+	else {
+		std::cout << "비상!!!!!!비상!!!!!!!" << std::endl;
+	}
 }
 
 void TutorialEffectObject::OnUpdate() // 업데이트
 {
 	if (!isPlay) return;
-	//여기에 pause 넣으면 안됨
+
+	if (Singleton<GameManager>::GetInstance().GetGameState() == GameState::Pause && index < 1)
+	{
+		return; // 처음에만 pause 허용
+	}
 
 	inputMouse = owner->GetComponent<InputSystem>()->IsMouseButtonDown(Left);
 
@@ -56,12 +100,25 @@ void TutorialEffectObject::OnUpdate() // 업데이트
 
 			if (!(index == 18)) {
 				if (index >= 1) slideImages[index - 1]->SetActive(false);
-				else 	Singleton<GameManager>::GetInstance().SetGameState(Pause);
+				else {
+					escPanel->SetInputEnable(false);
+					escPanel->DisablePanel();
+					Singleton<GameManager>::GetInstance().SetGameState(Pause);
+				}
 
 				slideImages[index]->SetActive(true);
 				index++;
 				if (index == 18) {
 					Singleton<GameManager>::GetInstance().SetGameState(Play);
+
+
+					escPanel->SetInputEnable(true);
+
+					for (auto& it : nums) {
+						it->Show(0);
+					}
+
+
 					// 3번 가드하시오 그런거 띄우면 됨
 					// 3번 공격하시오 이런거
 					// 여긴 한번만 호출되니까
@@ -82,8 +139,12 @@ void TutorialEffectObject::OnUpdate() // 업데이트
 		slideImages[index]->SetActive(true);
 		index++;
 		isDone = false;
+
+		escPanel->SetInputEnable(false);
+		escPanel->DisablePanel();
 		Singleton<GameManager>::GetInstance().SetGameState(Pause);
+
+		Clear.Invoke(); // 외부에 정리함수 호출
 		//isDone은 Check함수에서만 켜지는데, 인덱스 18일때만 작동함
 	}
-
 }

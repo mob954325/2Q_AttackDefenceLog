@@ -135,13 +135,18 @@ bool Button::IsMouseOver(const Vector2& mousePos) const
 	}
 }
 
-
-
 void Button::DisableBitmaps()
 {
 	normal->SetActive(false);
 	hover->SetActive(false);
 	pressed->SetActive(false);
+}
+
+void Button::EnableBitmaps()
+{
+	normal->SetActive(true);
+	hover->SetActive(true);
+	pressed->SetActive(true);
 }
 
 void Button::HandleButtonImage(ButtonState type)

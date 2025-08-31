@@ -32,15 +32,6 @@ void TutorialScene::OnEnterImpl()
 	nodePanel->AddComponent<BackboardObject>();
 	AddGameObject(nodePanel);
 
-	PCO = new GameObject();
-	auto comp = PCO->AddComponent<TutorialControlObject>();
-	AddGameObject(PCO , "PatternControlObject");
-	comp->GetEnemy()->SetNameDiff("Tutorial", Singleton<GameManager>::GetInstance().GetDifficultyString());
-
-	stageBGI = new GameObject();
-	stageBGI->AddComponent<StageBGI>();
-	AddGameObject(stageBGI, "StageBGI1");
-
 	GameObject* continueBtn = new GameObject();
 	continueBtn->SetRenderLayer(EngineData::UI);
 	auto continuBtnComp = continueBtn->AddComponent<EscContinueButton>();
@@ -59,9 +50,18 @@ void TutorialScene::OnEnterImpl()
 	escPanel = new GameObject();
 	escPanel->SetRenderLayer(EngineData::UI);
 	auto esc = escPanel->AddComponent<StageESCPanel>();
-	AddGameObject(escPanel, "escPanel");
+	AddGameObject(escPanel, "escPanelForTutorial");
 	esc->SetButtons({ continueBtn, exitBtn, muteBtn });
 	esc->SetButtonsPosition();
+
+	PCO = new GameObject();
+	auto comp = PCO->AddComponent<TutorialControlObject>();
+	AddGameObject(PCO , "PatternControlObject");
+	comp->GetEnemy()->SetNameDiff("Tutorial", Singleton<GameManager>::GetInstance().GetDifficultyString());
+
+	stageBGI = new GameObject();
+	stageBGI->AddComponent<StageBGI>();
+	AddGameObject(stageBGI, "StageBGI1");
 
 	Singleton<AudioSystem>::GetInstance().ReSetChannel();
 
