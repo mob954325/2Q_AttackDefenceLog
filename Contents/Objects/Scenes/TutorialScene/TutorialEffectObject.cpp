@@ -213,33 +213,15 @@ void TutorialEffectObject::OnUpdate() // 업데이트
 				bt->SetSpiritNormallize(0.0f); // 간파 진입
 			}
 			else {
-				std::cout << "비상!!! 비상!!!!!" << std::endl;
+				// 1초뒤에 연출적으로 넣어주고 싶어서 사용함(마지막 일격 후 1초)
+				slideImages[index]->SetActive(true);
+				index++;	
+
+				escPanel->SetInputEnable(false); // ESC 막고
+				escPanel->DisablePanel();  // 끄고
+				Singleton<GameManager>::GetInstance().SetGameState(Pause); //정지
+				Clear.Invoke();
 			}
 		}
 	}
-}
-
-void TutorialEffectObject::AttackSuccess()
-{
-	// 이전에, 루프 내부에서 현재 인덱스를 껐었음, 즉 -1을 이미 꺼버린 상태,
-	slideImages[index]->SetActive(true);
-	index++;
-	isPlayingAttack = false;
-
-	escPanel->SetInputEnable(false); // ESC 막고
-	escPanel->DisablePanel();  // 끄고
-	Singleton<GameManager>::GetInstance().SetGameState(Pause); //정지
-	Clear.Invoke();
-}
-
-void TutorialEffectObject::DefenceSuccess()
-{
-	slideImages[index]->SetActive(true); // 다음 이미지가 바로 켜지는거임
-	index++;
-	isPlayingDefence = false;
-
-	escPanel->SetInputEnable(false); // ESC 막고
-	escPanel->DisablePanel();  // 끄고
-	Singleton<GameManager>::GetInstance().SetGameState(Pause); //정지
-	Clear.Invoke();
 }
