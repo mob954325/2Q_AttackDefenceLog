@@ -143,21 +143,23 @@ void ThinkingPatternManager::SmartTour(std::vector<int>& p)
 	// 랜덤한 노드 하나 고르고, 그 노드의 주변에서 2개를 고른다.
 	// 깔끔하고, 랜덤하고, 멋지고, 쿨하고, 펀하고, 섹시하다.
 
-	if (p.empty()) return;
+	p.clear();
+	p.reserve(3);
 
+	static const int allowed[5] = { 1, 3, 5, 7, 4 }; // 2 4 6 8 5 5개(십자 모양)만 고를꺼임
+													// 굳이 모서리에 있는 노드를 고를 이유가 없음, 결과가 동일하게 나오는 수가 있어서, 중복임
+
+	int startNode = allowed[static_cast<int>(GameRandom::RandomRange(0, 5))];
 	int nodeA;
 	int nodeB;
 
-	int tmp = p.front();
-
-	if (!PickTwoNeighbors(tmp - 1, nodeA, nodeB)) {
+	if (!PickTwoNeighbors(startNode, nodeA, nodeB)) {
 		std::cout << "비-상 비상비상 쵸-비상!!!!" << std::endl;
 		return;
 	}
-	p.clear();
 
 	p.push_back(nodeA + 1);
-	p.push_back(tmp);
+	p.push_back(startNode + 1);
 	p.push_back(nodeB + 1);
 }
 
