@@ -85,6 +85,8 @@ public:
 	// 플레이어의 패턴과 적의 공격을 비교하는 함수
 	float CountDamageAtPlayerGroggy(std::vector<int>);
 
+	// 끝의 노드를 enum (상, 중, 하) 로 바꿔주는 함수!
+	AttackPosition ConvertEndNodeToPosition(int endNode);
 
 	bool isNewPattern = false; // 외부에서 확인하는 용도
 	NewPattern newPattern; // 버퍼
@@ -113,7 +115,7 @@ private:
 	std::vector<int> playerPatternB;
 	std::unordered_map<std::string, pattern*> tmpTimeOutPattern;
 	std::unordered_map<std::string, pattern*> timeOutPattern;
-	AttackPosition ConvertEndNodeToPosition(int endNode); // 끝의 노드를 enum (상, 중, 하) 로 바꿔주는 함수!
+	
 	float CalDistance(int node1, int node2); // 거리계산함수
 	//Vector2 NodeConvertMap(int node);        // 노드를 좌표로 바꿔주는 함수
 

@@ -350,7 +350,7 @@ void BettleManager::SetStateFormPatternIdle()
 	//pattern* tmpCorPatten = m_PattenManager->CorrectPattern(nowNode); // 현재 들어온 노드 index들
 	pattern* DefCorPatten = m_PattenManager->CheckDefencePattern(nowNode); // 현재 들어온 노드랑 적 공격이랑 패턴이 맞았는지
 	pattern* AtkCorPatten = m_PattenManager->CheckAttackPattern(nowNode); // 현재 들어온 노드랑 플레이어의 공격이 알맞는지
-
+	nowPlayerNodeFirstPos = m_PattenManager->ConvertEndNodeToPosition(nowNode[0]); // 현재 들어온 마지막 노드를 위치 enum으로 변환
 	if (DefCorPatten != nullptr) {
 		//방어 성공 처리
 		m_Enemy->SetState("Enemy_AttackSuccess");				// 적 상태 변경 -> 적 공격 성공
@@ -449,7 +449,7 @@ void BettleManager::SetStateFormPatternIdle()
 
 	}
 	else if (DefCorPatten == nullptr && AtkCorPatten != nullptr) {
-
+		nowNode;
 		//공격 성공
 		m_Player->SetState("Player_AttackSuccess");	// 플레이어 상태 변경 -> 플레이어 공격 성공
 		m_Player->SetEndAttack();					// isAttackingPattern = true 
@@ -481,7 +481,7 @@ void BettleManager::SetStateFormPatternIdle()
 		bool isHit = false;
 
 		// 마지막 노드가 중앙이 아니라면 적이 일정 확률로 회피 
-		if (m_Enemy->GetDefenseRate() >= GameRandom::RandomRange(1, 101) && AtkCorPatten->lastPosition != MiddleNode)
+		if (m_Enemy->GetDefenseRate() >= GameRandom::RandomRange(1, 101) && nowPlayerNodeFirstPos != MiddleNode)
 		{
 			////////////////////////// 적의 방어 //////////////////////
 			m_Enemy->SetState("Enemy_Defence");	// 적 상태 변경 -> 적 회피

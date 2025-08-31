@@ -90,7 +90,7 @@ private:
 	void EndPlayerGroggyCleanup(bool byTimeout);
 
 
-
+	AttackPosition nowPlayerNodeFirstPos = NonePos; // 플레이어가 입력한 노드의 마지막 위치
 	AttackPatternManager* m_PattenManager;
 	float m_DeltaTime = 0.0f;
 

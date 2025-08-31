@@ -87,7 +87,7 @@ void TutorialScene::OnEnterImpl()
 
 	GameObject* enemyProfileUIObj = new GameObject();
 	auto enemyProfileComp = enemyProfileUIObj->AddComponent<StageEnemyProfile>();
-	enemyProfileComp->SetProfileImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\StageTop\\ProfileUI\\enemy3_ui.png");
+	enemyProfileComp->SetProfileImage(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\StageTop\\ProfileUI\\tuto_enemy_ui.png");
 	enemyProfileComp->owner->GetTransform().SetPosition(EngineData::SceenWidth * 0.95f, 1);
 	AddGameObject(enemyProfileUIObj, "enemyProfileUIObj");
 

@@ -323,8 +323,8 @@ void Player::SetStatData(std::string tmp)
 
 	PatternID = CsvDataManager::GetInstance().GetIDData(nowPlayerPattenData); // 패턴 데이터의 ID를 미리 받음
 
-	Object_CoolTime = 1.0f;                                     //일단 쿨타임 1로 고정! -> 추후 변경가능
-	Object_nowCoolTime = 1.0f;									 //
+	Object_CoolTime = 0.5f;                                     //일단 쿨타임 1로 고정! -> 추후 변경가능
+	Object_nowCoolTime = 0.5f;									 //
 }
 
 void Player::SetSpiritData(float enemy_SpiritAmount)
