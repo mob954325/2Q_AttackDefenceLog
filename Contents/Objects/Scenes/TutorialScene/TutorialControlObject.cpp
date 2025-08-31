@@ -281,7 +281,7 @@ void TutorialControlObject::OnCreate()
 		else if (nowEnemy == L"강림")  // 3Stage
 			tmp = player->GetComponent<Player>()->TM.MakeTour(5);
 		else {
-			std::cout << "비상!!!!비상!!!쵸비상!!!" << std::endl;
+			std::cout << "튜토리얼이라 가능한, 알 수 없는 적의 공격이다!" << std::endl;
 			tmp = player->GetComponent<Player>()->TM.MakeTour(4); // 튜토리얼에 한해서 사용함
 		}
 

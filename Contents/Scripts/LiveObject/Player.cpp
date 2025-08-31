@@ -353,7 +353,8 @@ void Player::SetAttackPattenData(std::string PattID)
 void Player::SetNowPattern()
 {
 	//
-	std::vector<int> dump = TM.MakeTour(3); // 규칙성을 안에서 랜덤한 노드(길이)만큼 반환해줌		
+	std::vector<int> dump = TM.MakeTour(3, true); 
+	//9.01.추가, 무조건 3개 반환해주고, 랜덤성이 강해지는 로직으로 변경함(플레이어만)
 	//
 
 	std::string modifiedNum = "_001";

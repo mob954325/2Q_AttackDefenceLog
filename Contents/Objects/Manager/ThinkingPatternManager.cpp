@@ -5,7 +5,7 @@
 #include <cstdint> // 고정 폭 정수타입 정의해줌, 의도 명시 + 가시성 향상을 위해 사용됨(안써도 문제는 없음)
 #include <climits> // 극값 쓸때 필요함, 각 타입의 최대 최소값을 받을 수 있음(안써도 문제없음)
 
-std::vector<int> ThinkingPatternManager::MakeTour(int length)
+std::vector<int> ThinkingPatternManager::MakeTour(int length, bool isSmart)
 {
 	if (length > 9) length = 9;
 	if (length < 1) length = 1;
@@ -22,17 +22,22 @@ std::vector<int> ThinkingPatternManager::MakeTour(int length)
 	uint16_t visitedMask = 0;
 	// n = 시작 노드
 
-	for (int i = 0; i < length - 1; ++i) {
-		// visitedMask는 SetpTour 내부에서 계속 누적 + 사용됨
-		int tmp = StepTour(n, visitedMask);
+	if (isSmart) { // 기본값 false
+		SmartTour(path); // 무조건 3개 뱉어줌
+	}
+	else { // 기존 방식, 편향있음
+		for (int i = 0; i < length - 1; ++i) {
+			// visitedMask는 SetpTour 내부에서 계속 누적 + 사용됨
+			int tmp = StepTour(n, visitedMask);
 
-		if (tmp < 0) { // 음수 나오면 내부에서 꼬인거임
-			std::cout << "비상!!!비상!!!" << std::endl;
-			break;
+			if (tmp < 0) { // 음수 나오면 내부에서 꼬인거임
+				std::cout << "비상!!!비상!!!" << std::endl;
+				break;
+			}
+
+			path.push_back(tmp + 1);
+			n = tmp;
 		}
-
-		path.push_back(tmp + 1);
-		n = tmp;
 	}
 
 	//디버그용
@@ -124,6 +129,61 @@ int ThinkingPatternManager::StepTour(int nowNode, uint16_t& visited)
 	return same[num];
 }
 
+void ThinkingPatternManager::SmartTour(std::vector<int>& p)
+{
+	// [1] 폐기된 방식
+	// 양 끝 성장 방식을 사용한 알고리즘
+	// 랜덤으로 시작 노드를 선택하면, 그 노드를 기반으로
+	// 양 팔을 랜덤으로 확장함
+	// 이후, 확장된 노드를 기준으로 다시 1개씩 확장함
+	// 5개까지는 완벽하게 나옴
+	// 6개 부터는 실패 반례가 나옴, 예시 : 5 4 3 1 2(5개 최대)
+
+	// [2] 현재 적용된 방식
+	// 랜덤한 노드 하나 고르고, 그 노드의 주변에서 2개를 고른다.
+	// 깔끔하고, 랜덤하고, 멋지고, 쿨하고, 펀하고, 섹시하다.
+
+	if (p.empty()) return;
+
+	int nodeA;
+	int nodeB;
+
+	int tmp = p.front();
+
+	if (!PickTwoNeighbors(tmp - 1, nodeA, nodeB)) {
+		std::cout << "비-상 비상비상 쵸-비상!!!!" << std::endl;
+		return;
+	}
+	p.clear();
+
+	p.push_back(nodeA + 1);
+	p.push_back(tmp);
+	p.push_back(nodeB + 1);
+}
+
+bool ThinkingPatternManager::PickTwoNeighbors(int n, int& a, int& b, uint16_t visited)
+{
+	// candidate : 후보
+	uint16_t cand = adjMasks[n] & ~visited; // 3개만 상정하기 때문에, 기본값 0 사용
+	if (countOnes(cand) < 2) return false;  // 선택지 2개 이상 있어야 가능함, 방문으로 막히지 않는 이상 가능함
+
+	int buf[8]; // 최대 이웃 수 8, (노드 5 기준) 각각 3 5 8 가능함
+	int m = 0; // 이웃의 수
+
+	for (int i = 0; i < 9; ++i) {
+		if (cand & (1u << i))
+			buf[m++] = i; // 이렇게 하면, buf안에 3, 5, 8 이런식으로 쌓임
+	}
+
+	int x = GameRandom::RandomRange(0, m); // 인덱스로 쓸꺼라 -1이라, 자연스럽게 들어감
+	a = buf[x]; // 2, 4, 6, 7 이런거중에, 인덱스 하나 골라서 뽑은걸 a에 박음
+	std::swap(buf[x], buf[m - 1]); --m; // 가장 마지막칸에 박아넣고, m(사이즈)를 1 줄임 - 후보 제외한거임
+
+	int y = GameRandom::RandomRange(0, m);
+	b = buf[y];
+
+	return true;
+}
 
 //Kernighan 
 //브라이언 커니핸 아져씨가 고안한 좋은방법임
