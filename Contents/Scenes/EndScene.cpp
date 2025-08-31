@@ -18,7 +18,7 @@ void EndScene::OnEnterImpl()
 	inputObj = new GameObject();
 	inputObj->AddComponent<InputObject>();
 	AddGameObject(inputObj);
-	
+
 	trail = new GameObject();
 	trail->AddComponent<MouseTrailObject>();
 	AddGameObject(trail, "MouseTrail");
@@ -57,9 +57,12 @@ void EndScene::OnExitImpl()
 void EndScene::UpdateImpl()
 {
 	auto input = inputObj->GetComponent<InputSystem>();
+
+#ifndef NDEBUG
 	if (input->IsKeyPressed('2')) {
 		Singleton<SceneManager>::GetInstance().LoadScene(MENU);
 	}
+#endif
 
 	Singleton<AudioSystem>::GetInstance().Update();
 }

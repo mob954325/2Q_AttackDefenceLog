@@ -70,7 +70,7 @@ void TitleScene::OnExitImpl()
 void TitleScene::UpdateImpl()
 {
 	auto input = inputObj->GetComponent<InputSystem>();
-
+#ifndef NDEBUG
 	// 1 : menu 씬 진입
 	if (input->IsKeyPressed('1')) 
 	{
@@ -93,7 +93,7 @@ void TitleScene::UpdateImpl()
 	{
 		Singleton<SceneManager>::GetInstance().LoadScene(TUTORIAL);
 	}
-
+#endif
 
 	Singleton<AudioSystem>::GetInstance().Update();
 }
