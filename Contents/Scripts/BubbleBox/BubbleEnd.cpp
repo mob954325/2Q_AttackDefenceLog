@@ -8,7 +8,14 @@
 
 void BubbleEnd::OnUpdate()
 {
+	timer += Singleton<GameTime>::GetInstance().GetDeltaTime();
+
 	if (StartCheck) CheckInput();
+
+	if (isDone) {
+		if (timer > 1.0f)
+			Singleton<SceneManager>::GetInstance().LoadScene(SceneCount::TITLE); // MenuScene으로 이동
+	}
 }
 
 void BubbleEnd::OnCreate()
@@ -53,7 +60,6 @@ void BubbleEnd::OnDestroy()
 
 void BubbleEnd::CheckInput()
 {
-	timer += Singleton<GameTime>::GetInstance().GetDeltaTime();
 	if (timer > delaytime) // 시간이 다 지났으면
 	{
 		if (Input::leftButtonDown) // 왼쪽 클릭 했으면
@@ -67,7 +73,8 @@ void BubbleEnd::CheckInput()
 
 			if (count == 9) // 10은 나머지 다 비활성화하고 혼자 출력
 			{
-				Singleton<SceneManager>::GetInstance().LoadScene(SceneCount::TITLE); // MenuScene으로 이동
+				timer = 0.0f;
+				isDone = true; // 이거 계속 좌클릭 누르면, 영원히 안넘어감 ㅅㄱ
 			}
 		}
 	}
