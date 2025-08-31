@@ -32,9 +32,12 @@ void StageSelectManager::OnStart()
 
 	tutorial->AddEvent([this]()
 		{
-			if (Singleton<GameManager>::GetInstance().IsStage1Clear()) return;
-			if (Singleton<GameManager>::GetInstance().IsStage2Clear()) return;
-			if (Singleton<GameManager>::GetInstance().IsStage3Clear()) return; // 상남자 코딩
+			if (Singleton<GameManager>::GetInstance().IsStage1Clear() &&
+				Singleton<GameManager>::GetInstance().IsStage2Clear() &&
+				Singleton<GameManager>::GetInstance().IsStage3Clear())
+			{ // 1~3 스테이지 클리어시, 엔딩 진입을 위해 튜토리얼 진입 방지, 리턴
+				return;
+			}
 
 			if (!isSceneChange)
 			{
@@ -57,6 +60,7 @@ void StageSelectManager::OnStart()
 			if (!isSceneChange)
 			{
 				Singleton<GameManager>::GetInstance().SetBattleStage(SceneCount::STAGE1);
+				//std::cout << Singleton<GameManager>::GetInstance().GetTargetBattleStage() << "설정됨 끼얏호우~!!!!!!!!!!!!!!!!" << std::endl;
 				isSceneChange = true;
 			}
 		});
@@ -67,6 +71,7 @@ void StageSelectManager::OnStart()
 			if (!isSceneChange)
 			{
 				Singleton<GameManager>::GetInstance().SetBattleStage(SceneCount::STAGE2);
+				//std::cout << Singleton<GameManager>::GetInstance().GetTargetBattleStage() << "설정됨 끼얏호우~!!!!!!!!!!!!!!!!" << std::endl;
 				isSceneChange = true;
 			}
 		});
@@ -77,6 +82,7 @@ void StageSelectManager::OnStart()
 			if (!isSceneChange)
 			{
 				Singleton<GameManager>::GetInstance().SetBattleStage(SceneCount::STAGE3);
+				//std::cout << Singleton<GameManager>::GetInstance().GetTargetBattleStage() << "설정됨 끼얏호우~!!!!!!!!!!!!!!!!" << std::endl;
 				isSceneChange = true;
 			}
 		});
@@ -130,11 +136,11 @@ void StageSelectManager::OnUpdate()
 		{
 			if (isTutorialEnter) {
 				//Singleton<SceneManager>::GetInstance().LoadScene(TUTORIAL);
-				
+
 				auto enter = owner->GetQuery()->FindByName("tutorialEnter");
 				if (enter) {
 					Singleton<GameManager>::GetInstance().SetGameState(Pause);
-					enter->GetComponent<TutorialEnterObject>()->Show();		
+					enter->GetComponent<TutorialEnterObject>()->Show();
 				}
 
 				isSceneChange = false;
