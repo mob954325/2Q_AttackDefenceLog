@@ -25,6 +25,8 @@ protected:
 
 	float progress = 0.0f; // 0~1 정규화 값, 이거 기반으로 애니메이션 + 연출 돌아감
 
+	float timer = 0.0f;
+
 	bool isTextCreated = false;
 private:
 
