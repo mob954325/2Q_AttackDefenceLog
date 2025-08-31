@@ -108,7 +108,11 @@ void TutorialScene::UpdateImpl()
 	Singleton<AudioSystem>::GetInstance().Update();
 
 	auto input = inputObj->GetComponent<InputSystem>();
+
+#ifndef NDEBUG
 	if (input->IsKeyPressed('9')) {
 		Singleton<SceneManager>::GetInstance().LoadScene(TITLE);
 	}
+#endif
+
 }

@@ -56,7 +56,7 @@ void SelectScene::UpdateImpl()
 {
 	auto input = inputObj->GetComponent<InputSystem>();
 
-
+#ifndef NDEBUG
 	if (input->IsKeyPressed('3')) {
 		cloudManager->GetComponent<CloudManager>()->Start();
 	}
@@ -64,6 +64,7 @@ void SelectScene::UpdateImpl()
 	if (input->IsKeyPressed('4')) {
 		cloudManager->GetComponent<CloudManager>()->ReverseStart();
 	}
+#endif
 
 	Singleton<AudioSystem>::GetInstance().Update();
 }

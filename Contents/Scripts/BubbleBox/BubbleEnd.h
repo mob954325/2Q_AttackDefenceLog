@@ -13,6 +13,7 @@ public:
 	void CheckInput();
 
 private:
+	bool isDone = false;
 
 	std::vector<BitmapRenderer*> texts;
 

@@ -36,7 +36,7 @@ void Stage1::OnEnterImpl()
 
 	PCO = new GameObject();
 	auto comp = PCO->AddComponent<PatternControlObject>();
-	AddGameObject(PCO , "PatternControlObject");
+	AddGameObject(PCO, "PatternControlObject");
 	comp->GetEnemy()->SetNameDiff("Stage1", Singleton<GameManager>::GetInstance().GetDifficultyString());
 
 	stageBGI = new GameObject();
@@ -73,7 +73,7 @@ void Stage1::OnEnterImpl()
 
 	/*SoundStageOne->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Stage01");
 	SoundStageOne->GetComponent<SoundPlayScene>()->PlaySound();*/
-	
+
 	Textbox = new GameObject();
 	auto bb = Textbox->AddComponent<BubbleBox>();
 	AddGameObject(Textbox, "Textbox");
@@ -125,8 +125,12 @@ void Stage1::UpdateImpl()
 {
 	Singleton<AudioSystem>::GetInstance().Update();
 
+
 	auto input = inputObj->GetComponent<InputSystem>();
+#ifndef NDEBUG
 	if (input->IsKeyPressed('2')) {
 		Singleton<SceneManager>::GetInstance().LoadScene(END);
 	}
+#endif
+
 }

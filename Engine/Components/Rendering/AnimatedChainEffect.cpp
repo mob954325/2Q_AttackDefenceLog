@@ -3,6 +3,7 @@
 #include "../Engine/Utils/GameTime.h"
 #include <cmath>
 #include "Application/AppPaths.h"
+#include "../Contents/Scripts/GameManager.h"
 
 constexpr float PI = 3.141592654f; // 3. 1415926535 8979323846 2643383279 5028841971 6939937510 5820974944 5923078164 0628620899 8628034825 이 얼마나 멋진 숫자인가
 
@@ -26,7 +27,13 @@ void AnimatedChainEffect::Render(D2DRenderManager* manager)
 {
 	if (!isPlaying || !IsActiveSelf()) return;
 
-	timer += Singleton<GameTime>::GetInstance().GetDeltaTime();
+	// 게임 상태가 Pause가 아니라면 델타 가산 건너뜀
+	if (!Singleton<GameManager>::GetInstance().GetGameState() == GameState::Pause)
+	{
+		timer += Singleton<GameTime>::GetInstance().GetDeltaTime();
+	}
+
+
 
 	int safety = 4; // 세이프티 캡 - 4번이상 넘어가면 while 나가게
 	while (timer >= frameDur && safety-- > 0) {
@@ -73,7 +80,7 @@ void AnimatedChainEffect::SetAtlasStrip(std::wstring path, int maxF)
 	maxFrame = maxF;
 
 	frameH = size.height;
-	frameW = size.width / static_cast<float>(maxFrame);  
+	frameW = size.width / static_cast<float>(maxFrame);
 }
 
 //=======================================================================================
@@ -173,7 +180,7 @@ void AnimatedChainEffect::SliceRect(const std::vector<int>& pattern)
 					 0.0f,
 					 subX + dist,
 					 frameH
-				};			
+				};
 
 				subX += dist;
 			}
@@ -192,9 +199,9 @@ void AnimatedChainEffect::Draw(D2DRenderManager* manager)
 		float width = pi.rect.right - pi.rect.left;
 		float height = pi.rect.bottom - pi.rect.top;
 
-		D2D1_RECT_F dest = { pi.pos.x - pi.length * 0.5f, 
-			pi.pos.y - height * 0.5f, 
-			pi.pos.x + pi.length * 0.5f, 
+		D2D1_RECT_F dest = { pi.pos.x - pi.length * 0.5f,
+			pi.pos.y - height * 0.5f,
+			pi.pos.x + pi.length * 0.5f,
 			pi.pos.y + height * 0.5f };
 
 		auto xf = D2D1::Matrix3x2F::Rotation(pi.angle * 180.0f / PI, { pi.pos.x, pi.pos.y });

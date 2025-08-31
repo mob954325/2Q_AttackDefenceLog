@@ -56,7 +56,7 @@ void TitleEffectManager::OnStart()
 	b->GetTransform().SetUnityCoords(false);
 	guideMessageImage = b->AddComponent<BitmapRenderer>();
 	guideMessageImage->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\BattlePanel\\GuideText\\drawing_line_start_text.png");
-	guideMessageImage->SetOrderInLayer(100000000);
+	guideMessageImage->SetOrderInLayer(100000000); // ...? 1억이요?
 	guideMessageImage->SetCapacity(1.0f);
 
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(b, "guideMessageImage.");
@@ -67,12 +67,12 @@ void TitleEffectManager::OnStart()
 void TitleEffectManager::OnUpdate()
 {
 
-	if (isPlay) 
+	if (isPlay)
 	{
 		float delta = Singleton<GameTime>::GetInstance().GetDeltaTime();
 		progress += 0.15f * delta;
 
-		for (int i = 0; i < effectProgress.size(); ++i) 
+		for (int i = 0; i < effectProgress.size(); ++i)
 		{
 			//날 선형보간의 신이라고 불러라 2트
 			float posProgress = clampf((progress - effectProgress[i].startTimingPos) * (1.0f / (effectProgress[i].targetTimingPos - effectProgress[i].startTimingPos)), 0.0f, 1.0f);
@@ -89,24 +89,31 @@ void TitleEffectManager::OnUpdate()
 			//식 설명은 effectProgress 구조체에 써있음
 		}
 
-		if (progress >= 1.0f) isPlay = false;
+		if (progress >= 1.0f) {
+			isPlay = false;
+			timer = 0.0f;
+		}
+
 	}
 
 	if ((progress >= 1.0f) && !isPlay)// 이벤트가 종료되면 마우스 클릭으로 씬 넘어갈 수 있게 추가 : 작성자 - 이성호
 	{
-		if (!isTextCreated && Input::leftButtonDown)
-		{
-			// title 오브젝트 제거
-			effectProgress[7].bitmapRenderer->SetCapacity(0.0f);
+		if (timer > 1.0f) { // 1초동안 로고좀 보셈
+			if (!isTextCreated && Input::leftButtonDown)
+			{
+				// title 오브젝트 제거
+				effectProgress[7].bitmapRenderer->SetCapacity(0.0f);
 
-			// title 텍스트 객체 추가
-			GameObject* titleBubbleObj = new GameObject();
-			auto BBTComp = titleBubbleObj->AddComponent<BubbleBoxTittle>();
-			Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(titleBubbleObj, "TItleEffectManager");
-			isTextCreated = true;
+				// title 텍스트 객체 추가
+				GameObject* titleBubbleObj = new GameObject();
+				auto BBTComp = titleBubbleObj->AddComponent<BubbleBoxTittle>();
+				Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(titleBubbleObj, "TItleEffectManager");
+				isTextCreated = true;
+			}
 		}
-
-
+		else {
+			timer += Singleton<GameTime>::GetInstance().GetDeltaTime(); // 타이머 증가
+		}
 	}
 }
 

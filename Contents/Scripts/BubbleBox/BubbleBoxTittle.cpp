@@ -13,7 +13,7 @@ void BubbleBoxTittle::OnUpdate()
 
 	if (StartCheck) CheckInput();
 
-	if (timer > 2.0f) {
+	if (timer > 2.5f) {
 		if (Input::leftButtonDown && flag) {
 
 			Singleton<SceneManager>::GetInstance().LoadScene(SceneCount::MENU); // MenuScene으로 이동
@@ -67,10 +67,6 @@ void BubbleBoxTittle::OnDestroy()
 
 void BubbleBoxTittle::CheckInput()
 {
-
-
-
-
 	if (timer > delaytime) // 시간이 다 지났으면
 	{
 		if (Input::leftButtonDown) // 왼쪽 클릭 했으면

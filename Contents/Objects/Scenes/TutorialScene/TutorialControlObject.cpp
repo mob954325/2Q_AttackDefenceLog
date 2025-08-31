@@ -266,6 +266,10 @@ void TutorialControlObject::OnCreate()
 
 	bettletmp->onStartEnemyBlow.Add([this]() {
 
+		for (auto& it : enemyGuidelines) {
+			it->GetComponent<ChainDrawerComponent>()->Clear();
+		} // 9.01. 수정, 모든 공격 가이드라인을 강제로 지움
+
 		auto bgi = owner->GetQuery()->FindByName("Vignette");
 		if (bgi) { bgi->GetComponent<Vignette>()->Start(false); }
 
@@ -280,14 +284,17 @@ void TutorialControlObject::OnCreate()
 			tmp = player->GetComponent<Player>()->TM.MakeTour(4);
 		else if (nowEnemy == L"강림")  // 3Stage
 			tmp = player->GetComponent<Player>()->TM.MakeTour(5);
-		else
-			std::cout << "비상!!!!비상!!!쵸비상!!!" << std::endl;
+		else {
+			std::cout << "튜토리얼이라 가능한, 알 수 없는 적의 공격이다!" << std::endl;
+			tmp = player->GetComponent<Player>()->TM.MakeTour(4); // 튜토리얼에 한해서 사용함
+		}
 
 		auto atp = attackPattenManager->GetComponent<AttackPatternManager>();
 		atp->ResisterEnemyAtkAtPlayerGroggy(tmp);
 
 		blinkNodeObject->Start(tmp, true);
 		blinkNodeObject->AllActiveFalse();
+
 
 		isSkipped = true;
 		waitOneSecond = true;
@@ -318,6 +325,8 @@ void TutorialControlObject::OnCreate()
 			for (int i = 0; i < m_nodes.size(); ++i) {
 				m_nodes[i]->GetComponent<BitmapRenderer>()->SetActive(true);
 			}
+
+			tuto->RestartAfterDelay(); // 시간초과 연결
 		});
 
 	bettletmp->onEnemyHit.Add([this](std::vector<int> pattern, bool isHit) {
@@ -354,8 +363,6 @@ void TutorialControlObject::OnCreate()
 
 		if (isHit) {
 			//쳐맞음
-
-
 			auto bbs = battleBoards.front();
 			battleBoards.pop();
 			bbs->Hit(ty);
@@ -392,7 +399,7 @@ void TutorialControlObject::OnCreate()
 	// Manager의 Player와 Enemy 참조
 	bettletmp->m_Enemy = enemytmp;
 	bettletmp->m_Player = playertmp;
-	bettleManager->SetName("BettleManager");
+	bettleManager->SetName("TutorialBettleManager");
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(bettleManager);
 
 	// ChargedSlashManager 추가
@@ -411,6 +418,8 @@ void TutorialControlObject::OnCreate()
 
 			auto pll = player->GetComponent<Player>();
 			pll->RestoreGroggy();
+
+			tuto->AttackSuccess(); // 성공했다는걸 알림
 		});
 
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(csm, "ChargedSlashManager");
@@ -703,7 +712,16 @@ void TutorialControlObject::OnUpdate() // 업데이트
 
 	// 연격 연출 연속으로 보여주기
 	if (playEnemyChainEffect) {
-		if (chainQueue.empty()) { playEnemyChainEffect = false; } // 비었으면 연출 종료
+		if (chainQueue.empty()) {
+			playEnemyChainEffect = false; // 비었으면 연출 종료
+
+			if (tutoSuccessCount > 0) {
+				tuto->DefenceSuccess(); // 1개라도 성공함
+			}
+			else {
+				tuto->RestartAfterDelay(); // 다처맞음
+			}
+		}
 		else {
 
 			chainEffectTimer += delta;
@@ -734,6 +752,7 @@ void TutorialControlObject::OnUpdate() // 업데이트
 					}
 				}
 				else { // 한자릿수에 해당함, 즉 가드(패링)임
+					tutoSuccessCount++; // 가드성공 횟수 기록
 					//가드 성공
 					effectInstances[tmp - 1]->DoParry(tmp - 1);
 					//가드 소리
