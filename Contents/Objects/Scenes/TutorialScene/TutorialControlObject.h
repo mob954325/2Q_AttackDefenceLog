@@ -94,6 +94,7 @@ private:
 		chainEffectDuration = 0.5f / static_cast<float>(chainQueue.size());;
 		playEnemyChainEffect = true;
 		chainEffectTimer = chainEffectDuration; // 한번 바로 재생해야함				
+		tutoSuccessCount = 0; // 누적된값 확인하는 용도임
 	}
 
 	//===============================
@@ -101,6 +102,8 @@ private:
 	bool waitOneSecond = false; // 이거 키면, 특정 시간동안 노드를 비활성화하고 다시 켜줌
 
 	float waitTimer = 0.0f;
+
+	int tutoSuccessCount = 0;
 
 	std::vector<int> cachedVec;
 

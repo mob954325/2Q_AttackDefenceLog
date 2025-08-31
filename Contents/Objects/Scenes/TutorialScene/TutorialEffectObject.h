@@ -15,7 +15,6 @@
 */
 
 
-
 class TutorialEffectObject : public MonoBehavior
 {
 public:
@@ -25,7 +24,7 @@ public:
 	void OnStart() override;
 	void OnUpdate() override;
 
-	//외부에서 성공하면 호출해줄 함수들임
+	//외부에서 성공하면 호출해줄 함수들임(인덱스 18)
 	void CountUpParry() {
 		parryCount++;
 		if (parryCount <= 3)
@@ -47,13 +46,15 @@ public:
 		Check();
 	}
 
-	void AttackDone() {
-		isPlayingAttack = true;
+	//연격, 간파 연습 시간종료시 호출되는 함수임
+	void RestartAfterDelay() { // 외부에서 호출되면, 1초뒤에 한번, 원래 상태로 복귀시킴(플래그 isPlaying~ 기반)
+		oneSecPlay = true;
+		timer = 0.0f;
 	}
 
-	void DefenceDone() {
-		isPlayingDefence = true;
-	}
+	//연격 성공시 호출되는 함수
+	void AttackSuccess();
+	void DefenceSuccess();
 
 protected:
 	bool isPlay = false;
@@ -83,8 +84,7 @@ protected:
 
 	bool isDone = false;
 	bool isPlayingAttack = false;
-	bool isPlayingDefence= false;
-
+	bool isPlayingDefence = false;
 
 	bool oneSecPlay = false;
 	float timer = 0.0f;
