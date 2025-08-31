@@ -205,7 +205,7 @@ void PatternControlObject::OnCreate()
 			auto eac = enemyAttackChain.front();
 			enemyAttackChain.pop();
 			std::reverse(patten.begin(), patten.end());
-			eac->PlayOnce(patten);			
+			eac->PlayOnce(patten);
 			enemyAttackChain.push(eac);
 		}
 		});
@@ -257,7 +257,11 @@ void PatternControlObject::OnCreate()
 		});
 
 	bettletmp->onStartEnemyBlow.Add([this]() {
-		
+
+		for (auto& it : enemyGuidelines) {
+			it->GetComponent<ChainDrawerComponent>()->Clear();
+		} // 9.01. 수정, 모든 공격 가이드라인을 강제로 지움
+
 		auto bgi = owner->GetQuery()->FindByName("Vignette");
 		if (bgi) { bgi->GetComponent<Vignette>()->Start(false); }
 
@@ -564,7 +568,7 @@ void PatternControlObject::OnUpdate() // 업데이트
 	// [1] 입력 발생하면
 
 	if (t->isNewCached && !isSkipped) // 새로운 노드 발생하면	+ 스킵 상태가 아니라며
-	{		
+	{
 		PM.CheckTrails(t->CheckingCachedTrails());		// trail 찍힌 위치들을 확인하고 저장함
 		const auto& vec = PM.GetPatternPathPositions(); // 여기에 담김!!! 1 3 2 4 이런거 <<<<< (연결지점)
 
@@ -578,7 +582,7 @@ void PatternControlObject::OnUpdate() // 업데이트
 
 		auto bt = bettleManager->GetComponent<BettleManager>();
 		std::vector<int> pttt = PM.GetPattern();
-		
+
 		for (int value : pttt) { std::cout << value << "-"; } // Debug
 		std::reverse(pttt.begin(), pttt.end()); // 뒤집어서 집어넣음
 		bt->SetInputNode(pttt);
@@ -656,7 +660,7 @@ void PatternControlObject::OnUpdate() // 업데이트
 			//	}
 			//}
 	}*/
-	
+
 	//===================================================================================================
 	// [5] 이펙트 연출용
 

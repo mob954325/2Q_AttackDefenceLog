@@ -233,3 +233,11 @@ void ChainDrawerComponent::CancelByID(const std::string& id) {
 	OnInterrupted.Invoke();
 }
 
+void ChainDrawerComponent::Clear()
+{
+	isPlay = false;
+	timer = progress = 0.0f;
+	for (auto& p : pieces) p.fillAmount = 0.0f;
+	OnInterrupted.Invoke();
+}
+

@@ -266,6 +266,10 @@ void TutorialControlObject::OnCreate()
 
 	bettletmp->onStartEnemyBlow.Add([this]() {
 
+		for (auto& it : enemyGuidelines) {
+			it->GetComponent<ChainDrawerComponent>()->Clear();
+		} // 9.01. 수정, 모든 공격 가이드라인을 강제로 지움
+
 		auto bgi = owner->GetQuery()->FindByName("Vignette");
 		if (bgi) { bgi->GetComponent<Vignette>()->Start(false); }
 

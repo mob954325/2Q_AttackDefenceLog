@@ -58,6 +58,8 @@ public:
 
 	void CancelByID(const std::string& id);
 
+	void Clear();
+
 	//float piece = 3.0f; // 조각
 	bool isPlay = false;
 
