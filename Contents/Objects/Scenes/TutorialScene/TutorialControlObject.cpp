@@ -283,7 +283,7 @@ void TutorialControlObject::OnCreate()
 		else {
 			std::cout << "비상!!!!비상!!!쵸비상!!!" << std::endl;
 			tmp = player->GetComponent<Player>()->TM.MakeTour(4); // 튜토리얼에 한해서 사용함
-		}			
+		}
 
 		auto atp = attackPattenManager->GetComponent<AttackPatternManager>();
 		atp->ResisterEnemyAtkAtPlayerGroggy(tmp);
@@ -389,7 +389,7 @@ void TutorialControlObject::OnCreate()
 			chainQueue.clear();
 			for (auto& i : fromToVec) { chainQueue.push_back(i); }
 
-			chainPlayHelper();							
+			chainPlayHelper();
 		});
 
 	// Manager의 Player와 Enemy 참조
@@ -708,16 +708,16 @@ void TutorialControlObject::OnUpdate() // 업데이트
 
 	// 연격 연출 연속으로 보여주기
 	if (playEnemyChainEffect) {
-		if (chainQueue.empty()) { 
+		if (chainQueue.empty()) {
 			playEnemyChainEffect = false; // 비었으면 연출 종료
-		
+
 			if (tutoSuccessCount > 0) {
 				tuto->DefenceSuccess(); // 1개라도 성공함
 			}
 			else {
 				tuto->RestartAfterDelay(); // 다처맞음
-			}		
-		} 
+			}
+		}
 		else {
 
 			chainEffectTimer += delta;
