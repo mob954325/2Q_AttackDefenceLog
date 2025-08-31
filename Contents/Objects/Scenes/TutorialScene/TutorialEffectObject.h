@@ -57,6 +57,7 @@ public:
 		isPlayingAttack = false;
 		oneSecPlay = true; // 모든 플래그가 꺼진 상태로 진입하면, 알아서 정리해줌
 	}
+
 	void DefenceSuccess() {
 		isPlayingDefence = false;
 		oneSecPlay = true; // 모든 플래그가 꺼진 상태로 진입하면, 알아서 정리해줌

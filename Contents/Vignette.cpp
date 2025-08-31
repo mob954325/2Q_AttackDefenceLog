@@ -71,6 +71,8 @@ void Vignette::Start(bool isPl)
 {	
 	isGoingFillUp = true;
 	progress = 0.0f;
+	enemy->SetCapacity(progress);
+	player->SetCapacity(progress);
 	isPlay = true;
 	isPlayer = isPl;
 }
