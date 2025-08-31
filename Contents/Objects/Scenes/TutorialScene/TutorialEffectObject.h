@@ -6,6 +6,8 @@
 #include "../Engine/Utils/EventDelegate.h"
 #include "Objects/Scenes/Stage/EscMenu/StageESCPanel.h"
 
+#include "Scripts/LogicManager/BettleManager.h" // 이걸 여기서 다시 참조할줄이야
+
 /*8.28. 한승규
 * 해당 클래스를 기반으로, 연출을 재생함
 * GameManager Pause를 사용하면 안됨,
@@ -45,6 +47,14 @@ public:
 		Check();
 	}
 
+	void AttackDone() {
+		isPlayingAttack = true;
+	}
+
+	void DefenceDone() {
+		isPlayingDefence = true;
+	}
+
 protected:
 	bool isPlay = false;
 
@@ -61,6 +71,10 @@ protected:
 		for (auto& it : nums) {
 			it->Hide();
 		}
+
+		for (auto& it : numText) {
+			it->SetActive(false);
+		}
 	}
 
 	int parryCount = 0;
@@ -68,8 +82,15 @@ protected:
 	int guardCount = 0;
 
 	bool isDone = false;
+	bool isPlayingAttack = false;
+	bool isPlayingDefence= false;
 
-	StageESCPanel* escPanel;
+
+	bool oneSecPlay = false;
+	float timer = 0.0f;
+
+	StageESCPanel* escPanel; // 이놈도 여기소유가 아님
+	BettleManager* bt; // 기세 관련 설정에만 사용해야함, 두곳에서 포인터를 들고있는거라 귀찮아질 수 있음 여기 소유가 아님
 
 	int index = 0;
 	std::vector<BitmapRenderer*> slideImages;

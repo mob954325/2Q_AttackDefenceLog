@@ -392,7 +392,7 @@ void TutorialControlObject::OnCreate()
 	// Manager의 Player와 Enemy 참조
 	bettletmp->m_Enemy = enemytmp;
 	bettletmp->m_Player = playertmp;
-	bettleManager->SetName("BettleManager");
+	bettleManager->SetName("TutorialBettleManager");
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(bettleManager);
 
 	// ChargedSlashManager 추가

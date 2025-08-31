@@ -7,9 +7,9 @@
 #include "Scripts/GameManager.h"
 #include "../Engine/Components/Logic/InputSystem.h"
 
+
 void TutorialEffectObject::OnCreate()
 {
-
 }
 
 
@@ -41,23 +41,21 @@ void TutorialEffectObject::OnStart()
 	index = 0;
 	isPlay = true;
 
-	float x = 800.0f;
+	float x = 850.0f;
 
-	float y = -260.0f;
-
+	float y = -275.0f;
 
 	std::wstring textPath = Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\Number\\";
 	std::wstring textFiles[] = {
-		L"attack_3times_text.png",
+		L"parrying_3times_text.png",
 		L"defence_3times_text.png",
-		L"parrying_3times_text.png"
+		L"attack_3times_text.png"		
 	};
 
 	for (int i = 0; i < 3; ++i) {
-		GameObject* obj = new GameObject();
-		obj->GetTransform().SetUnityCoords(false);
+		GameObject* obj = new GameObject();		
 		obj->SetRenderLayer(EngineData::RenderLayer::UI);
-		//obj->GetTransform().SetPosition(x, y);
+		obj->GetTransform().SetPosition(x - 400.0f, y + i * 65.0f);
 
 		auto br = obj->AddComponent<BitmapRenderer>();
 		br->CreateBitmapResource(textPath + textFiles[i]);
@@ -66,7 +64,7 @@ void TutorialEffectObject::OnStart()
 		numText.push_back(br);
 
 		auto com = obj->AddComponent<TutorialNumObject>();
-		com->SetPos({ x, y + i * 60.0f }); // 간격 60		
+		com->SetPos({ x, y + i * 65.0f }); // 간격 65		
 		nums.push_back(com);
 
 		Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(obj, "tutorialNums." + i);
@@ -76,6 +74,15 @@ void TutorialEffectObject::OnStart()
 	auto esc = owner->GetQuery()->FindByName("escPanelForTutorial");
 	if (esc) {
 		escPanel = esc->GetComponent<StageESCPanel>();
+	}
+	else {
+		std::cout << "비상!!!!!!비상!!!!!!!" << std::endl;
+	}
+
+	//TutorialBettleManager << 이름
+	auto bettle = owner->GetQuery()->FindByName("TutorialBettleManager");
+	if (bettle) {
+		bt = bettle->GetComponent<BettleManager>();
 	}
 	else {
 		std::cout << "비상!!!!!!비상!!!!!!!" << std::endl;
@@ -90,6 +97,8 @@ void TutorialEffectObject::OnUpdate() // 업데이트
 	{
 		return; // 처음에만 pause 허용
 	}
+
+	float delta = Singleton<GameTime>::GetInstance().GetDeltaTime();
 
 	inputMouse = owner->GetComponent<InputSystem>()->IsMouseButtonDown(Left);
 
@@ -111,18 +120,28 @@ void TutorialEffectObject::OnUpdate() // 업데이트
 				if (index == 18) {
 					Singleton<GameManager>::GetInstance().SetGameState(Play);
 
-
 					escPanel->SetInputEnable(true);
 
 					for (auto& it : nums) {
 						it->Show(0);
 					}
 
+					for (auto& it : numText) {
+						it->SetActive(true);
+					}
 
-					// 3번 가드하시오 그런거 띄우면 됨
-					// 3번 공격하시오 이런거
-					// 여긴 한번만 호출되니까
 				}
+				if (index == 20) {
+					bt->SetSpiritNormallize(0.0f);
+					std::cout << "기세 0 된것임" << std::endl;
+					oneSecPlay = true;
+				}
+				if (index == 26) {
+					bt->SetSpiritNormallize(1.0f);
+					std::cout << "기세 100 된것임" << std::endl;
+					oneSecPlay = true;
+				}
+
 			}
 		}
 		else {
@@ -147,4 +166,45 @@ void TutorialEffectObject::OnUpdate() // 업데이트
 		Clear.Invoke(); // 외부에 정리함수 호출
 		//isDone은 Check함수에서만 켜지는데, 인덱스 18일때만 작동함
 	}
+
+	//====================================================================
+
+	if (isPlayingAttack) {
+		slideImages[index - 1]->SetActive(false);
+		slideImages[index]->SetActive(true);
+		index++;
+		isPlayingAttack = false;
+
+		escPanel->SetInputEnable(false);
+		escPanel->DisablePanel();
+		Singleton<GameManager>::GetInstance().SetGameState(Pause);
+
+		Clear.Invoke();
+	}
+
+	//====================================================================
+
+	if (isPlayingDefence) {
+		slideImages[index - 1]->SetActive(false);
+		slideImages[index]->SetActive(true);
+		index++;
+		isPlayingDefence = false;
+
+		escPanel->SetInputEnable(false);
+		escPanel->DisablePanel();
+		Singleton<GameManager>::GetInstance().SetGameState(Pause);
+
+		Clear.Invoke();
+	}
+
+	//====================================================================
+
+	if (oneSecPlay) { // 이거 왜 안되는거징
+		timer += delta;
+		if (timer > 1.0f) {
+			timer = 0.0f;
+			oneSecPlay = false;
+		}
+	}
+
 }
