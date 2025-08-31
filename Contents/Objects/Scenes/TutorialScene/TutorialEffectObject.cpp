@@ -181,18 +181,22 @@ void TutorialEffectObject::OnUpdate() // 업데이트
 	cachedInputMouse = inputMouse; // 마우스 인풋 캐싱
 
 	if (isDone) { // 18 인덱스에 해당함, Check()함수 내부에 플래그 키는 기능이 있음
-		slideImages[index - 1]->SetActive(false);
-		slideImages[index]->SetActive(true);
-		index++; // 여기까지가 기존 진행, 슬라이드 넘기기
+		timer2 += delta;
+		if (timer2 > 1.0f) {
+			timer2 = 0.0f;
+			isDone = false; // 플래그 꺼주기(1회만 보장)
 
-		isDone = false; // 플래그 꺼주기(1회만 보장)
+			slideImages[index - 1]->SetActive(false);
+			slideImages[index]->SetActive(true);
+			index++; // 여기까지가 기존 진행, 슬라이드 넘기기			
 
-		escPanel->SetInputEnable(false); // ESC 막고
-		escPanel->DisablePanel();  // 끄고
-		Singleton<GameManager>::GetInstance().SetGameState(Pause); //정지
+			escPanel->SetInputEnable(false); // ESC 막고
+			escPanel->DisablePanel();  // 끄고
+			Singleton<GameManager>::GetInstance().SetGameState(Pause); //정지
 
-		Clear.Invoke(); // 외부에 정리함수 호출(배틀 매니저 등)
-		//isDone은 Check함수에서만 켜지는데, 인덱스 18일때만 작동함
+			Clear.Invoke(); // 외부에 정리함수 호출(배틀 매니저 등)
+			//isDone은 Check함수에서만 켜지는데, 인덱스 18일때만 작동함
+		}
 	}
 
 	//====================================================================
@@ -215,7 +219,7 @@ void TutorialEffectObject::OnUpdate() // 업데이트
 			else {
 				// 1초뒤에 연출적으로 넣어주고 싶어서 사용함(마지막 일격 후 1초)
 				slideImages[index]->SetActive(true);
-				index++;	
+				index++;
 
 				escPanel->SetInputEnable(false); // ESC 막고
 				escPanel->DisablePanel();  // 끄고

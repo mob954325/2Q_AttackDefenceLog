@@ -75,6 +75,8 @@ protected:
 		if (attackCount < 3) return;
 
 		isDone = true;
+		timer2 = 0.0f;
+
 		for (auto& it : nums) {
 			it->Hide();
 		}
@@ -94,6 +96,7 @@ protected:
 
 	bool oneSecPlay = false;
 	float timer = 0.0f;
+	float timer2 = 0.0f;
 
 	StageESCPanel* escPanel; // 이놈도 여기소유가 아님
 	BettleManager* bt; // 기세 관련 설정에만 사용해야함, 두곳에서 포인터를 들고있는거라 귀찮아질 수 있음 여기 소유가 아님
