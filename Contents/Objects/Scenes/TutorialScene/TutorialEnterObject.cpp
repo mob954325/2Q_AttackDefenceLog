@@ -75,6 +75,7 @@ void TutorialEnterObject::OnStart()
 		Hide();
 		Singleton<GameManager>::GetInstance().wasSelected = true;
 		Singleton<GameManager>::GetInstance().SetGameState(Play);		
+		Singleton<SceneManager>::GetInstance().LoadScene(MENU); // 로드를 다시 때려버리면, 완벽한 초기화가 된다 이말씀임
 		});
 
 
