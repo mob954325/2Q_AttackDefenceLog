@@ -106,11 +106,11 @@ void TutorialEffectObject::OnUpdate() // 업데이트
 		std::cout << "튜토리얼 마우스 눌림 감지됨" << std::endl;
 		//====================================================================
 		//인덱스 사이즈 밖으로 나간 상태로 좌클릭시, 씬 넘김
-		if (index < slideImages.size() && !oneSecPlay) { // 31 -> 32까지만 구현 + 연출 대기중이 아닌경우에만
+		if (index < slideImages.size() ) { // 31 -> 32까지만 구현
 
 			// 조건에 해당하지 않으면, 좌클릭을 했다고 해서 인덱스가 증가하지 않음
 
-			if (index != 18) { // 18번은 isDone을 기반으로 넘겨줌
+			if (index != 18 && !oneSecPlay) { // 18번은 isDone을 기반으로 넘겨줌 + 대기 상태가 아닌 경우에만
 				if ((!isPlayingAttack && !isPlayingDefence)) {
 					if (index >= 1) slideImages[index - 1]->SetActive(false); // 첫 노드가 아니면, 이전 비트맵 끄기
 					else {
