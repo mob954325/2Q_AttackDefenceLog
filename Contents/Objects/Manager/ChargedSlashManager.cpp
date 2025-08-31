@@ -37,7 +37,7 @@ void ChargedSlashManager::OnStart()
 // 	if (camIns) { camIns->GetComponent<CamInstance>()->(1, 1, 1, ShakeType::X); }
 
 	owner->SetRenderLayer(EngineData::RenderLayer::UI);
-	inputSys = owner->AddComponent<InputSystem>(); 
+	inputSys = owner->AddComponent<InputSystem>(); // ??이거 왜쓰는거지 일단 놔둠
 	bitmapRenderer = owner->AddComponent<BitmapRenderer>();
 	bitmapRenderer->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\Mouse\\ui01.png");
 	bitmapRenderer->SetOrderInLayer(100);
