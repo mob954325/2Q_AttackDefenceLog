@@ -29,6 +29,7 @@ protected:
 	void ConsoleInitialize();
 	void ConsoleUnInitialize();
 	void ResizeSwapChainBuffers();
+	void CheckExitKey();
 
 	ComPtr<ID3D11Device>			m_d3dDevice;
 	ComPtr<IDXGISwapChain1>			m_dxgiSwapChain;

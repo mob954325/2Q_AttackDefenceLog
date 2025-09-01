@@ -270,6 +270,7 @@ void Application::Run()
 			Singleton<SceneManager>::GetInstance().GetCurrentScene()->CleanUpDestroyedObjects(); // 06 30 추가 : 모든 루프가 끝나고 오브젝트 제거
 			Input::ResetMouseEventFrameState();
 			Singleton<SceneManager>::GetInstance().CheckSceneLoad();	// 씬 교체 확인 
+			CheckExitKey();
 		}
 
 	}
@@ -324,4 +325,13 @@ void Application::ResizeSwapChainBuffers()
 
 	// 렌더 매니저에도 다시 설정
 	m_D2DRenderManager->SetD2D1DeviceContext7(m_d2dDeviceContext.Get());
+}
+
+void Application::CheckExitKey()
+{
+	// 업데이트에서 매번 실행함 -> 프로그램 종료 키 확인
+	if (GetAsyncKeyState(VK_BACK))
+	{
+		PostQuitMessage(0);
+	}
 }
