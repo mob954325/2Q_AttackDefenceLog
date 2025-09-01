@@ -31,7 +31,7 @@ void TutorialEffectObject::OnStart()
 
 		auto br = obj->AddComponent<BitmapRenderer>();
 		br->CreateBitmapResource(basePath + files[i]);
-		br->SetOrderInLayer(i + 10);
+		br->SetOrderInLayer(i + 300);
 		br->SetActive(false);
 
 		slideImages.push_back(br);
@@ -117,6 +117,7 @@ void TutorialEffectObject::OnUpdate() // 업데이트
 						escPanel->SetInputEnable(false); // 아니라면, ESC 막고
 						escPanel->DisablePanel(); // 패널 끄기
 						Singleton<GameManager>::GetInstance().SetGameState(Pause); // 일시정지 ON
+						Clear.Invoke();
 					}
 
 					slideImages[index]->SetActive(true); // 이미지 키고
