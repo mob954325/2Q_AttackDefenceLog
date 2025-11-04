@@ -600,11 +600,29 @@ void BettleManager::SetStateFormPatternIdle()
 			else // 플레이어 가이드 라인에 관한 실패
 			{
 				m_Player->SetState("Player_AttackFail");	// 플레이어 상태 변경 -> 플레이어 공격 실패
-				m_Player->SetEndAttack();					// isAttackingPattern = true -> ??
+				// 11.03. 한승규 : 기획자 요청으로, 공격 실패시 패턴 리셋 제거
+				//m_Player->SetEndAttack();					// isAttackingPattern = true -> ??
+				//// 플레이어 가이드 패턴 파괴
+				//m_PattenManager->SubPattern(tmpPatten->PattenID, "Player");
 
-				// 플레이어 가이드 패턴 파괴
-
-				m_PattenManager->SubPattern(tmpPatten->PattenID, "Player");
+				// 11.03. 한승규, 공격 실패시 회피 사운드 재생 추가
+				auto SoundCom = owner->GetQuery()->FindByName("SOUNDSTAGE");
+				IndexNum = static_cast<int>(RandomSound());
+				switch (IndexNum)
+				{
+				case 0:
+					if (SoundCom) {
+						SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Dodge01");
+						SoundCom->GetComponent<SoundPlayScene>()->PlaySound();;
+					}
+					break;
+				case 1:
+					if (SoundCom) {
+						SoundCom->GetComponent<SoundPlayScene>()->SetKeyHandle(L"Dodge02");
+						SoundCom->GetComponent<SoundPlayScene>()->PlaySound();;
+					}
+					break;
+				}		
 			}
 		}
 

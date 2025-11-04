@@ -13,7 +13,7 @@ void BubbleEnd::OnUpdate()
 	if (StartCheck) CheckInput();
 
 	if (isDone) {
-		if (timer > 1.0f)
+		if (timer > 2.0f && Input::leftButtonDown) // 2초뒤, 마우스 클릭하면 넘어가게 수정함(읽고싶은 사람 있을 수 있잖슴)
 			Singleton<SceneManager>::GetInstance().LoadScene(SceneCount::TITLE); // MenuScene으로 이동
 	}
 }
@@ -64,21 +64,22 @@ void BubbleEnd::CheckInput()
 	{
 		if (Input::leftButtonDown) // 왼쪽 클릭 했으면
 		{
-			if (count < 9) // 0 ~ 9은 하나씩 출현하기
+			if (count < 8) // 0 ~ 9은 하나씩 출현하기 // 이거도 조건 잘못되었음 9 -> 8로 수정함
 			{
-				texts[count]->SetActive(true);
 				count++;
+				texts[count]->SetActive(true);
+				//count++; 아니 이거 순서 반대라서 작동 안하는거였음 ;
 				timer = 0.0f;
 			}
 
-			if (count == 9) // 10은 나머지 다 비활성화하고 혼자 출력
+			if (count == 8 && !isDone)
 			{
 				timer = 0.0f;
-				isDone = true; // 이거 계속 좌클릭 누르면, 영원히 안넘어감 ㅅㄱ
+				isDone = true; // 이거 계속 좌클릭 누르면, 영원히 안넘어감 ㅅㄱ				
 			}
 		}
 	}
-
+		
 	if (count < 9 && texts[count]->IsActiveSelf() && timer < delaytime) // 위에서 밑으로 출력하기
 	{
 		rectY = texts[count]->GetResource()->GetBitmap()->GetSize().height * timer / delaytime;
