@@ -6,13 +6,13 @@
 class EndBackground : public MonoBehavior
 {
 public:
-	void OnCreate() override;
 	void OnStart() override;
 	void OnUpdate() override;
 	void OnDestroy() override;
-
+	D2D1_SIZE_F GetSize() { return size; };
 
 protected:
+	D2D1_SIZE_F size;
 	BitmapRenderer* bitmapRenderer{};
 };
 

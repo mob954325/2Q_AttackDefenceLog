@@ -7,6 +7,8 @@
 #include "../Engine/Systems/AudioSystem.h"
 #include "../Contents/Objects/Scenes/Stage/CloudManager.h"
 
+// 타이틀 글씨(11개 -> 9개 변경함)
+
 void BubbleBoxTittle::OnUpdate()
 {
 	timer += Singleton<GameTime>::GetInstance().GetDeltaTime();
@@ -30,7 +32,7 @@ void BubbleBoxTittle::OnCreate()
 
 	input = owner->AddComponent<InputSystem>();
 
-	for (int i = 0; i < 11; i++)
+	for (int i = 0; i < 9; i++)
 	{
 		texts.push_back(owner->AddComponent<BitmapRenderer>());
 
@@ -44,7 +46,7 @@ void BubbleBoxTittle::OnCreate()
 		texts[i]->SetUseCustomRect(true);
 	}
 
-	texts[10]->SetUseCustomRect(false);
+	texts[8]->SetUseCustomRect(false);
 
 	count = 0;
 	texts[count]->SetActive(true);
@@ -70,17 +72,17 @@ void BubbleBoxTittle::CheckInput()
 	{
 		if (Input::leftButtonDown) // 왼쪽 클릭 했으면
 		{
-			if (count < 10) // 0 ~ 9은 하나씩 출현하기
+			if (count < 8) 
 			{
 				count++;
 				texts[count]->SetActive(true);
 				timer = 0.0f;
 			}
 
-			if (count == 10) // 10은 나머지 다 비활성화하고 혼자 출력
+			if (count == 8) // 10은 나머지 다 비활성화하고 혼자 출력
 			{
 				// 기존에 출력 되었던 텍스트 모두 비활성화
-				for (int i = 0; i < 10; i++)
+				for (int i = 0; i < 8; i++)
 				{
 					texts[i]->SetActive(false);
 				}
@@ -92,7 +94,7 @@ void BubbleBoxTittle::CheckInput()
 				if (cld) { cld->GetComponent<CloudManager>()->Start(); }
 			}
 
-			if (count == 11) // 11번째 클릭에선 씬 전환
+			if (count == 9) // 11번째 클릭에선 씬 전환
 			{
 				StartCheck = false;
 				flag = true;
@@ -103,13 +105,13 @@ void BubbleBoxTittle::CheckInput()
 		}
 	}
 
-	if (count < 11 && texts[count]->IsActiveSelf() && timer < delaytime) // 위에서 밑으로 출력하기
+	if (count < 9 && texts[count]->IsActiveSelf() && timer < delaytime) // 위에서 밑으로 출력하기
 	{
 		rectY = texts[count]->GetResource()->GetBitmap()->GetSize().height * timer / delaytime;
 		std::cout << rectY << std::endl;
 	}
 
-	if (count < 11)
+	if (count < 9)
 	{
 		texts[count]->SetDestRect({ 0, 0, texts[count]->GetResource()->GetBitmap()->GetSize().width, rectY });
 		texts[count]->SetSrcRect({ 0, 0, texts[count]->GetResource()->GetBitmap()->GetSize().width, rectY });
