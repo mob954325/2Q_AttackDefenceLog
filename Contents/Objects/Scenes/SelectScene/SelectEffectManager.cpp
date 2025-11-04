@@ -10,7 +10,7 @@ void SelectEffectManager::OnStart()
 	owner->SetRenderLayer(EngineData::RenderLayer::None);
 	owner->GetTransform().SetUnityCoords(true);
 
-	for (int i = 0; i < 6; ++i) {
+	for (int i = 0; i < 5; ++i) {
 		GameObject* obj = new GameObject();
 		obj->GetTransform().SetUnityCoords(true);
 		obj->SetRenderLayer(EngineData::RenderLayer::None);
@@ -24,7 +24,7 @@ void SelectEffectManager::OnStart()
 
 	auto basePath = Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\BackGround\\lobby\\";
 	std::wstring files[] =
-	{ L"2sky.png", L"3.png", L"4.png", L"5.png", L"6.png", L"robby_text.png"};
+	{ L"2sky.png", L"3.png", L"4.png", L"5.png", L"robby_text.png" };
 
 	for (int i = 0; i < std::size(files); ++i) {
 		effectProgress[i].bitmapRenderer->CreateBitmapResource(basePath + files[i]);
@@ -52,10 +52,12 @@ void SelectEffectManager::OnUpdate()
 			float currentY = effectProgress[i].startPos.y + (effectProgress[i].targetPos.y - effectProgress[i].startPos.y) * posProgress;
 
 			effectProgress[i].bitmapRenderer->owner->GetTransform().SetPosition(currentX, currentY);
-
 			effectProgress[i].alpha = clampf((progress - effectProgress[i].startTimingAlpha) * (1.0f / (effectProgress[i].targetTimingAlpha - effectProgress[i].startTimingAlpha)), 0.0f, 1.0f);
-			effectProgress[i].bitmapRenderer->SetCapacity(effectProgress[i].alpha);
+			
+			if (i != 4 )
+				effectProgress[i].alpha = 1.0f - effectProgress[i].alpha; // 뒤집기		
 
+			effectProgress[i].bitmapRenderer->SetCapacity(effectProgress[i].alpha);
 		}
 
 		if (progress >= 1.0f) isPlay = false;
@@ -78,46 +80,40 @@ void SelectEffectManager::Reset()
 {
 	progress = 0.0f;
 	//[0]===============================================================
-	//하늘 
+	//근경 마스크
 	auto& p0 = effectProgress[0];
-	p0.startPos = { 200.0f,100.0f };	p0.targetPos = { 0.0f,0.0f };
-	p0.startTimingPos = 0.0f;			p0.targetTimingPos = 0.9f;
-	p0.startTimingAlpha = 0.0f;			p0.targetTimingAlpha = 0.6f;
+	p0.startPos = { 0.0f,0.0f };		p0.targetPos = { 0.0f,0.0f };
+	p0.startTimingPos = 0.0f;			p0.targetTimingPos = 0.0f;
+	p0.startTimingAlpha = 0.15f;		p0.targetTimingAlpha = 1.0f;
 
 	//[1]===============================================================
-	//왼쪽 원경
+	//중경 마스크
 	auto& p1 = effectProgress[1];
-	p1.startPos = { 192.0f,-100.0f };	p1.targetPos = { 0.0f,0.0f };
-	p1.startTimingPos = 0.0f;			p1.targetTimingPos = 0.9f;
-	p1.startTimingAlpha = 0.3f;			p1.targetTimingAlpha = 1.0f;
+	p1.startPos = { 0.0f,0.0f };		p1.targetPos = { 0.0f,0.0f };
+	p1.startTimingPos = 0.0f;			p1.targetTimingPos = 1.0f;
+	p1.startTimingAlpha = 0.4f;			p1.targetTimingAlpha = 0.7f;
 	//[2]===============================================================
-	//오른쪽 원경
+	//중원경 마스크
 	auto& p2 = effectProgress[2];
-	p2.startPos = { -192.0f,-300.0f };	p2.targetPos = { 0.0f,0.0f };
-	p2.startTimingPos = 0.3f;			p2.targetTimingPos = 0.9f;
-	p2.startTimingAlpha = 0.3f;			p2.targetTimingAlpha = 0.5f;
+	p2.startPos = { 0.0f,0.0f };		p2.targetPos = { 0.0f,0.0f };
+	p2.startTimingPos = 0.0f;			p2.targetTimingPos = 1.0f;
+	p2.startTimingAlpha = 0.5f;			p2.targetTimingAlpha = 0.9f;
 	//[3]===============================================================
-	//오른쪽 중경
+	//원경 마스크
 	auto& p3 = effectProgress[3];
-	p3.startPos = { 200.0f,-400.0f };	p3.targetPos = { 0.0f,0.0f };
-	p3.startTimingPos = 0.0f;			p3.targetTimingPos = 0.9f;
-	p3.startTimingAlpha = 0.2f;			p3.targetTimingAlpha = 0.8f;
-	//[4]===============================================================
-	//왼쪽 근경
-	auto& p4 = effectProgress[4];
-	p4.startPos = { -192.0f,-400.0f };	p4.targetPos = { 0.0f,0.0f };
-	p4.startTimingPos = 0.7f;			p4.targetTimingPos = 0.9f;
-	p4.startTimingAlpha = 0.7f;			p4.targetTimingAlpha = 0.9f;
-	////////////////////////////////////////////////////////////////////
+	p3.startPos = { 0.0f,0.0f };		p3.targetPos = { 0.0f,0.0f };
+	p3.startTimingPos = 0.0f;			p3.targetTimingPos = 1.0f;
+	p3.startTimingAlpha = 0.8f;			p3.targetTimingAlpha = 1.0f;
+
 	//[5]===============================================================
 	//문구 - 스테이지 선택
-	auto& p5 = effectProgress[5];
+	auto& p5 = effectProgress[4];
 	p5.startPos = { -100.0f,150.0f };	p5.targetPos = { 0.0f,0.0f };
 	p5.startTimingPos = 0.0f;			p5.targetTimingPos = 1.0f;
 	p5.startTimingAlpha = 0.95f;		p5.targetTimingAlpha = 1.0f;
 
 
-	for (int i = 0; i < effectProgress.size(); ++i) { 
+	for (int i = 0; i < effectProgress.size(); ++i) {
 		effectProgress[i].bitmapRenderer->owner->GetTransform().SetPosition(effectProgress[i].startPos.x, effectProgress[i].startPos.y);
 	}
 }
