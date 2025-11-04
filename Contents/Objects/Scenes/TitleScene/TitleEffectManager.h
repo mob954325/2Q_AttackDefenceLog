@@ -28,6 +28,10 @@ protected:
 	float timer = 0.0f;
 
 	bool isTextCreated = false;
+
+	bool needTouch = false;	
+	float touchProgress = 0.0f;
+	float touchAlpha = 0.0f;
 private:
 
 	inline float clampf(float v, float minVal, float maxVal) { // 나만의 작은 클램프 함수 C++14를 고집하는 자의 의지

@@ -15,7 +15,7 @@ void TitleEffectManager::OnStart()
 	owner->SetRenderLayer(EngineData::RenderLayer::None);
 	owner->GetTransform().SetUnityCoords(true);
 
-	for (int i = 0; i < 10; ++i) {
+	for (int i = 0; i < 11; ++i) {
 		GameObject* obj = new GameObject();
 		obj->GetTransform().SetUnityCoords(true);
 		obj->SetRenderLayer(EngineData::RenderLayer::None);
@@ -29,11 +29,14 @@ void TitleEffectManager::OnStart()
 
 	auto basePath = Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\BackGround\\start\\";
 	std::wstring files[] =
-	{ L"2sky.png", L"3.png", L"4.png", L"5.png", L"6.png", L"7boat.png", L"8human.png", L"title.png", L"top_and_bottom_filter_black1.png", L"top_and_bottom_filter_black2.png" };
+	{ L"2sky.png", L"3.png",
+		L"4.png", L"5.png",
+		L"6.png", L"7boat.png",
+		L"8human.png", L"title.png",
+		L"top_and_bottom_filter_black1.png", L"top_and_bottom_filter_black2.png",
+		L"touch_the_screen.png" };
 
 	for (int i = 0; i < std::size(files); ++i) {
-
-
 		effectProgress[i].bitmapRenderer->CreateBitmapResource(basePath + files[i]);
 		D2D1_SIZE_F rect = effectProgress[i].bitmapRenderer->GetResource()->GetBitmap()->GetSize();
 		effectProgress[i].bitmapRenderer->owner->GetTransform().SetOffset(-rect.width / 2, rect.height / 2);
@@ -56,7 +59,7 @@ void TitleEffectManager::OnStart()
 	b->GetTransform().SetUnityCoords(false);
 	guideMessageImage = b->AddComponent<BitmapRenderer>();
 	guideMessageImage->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\BattlePanel\\GuideText\\drawing_line_start_text.png");
-	guideMessageImage->SetOrderInLayer(100000000); // ...? 1억이요?
+	guideMessageImage->SetOrderInLayer(10000); // ...? 1억이요? << 너무커서 줄였음
 	guideMessageImage->SetCapacity(1.0f);
 
 	Singleton<SceneManager>::GetInstance().GetCurrentScene()->AddGameObject(b, "guideMessageImage.");
@@ -74,6 +77,8 @@ void TitleEffectManager::OnUpdate()
 
 		for (int i = 0; i < effectProgress.size(); ++i)
 		{
+			if (i == 10) continue; // 화면터치는 연출 생략
+
 			//날 선형보간의 신이라고 불러라 2트
 			float posProgress = clampf((progress - effectProgress[i].startTimingPos) * (1.0f / (effectProgress[i].targetTimingPos - effectProgress[i].startTimingPos)), 0.0f, 1.0f);
 			float currentX = effectProgress[i].startPos.x + (effectProgress[i].targetPos.x - effectProgress[i].startPos.x) * posProgress;
@@ -91,9 +96,21 @@ void TitleEffectManager::OnUpdate()
 
 		if (progress >= 1.0f) {
 			isPlay = false;
+			needTouch = true;
 			timer = 0.0f;
 		}
 
+	}
+
+	if (needTouch) {
+		float delta = Singleton<GameTime>::GetInstance().GetDeltaTime();
+
+		if (touchAlpha <= 0.0f)			touchProgress = 0.4f;
+		else if (touchAlpha >= 1.0f)	touchProgress = -0.4f;
+
+		touchAlpha += touchProgress * delta;
+
+		effectProgress[10].bitmapRenderer->SetCapacity(touchAlpha); // 내부에 클램핑 기능 들어있음
 	}
 
 	if ((progress >= 1.0f) && !isPlay)// 이벤트가 종료되면 마우스 클릭으로 씬 넘어갈 수 있게 추가 : 작성자 - 이성호
@@ -103,6 +120,10 @@ void TitleEffectManager::OnUpdate()
 			{
 				// title 오브젝트 제거
 				effectProgress[7].bitmapRenderer->SetCapacity(0.0f);
+
+				// 화면터치 안내문 제거
+				effectProgress[10].bitmapRenderer->SetCapacity(0.0f);
+				needTouch = false;
 
 				// title 텍스트 객체 추가
 				GameObject* titleBubbleObj = new GameObject();
@@ -127,6 +148,9 @@ void TitleEffectManager::Start()
 {
 	Reset();
 	isPlay = true;
+	needTouch = false;
+	touchProgress = 0.4f;
+	touchAlpha = 0.0f;
 }
 
 
@@ -200,8 +224,13 @@ void TitleEffectManager::Reset()
 	p9.startTimingPos = 0.0f;			p9.targetTimingPos = 0.3f;
 	p9.startTimingAlpha = 0.0f;			p9.targetTimingAlpha = 0.0f;
 
-
 	for (int i = 0; i < effectProgress.size(); ++i) {
+		if (i == 10)
+		{
+			effectProgress[i].bitmapRenderer->owner->GetTransform().SetPosition(0.0f, -150.0f);
+			continue;
+		};
+
 		effectProgress[i].bitmapRenderer->owner->GetTransform().SetPosition(effectProgress[i].startPos.x, effectProgress[i].startPos.y);
 	}
 }
