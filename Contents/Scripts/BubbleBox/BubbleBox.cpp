@@ -7,6 +7,7 @@
 #include "../Engine/Systems/AudioSystem.h"
 #include "Objects/Sound/SoundPlayScene.h"
 
+// 스테이지1
 
 void BubbleBox::OnUpdate()
 {
@@ -14,7 +15,7 @@ void BubbleBox::OnUpdate()
 		TextBox->SetActive(false);
 		Text_01->SetActive(false);
 		Text_02->SetActive(false);
-		Text_03->SetActive(false);
+		//Text_03->SetActive(false);
 
 		StartCheck = false;
 		Singleton<GameManager>::GetInstance().SetGameState(Play);
@@ -44,21 +45,21 @@ void BubbleBox::OnCreate()
 	TextBox = owner->AddComponent<BitmapRenderer>();
 	Text_01 = owner->AddComponent<BitmapRenderer>();
 	Text_02 = owner->AddComponent<BitmapRenderer>();
-	Text_03 = owner->AddComponent<BitmapRenderer>();
+	//Text_03 = owner->AddComponent<BitmapRenderer>();
 
 	TextBox->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\bubbleBox\\textbox.png");
 	Text_01->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\BoxText\\1stage\\01.png");
 	Text_02->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\BoxText\\1stage\\02.png");
-	Text_03->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\BoxText\\1stage\\03.png");
+	//Text_03->CreateBitmapResource(Singleton<AppPaths>::GetInstance().GetWorkingPath() + L"\\..\\Resource\\Sprites\\UI\\BoxText\\1stage\\03.png");
 
 	TextBox->SetActive(true);
 	Text_01->SetActive(true);
 	Text_02->SetActive(false);
-	Text_03->SetActive(false);
+	//Text_03->SetActive(false);
 
 	Text_01->SetOrderInLayer(19000);
 	Text_02->SetOrderInLayer(19000);
-	Text_03->SetOrderInLayer(19000);
+	//Text_03->SetOrderInLayer(19000);
 
 
 	count = 0;
@@ -87,18 +88,12 @@ void BubbleBox::CheckInput()
 		case 0:
 			Text_01->SetActive(false);
 			Text_02->SetActive(true);
-			Text_03->SetActive(false);
+			//Text_03->SetActive(false);
 			break;
 		case 1:
 			Text_01->SetActive(false);
 			Text_02->SetActive(false);
-			Text_03->SetActive(true);
-			break;
-		case 2:
-			TextBox->SetActive(false);
-			Text_01->SetActive(false);
-			Text_02->SetActive(false);
-			Text_03->SetActive(false);
+			//Text_03->SetActive(true);
 			StartCheck = false;
 			Singleton<GameManager>::GetInstance().SetGameState(Play);
 			auto SoundCom = owner->GetQuery()->FindByName("SOUNDSTAGE");
@@ -109,6 +104,13 @@ void BubbleBox::CheckInput()
 
 			escPanel->SetInputEnable(true);
 			break;
+		//case 2:
+		//	TextBox->SetActive(false);
+		//	Text_01->SetActive(false);
+		//	Text_02->SetActive(false);
+		//	//Text_03->SetActive(false);
+
+		//	break;
 		}
 		++count;
 	}

@@ -6,6 +6,8 @@
 #include "scripts/GameManager.h"
 #include "../Engine/Systems/AudioSystem.h"
 
+// 엔딩 글씨(9개 -> 6개로 변경함)
+
 void BubbleEnd::OnUpdate()
 {
 	timer += Singleton<GameTime>::GetInstance().GetDeltaTime();
@@ -27,7 +29,7 @@ void BubbleEnd::OnCreate()
 
 	input = owner->AddComponent<InputSystem>();
 
-	for (int i = 0; i < 9; i++)
+	for (int i = 0; i < 6; i++)
 	{
 		texts.push_back(owner->AddComponent<BitmapRenderer>());
 
@@ -64,7 +66,7 @@ void BubbleEnd::CheckInput()
 	{
 		if (Input::leftButtonDown) // 왼쪽 클릭 했으면
 		{
-			if (count < 8) // 0 ~ 9은 하나씩 출현하기 // 이거도 조건 잘못되었음 9 -> 8로 수정함
+			if (count < 5) // 0 ~ 9은 하나씩 출현하기 // 이거도 조건 잘못되었음 9 -> 8로 수정함
 			{
 				count++;
 				texts[count]->SetActive(true);
@@ -72,7 +74,7 @@ void BubbleEnd::CheckInput()
 				timer = 0.0f;
 			}
 
-			if (count == 8 && !isDone)
+			if (count == 5 && !isDone)
 			{
 				timer = 0.0f;
 				isDone = true; // 이거 계속 좌클릭 누르면, 영원히 안넘어감 ㅅㄱ				
@@ -80,13 +82,13 @@ void BubbleEnd::CheckInput()
 		}
 	}
 		
-	if (count < 9 && texts[count]->IsActiveSelf() && timer < delaytime) // 위에서 밑으로 출력하기
+	if (count < 6 && texts[count]->IsActiveSelf() && timer < delaytime) // 위에서 밑으로 출력하기
 	{
 		rectY = texts[count]->GetResource()->GetBitmap()->GetSize().height * timer / delaytime;
 		std::cout << rectY << std::endl;
 	}
 
-	if (count < 9)
+	if (count < 6)
 	{
 		texts[count]->SetDestRect({ 0, 0, texts[count]->GetResource()->GetBitmap()->GetSize().width, rectY });
 		texts[count]->SetSrcRect({ 0, 0, texts[count]->GetResource()->GetBitmap()->GetSize().width, rectY });
